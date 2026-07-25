@@ -276,52 +276,52 @@ export const TimedExamEngine: React.FC<TimedExamEngineProps> = ({
   };
 
   return (
-    <div className="w-full max-w-5xl mx-auto font-sans">
+    <div className="w-full max-w-5xl mx-auto font-sans space-y-4 sm:space-y-6">
       {/* Top Header Bar */}
-      <div className="bg-slate-900/95 backdrop-blur-xl border border-slate-800 rounded-3xl p-5 shadow-2xl mb-6 flex flex-col md:flex-row items-center justify-between gap-4">
+      <div className="bg-slate-900/95 backdrop-blur-xl border border-slate-800 rounded-2xl sm:rounded-3xl p-3.5 sm:p-5 shadow-2xl flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
         <div>
-          <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-emerald-400">
-            <Award className="w-4 h-4 text-amber-400" />
+          <div className="flex items-center gap-1.5 sm:gap-2 text-[10px] sm:text-xs font-bold uppercase tracking-wider text-emerald-400">
+            <Award className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-amber-400" />
             <span>Timed Exam Simulator & Auto Grading</span>
           </div>
-          <h2 className="text-xl font-bold text-white mt-1">
+          <h2 className="text-base sm:text-xl font-bold text-white mt-0.5 sm:mt-1">
             {activeLanguage === 'JAPANESE'
               ? 'JLPT Standard Model Mock Examination (N5, N4, N3, N2)'
               : 'EPS-TOPIK & TOPIK Level 2, 3, 4 Mock Examination'}
           </h2>
         </div>
 
-        <div className="flex items-center gap-4">
+        <div className="flex items-center justify-between sm:justify-end gap-3 pt-2 sm:pt-0 border-t sm:border-t-0 border-slate-800">
           <div
-            className={`flex items-center gap-2.5 px-4 py-2 rounded-2xl border transition-all ${
+            className={`flex items-center gap-2 px-3 sm:px-4 py-1.5 sm:py-2 rounded-xl sm:rounded-2xl border transition-all ${
               secondsRemaining < 300
                 ? 'bg-rose-950/80 border-rose-500 text-rose-300 animate-pulse'
                 : 'bg-slate-950 border-slate-800 text-amber-400'
             }`}
           >
-            <Clock className="w-5 h-5 text-amber-400" />
-            <span className="text-xl font-black font-mono tracking-wider">{formatTime(secondsRemaining)}</span>
+            <Clock className="w-4 h-4 sm:w-5 sm:h-5 text-amber-400" />
+            <span className="text-lg sm:text-xl font-black font-mono tracking-wider">{formatTime(secondsRemaining)}</span>
           </div>
 
           {!isSubmitted && (
             <button
               onClick={handleSubmitExam}
-              className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-bold text-xs shadow-glow transition-all"
+              className="px-4 sm:px-5 py-2 sm:py-2.5 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-bold text-xs shadow-glow transition-all"
             >
-              Submit Exam Now
+              Submit Exam
             </button>
           )}
         </div>
       </div>
 
       {/* Level Selector Bar */}
-      <div className="flex items-center gap-2 mb-6 bg-slate-900/80 p-2 rounded-2xl border border-slate-800 flex-wrap">
-        <span className="text-xs font-bold text-slate-400 px-2 flex items-center gap-1">
+      <div className="flex items-center gap-1.5 sm:gap-2 bg-slate-900/80 p-1.5 sm:p-2 rounded-xl sm:rounded-2xl border border-slate-800 flex-wrap">
+        <span className="text-[11px] sm:text-xs font-bold text-slate-400 px-1.5 flex items-center gap-1">
           <Layers className="w-3.5 h-3.5" /> Level:
         </span>
         <button
           onClick={() => { setSelectedLevelFilter('ALL'); setCurrentIndex(0); }}
-          className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all ${
+          className={`px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-lg sm:rounded-xl text-[11px] sm:text-xs font-bold transition-all ${
             selectedLevelFilter === 'ALL' ? 'bg-indigo-600 text-white' : 'bg-slate-950 text-slate-400 hover:text-white'
           }`}
         >
@@ -332,7 +332,7 @@ export const TimedExamEngine: React.FC<TimedExamEngineProps> = ({
             <button
               key={lvl}
               onClick={() => { setSelectedLevelFilter(lvl); setCurrentIndex(0); }}
-              className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all ${
+              className={`px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-lg sm:rounded-xl text-[11px] sm:text-xs font-bold transition-all ${
                 selectedLevelFilter === lvl ? 'bg-rose-600 text-white' : 'bg-slate-950 text-slate-400 hover:text-white'
               }`}
             >
@@ -344,7 +344,7 @@ export const TimedExamEngine: React.FC<TimedExamEngineProps> = ({
             <button
               key={lvl}
               onClick={() => { setSelectedLevelFilter(lvl); setCurrentIndex(0); }}
-              className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all ${
+              className={`px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-lg sm:rounded-xl text-[11px] sm:text-xs font-bold transition-all ${
                 selectedLevelFilter === lvl ? 'bg-emerald-600 text-white' : 'bg-slate-950 text-slate-400 hover:text-white'
               }`}
             >

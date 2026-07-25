@@ -234,97 +234,97 @@ export const AlphabetGrid: React.FC<AlphabetGridProps> = ({ activeLanguage }) =>
   };
 
   return (
-    <div className="w-full max-w-5xl mx-auto bg-slate-900/90 backdrop-blur-xl border border-slate-800 rounded-3xl p-6 shadow-2xl">
+    <div className="w-full max-w-5xl mx-auto bg-slate-900/90 backdrop-blur-xl border border-slate-800 rounded-2xl sm:rounded-3xl p-3.5 sm:p-6 shadow-2xl space-y-4 sm:space-y-5">
       {/* Header Info */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6 pb-5 border-b border-slate-800">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 sm:pb-4 border-b border-slate-800">
         <div>
-          <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-indigo-400">
-            <Headphones className="w-4 h-4 text-emerald-400" />
+          <div className="flex items-center gap-2 text-[10px] sm:text-xs font-bold uppercase tracking-wider text-indigo-400">
+            <Headphones className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-emerald-400" />
             <span>Interactive Pronunciation Matrix & Nepali Phonetics</span>
           </div>
-          <h2 className="text-xl font-bold text-white mt-1">
+          <h2 className="text-base sm:text-xl font-bold text-white mt-0.5 sm:mt-1">
             {activeLanguage === 'JAPANESE' ? 'Japanese Alphabets (ひらがな / カタカナ / स्वर / व्यंजन)' : 'Korean Hangul Alphabets (한글 자음 / 모음 / 쌍자음)'}
           </h2>
         </div>
       </div>
 
       {/* Sub-Tabs Selector */}
-      <div className="flex flex-wrap gap-2 mb-6 bg-slate-950/80 p-2 rounded-2xl border border-slate-800">
+      <div className="flex flex-wrap gap-1.5 sm:gap-2 bg-slate-950/80 p-1.5 sm:p-2 rounded-xl sm:rounded-2xl border border-slate-800">
         {activeLanguage === 'JAPANESE' ? (
           <>
             <button
               onClick={() => setJpSubTab('HIRAGANA')}
-              className={`px-4 py-2 rounded-xl text-xs font-extrabold transition-all ${
+              className={`px-3 sm:px-4 py-1.5 sm:py-2 rounded-lg sm:rounded-xl text-[11px] sm:text-xs font-extrabold transition-all ${
                 jpSubTab === 'HIRAGANA' ? 'bg-rose-600 text-white shadow-lg' : 'text-slate-400 hover:text-white'
               }`}
             >
-              Hiragana (ひらがな 46)
+              Hiragana (46)
             </button>
             <button
               onClick={() => setJpSubTab('KATAKANA')}
-              className={`px-4 py-2 rounded-xl text-xs font-extrabold transition-all ${
+              className={`px-3 sm:px-4 py-1.5 sm:py-2 rounded-lg sm:rounded-xl text-[11px] sm:text-xs font-extrabold transition-all ${
                 jpSubTab === 'KATAKANA' ? 'bg-rose-600 text-white shadow-lg' : 'text-slate-400 hover:text-white'
               }`}
             >
-              Katakana (カタカナ 46)
+              Katakana (46)
             </button>
             <button
               onClick={() => setJpSubTab('VOWELS')}
-              className={`px-4 py-2 rounded-xl text-xs font-extrabold transition-all ${
+              className={`px-3 sm:px-4 py-1.5 sm:py-2 rounded-lg sm:rounded-xl text-[11px] sm:text-xs font-extrabold transition-all ${
                 jpSubTab === 'VOWELS' ? 'bg-indigo-600 text-white shadow-lg' : 'text-slate-400 hover:text-white'
               }`}
             >
-              Basic Vowels (स्वर - あいうえお)
+              Vowels (あいうえお)
             </button>
             <button
               onClick={() => setJpSubTab('CONSONANTS')}
-              className={`px-4 py-2 rounded-xl text-xs font-extrabold transition-all ${
+              className={`px-3 sm:px-4 py-1.5 sm:py-2 rounded-lg sm:rounded-xl text-[11px] sm:text-xs font-extrabold transition-all ${
                 jpSubTab === 'CONSONANTS' ? 'bg-indigo-600 text-white shadow-lg' : 'text-slate-400 hover:text-white'
               }`}
             >
-              Consonants (व्यंजन - か, さ, た...)
+              Consonants (か, さ, た...)
             </button>
           </>
         ) : (
           <>
             <button
               onClick={() => setKrSubTab('CONSONANTS')}
-              className={`px-4 py-2 rounded-xl text-xs font-extrabold transition-all ${
+              className={`px-3 sm:px-4 py-1.5 sm:py-2 rounded-lg sm:rounded-xl text-[11px] sm:text-xs font-extrabold transition-all ${
                 krSubTab === 'CONSONANTS' ? 'bg-emerald-600 text-white shadow-lg' : 'text-slate-400 hover:text-white'
               }`}
             >
-              Basic Consonants (기본 자음 14)
+              Consonants (14)
             </button>
             <button
               onClick={() => setKrSubTab('VOWELS')}
-              className={`px-4 py-2 rounded-xl text-xs font-extrabold transition-all ${
+              className={`px-3 sm:px-4 py-1.5 sm:py-2 rounded-lg sm:rounded-xl text-[11px] sm:text-xs font-extrabold transition-all ${
                 krSubTab === 'VOWELS' ? 'bg-emerald-600 text-white shadow-lg' : 'text-slate-400 hover:text-white'
               }`}
             >
-              Basic Vowels (기본 모음 10)
+              Vowels (10)
             </button>
             <button
               onClick={() => setKrSubTab('DOUBLE_CONSONANTS')}
-              className={`px-4 py-2 rounded-xl text-xs font-extrabold transition-all ${
+              className={`px-3 sm:px-4 py-1.5 sm:py-2 rounded-lg sm:rounded-xl text-[11px] sm:text-xs font-extrabold transition-all ${
                 krSubTab === 'DOUBLE_CONSONANTS' ? 'bg-indigo-600 text-white shadow-lg' : 'text-slate-400 hover:text-white'
               }`}
             >
-              Double Consonants (쌍자음 5)
+              Double (5)
             </button>
             <button
               onClick={() => setKrSubTab('COMPOUND_VOWELS')}
-              className={`px-4 py-2 rounded-xl text-xs font-extrabold transition-all ${
+              className={`px-3 sm:px-4 py-1.5 sm:py-2 rounded-lg sm:rounded-xl text-[11px] sm:text-xs font-extrabold transition-all ${
                 krSubTab === 'COMPOUND_VOWELS' ? 'bg-indigo-600 text-white shadow-lg' : 'text-slate-400 hover:text-white'
               }`}
             >
-              Compound Vowels (복모음 11)
+              Compound Vowels (11)
             </button>
           </>
         )}
       </div>
 
       {/* Search Bar & Counter */}
-      <div className="flex items-center justify-between gap-4 mb-5">
+      <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
         <div className="relative flex-1">
           <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500" />
           <input
@@ -335,34 +335,34 @@ export const AlphabetGrid: React.FC<AlphabetGridProps> = ({ activeLanguage }) =>
             className="w-full bg-slate-950/80 border border-slate-800 rounded-xl pl-10 pr-4 py-2 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-indigo-500 transition-all"
           />
         </div>
-        <div className="text-xs text-slate-400 font-medium">
+        <div className="text-xs text-slate-400 font-medium text-right sm:text-left">
           Showing <span className="text-white font-bold">{filteredData.length}</span> items
         </div>
       </div>
 
       {/* Tap-to-Hear Cards Grid */}
-      <div className="grid grid-cols-4 sm:grid-cols-6 md:grid-cols-8 lg:grid-cols-10 gap-3">
+      <div className="grid grid-cols-4 sm:grid-cols-6 md:grid-cols-8 lg:grid-cols-10 gap-2 sm:gap-3">
         {filteredData.map((item, idx) => (
           <button
             key={idx}
             onClick={() => playSound(item.char)}
-            className={`relative group p-3 rounded-2xl border transition-all duration-200 flex flex-col items-center justify-center cursor-pointer select-none ${
+            className={`relative group p-2 sm:p-3 rounded-xl sm:rounded-2xl border transition-all duration-200 flex flex-col items-center justify-center cursor-pointer select-none min-h-[68px] ${
               activeChar === item.char
-                ? 'scale-110 bg-indigo-600 border-indigo-400 text-white shadow-glow'
+                ? 'scale-105 bg-indigo-600 border-indigo-400 text-white shadow-glow'
                 : 'bg-slate-950/60 hover:bg-slate-800/90 border-slate-800/80 hover:border-indigo-500/50 hover:shadow-lg'
             }`}
           >
-            <Volume2 className="absolute top-1 right-1 w-3.5 h-3.5 text-indigo-400 opacity-0 group-hover:opacity-100 transition-opacity" />
+            <Volume2 className="absolute top-1 right-1 w-3 h-3 sm:w-3.5 sm:h-3.5 text-indigo-400 opacity-0 group-hover:opacity-100 transition-opacity" />
 
-            <div className={`text-2xl font-black mb-1 ${activeLanguage === 'JAPANESE' ? 'font-jp text-rose-300' : 'font-kr text-emerald-300'}`}>
+            <div className={`text-xl sm:text-2xl font-black mb-0.5 sm:mb-1 ${activeLanguage === 'JAPANESE' ? 'font-jp text-rose-300' : 'font-kr text-emerald-300'}`}>
               {item.char}
             </div>
 
-            <div className="text-[11px] font-bold text-slate-200">
+            <div className="text-[10px] sm:text-[11px] font-bold text-slate-200 leading-tight">
               {item.romaji}
             </div>
 
-            <div className="text-[10px] text-amber-400 font-medium mt-0.5">
+            <div className="text-[9px] sm:text-[10px] text-amber-400 font-medium mt-0.5 leading-tight">
               {item.nepaliHint}
             </div>
           </button>
