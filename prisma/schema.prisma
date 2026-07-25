@@ -1,0 +1,242 @@
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id                    String        @id @default(uuid()) @db.VarChar(36)
+  email                 String        @unique @db.VarChar(255)
+  name                  String?       @db.VarChar(255)
+  password              String        @db.VarChar(255) // Stored hashed (bcrypt)
+  emailVerified         DateTime?
+  passwordResetToken    String?       @db.VarChar(255)
+  passwordResetExpires  DateTime?
+  role                  String        @default("STUDENT") @db.VarChar(50) // STUDENT, ADMIN, INSTRUCTOR
+  streakDays            Int           @default(0)
+  longestStreak         Int           @default(0)
+  lastActiveAt          DateTime?
+  points                Int           @default(0)
+  createdAt             DateTime      @default(now())
+  updatedAt             DateTime      @updatedAt
+
+  reviewCards           ReviewCard[]
+  examAttempts          ExamAttempt[]
+  certificates          Certificate[]
+  userProgress          UserProgress[]
+}
+
+model ReviewCard {
+  id             String    @id @default(uuid()) @db.VarChar(36)
+  userId         String    @db.VarChar(36)
+  itemType       String    @db.VarChar(50)    // "KANJI", "VOCABULARY", "GRAMMAR"
+  itemId         String    @db.VarChar(255)
+  easeFactor     Float     @default(2.5)
+  intervalDays   Int       @default(0)
+  repetitions    Int       @default(0)
+  nextReviewAt   DateTime  @default(now())
+  lastReviewedAt DateTime?
+  history        Json?                         // Review history as JSON
+
+  user           User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, itemType, itemId])
+  @@index([userId, nextReviewAt])
+}
+
+model Course {
+  id          String   @id @default(uuid()) @db.VarChar(36)
+  code        String   @unique @db.VarChar(100) // "JLPT_N5", "JLPT_N4", "EPS_TOPIK_BASIC"
+  title       String   @db.VarChar(255)
+  language    String   @db.VarChar(50)          // "JAPANESE", "KOREAN"
+  description String   @db.Text
+  level       String   @db.VarChar(50)          // "N5", "N4", "N3", "EPS-1"
+
+  lessons     Lesson[]
+  exams       Exam[]
+  certificates Certificate[]
+}
+
+model Lesson {
+  id                  String   @id @default(uuid()) @db.VarChar(36)
+  courseId            String   @db.VarChar(36)
+  title               String   @db.VarChar(255)
+  description         String   @db.Text
+  order               Int
+  unlockAfterLessonId String?  @db.VarChar(36)
+  requiredLevel       String?  @db.VarChar(50)
+
+  course              Course   @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  progress            UserProgress[]
+
+  @@index([courseId, order])
+}
+
+model UserProgress {
+  id          String   @id @default(uuid()) @db.VarChar(36)
+  userId      String   @db.VarChar(36)
+  lessonId    String   @db.VarChar(36)
+  completed   Boolean  @default(false)
+  score       Int      @default(0)
+  updatedAt   DateTime @updatedAt
+
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  lesson      Lesson   @relation(fields: [lessonId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, lessonId])
+  @@index([userId, lessonId])
+}
+
+model Kanji {
+  id              String   @id @default(uuid()) @db.VarChar(36)
+  character       String   @unique @db.VarChar(10)
+  strokeCount     Int
+  readingsOnyomi  String   @db.Text // Comma separated
+  readingsKunyomi String   @db.Text // Comma separated
+  meanings        String   @db.Text // Comma separated (English)
+  meaningsNepali  String?  @db.Text // Comma separated (Nepali)
+  radicals        Json                // [{radical, meaning, color}]
+  strokeSvgData   Json?               // Array of SVG paths
+  level           String   @db.VarChar(10) // "N5", "N4", "N3", "N2"
+  lessonOrder     Int      @default(1)
+
+  vocabularies    VocabularyKanji[]
+  examples        ExampleKanji[]
+}
+
+model Vocabulary {
+  id              String   @id @default(uuid()) @db.VarChar(36)
+  word            String   @db.VarChar(100)
+  reading         String   @db.VarChar(255)
+  meanings        String   @db.Text       // English
+  meaningsNepali  String?  @db.Text       // Nepali
+  language        String   @db.VarChar(50) // "JAPANESE", "KOREAN"
+  level           String   @db.VarChar(50)
+  lesson          Int      @default(1)
+  partOfSpeech    String?  @db.VarChar(100)
+
+  kanjiLinks      VocabularyKanji[]
+  grammarSentences GrammarSentence[]
+}
+
+model GrammarSentence {
+  id             String     @id @default(uuid()) @db.VarChar(36)
+  vocabularyId   String     @db.VarChar(36)
+  sentenceJP     String?    @db.Text   // Japanese sentence
+  readingJP      String?    @db.Text   // Hiragana reading
+  sentenceKR     String?    @db.Text   // Korean sentence
+  romanization   String?    @db.Text   // Romanization (Korean)
+  english        String     @db.Text
+  nepali         String     @db.Text
+
+  vocabulary     Vocabulary @relation(fields: [vocabularyId], references: [id], onDelete: Cascade)
+
+  @@index([vocabularyId])
+}
+
+model VocabularyKanji {
+  id           String     @id @default(uuid()) @db.VarChar(36)
+  vocabularyId String     @db.VarChar(36)
+  kanjiId      String     @db.VarChar(36)
+  position     Int        @default(0)
+
+  vocabulary   Vocabulary @relation(fields: [vocabularyId], references: [id], onDelete: Cascade)
+  kanji        Kanji      @relation(fields: [kanjiId], references: [id], onDelete: Cascade)
+
+  @@unique([vocabularyId, kanjiId])
+}
+
+model ExampleSentence {
+  id          String   @id @default(uuid()) @db.VarChar(36)
+  sentence    String   @db.Text
+  translation String   @db.Text
+  reading     String?  @db.Text
+  audioUrl    String?  @db.VarChar(500)
+  language    String   @db.VarChar(50)  // "JAPANESE", "KOREAN"
+
+  kanjiLinks  ExampleKanji[]
+}
+
+model ExampleKanji {
+  id          String          @id @default(uuid()) @db.VarChar(36)
+  exampleId   String          @db.VarChar(36)
+  kanjiId     String          @db.VarChar(36)
+
+  example     ExampleSentence @relation(fields: [exampleId], references: [id], onDelete: Cascade)
+  kanji       Kanji           @relation(fields: [kanjiId], references: [id], onDelete: Cascade)
+
+  @@unique([exampleId, kanjiId])
+}
+
+model Question {
+  id            String   @id @default(uuid()) @db.VarChar(36)
+  examId        String   @db.VarChar(36)
+  type          String   @db.VarChar(50)  // "MULTIPLE_CHOICE", "LISTENING", "FILL_BLANK"
+  prompt        String   @db.Text
+  audioUrl      String?  @db.VarChar(500)
+  options       Json                       // JSON array
+  correctAnswer String   @db.VarChar(500)
+  explanation   String?  @db.Text
+
+  exam          Exam     @relation(fields: [examId], references: [id], onDelete: Cascade)
+
+  @@index([examId, type])
+}
+
+model Exam {
+  id               String        @id @default(uuid()) @db.VarChar(36)
+  courseId         String        @db.VarChar(36)
+  title            String        @db.VarChar(255)
+  timeLimitMinutes Int           @default(50)
+  passPercentage   Int           @default(70)
+
+  course           Course        @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  questions        Question[]
+  attempts         ExamAttempt[]
+}
+
+model ExamAttempt {
+  id               String   @id @default(uuid()) @db.VarChar(36)
+  userId           String   @db.VarChar(36)
+  examId           String   @db.VarChar(36)
+  score            Int
+  passed           Boolean
+  timeSpentSeconds Int
+  answers          Json                     // JSON of user answers
+  status           String   @default("COMPLETED") @db.VarChar(50)
+  completedAt      DateTime @default(now())
+
+  user             User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  exam             Exam     @relation(fields: [examId], references: [id], onDelete: Cascade)
+
+  @@index([userId, status])
+}
+
+model Certificate {
+  id                String   @id @default(uuid()) @db.VarChar(36)
+  userId            String   @db.VarChar(36)
+  courseId          String   @db.VarChar(36)
+  certificateCode   String   @unique @default(uuid()) @db.VarChar(36)
+  score             Int
+  qrVerificationUrl String?  @db.VarChar(500)
+  verifiedAt        DateTime?
+  issuedAt          DateTime @default(now())
+
+  user              User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  course            Course   @relation(fields: [courseId], references: [id], onDelete: Cascade)
+
+  @@index([certificateCode])
+}
+
+model Alphabet {
+  id          String   @id @default(uuid()) @db.VarChar(36)
+  script      String   @db.VarChar(50) // "HIRAGANA", "KATAKANA", "HANGUL_CONSONANT", "HANGUL_VOWEL"
+  character   String   @db.VarChar(10)
+  romaji      String   @db.VarChar(50)
+  nepaliHint  String?  @db.VarChar(100)
+  category    String?  @db.VarChar(50)
+}
+

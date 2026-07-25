@@ -1,0 +1,465 @@
+'use client';
+
+import React, { useState } from 'react';
+import { BookOpen, Search, HelpCircle, Sparkles, Volume2, ChevronDown, MessageSquare, Globe, Award, BookCheck, X, Layers, ExternalLink } from 'lucide-react';
+import {
+  NIHONGO_VOCAB_DATA, VocabItem,
+  getVocabByLevel, getVocabByLevelAndLesson, getAvailableLessonsForLevel
+} from '@/lib/nihongo-vocab';
+import { getKanjiByLevelAndLesson, KanjiItem } from '@/lib/kanji-dataset';
+import { getGrammarGuide, LessonGrammarGuide } from '@/lib/grammar-guide';
+
+const LEVEL_LABELS: Record<'N5' | 'N4' | 'N3', string> = {
+  N5: 'JLPT N5 (Basic Minna no Nihongo 1–25)',
+  N4: 'JLPT N4 (Elementary Minna no Nihongo 26–50)',
+  N3: 'JLPT N3 (Intermediate Japanese 51–75)',
+};
+
+const LESSON_TOPICS: Record<number, string> = {
+  1: 'Introductions & Jobs', 2: 'Things & Belongings', 3: 'Location & Directions', 4: 'Time Expressions', 5: 'Shopping & Numbers',
+  6: 'Daily Actions', 7: 'Family & People', 8: 'Transportation', 9: 'Shops & Places', 10: 'Adjectives',
+  11: 'Frequency', 12: 'Comparisons', 13: 'Desires (〜たい)', 14: 'Activities', 15: 'て Form Rules',
+  16: 'Hobbies', 17: 'Giving & Receiving', 18: 'Past Events', 19: 'Experience (〜たことがある)', 20: 'Plans (〜つもり)',
+  21: 'Conditionals (〜たら)', 22: 'Reasons (〜ので)', 23: 'Potential (できます)', 24: 'Advice', 25: 'Casual Speech',
+  26: 'Explanatory (〜んです)', 27: 'Potential Verbs', 28: 'Simultaneous Actions (〜ながら)', 29: 'States of Being', 30: 'Preparatory Action (〜ておく)',
+  31: 'Volitional Form (おう/よう)', 32: 'Advice & Probabilities', 33: 'Imperative & Prohibition', 34: 'Instructions (〜通りに)', 35: 'Conditional (〜ば)',
+  36: 'Habits (〜ようにする)', 37: 'Passive Voice (〜れる/られる)', 38: 'Nominalization (〜の)', 39: 'Causes & Reasons', 40: 'Embedded Questions (〜かどうか)',
+  41: 'Polite Giving (いただきます)', 42: 'Purpose (〜ために)', 43: 'Conjecture (〜そうです)', 44: 'Excess (〜すぎる)', 45: 'Cases (〜場合は)',
+  46: 'Timing (〜ところ)', 47: 'Hearsay (〜そうです)', 48: 'Causative (〜させる)', 49: 'Honorific Keigo (尊敬語)', 50: 'Humble Keigo (謙譲語)',
+  51: 'Must Be (〜に違いない)', 52: 'Regarding (〜に関して)', 53: 'Centered On (〜を中心に)', 54: 'Through (〜を通じて)', 55: 'Depending On (〜によって)',
+};
+
+// Kanji Details Dataset Lookup
+const KANJI_LOOKUP_DATABASE: Record<string, KanjiItem> = {
+  '見': { character: '見', level: 'N5', meanings: ['See', 'Look', 'Show'], meaningsNepali: ['हेर्नु', 'देखाउनु'], readingsOnyomi: ['ケン'], readingsKunyomi: ['み.る', 'み.える'], strokeCount: 7, strokeSvgData: [], radicals: [{ radical: '目', meaning: 'Eye', color: '#f59e0b' }, { radical: '儿', meaning: 'Legs', color: '#3b82f6' }], lessonOrder: 1, compounds: [{ word: '見学', reading: 'けんがく', meaning: 'Study tour' }, { word: '意見', reading: 'いけん', meaning: 'Opinion' }] },
+  '学': { character: '学', level: 'N5', meanings: ['Study', 'Learn', 'Science'], meaningsNepali: ['सिक्नु', 'पढ्नु'], readingsOnyomi: ['ガク'], readingsKunyomi: ['まな.ぶ'], strokeCount: 8, strokeSvgData: [], radicals: [{ radical: '子', meaning: 'Child', color: '#10b981' }], lessonOrder: 1, compounds: [{ word: '学生', reading: 'がくせい', meaning: 'Student' }, { word: '学校', reading: 'がっこう', meaning: 'School' }] },
+  '案': { character: '案', level: 'N4', meanings: ['Plan', 'Suggestion', 'Idea'], meaningsNepali: ['योजना', 'राय'], readingsOnyomi: ['アン'], readingsKunyomi: [], strokeCount: 10, strokeSvgData: [], radicals: [{ radical: '木', meaning: 'Tree', color: '#10b981' }], lessonOrder: 26, compounds: [{ word: '案内', reading: 'あんない', meaning: 'Guidance' }] },
+  '内': { character: '内', level: 'N4', meanings: ['Inside', 'Within', 'Home'], meaningsNepali: ['भित्र', 'आन्तरिक'], readingsOnyomi: ['ナイ'], readingsKunyomi: ['うち'], strokeCount: 4, strokeSvgData: [], radicals: [{ radical: '冂', meaning: 'Border', color: '#ec4899' }], lessonOrder: 26, compounds: [{ word: '案内', reading: 'あんない', meaning: 'Guidance' }, { word: '国内', reading: 'こくない', meaning: 'Domestic' }] },
+  '探': { character: '探', level: 'N4', meanings: ['Search', 'Look for', 'Explore'], meaningsNepali: ['खोज्नु', 'अन्वेषण'], readingsOnyomi: ['タン'], readingsKunyomi: ['さが.す'], strokeCount: 11, strokeSvgData: [], radicals: [{ radical: '扌', meaning: 'Hand', color: '#ef4444' }], lessonOrder: 26, compounds: [{ word: '探す', reading: 'さがす', meaning: 'Search for' }] },
+  '都': { character: '都', level: 'N4', meanings: ['Metropolis', 'Capital'], meaningsNepali: ['राजधानी / सहर'], readingsOnyomi: ['ト', 'ツ'], readingsKunyomi: ['みやこ'], strokeCount: 11, strokeSvgData: [], radicals: [{ radical: '阝', meaning: 'City wall', color: '#8b5cf6' }], lessonOrder: 26, compounds: [{ word: '都合', reading: 'つごう', meaning: 'Convenience' }] },
+  '合': { character: '合', level: 'N4', meanings: ['Fit', 'Join', 'Suit'], meaningsNepali: ['मिल्नु / जोड्नु'], readingsOnyomi: ['ゴウ'], readingsKunyomi: ['あ.う'], strokeCount: 6, strokeSvgData: [], radicals: [{ radical: '口', meaning: 'Mouth', color: '#06b6d4' }], lessonOrder: 26, compounds: [{ word: '都合', reading: 'つごう', meaning: 'Convenience' }] },
+  '遅': { character: '遅', level: 'N4', meanings: ['Slow', 'Late'], meaningsNepali: ['ढिलो / सुस्त'], readingsOnyomi: ['チ'], readingsKunyomi: ['おく.れる', 'おそ.い'], strokeCount: 12, strokeSvgData: [], radicals: [{ radical: '辶', meaning: 'Road', color: '#10b981' }], lessonOrder: 26, compounds: [{ word: '遅れる', reading: 'おくれる', meaning: 'Be late' }] },
+  '参': { character: '参', level: 'N4', meanings: ['Participate', 'Attend', 'Visit'], meaningsNepali: ['सहभागी हुनु / जानु'], readingsOnyomi: ['サン'], readingsKunyomi: ['まい.る'], strokeCount: 8, strokeSvgData: [], radicals: [{ radical: '厶', meaning: 'Private', color: '#f59e0b' }], lessonOrder: 26, compounds: [{ word: '参加', reading: 'さんか', meaning: 'Participation' }] },
+  '加': { character: '加', level: 'N4', meanings: ['Add', 'Join', 'Increase'], meaningsNepali: ['थप्नु / जोडिनु'], readingsOnyomi: ['カ'], readingsKunyomi: ['くわ.える'], strokeCount: 5, strokeSvgData: [], radicals: [{ radical: '力', meaning: 'Power', color: '#ef4444' }], lessonOrder: 26, compounds: [{ word: '参加', reading: 'さんか', meaning: 'Participation' }] },
+};
+
+export const VocabularyExplorer: React.FC = () => {
+  const [selectedLevel, setSelectedLevel] = useState<'N5' | 'N4' | 'N3'>('N5');
+  const [selectedLesson, setSelectedLesson] = useState<number>(1);
+  const [searchQuery, setSearchQuery] = useState<string>('');
+  const [inspectKanji, setInspectKanji] = useState<string | null>(null);
+  const [expandedGrammar, setExpandedGrammar] = useState<string | null>(null);
+  const [showGrammarModal, setShowGrammarModal] = useState<boolean>(false);
+
+  const availableLessons = getAvailableLessonsForLevel(selectedLevel);
+  const lessonVocab = getVocabByLevelAndLesson(selectedLevel, selectedLesson);
+  const allLevelVocab = getVocabByLevel(selectedLevel);
+  const grammarGuide = getGrammarGuide('JAPANESE', selectedLevel, selectedLesson);
+
+  const filteredVocab = searchQuery
+    ? allLevelVocab.filter((v) =>
+        v.word.includes(searchQuery) ||
+        v.reading.includes(searchQuery) ||
+        v.meaning.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        v.meaningNepali.includes(searchQuery)
+      )
+    : lessonVocab;
+
+  const getInspectKanjiDetails = (char: string): KanjiItem => {
+    if (KANJI_LOOKUP_DATABASE[char]) return KANJI_LOOKUP_DATABASE[char];
+    return {
+      character: char,
+      level: selectedLevel,
+      meanings: ['Kanji Character'],
+      meaningsNepali: ['काञ्जी अक्षर'],
+      readingsOnyomi: ['—'],
+      readingsKunyomi: ['—'],
+      strokeCount: 8,
+      strokeSvgData: [],
+      radicals: [{ radical: char, meaning: 'Radical Component', color: '#f59e0b' }],
+      lessonOrder: selectedLesson,
+      compounds: [],
+    };
+  };
+
+  const playPronunciation = (text: string) => {
+    if ('speechSynthesis' in window) {
+      window.speechSynthesis.cancel();
+      const utterance = new SpeechSynthesisUtterance(text);
+      utterance.lang = 'ja-JP';
+      window.speechSynthesis.speak(utterance);
+    }
+  };
+
+  const inspectKanjiObj = inspectKanji ? getInspectKanjiDetails(inspectKanji) : null;
+
+  return (
+    <div className="w-full max-w-5xl mx-auto font-sans space-y-5">
+      {/* Level Tabs */}
+      <div className="bg-slate-900/90 border border-slate-800 rounded-3xl p-5 shadow-xl">
+        <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-rose-400 mb-4">
+          <Globe className="w-4 h-4" />
+          <span>Japanese Language Curriculum System</span>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-2 mb-4">
+          {(['N5', 'N4', 'N3'] as const).map((level) => (
+            <button
+              key={level}
+              onClick={() => {
+                setSelectedLevel(level);
+                setSelectedLesson(getAvailableLessonsForLevel(level)[0] || 1);
+                setSearchQuery('');
+                setInspectKanji(null);
+                setExpandedGrammar(null);
+              }}
+              className={`p-3.5 rounded-2xl border transition-all text-left ${
+                selectedLevel === level
+                  ? 'bg-rose-600 border-rose-400 text-white shadow-glow'
+                  : 'bg-slate-950/60 border-slate-800 text-slate-400 hover:text-white hover:border-slate-700'
+              }`}
+            >
+              <div className="flex items-center gap-2 mb-1">
+                <Award className={`w-4 h-4 ${selectedLevel === level ? 'text-white' : 'text-rose-400'}`} />
+                <span className="text-xs font-black">JLPT {level}</span>
+              </div>
+              <div className="text-[10px] opacity-80 leading-tight">{LEVEL_LABELS[level]}</div>
+            </button>
+          ))}
+        </div>
+
+        {/* Lesson Selector Row */}
+        <div className="flex items-center justify-between gap-3 flex-wrap pt-2 border-t border-slate-800">
+          <div className="flex items-center gap-3 overflow-x-auto scrollbar-none pb-1 flex-1">
+            <span className="text-xs font-bold text-slate-400">Lesson:</span>
+            {availableLessons.map((n) => (
+              <button
+                key={n}
+                onClick={() => {
+                  setSelectedLesson(n);
+                  setSearchQuery('');
+                  setInspectKanji(null);
+                  setExpandedGrammar(null);
+                }}
+                className={`px-3 py-1.5 rounded-xl text-xs font-bold whitespace-nowrap border transition-all flex-shrink-0 ${
+                  selectedLesson === n && !searchQuery
+                    ? 'bg-rose-600 border-rose-400 text-white shadow-sm'
+                    : 'bg-slate-950 border-slate-800 text-slate-400 hover:text-white'
+                }`}
+              >
+                {n}. {LESSON_TOPICS[n] || `Lesson ${n}`}
+              </button>
+            ))}
+          </div>
+
+          {/* Grammar Guide Button */}
+          <button
+            onClick={() => setShowGrammarModal(true)}
+            className="px-4 py-2 rounded-xl bg-gradient-to-r from-amber-600 to-orange-600 hover:from-amber-500 hover:to-orange-500 text-white text-xs font-extrabold flex items-center gap-2 shadow-md transition-all whitespace-nowrap"
+          >
+            <BookCheck className="w-4 h-4" />
+            <span>Lesson {selectedLesson} Grammar Guide (व्याकरण)</span>
+          </button>
+        </div>
+      </div>
+
+      {/* Vocabulary List Box */}
+      <div className="bg-slate-900/90 border border-slate-800 rounded-3xl p-6 shadow-2xl">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pb-4 mb-4 border-b border-slate-800">
+          <div>
+            <div className="text-xs font-bold uppercase tracking-wider text-rose-400">
+              {LEVEL_LABELS[selectedLevel]}
+            </div>
+            <h2 className="text-lg font-bold text-white mt-0.5">
+              {searchQuery ? 'Search Results' : `Lesson ${selectedLesson}: ${LESSON_TOPICS[selectedLesson] || ''}`}
+            </h2>
+          </div>
+
+          <div className="relative w-full sm:w-72">
+            <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500" />
+            <input
+              type="text"
+              placeholder="Search Kanji / Reading / English / Nepali..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="w-full bg-slate-950/80 border border-slate-800 rounded-xl pl-10 pr-4 py-2 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-rose-500 transition-all"
+            />
+          </div>
+        </div>
+
+        <div className="space-y-2.5 max-h-[560px] overflow-y-auto pr-1 scrollbar-thin scrollbar-thumb-slate-700 scrollbar-track-transparent">
+          {filteredVocab.length === 0 ? (
+            <div className="text-center py-12 text-slate-500 text-xs font-semibold">
+              No matching vocabulary items found for this lesson.
+            </div>
+          ) : (
+            filteredVocab.map((vocab) => {
+              // Extract Kanji characters for clickable Kanji inspection
+              const extractedKanji = vocab.kanjiCharacters && vocab.kanjiCharacters.length > 0
+                ? vocab.kanjiCharacters
+                : vocab.word.split('').filter(c => /[\u4e00-\u9faf]/.test(c));
+
+              return (
+                <div
+                  key={vocab.id}
+                  className="bg-slate-950/60 hover:bg-slate-800/80 border border-slate-800/80 hover:border-slate-700 rounded-2xl p-4 transition-all group"
+                >
+                  <div className="flex items-start justify-between gap-4">
+                    <div className="flex-1 space-y-1.5">
+                      <div className="flex items-center gap-3 flex-wrap">
+                        <div className="text-2xl font-bold font-jp text-white">
+                          {vocab.word}
+                        </div>
+
+                        <button
+                          onClick={() => playPronunciation(vocab.reading)}
+                          className="p-1.5 rounded-lg bg-slate-900 hover:bg-rose-600 text-slate-400 hover:text-white transition-all"
+                          title="Play pronunciation"
+                        >
+                          <Volume2 className="w-3.5 h-3.5" />
+                        </button>
+
+                        {vocab.partOfSpeech && (
+                          <span className="text-[10px] px-2 py-0.5 rounded-md bg-rose-500/20 border border-rose-500/30 text-rose-300 font-semibold">
+                            {vocab.partOfSpeech}
+                          </span>
+                        )}
+
+                        {/* Interactive Kanji Breakdown Chips */}
+                        {extractedKanji.length > 0 && (
+                          <div className="flex items-center gap-1.5 ml-1">
+                            <span className="text-[10px] font-bold text-amber-400 uppercase tracking-wider">Kanji:</span>
+                            {extractedKanji.map((kChar, kIdx) => (
+                              <button
+                                key={kIdx}
+                                onClick={() => setInspectKanji(kChar)}
+                                className="px-2 py-0.5 rounded-md bg-amber-500/20 hover:bg-amber-500 text-amber-300 hover:text-slate-950 border border-amber-500/40 text-xs font-jp font-bold transition-all flex items-center gap-1 cursor-pointer shadow-sm"
+                                title={`Click to inspect Kanji ${kChar}`}
+                              >
+                                <span>{kChar}</span>
+                                <Layers className="w-3 h-3" />
+                              </button>
+                            ))}
+                          </div>
+                        )}
+                      </div>
+
+                      <div className="text-xs text-slate-400 italic font-jp">Reading: {vocab.reading}</div>
+
+                      <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-3 text-xs">
+                        <span className="font-semibold text-slate-200">🇬🇧 {vocab.meaning}</span>
+                        <span className="hidden sm:inline text-slate-700">•</span>
+                        <span className="font-semibold text-amber-400">🇳🇵 {vocab.meaningNepali}</span>
+                      </div>
+
+                      {vocab.grammarSentences && vocab.grammarSentences.length > 0 && (
+                        <div>
+                          <button
+                            onClick={() => setExpandedGrammar(expandedGrammar === vocab.id ? null : vocab.id)}
+                            className="flex items-center gap-1.5 text-[11px] text-rose-400 hover:text-rose-300 font-semibold mt-1 transition-colors"
+                          >
+                            <MessageSquare className="w-3 h-3" />
+                            <span>{expandedGrammar === vocab.id ? 'Hide example' : 'Show example sentence'}</span>
+                            <ChevronDown className={`w-3 h-3 transition-transform ${expandedGrammar === vocab.id ? 'rotate-180' : ''}`} />
+                          </button>
+
+                          {expandedGrammar === vocab.id && vocab.grammarSentences.map((gs, idx) => (
+                            <div key={idx} className="mt-2 p-3 rounded-xl bg-slate-900/80 border border-rose-900/50 space-y-1.5">
+                              <div className="flex items-start gap-2">
+                                <span className="text-[10px] font-bold text-rose-400 uppercase tracking-wider mt-0.5 whitespace-nowrap">JP</span>
+                                <div className="flex-1">
+                                  <div className="text-sm font-jp font-bold text-white">{gs.japanese}</div>
+                                  <div className="text-[11px] text-slate-400 italic">{gs.reading}</div>
+                                </div>
+                                <button
+                                  onClick={() => playPronunciation(gs.japanese)}
+                                  className="p-1 rounded bg-slate-800 hover:bg-rose-600 text-slate-400 hover:text-white transition-all"
+                                >
+                                  <Volume2 className="w-3 h-3" />
+                                </button>
+                              </div>
+                              <div className="flex items-start gap-2 pt-1 border-t border-slate-800">
+                                <span className="text-[10px] font-bold text-blue-400 uppercase tracking-wider mt-0.5 whitespace-nowrap">EN</span>
+                                <span className="text-xs text-slate-300">{gs.english}</span>
+                              </div>
+                              <div className="flex items-start gap-2">
+                                <span className="text-[10px] font-bold text-amber-400 uppercase tracking-wider mt-0.5 whitespace-nowrap">NP</span>
+                                <span className="text-xs text-amber-300">{gs.nepali}</span>
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              );
+            })
+          )}
+        </div>
+      </div>
+
+      {/* Clicked Kanji Inspection Modal */}
+      {inspectKanjiObj && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md animate-fade-in">
+          <div className="w-full max-w-md bg-slate-900 border border-slate-800 rounded-3xl p-6 shadow-2xl space-y-4 text-left">
+            <div className="flex items-center justify-between pb-3 border-b border-slate-800">
+              <div className="flex items-center gap-2">
+                <Layers className="w-5 h-5 text-amber-400" />
+                <span className="text-xs font-bold uppercase tracking-wider text-amber-400">Kanji Inspector</span>
+              </div>
+              <button
+                onClick={() => setInspectKanji(null)}
+                className="p-1.5 rounded-xl bg-slate-800 hover:bg-rose-600 text-slate-400 hover:text-white transition-all"
+              >
+                <X className="w-4 h-4" />
+              </button>
+            </div>
+
+            <div className="flex items-center gap-4">
+              <div className="w-20 h-20 rounded-2xl bg-slate-950 border border-amber-500/40 flex items-center justify-center text-5xl font-jp font-black text-amber-300 shadow-inner">
+                {inspectKanjiObj.character}
+              </div>
+              <div className="space-y-1">
+                <div className="text-lg font-extrabold text-white">{inspectKanjiObj.meanings.join(', ')}</div>
+                <div className="text-sm font-bold text-amber-400">🇳🇵 {inspectKanjiObj.meaningsNepali?.join(', ')}</div>
+                <div className="text-xs text-slate-400">Stroke count: {inspectKanjiObj.strokeCount}</div>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-2 gap-2 bg-slate-950 p-3 rounded-2xl border border-slate-800 text-xs">
+              <div>
+                <span className="text-[10px] font-bold uppercase text-rose-400 block">Onyomi (音読み)</span>
+                <span className="font-bold text-slate-200">{inspectKanjiObj.readingsOnyomi.join(', ')}</span>
+              </div>
+              <div>
+                <span className="text-[10px] font-bold uppercase text-emerald-400 block">Kunyomi (訓読み)</span>
+                <span className="font-bold text-slate-200">{inspectKanjiObj.readingsKunyomi.join(', ')}</span>
+              </div>
+            </div>
+
+            {/* Radicals */}
+            <div>
+              <span className="text-[10px] font-bold uppercase text-slate-400 block mb-1.5">Radical Breakdown</span>
+              <div className="flex items-center gap-2">
+                {inspectKanjiObj.radicals.map((r, rIdx) => (
+                  <span
+                    key={rIdx}
+                    className="px-3 py-1 rounded-xl text-xs font-jp font-bold text-slate-950 shadow"
+                    style={{ backgroundColor: r.color }}
+                  >
+                    {r.radical} ({r.meaning})
+                  </span>
+                ))}
+              </div>
+            </div>
+
+            {/* Compound Words */}
+            {inspectKanjiObj.compounds && inspectKanjiObj.compounds.length > 0 && (
+              <div>
+                <span className="text-[10px] font-bold uppercase text-slate-400 block mb-1.5">Compound Vocabulary</span>
+                <div className="space-y-1">
+                  {inspectKanjiObj.compounds.map((c, cIdx) => (
+                    <div key={cIdx} className="flex items-center justify-between p-2 rounded-xl bg-slate-950 border border-slate-800 text-xs">
+                      <span className="font-jp font-bold text-amber-300">{c.word} ({c.reading})</span>
+                      <span className="text-slate-300 font-medium">{c.meaning}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            <div className="pt-2">
+              <button
+                onClick={() => setInspectKanji(null)}
+                className="w-full py-2.5 rounded-xl bg-amber-600 hover:bg-amber-500 text-slate-950 font-black text-xs transition-all shadow"
+              >
+                Close Inspector
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Lesson Grammar Guide Modal */}
+      {showGrammarModal && grammarGuide && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md animate-fade-in">
+          <div className="w-full max-w-2xl bg-slate-900 border border-slate-800 rounded-3xl p-6 shadow-2xl space-y-5 max-h-[85vh] overflow-y-auto">
+            <div className="flex items-center justify-between pb-3 border-b border-slate-800">
+              <div>
+                <div className="text-xs font-bold uppercase tracking-wider text-amber-400">
+                  Japanese Grammar Explanation Guide (व्याकरण व्याख्या)
+                </div>
+                <h3 className="text-lg font-black text-white mt-0.5">
+                  Lesson {selectedLesson}: {grammarGuide.lessonTitle}
+                </h3>
+              </div>
+              <button
+                onClick={() => setShowGrammarModal(false)}
+                className="p-2 rounded-xl bg-slate-800 hover:bg-rose-600 text-slate-400 hover:text-white transition-all"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            <div className="space-y-4">
+              {grammarGuide.grammarPoints.map((point, idx) => (
+                <div key={idx} className="bg-slate-950 p-4 rounded-2xl border border-slate-800 space-y-3">
+                  <div className="flex items-center justify-between">
+                    <h4 className="text-sm font-extrabold text-white">{point.title}</h4>
+                    <span className="px-2 py-0.5 rounded-lg bg-amber-500/20 text-amber-300 border border-amber-500/30 text-[11px] font-mono font-bold">
+                      {point.pattern}
+                    </span>
+                  </div>
+
+                  <div className="space-y-2 pt-1 border-t border-slate-900">
+                    <div>
+                      <span className="text-[10px] font-bold uppercase tracking-wider text-blue-400 block">English Explanation</span>
+                      <p className="text-xs text-slate-300 leading-relaxed font-medium">{point.explanationEnglish}</p>
+                    </div>
+
+                    <div>
+                      <span className="text-[10px] font-bold uppercase tracking-wider text-amber-400 block">Nepali Explanation (नेपाली व्याख्या)</span>
+                      <p className="text-xs text-amber-300 leading-relaxed font-semibold">{point.explanationNepali}</p>
+                    </div>
+                  </div>
+
+                  {point.examples.length > 0 && (
+                    <div className="space-y-2 pt-2 border-t border-slate-900">
+                      <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400 block">Example Sentences</span>
+                      {point.examples.map((ex, eIdx) => (
+                        <div key={eIdx} className="bg-slate-900/80 p-3 rounded-xl border border-slate-800 space-y-1">
+                          <div className="flex items-center justify-between">
+                            <span className="text-sm font-jp font-bold text-white">{ex.target}</span>
+                            <button
+                              onClick={() => playPronunciation(ex.target)}
+                              className="p-1 rounded bg-slate-800 hover:bg-rose-600 text-slate-400 hover:text-white transition-all"
+                            >
+                              <Volume2 className="w-3.5 h-3.5" />
+                            </button>
+                          </div>
+                          {ex.reading && <div className="text-[11px] text-slate-400 italic">{ex.reading}</div>}
+                          <div className="text-xs text-slate-300">🇬🇧 {ex.english}</div>
+                          <div className="text-xs text-amber-300">🇳🇵 {ex.nepali}</div>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
+
+            <div className="pt-3 border-t border-slate-800 text-right">
+              <button
+                onClick={() => setShowGrammarModal(false)}
+                className="px-5 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-white font-bold text-xs transition-all"
+              >
+                Close Grammar Guide
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+};

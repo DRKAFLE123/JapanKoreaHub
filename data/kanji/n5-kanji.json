@@ -1,0 +1,353 @@
+[
+  {
+    "character": "一",
+    "level": "N5",
+    "lessonOrder": 1,
+    "strokeCount": 1,
+    "readingsOnyomi": ["ICHI", "ITSU"],
+    "readingsKunyomi": ["hito-tsu", "hito"],
+    "meanings": ["One", "Single"],
+    "meaningsNepali": ["एक (१)"],
+    "radicals": [{ "radical": "一", "meaning": "One", "color": "#ffb703" }],
+    "strokeSvgData": ["M15,50 L85,50"],
+    "compounds": [
+      { "word": "一人", "reading": "hitori", "meaning": "One person" },
+      { "word": "一日", "reading": "tachi", "meaning": "1st day of month" },
+      { "word": "一番", "reading": "ichiban", "meaning": "Number one / Best" }
+    ]
+  },
+  {
+    "character": "二",
+    "level": "N5",
+    "lessonOrder": 1,
+    "strokeCount": 2,
+    "readingsOnyomi": ["NI"],
+    "readingsKunyomi": ["futa-tsu", "futa"],
+    "meanings": ["Two"],
+    "meaningsNepali": ["दुई (२)"],
+    "radicals": [{ "radical": "二", "meaning": "Two", "color": "#3b82f6" }],
+    "strokeSvgData": ["M25,35 L75,35", "M15,65 L85,65"],
+    "compounds": [
+      { "word": "二人", "reading": "futari", "meaning": "Two people" },
+      { "word": "二日", "reading": "futsuka", "meaning": "2nd day of month" },
+      { "word": "二月", "reading": "nigatsu", "meaning": "February" }
+    ]
+  },
+  {
+    "character": "三",
+    "level": "N5",
+    "lessonOrder": 1,
+    "strokeCount": 3,
+    "readingsOnyomi": ["SAN"],
+    "readingsKunyomi": ["mit-tsu", "mi"],
+    "meanings": ["Three"],
+    "meaningsNepali": ["तीन (३)"],
+    "radicals": [{ "radical": "一", "meaning": "One", "color": "#10b981" }],
+    "strokeSvgData": ["M25,30 L75,30", "M30,50 L70,50", "M15,70 L85,70"],
+    "compounds": [
+      { "word": "三日", "reading": "mikka", "meaning": "3rd day of month" },
+      { "word": "三年", "reading": "sannen", "meaning": "Three years" },
+      { "word": "三角", "reading": "sankaku", "meaning": "Triangle" }
+    ]
+  },
+  {
+    "character": "四",
+    "level": "N5",
+    "lessonOrder": 1,
+    "strokeCount": 5,
+    "readingsOnyomi": ["SHI"],
+    "readingsKunyomi": ["yot-tsu", "yon", "yo"],
+    "meanings": ["Four"],
+    "meaningsNepali": ["चार (४)"],
+    "radicals": [{ "radical": "囗", "meaning": "Enclosure", "color": "#ff4d6d" }],
+    "strokeSvgData": ["M20,20 L20,80", "M20,20 L80,20 L80,80", "M35,35 L35,65", "M65,35 L65,65", "M20,80 L80,80"],
+    "compounds": [
+      { "word": "四日", "reading": "yokka", "meaning": "4th day of month" },
+      { "word": "四季", "reading": "shiki", "meaning": "Four seasons" },
+      { "word": "四角", "reading": "shikaku", "meaning": "Square" }
+    ]
+  },
+  {
+    "character": "五",
+    "level": "N5",
+    "lessonOrder": 1,
+    "strokeCount": 4,
+    "readingsOnyomi": ["GO"],
+    "readingsKunyomi": ["itsu-tsu", "itsu"],
+    "meanings": ["Five"],
+    "meaningsNepali": ["पाँच (५)"],
+    "radicals": [{ "radical": "二", "meaning": "Two", "color": "#ffb703" }],
+    "strokeSvgData": ["M25,25 L75,25", "M50,25 L35,55", "M35,55 L75,55 L75,80", "M15,80 L85,80"],
+    "compounds": [
+      { "word": "五日", "reading": "itsuka", "meaning": "5th day of month" },
+      { "word": "五月", "reading": "gogatsu", "meaning": "May" }
+    ]
+  },
+  {
+    "character": "六",
+    "level": "N5",
+    "lessonOrder": 1,
+    "strokeCount": 4,
+    "readingsOnyomi": ["ROKU"],
+    "readingsKunyomi": ["mut-tsu", "mu"],
+    "meanings": ["Six"],
+    "meaningsNepali": ["छ (६)"],
+    "radicals": [{ "radical": "八", "meaning": "Eight", "color": "#3b82f6" }],
+    "strokeSvgData": ["M50,15 L50,30", "M15,35 L85,35", "M35,45 L20,80", "M65,45 L80,80"],
+    "compounds": [
+      { "word": "六日", "reading": "muika", "meaning": "6th day of month" },
+      { "word": "六月", "reading": "rokugatsu", "meaning": "June" }
+    ]
+  },
+  {
+    "character": "七",
+    "level": "N5",
+    "lessonOrder": 1,
+    "strokeCount": 2,
+    "readingsOnyomi": ["SHICHI"],
+    "readingsKunyomi": ["nana-tsu", "nana"],
+    "meanings": ["Seven"],
+    "meaningsNepali": ["सात (७)"],
+    "radicals": [{ "radical": "一", "meaning": "One", "color": "#10b981" }],
+    "strokeSvgData": ["M15,45 L85,35", "M45,15 L45,65 C45,85 75,85 80,75"],
+    "compounds": [
+      { "word": "七日", "reading": "nanoka", "meaning": "7th day of month" },
+      { "word": "七月", "reading": "shichigatsu", "meaning": "July" }
+    ]
+  },
+  {
+    "character": "八",
+    "level": "N5",
+    "lessonOrder": 1,
+    "strokeCount": 2,
+    "readingsOnyomi": ["HACHI"],
+    "readingsKunyomi": ["yat-tsu", "ya"],
+    "meanings": ["Eight"],
+    "meaningsNepali": ["आठ (८)"],
+    "radicals": [{ "radical": "八", "meaning": "Eight", "color": "#ff4d6d" }],
+    "strokeSvgData": ["M35,25 L15,80", "M65,25 L85,80"],
+    "compounds": [
+      { "word": "八日", "reading": "yōka", "meaning": "8th day of month" },
+      { "word": "八百屋", "reading": "yaoya", "meaning": "Greengrocer" }
+    ]
+  },
+  {
+    "character": "九",
+    "level": "N5",
+    "lessonOrder": 1,
+    "strokeCount": 2,
+    "readingsOnyomi": ["KYŪ", "KU"],
+    "readingsKunyomi": ["kokono-tsu", "kokono"],
+    "meanings": ["Nine"],
+    "meaningsNepali": ["नौ (९)"],
+    "radicals": [{ "radical": "乙", "meaning": "Second", "color": "#ffb703" }],
+    "strokeSvgData": ["M45,15 L30,85", "M20,35 L75,35 C85,35 85,85 65,85"],
+    "compounds": [
+      { "word": "九日", "reading": "kokonoka", "meaning": "9th day of month" },
+      { "word": "九月", "reading": "kugatsu", "meaning": "September" }
+    ]
+  },
+  {
+    "character": "十",
+    "level": "N5",
+    "lessonOrder": 1,
+    "strokeCount": 2,
+    "readingsOnyomi": ["JŪ", "JIS"],
+    "readingsKunyomi": ["tō", "to"],
+    "meanings": ["Ten"],
+    "meaningsNepali": ["दश (१०)"],
+    "radicals": [{ "radical": "十", "meaning": "Ten", "color": "#3b82f6" }],
+    "strokeSvgData": ["M15,50 L85,50", "M50,15 L50,85"],
+    "compounds": [
+      { "word": "十日", "reading": "tōka", "meaning": "10th day of month" },
+      { "word": "十分", "reading": "jūbun", "meaning": "Enough / Sufficient" }
+    ]
+  },
+  {
+    "character": "日",
+    "level": "N5",
+    "lessonOrder": 2,
+    "strokeCount": 4,
+    "readingsOnyomi": ["NICHI", "JITSU"],
+    "readingsKunyomi": ["hi", "bi", "ka"],
+    "meanings": ["Sun", "Day"],
+    "meaningsNepali": ["घाम, दिन"],
+    "radicals": [{ "radical": "日", "meaning": "Sun", "color": "#ffb703" }],
+    "strokeSvgData": ["M25,20 L25,80", "M25,20 L75,20 L75,80", "M25,50 L75,50", "M25,80 L75,80"],
+    "compounds": [
+      { "word": "日曜日", "reading": "nichiyōbi", "meaning": "Sunday" },
+      { "word": "日本", "reading": "Nihon", "meaning": "Japan" },
+      { "word": "毎日", "reading": "mainichi", "meaning": "Every day" }
+    ]
+  },
+  {
+    "character": "月",
+    "level": "N5",
+    "lessonOrder": 2,
+    "strokeCount": 4,
+    "readingsOnyomi": ["GETSU", "GATSU"],
+    "readingsKunyomi": ["tsuki"],
+    "meanings": ["Moon", "Month"],
+    "meaningsNepali": ["जुन, महिना"],
+    "radicals": [{ "radical": "月", "meaning": "Moon", "color": "#3b82f6" }],
+    "strokeSvgData": ["M30,15 L30,85", "M30,15 L75,15 L75,85", "M30,40 L75,40", "M30,60 L75,60"],
+    "compounds": [
+      { "word": "月曜日", "reading": "getsuyōbi", "meaning": "Monday" },
+      { "word": "今月", "reading": "kongetsu", "meaning": "This month" },
+      { "word": "一月", "reading": "ichigatsu", "meaning": "January" }
+    ]
+  },
+  {
+    "character": "火",
+    "level": "N5",
+    "lessonOrder": 2,
+    "strokeCount": 4,
+    "readingsOnyomi": ["KA"],
+    "readingsKunyomi": ["hi", "bi"],
+    "meanings": ["Fire"],
+    "meaningsNepali": ["आगो"],
+    "radicals": [{ "radical": "火", "meaning": "Fire", "color": "#ff4d6d" }],
+    "strokeSvgData": ["M30,35 L20,50", "M70,35 L80,50", "M45,20 L25,85", "M45,50 L75,85"],
+    "compounds": [
+      { "word": "火曜日", "reading": "kayōbi", "meaning": "Tuesday" },
+      { "word": "火事", "reading": "kaji", "meaning": "Fire disaster" }
+    ]
+  },
+  {
+    "character": "水",
+    "level": "N5",
+    "lessonOrder": 2,
+    "strokeCount": 4,
+    "readingsOnyomi": ["SUI"],
+    "readingsKunyomi": ["mizu"],
+    "meanings": ["Water"],
+    "meaningsNepali": ["पानी"],
+    "radicals": [{ "radical": "水", "meaning": "Water", "color": "#06b6d4" }],
+    "strokeSvgData": ["M50,15 L50,85", "M20,40 L40,55 L20,80", "M80,30 L60,50", "M60,50 L85,85"],
+    "compounds": [
+      { "word": "水曜日", "reading": "suiyōbi", "meaning": "Wednesday" },
+      { "word": "水着", "reading": "mizugi", "meaning": "Swimsuit" }
+    ]
+  },
+  {
+    "character": "木",
+    "level": "N5",
+    "lessonOrder": 2,
+    "strokeCount": 4,
+    "readingsOnyomi": ["MOKU", "BOKU"],
+    "readingsKunyomi": ["ki", "ko"],
+    "meanings": ["Tree", "Wood"],
+    "meaningsNepali": ["रूख, काठ"],
+    "radicals": [{ "radical": "木", "meaning": "Tree", "color": "#10b981" }],
+    "strokeSvgData": ["M15,40 L85,40", "M50,15 L50,85", "M50,40 L20,80", "M50,40 L80,80"],
+    "compounds": [
+      { "word": "木曜日", "reading": "mokuyōbi", "meaning": "Thursday" },
+      { "word": "大木", "reading": "taiboku", "meaning": "Large tree" }
+    ]
+  },
+  {
+    "character": "金",
+    "level": "N5",
+    "lessonOrder": 2,
+    "strokeCount": 8,
+    "readingsOnyomi": ["KIN", "KON"],
+    "readingsKunyomi": ["kane", "kana"],
+    "meanings": ["Gold", "Money", "Metal"],
+    "meaningsNepali": ["सुन, पैसा"],
+    "radicals": [{ "radical": "金", "meaning": "Metal", "color": "#ffb703" }],
+    "strokeSvgData": ["M50,15 L20,45", "M50,15 L80,45", "M30,45 L70,45", "M25,60 L75,60", "M50,45 L50,80", "M35,70 L25,80", "M65,70 L75,80", "M15,85 L85,85"],
+    "compounds": [
+      { "word": "金曜日", "reading": "kin'yōbi", "meaning": "Friday" },
+      { "word": "お金", "reading": "okane", "meaning": "Money" }
+    ]
+  },
+  {
+    "character": "土",
+    "level": "N5",
+    "lessonOrder": 2,
+    "strokeCount": 3,
+    "readingsOnyomi": ["TO", "DO"],
+    "readingsKunyomi": ["tsuchi"],
+    "meanings": ["Soil", "Earth", "Ground"],
+    "meaningsNepali": ["माटो, जमिन"],
+    "radicals": [{ "radical": "土", "meaning": "Earth", "color": "#8b5cf6" }],
+    "strokeSvgData": ["M25,40 L75,40", "M50,15 L50,75", "M15,75 L85,75"],
+    "compounds": [
+      { "word": "土曜日", "reading": "doyōbi", "meaning": "Saturday" },
+      { "word": "土地", "reading": "tochi", "meaning": "Land / Plot" }
+    ]
+  },
+  {
+    "character": "人",
+    "level": "N5",
+    "lessonOrder": 3,
+    "strokeCount": 2,
+    "readingsOnyomi": ["JIN", "NIN"],
+    "readingsKunyomi": ["hito"],
+    "meanings": ["Person", "Human"],
+    "meaningsNepali": ["मानिस, व्यक्ति"],
+    "radicals": [{ "radical": "人", "meaning": "Person", "color": "#ff4d6d" }],
+    "strokeSvgData": ["M50,20 L20,80", "M45,45 L80,80"],
+    "compounds": [
+      { "word": "日本人", "reading": "Nihonjin", "meaning": "Japanese person" },
+      { "word": "大人", "reading": "otona", "meaning": "Adult" }
+    ]
+  },
+  {
+    "character": "学",
+    "level": "N5",
+    "lessonOrder": 3,
+    "strokeCount": 8,
+    "readingsOnyomi": ["GAKU"],
+    "readingsKunyomi": ["mana-bu"],
+    "meanings": ["Study", "Learning", "Science"],
+    "meaningsNepali": ["अध्ययन, सिक्नु"],
+    "radicals": [
+      { "radical": "⺌", "meaning": "Small", "color": "#ff4d6d" },
+      { "radical": "子", "meaning": "Child", "color": "#3b82f6" }
+    ],
+    "strokeSvgData": ["M30,15 L35,25", "M50,12 L50,25", "M70,15 L65,25", "M20,35 L80,35 L80,45", "M30,55 L70,55", "M50,35 L50,85", "M25,85 L75,85"],
+    "compounds": [
+      { "word": "学校", "reading": "gakkou", "meaning": "School" },
+      { "word": "学生", "reading": "gakusei", "meaning": "Student" },
+      { "word": "大学", "reading": "daigaku", "meaning": "University" }
+    ]
+  },
+  {
+    "character": "校",
+    "level": "N5",
+    "lessonOrder": 3,
+    "strokeCount": 10,
+    "readingsOnyomi": ["KŌ"],
+    "readingsKunyomi": [],
+    "meanings": ["School", "Proofread"],
+    "meaningsNepali": ["विद्यालय"],
+    "radicals": [{ "radical": "木", "meaning": "Tree", "color": "#10b981" }],
+    "strokeSvgData": ["M15,40 L45,40", "M30,15 L30,85", "M30,40 L15,75", "M30,40 L45,75", "M60,15 L60,30", "M50,30 L90,30", "M70,30 L55,85", "M70,30 L85,85"],
+    "compounds": [
+      { "word": "高校", "reading": "kōkō", "meaning": "High school" },
+      { "word": "校長", "reading": "kōchō", "meaning": "Principal" }
+    ]
+  },
+  {
+    "character": "語",
+    "level": "N5",
+    "lessonOrder": 4,
+    "strokeCount": 14,
+    "readingsOnyomi": ["GO"],
+    "readingsKunyomi": ["kata-ru"],
+    "meanings": ["Language", "Word", "Tell"],
+    "meaningsNepali": ["भाषा, शब्द"],
+    "radicals": [
+      { "radical": "言", "meaning": "Speech", "color": "#ffb703" },
+      { "radical": "五", "meaning": "Five", "color": "#3b82f6" },
+      { "radical": "口", "meaning": "Mouth", "color": "#10b981" }
+    ],
+    "strokeSvgData": ["M20,20 L40,20", "M30,10 L30,30", "M15,40 L45,40", "M55,20 L85,20", "M70,10 L70,30", "M55,40 L85,40", "M60,60 L80,60"],
+    "compounds": [
+      { "word": "日本語", "reading": "Nihongo", "meaning": "Japanese language" },
+      { "word": "英語", "reading": "Eigo", "meaning": "English language" },
+      { "word": "単語", "reading": "tango", "meaning": "Vocabulary" }
+    ]
+  }
+]
