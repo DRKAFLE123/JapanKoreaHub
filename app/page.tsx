@@ -40,9 +40,9 @@ interface TabDef {
    TAB DEFINITIONS
 ────────────────────────────────────────────────────────────── */
 const JAPANESE_TABS: TabDef[] = [
-  { id: 'VOCAB_EXPLORER', label: 'Vocabulary',  sublabel: 'Lessons 1–75 • Nepali & English', icon: BookOpen,    emoji: '📚', group: 'LEARNING' },
+  { id: 'VOCAB_EXPLORER', label: 'Vocabulary',  sublabel: 'Basics • Kana • N5–N3 Lessons',   icon: BookOpen,    emoji: '📚', group: 'LEARNING' },
   { id: 'KANJI_SRS',      label: 'Flashcards',  sublabel: 'Kanji SRS • SM-2 Algorithm',      icon: Layers,      emoji: '🃏', group: 'LEARNING' },
-  { id: 'ALPHABET_GRID',  label: 'Listening',   sublabel: 'Kana & Chapter Audio Tracks',     icon: Headphones,  emoji: '🎧', group: 'LEARNING' },
+  { id: 'ALPHABET_GRID',  label: 'Listening',   sublabel: '87 CD Tracks • Lessons 1–25',     icon: Headphones,  emoji: '🎧', group: 'LEARNING' },
   { id: 'TIMED_EXAM',     label: 'Mock Test',   sublabel: 'JLPT N5–N2 Exam Simulator',       icon: Clock,       emoji: '⏱',  group: 'LEARNING' },
   { id: 'RADICALS',       label: 'Radicals',    sublabel: 'Kanji Radical Breakdown',         icon: Layers,      emoji: '🧩', group: 'TOOLS'    },
   { id: 'HEATMAP',        label: 'Streak',      sublabel: 'Study Progress Heatmap',          icon: Calendar,    emoji: '🔥', group: 'TOOLS'    },
