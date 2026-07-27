@@ -130,8 +130,8 @@ async function main() {
       meanings: v.meaning,
       meaningsNepali: v.meaningNepali,
       language: 'JAPANESE',
-      level: v.lesson <= 25 ? 'N5' : 'N4',
-      lesson: v.lesson,
+      level: (v.lesson || 0) <= 25 ? 'N5' : 'N4',
+      lesson: v.lesson || 0,
       partOfSpeech: v.partOfSpeech || 'Noun',
     });
 

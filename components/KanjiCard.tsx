@@ -104,8 +104,8 @@ export const KanjiCard: React.FC = () => {
       meaningNepali: v.meaningNepali,
       kanjiCharacters: v.kanjiCharacters,
       partOfSpeech: v.partOfSpeech,
-      lessonNumber: v.lesson,
-      lessonLabel: `Lesson ${v.lesson}`,
+      lessonNumber: v.lesson || 0,
+      lessonLabel: v.lesson ? `Lesson ${v.lesson}` : 'General',
       grammarSentences: v.grammarSentences,
     }));
 

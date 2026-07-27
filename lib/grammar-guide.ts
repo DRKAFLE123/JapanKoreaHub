@@ -758,7 +758,154 @@ export const KOREAN_GRAMMAR_GUIDES: LessonGrammarGuide[] = [
         ]
       }
     ]
-  }
+  },
+  {
+    language: 'JAPANESE', level: 'N4', lesson: 30,
+    lessonTitle: 'Lesson 30 – State of Preparation 〜てあります & Advance Preparation 〜ておきます',
+    grammarPoints: [
+      {
+        title: '1. State of Intentional Action (N が V-て あります)',
+        pattern: '[Noun] が [Transitive Verb て-form] + あります',
+        explanationEnglish: 'Expresses that a state has been brought about intentionally for a specific purpose by someone.',
+        explanationNepali: 'कुनै खास उद्देश्यले कसैद्वारा पूर्व-तयारी गरी राखिएको स्थिति व्यक्त गर्दछ।',
+        examples: [
+          { target: 'カレンダーに予定が書いてあります。', reading: 'カレンダーによていが書いてあります。', english: 'The schedule is written on the calendar.', nepali: 'पात्रोमा कार्यतालिका लेखिएको छ।' }
+        ]
+      },
+      {
+        title: '2. Preparation in Advance (V-て おきます)',
+        pattern: '[Verb て-form] + おきます',
+        explanationEnglish: '1) Doing an action in advance for future convenience. 2) Leaving a state as it is for the next use.',
+        explanationNepali: '१) भविष्यको सुविधाका लागि पहिले नै तयारी स्वरूप काम गर्नु। २) अर्को पटकको प्रयोगका लागि अवस्था यत्तिकै राख्नु।',
+        examples: [
+          { target: '旅行の前にチケットを買っておきます。', reading: 'りょこうのまえにチケットをかっておきます。', english: 'I will buy the tickets in advance before the trip.', nepali: 'यात्रा अघि नै टिकट किनेर राख्नेछु।' }
+        ]
+      }
+    ]
+  },
+  {
+    language: 'JAPANESE', level: 'N4', lesson: 31,
+    lessonTitle: 'Lesson 31 – Volitional Form (意向形) & Expressing Intentions 〜と思っています',
+    grammarPoints: [
+      {
+        title: '1. Volitional Form Conjugation (意向形)',
+        pattern: 'Gr.1: う→おう (書く→書こう) | Gr.2: る→よう (食べる→食べよう) | Irreg: する→しよう, 来る→来よう',
+        explanationEnglish: 'The casual equivalent of 〜ましょう. Used to invite or express willpower.',
+        explanationNepali: '〜ましょう को सामान्य बोलचाल रूप। प्रस्ताव राख्न वा इच्छा व्यक्त गर्न प्रयोग हुन्छ।',
+        examples: [
+          { target: '一緒にご飯を食べよう。', reading: 'いっしょにごはんをたべよう。', english: 'Let us eat together.', nepali: 'सँगै खाना खाऔँ।' }
+        ]
+      },
+      {
+        title: '2. Expressing Intentions (V-Volitional + と思っています)',
+        pattern: '[Verb Volitional form] + と思っています',
+        explanationEnglish: 'Expresses a decision or plan that the speaker has been holding for some time.',
+        explanationNepali: 'वक्ताले केही समयदेखि मनमा बनाइराखेको योजना वा विचार व्यक्त गर्दछ।',
+        examples: [
+          { target: '週末は海へ行こうと思っています。', reading: 'しゅうまつはうみへいこうとおもっています。', english: 'I am planning to go to the sea this weekend.', nepali: 'यो साताको अन्तमा समुन्द्र जाने सोचिरहेको छु।' }
+        ]
+      }
+    ]
+  },
+  {
+    language: 'JAPANESE', level: 'N4', lesson: 32,
+    lessonTitle: 'Lesson 32 – Suggestions 〜ほうがいい & Conjecture 〜でしょう / 〜かもしれない',
+    grammarPoints: [
+      {
+        title: '1. Giving Advice / Suggestion (V-た / V-ない ほうがいいです)',
+        pattern: '[Verb た-form / ない-form] + ほうがいいです',
+        explanationEnglish: 'Used to give direct advice or recommendations.',
+        explanationNepali: 'सुझाव वा सल्लाह दिन प्रयोग गरिन्छ।',
+        examples: [
+          { target: '毎日運動したほうがいいです。', reading: 'まいにちうんどうしたほうがいいです。', english: 'You had better exercise every day.', nepali: 'हरेक दिन व्यायाम गरेको राम्रो हुन्छ।' }
+        ]
+      },
+      {
+        title: '2. Conjecture / Probability (〜でしょう / 〜かもしれない)',
+        pattern: '[Plain Form] + でしょう (70-80% likely) / かもしれない (50% possibility)',
+        explanationEnglish: '〜でしょう expresses high probability ("probably"). 〜かもしれない expresses possibility ("might/maybe").',
+        explanationNepali: '〜でしょう ले उच्च सम्भावना जनाउँछ। 〜かもしれない ले सम्भावना हुन सक्ने जनाउँछ।',
+        examples: [
+          { target: '明日は雨が降るでしょう。', reading: 'あしたはあめがふるでしょう。', english: 'It will probably rain tomorrow.', nepali: 'भोलि पानी पर्ला।' },
+          { target: '時間に間に合わないかもしれない。', reading: 'じかんにまにあわないかもしれない。', english: 'We might not be in time.', nepali: 'समयमा नपुग्न पनि सकिन्छ।' }
+        ]
+      }
+    ]
+  },
+  {
+    language: 'JAPANESE', level: 'N4', lesson: 33,
+    lessonTitle: 'Lesson 33 – Imperative / Prohibitive Forms (命令形・禁止形) & Quoting 〜と言っていました',
+    grammarPoints: [
+      {
+        title: '1. Imperative and Prohibitive Forms (命令形・禁止形)',
+        pattern: 'Imperative: 行け / 食べろ | Prohibitive: 行くな / 食べるな',
+        explanationEnglish: 'Commands and strict prohibitions used in emergencies, sports, or by superiors.',
+        explanationNepali: 'आपत्कालीन अवस्था वा खेलकुदमा दिइने कडा आदेश र निषेध।',
+        examples: [
+          { target: '早く走れ！', reading: 'はやくはしれ！', english: 'Run fast!', nepali: 'छिटो दगुर्!' },
+          { target: 'ここに触るな！', reading: 'ここにさわるな！', english: 'Do not touch here!', nepali: 'यहाँ नछोऊ!' }
+        ]
+      },
+      {
+        title: '2. Indirect Quoting (〜と言っていました / 〜という意味です)',
+        pattern: '[Sentence Plain form] + と言っていました / という意味です',
+        explanationEnglish: 'Used to pass on a message or explain the meaning of a sign or word.',
+        explanationNepali: 'सन्देश पुर्‍याउन वा कुनै शब्द/चिह्नको अर्थ बुझाउन प्रयोग गरिन्छ।',
+        examples: [
+          { target: '田中さんは明日休むと言っていました。', reading: 'たなかさんはあしたやすむといっていました。', english: 'Tanaka said he will take tomorrow off.', nepali: 'नाकाजीले भोलि बिदा बस्छु भन्नुभएको थियो।' }
+        ]
+      }
+    ]
+  },
+  {
+    language: 'JAPANESE', level: 'N4', lesson: 34,
+    lessonTitle: 'Lesson 34 – Doing as Instructed 〜とおりに & Sequence 〜あとで',
+    grammarPoints: [
+      {
+        title: '1. Doing as Instructed (V-とおりに / N の とおりに)',
+        pattern: '[Verb Plain / Noun の] + とおりに',
+        explanationEnglish: 'Doing an action in the exact manner as instructed or shown.',
+        explanationNepali: 'निर्देशन वा प्रदर्शन अनुसार नै दुरुस्त काम गर्नु।',
+        examples: [
+          { target: '私が言ったとおりに書いてください。', reading: 'わたしがいったとおりにかいてください。', english: 'Please write down exactly as I said.', nepali: 'मैले भने अनुसार नै लेख्नुहोस्।' }
+        ]
+      },
+      {
+        title: '2. Action Sequence (V-た あとで / N の あとで)',
+        pattern: '[Verb た-form / Noun の] + あとで',
+        explanationEnglish: 'Expresses that an event occurs after completing another action.',
+        explanationNepali: 'एउटा काम सकिएपछि अर्को काम गर्ने क्रम जनाउँछ।',
+        examples: [
+          { target: '仕事が終わったあとで、飲みに行きます。', reading: 'しごとがおわったあとで、のみにいきます。', english: 'After work finishes, we will go for a drink.', nepali: 'काम सकिएपछि पिउन जानेछौँ।' }
+        ]
+      }
+    ]
+  },
+  {
+    language: 'JAPANESE', level: 'N4', lesson: 35,
+    lessonTitle: 'Lesson 35 – Conditional Form (条件形 〜ば) & Topic Suggestion 〜なら',
+    grammarPoints: [
+      {
+        title: '1. Conditional Form (〜ば)',
+        pattern: 'Gr 1: え+ば (書けば) | Gr 2: れば (食べれば) | い-adj: ければ | N/な: なら',
+        explanationEnglish: 'Expresses conditional requirements for a result to occur ("if... then").',
+        explanationNepali: 'कुनै परिणाम हुन आवश्यक सर्त व्यक्त गर्दछ ("यदि... भने")।',
+        examples: [
+          { target: '安ければ、買います。', reading: 'やすければ、かいます。', english: 'If it is cheap, I will buy it.', nepali: 'सस्तो भयो भने, किन्नेछु।' },
+          { target: 'ボタンを押せば、お湯が出ます。', reading: 'ボタンをおせば、おゆがでます。', english: 'If you press the button, hot water comes out.', nepali: 'बटन थिच्नुभयो भने तातोपानी आउँछ।' }
+        ]
+      },
+      {
+        title: '2. Topic Advice (N なら)',
+        pattern: '[Noun] + なら',
+        explanationEnglish: 'Used to offer information or recommendations on a topic mentioned by the listener.',
+        explanationNepali: 'सुन्ने व्यक्तिले उठाएको विषयमा जानकारी वा सुझाव दिन प्रयोग गरिन्छ।',
+        examples: [
+          { target: 'カメラなら、秋葉原がいいですよ。', reading: 'カメラなら、あきはばらがいいですよ。', english: 'If you want a camera, Akihabara is great.', nepali: 'क्यामेराको लागि त अकिहाबारा राम्रो छ।' }
+        ]
+      }
+    ]
+  },
 ];
 
 // Dynamic fallback generator — NEVER returns Lesson 1 for wrong lesson
