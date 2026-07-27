@@ -1,7 +1,8 @@
 'use client';
 
-import React, { useState } from 'react';
-import { BookOpen, Search, HelpCircle, Sparkles, Volume2, ChevronDown, MessageSquare, Globe, Award, BookCheck, X, Layers, ExternalLink, FileText, Printer } from 'lucide-react';
+import React, { useState, useRef } from 'react';
+import { BookOpen, Search, HelpCircle, Sparkles, Volume2, ChevronDown, MessageSquare, Globe, Award, BookCheck, X, Layers, ExternalLink, FileText, Printer, Music, Headphones, Mic2, Square } from 'lucide-react';
+import { getAudioTracksForLesson, LessonAudioTracks } from '@/lib/n5-audio-tracks';
 import {
   NIHONGO_VOCAB_DATA, VocabItem,
   getVocabByLevel, getVocabByLevelAndLesson, getAvailableLessonsForLevel
@@ -52,6 +53,43 @@ export const VocabularyExplorer: React.FC = () => {
   const [expandedGrammar, setExpandedGrammar] = useState<string | null>(null);
   const [showGrammarModal, setShowGrammarModal] = useState<boolean>(false);
   const [showShortNoteModal, setShowShortNoteModal] = useState<boolean>(false);
+
+  // Audio player state
+  const audioRef = useRef<HTMLAudioElement | null>(null);
+  const [playingTrack, setPlayingTrack] = useState<'vocab' | 'dialogue' | 'drill' | null>(null);
+
+  const playLessonTrack = (trackType: 'vocab' | 'dialogue' | 'drill', url: string) => {
+    // Stop currently playing audio
+    if (audioRef.current) {
+      audioRef.current.pause();
+      audioRef.current.currentTime = 0;
+    }
+    // If clicking the same track again — toggle off
+    if (playingTrack === trackType) {
+      setPlayingTrack(null);
+      return;
+    }
+    const audio = new Audio(url);
+    audioRef.current = audio;
+    audio.play().catch(() => {
+      // Fallback to speech synthesis if file not found
+      if ('speechSynthesis' in window) {
+        const utt = new SpeechSynthesisUtterance(`レッスン ${selectedLesson} の ${trackType === 'vocab' ? '単語' : trackType === 'dialogue' ? '会話' : '練習'} です。`);
+        utt.lang = 'ja-JP';
+        window.speechSynthesis.speak(utt);
+      }
+    });
+    audio.onended = () => setPlayingTrack(null);
+    setPlayingTrack(trackType);
+  };
+
+  const stopAudio = () => {
+    if (audioRef.current) {
+      audioRef.current.pause();
+      audioRef.current.currentTime = 0;
+    }
+    setPlayingTrack(null);
+  };
 
   const availableLessons = getAvailableLessonsForLevel(selectedLevel);
   const lessonVocab = getVocabByLevelAndLesson(selectedLevel, selectedLesson);
@@ -155,6 +193,48 @@ export const VocabularyExplorer: React.FC = () => {
           </div>
 
           <div className="flex items-center gap-2 flex-wrap sm:flex-nowrap">
+            {/* N5 Lesson Audio Tracks — shown only for N5 */}
+            {selectedLevel === 'N5' && (() => {
+              const tracks = getAudioTracksForLesson(selectedLesson);
+              if (!tracks) return null;
+              const btns: { type: 'vocab' | 'dialogue' | 'drill'; label: string; labelJp: string; url: string; icon: React.ReactNode; color: string; activeColor: string }[] = [
+                { type: 'vocab',    label: 'Vocabulary', labelJp: '単語', url: tracks.vocab,    icon: <Music className="w-3.5 h-3.5 flex-shrink-0" />,     color: 'bg-violet-700 hover:bg-violet-600',    activeColor: 'bg-violet-500 ring-2 ring-violet-300' },
+                { type: 'dialogue', label: 'Dialogue',   labelJp: '会話', url: tracks.dialogue, icon: <Headphones className="w-3.5 h-3.5 flex-shrink-0" />, color: 'bg-emerald-700 hover:bg-emerald-600',  activeColor: 'bg-emerald-500 ring-2 ring-emerald-300' },
+                { type: 'drill',    label: 'Drills',     labelJp: '練習', url: tracks.drill,    icon: <Mic2 className="w-3.5 h-3.5 flex-shrink-0" />,      color: 'bg-sky-700 hover:bg-sky-600',          activeColor: 'bg-sky-500 ring-2 ring-sky-300' },
+              ];
+              return (
+                <div className="flex items-center gap-1.5">
+                  <span className="text-[10px] font-bold text-slate-400 whitespace-nowrap hidden sm:block">🎵 Audio:</span>
+                  {btns.map((btn) => (
+                    <button
+                      key={btn.type}
+                      onClick={() => playLessonTrack(btn.type, btn.url)}
+                      title={`Play ${btn.label} (${btn.labelJp}) — Lesson ${selectedLesson} Track`}
+                      className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl text-white text-[11px] font-bold transition-all shadow whitespace-nowrap ${
+                        playingTrack === btn.type ? btn.activeColor : btn.color
+                      }`}
+                    >
+                      {playingTrack === btn.type
+                        ? <span className="flex gap-0.5 items-center"><span className="w-1 h-3 bg-white rounded-full animate-bounce" style={{animationDelay:'0ms'}} /><span className="w-1 h-3 bg-white rounded-full animate-bounce" style={{animationDelay:'150ms'}} /><span className="w-1 h-3 bg-white rounded-full animate-bounce" style={{animationDelay:'300ms'}} /></span>
+                        : btn.icon
+                      }
+                      <span className="hidden sm:inline">{btn.label}</span>
+                      <span className="font-jp text-[10px] opacity-80">{btn.labelJp}</span>
+                    </button>
+                  ))}
+                  {playingTrack && (
+                    <button
+                      onClick={stopAudio}
+                      title="Stop Audio"
+                      className="p-1.5 rounded-lg bg-rose-700 hover:bg-rose-600 text-white transition-all"
+                    >
+                      <Square className="w-3 h-3 fill-white" />
+                    </button>
+                  )}
+                </div>
+              );
+            })()}
+
             {/* Vocab Short Note Sheet Button */}
             <button
               onClick={() => setShowShortNoteModal(true)}
