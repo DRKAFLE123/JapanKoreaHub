@@ -22,7 +22,9 @@ import {
   ArrowLeft,
   FileText,
   Headphones,
-  RotateCcw
+  RotateCcw,
+  BarChart3,
+  CheckSquare
 } from 'lucide-react';
 import { validateExamSubmission } from '@/lib/auth-security';
 
@@ -555,7 +557,7 @@ const KOREAN_QUESTIONS: ExamQuestion[] = [
     prompt: '다음 중 문맥상 의미가 가장 어색한 표현을 고르시오.',
     options: ['경제 성장이 가속화되고 있다', '기술 혁신이 침체되고 있다', '물가가 지속적으로 상승한다', '고용 시장이 활성화된다'],
     correctAnswer: '기술 혁신이 침체되고 있다',
-    explanation: '문맥 및 일반적 표현 비교 시 적절성을 평가합니다.',
+    explanation: '문맥 및 일반적 표현 비교 시 적절性を 평가합니다.',
   },
 ];
 
@@ -571,7 +573,7 @@ export const TimedExamEngine: React.FC<TimedExamEngineProps> = ({
   const containerRef = useRef<HTMLDivElement>(null);
   const [isFullscreen, setIsFullscreen] = useState(false);
 
-  // Flow State: 'LOBBY' (show list of mock tests) vs 'EXAM_IN_PROGRESS'
+  // Flow State: 'LOBBY' (show catalog) vs 'EXAM_IN_PROGRESS'
   const [isExamActive, setIsExamActive] = useState(false);
   const [selectedMockTest, setSelectedMockTest] = useState<MockTestInfo | null>(null);
 
@@ -582,6 +584,16 @@ export const TimedExamEngine: React.FC<TimedExamEngineProps> = ({
   const [secondsRemaining, setSecondsRemaining] = useState(50 * 60);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [audioPlaysCount, setAudioPlaysCount] = useState<Record<string, number>>({});
+
+  // Exam Results state
+  const [examResult, setExamResult] = useState<{
+    score: number;
+    correctCount: number;
+    totalQuestions: number;
+    passed: boolean;
+    timeSpentSeconds: number;
+  } | null>(null);
+  const [reviewFilter, setReviewFilter] = useState<'ALL' | 'INCORRECT' | 'FLAGGED'>('ALL');
 
   const allQuestions = activeLanguage === 'JAPANESE' ? JAPANESE_QUESTIONS : KOREAN_QUESTIONS;
 
@@ -616,7 +628,9 @@ export const TimedExamEngine: React.FC<TimedExamEngineProps> = ({
     setFlaggedQuestions({});
     setSecondsRemaining((test.timeLimitMinutes || 50) * 60);
     setIsSubmitted(false);
+    setExamResult(null);
     setAudioPlaysCount({});
+    setReviewFilter('ALL');
     setIsExamActive(true);
 
     // Launch Full Screen Mode automatically like real JLPT exam
@@ -633,6 +647,8 @@ export const TimedExamEngine: React.FC<TimedExamEngineProps> = ({
     setIsFullscreen(false);
     setIsExamActive(false);
     setSelectedMockTest(null);
+    setIsSubmitted(false);
+    setExamResult(null);
   };
 
   useEffect(() => {
@@ -647,6 +663,8 @@ export const TimedExamEngine: React.FC<TimedExamEngineProps> = ({
     setIsExamActive(false);
     setSelectedMockTest(null);
     setSelectedLevelFilter('ALL');
+    setIsSubmitted(false);
+    setExamResult(null);
   }, [activeLanguage]);
 
   useEffect(() => {
@@ -719,6 +737,14 @@ export const TimedExamEngine: React.FC<TimedExamEngineProps> = ({
     const score = Math.round((correctCount / questions.length) * 100);
     const passed = score >= 70;
     const timeSpentSeconds = ((selectedMockTest?.timeLimitMinutes || 50) * 60) - secondsRemaining;
+
+    setExamResult({
+      score,
+      correctCount,
+      totalQuestions: questions.length,
+      passed,
+      timeSpentSeconds: Math.max(1, timeSpentSeconds),
+    });
 
     const check = validateExamSubmission(questions.length, timeSpentSeconds, score);
     if (!check.valid) {
@@ -923,198 +949,369 @@ export const TimedExamEngine: React.FC<TimedExamEngineProps> = ({
         </div>
       </div>
 
-      {/* Main Grid */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        {currentQ ? (
-          <div className="lg:col-span-2 bg-slate-900/90 border border-slate-800 rounded-3xl p-6 shadow-xl flex flex-col justify-between min-h-[420px]">
-            <div>
-              <div className="flex items-center justify-between pb-4 mb-4 border-b border-slate-800">
-                <div className="flex items-center gap-2">
-                  <span className="px-3 py-1 rounded-lg bg-indigo-600/20 border border-indigo-500/30 text-indigo-300 text-xs font-bold">
-                    Question {currentIndex + 1} of {questions.length}
-                  </span>
-                  <span className="px-2 py-0.5 rounded-md bg-slate-800 text-amber-400 text-[10px] font-bold">
-                    {currentQ.level}
+      {/* POST-SUBMISSION MARKS & REVIEW SCREEN */}
+      {isSubmitted && examResult && (
+        <div className="bg-slate-900/95 border border-slate-800 rounded-3xl p-6 sm:p-8 shadow-2xl space-y-6">
+          {/* Marks Summary Hero Header */}
+          <div className="flex flex-col md:flex-row items-center justify-between gap-6 pb-6 border-b border-slate-800">
+            <div className="flex items-center gap-5">
+              <div
+                className={`w-24 h-24 rounded-3xl flex flex-col items-center justify-center font-black text-white shadow-2xl ${
+                  examResult.passed ? 'bg-gradient-to-tr from-emerald-600 to-teal-500 shadow-emerald-900/40' : 'bg-gradient-to-tr from-rose-600 to-pink-600 shadow-rose-900/40'
+                }`}
+              >
+                <span className="text-3xl">{examResult.score}%</span>
+                <span className="text-[10px] uppercase font-bold tracking-wider">{examResult.passed ? 'PASSED' : 'FAILED'}</span>
+              </div>
+
+              <div className="space-y-1 text-center md:text-left">
+                <div className="flex items-center justify-center md:justify-start gap-2">
+                  <span className="text-xs font-bold uppercase tracking-wider text-amber-400">Official Exam Scorecard</span>
+                  <span
+                    className={`px-2.5 py-0.5 rounded-full text-[10px] font-extrabold ${
+                      examResult.passed ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/30' : 'bg-rose-500/20 text-rose-300 border border-rose-500/30'
+                    }`}
+                  >
+                    {examResult.passed ? '★ JLPT Certificate Eligible' : 'Retake Practice Advised'}
                   </span>
                 </div>
+                <h3 className="text-2xl font-black text-white">
+                  {selectedMockTest?.title || 'JLPT Mock Examination'}
+                </h3>
+                <p className="text-xs text-slate-400">
+                  Time Spent: <span className="font-bold text-white">{Math.floor(examResult.timeSpentSeconds / 60)}m {examResult.timeSpentSeconds % 60}s</span> • Marks: <span className="font-bold text-white">{examResult.correctCount} / {examResult.totalQuestions}</span> Correct ({examResult.score}%)
+                </p>
+              </div>
+            </div>
 
+            {/* Action Buttons */}
+            <div className="flex items-center gap-3">
+              <button
+                onClick={() => {
+                  setIsSubmitted(false);
+                  setExamResult(null);
+                  setSelectedAnswers({});
+                  setFlaggedQuestions({});
+                  setSecondsRemaining((selectedMockTest?.timeLimitMinutes || 50) * 60);
+                  setCurrentIndex(0);
+                }}
+                className="px-4 py-2.5 rounded-2xl bg-slate-800 hover:bg-slate-700 text-white font-bold text-xs transition-all flex items-center gap-2 border border-slate-700 shadow"
+              >
+                <RotateCcw className="w-4 h-4 text-amber-400" />
+                <span>Retake Exam</span>
+              </button>
+
+              <button
+                onClick={handleExitExam}
+                className="px-5 py-2.5 rounded-2xl bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white font-extrabold text-xs shadow-glow transition-all flex items-center gap-2"
+              >
+                <ArrowLeft className="w-4 h-4" />
+                <span>Return to Catalog</span>
+              </button>
+            </div>
+          </div>
+
+          {/* Detailed Review Section */}
+          <div className="space-y-4">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+              <h4 className="text-sm font-bold text-white flex items-center gap-2">
+                <BookOpen className="w-4 h-4 text-indigo-400" />
+                <span>Detailed Question Review & Explanation Solutions ({questions.length} Questions)</span>
+              </h4>
+
+              {/* Filter Tabs */}
+              <div className="flex items-center gap-1.5 bg-slate-950 p-1 rounded-xl border border-slate-800">
                 <button
-                  onClick={() => toggleFlag(currentQ.id)}
-                  className={`flex items-center gap-1.5 px-3 py-1 rounded-lg text-xs font-semibold border transition-all ${
-                    flaggedQuestions[currentQ.id]
-                      ? 'bg-amber-500/20 border-amber-500/50 text-amber-300'
-                      : 'bg-slate-950 border-slate-800 text-slate-400 hover:text-white'
+                  onClick={() => setReviewFilter('ALL')}
+                  className={`px-3 py-1 rounded-lg text-xs font-bold transition-all ${
+                    reviewFilter === 'ALL' ? 'bg-indigo-600 text-white' : 'text-slate-400 hover:text-white'
                   }`}
                 >
-                  <Flag className="w-3.5 h-3.5" />
-                  <span>{flaggedQuestions[currentQ.id] ? 'Flagged' : 'Flag for Review'}</span>
+                  All ({questions.length})
+                </button>
+                <button
+                  onClick={() => setReviewFilter('INCORRECT')}
+                  className={`px-3 py-1 rounded-lg text-xs font-bold transition-all ${
+                    reviewFilter === 'INCORRECT' ? 'bg-rose-600 text-white' : 'text-slate-400 hover:text-white'
+                  }`}
+                >
+                  Incorrect ({questions.filter((q) => selectedAnswers[q.id] !== q.correctAnswer).length})
+                </button>
+                <button
+                  onClick={() => setReviewFilter('FLAGGED')}
+                  className={`px-3 py-1 rounded-lg text-xs font-bold transition-all ${
+                    reviewFilter === 'FLAGGED' ? 'bg-amber-600 text-white' : 'text-slate-400 hover:text-white'
+                  }`}
+                >
+                  Flagged ({Object.keys(flaggedQuestions).filter((k) => flaggedQuestions[k]).length})
                 </button>
               </div>
+            </div>
 
-              <div className="mb-6">
-                {currentQ.type === 'LISTENING' && (
-                  <div className="mb-4 bg-slate-950 p-4 rounded-2xl border border-slate-800 flex items-center justify-between">
-                    <div className="flex items-center gap-3">
-                      <div className="p-3 rounded-xl bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">
-                        <Volume2 className="w-5 h-5 animate-pulse" />
+            {/* Questions Detailed List */}
+            <div className="space-y-4">
+              {questions
+                .filter((q) => {
+                  if (reviewFilter === 'INCORRECT') return selectedAnswers[q.id] !== q.correctAnswer;
+                  if (reviewFilter === 'FLAGGED') return Boolean(flaggedQuestions[q.id]);
+                  return true;
+                })
+                .map((q, qIdx) => {
+                  const userAnswer = selectedAnswers[q.id];
+                  const isCorrect = userAnswer === q.correctAnswer;
+
+                  return (
+                    <div
+                      key={q.id}
+                      className={`p-5 rounded-2xl border transition-all space-y-3 ${
+                        isCorrect ? 'bg-slate-950/80 border-emerald-500/40' : 'bg-slate-950/80 border-rose-500/40'
+                      }`}
+                    >
+                      <div className="flex items-start justify-between gap-3">
+                        <div className="flex items-center gap-2">
+                          <span
+                            className={`w-7 h-7 rounded-xl flex items-center justify-center text-xs font-bold ${
+                              isCorrect ? 'bg-emerald-500/20 text-emerald-300' : 'bg-rose-500/20 text-rose-300'
+                            }`}
+                          >
+                            {qIdx + 1}
+                          </span>
+                          <span className="text-xs font-bold text-amber-400 uppercase tracking-wider">
+                            {q.level} • {q.type}
+                          </span>
+                        </div>
+                        <span
+                          className={`px-2.5 py-0.5 rounded-full text-[10px] font-extrabold flex items-center gap-1 ${
+                            isCorrect ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/30' : 'bg-rose-500/20 text-rose-300 border border-rose-500/30'
+                          }`}
+                        >
+                          {isCorrect ? <Check className="w-3 h-3" /> : <X className="w-3 h-3" />}
+                          {isCorrect ? 'Correct Answer' : 'Incorrect'}
+                        </span>
                       </div>
-                      <div>
-                        <div className="text-xs font-bold text-white">Audio Listening Track</div>
-                        <div className="text-[11px] text-slate-400">
-                          Played: {audioPlaysCount[currentQ.id] || 0} / 2 times max
+
+                      <div className="text-sm font-bold text-white">{q.prompt}</div>
+
+                      {/* Audio Track Replay */}
+                      {q.type === 'LISTENING' && q.audioUrl && (
+                        <div className="flex items-center gap-2">
+                          <button
+                            onClick={() => {
+                              const audio = new Audio(q.audioUrl);
+                              audio.play().catch(() => {});
+                            }}
+                            className="px-3 py-1 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs flex items-center gap-1.5 shadow"
+                          >
+                            <Volume2 className="w-3.5 h-3.5" /> Replay Audio Clip
+                          </button>
+                        </div>
+                      )}
+
+                      {/* Options Comparison Grid */}
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
+                        {q.options.map((opt, oIdx) => {
+                          const isOptionSelected = userAnswer === opt;
+                          const isOptionCorrect = q.correctAnswer === opt;
+
+                          let style = 'bg-slate-900 border-slate-800 text-slate-400';
+                          if (isOptionCorrect) {
+                            style = 'bg-emerald-950 border-emerald-500 text-emerald-200 font-bold';
+                          } else if (isOptionSelected) {
+                            style = 'bg-rose-950 border-rose-500 text-rose-200 line-through opacity-80';
+                          }
+
+                          return (
+                            <div key={oIdx} className={`p-2.5 rounded-xl border flex items-center justify-between ${style}`}>
+                              <span>{opt}</span>
+                              {isOptionCorrect && <span className="text-[10px] font-extrabold text-emerald-400 uppercase">Correct Answer</span>}
+                              {isOptionSelected && !isOptionCorrect && <span className="text-[10px] font-extrabold text-rose-400 uppercase">Your Choice</span>}
+                            </div>
+                          );
+                        })}
+                      </div>
+
+                      {/* Detailed Explanation */}
+                      {q.explanation && (
+                        <div className="p-3 rounded-xl bg-indigo-950/40 border border-indigo-800/50 text-xs text-indigo-200">
+                          <span className="font-bold text-indigo-300 block mb-0.5">💡 Solution Explanation:</span>
+                          {q.explanation}
+                        </div>
+                      )}
+                    </div>
+                  );
+                })}
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Main Interactive Question Panel (When taking exam) */}
+      {!isSubmitted && (
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          {currentQ ? (
+            <div className="lg:col-span-2 bg-slate-900/90 border border-slate-800 rounded-3xl p-6 shadow-xl flex flex-col justify-between min-h-[420px]">
+              <div>
+                <div className="flex items-center justify-between pb-4 mb-4 border-b border-slate-800">
+                  <div className="flex items-center gap-2">
+                    <span className="px-3 py-1 rounded-lg bg-indigo-600/20 border border-indigo-500/30 text-indigo-300 text-xs font-bold">
+                      Question {currentIndex + 1} of {questions.length}
+                    </span>
+                    <span className="px-2 py-0.5 rounded-md bg-slate-800 text-amber-400 text-[10px] font-bold">
+                      {currentQ.level}
+                    </span>
+                  </div>
+
+                  <button
+                    onClick={() => toggleFlag(currentQ.id)}
+                    className={`flex items-center gap-1.5 px-3 py-1 rounded-lg text-xs font-semibold border transition-all ${
+                      flaggedQuestions[currentQ.id]
+                        ? 'bg-amber-500/20 border-amber-500/50 text-amber-300'
+                        : 'bg-slate-950 border-slate-800 text-slate-400 hover:text-white'
+                    }`}
+                  >
+                    <Flag className="w-3.5 h-3.5" />
+                    <span>{flaggedQuestions[currentQ.id] ? 'Flagged' : 'Flag for Review'}</span>
+                  </button>
+                </div>
+
+                <div className="mb-6">
+                  {currentQ.type === 'LISTENING' && (
+                    <div className="mb-4 bg-slate-950 p-4 rounded-2xl border border-slate-800 flex items-center justify-between">
+                      <div className="flex items-center gap-3">
+                        <div className="p-3 rounded-xl bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">
+                          <Volume2 className="w-5 h-5 animate-pulse" />
+                        </div>
+                        <div>
+                          <div className="text-xs font-bold text-white">Audio Listening Track</div>
+                          <div className="text-[11px] text-slate-400">
+                            Played: {audioPlaysCount[currentQ.id] || 0} / 2 times max
+                          </div>
                         </div>
                       </div>
+                      <button
+                        onClick={playAudioPrompt}
+                        className="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs shadow-md transition-all"
+                      >
+                        Play Audio Clip
+                      </button>
                     </div>
-                    <button
-                      onClick={playAudioPrompt}
-                      className="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs shadow-md transition-all"
-                    >
-                      Play Audio Clip
-                    </button>
-                  </div>
-                )}
+                  )}
 
-                <h3 className="text-lg font-bold text-slate-100 leading-relaxed">{currentQ.prompt}</h3>
+                  <h3 className="text-lg font-bold text-slate-100 leading-relaxed">{currentQ.prompt}</h3>
+                </div>
+
+                <div className="space-y-3">
+                  {currentQ.options.map((option, idx) => {
+                    const isSelected = selectedAnswers[currentQ.id] === option;
+
+                    let optionStyle = 'bg-slate-950/80 border-slate-800 text-slate-200 hover:border-slate-700';
+                    if (isSelected) {
+                      optionStyle = 'bg-indigo-950/80 border-indigo-500 text-indigo-200 shadow-glow font-bold';
+                    }
+
+                    return (
+                      <button
+                        key={idx}
+                        onClick={() => handleSelectAnswer(option)}
+                        className={`w-full text-left p-4 rounded-2xl border transition-all flex items-center justify-between ${optionStyle}`}
+                      >
+                        <div className="flex items-center gap-3">
+                          <span className="w-7 h-7 rounded-xl bg-slate-800 flex items-center justify-center text-xs font-bold text-slate-300">
+                            {idx + 1}
+                          </span>
+                          <span className="text-sm font-medium">{option}</span>
+                        </div>
+                        {isSelected && <CheckCircle2 className="w-5 h-5 text-indigo-400" />}
+                      </button>
+                    );
+                  })}
+                </div>
               </div>
 
-              <div className="space-y-3">
-                {currentQ.options.map((option, idx) => {
-                  const isSelected = selectedAnswers[currentQ.id] === option;
-                  const isCorrect = currentQ.correctAnswer === option;
+              <div className="flex items-center justify-between pt-6 mt-6 border-t border-slate-800">
+                <button
+                  onClick={() => setCurrentIndex(Math.max(0, currentIndex - 1))}
+                  disabled={currentIndex === 0}
+                  className="px-4 py-2 rounded-xl bg-slate-800 disabled:opacity-40 hover:bg-slate-700 text-slate-200 text-xs font-bold transition-all flex items-center gap-1.5"
+                >
+                  <ChevronLeft className="w-4 h-4" /> Previous
+                </button>
 
-                  let optionStyle = 'bg-slate-950/80 border-slate-800 text-slate-200 hover:border-slate-700';
+                <button
+                  onClick={() => setCurrentIndex(Math.min(questions.length - 1, currentIndex + 1))}
+                  disabled={currentIndex === questions.length - 1}
+                  className="px-4 py-2 rounded-xl bg-slate-800 disabled:opacity-40 hover:bg-slate-700 text-slate-200 text-xs font-bold transition-all flex items-center gap-1.5"
+                >
+                  Next <ChevronRight className="w-4 h-4" />
+                </button>
+              </div>
+            </div>
+          ) : (
+            <div className="lg:col-span-2 bg-slate-900/90 border border-slate-800 rounded-3xl p-8 text-center text-slate-400">
+              No questions available for this selection.
+            </div>
+          )}
 
-                  if (isSubmitted) {
-                    if (isCorrect) {
-                      optionStyle = 'bg-emerald-950/80 border-emerald-500 text-emerald-200 font-bold';
-                    } else if (isSelected) {
-                      optionStyle = 'bg-rose-950/80 border-rose-500 text-rose-200';
-                    }
-                  } else if (isSelected) {
-                    optionStyle = 'bg-indigo-950/80 border-indigo-500 text-indigo-200 shadow-glow font-bold';
+          <div className="bg-slate-900/90 border border-slate-800 rounded-3xl p-6 shadow-xl flex flex-col justify-between">
+            <div>
+              <h4 className="text-xs font-bold uppercase tracking-wider text-slate-400 mb-4">
+                Question Navigator Grid
+              </h4>
+
+              <div className="grid grid-cols-4 gap-2.5 mb-6">
+                {questions.map((q, idx) => {
+                  const isAnswered = Boolean(selectedAnswers[q.id]);
+                  const isFlagged = Boolean(flaggedQuestions[q.id]);
+                  const isCurrent = idx === currentIndex;
+
+                  let gridStyle = 'bg-slate-950 border-slate-800 text-slate-400';
+
+                  if (isCurrent) {
+                    gridStyle = 'ring-2 ring-indigo-500 border-indigo-400 text-white font-bold bg-slate-800';
+                  } else if (isFlagged) {
+                    gridStyle = 'bg-amber-950/80 border-amber-500 text-amber-300 font-bold';
+                  } else if (isAnswered) {
+                    gridStyle = 'bg-emerald-950/80 border-emerald-500 text-emerald-300 font-bold';
                   }
 
                   return (
                     <button
-                      key={idx}
-                      onClick={() => handleSelectAnswer(option)}
-                      className={`w-full text-left p-4 rounded-2xl border transition-all flex items-center justify-between ${optionStyle}`}
+                      key={q.id}
+                      onClick={() => setCurrentIndex(idx)}
+                      className={`relative h-12 rounded-xl border text-xs flex items-center justify-center transition-all ${gridStyle}`}
                     >
-                      <div className="flex items-center gap-3">
-                        <span className="w-7 h-7 rounded-xl bg-slate-800 flex items-center justify-center text-xs font-bold text-slate-300">
-                          {idx + 1}
-                        </span>
-                        <span className="text-sm font-medium">{option}</span>
-                      </div>
-                      {isSelected && <CheckCircle2 className="w-5 h-5 text-indigo-400" />}
+                      <span>{idx + 1}</span>
+                      {isFlagged && <Flag className="absolute top-1 right-1 w-3 h-3 text-amber-400" />}
                     </button>
                   );
                 })}
               </div>
 
-              {isSubmitted && currentQ.explanation && (
-                <div className="mt-5 p-4 rounded-2xl bg-indigo-950/40 border border-indigo-800/50 text-xs text-indigo-200">
-                  <span className="font-bold block mb-1">Explanation:</span>
-                  {currentQ.explanation}
+              <div className="space-y-2 text-xs text-slate-400 border-t border-slate-800 pt-4">
+                <div className="flex items-center gap-2">
+                  <span className="w-3 h-3 rounded bg-emerald-950 border border-emerald-500" />
+                  <span>Answered</span>
                 </div>
-              )}
-            </div>
-
-            <div className="flex items-center justify-between pt-6 mt-6 border-t border-slate-800">
-              <button
-                onClick={() => setCurrentIndex(Math.max(0, currentIndex - 1))}
-                disabled={currentIndex === 0}
-                className="px-4 py-2 rounded-xl bg-slate-800 disabled:opacity-40 hover:bg-slate-700 text-slate-200 text-xs font-bold transition-all flex items-center gap-1.5"
-              >
-                <ChevronLeft className="w-4 h-4" /> Previous
-              </button>
-
-              <button
-                onClick={() => setCurrentIndex(Math.min(questions.length - 1, currentIndex + 1))}
-                disabled={currentIndex === questions.length - 1}
-                className="px-4 py-2 rounded-xl bg-slate-800 disabled:opacity-40 hover:bg-slate-700 text-slate-200 text-xs font-bold transition-all flex items-center gap-1.5"
-              >
-                Next <ChevronRight className="w-4 h-4" />
-              </button>
-            </div>
-          </div>
-        ) : (
-          <div className="lg:col-span-2 bg-slate-900/90 border border-slate-800 rounded-3xl p-8 text-center text-slate-400">
-            No questions available for this selection.
-          </div>
-        )}
-
-        <div className="bg-slate-900/90 border border-slate-800 rounded-3xl p-6 shadow-xl flex flex-col justify-between">
-          <div>
-            <h4 className="text-xs font-bold uppercase tracking-wider text-slate-400 mb-4">
-              Question Navigator Grid
-            </h4>
-
-            <div className="grid grid-cols-4 gap-2.5 mb-6">
-              {questions.map((q, idx) => {
-                const isAnswered = Boolean(selectedAnswers[q.id]);
-                const isFlagged = Boolean(flaggedQuestions[q.id]);
-                const isCurrent = idx === currentIndex;
-
-                let gridStyle = 'bg-slate-950 border-slate-800 text-slate-400';
-
-                if (isCurrent) {
-                  gridStyle = 'ring-2 ring-indigo-500 border-indigo-400 text-white font-bold bg-slate-800';
-                } else if (isFlagged) {
-                  gridStyle = 'bg-amber-950/80 border-amber-500 text-amber-300 font-bold';
-                } else if (isAnswered) {
-                  gridStyle = 'bg-emerald-950/80 border-emerald-500 text-emerald-300 font-bold';
-                }
-
-                return (
-                  <button
-                    key={q.id}
-                    onClick={() => setCurrentIndex(idx)}
-                    className={`relative h-12 rounded-xl border text-xs flex items-center justify-center transition-all ${gridStyle}`}
-                  >
-                    <span>{idx + 1}</span>
-                    {isFlagged && <Flag className="absolute top-1 right-1 w-3 h-3 text-amber-400" />}
-                  </button>
-                );
-              })}
-            </div>
-
-            <div className="space-y-2 text-xs text-slate-400 border-t border-slate-800 pt-4">
-              <div className="flex items-center gap-2">
-                <span className="w-3 h-3 rounded bg-emerald-950 border border-emerald-500" />
-                <span>Answered</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <span className="w-3 h-3 rounded bg-amber-950 border border-amber-500" />
-                <span>Flagged for Review</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <span className="w-3 h-3 rounded bg-slate-950 border border-slate-800" />
-                <span>Unanswered</span>
+                <div className="flex items-center gap-2">
+                  <span className="w-3 h-3 rounded bg-amber-950 border border-amber-500" />
+                  <span>Flagged for Review</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <span className="w-3 h-3 rounded bg-slate-950 border border-slate-800" />
+                  <span>Unanswered</span>
+                </div>
               </div>
             </div>
-          </div>
 
-          <div className="mt-6 pt-4 border-t border-slate-800 space-y-3">
-            <div className="text-center">
+            <div className="mt-6 pt-4 border-t border-slate-800 text-center">
               <div className="text-xs text-slate-400 font-medium">Answered Progress</div>
               <div className="text-xl font-bold text-white mt-0.5">
                 {Object.keys(selectedAnswers).length} / {questions.length} Questions
               </div>
             </div>
-
-            {isSubmitted && (
-              <button
-                onClick={handleExitExam}
-                className="w-full py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-white font-bold text-xs transition-all flex items-center justify-center gap-2 border border-slate-700"
-              >
-                <RotateCcw className="w-4 h-4" />
-                <span>Return to Mock Test Catalog</span>
-              </button>
-            )}
           </div>
         </div>
-      </div>
+      )}
     </div>
   );
 };
