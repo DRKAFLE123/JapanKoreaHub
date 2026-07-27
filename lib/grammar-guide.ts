@@ -63,16 +63,38 @@ export const JAPANESE_GRAMMAR_GUIDES: LessonGrammarGuide[] = [
 
   {
     language: 'JAPANESE', level: 'N4', lesson: 27,
-    lessonTitle: 'Potential Verb Forms (可能動詞)',
+    lessonTitle: 'Lesson 27 – Potential Form (可能形)',
     grammarPoints: [
       {
-        title: '1. Group 1 Potential: u→e+る',
-        pattern: 'Gr.1: 書く → 書ける | Gr.2: 食べる → 食べられる | する → できる',
-        explanationEnglish: 'Potential verbs express ability. The direct object particle を changes to が. Group 1 verbs change the final う sound to え+る. Group 2 add られる.',
-        explanationNepali: 'सम्भावना क्रियाले क्षमता जनाउँछ। を को ठाउँ में が आउँछ। समूह-१ मा अन्तिम う → え+る हुन्छ। समूह-२ मा られる थपिन्छ।',
+        title: '1. Potential Form Conjugation (可能形)',
+        pattern: 'Gr.1: う → え+る (書く→書ける) | Gr.2: る → られる (食べる→食べられる) | Irreg: する→できる, 来る→来られる',
+        explanationEnglish: 'The potential form expresses ability or possibility. Group 1 (う-verbs): Change final う sound to え sound + る. Group 2 (る-verbs): Replace る with られる. Irregular: する→できる, 来る→来られる.',
+        explanationNepali: 'सम्भावना स्वरूप (可能形) ले क्षमता वा सम्भावना व्यक्त गर्दछ। समूह-१: अन्तिम う ध्वनिलाई え + る मा परिवर्तन गरिन्छ। समूह-२: る को ठाउँमा られる राखिन्छ। अनियमित: する→できる, 来る→来られる।',
         examples: [
           { target: '私は日本語が話せます。', reading: 'わたしはにほんごがはなせます。', english: 'I can speak Japanese.', nepali: 'म जापानी बोल्न सक्छु।' },
-          { target: '漢字が読めますか。', reading: 'かんじがよめますか。', english: 'Can you read Kanji?', nepali: 'काञ्जी पढ्न सक्नुहुन्छ?' },
+          { target: '漢字が読めます。', reading: 'かんじがよめます。', english: 'I can read Kanji.', nepali: 'म काञ्जी पढ्न सक्छु।' },
+          { target: '車が運転できます。', reading: 'くるまがうんてんできます。', english: 'I can drive a car.', nepali: 'म गाडी चलाउन सक्छु।' },
+          { target: '今日は来られません。', reading: 'きょうはこられません。', english: 'I cannot come today.', nepali: 'म आज आउन सक्दिनँ।' }
+        ]
+      },
+      {
+        title: '2. Potential Sentence Pattern (N が Potential Verb)',
+        pattern: '[Subject] は [Noun] が [Potential Verb]',
+        explanationEnglish: 'The particle が is used to mark the object of ability with potential verbs (instead of を).',
+        explanationNepali: 'सम्भावना क्रियामा कर्मलाई जनाउन を को सट्टा が प्रत्यय प्रयोग गरिन्छ।',
+        examples: [
+          { target: '私は泳げます。', reading: 'わたしはおよげます。', english: 'I can swim.', nepali: 'म पौड्न सक्छु।' },
+          { target: '私は泳げません。', reading: 'わたしはおよげません。', english: 'I cannot swim.', nepali: 'म पौड्न सक्दिनँ।' }
+        ]
+      },
+      {
+        title: '3. Expressing Possibility vs Permission',
+        pattern: 'Possibility: 見える / 見られる / 入れます vs Permission: 入ってもいいです',
+        explanationEnglish: '見える / 見られる express visible possibility (e.g. You can see Mt. Fuji from here). Do not confuse potential form (入れます = can enter) with permission (入ってもいいです = may enter).',
+        explanationNepali: 'देखिने वा प्रवेश गर्न सकिने सम्भावना व्यक्त गर्दछ। अनुमति (入ってもいいです) र क्षमता (入れます) मा भिन्नता हुन्छ।',
+        examples: [
+          { target: 'ここから富士山が見えます。', reading: 'ここからふじさんがみえます。', english: 'You can see Mt. Fuji from here.', nepali: 'यहाँबाट फुजि पर्वत देखिन्छ।' },
+          { target: 'ここから中に入れます。', reading: 'ここからなかにいれます。', english: 'You can enter inside from here.', nepali: 'यहाँबाट भित्र छिर्न सकिन्छ।' }
         ]
       }
     ]
