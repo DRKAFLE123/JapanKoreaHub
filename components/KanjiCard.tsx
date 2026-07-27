@@ -72,7 +72,7 @@ export const KanjiCard: React.FC = () => {
   const [selectedLesson, setSelectedLesson] = useState<number | 'ALL'>('ALL');
   const [contentCategory, setContentCategory] = useState<ContentCategory>('KANJI');
   const [answerLang, setAnswerLang] = useState<AnswerLang>('BOTH');
-  const [cardMode, setCardMode] = useState<FlashcardMode>('MIXED');
+  const [cardMode, setCardMode] = useState<FlashcardMode>('JAPANESE_FIRST');
   const [isShuffled, setIsShuffled] = useState<boolean>(true);
   const [shuffleSeed, setShuffleSeed] = useState<number>(() => Date.now());
 
