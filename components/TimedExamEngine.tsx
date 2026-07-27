@@ -4361,11 +4361,24 @@ export const TimedExamEngine: React.FC<TimedExamEngineProps> = ({
                       </button>
                     ) : (
                       <button
-                        onClick={currentPaperIndex === 0 && rawQuestions.length >= 40 && !isJFT ? handleFinishPaper1 : handleSubmitExam}
-                        className="px-4 py-1.5 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white text-xs font-black transition-all flex items-center gap-1.5 shadow-glow cursor-pointer"
+                        onClick={() => {
+                          if (isJFT) {
+                            if (currentJftSectionIndex < 3) setShowJftSectionLockModal(true);
+                            else handleSubmitExam();
+                          } else if (currentPaperIndex === 0 && rawQuestions.length >= 40) {
+                            handleFinishPaper1();
+                          } else {
+                            handleSubmitExam();
+                          }
+                        }}
+                        className="px-4 py-1.5 rounded-xl bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-500 hover:to-blue-500 text-white text-xs font-black transition-all flex items-center gap-1.5 shadow-glow cursor-pointer"
                       >
                         <CheckCircle2 className="w-3.5 h-3.5" />
-                        <span>{currentPaperIndex === 0 && rawQuestions.length >= 40 && !isJFT ? 'Submit Paper 1 ➔' : 'Submit Exam 🏁'}</span>
+                        <span>
+                          {isJFT
+                            ? (currentJftSectionIndex < 3 ? `Lock Sec ${currentJftSectionIndex + 1} 🔒 ➔` : 'Submit Final CBT Exam 🏁')
+                            : (currentPaperIndex === 0 && rawQuestions.length >= 40 ? 'Submit Paper 1 ➔' : 'Submit Exam 🏁')}
+                        </span>
                       </button>
                     )}
 
@@ -4464,11 +4477,24 @@ export const TimedExamEngine: React.FC<TimedExamEngineProps> = ({
                   </button>
                 ) : (
                   <button
-                    onClick={currentPaperIndex === 0 && rawQuestions.length >= 40 && !isJFT ? handleFinishPaper1 : handleSubmitExam}
-                    className="px-6 py-2.5 rounded-2xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white text-xs font-black transition-all flex items-center gap-2 shadow-glow cursor-pointer"
+                    onClick={() => {
+                      if (isJFT) {
+                        if (currentJftSectionIndex < 3) setShowJftSectionLockModal(true);
+                        else handleSubmitExam();
+                      } else if (currentPaperIndex === 0 && rawQuestions.length >= 40) {
+                        handleFinishPaper1();
+                      } else {
+                        handleSubmitExam();
+                      }
+                    }}
+                    className="px-6 py-2.5 rounded-2xl bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-500 hover:to-blue-500 text-white text-xs font-black transition-all flex items-center gap-2 shadow-glow cursor-pointer"
                   >
                     <CheckCircle2 className="w-4 h-4" />
-                    <span>{currentPaperIndex === 0 && rawQuestions.length >= 40 && !isJFT ? 'Submit Paper 1 ➔' : 'Submit Final Exam 🏁'}</span>
+                    <span>
+                      {isJFT
+                        ? (currentJftSectionIndex < 3 ? `Lock Section ${currentJftSectionIndex + 1} & Proceed 🔒 ➔` : 'Submit Final CBT Exam 🏁')
+                        : (currentPaperIndex === 0 && rawQuestions.length >= 40 ? 'Submit Paper 1 ➔' : 'Submit Final Exam 🏁')}
+                    </span>
                   </button>
                 )}
               </div>
@@ -4492,7 +4518,10 @@ export const TimedExamEngine: React.FC<TimedExamEngineProps> = ({
                 )}
                 {isJFT && (
                   <span className="text-[10px] font-bold text-cyan-400">
-                    JFT CBT (50 Qs)
+                    {currentJftSectionIndex === 0 && 'Sec 1 (Q1-12)'}
+                    {currentJftSectionIndex === 1 && 'Sec 2 (Q13-24)'}
+                    {currentJftSectionIndex === 2 && 'Sec 3 (Q25-36)'}
+                    {currentJftSectionIndex === 3 && 'Sec 4 (Q37-end)'}
                   </span>
                 )}
               </div>
@@ -4552,21 +4581,23 @@ export const TimedExamEngine: React.FC<TimedExamEngineProps> = ({
             </div>
 
             <div className="mt-4 pt-3 border-t border-slate-800 text-center">
-              {currentPaperIndex === 0 && rawQuestions.length >= 40 && !isJFT ? (
-                <button
-                  onClick={handleFinishPaper1}
-                  className="w-full py-2.5 rounded-xl bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white font-bold text-xs shadow-glow transition-all cursor-pointer"
-                >
-                  Submit Paper 1 ➔
-                </button>
-              ) : (
-                <button
-                  onClick={handleSubmitExam}
-                  className="w-full py-2.5 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-bold text-xs shadow-glow transition-all cursor-pointer"
-                >
-                  Submit Final Exam 🏁
-                </button>
-              )}
+              <button
+                onClick={() => {
+                  if (isJFT) {
+                    if (currentJftSectionIndex < 3) setShowJftSectionLockModal(true);
+                    else handleSubmitExam();
+                  } else if (currentPaperIndex === 0 && rawQuestions.length >= 40) {
+                    handleFinishPaper1();
+                  } else {
+                    handleSubmitExam();
+                  }
+                }}
+                className="w-full py-2.5 rounded-xl bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-500 hover:to-blue-500 text-white font-bold text-xs shadow-glow transition-all cursor-pointer"
+              >
+                {isJFT
+                  ? (currentJftSectionIndex < 3 ? `Lock Section ${currentJftSectionIndex + 1} 🔒 ➔` : 'Submit Final CBT Exam 🏁')
+                  : (currentPaperIndex === 0 && rawQuestions.length >= 40 ? 'Submit Paper 1 ➔' : 'Submit Final Exam 🏁')}
+              </button>
             </div>
           </div>
         </div>
