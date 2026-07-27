@@ -1,12 +1,30 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
-import { Clock, Flag, CheckCircle2, Volume2, Award, ChevronRight, ChevronLeft, Layers, HelpCircle, Check, X } from 'lucide-react';
+import React, { useState, useEffect, useRef } from 'react';
+import {
+  Clock,
+  Flag,
+  CheckCircle2,
+  Volume2,
+  Award,
+  ChevronRight,
+  ChevronLeft,
+  Layers,
+  HelpCircle,
+  Check,
+  X,
+  Maximize2,
+  Minimize2,
+  ListFilter,
+  Sparkles,
+  BookOpen
+} from 'lucide-react';
 import { validateExamSubmission } from '@/lib/auth-security';
 
 export interface ExamQuestion {
   id: string;
   level: string; // N5, N4, N3, N2 | EPS, TOPIK2, TOPIK3, TOPIK4
+  mockSet?: string; // 'N5_SET_1' | 'N5_SET_2' | 'N4_SET_1' | 'GENERAL'
   type: 'MULTIPLE_CHOICE' | 'LISTENING' | 'FILL_BLANK';
   prompt: string;
   audioUrl?: string;
@@ -17,88 +35,92 @@ export interface ExamQuestion {
 
 const JAPANESE_QUESTIONS: ExamQuestion[] = [
   // ==========================================
-  // JLPT N5 QUESTION SET
+  // JLPT N5 MOCK TEST SET 1 (模擬試験 1)
   // ==========================================
-  // --- Section 1: Kanji & Vocabulary (文字・語彙) ---
   {
-    id: 'jp_n5_1',
+    id: 'jp_n5_1_1',
     level: 'N5',
+    mockSet: 'N5_SET_1',
     type: 'MULTIPLE_CHOICE',
-    prompt: '【問題1】下線の言葉のひらがなを選んでください: 私は毎日日本のご飯を【食べます】。',
+    prompt: '【問題1 文字・語彙】下線の言葉のひらがなを選んでください: 私は毎日日本のご飯を【食べます】。',
     options: ['のみます', 'たべます', 'いきます', 'きます'],
     correctAnswer: 'たべます',
     explanation: '「食」は「た(べます)」と読みます。ご飯を食べる = Eat rice/meal.',
   },
   {
-    id: 'jp_n5_2',
+    id: 'jp_n5_1_2',
     level: 'N5',
+    mockSet: 'N5_SET_1',
     type: 'MULTIPLE_CHOICE',
-    prompt: '【問題2】下線の漢字を選んでください: つくえのうえに【ほん】があります。',
+    prompt: '【問題2 文字・語彙】下線の漢字を選んでください: つくえのうえに【ほん】があります。',
     options: ['本', '木', '休', '体'],
     correctAnswer: '本',
     explanation: '「ほん」(Book)の漢字は「本」です。',
   },
   {
-    id: 'jp_n5_3',
+    id: 'jp_n5_1_3',
     level: 'N5',
+    mockSet: 'N5_SET_1',
     type: 'MULTIPLE_CHOICE',
-    prompt: '【問題3】正しい意味の言葉を選んでください: きょうはとても【あつい】ですね。',
+    prompt: '【問題3 文字・語彙】正しい意味の言葉を選んでください: きょうはとても【あつい】ですね。',
     options: ['Hot', 'Cold', 'Warm', 'Cool'],
     correctAnswer: 'Hot',
     explanation: '「あつい」(暑い/熱い)の意味は「Hot」です。',
   },
   {
-    id: 'jp_n5_4',
+    id: 'jp_n5_1_4',
     level: 'N5',
+    mockSet: 'N5_SET_1',
     type: 'MULTIPLE_CHOICE',
-    prompt: '【問題4】適切な言葉を選んでください: 毎朝6時に【_____】。',
+    prompt: '【問題4 文字・語彙】適切な言葉を選んでください: 毎朝6時に【_____】。',
     options: ['おきます', 'ねます', 'のみます', 'かいます'],
     correctAnswer: 'おきます',
     explanation: '朝6時に起きる(Wake up at 6 a.m.)が文脈に合います。',
   },
-
-  // --- Section 2: Grammar & Reading (文法・読解) ---
   {
-    id: 'jp_n5_5',
+    id: 'jp_n5_1_5',
     level: 'N5',
+    mockSet: 'N5_SET_1',
     type: 'FILL_BLANK',
-    prompt: '【問題5】正しい助詞を入れてください: 私はバス【_____】学校へ行きます。',
+    prompt: '【問題5 文法】正しい助詞を入れてください: 私はバス【_____】学校へ行きます。',
     options: ['に', 'で', 'を', 'が'],
     correctAnswer: 'で',
     explanation: '交通手段(by means of transport)を表す助詞は「で」を使います。',
   },
   {
-    id: 'jp_n5_6',
+    id: 'jp_n5_1_6',
     level: 'N5',
+    mockSet: 'N5_SET_1',
     type: 'FILL_BLANK',
-    prompt: '【問題6】文法: 部屋に田中さん【_____】います。',
+    prompt: '【問題6 文法】適切な助詞を入れてください: 部屋に田中さん【_____】います。',
     options: ['が', 'を', 'へ', 'で'],
     correctAnswer: 'が',
     explanation: '人や動物の存在を表す文(There is someone)の主語には「が」を使います。',
   },
   {
-    id: 'jp_n5_7',
+    id: 'jp_n5_1_7',
     level: 'N5',
+    mockSet: 'N5_SET_1',
     type: 'FILL_BLANK',
-    prompt: '【問題7】文法の順番 (★に入る言葉): 昨日 映画【 ___ 】【 ___ 】【 ★ 】【 ___ 】。',
+    prompt: '【問題7 文法★並べ替え】文法の順番 (★に入る言葉): 昨日 映画【 ___ 】【 ___ 】【 ★ 】【 ___ 】。',
     options: ['を', '見に', '行きました', '映画館へ'],
     correctAnswer: '行きました',
     explanation: '文の正しい順番: 「昨日 映画を 映画館へ 見に 行きました。」★の位置は「行きました」。',
   },
   {
-    id: 'jp_n5_8',
+    id: 'jp_n5_1_8',
     level: 'N5',
+    mockSet: 'N5_SET_1',
     type: 'MULTIPLE_CHOICE',
-    prompt: '【問題8】読解(Short Reading): 「マリアさんは毎朝7時に起きて、コーヒーを飲みます。それから8時にバスで会社へ行きます。」マリアさんは何で会社へ行きますか。',
+    prompt: '【問題8 読解】「マリアさんは毎朝7時に起きて、コーヒーを飲みます。それから8時にバスで会社へ行きます。」マリアさんは何で会社へ行きますか。',
     options: ['電車', 'バス', '自転車', '歩いて'],
     correctAnswer: 'バス',
     explanation: '文章に「8時にバスで会社へ行きます」と書いてあります。',
   },
-
-  // --- Section 3: Listening (聴解) ---
   {
-    id: 'jp_n5_9',
+    id: 'jp_n5_1_9',
     level: 'N5',
+    mockSet: 'N5_SET_1',
     type: 'LISTENING',
     prompt: '【問題9 聴解】音声を聞いて、男の人と女の人が何時に会うか選んでください。',
     audioUrl: '/audio/n5/minna_shokyu_1_001.mp3',
@@ -107,8 +129,9 @@ const JAPANESE_QUESTIONS: ExamQuestion[] = [
     explanation: '音声トラック「10時半に会いましょう」より、正解は10時半です。',
   },
   {
-    id: 'jp_n5_10',
+    id: 'jp_n5_1_10',
     level: 'N5',
+    mockSet: 'N5_SET_1',
     type: 'LISTENING',
     prompt: '【問題10 聴解】会話を聞いて、女の人は何を注文しましたか。',
     audioUrl: '/audio/n5/minna_shokyu_1_002.mp3',
@@ -118,79 +141,188 @@ const JAPANESE_QUESTIONS: ExamQuestion[] = [
   },
 
   // ==========================================
-  // JLPT N4 QUESTION SET
+  // JLPT N5 MOCK TEST SET 2 (模擬試験 2)
   // ==========================================
-  // --- Section 1: Kanji & Vocabulary (文字・語彙) ---
   {
-    id: 'jp_n4_1',
-    level: 'N4',
+    id: 'jp_n5_2_1',
+    level: 'N5',
+    mockSet: 'N5_SET_2',
     type: 'MULTIPLE_CHOICE',
-    prompt: '【問題1】下線の言葉の読み方を選んでください: 旅行の【準備】をします。',
+    prompt: '【問題1 文字・語彙】下線の言葉のひらがなを選んでください: 田中さんは【来週】日本へ来ます。',
+    options: ['らいしゅう', 'こんしゅう', 'せんしゅう', 'まいしゅう'],
+    correctAnswer: 'らいしゅう',
+    explanation: '「来週」の読み方は「らいしゅう」(Next week)です。',
+  },
+  {
+    id: 'jp_n5_2_2',
+    level: 'N5',
+    mockSet: 'N5_SET_2',
+    type: 'MULTIPLE_CHOICE',
+    prompt: '【問題2 文字・語彙】下線の漢字を選んでください: 昨日は【あめ】がふりました。',
+    options: ['雨', '天', '雪', '水'],
+    correctAnswer: '雨',
+    explanation: '「あめ」(Rain)の漢字は「雨」です。',
+  },
+  {
+    id: 'jp_n5_2_3',
+    level: 'N5',
+    mockSet: 'N5_SET_2',
+    type: 'MULTIPLE_CHOICE',
+    prompt: '【問題3 文字・語彙】反対の言葉を選んでください: 「たかい (高い)」の対義語は何ですか。',
+    options: ['ひくい', 'みじかい', 'ちいさい', 'おそい'],
+    correctAnswer: 'ひくい',
+    explanation: '「高い」(High/Expensive)の対義語は「低い」(Low)です。',
+  },
+  {
+    id: 'jp_n5_2_4',
+    level: 'N5',
+    mockSet: 'N5_SET_2',
+    type: 'MULTIPLE_CHOICE',
+    prompt: '【問題4 文字・語彙】適切な言葉を選んでください: デパートで新しい服を【_____】。',
+    options: ['かいました', 'ききました', 'あいました', 'いいました'],
+    correctAnswer: 'かいました',
+    explanation: '服を買う (Bought new clothes at the department store).',
+  },
+  {
+    id: 'jp_n5_2_5',
+    level: 'N5',
+    mockSet: 'N5_SET_2',
+    type: 'FILL_BLANK',
+    prompt: '【問題5 文法】正しい助詞を入れてください: 日曜日に友達【_____】映画を見に行きます。',
+    options: ['と', 'に', 'へ', 'を'],
+    correctAnswer: 'と',
+    explanation: '「〜と一緒に」(Together with)を表す助詞は「と」です。',
+  },
+  {
+    id: 'jp_n5_2_6',
+    level: 'N5',
+    mockSet: 'N5_SET_2',
+    type: 'FILL_BLANK',
+    prompt: '【問題6 文法】文法: ここで写真を【_____】もいいですか。 (Permission ~てもいい)',
+    options: ['とっ', 'とる', 'とり', 'とって'],
+    correctAnswer: 'とって',
+    explanation: '動詞て形 ＋ もいいですか (May I take photos here?). 「撮って」が正解です。',
+  },
+  {
+    id: 'jp_n5_2_7',
+    level: 'N5',
+    mockSet: 'N5_SET_2',
+    type: 'FILL_BLANK',
+    prompt: '【問題7 文法】文法: 会議は9時【_____】12時まで行われます。',
+    options: ['から', 'まで', 'に', 'で'],
+    correctAnswer: 'から',
+    explanation: '時間の起点(From 9 o\'clock)を表す助詞は「から」です。',
+  },
+  {
+    id: 'jp_n5_2_8',
+    level: 'N5',
+    mockSet: 'N5_SET_2',
+    type: 'MULTIPLE_CHOICE',
+    prompt: '【問題8 読解】「山田さんは日本語の先生です。月曜日から金曜日まで大学で教えます。土曜日と日曜日は休みです。」山田さんはいつ休みですか。',
+    options: ['月曜日', '金曜日', '土曜日と日曜日', '毎日'],
+    correctAnswer: '土曜日と日曜日',
+    explanation: '文章に「土曜日と日曜日は休みです」と書かれています。',
+  },
+  {
+    id: 'jp_n5_2_9',
+    level: 'N5',
+    mockSet: 'N5_SET_2',
+    type: 'LISTENING',
+    prompt: '【問題9 聴解】音声を聞いて、明日の天気はどうなりますか。',
+    audioUrl: '/audio/n5/minna_shokyu_1_004.mp3',
+    options: ['はれ', 'あめ', 'くもり', 'ゆき'],
+    correctAnswer: 'あめ',
+    explanation: '音声会話の天気予報「明日は雨が降るでしょう」より正解は「あめ」です。',
+  },
+  {
+    id: 'jp_n5_2_10',
+    level: 'N5',
+    mockSet: 'N5_SET_2',
+    type: 'LISTENING',
+    prompt: '【問題10 聴解】会話を聞いて、男の人は何で学校へ行きますか。',
+    audioUrl: '/audio/n5/minna_shokyu_1_005.mp3',
+    options: ['でんしゃ', 'バス', 'じてんしゃ', 'あるいて'],
+    correctAnswer: 'じてんしゃ',
+    explanation: '会話の「自転車で通っています」より正解は「じてんしゃ」です。',
+  },
+
+  // ==========================================
+  // JLPT N4 QUESTION SET (模擬試験 N4)
+  // ==========================================
+  {
+    id: 'jp_n4_1_1',
+    level: 'N4',
+    mockSet: 'N4_SET_1',
+    type: 'MULTIPLE_CHOICE',
+    prompt: '【問題1 文字・語彙】下線の言葉の読み方を選んでください: 旅行の【準備】をします。',
     options: ['じゅんび', 'しょんび', 'じゅうび', 'ちゅんび'],
     correctAnswer: 'じゅんび',
     explanation: '「準備」の読み方は「じゅんび」(Preparation)です。',
   },
   {
-    id: 'jp_n4_2',
+    id: 'jp_n4_1_2',
     level: 'N4',
+    mockSet: 'N4_SET_1',
     type: 'MULTIPLE_CHOICE',
-    prompt: '【問題2】下線の漢字を選んでください: 部屋を【かたづけます】。',
+    prompt: '【問題2 文字・語彙】下線の漢字を選んでください: 部屋を【かたづけます】。',
     options: ['片付けます', '形付けます', '方付けます', '向付けます'],
     correctAnswer: '片付けます',
     explanation: '「かたづける」(Tidy up)の漢字は「片付ける」です。',
   },
   {
-    id: 'jp_n4_3',
+    id: 'jp_n4_1_3',
     level: 'N4',
+    mockSet: 'N4_SET_1',
     type: 'MULTIPLE_CHOICE',
-    prompt: '【問題3】反対の意味の言葉を選んでください: 「複雑(ふくざつ)」の対義語',
+    prompt: '【問題3 文字・語彙】反対の意味の言葉を選んでください: 「複雑(ふくざつ)」の対義語',
     options: ['簡単', '親切', '便利', '賑やか'],
     correctAnswer: '簡単',
     explanation: '「複雑」(Complex)の反対語は「簡単」(Simple)です。',
   },
-
-  // --- Section 2: Grammar & Reading (文法・読解) ---
   {
-    id: 'jp_n4_4',
+    id: 'jp_n4_1_4',
     level: 'N4',
+    mockSet: 'N4_SET_1',
     type: 'FILL_BLANK',
-    prompt: '【問題4】適切な文法を選んでください: 雨が_____そうだから、傘を持っていきましょう。',
+    prompt: '【問題4 文法】適切な文法を選んでください: 雨が_____そうだから、傘を持っていきましょう。',
     options: ['ふり', 'ふって', 'ふった', 'ふりそう'],
     correctAnswer: 'ふり',
     explanation: '動詞のます形語幹 ＋ そう (It looks like it will rain).',
   },
   {
-    id: 'jp_n4_5',
+    id: 'jp_n4_1_5',
     level: 'N4',
+    mockSet: 'N4_SET_1',
     type: 'FILL_BLANK',
-    prompt: '【問題5】文法: 日本語を勉強したい_____、いい先生を紹介していただけませんか。',
+    prompt: '【問題5 文法】文法: 日本語を勉強したい_____、いい先生を紹介していただけませんか。',
     options: ['んですが', 'のに', 'ので', 'から'],
     correctAnswer: 'んですが',
     explanation: '依頼の前提を述べる「〜んですが」が最も適切です。',
   },
   {
-    id: 'jp_n4_6',
+    id: 'jp_n4_1_6',
     level: 'N4',
+    mockSet: 'N4_SET_1',
     type: 'FILL_BLANK',
-    prompt: '【問題6】文法: どんなに難しくても、最後まであきらめる_____。',
+    prompt: '【問題6 文法】文法: どんなに難しくても、最後まであきらめる_____。',
     options: ['わけにはいかない', 'はずがない', 'わけがない', 'に違いない'],
     correctAnswer: 'わけにはいかない',
     explanation: '「〜わけにはいかない」 = Cannot afford to / Must not.',
   },
   {
-    id: 'jp_n4_7',
+    id: 'jp_n4_1_7',
     level: 'N4',
+    mockSet: 'N4_SET_1',
     type: 'MULTIPLE_CHOICE',
-    prompt: '【問題7】読解(Reading): 「日本では、ゴミを捨てる時に分別しなければなりません。燃えるゴミ、燃えないゴミ、ペットボトルなどを分けて出します。」ゴミを捨てる時どうしますか。',
+    prompt: '【問題7 読解】「日本では、ゴミを捨てる時に分別しなければなりません。燃えるゴミ、燃えないゴミ、ペットボトルなどを分けて出します。」ゴミを捨てる時どうしますか。',
     options: ['一緒に捨てる', '分別して捨てる', '夜に捨てる', '海に捨てる'],
     correctAnswer: '分別して捨てる',
     explanation: '文章に「分別しなければなりません」と書かれています。',
   },
-
-  // --- Section 3: Listening (聴解) ---
   {
-    id: 'jp_n4_8',
+    id: 'jp_n4_1_8',
     level: 'N4',
+    mockSet: 'N4_SET_1',
     type: 'LISTENING',
     prompt: '【問題8 聴解】会話を聞いて、男の人は明日の朝何時に出発しますか。',
     audioUrl: '/audio/n5/minna_shokyu_1_003.mp3',
@@ -200,7 +332,7 @@ const JAPANESE_QUESTIONS: ExamQuestion[] = [
   },
 
   // ==========================================
-  // JLPT N3 & N2 EXAM SAMPLE QUESTIONS
+  // JLPT N3 & N2 SAMPLE EXAM QUESTIONS
   // ==========================================
   {
     id: 'jp_n3_1',
@@ -291,7 +423,7 @@ const KOREAN_QUESTIONS: ExamQuestion[] = [
     prompt: '다음 중 문맥상 의미가 가장 어색한 표현을 고르시오.',
     options: ['경제 성장이 가속화되고 있다', '기술 혁신이 침체되고 있다', '물가가 지속적으로 상승한다', '고용 시장이 활성화된다'],
     correctAnswer: '기술 혁신이 침체되고 있다',
-    explanation: '문맥 및 일반적 표현 비교 시 적절성을 평가합니다.',
+    explanation: '문맥 및 일반적 표현 비교 시 적절性を 평가합니다.',
   },
 ];
 
@@ -304,6 +436,10 @@ export const TimedExamEngine: React.FC<TimedExamEngineProps> = ({
   activeLanguage = 'JAPANESE',
   onCompleteExam,
 }) => {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [isFullscreen, setIsFullscreen] = useState(false);
+
+  const [selectedMockSet, setSelectedMockSet] = useState<string>('N5_SET_1');
   const [selectedLevelFilter, setSelectedLevelFilter] = useState<string>('ALL');
   const [currentIndex, setCurrentIndex] = useState(0);
   const [selectedAnswers, setSelectedAnswers] = useState<Record<string, string>>({});
@@ -314,9 +450,43 @@ export const TimedExamEngine: React.FC<TimedExamEngineProps> = ({
 
   const allQuestions = activeLanguage === 'JAPANESE' ? JAPANESE_QUESTIONS : KOREAN_QUESTIONS;
 
-  const questions = selectedLevelFilter === 'ALL'
-    ? allQuestions
-    : allQuestions.filter(q => q.level === selectedLevelFilter);
+  const questions = allQuestions.filter((q) => {
+    if (activeLanguage === 'JAPANESE') {
+      if (selectedMockSet !== 'ALL' && q.mockSet) {
+        return q.mockSet === selectedMockSet;
+      }
+      if (selectedLevelFilter !== 'ALL') {
+        return q.level === selectedLevelFilter;
+      }
+    } else {
+      if (selectedLevelFilter !== 'ALL') {
+        return q.level === selectedLevelFilter;
+      }
+    }
+    return true;
+  });
+
+  const toggleFullscreen = () => {
+    if (!isFullscreen) {
+      if (containerRef.current?.requestFullscreen) {
+        containerRef.current.requestFullscreen().catch(() => {});
+      }
+      setIsFullscreen(true);
+    } else {
+      if (document.fullscreenElement) {
+        document.exitFullscreen().catch(() => {});
+      }
+      setIsFullscreen(false);
+    }
+  };
+
+  useEffect(() => {
+    const handleFsChange = () => {
+      setIsFullscreen(Boolean(document.fullscreenElement));
+    };
+    document.addEventListener('fullscreenchange', handleFsChange);
+    return () => document.removeEventListener('fullscreenchange', handleFsChange);
+  }, []);
 
   useEffect(() => {
     setCurrentIndex(0);
@@ -325,6 +495,9 @@ export const TimedExamEngine: React.FC<TimedExamEngineProps> = ({
     setSecondsRemaining(50 * 60);
     setIsSubmitted(false);
     setAudioPlaysCount({});
+    if (activeLanguage === 'JAPANESE') {
+      setSelectedMockSet('N5_SET_1');
+    }
     setSelectedLevelFilter('ALL');
   }, [activeLanguage]);
 
@@ -373,7 +546,6 @@ export const TimedExamEngine: React.FC<TimedExamEngineProps> = ({
     if (currentQ.audioUrl) {
       const audio = new Audio(currentQ.audioUrl);
       audio.play().catch(() => {
-        // Fallback to speech synthesis if audio file loading fails
         if ('speechSynthesis' in window) {
           const utterance = new SpeechSynthesisUtterance(currentQ.prompt);
           utterance.lang = activeLanguage === 'JAPANESE' ? 'ja-JP' : 'ko-KR';
@@ -411,7 +583,14 @@ export const TimedExamEngine: React.FC<TimedExamEngineProps> = ({
   };
 
   return (
-    <div className="w-full max-w-5xl mx-auto font-sans space-y-4 sm:space-y-6">
+    <div
+      ref={containerRef}
+      className={`w-full font-sans transition-all duration-300 ${
+        isFullscreen
+          ? 'fixed inset-0 z-50 overflow-y-auto bg-slate-950 p-4 sm:p-8 space-y-4'
+          : 'max-w-5xl mx-auto space-y-4 sm:space-y-6'
+      }`}
+    >
       {/* Top Header Bar */}
       <div className="bg-slate-900/95 backdrop-blur-xl border border-slate-800 rounded-2xl sm:rounded-3xl p-3.5 sm:p-5 shadow-2xl flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
         <div>
@@ -427,6 +606,17 @@ export const TimedExamEngine: React.FC<TimedExamEngineProps> = ({
         </div>
 
         <div className="flex items-center justify-between sm:justify-end gap-3 pt-2 sm:pt-0 border-t sm:border-t-0 border-slate-800">
+          {/* Full Screen Mode Toggle Button */}
+          <button
+            onClick={toggleFullscreen}
+            className="flex items-center gap-1.5 px-3 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white border border-slate-700 text-xs font-bold transition-all"
+            title={isFullscreen ? 'Exit Full Screen' : 'Enter Full Screen Exam Mode'}
+          >
+            {isFullscreen ? <Minimize2 className="w-4 h-4 text-amber-400" /> : <Maximize2 className="w-4 h-4 text-indigo-400" />}
+            <span className="hidden sm:inline">{isFullscreen ? 'Exit Full Screen' : 'Full Screen'}</span>
+          </button>
+
+          {/* Timer Display */}
           <div
             className={`flex items-center gap-2 px-3 sm:px-4 py-1.5 sm:py-2 rounded-xl sm:rounded-2xl border transition-all ${
               secondsRemaining < 300
@@ -449,24 +639,99 @@ export const TimedExamEngine: React.FC<TimedExamEngineProps> = ({
         </div>
       </div>
 
+      {/* Mock Test Selection Selector (Japanese) */}
+      {activeLanguage === 'JAPANESE' && (
+        <div className="bg-slate-900/90 backdrop-blur-xl border border-slate-800 rounded-2xl sm:rounded-3xl p-3.5 sm:p-4 shadow-xl flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
+          <div className="flex items-center gap-2">
+            <ListFilter className="w-4 h-4 text-indigo-400" />
+            <span className="text-xs font-bold text-slate-300 uppercase tracking-wider">Select Mock Exam Set:</span>
+          </div>
+          <div className="flex flex-wrap gap-2">
+            <button
+              onClick={() => {
+                setSelectedMockSet('N5_SET_1');
+                setSelectedLevelFilter('ALL');
+                setCurrentIndex(0);
+              }}
+              className={`px-3 sm:px-4 py-1.5 sm:py-2 rounded-xl text-xs font-black transition-all ${
+                selectedMockSet === 'N5_SET_1'
+                  ? 'bg-gradient-to-r from-rose-600 to-pink-600 text-white shadow-glow'
+                  : 'bg-slate-950 text-slate-400 hover:text-white border border-slate-800'
+              }`}
+            >
+              📝 JLPT N5 Mock Test Set 1
+            </button>
+            <button
+              onClick={() => {
+                setSelectedMockSet('N5_SET_2');
+                setSelectedLevelFilter('ALL');
+                setCurrentIndex(0);
+              }}
+              className={`px-3 sm:px-4 py-1.5 sm:py-2 rounded-xl text-xs font-black transition-all ${
+                selectedMockSet === 'N5_SET_2'
+                  ? 'bg-gradient-to-r from-rose-600 to-pink-600 text-white shadow-glow'
+                  : 'bg-slate-950 text-slate-400 hover:text-white border border-slate-800'
+              }`}
+            >
+              📝 JLPT N5 Mock Test Set 2
+            </button>
+            <button
+              onClick={() => {
+                setSelectedMockSet('N4_SET_1');
+                setSelectedLevelFilter('ALL');
+                setCurrentIndex(0);
+              }}
+              className={`px-3 sm:px-4 py-1.5 sm:py-2 rounded-xl text-xs font-black transition-all ${
+                selectedMockSet === 'N4_SET_1'
+                  ? 'bg-gradient-to-r from-indigo-600 to-purple-600 text-white shadow-glow'
+                  : 'bg-slate-950 text-slate-400 hover:text-white border border-slate-800'
+              }`}
+            >
+              📝 JLPT N4 Mock Test
+            </button>
+            <button
+              onClick={() => {
+                setSelectedMockSet('ALL');
+                setSelectedLevelFilter('ALL');
+                setCurrentIndex(0);
+              }}
+              className={`px-3 sm:px-4 py-1.5 sm:py-2 rounded-xl text-xs font-black transition-all ${
+                selectedMockSet === 'ALL'
+                  ? 'bg-slate-800 text-white'
+                  : 'bg-slate-950 text-slate-400 hover:text-white border border-slate-800'
+              }`}
+            >
+              🌐 All Questions Pool
+            </button>
+          </div>
+        </div>
+      )}
+
       {/* Level Selector Bar */}
       <div className="flex items-center gap-1.5 sm:gap-2 bg-slate-900/80 p-1.5 sm:p-2 rounded-xl sm:rounded-2xl border border-slate-800 flex-wrap">
         <span className="text-[11px] sm:text-xs font-bold text-slate-400 px-1.5 flex items-center gap-1">
-          <Layers className="w-3.5 h-3.5" /> Level:
+          <Layers className="w-3.5 h-3.5" /> Filter Level:
         </span>
         <button
-          onClick={() => { setSelectedLevelFilter('ALL'); setCurrentIndex(0); }}
+          onClick={() => {
+            setSelectedLevelFilter('ALL');
+            setCurrentIndex(0);
+          }}
           className={`px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-lg sm:rounded-xl text-[11px] sm:text-xs font-bold transition-all ${
             selectedLevelFilter === 'ALL' ? 'bg-indigo-600 text-white' : 'bg-slate-950 text-slate-400 hover:text-white'
           }`}
         >
-          All Levels
+          All
         </button>
         {activeLanguage === 'JAPANESE' ? (
-          ['N5', 'N4', 'N3', 'N2'].map(lvl => (
+          ['N5', 'N4', 'N3', 'N2'].map((lvl) => (
             <button
               key={lvl}
-              onClick={() => { setSelectedLevelFilter(lvl); setCurrentIndex(0); }}
+              onClick={() => {
+                setSelectedLevelFilter(lvl);
+                setSelectedMockSet('ALL');
+                setCurrentIndex(0);
+              }}
               className={`px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-lg sm:rounded-xl text-[11px] sm:text-xs font-bold transition-all ${
                 selectedLevelFilter === lvl ? 'bg-rose-600 text-white' : 'bg-slate-950 text-slate-400 hover:text-white'
               }`}
@@ -475,10 +740,13 @@ export const TimedExamEngine: React.FC<TimedExamEngineProps> = ({
             </button>
           ))
         ) : (
-          ['EPS', 'TOPIK2', 'TOPIK3', 'TOPIK4'].map(lvl => (
+          ['EPS', 'TOPIK2', 'TOPIK3', 'TOPIK4'].map((lvl) => (
             <button
               key={lvl}
-              onClick={() => { setSelectedLevelFilter(lvl); setCurrentIndex(0); }}
+              onClick={() => {
+                setSelectedLevelFilter(lvl);
+                setCurrentIndex(0);
+              }}
               className={`px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-lg sm:rounded-xl text-[11px] sm:text-xs font-bold transition-all ${
                 selectedLevelFilter === lvl ? 'bg-emerald-600 text-white' : 'bg-slate-950 text-slate-400 hover:text-white'
               }`}
@@ -491,7 +759,7 @@ export const TimedExamEngine: React.FC<TimedExamEngineProps> = ({
 
       {/* Main Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        {currentQ && (
+        {currentQ ? (
           <div className="lg:col-span-2 bg-slate-900/90 border border-slate-800 rounded-3xl p-6 shadow-xl flex flex-col justify-between min-h-[420px]">
             <div>
               <div className="flex items-center justify-between pb-4 mb-4 border-b border-slate-800">
@@ -603,6 +871,10 @@ export const TimedExamEngine: React.FC<TimedExamEngineProps> = ({
                 Next <ChevronRight className="w-4 h-4" />
               </button>
             </div>
+          </div>
+        ) : (
+          <div className="lg:col-span-2 bg-slate-900/90 border border-slate-800 rounded-3xl p-8 text-center text-slate-400">
+            No questions available for this selection.
           </div>
         )}
 
