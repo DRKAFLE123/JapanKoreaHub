@@ -3318,6 +3318,8 @@ export const TimedExamEngine: React.FC<TimedExamEngineProps> = ({
 
   // 2-Paper Official JLPT Structure (0: Paper 1 [Vocab/Grammar/Reading], 1: Paper 2 [Listening])
   const [currentPaperIndex, setCurrentPaperIndex] = useState<number>(0);
+  const [currentJftSectionIndex, setCurrentJftSectionIndex] = useState<number>(0);
+  const [showJftSectionLockModal, setShowJftSectionLockModal] = useState<boolean>(false);
   const [paper1Submitted, setPaper1Submitted] = useState<boolean>(false);
   
   // Modal States
@@ -3340,7 +3342,8 @@ export const TimedExamEngine: React.FC<TimedExamEngineProps> = ({
     totalQuestions: number;
     passed: boolean;
     timeSpentSeconds: number;
-    jftScore?: number; // Out of 250 points
+    jftScore?: number;
+    cefrRank?: string; // Out of 250 points
     jftSections?: { sectionTitle: string; correct: number; total: number; pts: number }[];
     paper1Score?: { correct: number; total: number; percentage: number };
     paper2Score?: { correct: number; total: number; percentage: number };
@@ -3357,12 +3360,18 @@ export const TimedExamEngine: React.FC<TimedExamEngineProps> = ({
 
   // Filter questions according to current paper (JLPT) vs CBT (JFT)
   const currentPaperQuestions = React.useMemo(() => {
-    if (!selectedMockTest || selectedMockTest.language !== 'JAPANESE' || rawQuestions.length < 40 || isJFT) {
+    if (!selectedMockTest || selectedMockTest.language !== 'JAPANESE' || rawQuestions.length < 40) {
       return rawQuestions;
+    }
+    if (isJFT) {
+      if (currentJftSectionIndex === 0) return rawQuestions.slice(0, 12);  // Sec 1: Script & Vocab
+      if (currentJftSectionIndex === 1) return rawQuestions.slice(12, 24); // Sec 2: Conversation
+      if (currentJftSectionIndex === 2) return rawQuestions.slice(24, 36); // Sec 3: Listening
+      return rawQuestions.slice(36); // Sec 4: Reading
     }
     if (currentPaperIndex === 0) return rawQuestions.slice(0, 36); // Paper 1: Vocab + Grammar + Reading (Q1 to Q36)
     return rawQuestions.slice(36); // Paper 2: Audio Listening (Q37 to Q44)
-  }, [rawQuestions, currentPaperIndex, selectedMockTest, isJFT]);
+  }, [rawQuestions, currentPaperIndex, currentJftSectionIndex, selectedMockTest, isJFT]);
 
   const questions = currentPaperQuestions;
 
@@ -3405,6 +3414,8 @@ export const TimedExamEngine: React.FC<TimedExamEngineProps> = ({
     stopCurrentAudio();
     setSelectedMockTest(test);
     setCurrentPaperIndex(0);
+    setCurrentJftSectionIndex(0);
+    setShowJftSectionLockModal(false);
     setPaper1Submitted(false);
     setCurrentIndex(0);
     setSelectedAnswers({});
@@ -3627,6 +3638,11 @@ export const TimedExamEngine: React.FC<TimedExamEngineProps> = ({
       const jftPoints = Math.max(10, Math.min(250, jftSec1.pts + jftSec2.pts + jftSec3.pts + jftSec4.pts));
       const passed = jftPoints >= 200;
 
+      let cefrRank = 'Below A1 (Unranked)';
+      if (jftPoints >= 200) cefrRank = 'A2.2 Level (SSW Visa Qualified 🎉)';
+      else if (jftPoints >= 175) cefrRank = 'A2.1 Level (Elementary)';
+      else if (jftPoints >= 145) cefrRank = 'A1 Level (Basic Beginner)';
+
       setExamResult({
         score: percentage,
         correctCount,
@@ -3634,6 +3650,7 @@ export const TimedExamEngine: React.FC<TimedExamEngineProps> = ({
         passed,
         timeSpentSeconds: Math.max(1, timeSpentSeconds),
         jftScore: jftPoints,
+        cefrRank,
         jftSections: [jftSec1, jftSec2, jftSec3, jftSec4]
       });
 
@@ -3882,7 +3899,49 @@ export const TimedExamEngine: React.FC<TimedExamEngineProps> = ({
         </div>
       )}
 
-      {/* Exit Confirmation Modal Prompt */}
+            {/* Official JFT CBT Section Lock Confirmation Modal */}
+      {showJftSectionLockModal && (
+        <div className="fixed inset-0 z-50 bg-slate-950/90 backdrop-blur-md flex items-center justify-center p-4 animate-fade-in">
+          <div className="bg-slate-900 border border-slate-800 rounded-3xl p-6 max-w-md w-full shadow-2xl space-y-4 text-center">
+            <div className="w-16 h-16 rounded-2xl bg-cyan-500/20 text-cyan-400 border border-cyan-500/30 flex items-center justify-center text-3xl mx-auto shadow-glow">
+              🔒
+            </div>
+            <div>
+              <div className="inline-block px-3 py-1 rounded-full bg-cyan-500/20 text-cyan-300 border border-cyan-500/30 text-xs font-black uppercase tracking-wider mb-2">
+                Prometric CBT Section Lock
+              </div>
+              <h3 className="text-xl font-black text-white">
+                Complete & Seal Section {currentJftSectionIndex + 1}?
+              </h3>
+              <p className="text-xs text-slate-300 mt-2 leading-relaxed">
+                Official Prometric Rule: Once you submit and advance past Section {currentJftSectionIndex + 1}, your answers in this section will be permanently locked and cannot be edited.
+              </p>
+            </div>
+            <div className="space-y-2 pt-2">
+              <button
+                onClick={() => {
+                  stopCurrentAudio();
+                  setShowJftSectionLockModal(false);
+                  setCurrentJftSectionIndex((prev) => prev + 1);
+                  setCurrentIndex(0);
+                }}
+                className="w-full py-3.5 rounded-2xl bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-500 hover:to-blue-500 text-white font-black text-xs shadow-glow transition-all flex items-center justify-center gap-2 cursor-pointer text-sm"
+              >
+                <span>Lock Section {currentJftSectionIndex + 1} & Proceed to Section {currentJftSectionIndex + 2} 🔒 ➔</span>
+              </button>
+
+              <button
+                onClick={() => setShowJftSectionLockModal(false)}
+                className="w-full py-2.5 rounded-2xl bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold text-xs transition-all cursor-pointer"
+              >
+                Review Section {currentJftSectionIndex + 1} Questions
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+{/* Exit Confirmation Modal Prompt */}
       {showExitConfirmModal && (
         <div className="fixed inset-0 z-50 bg-slate-950/85 backdrop-blur-md flex items-center justify-center p-4">
           <div className="bg-slate-900 border border-slate-800 rounded-3xl p-6 sm:p-8 max-w-md w-full shadow-2xl space-y-5">
@@ -3957,7 +4016,10 @@ export const TimedExamEngine: React.FC<TimedExamEngineProps> = ({
               )}
               {isJFT && (
                 <span className="px-2 py-0.5 rounded-md bg-cyan-600/30 text-cyan-300 border border-cyan-500/40 text-[10px] font-bold">
-                  Prometric CBT Interface
+                  {currentJftSectionIndex === 0 && 'Sec 1: 文字・語彙 (Script & Vocab)'}
+                  {currentJftSectionIndex === 1 && 'Sec 2: 会話・表現 (Conversation)'}
+                  {currentJftSectionIndex === 2 && 'Sec 3: 聴解 (Listening)'}
+                  {currentJftSectionIndex === 3 && 'Sec 4: 読解 (Reading)'}
                 </span>
               )}
             </div>
@@ -3992,10 +4054,21 @@ export const TimedExamEngine: React.FC<TimedExamEngineProps> = ({
 
           {!isSubmitted && (
             <button
-              onClick={currentPaperIndex === 0 && rawQuestions.length >= 40 && !isJFT ? handleFinishPaper1 : handleSubmitExam}
-              className="px-4 py-1.5 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-bold text-xs shadow-glow transition-all cursor-pointer"
+              onClick={() => {
+                if (isJFT) {
+                  if (currentJftSectionIndex < 3) setShowJftSectionLockModal(true);
+                  else handleSubmitExam();
+                } else if (currentPaperIndex === 0 && rawQuestions.length >= 40) {
+                  handleFinishPaper1();
+                } else {
+                  handleSubmitExam();
+                }
+              }}
+              className="px-4 py-1.5 rounded-xl bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-500 hover:to-blue-500 text-white font-bold text-xs shadow-glow transition-all cursor-pointer"
             >
-              {currentPaperIndex === 0 && rawQuestions.length >= 40 && !isJFT ? 'Submit Paper 1 ➔' : 'Submit Final Exam 🏁'}
+              {isJFT
+                ? (currentJftSectionIndex < 3 ? `Lock Section ${currentJftSectionIndex + 1} 🔒 ➔` : 'Submit Final CBT Exam 🏁')
+                : (currentPaperIndex === 0 && rawQuestions.length >= 40 ? 'Submit Paper 1 ➔' : 'Submit Final Exam 🏁')}
             </button>
           )}
         </div>
@@ -4037,7 +4110,7 @@ export const TimedExamEngine: React.FC<TimedExamEngineProps> = ({
                     }`}
                   >
                     {isJFT
-                      ? (examResult.passed ? '★ CEFR A2 Level • SSW Visa Eligible (200+ Pts)' : 'Below 200 Pts Benchmark')
+                      ? `★ ${examResult.cefrRank || (examResult.passed ? 'A2.2 Level • SSW Visa Qualified (200+ Pts)' : 'Below 200 Pts Benchmark')}`
                       : (examResult.passed ? '★ JLPT Certificate Eligible' : 'Retake Practice Advised')}
                   </span>
                 </div>
@@ -4084,6 +4157,8 @@ export const TimedExamEngine: React.FC<TimedExamEngineProps> = ({
                   setSelectedAnswers({});
                   setFlaggedQuestions({});
                   setCurrentPaperIndex(0);
+    setCurrentJftSectionIndex(0);
+    setShowJftSectionLockModal(false);
                   setPaper1Submitted(false);
                   setSecondsRemaining((selectedMockTest?.timeLimitMinutes || 60) * 60);
                   setCurrentIndex(0);
