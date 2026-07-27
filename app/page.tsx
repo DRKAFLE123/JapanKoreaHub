@@ -5,7 +5,7 @@ import {
   Flame, Wifi, WifiOff, BookOpen, Headphones,
   Clock, Layers, Calendar, ShieldCheck, Globe, Sparkles,
   User, LogOut, LogIn, UserPlus, ArrowLeft, CheckCircle2, Award, X, ChevronRight,
-  Zap, Menu, Compass, Settings, Radio
+  Zap, Menu,
 } from 'lucide-react';
 import { KanjiCard } from '@/components/KanjiCard';
 import { AlphabetGrid } from '@/components/AlphabetGrid';
@@ -160,7 +160,7 @@ const AuthModal: React.FC<AuthModalProps> = ({
 );
 
 /* ──────────────────────────────────────────────────────────────
-   SHARED HEADER
+   SHARED HEADER (Single Top-Left Hamburger Menu Button)
 ────────────────────────────────────────────────────────────── */
 interface SharedHeaderProps {
   viewMode: ViewMode;
@@ -183,15 +183,16 @@ const SharedHeader: React.FC<SharedHeaderProps> = ({
   <header className="sticky top-0 z-40 bg-slate-950/90 backdrop-blur-xl border-b border-slate-800/80 px-3 sm:px-6 py-2.5 sm:py-3">
     <div className="max-w-7xl mx-auto flex items-center justify-between gap-2">
 
-      {/* Left: hamburger + logo */}
+      {/* Left: Single official hamburger button + logo */}
       <div className="flex items-center gap-2.5">
         {viewMode !== 'LANDING' && (
           <button
             onClick={() => setDrawerOpen(true)}
-            className="sm:hidden flex items-center justify-center w-9 h-9 rounded-xl bg-slate-900 border border-slate-800 text-slate-300 hover:text-white transition-all flex-shrink-0 active:scale-95"
+            className="flex items-center justify-center w-9 h-9 rounded-xl bg-slate-900 border border-slate-800 text-slate-300 hover:text-white transition-all flex-shrink-0 active:scale-95 shadow-sm"
             aria-label="Open navigation menu"
+            title="Open Drawer Menu"
           >
-            <Menu className="w-5 h-5" />
+            <Menu className="w-5 h-5 text-rose-400" />
           </button>
         )}
         <button onClick={() => setViewMode('LANDING')} className="flex items-center gap-2 group">
@@ -389,7 +390,6 @@ const MobileDrawer: React.FC<MobileDrawerProps> = ({
             </div>
 
             {learningTabs.map((tab) => {
-              const Icon = tab.icon;
               const isActive = activeTabId === tab.id;
 
               return (
@@ -428,7 +428,6 @@ const MobileDrawer: React.FC<MobileDrawerProps> = ({
             </div>
 
             {toolTabs.map((tab) => {
-              const Icon = tab.icon;
               const isActive = activeTabId === tab.id;
 
               return (
@@ -721,9 +720,9 @@ export default function HomePage() {
         openLogin={openLogin} openSignup={openSignup} handleLogout={handleLogout}
       />
 
-      {/* Desktop tab bar */}
-      <div className="hidden sm:block sticky top-[68px] z-30 bg-slate-950/95 backdrop-blur-md border-b border-slate-800/60 px-6">
-        <div className="max-w-7xl mx-auto py-2.5 flex items-center gap-2 overflow-x-auto scrollbar-none">
+      {/* Horizontal Scrollable Tab Bar (Mobile + Desktop) */}
+      <div className="sticky top-[57px] sm:top-[68px] z-30 bg-slate-950/95 backdrop-blur-md border-b border-slate-800/60 px-3 sm:px-6">
+        <div className="max-w-7xl mx-auto py-2 sm:py-2.5 flex items-center gap-1.5 sm:gap-2 overflow-x-auto scrollbar-none">
           {tabs.map(tab => {
             const Icon = tab.icon;
             const isActive = activeTab === tab.id;
@@ -732,40 +731,18 @@ export default function HomePage() {
                 key={tab.id}
                 onClick={() => isJapanese ? handleJpTabClick(tab.id) : handleKrTabClick(tab.id)}
                 title={tab.label}
-                className={`px-4 py-2 rounded-xl text-xs font-extrabold transition-all whitespace-nowrap flex items-center gap-2 border flex-shrink-0 ${
+                className={`px-3 sm:px-4 py-1.5 sm:py-2 rounded-xl text-[11px] sm:text-xs font-extrabold transition-all whitespace-nowrap flex items-center gap-1.5 sm:gap-2 border flex-shrink-0 ${
                   isActive
                     ? `${accentActive} text-white shadow-glow`
                     : 'bg-slate-900/80 hover:bg-slate-800 border-slate-800 text-slate-400 hover:text-white'
                 }`}
               >
-                <Icon className="w-4 h-4 flex-shrink-0" />
+                <Icon className="w-3.5 h-3.5 sm:w-4 sm:h-4 flex-shrink-0" />
                 <span>{tab.label}</span>
               </button>
             );
           })}
         </div>
-      </div>
-
-      {/* Mobile: current tab tap-to-open bar */}
-      <div className="sm:hidden sticky top-[57px] z-30 bg-slate-950/95 backdrop-blur-md border-b border-slate-800/60 px-3 py-2">
-        <button
-          onClick={() => setDrawerOpen(true)}
-          className={`w-full flex items-center justify-between gap-3 px-4 py-2.5 rounded-2xl border transition-all shadow-md active:scale-98 ${
-            isJapanese ? 'bg-rose-950/40 border-rose-500/30 text-rose-300' : 'bg-emerald-950/40 border-emerald-500/30 text-emerald-300'
-          }`}
-        >
-          <div className="flex items-center gap-2.5">
-            <span className="text-lg">{activeDef?.emoji}</span>
-            <div className="text-left">
-              <div className="text-xs font-black text-white">{activeDef?.label}</div>
-              <div className="text-[10px] text-slate-400 truncate max-w-[190px]">{activeDef?.sublabel}</div>
-            </div>
-          </div>
-          <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-xl bg-slate-900 border border-slate-700 text-[10px] font-extrabold text-white">
-            <Menu className="w-3.5 h-3.5 text-rose-400" />
-            <span>Menu</span>
-          </div>
-        </button>
       </div>
 
       {/* Mobile Left Drawer */}
