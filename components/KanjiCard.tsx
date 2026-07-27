@@ -1,4 +1,3 @@
-'use me';
 'use client';
 
 import React, { useState } from 'react';
@@ -12,12 +11,19 @@ import {
   CheckCircle,
   ArrowRight,
   Award,
+  BookOpen,
+  Shuffle,
+  HelpCircle,
+  FileText
 } from 'lucide-react';
 import { calculateSM2, SrsItemState, SrsRating } from '@/lib/srs-engine';
 import { getKanjiByLevel, KanjiItem } from '@/lib/kanji-dataset';
 
+export type FlashcardMode = 'KANJI' | 'MEANING' | 'MIXED';
+
 export const KanjiCard: React.FC = () => {
   const [selectedLevel, setSelectedLevel] = useState<'N5' | 'N4' | 'N3' | 'N2'>('N5');
+  const [cardMode, setCardMode] = useState<FlashcardMode>('KANJI');
   const [currentIndex, setCurrentIndex] = useState<number>(0);
 
   const [isFlipped, setIsFlipped] = useState(false);
@@ -28,6 +34,10 @@ export const KanjiCard: React.FC = () => {
   const currentKanjiList = getKanjiByLevel(selectedLevel);
   const safeIndex = Math.min(currentIndex, Math.max(0, currentKanjiList.length - 1));
   const currentKanji: KanjiItem = currentKanjiList[safeIndex] || getKanjiByLevel('N5')[0];
+
+  // Determine if the current card displays Meaning on front (in Mixed mode, odd cards show Meaning first)
+  const isMeaningFront =
+    cardMode === 'MEANING' || (cardMode === 'MIXED' && safeIndex % 2 === 1);
 
   const strokePaths = currentKanji.strokeSvgData || [
     'M20,30 L80,30',
@@ -57,7 +67,6 @@ export const KanjiCard: React.FC = () => {
     if (safeIndex < currentKanjiList.length - 1) {
       setCurrentIndex(safeIndex + 1);
     } else {
-      // End of level Kanji queue reached
       setShowAdvanceModal(true);
     }
   };
@@ -84,8 +93,11 @@ export const KanjiCard: React.FC = () => {
 
   return (
     <div className="w-full max-w-2xl mx-auto font-sans space-y-4">
-      {/* Level Selector Bar */}
-      <div className="bg-slate-900/90 backdrop-blur-xl border border-slate-800 rounded-3xl p-4 shadow-xl flex items-center justify-between gap-3">
+
+      {/* ── TOP: Level & Mode Filter Controls ── */}
+      <div className="bg-slate-900/90 backdrop-blur-xl border border-slate-800 rounded-3xl p-4 shadow-xl space-y-3">
+        
+        {/* 1. JLPT Level Selector */}
         <div className="flex items-center gap-1.5 bg-slate-950 p-1 rounded-2xl border border-slate-800 w-full justify-around">
           {(['N5', 'N4', 'N3', 'N2'] as const).map((lvl) => (
             <button
@@ -93,9 +105,10 @@ export const KanjiCard: React.FC = () => {
               onClick={() => {
                 setSelectedLevel(lvl);
                 setCurrentIndex(0);
+                setIsFlipped(false);
                 setShowAdvanceModal(false);
               }}
-              className={`px-6 py-2 rounded-xl text-xs font-black transition-all ${
+              className={`px-4 sm:px-6 py-2 rounded-xl text-xs font-black transition-all ${
                 selectedLevel === lvl
                   ? 'bg-gradient-to-r from-indigo-600 to-purple-600 text-white shadow-glow'
                   : 'text-slate-400 hover:text-white'
@@ -105,19 +118,69 @@ export const KanjiCard: React.FC = () => {
             </button>
           ))}
         </div>
+
+        {/* 2. Flashcard Mode Selector (Kanji / Meaning / Mix) */}
+        <div className="flex items-center justify-between gap-2 pt-1 border-t border-slate-800/80">
+          <span className="text-[11px] font-bold text-slate-400 flex items-center gap-1">
+            <Filter className="w-3.5 h-3.5 text-indigo-400" /> Mode:
+          </span>
+
+          <div className="grid grid-cols-3 gap-1.5 flex-1 max-w-md">
+            <button
+              onClick={() => { setCardMode('KANJI'); setIsFlipped(false); }}
+              className={`py-1.5 px-2 rounded-xl text-xs font-extrabold transition-all flex items-center justify-center gap-1 ${
+                cardMode === 'KANJI'
+                  ? 'bg-rose-600 text-white shadow'
+                  : 'bg-slate-950 text-slate-400 hover:text-white border border-slate-800'
+              }`}
+            >
+              <BookOpen className="w-3.5 h-3.5" />
+              <span>Kanji First</span>
+            </button>
+
+            <button
+              onClick={() => { setCardMode('MEANING'); setIsFlipped(false); }}
+              className={`py-1.5 px-2 rounded-xl text-xs font-extrabold transition-all flex items-center justify-center gap-1 ${
+                cardMode === 'MEANING'
+                  ? 'bg-emerald-600 text-white shadow'
+                  : 'bg-slate-950 text-slate-400 hover:text-white border border-slate-800'
+              }`}
+            >
+              <FileText className="w-3.5 h-3.5" />
+              <span>Meaning First</span>
+            </button>
+
+            <button
+              onClick={() => { setCardMode('MIXED'); setIsFlipped(false); }}
+              className={`py-1.5 px-2 rounded-xl text-xs font-extrabold transition-all flex items-center justify-center gap-1 ${
+                cardMode === 'MIXED'
+                  ? 'bg-amber-600 text-white shadow'
+                  : 'bg-slate-950 text-slate-400 hover:text-white border border-slate-800'
+              }`}
+            >
+              <Shuffle className="w-3.5 h-3.5" />
+              <span>Mix Cards</span>
+            </button>
+          </div>
+        </div>
       </div>
 
-      {/* Dynamic Lesson Badge */}
+      {/* Dynamic Lesson & Counter Header */}
       <div className="bg-slate-900/80 backdrop-blur-md border border-slate-800 rounded-2xl p-3.5 flex items-center justify-between shadow-glow">
         <div className="flex items-center gap-3">
           <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-rose-600 to-pink-600 flex items-center justify-center text-white font-black text-xl shadow-md font-jp">
             {currentKanji.character}
           </div>
           <div>
-            <div className="text-xs font-semibold uppercase tracking-wider text-rose-400">
-              JLPT {selectedLevel} • Dynamic Lesson {currentKanji.lessonOrder}
+            <div className="flex items-center gap-2">
+              <span className="text-xs font-semibold uppercase tracking-wider text-rose-400">
+                JLPT {selectedLevel} • Lesson {currentKanji.lessonOrder}
+              </span>
+              <span className="px-2 py-0.5 rounded-md bg-slate-950 text-[10px] font-bold text-amber-400 border border-slate-800">
+                {isMeaningFront ? 'Meaning → Kanji' : 'Kanji → Meaning'}
+              </span>
             </div>
-            <div className="text-sm font-bold text-slate-100">
+            <div className="text-sm font-bold text-slate-100 mt-0.5">
               Character {safeIndex + 1} of {currentKanjiList.length}
             </div>
           </div>
@@ -141,14 +204,14 @@ export const KanjiCard: React.FC = () => {
         </div>
       </div>
 
-      {/* Kanji Card Board */}
+      {/* Flashcard Component */}
       <div className="relative group">
         <div
-          className={`w-full min-h-[460px] bg-gradient-to-b from-slate-900 via-slate-900 to-slate-950 border border-slate-800 rounded-3xl p-6 shadow-2xl transition-all duration-300 flex flex-col justify-between ${
+          className={`w-full min-h-[480px] bg-gradient-to-b from-slate-900 via-slate-900 to-slate-950 border border-slate-800 rounded-3xl p-6 shadow-2xl transition-all duration-300 flex flex-col justify-between ${
             isFlipped ? 'border-indigo-500/50 shadow-glow' : 'hover:border-slate-700'
           }`}
         >
-          {/* Card Top */}
+          {/* Card Top Control */}
           <div className="flex items-center justify-between pb-3 border-b border-slate-800/80">
             <div className="flex items-center gap-2">
               <span className="text-xs uppercase tracking-wider font-semibold text-slate-400">Radicals:</span>
@@ -170,137 +233,175 @@ export const KanjiCard: React.FC = () => {
               className="text-xs font-semibold px-3 py-1.5 rounded-xl bg-indigo-600/20 text-indigo-300 border border-indigo-500/30 hover:bg-indigo-600 hover:text-white transition-all flex items-center gap-1.5 shadow-sm"
             >
               <RotateCcw className="w-3.5 h-3.5" />
-              <span>{isFlipped ? 'Show character' : 'Flip meanings'}</span>
+              <span>{isFlipped ? 'Show Front' : 'Flip Card'}</span>
             </button>
           </div>
 
-          {/* Card Body */}
+          {/* Card Main Body */}
           {!isFlipped ? (
-            <div className="my-auto py-4 space-y-6">
-              {/* Graphic View */}
-              <div className="flex items-center justify-center gap-6">
-                <div className="relative flex items-center justify-center w-36 h-36 rounded-3xl bg-slate-950/80 border border-slate-850 shadow-inner">
-                  <div className="text-7xl font-jp font-black text-transparent bg-clip-text bg-gradient-to-tr from-white via-indigo-100 to-indigo-400 select-none">
-                    {currentKanji.character}
+            /* ============================================================ */
+            /* CARD FRONT VIEW                                              */
+            /* ============================================================ */
+            isMeaningFront ? (
+              /* MEANING-FIRST FRONT */
+              <div className="my-auto py-8 space-y-6 text-center">
+                <div className="space-y-2">
+                  <span className="text-xs font-bold uppercase tracking-wider text-emerald-400 bg-emerald-950/80 px-3 py-1 rounded-full border border-emerald-500/30 inline-block">
+                    Meaning First • What is the Kanji & Reading?
+                  </span>
+                  <h3 className="text-3xl font-black text-white pt-2">
+                    {currentKanji.meanings.join(', ')}
+                  </h3>
+                  {currentKanji.meaningsNepali && (
+                    <div className="text-lg font-bold text-amber-400">
+                      🇳🇵 नेपाली: {currentKanji.meaningsNepali.join(', ')}
+                    </div>
+                  )}
+                </div>
+
+                <div className="p-4 rounded-2xl bg-slate-950/80 border border-slate-800 text-xs text-slate-400 max-w-sm mx-auto space-y-1">
+                  <p className="font-semibold text-slate-300">💡 Challenge Yourself:</p>
+                  <p>Visualize the Kanji character and recall its Kunyomi/Onyomi readings before flipping!</p>
+                </div>
+              </div>
+            ) : (
+              /* KANJI-FIRST FRONT */
+              <div className="my-auto py-4 space-y-6">
+                <div className="flex items-center justify-center gap-6">
+                  <div className="relative flex items-center justify-center w-36 h-36 rounded-3xl bg-slate-950/80 border border-slate-850 shadow-inner">
+                    <div className="text-7xl font-jp font-black text-transparent bg-clip-text bg-gradient-to-tr from-white via-indigo-100 to-indigo-400 select-none">
+                      {currentKanji.character}
+                    </div>
+                    <button
+                      onClick={playAudio}
+                      className="absolute bottom-2 right-2 p-2 rounded-xl bg-slate-900 hover:bg-emerald-600 text-slate-400 hover:text-white transition-all border border-slate-800 shadow"
+                      title="Pronounce Kanji"
+                    >
+                      <Volume2 className="w-4 h-4" />
+                    </button>
                   </div>
+
+                  <div className="text-left space-y-1">
+                    <span className="text-xs font-bold uppercase tracking-wider text-indigo-400 block">Vocabulary Meaning</span>
+                    <h3 className="text-2xl font-black text-white">{currentKanji.meanings.slice(0, 2).join(', ')}</h3>
+                    {currentKanji.meaningsNepali && (
+                      <span className="text-sm font-semibold text-amber-400 block">नेपाली: {currentKanji.meaningsNepali.join(', ')}</span>
+                    )}
+                    <span className="text-[11px] text-slate-400 font-medium block">Total strokes: {currentKanji.strokeCount}</span>
+                  </div>
+                </div>
+
+                {/* Stroke steps */}
+                <div>
+                  <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-2 block text-left">
+                    Stroke-by-Stroke Step Progression (Static Draw Sequence)
+                  </span>
+                  <div className="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-none">
+                    {strokePaths.map((_, index) => (
+                      <div
+                        key={index}
+                        className="flex-shrink-0 w-11 h-11 bg-slate-950 border border-slate-855 rounded-xl flex flex-col items-center justify-center relative"
+                      >
+                        <svg className="w-9 h-9 stroke-slate-500 fill-none stroke-[3] stroke-linecap-round stroke-linejoin-round">
+                          {strokePaths.slice(0, index + 1).map((path, pIdx) => (
+                            <path
+                              key={pIdx}
+                              d={path}
+                              className={pIdx === index ? 'stroke-indigo-400 stroke-[4]' : ''}
+                            />
+                          ))}
+                        </svg>
+                        <span className="absolute bottom-0.5 right-1 text-[8px] text-slate-500 font-bold">
+                          {index + 1}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Tracing Grid */}
+                <div>
+                  <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-2.5 block text-left">
+                    Handwriting Tracing / Practice Grid (手書き練習)
+                  </span>
+                  <div className="text-[9px] text-slate-500 font-semibold mb-1.5 uppercase tracking-wider">
+                    ① Trace over the guide character:
+                  </div>
+                  <div className="flex flex-wrap gap-2 mb-3">
+                    {[1, 2, 3, 4].map((n) => (
+                      <div
+                        key={n}
+                        className="relative w-16 h-16 rounded-xl bg-slate-950 border border-slate-700 overflow-hidden flex-shrink-0"
+                      >
+                        <svg className="absolute inset-0 w-full h-full" xmlns="http://www.w3.org/2000/svg">
+                          <rect x="0" y="0" width="100%" height="100%" fill="none" stroke="#334155" strokeWidth="1" />
+                          <line x1="0" y1="50%" x2="100%" y2="50%" stroke="#1e3a5f" strokeWidth="1" strokeDasharray="3,3" />
+                          <line x1="50%" y1="0" x2="50%" y2="100%" stroke="#1e3a5f" strokeWidth="1" strokeDasharray="3,3" />
+                          <line x1="0" y1="0" x2="100%" y2="100%" stroke="#1e293b" strokeWidth="1" />
+                          <line x1="100%" y1="0" x2="0" y2="100%" stroke="#1e293b" strokeWidth="1" />
+                        </svg>
+                        <div className="absolute inset-0 flex items-center justify-center">
+                          <span className="text-3xl font-jp font-black text-slate-600/60 select-none pointer-events-none leading-none">
+                            {currentKanji.character}
+                          </span>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+
+                  <div className="text-[9px] text-slate-500 font-semibold mb-1.5 uppercase tracking-wider">
+                    ② Free write practice (blank):
+                  </div>
+                  <div className="flex flex-wrap gap-2">
+                    {[1, 2, 3, 4, 5, 6].map((n) => (
+                      <div
+                        key={n}
+                        className="relative w-16 h-16 rounded-xl bg-slate-950 border border-dashed border-slate-700 overflow-hidden flex-shrink-0"
+                      >
+                        <svg className="absolute inset-0 w-full h-full" xmlns="http://www.w3.org/2000/svg">
+                          <line x1="0" y1="50%" x2="100%" y2="50%" stroke="#1e3a5f" strokeWidth="1" strokeDasharray="3,3" />
+                          <line x1="50%" y1="0" x2="50%" y2="100%" stroke="#1e3a5f" strokeWidth="1" strokeDasharray="3,3" />
+                          <line x1="0" y1="0" x2="100%" y2="100%" stroke="#1e293b" strokeWidth="1" />
+                          <line x1="100%" y1="0" x2="0" y2="100%" stroke="#1e293b" strokeWidth="1" />
+                        </svg>
+                        <span className="absolute bottom-0.5 right-1 text-[8px] text-slate-700 font-bold select-none">
+                          {n}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            )
+          ) : (
+            /* ============================================================ */
+            /* CARD BACK REVEAL VIEW                                        */
+            /* ============================================================ */
+            <div className="my-auto py-2 space-y-5 text-left">
+              {/* Revealed Character Header */}
+              <div className="flex items-center gap-4 bg-slate-950/80 p-4 rounded-2xl border border-slate-800">
+                <div className="relative flex items-center justify-center w-20 h-20 rounded-2xl bg-slate-900 border border-indigo-500/40 shadow-inner flex-shrink-0">
+                  <span className="text-5xl font-jp font-black text-transparent bg-clip-text bg-gradient-to-tr from-white to-indigo-300">
+                    {currentKanji.character}
+                  </span>
                   <button
                     onClick={playAudio}
-                    className="absolute bottom-2 right-2 p-2 rounded-xl bg-slate-900 hover:bg-emerald-600 text-slate-400 hover:text-white transition-all border border-slate-800 shadow"
-                    title="Pronounce Kanji"
+                    className="absolute -bottom-1 -right-1 p-1.5 rounded-lg bg-slate-800 text-slate-300 hover:text-white"
                   >
-                    <Volume2 className="w-4 h-4" />
+                    <Volume2 className="w-3.5 h-3.5" />
                   </button>
                 </div>
 
-                <div className="text-left space-y-1">
-                  <span className="text-xs font-bold uppercase tracking-wider text-indigo-400 block">Vocabulary Meaning</span>
-                  <h3 className="text-2xl font-black text-white">{currentKanji.meanings.slice(0, 2).join(', ')}</h3>
+                <div>
+                  <div className="text-lg font-black text-white">{currentKanji.meanings.join(', ')}</div>
                   {currentKanji.meaningsNepali && (
-                    <span className="text-sm font-semibold text-amber-400 block">नेपाली: {currentKanji.meaningsNepali.join(', ')}</span>
+                    <div className="text-sm font-bold text-amber-400">🇳🇵 {currentKanji.meaningsNepali.join(', ')}</div>
                   )}
-                  <span className="text-[11px] text-slate-400 font-medium block">Total strokes: {currentKanji.strokeCount}</span>
+                  <div className="text-xs text-slate-400 mt-0.5">Strokes: {currentKanji.strokeCount}</div>
                 </div>
               </div>
 
-              {/* Static Stroke steps */}
-              <div>
-                <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-2 block text-left">
-                  Stroke-by-Stroke Step Progression (Static Draw Sequence)
-                </span>
-                <div className="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-none">
-                  {strokePaths.map((_, index) => (
-                    <div
-                      key={index}
-                      className="flex-shrink-0 w-11 h-11 bg-slate-950 border border-slate-855 rounded-xl flex flex-col items-center justify-center relative"
-                    >
-                      <svg className="w-9 h-9 stroke-slate-500 fill-none stroke-[3] stroke-linecap-round stroke-linejoin-round">
-                        {strokePaths.slice(0, index + 1).map((path, pIdx) => (
-                          <path
-                            key={pIdx}
-                            d={path}
-                            className={pIdx === index ? 'stroke-indigo-400 stroke-[4]' : ''}
-                          />
-                        ))}
-                      </svg>
-                      <span className="absolute bottom-0.5 right-1 text-[8px] text-slate-500 font-bold">
-                        {index + 1}
-                      </span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              {/* Tracing Grid */}
-              <div>
-                <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-2.5 block text-left">
-                  Handwriting Tracing / Practice Grid (手書き練習)
-                </span>
-                {/* Trace-over guide cells (ghost kanji visible) */}
-                <div className="text-[9px] text-slate-500 font-semibold mb-1.5 uppercase tracking-wider">
-                  ① Trace over the guide character:
-                </div>
-                <div className="flex flex-wrap gap-2 mb-3">
-                  {[1, 2, 3, 4].map((n) => (
-                    <div
-                      key={n}
-                      className="relative w-16 h-16 rounded-xl bg-slate-950 border border-slate-700 overflow-hidden flex-shrink-0"
-                    >
-                      {/* SVG Guide Lines */}
-                      <svg className="absolute inset-0 w-full h-full" xmlns="http://www.w3.org/2000/svg">
-                        {/* Outer border */}
-                        <rect x="0" y="0" width="100%" height="100%" fill="none" stroke="#334155" strokeWidth="1" />
-                        {/* Horizontal center */}
-                        <line x1="0" y1="50%" x2="100%" y2="50%" stroke="#1e3a5f" strokeWidth="1" strokeDasharray="3,3" />
-                        {/* Vertical center */}
-                        <line x1="50%" y1="0" x2="50%" y2="100%" stroke="#1e3a5f" strokeWidth="1" strokeDasharray="3,3" />
-                        {/* Diagonal top-left to bottom-right */}
-                        <line x1="0" y1="0" x2="100%" y2="100%" stroke="#1e293b" strokeWidth="1" />
-                        {/* Diagonal top-right to bottom-left */}
-                        <line x1="100%" y1="0" x2="0" y2="100%" stroke="#1e293b" strokeWidth="1" />
-                      </svg>
-                      {/* Ghost Character */}
-                      <div className="absolute inset-0 flex items-center justify-center">
-                        <span className="text-3xl font-jp font-black text-slate-600/60 select-none pointer-events-none leading-none">
-                          {currentKanji.character}
-                        </span>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-
-                {/* Free practice cells (blank) */}
-                <div className="text-[9px] text-slate-500 font-semibold mb-1.5 uppercase tracking-wider">
-                  ② Free write practice (blank):
-                </div>
-                <div className="flex flex-wrap gap-2">
-                  {[1, 2, 3, 4, 5, 6].map((n) => (
-                    <div
-                      key={n}
-                      className="relative w-16 h-16 rounded-xl bg-slate-950 border border-dashed border-slate-700 overflow-hidden flex-shrink-0"
-                    >
-                      <svg className="absolute inset-0 w-full h-full" xmlns="http://www.w3.org/2000/svg">
-                        <line x1="0" y1="50%" x2="100%" y2="50%" stroke="#1e3a5f" strokeWidth="1" strokeDasharray="3,3" />
-                        <line x1="50%" y1="0" x2="50%" y2="100%" stroke="#1e3a5f" strokeWidth="1" strokeDasharray="3,3" />
-                        <line x1="0" y1="0" x2="100%" y2="100%" stroke="#1e293b" strokeWidth="1" />
-                        <line x1="100%" y1="0" x2="0" y2="100%" stroke="#1e293b" strokeWidth="1" />
-                      </svg>
-                      {/* Stroke count hint */}
-                      <span className="absolute bottom-0.5 right-1 text-[8px] text-slate-700 font-bold select-none">
-                        {n}
-                      </span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-          ) : (
-            /* BACK: Meanings & Compounds */
-            <div className="my-auto py-2 space-y-4 text-left">
-              <div>
-                <div className="text-xs font-semibold uppercase tracking-wider text-indigo-400 mb-1">Meanings</div>
-                <div className="text-xl font-bold text-slate-100">{currentKanji.meanings.join(', ')}</div>
-              </div>
-
+              {/* Readings Grid */}
               <div className="grid grid-cols-2 gap-3 bg-slate-950/60 p-3 rounded-xl border border-slate-800/80">
                 <div>
                   <span className="text-[10px] font-bold uppercase tracking-wider text-rose-400 block">Onyomi (音読み)</span>
@@ -312,6 +413,7 @@ export const KanjiCard: React.FC = () => {
                 </div>
               </div>
 
+              {/* Compounds */}
               <div>
                 <span className="text-xs font-semibold uppercase tracking-wider text-slate-400 mb-1.5 block">
                   Compound Vocabulary words
