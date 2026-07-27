@@ -5,6 +5,7 @@ import {
   Flame, Wifi, WifiOff, BookOpen, Headphones,
   Clock, Layers, Calendar, ShieldCheck, Globe, Sparkles,
   User, LogOut, LogIn, UserPlus, ArrowLeft, CheckCircle2, Award, X, ChevronRight,
+  Lock, Unlock, Star, Zap,
 } from 'lucide-react';
 import { KanjiCard } from '@/components/KanjiCard';
 import { AlphabetGrid } from '@/components/AlphabetGrid';
@@ -42,6 +43,10 @@ interface UserProfile {
   streak: number;
 }
 
+// Tabs that require login
+const PROTECTED_JP_TABS: JapaneseTab[] = ['VOCAB_EXPLORER', 'ALPHABET_GRID', 'TIMED_EXAM'];
+const PROTECTED_KR_TABS: KoreanTab[] = ['KOREAN_VOCAB', 'ALPHABET_GRID', 'TIMED_EXAM'];
+
 export default function HomePage() {
   const [viewMode, setViewMode] = useState<ViewMode>('LANDING');
   const [jpTab, setJpTab] = useState<JapaneseTab>('VOCAB_EXPLORER');
@@ -56,6 +61,10 @@ export default function HomePage() {
   const [authName, setAuthName] = useState('');
   const [authEmail, setAuthEmail] = useState('');
   const [authPassword, setAuthPassword] = useState('');
+
+  // Auth gate state – which tab triggered the gate
+  const [pendingJpTab, setPendingJpTab] = useState<JapaneseTab | null>(null);
+  const [pendingKrTab, setPendingKrTab] = useState<KoreanTab | null>(null);
 
   useEffect(() => {
     setIsOnline(navigator.onLine);
@@ -80,31 +89,126 @@ export default function HomePage() {
     localStorage.setItem('lg_user', JSON.stringify(profile));
     setShowAuthModal(false);
     setAuthEmail(''); setAuthPassword(''); setAuthName('');
+    // Navigate to the pending tab if any
+    if (pendingJpTab) { setJpTab(pendingJpTab); setPendingJpTab(null); }
+    if (pendingKrTab) { setKrTab(pendingKrTab); setPendingKrTab(null); }
   };
 
   const handleLogout = () => {
     setUser(null);
     localStorage.removeItem('lg_user');
+    // Reset to a free tab on logout
+    setJpTab('KANJI_SRS');
+    setKrTab('KOREAN_FLASHCARD');
+  };
+
+  /** Handle tab click — gate protected tabs */
+  const handleJpTabClick = (tabId: JapaneseTab) => {
+    if (!user && PROTECTED_JP_TABS.includes(tabId)) {
+      setPendingJpTab(tabId);
+      setAuthMode('SIGNUP');
+      setShowAuthModal(true);
+      return;
+    }
+    setJpTab(tabId);
+  };
+
+  const handleKrTabClick = (tabId: KoreanTab) => {
+    if (!user && PROTECTED_KR_TABS.includes(tabId)) {
+      setPendingKrTab(tabId);
+      setAuthMode('SIGNUP');
+      setShowAuthModal(true);
+      return;
+    }
+    setKrTab(tabId);
   };
 
   const japaneseTabs = [
-    { id: 'VOCAB_EXPLORER' as JapaneseTab,  label: '1. Japanese Vocab (Lessons 1-75)', icon: BookOpen },
-    { id: 'KANJI_SRS' as JapaneseTab,       label: '2. Kanji SRS Flashcards',          icon: Layers   },
-    { id: 'ALPHABET_GRID' as JapaneseTab,   label: '3. Kana Matrix (Audio)',           icon: Headphones },
-    { id: 'TIMED_EXAM' as JapaneseTab,      label: '4. Mock Exam (JLPT N5-N2)',       icon: Clock    },
-    { id: 'RADICALS' as JapaneseTab,        label: '5. Kanji Radicals',                icon: Layers   },
-    { id: 'HEATMAP' as JapaneseTab,         label: '6. Streak Heatmap',                icon: Calendar },
-    { id: 'CERTIFICATE' as JapaneseTab,     label: '7. Certificate Verifier',         icon: ShieldCheck },
+    { id: 'VOCAB_EXPLORER' as JapaneseTab,  label: 'Vocabulary', icon: BookOpen,   protected: true  },
+    { id: 'KANJI_SRS' as JapaneseTab,       label: 'Flashcards', icon: Layers,     protected: false },
+    { id: 'ALPHABET_GRID' as JapaneseTab,   label: 'Listening',  icon: Headphones, protected: true  },
+    { id: 'TIMED_EXAM' as JapaneseTab,      label: 'Mock Test',  icon: Clock,      protected: true  },
+    { id: 'RADICALS' as JapaneseTab,        label: 'Radicals',   icon: Layers,     protected: false },
+    { id: 'HEATMAP' as JapaneseTab,         label: 'Streak',     icon: Calendar,   protected: false },
+    { id: 'CERTIFICATE' as JapaneseTab,     label: 'Certificate',icon: ShieldCheck,protected: false },
   ];
 
   const koreanTabs = [
-    { id: 'KOREAN_VOCAB' as KoreanTab,      label: '1. Korean Vocab (Lessons 1-60)',   icon: Globe    },
-    { id: 'KOREAN_FLASHCARD' as KoreanTab,  label: '2. Korean SRS Flashcards',         icon: Layers   },
-    { id: 'ALPHABET_GRID' as KoreanTab,     label: '3. Hangul Matrix (Audio)',         icon: Headphones },
-    { id: 'TIMED_EXAM' as KoreanTab,        label: '4. EPS & TOPIK Mock Exam',         icon: Clock    },
-    { id: 'HEATMAP' as KoreanTab,           label: '5. Streak Heatmap',                icon: Calendar },
-    { id: 'CERTIFICATE' as KoreanTab,       label: '6. Certificate Verifier',         icon: ShieldCheck },
+    { id: 'KOREAN_VOCAB' as KoreanTab,      label: 'Vocabulary', icon: Globe,      protected: true  },
+    { id: 'KOREAN_FLASHCARD' as KoreanTab,  label: 'Flashcards', icon: Layers,     protected: false },
+    { id: 'ALPHABET_GRID' as KoreanTab,     label: 'Listening',  icon: Headphones, protected: true  },
+    { id: 'TIMED_EXAM' as KoreanTab,        label: 'Mock Test',  icon: Clock,      protected: true  },
+    { id: 'HEATMAP' as KoreanTab,           label: 'Streak',     icon: Calendar,   protected: false },
+    { id: 'CERTIFICATE' as KoreanTab,       label: 'Certificate',icon: ShieldCheck,protected: false },
   ];
+
+  /* ─── Auth Gate Wall ────────────────────────────────────── */
+  const AuthGateWall = ({
+    tabLabel,
+    onSignIn,
+  }: {
+    tabLabel: string;
+    onSignIn: () => void;
+  }) => (
+    <div className="flex items-center justify-center min-h-[60vh] px-4">
+      <div className="w-full max-w-lg text-center space-y-6">
+        {/* Glowing icon ring */}
+        <div className="relative mx-auto w-28 h-28 flex items-center justify-center">
+          <div className="absolute inset-0 rounded-full bg-indigo-600/20 blur-2xl animate-pulse" />
+          <div className="relative w-24 h-24 rounded-3xl bg-gradient-to-tr from-indigo-700 via-purple-700 to-pink-700 flex items-center justify-center shadow-2xl border border-indigo-500/40">
+            <Lock className="w-10 h-10 text-white" />
+          </div>
+        </div>
+
+        {/* Title */}
+        <div className="space-y-2">
+          <h2 className="text-2xl sm:text-3xl font-black text-white">
+            Sign in to access <span className="bg-gradient-to-r from-indigo-400 to-pink-400 bg-clip-text text-transparent">{tabLabel}</span>
+          </h2>
+          <p className="text-sm text-slate-400 leading-relaxed max-w-sm mx-auto">
+            Create a free account or sign in to unlock the full curriculum — vocabulary, listening tracks, and mock exam engine.
+          </p>
+        </div>
+
+        {/* Perks list */}
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-left">
+          {[
+            { icon: BookOpen,  color: 'text-rose-400',    bg: 'bg-rose-500/10 border-rose-500/20',    text: 'Full vocabulary with Nepali meanings' },
+            { icon: Headphones,color: 'text-sky-400',     bg: 'bg-sky-500/10 border-sky-500/20',      text: 'Audio listening tracks per lesson'   },
+            { icon: Clock,     color: 'text-amber-400',   bg: 'bg-amber-500/10 border-amber-500/20',  text: 'JLPT / EPS-TOPIK mock exams'         },
+          ].map(({ icon: Icon, color, bg, text }) => (
+            <div key={text} className={`${bg} border rounded-2xl p-3 flex items-start gap-2.5`}>
+              <Icon className={`w-4 h-4 mt-0.5 flex-shrink-0 ${color}`} />
+              <span className="text-xs text-slate-300 font-medium leading-snug">{text}</span>
+            </div>
+          ))}
+        </div>
+
+        {/* CTA Buttons */}
+        <div className="flex flex-col sm:flex-row gap-3 justify-center pt-2">
+          <button
+            onClick={() => { setAuthMode('SIGNUP'); setShowAuthModal(true); }}
+            className="flex-1 sm:flex-none px-8 py-3.5 rounded-2xl bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white font-black text-sm shadow-2xl flex items-center justify-center gap-2.5 transition-all transform hover:-translate-y-0.5"
+          >
+            <UserPlus className="w-4 h-4" />
+            Create Free Account
+            <Zap className="w-3.5 h-3.5 text-yellow-300" />
+          </button>
+          <button
+            onClick={() => { setAuthMode('LOGIN'); setShowAuthModal(true); }}
+            className="flex-1 sm:flex-none px-8 py-3.5 rounded-2xl bg-slate-900 hover:bg-slate-800 border border-slate-700 text-white font-black text-sm flex items-center justify-center gap-2.5 transition-all"
+          >
+            <LogIn className="w-4 h-4 text-indigo-400" />
+            Sign In
+          </button>
+        </div>
+
+        <p className="text-[11px] text-slate-500">
+          Flashcards, Radicals & Streak Heatmap are always free — no account needed.
+        </p>
+      </div>
+    </div>
+  );
 
   /* ─── Shared Header ─────────────────────────────────────── */
   const SharedHeader = () => (
@@ -182,17 +286,39 @@ export default function HomePage() {
   const AuthModal = () => (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/85 backdrop-blur-md">
       <div className="w-full max-w-md bg-slate-900 border border-slate-800 rounded-3xl p-6 shadow-2xl space-y-5">
+        {/* Header */}
         <div className="flex items-center justify-between pb-3 border-b border-slate-800">
-          <div className="flex items-center gap-2">
-            <Sparkles className="w-5 h-5 text-indigo-400" />
-            <span className="text-xs font-bold uppercase tracking-wider text-indigo-400">
-              {authMode === 'LOGIN' ? 'Sign In to LanguageGuru' : 'Create Free Account'}
-            </span>
+          <div className="flex items-center gap-2.5">
+            <div className="w-9 h-9 rounded-2xl bg-gradient-to-tr from-indigo-600 to-purple-600 flex items-center justify-center shadow-glow">
+              {authMode === 'LOGIN' ? <LogIn className="w-4 h-4 text-white" /> : <UserPlus className="w-4 h-4 text-white" />}
+            </div>
+            <div>
+              <div className="text-[10px] font-bold uppercase tracking-wider text-indigo-400">LanguageGuru</div>
+              <div className="text-sm font-black text-white">
+                {authMode === 'LOGIN' ? 'Welcome back!' : 'Start for free'}
+              </div>
+            </div>
           </div>
-          <button onClick={() => setShowAuthModal(false)} className="p-1.5 rounded-xl bg-slate-800 hover:bg-rose-600 text-slate-400 hover:text-white transition-all">
+          <button onClick={() => { setShowAuthModal(false); setPendingJpTab(null); setPendingKrTab(null); }} className="p-1.5 rounded-xl bg-slate-800 hover:bg-rose-600 text-slate-400 hover:text-white transition-all">
             <X className="w-4 h-4" />
           </button>
         </div>
+
+        {/* Unlock message if pending tab */}
+        {(pendingJpTab || pendingKrTab) && (
+          <div className="flex items-start gap-3 bg-indigo-500/10 border border-indigo-500/30 rounded-2xl p-3.5">
+            <Unlock className="w-5 h-5 text-indigo-400 flex-shrink-0 mt-0.5" />
+            <div className="text-xs text-indigo-200 leading-snug">
+              <span className="font-black text-white">
+                {pendingJpTab === 'VOCAB_EXPLORER' || pendingKrTab === 'KOREAN_VOCAB' ? '📚 Vocabulary' :
+                 pendingJpTab === 'ALPHABET_GRID' || pendingKrTab === 'ALPHABET_GRID' ? '🎧 Listening Tracks' :
+                 pendingJpTab === 'TIMED_EXAM' || pendingKrTab === 'TIMED_EXAM' ? '⏱ Mock Exam Engine' : 'This feature'}
+              </span>{' '}
+              requires an account. Sign in to unlock instantly — it&apos;s completely free!
+            </div>
+          </div>
+        )}
+
         <form onSubmit={handleAuth} className="space-y-4">
           {authMode === 'SIGNUP' && (
             <div>
@@ -211,12 +337,12 @@ export default function HomePage() {
             <input type="password" required placeholder="••••••••" value={authPassword} onChange={e => setAuthPassword(e.target.value)}
               className="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2.5 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-indigo-500 transition-all" />
           </div>
-          <button type="submit" className="w-full py-3 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-extrabold text-xs shadow-glow transition-all">
-            {authMode === 'LOGIN' ? 'Sign In & Load Progress' : 'Create Account & Start Learning'}
+          <button type="submit" className="w-full py-3 rounded-xl bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white font-extrabold text-xs shadow-glow transition-all flex items-center justify-center gap-2">
+            {authMode === 'LOGIN' ? <><LogIn className="w-4 h-4" /> Sign In & Load Progress</> : <><Zap className="w-4 h-4 text-yellow-300" /> Create Account & Start Learning</>}
           </button>
         </form>
         <p className="text-center text-xs text-slate-400">
-          {authMode === 'LOGIN' ? (<>Don&apos;t have an account? <button onClick={() => setAuthMode('SIGNUP')} className="text-indigo-400 hover:underline font-bold">Sign Up</button></>) :
+          {authMode === 'LOGIN' ? (<>Don&apos;t have an account? <button onClick={() => setAuthMode('SIGNUP')} className="text-indigo-400 hover:underline font-bold">Sign Up Free</button></>) :
             (<>Already have an account? <button onClick={() => setAuthMode('LOGIN')} className="text-indigo-400 hover:underline font-bold">Sign In</button></>)}
         </p>
       </div>
@@ -408,6 +534,14 @@ export default function HomePage() {
   const activeTab = isJapanese ? jpTab : krTab;
   const accentActive = isJapanese ? 'bg-rose-600 border-rose-400' : 'bg-emerald-600 border-emerald-400';
 
+  // Determine if current tab is gated
+  const isCurrentTabGated = !user && (
+    (isJapanese && PROTECTED_JP_TABS.includes(jpTab)) ||
+    (!isJapanese && PROTECTED_KR_TABS.includes(krTab))
+  );
+
+  const currentTabLabel = tabs.find(t => t.id === activeTab)?.label || 'this section';
+
   return (
     <main className="min-h-screen bg-slate-950 text-slate-100 flex flex-col font-sans relative">
       <div className="fixed top-0 left-1/4 w-[500px] h-[500px] bg-indigo-600/10 rounded-full blur-[140px] pointer-events-none" />
@@ -421,16 +555,23 @@ export default function HomePage() {
           {tabs.map(tab => {
             const Icon = tab.icon;
             const isActive = activeTab === tab.id;
+            const isLocked = !user && tab.protected;
             return (
               <button
                 key={tab.id}
-                onClick={() => isJapanese ? setJpTab(tab.id as JapaneseTab) : setKrTab(tab.id as KoreanTab)}
+                onClick={() => isJapanese ? handleJpTabClick(tab.id as JapaneseTab) : handleKrTabClick(tab.id as KoreanTab)}
                 className={`px-3 sm:px-4 py-1.5 sm:py-2 rounded-xl text-[11px] sm:text-xs font-extrabold transition-all whitespace-nowrap flex items-center gap-1.5 sm:gap-2 border flex-shrink-0 ${
-                  isActive ? `${accentActive} text-white shadow-glow` : 'bg-slate-900/80 hover:bg-slate-800 border-slate-800 text-slate-400 hover:text-white'
+                  isActive && !isCurrentTabGated
+                    ? `${accentActive} text-white shadow-glow`
+                    : isLocked
+                    ? 'bg-slate-900/60 border-slate-800 text-slate-500 hover:text-slate-300 hover:bg-slate-800/60'
+                    : 'bg-slate-900/80 hover:bg-slate-800 border-slate-800 text-slate-400 hover:text-white'
                 }`}
+                title={isLocked ? `Sign in to access ${tab.label}` : tab.label}
               >
                 <Icon className="w-3.5 h-3.5 sm:w-4 sm:h-4 flex-shrink-0" />
                 <span>{tab.label}</span>
+                {isLocked && <Lock className="w-2.5 h-2.5 text-slate-500 flex-shrink-0" />}
               </button>
             );
           })}
@@ -439,20 +580,31 @@ export default function HomePage() {
 
       {/* Content Area */}
       <div className="flex-1 max-w-7xl mx-auto w-full px-3 sm:px-6 py-4 sm:py-8">
-        {/* Japanese panels */}
-        {isJapanese && jpTab === 'VOCAB_EXPLORER' && <VocabularyExplorer />}
-        {isJapanese && jpTab === 'KANJI_SRS' && <KanjiCard />}
-        {isJapanese && jpTab === 'RADICALS' && <RadicalBreakdown />}
 
-        {/* Korean panels */}
-        {!isJapanese && krTab === 'KOREAN_VOCAB' && <KoreanVocabularyExplorer />}
-        {!isJapanese && krTab === 'KOREAN_FLASHCARD' && <KoreanFlashcardCard />}
+        {/* Auth Gate Wall — shown when unauthenticated user hits a protected tab */}
+        {isCurrentTabGated ? (
+          <AuthGateWall
+            tabLabel={currentTabLabel}
+            onSignIn={() => { setAuthMode('LOGIN'); setShowAuthModal(true); }}
+          />
+        ) : (
+          <>
+            {/* Japanese panels */}
+            {isJapanese && jpTab === 'VOCAB_EXPLORER' && <VocabularyExplorer />}
+            {isJapanese && jpTab === 'KANJI_SRS' && <KanjiCard />}
+            {isJapanese && jpTab === 'RADICALS' && <RadicalBreakdown />}
 
-        {/* Shared panels */}
-        {activeTab === 'ALPHABET_GRID' && <AlphabetGrid activeLanguage={isJapanese ? 'JAPANESE' : 'KOREAN'} />}
-        {activeTab === 'TIMED_EXAM' && <TimedExamEngine activeLanguage={isJapanese ? 'JAPANESE' : 'KOREAN'} />}
-        {activeTab === 'HEATMAP' && <StreakHeatmap />}
-        {activeTab === 'CERTIFICATE' && <CertificateVerifier />}
+            {/* Korean panels */}
+            {!isJapanese && krTab === 'KOREAN_VOCAB' && <KoreanVocabularyExplorer />}
+            {!isJapanese && krTab === 'KOREAN_FLASHCARD' && <KoreanFlashcardCard />}
+
+            {/* Shared panels */}
+            {activeTab === 'ALPHABET_GRID' && <AlphabetGrid activeLanguage={isJapanese ? 'JAPANESE' : 'KOREAN'} />}
+            {activeTab === 'TIMED_EXAM' && <TimedExamEngine activeLanguage={isJapanese ? 'JAPANESE' : 'KOREAN'} />}
+            {activeTab === 'HEATMAP' && <StreakHeatmap />}
+            {activeTab === 'CERTIFICATE' && <CertificateVerifier />}
+          </>
+        )}
       </div>
 
       <footer className="bg-slate-950 border-t border-slate-800/80 py-4 sm:py-5 px-4 sm:px-6 text-center text-xs text-slate-500">
