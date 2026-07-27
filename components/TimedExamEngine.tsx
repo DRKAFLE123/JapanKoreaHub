@@ -64,9 +64,9 @@ const MOCK_TEST_CATALOG: MockTestInfo[] = [
     level: 'JFT',
     language: 'JAPANESE',
     examFormat: 'JFT_CBT',
-    title: 'JFT-Basic Official CBT Examination (SSW A2)',
-    japaneseTitle: 'JFT-Basic 国際交流基金日本語基礎テスト (CBT方式)',
-    description: 'Official Japan Foundation Computer-Based Test for SSW Visa (CEFR A2). 4 Section-locked parts (Script & Vocab, Conversation, Listening, Reading). 10-250 Points Scale (Pass: 200/250).',
+    title: 'JFT-Basic Official CBT Examination - Set 1',
+    japaneseTitle: 'JFT-Basic 国際交流基金日本語基礎テスト 第1集 (50問)',
+    description: 'Official Japan Foundation Computer-Based Test for SSW Visa (CEFR A2). 4 Section-locked parts (Script & Vocab 12Q, Conversation 12Q, Listening 12Q, Reading 14Q). 250 Marks Scale with 200/250 passing benchmark.',
     timeLimitMinutes: 60,
     questionCount: 50,
     sections: ['文字・語彙 (Script & Vocab)', '会話・表現 (Conversation)', '聴解 (Listening)', '読解 (Reading)'],
@@ -79,14 +79,14 @@ const MOCK_TEST_CATALOG: MockTestInfo[] = [
     level: 'JFT',
     language: 'JAPANESE',
     examFormat: 'JFT_CBT',
-    title: 'JFT-Basic Practice Mock Test - Set 2',
-    japaneseTitle: 'JFT-Basic 日本語基礎テスト 模擬試験 第2集 (48問)',
+    title: 'JFT-Basic Official CBT Examination - Set 2',
+    japaneseTitle: 'JFT-Basic 国際交流基金日本語基礎テスト 第2集 (48問)',
     description: 'Complete 48-question JFT-Basic CBT exam pattern (Script & Vocab 12Q, Conversation 12Q, Listening 12Q, Reading 12Q). 250 Marks Scale with 200/250 passing benchmark.',
     timeLimitMinutes: 60,
     questionCount: 48,
     sections: ['文字・語彙 (Script & Vocab)', '会話・表現 (Conversation)', '聴解 (Listening)', '読解 (Reading)'],
     audioCount: 12,
-    badgeColor: 'from-cyan-600 to-teal-600',
+    badgeColor: 'from-cyan-600 to-blue-600',
   },
   {
     id: 'jft-cbt-3',
@@ -94,14 +94,14 @@ const MOCK_TEST_CATALOG: MockTestInfo[] = [
     level: 'JFT',
     language: 'JAPANESE',
     examFormat: 'JFT_CBT',
-    title: 'JFT-Basic Practice Mock Test - Set 3',
-    japaneseTitle: 'JFT-Basic 日本語基礎テスト 模擬試験 第3集 (48問)',
+    title: 'JFT-Basic Official CBT Examination - Set 3',
+    japaneseTitle: 'JFT-Basic 国際交流基金日本語基礎テスト 第3集 (48問)',
     description: 'Complete 48-question JFT-Basic CBT exam pattern (Script & Vocab 12Q, Conversation 12Q, Listening 12Q, Reading 12Q). 250 Marks Scale with 200/250 passing benchmark.',
     timeLimitMinutes: 60,
     questionCount: 48,
     sections: ['文字・語彙 (Script & Vocab)', '会話・表現 (Conversation)', '聴解 (Listening)', '読解 (Reading)'],
     audioCount: 12,
-    badgeColor: 'from-cyan-600 to-teal-600',
+    badgeColor: 'from-cyan-600 to-blue-600',
   },
   {
     id: 'jft-cbt-4',
@@ -109,14 +109,14 @@ const MOCK_TEST_CATALOG: MockTestInfo[] = [
     level: 'JFT',
     language: 'JAPANESE',
     examFormat: 'JFT_CBT',
-    title: 'JFT-Basic Practice Mock Test - Set 4',
-    japaneseTitle: 'JFT-Basic 日本語基礎テスト 模擬試験 第4集 (48問)',
+    title: 'JFT-Basic Official CBT Examination - Set 4',
+    japaneseTitle: 'JFT-Basic 国際交流基金日本語基礎テスト 第4集 (48問)',
     description: 'Complete 48-question JFT-Basic CBT exam pattern (Script & Vocab 12Q, Conversation 12Q, Listening 12Q, Reading 12Q). 250 Marks Scale with 200/250 passing benchmark.',
     timeLimitMinutes: 60,
     questionCount: 48,
     sections: ['文字・語彙 (Script & Vocab)', '会話・表現 (Conversation)', '聴解 (Listening)', '読解 (Reading)'],
     audioCount: 12,
-    badgeColor: 'from-cyan-600 to-teal-600',
+    badgeColor: 'from-cyan-600 to-blue-600',
   },
   {
     id: 'jft-cbt-5',
@@ -124,14 +124,14 @@ const MOCK_TEST_CATALOG: MockTestInfo[] = [
     level: 'JFT',
     language: 'JAPANESE',
     examFormat: 'JFT_CBT',
-    title: 'JFT-Basic Practice Mock Test - Set 5',
-    japaneseTitle: 'JFT-Basic 日本語基礎テスト 模擬試験 第5集 (48問)',
+    title: 'JFT-Basic Official CBT Examination - Set 5',
+    japaneseTitle: 'JFT-Basic 国際交流基金日本語基礎テスト 第5集 (48問)',
     description: 'Complete 48-question JFT-Basic CBT exam pattern (Script & Vocab 12Q, Conversation 12Q, Listening 12Q, Reading 12Q). 250 Marks Scale with 200/250 passing benchmark.',
     timeLimitMinutes: 60,
     questionCount: 48,
     sections: ['文字・語彙 (Script & Vocab)', '会話・表現 (Conversation)', '聴解 (Listening)', '読解 (Reading)'],
     audioCount: 12,
-    badgeColor: 'from-cyan-600 to-teal-600',
+    badgeColor: 'from-cyan-600 to-blue-600',
   },
   {
     id: 'n5-mock-1',
@@ -139,7 +139,7 @@ const MOCK_TEST_CATALOG: MockTestInfo[] = [
     level: 'N5',
     language: 'JAPANESE',
     examFormat: 'JLPT_PAPER',
-    title: 'JLPT N5 Official Mock Test - Paper 1',
+    title: 'JLPT N5 Official Mock Test - Set 1',
     japaneseTitle: 'JLPT N5 公式模擬試験 第1集 (2-Paper Booklet)',
     description: 'Full official JLPT N5 paper given in 2 booklets (Paper 1: Vocab, Grammar & Reading, 15-Min Break, Paper 2: Audio Listening).',
     timeLimitMinutes: 90,
@@ -154,7 +154,7 @@ const MOCK_TEST_CATALOG: MockTestInfo[] = [
     level: 'N5',
     language: 'JAPANESE',
     examFormat: 'JLPT_PAPER',
-    title: 'JLPT N5 Official Mock Test - Paper 2',
+    title: 'JLPT N5 Official Mock Test - Set 2',
     japaneseTitle: 'JLPT N5 公式模擬試験 第2集 (2-Paper Booklet)',
     description: 'Second official N5 paper covering particles (~てもいい, ~から), te-form verbs, reading notices, and audio dialogue tracks.',
     timeLimitMinutes: 90,
@@ -169,7 +169,7 @@ const MOCK_TEST_CATALOG: MockTestInfo[] = [
     level: 'N5',
     language: 'JAPANESE',
     examFormat: 'JLPT_PAPER',
-    title: 'JLPT N5 Official Mock Test - Paper 3',
+    title: 'JLPT N5 Official Mock Test - Set 3',
     japaneseTitle: 'JLPT N5 公式模擬試験 第3集 (2-Paper Booklet)',
     description: 'Third full N5 paper with authentic listening dialogues, sentence ordering (★), reading notices, and vocabulary.',
     timeLimitMinutes: 90,
@@ -184,7 +184,7 @@ const MOCK_TEST_CATALOG: MockTestInfo[] = [
     level: 'N5',
     language: 'JAPANESE',
     examFormat: 'JLPT_PAPER',
-    title: 'JLPT N5 Official Mock Test - Paper 4',
+    title: 'JLPT N5 Official Mock Test - Set 4',
     japaneseTitle: 'JLPT N5 公式模擬試験 第4集 (2-Paper Booklet)',
     description: 'Fourth official N5 paper covering advanced N5 expressions, store announcements, daily conversations, and listening audio.',
     timeLimitMinutes: 90,
@@ -3745,9 +3745,16 @@ export const TimedExamEngine: React.FC<TimedExamEngineProps> = ({
             >
               <div>
                 <div className="flex items-center justify-between gap-2 mb-3">
-                  <span className={`px-3 py-1 rounded-xl text-xs font-black text-white bg-gradient-to-r ${test.badgeColor} shadow-md`}>
-                    {test.examFormat === 'JFT_CBT' ? '💻 JFT-Basic CBT (250 Marks)' : `📄 JLPT ${test.level} Official Paper`}
-                  </span>
+                  <div className="flex items-center gap-2 flex-wrap">
+                    <span className={`px-3 py-1 rounded-xl text-xs font-black text-white bg-gradient-to-r ${test.badgeColor} shadow-md`}>
+                      {test.examFormat === 'JFT_CBT' ? '💻 JFT-Basic CBT (250 Marks)' : `📄 JLPT ${test.level} Official Paper`}
+                    </span>
+                    {test.mockSet && (
+                      <span className="px-2.5 py-0.5 rounded-lg bg-indigo-500/20 text-indigo-300 border border-indigo-500/30 text-xs font-black">
+                        {test.mockSet.replace('JFT_SET_', 'Set ').replace('N5_SET_', 'Set ').replace('N4_SET_', 'Set ').replace('EPS_SET_', 'Set ')}
+                      </span>
+                    )}
+                  </div>
                   <div className="flex items-center gap-1.5 text-xs font-bold text-amber-400 bg-slate-950 px-2.5 py-1 rounded-lg border border-slate-800">
                     <Clock className="w-3.5 h-3.5" />
                     <span>{test.examFormat === 'JFT_CBT' ? '4 Sections • 60 Mins' : '2 Papers • 90 Mins'}</span>
