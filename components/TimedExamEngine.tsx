@@ -60,7 +60,7 @@ export interface MockTestInfo {
 const MOCK_TEST_CATALOG: MockTestInfo[] = [
   {
     id: 'jft-cbt-1',
-    mockSet: 'N5_SET_1',
+    mockSet: 'JFT_SET_1',
     level: 'JFT',
     language: 'JAPANESE',
     examFormat: 'JFT_CBT',
@@ -68,9 +68,9 @@ const MOCK_TEST_CATALOG: MockTestInfo[] = [
     japaneseTitle: 'JFT-Basic 国際交流基金日本語基礎テスト (CBT方式)',
     description: 'Official Japan Foundation Computer-Based Test for SSW Visa (CEFR A2). 4 Section-locked parts (Script & Vocab, Conversation, Listening, Reading). 10-250 Points Scale (Pass: 200/250).',
     timeLimitMinutes: 60,
-    questionCount: 44,
+    questionCount: 50,
     sections: ['文字・語彙 (Script & Vocab)', '会話・表現 (Conversation)', '聴解 (Listening)', '読解 (Reading)'],
-    audioCount: 8,
+    audioCount: 12,
     badgeColor: 'from-cyan-600 to-blue-600',
   },
   {
@@ -197,6 +197,59 @@ const MOCK_TEST_CATALOG: MockTestInfo[] = [
 
 
 const JAPANESE_QUESTIONS: ExamQuestion[] = [
+  // ==========================================
+  // JFT-BASIC OFFICIAL 50-QUESTION CBT MOCK TEST (JFT_SET_1)
+  // ==========================================
+  {"id": "jft_set1_1", "level": "JFT", "mockSet": "JFT_SET_1", "type": "MULTIPLE_CHOICE", "prompt": "【文字・語彙 Q1】下線の言葉のひらがなを選んでください: 来週、工場で【安全】の研修があります。", "options": ["あんぜん", "かんぜん", "あぜん", "あんぜ"], "correctAnswer": "あんぜん", "explanation": "「安全」は「あんぜん」(Safety)と読みます。"},
+  {"id": "jft_set1_2", "level": "JFT", "mockSet": "JFT_SET_1", "type": "MULTIPLE_CHOICE", "prompt": "【文字・語彙 Q2】下線の言葉の漢字を選んでください: あした【かいぎ】は 9時から始まります。", "options": ["会議", "会社", "会場", "会長"], "correctAnswer": "会議", "explanation": "「かいぎ」の漢字は「会議」(Meeting)です。"},
+  {"id": "jft_set1_3", "level": "JFT", "mockSet": "JFT_SET_1", "type": "MULTIPLE_CHOICE", "prompt": "【文字・語彙 Q3】( )に入れるのに最もよいものを選んでください: 作業が終わったら、道具を元の場所へ ( ) ください。", "options": ["もどして", "すてて", "こわして", "おとして"], "correctAnswer": "もどして", "explanation": "作業後は道具を元の場所へ戻します(Return items to original place)。"},
+  {"id": "jft_set1_4", "level": "JFT", "mockSet": "JFT_SET_1", "type": "MULTIPLE_CHOICE", "prompt": "【文字・語彙 Q4】下線の言葉のひらがなを選んでください: 機械の【点検】を 毎日 行います。", "options": ["てんけん", "てんかん", "でんけん", "てんきん"], "correctAnswer": "てんけん", "explanation": "「点検」は「てんけん」(Inspection/Check)と読みます。"},
+  {"id": "jft_set1_5", "level": "JFT", "mockSet": "JFT_SET_1", "type": "MULTIPLE_CHOICE", "prompt": "【文字・語彙 Q5】( )に入れるのに最もよいものを選んでください: 熱があるときは、むりをしないで ( ) を 休んでください。", "options": ["しごと", "かいしゃ", "べんきょう", "からだ"], "correctAnswer": "からだ", "explanation": "「体を休める」(Rest your body)が適切な表現です。"},
+  {"id": "jft_set1_6", "level": "JFT", "mockSet": "JFT_SET_1", "type": "MULTIPLE_CHOICE", "prompt": "【文字・語彙 Q6】下線の言葉の漢字を選んでください: 荷物を【はこぶ】ときは 気をつけてください。", "options": ["運ぶ", "通ぶ", "送ぶ", "転ぶ"], "correctAnswer": "運ぶ", "explanation": "「はこぶ」の漢字は「運ぶ」(To carry/transport)です。"},
+  {"id": "jft_set1_7", "level": "JFT", "mockSet": "JFT_SET_1", "type": "MULTIPLE_CHOICE", "prompt": "【文字・語彙 Q7】( )に入れるのに最もよいものを選んでください: この 手袋は ( ) ですから、滑りにくいです。", "options": ["ゴム製", "紙製", "ガラス製", "木製"], "correctAnswer": "ゴム製", "explanation": "「ゴム製」(Made of rubber)の手袋は作業時に滑りにくいです。"},
+  {"id": "jft_set1_8", "level": "JFT", "mockSet": "JFT_SET_1", "type": "MULTIPLE_CHOICE", "prompt": "【文字・語彙 Q8】下線の言葉のひらがなを選んでください: 【非常口】の 前に 荷物を 置かないでください。", "options": ["ひじょうぐち", "ひじょぐち", "ひしょうぐち", "ひちようぐち"], "correctAnswer": "ひじょうぐち", "explanation": "「非常口」は「ひじょうぐち」(Emergency Exit)と読みます。"},
+  {"id": "jft_set1_9", "level": "JFT", "mockSet": "JFT_SET_1", "type": "MULTIPLE_CHOICE", "prompt": "【文字・語彙 Q9】( )に入れるのに最もよいものを選んでください: 電気の スイッチを ( ) に してください。", "options": ["オフ", "アウト", "オープン", "ダウン"], "correctAnswer": "オフ", "explanation": "「スイッチをオフにする」(Turn off switch)が正しい作業指示です。"},
+  {"id": "jft_set1_10", "level": "JFT", "mockSet": "JFT_SET_1", "type": "MULTIPLE_CHOICE", "prompt": "【文字・語彙 Q10】下線の言葉の漢字を選んでください: つぎの【しんごう】を 右へ 曲がってください。", "options": ["信号", "信後", "心号", "新号"], "correctAnswer": "信号", "explanation": "「しんごう」の漢字は「信号」(Traffic light)です。"},
+  {"id": "jft_set1_11", "level": "JFT", "mockSet": "JFT_SET_1", "type": "MULTIPLE_CHOICE", "prompt": "【文字・語彙 Q11】( )に入れるのに最もよいものを選んでください: けがをしたので、( ) で 消毒しました。", "options": ["消毒液", "洗剤", "醤油", "油"], "correctAnswer": "消毒液", "explanation": "けがの消毒には「消毒液」(Disinfectant)を使います。"},
+  {"id": "jft_set1_12", "level": "JFT", "mockSet": "JFT_SET_1", "type": "MULTIPLE_CHOICE", "prompt": "【文字・語彙 Q12】下線の言葉のひらがなを選んでください: 今日の【作業】は これで 終わりです。", "options": ["さぎょう", "さくぎょう", "さぎよう", "さごう"], "correctAnswer": "さぎょう", "explanation": "「作業」は「さぎょう」(Work/Operation)と読みます。"},
+  {"id": "jft_set1_13", "level": "JFT", "mockSet": "JFT_SET_1", "type": "MULTIPLE_CHOICE", "prompt": "【会話・表現 Q13】A:「すみません、この 機械の 使い方を 教えていただけませんか。」\nB:「( )。」", "options": ["ええ、いいですよ。こちらへ どうぞ", "いいえ、使いません", "はい、使い終わりました", "いいえ、けっこうです"], "correctAnswer": "ええ、いいですよ。こちらへ どうぞ", "explanation": "依頼に対する快諾の表現「ええ、いいですよ」(Sure, of course)が適切です。"},
+  {"id": "jft_set1_14", "level": "JFT", "mockSet": "JFT_SET_1", "type": "MULTIPLE_CHOICE", "prompt": "【会話・表現 Q14】A:「重そうな 荷物ですね。持ちましょうか。」\nB:「あ、すみません。( )。」", "options": ["助かります。お願いします", "持ちません", "要りません", "持ってください"], "correctAnswer": "助かります。お願いします", "explanation": "手伝いに対して「助かります。お願いします」(That helps a lot, thanks)と答えるのが自然です。"},
+  {"id": "jft_set1_15", "level": "JFT", "mockSet": "JFT_SET_1", "type": "MULTIPLE_CHOICE", "prompt": "【会話・表現 Q15】A:「明日、体調が 悪いので 病院へ 行きたいのですが...」\nB:「そうですか。じゃあ、( )。」", "options": ["無理をしないで 休んでくださいね", "病院へ 行かないでください", "もっと 働いてください", "おめでとうございます"], "correctAnswer": "無理をしないで 休んでくださいね", "explanation": "体調不良者への気遣い「無理をしないで休んでくださいね」(Don't push yourself, rest up)が適切です。"},
+  {"id": "jft_set1_16", "level": "JFT", "mockSet": "JFT_SET_1", "type": "MULTIPLE_CHOICE", "prompt": "【会話・表現 Q16】A:「この 資料、コピーして おきましょうか。」\nB:「ええ、( ) お願いします。」", "options": ["10部ほど", "10個ほど", "10本ほど", "10着ほど"], "correctAnswer": "10部ほど", "explanation": "書類・資料のカウント単位は「部」(copies)です。"},
+  {"id": "jft_set1_17", "level": "JFT", "mockSet": "JFT_SET_1", "type": "MULTIPLE_CHOICE", "prompt": "【会話・表現 Q17】A:「工場内では 必ず ヘルメットを ( ) なればなりません。」\nB:「わかりました。」", "options": ["被らなければ", "履かなければ", "着なければ", "嵌めなければ"], "correctAnswer": "被らなければ", "explanation": "帽子やヘルメットを装着する動詞は「被る」(かぶる)です。"},
+  {"id": "jft_set1_18", "level": "JFT", "mockSet": "JFT_SET_1", "type": "MULTIPLE_CHOICE", "prompt": "【会話・表現 Q18】A:「ちょっと 熱が あるみたいなんです...」\nB:「それなら、早く ( ) ほうが いいですよ。」", "options": ["帰った", "帰る", "帰らない", "帰って"], "correctAnswer": "帰った", "explanation": "アドバイス表現は「〜たほうがいいです」(Had better go home)を使います。"},
+  {"id": "jft_set1_19", "level": "JFT", "mockSet": "JFT_SET_1", "type": "MULTIPLE_CHOICE", "prompt": "【会話・表現 Q19】A:「すみません、落とし物を 拾ったのですが、どこへ 持っていけば いいですか。」\nB:「あちらの ( ) へ 持っていってください。」", "options": ["受付", "食堂", "トイレ", "駐車場"], "correctAnswer": "受付", "explanation": "拾得物は「受付」(Reception/Information Desk)に届けます。"},
+  {"id": "jft_set1_20", "level": "JFT", "mockSet": "JFT_SET_1", "type": "MULTIPLE_CHOICE", "prompt": "【会話・表現 Q20】A:「田中さん、午後の 会議の 準備は できましたか。」\nB:「はい、もう ( ) あります。」", "options": ["準備して", "準備する", "準備された", "準備し"], "correctAnswer": "準備して", "explanation": "状態の準備完了を表す「〜てあります」(Prepared in advance)が正解です。"},
+  {"id": "jft_set1_21", "level": "JFT", "mockSet": "JFT_SET_1", "type": "MULTIPLE_CHOICE", "prompt": "【会話・表現 Q21】A:「危ないですから、機械に 手を ( ) ください。」\nB:「気をつけます。」", "options": ["触れないで", "触って", "触れて", "触ら"], "correctAnswer": "触れないで", "explanation": "禁止の安全指示「〜ないでください」(Please do not touch)が適切です。"},
+  {"id": "jft_set1_22", "level": "JFT", "mockSet": "JFT_SET_1", "type": "MULTIPLE_CHOICE", "prompt": "【会話・表現 Q22】A:「お先に 失礼します。」\nB:「( )。」", "options": ["お疲れ様でした", "はじめまして", "ごちそうさまでした", "いってらっしゃい"], "correctAnswer": "お疲れ様でした", "explanation": "退社時の挨拶に対する返答は「お疲れ様でした」(Thank you for your hard work)です。"},
+  {"id": "jft_set1_23", "level": "JFT", "mockSet": "JFT_SET_1", "type": "MULTIPLE_CHOICE", "prompt": "【会話・表現 Q23】A:「すみません、この 漢字の 読み方を ( )。」\nB:「これは『あんぜん』と 読みますよ。」", "options": ["教えてもらえませんか", "教えましょうか", "教えてあげます", "教えます"], "correctAnswer": "教えてもらえませんか", "explanation": "丁寧な依頼表現「〜てもらえませんか」(Could you please tell me?)が正解です。"},
+  {"id": "jft_set1_24", "level": "JFT", "mockSet": "JFT_SET_1", "type": "MULTIPLE_CHOICE", "prompt": "【会話・表現 Q24】A:「今日の 作業は 予定より 早く 終わりましたね。」\nB:「ええ、みんなで ( ) おかげですね。」", "options": ["協力した", "喧嘩した", "休んだ", "忘れた"], "correctAnswer": "協力した", "explanation": "感謝の表現「〜おかげ」(Thanks to everyone cooperating)が適切です。"},
+  {"id": "jft_set1_25", "level": "JFT", "mockSet": "JFT_SET_1", "type": "LISTENING", "prompt": "【聴解 Q25】店員：いらっしゃいませ。ご注文は？\n男の人：アイスコーヒーを 二つと、ショートケーキを 一つ お願いします。\n\n質問: 男の人は 何を いくつ 注文しましたか。", "options": ["アイスコーヒー2つ、ケーキ1つ", "アイスコーヒー1つ、ケーキ2つ", "ホットコーヒー2つ、ケーキ1つ", "アイスコーヒー2つのみ"], "correctAnswer": "アイスコーヒー2つ、ケーキ1つ", "explanation": "会話より「アイスコーヒー2つとショートケーキ1つ」が正解です。", "audioUrl": "/audio/n5/minna_shokyu_1_003.mp3"},
+  {"id": "jft_set1_26", "level": "JFT", "mockSet": "JFT_SET_1", "type": "LISTENING", "prompt": "【聴解 Q26】女の人：佐藤さん、明日の 作業指示書は どこに ありますか。\n男の人：棚の 上の 青い ファイルの中に 入って いますよ。\n\n質問: 明日の 作業指示書は どこに ありますか。", "options": ["青いファイルの中", "赤いファイルの中", "机の引き出しの中", "パソコンの中"], "correctAnswer": "青いファイルの中", "explanation": "会話より棚の上の「青いファイルの中」にあります。", "audioUrl": "/audio/n5/minna_shokyu_1_006.mp3"},
+  {"id": "jft_set1_27", "level": "JFT", "mockSet": "JFT_SET_1", "type": "LISTENING", "prompt": "【聴解 Q27】男の人：この 電子レンジ、どうやって 使うんですか。\n女の人：まず 皿を 入れて、扉を 閉めてから、この 緑の ボタンを 押してください。\n\n質問: 最初に 何を しますか。", "options": ["皿を入れる", "緑のボタンを押す", "扉を開ける", "タイマーを回す"], "correctAnswer": "皿を入れる", "explanation": "「まず皿を入れて」(First put the plate in)が最初の操作です。", "audioUrl": "/audio/n5/minna_shokyu_1_012.mp3"},
+  {"id": "jft_set1_28", "level": "JFT", "mockSet": "JFT_SET_1", "type": "LISTENING", "prompt": "【聴解 Q28】アナウンス：まもなく 2番線に 東京行き 普通列車が 到着します。黄色い線の 内側まで お下がりください。\n\n質問: 乗客は どこまで 下がらなければなりませんか。", "options": ["黄色い線の内側", "黄色い線の外側", "階段の上", "改札口の前"], "correctAnswer": "黄色い線の内側", "explanation": "アナウンスより「黄色い線の内側」(Inside yellow line)です。", "audioUrl": "/audio/n5/minna_shokyu_1_018.mp3"},
+  {"id": "jft_set1_29", "level": "JFT", "mockSet": "JFT_SET_1", "type": "LISTENING", "prompt": "【聴解 Q29】男の人：田中さん、午後の 打合せは 何時からですか。\n女の人：もともと 2時からでしたが、3時に 変更に なりました。\n\n質問: 打合せは 何時に 始まりますか。", "options": ["3時", "2時", "1時", "4時"], "correctAnswer": "3時", "explanation": "変更後の時間は「3時」です。", "audioUrl": "/audio/n5/minna_shokyu_1_025.mp3"},
+  {"id": "jft_set1_30", "level": "JFT", "mockSet": "JFT_SET_1", "type": "LISTENING", "prompt": "【聴解 Q30】女の人：すみません、この 服を 試着しても いいですか。\n店員：はい、どうぞ。あちらの 試着室を ご利用ください。\n\n質問: 女の人は これから 何を しますか。", "options": ["服を試着する", "服を買う", "服を洗う", "服を返品する"], "correctAnswer": "服を試着する", "explanation": "会話より「服を試着する」(Try on clothes)が正解です。", "audioUrl": "/audio/n5/minna_shokyu_1_031.mp3"},
+  {"id": "jft_set1_31", "level": "JFT", "mockSet": "JFT_SET_1", "type": "LISTENING", "prompt": "【聴解 Q31】男の人：明日の 天気予報に よると、朝から 大雨が 降るそうです。\n女の人：じゃあ、電車が 遅れるかもしれませんね。早めに 家を 出ましょう。\n\n質問: 二人は 明日の 朝、どうしますか。", "options": ["早めに家を出る", "家で休む", "車で行く", "遅く起言"], "correctAnswer": "早めに家を出る", "explanation": "大雨で電車遅延が予想されるため「早めに家を出る」が正解です。", "audioUrl": "/audio/n5/minna_shokyu_1_038.mp3"},
+  {"id": "jft_set1_32", "level": "JFT", "mockSet": "JFT_SET_1", "type": "LISTENING", "prompt": "【聴解 Q32】工場長：皆さん、今日の 作業前 点検を 始めます。まずは 保護メガネと 安全靴を 着用してください。\n\n質問: 作業前に 必ず 装着するものは 何ですか。", "options": ["保護メガネと安全靴", "ヘルメットと手袋", "マスクとエプロン", "帽子と長靴"], "correctAnswer": "保護メガネと安全靴", "explanation": "会話より「保護メガネと安全靴」(Safety glasses & shoes)です。", "audioUrl": "/audio/n5/minna_shokyu_1_042.mp3"},
+  {"id": "jft_set1_33", "level": "JFT", "mockSet": "JFT_SET_1", "type": "LISTENING", "prompt": "【聴解 Q33】女の人：この 荷物、どこへ 運びますか。\n男の人：2階の 倉庫へ 運んでください。エレベーターを 使ってくださいね。\n\n質問: 荷物を どこへ 運ぶために 何を 使いますか。", "options": ["2階の倉庫へ、エレベーターを使う", "1階の事務所へ、階段を使う", "3階の屋上へ、階段を使う", "トラックへ、フォークリフトを使う"], "correctAnswer": "2階の倉庫へ、エレベーターを使う", "explanation": "「2階の倉庫へエレベーターを使って運ぶ」が正しい指示です。", "audioUrl": "/audio/n5/minna_shokyu_1_048.mp3"},
+  {"id": "jft_set1_34", "level": "JFT", "mockSet": "JFT_SET_1", "type": "LISTENING", "prompt": "【聴解 Q34】男の人：すみません、体調が 悪いので 早退しても いいですか。\n上司：わかりました。病院へ 行って、ゆっくり 休んでください。\n\n質問: 男の人は これから どうしますか。", "options": ["早退して病院へ行く", "残業して働く", "昼ご飯を食べる", "出張に行く"], "correctAnswer": "早退して病院へ行く", "explanation": "体調不良のため「早退して病院へ行く」(Leave early & go to clinic)が正解です。", "audioUrl": "/audio/n5/minna_shokyu_1_055.mp3"},
+  {"id": "jft_set1_35", "level": "JFT", "mockSet": "JFT_SET_1", "type": "LISTENING", "prompt": "【聴解 Q35】アナウンス：本日、台風の 影響により、午後の バスは 全便 運休となります。\n\n質問: 午後の バスは どうなりますか。", "options": ["全便運休になる", "通常通り運行する", "無料で乗れる", "増便される"], "correctAnswer": "全便運休になる", "explanation": "「全便運休」(All buses cancelled)がアナウンス内容です。", "audioUrl": "/audio/n5/minna_shokyu_1_062.mp3"},
+  {"id": "jft_set1_36", "level": "JFT", "mockSet": "JFT_SET_1", "type": "LISTENING", "prompt": "【聴解 Q36】女の人：山田さん、この 書類を 10部 コピーして、会議室に 置いておいてください。\n男の人：わかりました。すぐ やります。\n\n質問: 男の人は コピーした あと、書類を どこに 置きますか。", "options": ["会議室", "自分のデスク", "社長室", "受付"], "correctAnswer": "会議室", "explanation": "「会議室に置いておいてください」より「会議室」が正解です。", "audioUrl": "/audio/n5/minna_shokyu_1_075.mp3"},
+  {"id": "jft_set1_37", "level": "JFT", "mockSet": "JFT_SET_1", "type": "MULTIPLE_CHOICE", "prompt": "【読解 Q37】＜お知らせ：ゴミの 分別について＞\n・可燃ゴミ（燃えるゴミ）：月曜日・木曜日\n・不燃ゴミ（燃えないゴミ）：水曜日\n・ペットボトル・缶：金曜日\n※ゴミは 朝 8時までに 出してください。\n\n質問: 缶や ペットボトルは 何曜日に 出しますか。", "options": ["金曜日", "月曜日", "水曜日", "木曜日"], "correctAnswer": "金曜日", "explanation": "お知らせより、ペットボトル・缶は「金曜日」です。"},
+  {"id": "jft_set1_38", "level": "JFT", "mockSet": "JFT_SET_1", "type": "MULTIPLE_CHOICE", "prompt": "【読解 Q38】＜工場内の 安全ルール＞\n1. 作業中は 必ず ヘルメットと 安全靴を 着用すること。\n2. 危険な 場所には 入らないこと。\n3. 事故が 起きたら、すぐに 班長へ 報告すること。\n\n質問: 事故が 起きたとき、最初に 何を しますか。", "options": ["すぐに班長へ報告する", "自分で修理する", "警察へ電話する", "そのまま帰る"], "correctAnswer": "すぐに班長へ報告する", "explanation": "ルール3より「すぐに班長へ報告すること」が正解です。"},
+  {"id": "jft_set1_39", "level": "JFT", "mockSet": "JFT_SET_1", "type": "MULTIPLE_CHOICE", "prompt": "【読解 Q39】＜メール：清掃作業の お願い＞\n田中さんへ\n本日、16時から 3階の 会議室Aで 全員で 清掃を行います。作業服と 軍手を 準備して 集合してください。\n\n質問: 田中さんは 16時に どこへ 行かなければなりませんか。", "options": ["3階の会議室A", "1階の受付", "屋外の駐車場", "2階の食堂"], "correctAnswer": "3階の会議室A", "explanation": "メールより「3階の会議室A」へ集合します。"},
+  {"id": "jft_set1_40", "level": "JFT", "mockSet": "JFT_SET_1", "type": "MULTIPLE_CHOICE", "prompt": "【読解 Q40】＜張り紙：エレベーター 点検中＞\n本日 13:00 〜 15:00 まで、点検のため エレベーターは ご利用になれません。階段を ご利用ください。\n\n質問: 14時に 4階へ 行きたいとき、どうしますか。", "options": ["階段を使う", "エレベーターを使う", "明日行く", "エスカレーターを使う"], "correctAnswer": "階段を使う", "explanation": "13〜15時はエレベーター点検中のため「階段を使う」が正解です。"},
+  {"id": "jft_set1_41", "level": "JFT", "mockSet": "JFT_SET_1", "type": "MULTIPLE_CHOICE", "prompt": "【読解 Q41】＜シフト表：今週の 休日＞\n・キムさん：火曜日・土曜日\n・アリさん：水曜日・日曜日\n・サントスさん：月曜日・木曜日\n\n質問: 水曜日に お休みなのは 誰ですか。", "options": ["アリさん", "キムさん", "サントスさん", "全員"], "correctAnswer": "アリさん", "explanation": "シフト表より、水曜日が休日なのは「アリさん」です。"},
+  {"id": "jft_set1_42", "level": "JFT", "mockSet": "JFT_SET_1", "type": "MULTIPLE_CHOICE", "prompt": "【読解 Q42】＜割引クーポン＞\n【ランチ限定 200円引き】\n※有効期限：2026年 8月末日まで\n※11:00 〜 14:30 のみ 使用可能。\n※他の サービス券との 併用は できません。\n\n質問: この クーポンが 使える 時間は いつですか。", "options": ["11:00 〜 14:30", "18:00 〜 21:00", "終日いつでも", "朝 8:00 〜 10:00"], "correctAnswer": "11:00 〜 14:30", "explanation": "条件より「11:00 〜 14:30 のみ使用可能」です。"},
+  {"id": "jft_set1_43", "level": "JFT", "mockSet": "JFT_SET_1", "type": "MULTIPLE_CHOICE", "prompt": "【読解 Q43】＜社内掲示：健康診断の お知らせ＞\n来月 10日（木）に 年1回の 健康診断を 行います。\n受診前の 8時間は 食事を 控えてください。水は 飲んでも かまいません。\n\n質問: 健康診断の 直前 8時間に やってはいけないことは 何ですか。", "options": ["食事をすること", "水を飲むこと", "寝ること", "歩くこと"], "correctAnswer": "食事をすること", "explanation": "「受診前の8時間は食事を控えてください」より「食事をすること」が禁止事項です。"},
+  {"id": "jft_set1_44", "level": "JFT", "mockSet": "JFT_SET_1", "type": "MULTIPLE_CHOICE", "prompt": "【読解 Q44】＜食堂の ご案内＞\n・営業時間：11:30 〜 13:30\n・日替わり定食：500円\n・券売機で 食券を 買ってから、カウンターへ お出しください。\n\n質問: 食堂で 食事を するとき、最初に 何を しますか。", "options": ["券売機で食券を買う", "カウンターで注文する", "席に座る", "食器を洗う"], "correctAnswer": "券売機で食券を買う", "explanation": "案内より「券売機で食券を買ってから」とありますので食券の購入が最初です。"},
+  {"id": "jft_set1_45", "level": "JFT", "mockSet": "JFT_SET_1", "type": "MULTIPLE_CHOICE", "prompt": "【読解 Q45】＜注意書き：熱中症対策＞\n夏場は こまめに 水分と 塩分を 補給してください。気分が 悪くなった場合は、涼しい 場所で 休んで、近くの人に 声を かけてください。\n\n質問: 作業中に 体調が 悪くなったら どうしますか。", "options": ["涼しい場所で休んで近くの人に声をかける", "無理して作業を続ける", "そのまま倒れる", "一人で家に帰る"], "correctAnswer": "涼しい場所で休んで近くの人に声をかける", "explanation": "注意書きより「涼しい場所で休んで近くの人に声をかける」が正解です。"},
+  {"id": "jft_set1_46", "level": "JFT", "mockSet": "JFT_SET_1", "type": "MULTIPLE_CHOICE", "prompt": "【読解 Q46】＜宅配便 不在連絡票＞\nご配達に 伺いましたが、ご不在でした。\n再配達のご希望は、お電話 または Webサイトより お申し込みください。\n\n質問: 荷物を もう一度 送ってもらうには どうすれば いいですか。", "options": ["電話かWebサイトで再配達を申し込む", "郵便局へ行く", "諦める", "荷物を買い直す"], "correctAnswer": "電話かWebサイトで再配達を申し込む", "explanation": "「電話またはWebサイトよりお申し込み」が正解です。"},
+  {"id": "jft_set1_47", "level": "JFT", "mockSet": "JFT_SET_1", "type": "MULTIPLE_CHOICE", "prompt": "【読解 Q47】＜研修案内：日本語講習＞\n毎週 水曜日 18:00〜19:30、3階 研修室にて 開講します。テキスト代は 無料です。\n\n質問: この 講習の 受講料や テキスト代は いくらですか。", "options": ["無料", "1,000円", "500円", "5,000円"], "correctAnswer": "無料", "explanation": "案内より「テキスト代は無料です」が正解です。"},
+  {"id": "jft_set1_48", "level": "JFT", "mockSet": "JFT_SET_1", "type": "MULTIPLE_CHOICE", "prompt": "【読解 Q48】＜防災訓練のお知らせ＞\n9月1日（金）10:00より 防災訓練を 実施します。サイレンが 鳴ったら、慌てずに 避難場所の グラウンドへ 移動してください。\n\n質問: サイレンが 鳴ったら どこへ 移動しますか。", "options": ["グラウンド", "自分の部屋", "屋上", "食堂"], "correctAnswer": "グラウンド", "explanation": "「避難場所のグラウンドへ移動してください」が正解です。"},
+  {"id": "jft_set1_49", "level": "JFT", "mockSet": "JFT_SET_1", "type": "MULTIPLE_CHOICE", "prompt": "【読解 Q49】＜設備利用案内：洗濯機＞\n・利用時間：7:00 〜 22:00\n・1回 200円（100円玉 2枚）\n・洗剤は 自動で 出ますので、持参不要です。\n\n質問: 洗濯機を使うとき、自分で 持っていく必要が ないものは 何ですか。", "options": ["洗剤", "服", "100円玉", "タオル"], "correctAnswer": "洗剤", "explanation": "「洗剤は自動で出ますので持参不要です」より「洗剤」が正解です。"},
+  {"id": "jft_set1_50", "level": "JFT", "mockSet": "JFT_SET_1", "type": "MULTIPLE_CHOICE", "prompt": "【読解 Q50】＜社内ルール：パスワード管理＞\nパソコンの パスワードは 他人に 教えないでください。また、3ヶ月に 1回 変更してください。\n\n質問: パスワードについて 正しいものは どれですか。", "options": ["他人に教えず3ヶ月に1回変更する", "紙に書いて貼っておく", "友達と共有する", "一生変更しない"], "correctAnswer": "他人に教えず3ヶ月に1回変更する", "explanation": "「他人に教えない」「3ヶ月に1回変更」の両方を満たす選択肢が正解です。"},
   {
     "id": "jp_n5_set1_1",
     "level": "N5",
@@ -3296,11 +3349,7 @@ export const TimedExamEngine: React.FC<TimedExamEngineProps> = ({
     const timeSpentSeconds = ((selectedMockTest?.timeLimitMinutes || 60) * 60) - secondsRemaining;
 
     if (isJFT) {
-      // JFT-Basic CBT Exam 250 Points Scale Scoring (Pass: 200 / 250 pts)
-      const jftPoints = Math.round(10 + (correctCount / totalQ) * 240);
-      const passed = jftPoints >= 200;
-
-      // 4 JFT Section Scores (~11-12 Qs per section)
+      // 4 JFT Section Scores (~12 Qs per section, totaling 250 marks)
       const sec1 = rawQuestions.slice(0, 12);
       const sec2 = rawQuestions.slice(12, 24);
       const sec3 = rawQuestions.slice(24, 36);
@@ -3312,6 +3361,14 @@ export const TimedExamEngine: React.FC<TimedExamEngineProps> = ({
         return { sectionTitle: title, correct: c, total: arr.length, pts };
       };
 
+      const jftSec1 = calcJftSec('Script & Vocabulary (文字・語彙)', sec1, 60);
+      const jftSec2 = calcJftSec('Conversation & Expression (会話・表現)', sec2, 60);
+      const jftSec3 = calcJftSec('Listening Comprehension (聴解)', sec3, 65);
+      const jftSec4 = calcJftSec('Reading Comprehension (読解)', sec4, 65);
+
+      const jftPoints = Math.max(10, Math.min(250, jftSec1.pts + jftSec2.pts + jftSec3.pts + jftSec4.pts));
+      const passed = jftPoints >= 200;
+
       setExamResult({
         score: percentage,
         correctCount,
@@ -3319,12 +3376,7 @@ export const TimedExamEngine: React.FC<TimedExamEngineProps> = ({
         passed,
         timeSpentSeconds: Math.max(1, timeSpentSeconds),
         jftScore: jftPoints,
-        jftSections: [
-          calcJftSec('Script & Vocabulary (文字・語彙)', sec1, 60),
-          calcJftSec('Conversation & Expression (会話・表現)', sec2, 60),
-          calcJftSec('Listening Comprehension (聴解)', sec3, 65),
-          calcJftSec('Reading Comprehension (読解)', sec4, 65),
-        ]
+        jftSections: [jftSec1, jftSec2, jftSec3, jftSec4]
       });
 
       if (onCompleteExam) {
