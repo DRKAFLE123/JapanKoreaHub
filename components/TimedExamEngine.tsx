@@ -24,7 +24,8 @@ import {
   Headphones,
   RotateCcw,
   BarChart3,
-  CheckSquare
+  CheckSquare,
+  AlertTriangle
 } from 'lucide-react';
 import { validateExamSubmission } from '@/lib/auth-security';
 
@@ -161,7 +162,7 @@ const MOCK_TEST_CATALOG: MockTestInfo[] = [
     description: 'Advanced grammar, newspaper headlines, societal issues, and academic Korean.',
     timeLimitMinutes: 60,
     questionCount: 2,
-    sections: ['읽기 (Reading)', '문형 (Grammar Patterns)'],
+    sections: ['읽기 (Reading)', '문形 (Grammar Patterns)'],
     audioCount: 0,
     badgeColor: 'from-purple-600 to-pink-600',
   },
@@ -543,7 +544,7 @@ const KOREAN_QUESTIONS: ExamQuestion[] = [
     id: 'ko_t3_1',
     level: 'TOPIK3',
     type: 'FILL_BLANK',
-    prompt: '환경 오염이 심각해짐에 _____ 정부는 새로운 정책을 발표했다.',
+    prompt: '환경 오염이 심각해ジムに _____ 정부는 새로운 정책을 발표했다.',
     options: ['따라', '대해', '관해', '위해'],
     correctAnswer: '따라',
     explanation: '~에 따라 = according to / as a consequence of.',
@@ -576,6 +577,9 @@ export const TimedExamEngine: React.FC<TimedExamEngineProps> = ({
   // Flow State: 'LOBBY' (show catalog) vs 'EXAM_IN_PROGRESS'
   const [isExamActive, setIsExamActive] = useState(false);
   const [selectedMockTest, setSelectedMockTest] = useState<MockTestInfo | null>(null);
+
+  // Exit confirmation modal state
+  const [showExitConfirmModal, setShowExitConfirmModal] = useState(false);
 
   const [selectedLevelFilter, setSelectedLevelFilter] = useState<string>('ALL');
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -631,6 +635,7 @@ export const TimedExamEngine: React.FC<TimedExamEngineProps> = ({
     setExamResult(null);
     setAudioPlaysCount({});
     setReviewFilter('ALL');
+    setShowExitConfirmModal(false);
     setIsExamActive(true);
 
     // Launch Full Screen Mode automatically like real JLPT exam
@@ -638,6 +643,14 @@ export const TimedExamEngine: React.FC<TimedExamEngineProps> = ({
       containerRef.current.requestFullscreen().catch(() => {});
     }
     setIsFullscreen(true);
+  };
+
+  const handleBackButtonClick = () => {
+    if (isExamActive && !isSubmitted) {
+      setShowExitConfirmModal(true);
+    } else {
+      handleExitExam();
+    }
   };
 
   const handleExitExam = () => {
@@ -649,7 +662,22 @@ export const TimedExamEngine: React.FC<TimedExamEngineProps> = ({
     setSelectedMockTest(null);
     setIsSubmitted(false);
     setExamResult(null);
+    setShowExitConfirmModal(false);
   };
+
+  // Prevent accidental tab refresh / browser navigation during an active unsubmitted exam
+  useEffect(() => {
+    if (!isExamActive || isSubmitted) return;
+
+    const handleBeforeUnload = (e: BeforeUnloadEvent) => {
+      e.preventDefault();
+      e.returnValue = '';
+      return 'Your official exam session is currently in progress. Are you sure you want to leave?';
+    };
+
+    window.addEventListener('beforeunload', handleBeforeUnload);
+    return () => window.removeEventListener('beforeunload', handleBeforeUnload);
+  }, [isExamActive, isSubmitted]);
 
   useEffect(() => {
     const handleFsChange = () => {
@@ -665,6 +693,7 @@ export const TimedExamEngine: React.FC<TimedExamEngineProps> = ({
     setSelectedLevelFilter('ALL');
     setIsSubmitted(false);
     setExamResult(null);
+    setShowExitConfirmModal(false);
   }, [activeLanguage]);
 
   useEffect(() => {
@@ -894,13 +923,65 @@ export const TimedExamEngine: React.FC<TimedExamEngineProps> = ({
           : 'max-w-5xl mx-auto space-y-4 sm:space-y-6'
       }`}
     >
+      {/* Exit Confirmation Modal Prompt */}
+      {showExitConfirmModal && (
+        <div className="fixed inset-0 z-50 bg-slate-950/85 backdrop-blur-md flex items-center justify-center p-4">
+          <div className="bg-slate-900 border border-slate-800 rounded-3xl p-6 sm:p-8 max-w-md w-full shadow-2xl space-y-5">
+            <div className="flex items-center gap-3">
+              <div className="p-3 rounded-2xl bg-amber-500/10 border border-amber-500/20">
+                <AlertTriangle className="w-6 h-6 text-amber-400" />
+              </div>
+              <div>
+                <h3 className="text-lg font-black text-white">Exit Exam Session?</h3>
+                <p className="text-xs text-amber-300 font-medium">An official timed exam is currently in progress.</p>
+              </div>
+            </div>
+
+            <p className="text-xs text-slate-300 leading-relaxed bg-slate-950 p-3.5 rounded-2xl border border-slate-800">
+              Leaving now will interrupt your session for <span className="font-bold text-white">{selectedMockTest?.title}</span>. Would you like to submit your exam for scoring or exit without submitting?
+            </p>
+
+            <div className="space-y-2.5 pt-1">
+              <button
+                onClick={() => {
+                  setShowExitConfirmModal(false);
+                  handleSubmitExam();
+                }}
+                className="w-full py-3 rounded-2xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-black text-xs shadow-glow transition-all flex items-center justify-center gap-2"
+              >
+                <CheckCircle2 className="w-4 h-4" />
+                <span>Submit Exam & View Marks</span>
+              </button>
+
+              <button
+                onClick={() => {
+                  setShowExitConfirmModal(false);
+                  handleExitExam();
+                }}
+                className="w-full py-2.5 rounded-2xl bg-slate-800 hover:bg-rose-900/40 text-slate-300 hover:text-rose-300 font-bold text-xs transition-all flex items-center justify-center gap-2 border border-slate-700"
+              >
+                <X className="w-4 h-4" />
+                <span>Exit Without Submitting</span>
+              </button>
+
+              <button
+                onClick={() => setShowExitConfirmModal(false)}
+                className="w-full py-2 rounded-xl text-slate-400 hover:text-white font-bold text-xs transition-colors"
+              >
+                ▶ Continue Exam Session
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Top Header Bar */}
       <div className="bg-slate-900/95 backdrop-blur-xl border border-slate-800 rounded-2xl sm:rounded-3xl p-3.5 sm:p-5 shadow-2xl flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
         <div className="flex items-center gap-3">
           <button
-            onClick={handleExitExam}
+            onClick={handleBackButtonClick}
             className="p-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white transition-all border border-slate-700"
-            title="Exit Exam to Lobby"
+            title="Exit or Submit Exam"
           >
             <ArrowLeft className="w-4 h-4" />
           </button>
