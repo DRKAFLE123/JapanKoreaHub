@@ -17,14 +17,19 @@ import {
   Minimize2,
   ListFilter,
   Sparkles,
-  BookOpen
+  BookOpen,
+  Play,
+  ArrowLeft,
+  FileText,
+  Headphones,
+  RotateCcw
 } from 'lucide-react';
 import { validateExamSubmission } from '@/lib/auth-security';
 
 export interface ExamQuestion {
   id: string;
   level: string; // N5, N4, N3, N2 | EPS, TOPIK2, TOPIK3, TOPIK4
-  mockSet?: string; // 'N5_SET_1' | 'N5_SET_2' | 'N4_SET_1' | 'GENERAL'
+  mockSet?: string; // 'N5_SET_1' | 'N5_SET_2' | 'N4_SET_1' | etc.
   type: 'MULTIPLE_CHOICE' | 'LISTENING' | 'FILL_BLANK';
   prompt: string;
   audioUrl?: string;
@@ -32,6 +37,133 @@ export interface ExamQuestion {
   correctAnswer: string;
   explanation?: string;
 }
+
+export interface MockTestInfo {
+  id: string;
+  mockSet: string;
+  level: string;
+  language: 'JAPANESE' | 'KOREAN';
+  title: string;
+  japaneseTitle?: string;
+  description: string;
+  timeLimitMinutes: number;
+  questionCount: number;
+  sections: string[];
+  audioCount: number;
+  badgeColor: string;
+}
+
+const MOCK_TEST_CATALOG: MockTestInfo[] = [
+  {
+    id: 'n5-mock-1',
+    mockSet: 'N5_SET_1',
+    level: 'N5',
+    language: 'JAPANESE',
+    title: 'JLPT N5 Official Mock Test - Paper 1',
+    japaneseTitle: 'JLPT N5 公式模擬試験 第1集',
+    description: 'Complete JLPT N5 paper covering Kanji & Vocabulary, Grammar patterns, Reading comprehension, and Audio Listening.',
+    timeLimitMinutes: 50,
+    questionCount: 10,
+    sections: ['文字・語彙 (Kanji & Vocab)', '文法・読解 (Grammar & Reading)', '聴解 (Audio Listening)'],
+    audioCount: 2,
+    badgeColor: 'from-rose-600 to-pink-600',
+  },
+  {
+    id: 'n5-mock-2',
+    mockSet: 'N5_SET_2',
+    level: 'N5',
+    language: 'JAPANESE',
+    title: 'JLPT N5 Official Mock Test - Paper 2',
+    japaneseTitle: 'JLPT N5 公式模擬試験 第2集',
+    description: 'Second full N5 exam set focused on Minna no Nihongo I concepts, particles (~てもいい, ~から), and audio dialogs.',
+    timeLimitMinutes: 50,
+    questionCount: 10,
+    sections: ['文字・語彙 (Kanji & Vocab)', '文法・読解 (Grammar & Reading)', '聴解 (Audio Listening)'],
+    audioCount: 2,
+    badgeColor: 'from-rose-600 to-pink-600',
+  },
+  {
+    id: 'n4-mock-1',
+    mockSet: 'N4_SET_1',
+    level: 'N4',
+    language: 'JAPANESE',
+    title: 'JLPT N4 Standard Practice Exam - Paper 1',
+    japaneseTitle: 'JLPT N4 標準模擬試験 第1集',
+    description: 'Full N4 exam covering intermediate verb conjugations, passive/causative forms, and conversation listening.',
+    timeLimitMinutes: 55,
+    questionCount: 8,
+    sections: ['文字・語彙 (Vocab)', '文法・読解 (Grammar)', '聴解 (Listening)'],
+    audioCount: 1,
+    badgeColor: 'from-indigo-600 to-purple-600',
+  },
+  {
+    id: 'n3-mock-1',
+    mockSet: 'ALL_N3',
+    level: 'N3',
+    language: 'JAPANESE',
+    title: 'JLPT N3 Intermediate Mock Test - Sample Set',
+    japaneseTitle: 'JLPT N3 中級模擬試験',
+    description: 'N3 level grammar nuances, honorifics, complex reading, and inference questions.',
+    timeLimitMinutes: 60,
+    questionCount: 2,
+    sections: ['言語知識 (Language Knowledge)', '読解 (Reading)'],
+    audioCount: 0,
+    badgeColor: 'from-amber-600 to-orange-600',
+  },
+  {
+    id: 'n2-mock-1',
+    mockSet: 'ALL_N2',
+    level: 'N2',
+    language: 'JAPANESE',
+    title: 'JLPT N2 Advanced Mock Test - Sample Set',
+    japaneseTitle: 'JLPT N2 上級模擬試験',
+    description: 'N2 advanced expressions, business Japanese structures, and deep comprehension.',
+    timeLimitMinutes: 65,
+    questionCount: 1,
+    sections: ['言語知識 (Language Knowledge)'],
+    audioCount: 0,
+    badgeColor: 'from-emerald-600 to-teal-600',
+  },
+  {
+    id: 'eps-mock-1',
+    mockSet: 'EPS_SET_1',
+    level: 'EPS',
+    language: 'KOREAN',
+    title: 'EPS-TOPIK Industry & General Worker Exam',
+    description: 'Standard EPS-TOPIK evaluation paper covering factory vocabulary, safety rules, and daily Korean.',
+    timeLimitMinutes: 50,
+    questionCount: 3,
+    sections: ['어휘 (Vocabulary)', '문법 (Grammar)', '안전 수칙 (Safety)'],
+    audioCount: 0,
+    badgeColor: 'from-emerald-600 to-teal-600',
+  },
+  {
+    id: 'topik2-mock-1',
+    mockSet: 'TOPIK2_SET_1',
+    level: 'TOPIK2',
+    language: 'KOREAN',
+    title: 'TOPIK I (Level 2) Official Practice Exam',
+    description: 'Official TOPIK Level 2 practice exam for basic conversation and reading comprehension.',
+    timeLimitMinutes: 50,
+    questionCount: 1,
+    sections: ['읽기 (Reading)'],
+    audioCount: 0,
+    badgeColor: 'from-indigo-600 to-blue-600',
+  },
+  {
+    id: 'topik34-mock-1',
+    mockSet: 'TOPIK34_SET_1',
+    level: 'TOPIK3',
+    language: 'KOREAN',
+    title: 'TOPIK II (Level 3 & 4) Intermediate Exam',
+    description: 'Advanced grammar, newspaper headlines, societal issues, and academic Korean.',
+    timeLimitMinutes: 60,
+    questionCount: 2,
+    sections: ['읽기 (Reading)', '문형 (Grammar Patterns)'],
+    audioCount: 0,
+    badgeColor: 'from-purple-600 to-pink-600',
+  },
+];
 
 const JAPANESE_QUESTIONS: ExamQuestion[] = [
   // ==========================================
@@ -390,7 +522,7 @@ const KOREAN_QUESTIONS: ExamQuestion[] = [
     prompt: '공장에서 일할 때 반드시 착용해야 하는 안전 장구는 무엇입니까?',
     options: ['안전모', '운동화', '모자', '슬리퍼'],
     correctAnswer: '안전모',
-    explanation: '공장에서는 머리를 보호하기 위해 안전모(Safety Helmet)를 착용해야 합니다.',
+    explanation: '공장에서는 머리를保護하기 위해 안전모(Safety Helmet)를 착용해야 합니다.',
   },
 
   // TOPIK 2
@@ -423,7 +555,7 @@ const KOREAN_QUESTIONS: ExamQuestion[] = [
     prompt: '다음 중 문맥상 의미가 가장 어색한 표현을 고르시오.',
     options: ['경제 성장이 가속화되고 있다', '기술 혁신이 침체되고 있다', '물가가 지속적으로 상승한다', '고용 시장이 활성화된다'],
     correctAnswer: '기술 혁신이 침체되고 있다',
-    explanation: '문맥 및 일반적 표현 비교 시 적절性を 평가합니다.',
+    explanation: '문맥 및 일반적 표현 비교 시 적절성을 평가합니다.',
   },
 ];
 
@@ -439,7 +571,10 @@ export const TimedExamEngine: React.FC<TimedExamEngineProps> = ({
   const containerRef = useRef<HTMLDivElement>(null);
   const [isFullscreen, setIsFullscreen] = useState(false);
 
-  const [selectedMockSet, setSelectedMockSet] = useState<string>('N5_SET_1');
+  // Flow State: 'LOBBY' (show list of mock tests) vs 'EXAM_IN_PROGRESS'
+  const [isExamActive, setIsExamActive] = useState(false);
+  const [selectedMockTest, setSelectedMockTest] = useState<MockTestInfo | null>(null);
+
   const [selectedLevelFilter, setSelectedLevelFilter] = useState<string>('ALL');
   const [currentIndex, setCurrentIndex] = useState(0);
   const [selectedAnswers, setSelectedAnswers] = useState<Record<string, string>>({});
@@ -450,19 +585,13 @@ export const TimedExamEngine: React.FC<TimedExamEngineProps> = ({
 
   const allQuestions = activeLanguage === 'JAPANESE' ? JAPANESE_QUESTIONS : KOREAN_QUESTIONS;
 
-  const questions = allQuestions.filter((q) => {
-    if (activeLanguage === 'JAPANESE') {
-      if (selectedMockSet !== 'ALL' && q.mockSet) {
-        return q.mockSet === selectedMockSet;
-      }
-      if (selectedLevelFilter !== 'ALL') {
-        return q.level === selectedLevelFilter;
-      }
-    } else {
-      if (selectedLevelFilter !== 'ALL') {
-        return q.level === selectedLevelFilter;
-      }
-    }
+  const questions = selectedMockTest
+    ? allQuestions.filter((q) => q.mockSet === selectedMockTest.mockSet || (selectedMockTest.mockSet.startsWith('ALL_') && q.level === selectedMockTest.level))
+    : allQuestions;
+
+  const filteredCatalog = MOCK_TEST_CATALOG.filter((test) => {
+    if (test.language !== activeLanguage) return false;
+    if (selectedLevelFilter !== 'ALL' && test.level !== selectedLevelFilter) return false;
     return true;
   });
 
@@ -480,6 +609,32 @@ export const TimedExamEngine: React.FC<TimedExamEngineProps> = ({
     }
   };
 
+  const handleStartExam = (test: MockTestInfo) => {
+    setSelectedMockTest(test);
+    setCurrentIndex(0);
+    setSelectedAnswers({});
+    setFlaggedQuestions({});
+    setSecondsRemaining((test.timeLimitMinutes || 50) * 60);
+    setIsSubmitted(false);
+    setAudioPlaysCount({});
+    setIsExamActive(true);
+
+    // Launch Full Screen Mode automatically like real JLPT exam
+    if (containerRef.current?.requestFullscreen) {
+      containerRef.current.requestFullscreen().catch(() => {});
+    }
+    setIsFullscreen(true);
+  };
+
+  const handleExitExam = () => {
+    if (document.fullscreenElement) {
+      document.exitFullscreen().catch(() => {});
+    }
+    setIsFullscreen(false);
+    setIsExamActive(false);
+    setSelectedMockTest(null);
+  };
+
   useEffect(() => {
     const handleFsChange = () => {
       setIsFullscreen(Boolean(document.fullscreenElement));
@@ -489,20 +644,13 @@ export const TimedExamEngine: React.FC<TimedExamEngineProps> = ({
   }, []);
 
   useEffect(() => {
-    setCurrentIndex(0);
-    setSelectedAnswers({});
-    setFlaggedQuestions({});
-    setSecondsRemaining(50 * 60);
-    setIsSubmitted(false);
-    setAudioPlaysCount({});
-    if (activeLanguage === 'JAPANESE') {
-      setSelectedMockSet('N5_SET_1');
-    }
+    setIsExamActive(false);
+    setSelectedMockTest(null);
     setSelectedLevelFilter('ALL');
   }, [activeLanguage]);
 
   useEffect(() => {
-    if (isSubmitted) return;
+    if (!isExamActive || isSubmitted) return;
     const timer = setInterval(() => {
       setSecondsRemaining((prev) => {
         if (prev <= 1) {
@@ -515,7 +663,7 @@ export const TimedExamEngine: React.FC<TimedExamEngineProps> = ({
     }, 1000);
 
     return () => clearInterval(timer);
-  }, [isSubmitted]);
+  }, [isExamActive, isSubmitted]);
 
   const currentQ = questions[currentIndex] || questions[0];
 
@@ -570,7 +718,7 @@ export const TimedExamEngine: React.FC<TimedExamEngineProps> = ({
 
     const score = Math.round((correctCount / questions.length) * 100);
     const passed = score >= 70;
-    const timeSpentSeconds = 50 * 60 - secondsRemaining;
+    const timeSpentSeconds = ((selectedMockTest?.timeLimitMinutes || 50) * 60) - secondsRemaining;
 
     const check = validateExamSubmission(questions.length, timeSpentSeconds, score);
     if (!check.valid) {
@@ -582,6 +730,135 @@ export const TimedExamEngine: React.FC<TimedExamEngineProps> = ({
     }
   };
 
+  // ----------------------------------------------------
+  // LOBBY VIEW: DIRECTORY OF MOCK TESTS
+  // ----------------------------------------------------
+  if (!isExamActive) {
+    return (
+      <div className="w-full max-w-5xl mx-auto font-sans space-y-6">
+        {/* Lobby Header */}
+        <div className="bg-slate-900/95 backdrop-blur-xl border border-slate-800 rounded-3xl p-6 shadow-2xl flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+          <div>
+            <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-emerald-400 mb-1">
+              <Award className="w-4 h-4 text-amber-400" />
+              <span>Official Exam Simulator & Practice Hall</span>
+            </div>
+            <h2 className="text-xl sm:text-2xl font-black text-white">
+              {activeLanguage === 'JAPANESE' ? 'JLPT N5 / N4 / N3 / N2 Mock Test Center' : 'EPS-TOPIK & TOPIK I / II Mock Test Center'}
+            </h2>
+            <p className="text-xs text-slate-400 mt-1">
+              Select a mock test below to launch in full-screen interactive exam mode with timed timer and scoring.
+            </p>
+          </div>
+        </div>
+
+        {/* Level Filter Bar */}
+        <div className="flex items-center gap-2 bg-slate-900/80 p-2 rounded-2xl border border-slate-800 flex-wrap">
+          <span className="text-xs font-bold text-slate-400 px-2 flex items-center gap-1.5">
+            <Layers className="w-4 h-4 text-indigo-400" /> Choose Level:
+          </span>
+          <button
+            onClick={() => setSelectedLevelFilter('ALL')}
+            className={`px-4 py-2 rounded-xl text-xs font-extrabold transition-all ${
+              selectedLevelFilter === 'ALL' ? 'bg-indigo-600 text-white shadow-glow' : 'bg-slate-950 text-slate-400 hover:text-white border border-slate-800'
+            }`}
+          >
+            All Levels ({MOCK_TEST_CATALOG.filter(t => t.language === activeLanguage).length})
+          </button>
+          {activeLanguage === 'JAPANESE' ? (
+            ['N5', 'N4', 'N3', 'N2'].map((lvl) => (
+              <button
+                key={lvl}
+                onClick={() => setSelectedLevelFilter(lvl)}
+                className={`px-4 py-2 rounded-xl text-xs font-extrabold transition-all ${
+                  selectedLevelFilter === lvl ? 'bg-rose-600 text-white shadow-glow' : 'bg-slate-950 text-slate-400 hover:text-white border border-slate-800'
+                }`}
+              >
+                JLPT {lvl} ({MOCK_TEST_CATALOG.filter(t => t.language === 'JAPANESE' && t.level === lvl).length})
+              </button>
+            ))
+          ) : (
+            ['EPS', 'TOPIK2', 'TOPIK3'].map((lvl) => (
+              <button
+                key={lvl}
+                onClick={() => setSelectedLevelFilter(lvl)}
+                className={`px-4 py-2 rounded-xl text-xs font-extrabold transition-all ${
+                  selectedLevelFilter === lvl ? 'bg-emerald-600 text-white shadow-glow' : 'bg-slate-950 text-slate-400 hover:text-white border border-slate-800'
+                }`}
+              >
+                {lvl} ({MOCK_TEST_CATALOG.filter(t => t.language === 'KOREAN' && t.level === lvl).length})
+              </button>
+            ))
+          )}
+        </div>
+
+        {/* Mock Test Cards Directory */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+          {filteredCatalog.map((test) => (
+            <div
+              key={test.id}
+              className="group bg-slate-900/90 backdrop-blur-xl border border-slate-800 hover:border-indigo-500/60 rounded-3xl p-6 shadow-xl transition-all duration-300 flex flex-col justify-between"
+            >
+              <div>
+                <div className="flex items-center justify-between gap-2 mb-3">
+                  <span className={`px-3 py-1 rounded-xl text-xs font-black text-white bg-gradient-to-r ${test.badgeColor} shadow-md`}>
+                    {test.level} Official Paper
+                  </span>
+                  <div className="flex items-center gap-1.5 text-xs font-bold text-amber-400 bg-slate-950 px-2.5 py-1 rounded-lg border border-slate-800">
+                    <Clock className="w-3.5 h-3.5" />
+                    <span>{test.timeLimitMinutes} Mins</span>
+                  </div>
+                </div>
+
+                <h3 className="text-lg font-black text-white group-hover:text-indigo-300 transition-colors">
+                  {test.title}
+                </h3>
+                {test.japaneseTitle && (
+                  <div className="text-xs font-bold font-jp text-slate-400 mt-0.5 mb-2">
+                    {test.japaneseTitle}
+                  </div>
+                )}
+                <p className="text-xs text-slate-300 leading-relaxed mb-4">
+                  {test.description}
+                </p>
+
+                {/* Section tags */}
+                <div className="flex flex-wrap gap-1.5 mb-4">
+                  {test.sections.map((sec, i) => (
+                    <span key={i} className="px-2.5 py-1 rounded-lg bg-slate-950 border border-slate-800 text-[10px] font-semibold text-slate-300">
+                      {sec}
+                    </span>
+                  ))}
+                  {test.audioCount > 0 && (
+                    <span className="px-2.5 py-1 rounded-lg bg-emerald-950/80 border border-emerald-500/40 text-[10px] font-bold text-emerald-300 flex items-center gap-1">
+                      <Headphones className="w-3 h-3 text-emerald-400" /> {test.audioCount} Audio Tracks
+                    </span>
+                  )}
+                </div>
+              </div>
+
+              <div className="pt-4 border-t border-slate-800/80 flex items-center justify-between">
+                <div className="text-[11px] text-slate-400 font-medium">
+                  {test.questionCount} Questions • Passing 70%
+                </div>
+                <button
+                  onClick={() => handleStartExam(test)}
+                  className="px-5 py-2.5 rounded-2xl bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white font-extrabold text-xs shadow-glow transition-all flex items-center gap-2 group-hover:scale-105"
+                >
+                  <Play className="w-4 h-4 fill-white" />
+                  <span>Start Full-Screen Exam</span>
+                </button>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    );
+  }
+
+  // ----------------------------------------------------
+  // INTERACTIVE ACTIVE EXAM VIEW (FULL SCREEN MODE)
+  // ----------------------------------------------------
   return (
     <div
       ref={containerRef}
@@ -593,16 +870,23 @@ export const TimedExamEngine: React.FC<TimedExamEngineProps> = ({
     >
       {/* Top Header Bar */}
       <div className="bg-slate-900/95 backdrop-blur-xl border border-slate-800 rounded-2xl sm:rounded-3xl p-3.5 sm:p-5 shadow-2xl flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
-        <div>
-          <div className="flex items-center gap-1.5 sm:gap-2 text-[10px] sm:text-xs font-bold uppercase tracking-wider text-emerald-400">
-            <Award className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-amber-400" />
-            <span>Timed Exam Simulator & Auto Grading</span>
+        <div className="flex items-center gap-3">
+          <button
+            onClick={handleExitExam}
+            className="p-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white transition-all border border-slate-700"
+            title="Exit Exam to Lobby"
+          >
+            <ArrowLeft className="w-4 h-4" />
+          </button>
+          <div>
+            <div className="flex items-center gap-1.5 sm:gap-2 text-[10px] sm:text-xs font-bold uppercase tracking-wider text-emerald-400">
+              <Award className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-amber-400" />
+              <span>{selectedMockTest?.level} Official Timed Examination</span>
+            </div>
+            <h2 className="text-base sm:text-lg font-bold text-white mt-0.5">
+              {selectedMockTest?.title || 'JLPT Mock Examination'}
+            </h2>
           </div>
-          <h2 className="text-base sm:text-xl font-bold text-white mt-0.5 sm:mt-1">
-            {activeLanguage === 'JAPANESE'
-              ? 'JLPT Standard Model Mock Examination (N5, N4, N3, N2)'
-              : 'EPS-TOPIK & TOPIK Level 2, 3, 4 Mock Examination'}
-          </h2>
         </div>
 
         <div className="flex items-center justify-between sm:justify-end gap-3 pt-2 sm:pt-0 border-t sm:border-t-0 border-slate-800">
@@ -637,124 +921,6 @@ export const TimedExamEngine: React.FC<TimedExamEngineProps> = ({
             </button>
           )}
         </div>
-      </div>
-
-      {/* Mock Test Selection Selector (Japanese) */}
-      {activeLanguage === 'JAPANESE' && (
-        <div className="bg-slate-900/90 backdrop-blur-xl border border-slate-800 rounded-2xl sm:rounded-3xl p-3.5 sm:p-4 shadow-xl flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
-          <div className="flex items-center gap-2">
-            <ListFilter className="w-4 h-4 text-indigo-400" />
-            <span className="text-xs font-bold text-slate-300 uppercase tracking-wider">Select Mock Exam Set:</span>
-          </div>
-          <div className="flex flex-wrap gap-2">
-            <button
-              onClick={() => {
-                setSelectedMockSet('N5_SET_1');
-                setSelectedLevelFilter('ALL');
-                setCurrentIndex(0);
-              }}
-              className={`px-3 sm:px-4 py-1.5 sm:py-2 rounded-xl text-xs font-black transition-all ${
-                selectedMockSet === 'N5_SET_1'
-                  ? 'bg-gradient-to-r from-rose-600 to-pink-600 text-white shadow-glow'
-                  : 'bg-slate-950 text-slate-400 hover:text-white border border-slate-800'
-              }`}
-            >
-              📝 JLPT N5 Mock Test Set 1
-            </button>
-            <button
-              onClick={() => {
-                setSelectedMockSet('N5_SET_2');
-                setSelectedLevelFilter('ALL');
-                setCurrentIndex(0);
-              }}
-              className={`px-3 sm:px-4 py-1.5 sm:py-2 rounded-xl text-xs font-black transition-all ${
-                selectedMockSet === 'N5_SET_2'
-                  ? 'bg-gradient-to-r from-rose-600 to-pink-600 text-white shadow-glow'
-                  : 'bg-slate-950 text-slate-400 hover:text-white border border-slate-800'
-              }`}
-            >
-              📝 JLPT N5 Mock Test Set 2
-            </button>
-            <button
-              onClick={() => {
-                setSelectedMockSet('N4_SET_1');
-                setSelectedLevelFilter('ALL');
-                setCurrentIndex(0);
-              }}
-              className={`px-3 sm:px-4 py-1.5 sm:py-2 rounded-xl text-xs font-black transition-all ${
-                selectedMockSet === 'N4_SET_1'
-                  ? 'bg-gradient-to-r from-indigo-600 to-purple-600 text-white shadow-glow'
-                  : 'bg-slate-950 text-slate-400 hover:text-white border border-slate-800'
-              }`}
-            >
-              📝 JLPT N4 Mock Test
-            </button>
-            <button
-              onClick={() => {
-                setSelectedMockSet('ALL');
-                setSelectedLevelFilter('ALL');
-                setCurrentIndex(0);
-              }}
-              className={`px-3 sm:px-4 py-1.5 sm:py-2 rounded-xl text-xs font-black transition-all ${
-                selectedMockSet === 'ALL'
-                  ? 'bg-slate-800 text-white'
-                  : 'bg-slate-950 text-slate-400 hover:text-white border border-slate-800'
-              }`}
-            >
-              🌐 All Questions Pool
-            </button>
-          </div>
-        </div>
-      )}
-
-      {/* Level Selector Bar */}
-      <div className="flex items-center gap-1.5 sm:gap-2 bg-slate-900/80 p-1.5 sm:p-2 rounded-xl sm:rounded-2xl border border-slate-800 flex-wrap">
-        <span className="text-[11px] sm:text-xs font-bold text-slate-400 px-1.5 flex items-center gap-1">
-          <Layers className="w-3.5 h-3.5" /> Filter Level:
-        </span>
-        <button
-          onClick={() => {
-            setSelectedLevelFilter('ALL');
-            setCurrentIndex(0);
-          }}
-          className={`px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-lg sm:rounded-xl text-[11px] sm:text-xs font-bold transition-all ${
-            selectedLevelFilter === 'ALL' ? 'bg-indigo-600 text-white' : 'bg-slate-950 text-slate-400 hover:text-white'
-          }`}
-        >
-          All
-        </button>
-        {activeLanguage === 'JAPANESE' ? (
-          ['N5', 'N4', 'N3', 'N2'].map((lvl) => (
-            <button
-              key={lvl}
-              onClick={() => {
-                setSelectedLevelFilter(lvl);
-                setSelectedMockSet('ALL');
-                setCurrentIndex(0);
-              }}
-              className={`px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-lg sm:rounded-xl text-[11px] sm:text-xs font-bold transition-all ${
-                selectedLevelFilter === lvl ? 'bg-rose-600 text-white' : 'bg-slate-950 text-slate-400 hover:text-white'
-              }`}
-            >
-              JLPT {lvl}
-            </button>
-          ))
-        ) : (
-          ['EPS', 'TOPIK2', 'TOPIK3', 'TOPIK4'].map((lvl) => (
-            <button
-              key={lvl}
-              onClick={() => {
-                setSelectedLevelFilter(lvl);
-                setCurrentIndex(0);
-              }}
-              className={`px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-lg sm:rounded-xl text-[11px] sm:text-xs font-bold transition-all ${
-                selectedLevelFilter === lvl ? 'bg-emerald-600 text-white' : 'bg-slate-950 text-slate-400 hover:text-white'
-              }`}
-            >
-              {lvl}
-            </button>
-          ))
-        )}
       </div>
 
       {/* Main Grid */}
@@ -929,11 +1095,23 @@ export const TimedExamEngine: React.FC<TimedExamEngineProps> = ({
             </div>
           </div>
 
-          <div className="mt-6 pt-4 border-t border-slate-800 text-center">
-            <div className="text-xs text-slate-400 font-medium">Answered Progress</div>
-            <div className="text-xl font-bold text-white mt-0.5">
-              {Object.keys(selectedAnswers).length} / {questions.length} Questions
+          <div className="mt-6 pt-4 border-t border-slate-800 space-y-3">
+            <div className="text-center">
+              <div className="text-xs text-slate-400 font-medium">Answered Progress</div>
+              <div className="text-xl font-bold text-white mt-0.5">
+                {Object.keys(selectedAnswers).length} / {questions.length} Questions
+              </div>
             </div>
+
+            {isSubmitted && (
+              <button
+                onClick={handleExitExam}
+                className="w-full py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-white font-bold text-xs transition-all flex items-center justify-center gap-2 border border-slate-700"
+              >
+                <RotateCcw className="w-4 h-4" />
+                <span>Return to Mock Test Catalog</span>
+              </button>
+            )}
           </div>
         </div>
       </div>
