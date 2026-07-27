@@ -5,7 +5,7 @@ import {
   Flame, Wifi, WifiOff, BookOpen, Headphones,
   Clock, Layers, Calendar, ShieldCheck, Globe, Sparkles,
   User, LogOut, LogIn, UserPlus, ArrowLeft, CheckCircle2, Award, X, ChevronRight,
-  Zap, Menu,
+  Zap, Menu, Compass, Settings, Radio
 } from 'lucide-react';
 import { KanjiCard } from '@/components/KanjiCard';
 import { AlphabetGrid } from '@/components/AlphabetGrid';
@@ -33,28 +33,29 @@ interface TabDef {
   sublabel: string;
   icon: React.ElementType;
   emoji: string;
+  group: 'LEARNING' | 'TOOLS';
 }
 
 /* ──────────────────────────────────────────────────────────────
-   TAB DEFINITIONS (All tabs open & accessible directly)
+   TAB DEFINITIONS
 ────────────────────────────────────────────────────────────── */
 const JAPANESE_TABS: TabDef[] = [
-  { id: 'VOCAB_EXPLORER', label: 'Vocabulary',  sublabel: 'Lessons 1–75 • Nepali & English', icon: BookOpen,    emoji: '📚' },
-  { id: 'KANJI_SRS',      label: 'Flashcards',  sublabel: 'Kanji SRS • SM-2 Algorithm',      icon: Layers,      emoji: '🃏' },
-  { id: 'ALPHABET_GRID',  label: 'Listening',   sublabel: 'Kana Audio Matrix',               icon: Headphones,  emoji: '🎧' },
-  { id: 'TIMED_EXAM',     label: 'Mock Test',   sublabel: 'JLPT N5–N2 Exam Engine',          icon: Clock,       emoji: '⏱'  },
-  { id: 'RADICALS',       label: 'Radicals',    sublabel: 'Kanji Radical Breakdown',         icon: Layers,      emoji: '🧩' },
-  { id: 'HEATMAP',        label: 'Streak',      sublabel: 'Study Progress Heatmap',          icon: Calendar,    emoji: '🔥' },
-  { id: 'CERTIFICATE',    label: 'Certificate', sublabel: 'QR Certificate Verifier',         icon: ShieldCheck, emoji: '🏅' },
+  { id: 'VOCAB_EXPLORER', label: 'Vocabulary',  sublabel: 'Lessons 1–75 • Nepali & English', icon: BookOpen,    emoji: '📚', group: 'LEARNING' },
+  { id: 'KANJI_SRS',      label: 'Flashcards',  sublabel: 'Kanji SRS • SM-2 Algorithm',      icon: Layers,      emoji: '🃏', group: 'LEARNING' },
+  { id: 'ALPHABET_GRID',  label: 'Listening',   sublabel: 'Kana & Chapter Audio Tracks',     icon: Headphones,  emoji: '🎧', group: 'LEARNING' },
+  { id: 'TIMED_EXAM',     label: 'Mock Test',   sublabel: 'JLPT N5–N2 Exam Simulator',       icon: Clock,       emoji: '⏱',  group: 'LEARNING' },
+  { id: 'RADICALS',       label: 'Radicals',    sublabel: 'Kanji Radical Breakdown',         icon: Layers,      emoji: '🧩', group: 'TOOLS'    },
+  { id: 'HEATMAP',        label: 'Streak',      sublabel: 'Study Progress Heatmap',          icon: Calendar,    emoji: '🔥', group: 'TOOLS'    },
+  { id: 'CERTIFICATE',    label: 'Certificate', sublabel: 'QR Certificate Verifier',         icon: ShieldCheck, emoji: '🏅', group: 'TOOLS'    },
 ];
 
 const KOREAN_TABS: TabDef[] = [
-  { id: 'KOREAN_VOCAB',    label: 'Vocabulary',  sublabel: 'Lessons 1–60 • Nepali & English', icon: Globe,       emoji: '📚' },
-  { id: 'KOREAN_FLASHCARD',label: 'Flashcards',  sublabel: 'Korean SRS Flashcards',           icon: Layers,      emoji: '🃏' },
-  { id: 'ALPHABET_GRID',   label: 'Listening',   sublabel: 'Hangul Audio Matrix',             icon: Headphones,  emoji: '🎧' },
-  { id: 'TIMED_EXAM',      label: 'Mock Test',   sublabel: 'EPS & TOPIK Exam Engine',         icon: Clock,       emoji: '⏱'  },
-  { id: 'HEATMAP',         label: 'Streak',      sublabel: 'Study Progress Heatmap',          icon: Calendar,    emoji: '🔥' },
-  { id: 'CERTIFICATE',     label: 'Certificate', sublabel: 'QR Certificate Verifier',         icon: ShieldCheck, emoji: '🏅' },
+  { id: 'KOREAN_VOCAB',    label: 'Vocabulary',  sublabel: 'Lessons 1–60 • Nepali & English', icon: Globe,       emoji: '📚', group: 'LEARNING' },
+  { id: 'KOREAN_FLASHCARD',label: 'Flashcards',  sublabel: 'Korean SRS Flashcards',           icon: Layers,      emoji: '🃏', group: 'LEARNING' },
+  { id: 'ALPHABET_GRID',   label: 'Listening',   sublabel: 'Hangul Audio Matrix',             icon: Headphones,  emoji: '🎧', group: 'LEARNING' },
+  { id: 'TIMED_EXAM',      label: 'Mock Test',   sublabel: 'EPS & TOPIK Exam Engine',         icon: Clock,       emoji: '⏱',  group: 'LEARNING' },
+  { id: 'HEATMAP',         label: 'Streak',      sublabel: 'Study Progress Heatmap',          icon: Calendar,    emoji: '🔥', group: 'TOOLS'    },
+  { id: 'CERTIFICATE',     label: 'Certificate', sublabel: 'QR Certificate Verifier',         icon: ShieldCheck, emoji: '🏅', group: 'TOOLS'    },
 ];
 
 /* ──────────────────────────────────────────────────────────────
@@ -76,7 +77,7 @@ const AuthModal: React.FC<AuthModalProps> = ({
   authPassword, setAuthPassword,
   onSubmit, onClose,
 }) => (
-  <div className="fixed inset-0 z-[60] flex items-center justify-center p-4 bg-slate-950/85 backdrop-blur-md animate-fade-in">
+  <div className="fixed inset-0 z-[70] flex items-center justify-center p-4 bg-slate-950/85 backdrop-blur-md animate-fade-in">
     <div className="w-full max-w-md bg-slate-900 border border-slate-800 rounded-3xl p-6 shadow-2xl space-y-5">
       {/* Header */}
       <div className="flex items-center justify-between pb-3 border-b border-slate-800">
@@ -179,7 +180,7 @@ const SharedHeader: React.FC<SharedHeaderProps> = ({
   viewMode, isJapanese, activeTabLabel, user, isOnline, unsyncedItems,
   setViewMode, setDrawerOpen, openLogin, openSignup, handleLogout,
 }) => (
-  <header className="sticky top-0 z-50 bg-slate-950/90 backdrop-blur-xl border-b border-slate-800/80 px-3 sm:px-6 py-2.5 sm:py-3">
+  <header className="sticky top-0 z-40 bg-slate-950/90 backdrop-blur-xl border-b border-slate-800/80 px-3 sm:px-6 py-2.5 sm:py-3">
     <div className="max-w-7xl mx-auto flex items-center justify-between gap-2">
 
       {/* Left: hamburger + logo */}
@@ -187,10 +188,10 @@ const SharedHeader: React.FC<SharedHeaderProps> = ({
         {viewMode !== 'LANDING' && (
           <button
             onClick={() => setDrawerOpen(true)}
-            className="sm:hidden flex items-center justify-center w-9 h-9 rounded-xl bg-slate-900 border border-slate-800 text-slate-300 hover:text-white transition-all flex-shrink-0"
+            className="sm:hidden flex items-center justify-center w-9 h-9 rounded-xl bg-slate-900 border border-slate-800 text-slate-300 hover:text-white transition-all flex-shrink-0 active:scale-95"
             aria-label="Open navigation menu"
           >
-            <Menu className="w-4 h-4" />
+            <Menu className="w-5 h-5" />
           </button>
         )}
         <button onClick={() => setViewMode('LANDING')} className="flex items-center gap-2 group">
@@ -205,9 +206,9 @@ const SharedHeader: React.FC<SharedHeaderProps> = ({
             <p className="text-[10px] text-slate-400">Japanese (JLPT N5–N1) &amp; Korean (EPS-TOPIK)</p>
           </div>
           {viewMode !== 'LANDING' && (
-            <div className="sm:hidden flex flex-col">
+            <div className="sm:hidden flex flex-col text-left">
               <span className="text-[11px] font-black text-white leading-tight">LanguageGuru</span>
-              <span className="text-[10px] text-slate-400">{isJapanese ? '🇯🇵' : '🇰🇷'} {activeTabLabel}</span>
+              <span className="text-[10px] text-rose-400 font-bold">{isJapanese ? '🇯🇵' : '🇰🇷'} {activeTabLabel}</span>
             </div>
           )}
         </button>
@@ -258,7 +259,7 @@ const SharedHeader: React.FC<SharedHeaderProps> = ({
 );
 
 /* ──────────────────────────────────────────────────────────────
-   MOBILE DRAWER
+   MOBILE DRAWER — Left Slide-Over Menu
 ────────────────────────────────────────────────────────────── */
 interface MobileDrawerProps {
   open: boolean;
@@ -271,138 +272,213 @@ interface MobileDrawerProps {
   onSwitchLanguage: () => void;
   openLogin: () => void;
   openSignup: () => void;
+  handleLogout: () => void;
 }
 const MobileDrawer: React.FC<MobileDrawerProps> = ({
   open, onClose, tabs, activeTabId, isJapanese, user,
-  onTabClick, onSwitchLanguage, openLogin, openSignup,
+  onTabClick, onSwitchLanguage, openLogin, openSignup, handleLogout,
 }) => {
-  const accent      = isJapanese ? 'from-rose-600 to-pink-700'    : 'from-emerald-600 to-teal-700';
-  const accentBorder= isJapanese ? 'border-rose-500/50'            : 'border-emerald-500/50';
-  const accentText  = isJapanese ? 'text-rose-400'                 : 'text-emerald-400';
-  const accentGlow  = isJapanese ? 'bg-rose-500/10'                : 'bg-emerald-500/10';
+  const accentGradient = isJapanese ? 'from-rose-600 via-pink-600 to-purple-600' : 'from-emerald-600 via-teal-600 to-indigo-600';
+  const accentText     = isJapanese ? 'text-rose-400'  : 'text-emerald-400';
+  const accentBorder   = isJapanese ? 'border-rose-500/40 bg-rose-500/10' : 'border-emerald-500/40 bg-emerald-500/10';
+  const activeBg       = isJapanese ? 'bg-gradient-to-r from-rose-600 to-pink-600 text-white shadow-lg shadow-rose-900/30' : 'bg-gradient-to-r from-emerald-600 to-teal-600 text-white shadow-lg shadow-emerald-900/30';
+
+  const learningTabs = tabs.filter(t => t.group === 'LEARNING');
+  const toolTabs     = tabs.filter(t => t.group === 'TOOLS');
 
   return (
     <>
-      {/* Backdrop */}
+      {/* Dark Backdrop */}
       <div
-        className={`fixed inset-0 z-40 bg-slate-950/70 backdrop-blur-sm transition-opacity duration-300 ${open ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
+        className={`fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-sm transition-opacity duration-300 ${
+          open ? 'opacity-100' : 'opacity-0 pointer-events-none'
+        }`}
         onClick={onClose}
       />
 
-      {/* Drawer panel */}
-      <div
-        className={`fixed left-0 right-0 bottom-0 z-50 flex flex-col rounded-t-3xl bg-slate-900 border-t border-slate-700/80 shadow-2xl transition-transform duration-300 ease-out ${open ? 'translate-y-0' : 'translate-y-full'}`}
-        style={{ maxHeight: '85vh' }}
+      {/* Left Slide-Over Drawer Container */}
+      <aside
+        className={`fixed top-0 bottom-0 left-0 z-50 w-[84vw] max-w-[340px] bg-slate-900/98 border-r border-slate-800 shadow-2xl flex flex-col transition-transform duration-300 ease-out font-sans ${
+          open ? 'translate-x-0' : '-translate-x-full'
+        }`}
       >
-        {/* Pull handle */}
-        <div className="flex justify-center pt-3 pb-1">
-          <div className="w-10 h-1 rounded-full bg-slate-600" />
-        </div>
-
-        {/* Drawer header */}
-        <div className="flex items-center justify-between px-5 py-3 border-b border-slate-800">
-          <div className="flex items-center gap-3">
-            <div className={`w-8 h-8 rounded-xl bg-gradient-to-br ${accent} flex items-center justify-center text-sm`}>
-              {isJapanese ? '🇯🇵' : '🇰🇷'}
+        {/* Top Header */}
+        <div className="flex items-center justify-between p-4 border-b border-slate-800/80 bg-slate-950/60">
+          <div className="flex items-center gap-2.5">
+            <div className={`w-9 h-9 rounded-2xl bg-gradient-to-tr ${accentGradient} flex items-center justify-center text-white font-black text-xl shadow-glow`}>
+              語
             </div>
             <div>
-              <div className={`text-[10px] font-bold uppercase tracking-wider ${accentText}`}>
-                {isJapanese ? 'Japanese Platform' : 'Korean Platform'}
+              <div className="flex items-center gap-1.5">
+                <span className="text-sm font-extrabold text-white">LanguageGuru</span>
+                <span className={`px-1.5 py-0.2 rounded-md text-[9px] font-black uppercase border ${accentBorder} ${accentText}`}>
+                  {isJapanese ? 'N5–N1' : 'EPS'}
+                </span>
               </div>
-              <div className="text-xs font-black text-white">
-                {isJapanese ? 'JLPT N5–N1' : 'EPS-TOPIK 60 Lessons'}
-              </div>
+              <p className="text-[10px] text-slate-400">
+                {isJapanese ? '🇯🇵 Japanese Platform' : '🇰🇷 Korean Platform'}
+              </p>
             </div>
           </div>
-          <button onClick={onClose} className="p-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-400 hover:text-white transition-all">
+
+          <button
+            onClick={onClose}
+            className="p-1.5 rounded-xl bg-slate-800 hover:bg-rose-600 text-slate-400 hover:text-white transition-all border border-slate-700"
+            aria-label="Close menu"
+          >
             <X className="w-4 h-4" />
           </button>
         </div>
 
-        {/* User / auth strip */}
-        {user ? (
-          <div className="mx-4 mt-3 flex items-center gap-3 bg-slate-800/80 border border-slate-700 rounded-2xl px-4 py-2.5">
-            <div className="w-8 h-8 rounded-xl bg-indigo-600/30 border border-indigo-500/40 flex items-center justify-center">
-              <User className="w-4 h-4 text-indigo-400" />
-            </div>
-            <div className="flex-1 min-w-0">
-              <div className="text-xs font-black text-white truncate">{user.name}</div>
-              <div className="text-[10px] text-slate-400 truncate">{user.email}</div>
-            </div>
-            <div className="flex items-center gap-1 bg-amber-500/20 border border-amber-500/30 px-2 py-1 rounded-lg">
-              <Flame className="w-3 h-3 text-amber-400" />
-              <span className="text-[10px] font-black text-amber-300">{user.streak}d</span>
-            </div>
-          </div>
-        ) : (
-          <div className="mx-4 mt-3 flex items-center gap-2">
-            <button
-              onClick={() => { openLogin(); onClose(); }}
-              className="flex-1 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-700 text-white font-black text-xs flex items-center justify-center gap-2 transition-all"
-            >
-              <LogIn className="w-3.5 h-3.5 text-indigo-400" /> Sign In
-            </button>
-            <button
-              onClick={() => { openSignup(); onClose(); }}
-              className="flex-1 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-black text-xs flex items-center justify-center gap-2 shadow-glow transition-all"
-            >
-              <UserPlus className="w-3.5 h-3.5" /> Sign Up Free
-            </button>
-          </div>
-        )}
+        {/* User Profile / Account Strip */}
+        <div className="p-3.5 border-b border-slate-800/80 bg-slate-950/40">
+          {user ? (
+            <div className="flex items-center justify-between gap-3 bg-slate-800/80 border border-slate-700/80 rounded-2xl p-3 shadow-inner">
+              <div className="flex items-center gap-2.5 min-w-0">
+                <div className="w-10 h-10 rounded-2xl bg-gradient-to-tr from-indigo-600 to-purple-600 flex items-center justify-center text-white font-black text-base flex-shrink-0 shadow-md">
+                  {user.name.charAt(0).toUpperCase()}
+                </div>
+                <div className="min-w-0">
+                  <div className="text-xs font-black text-white truncate">{user.name}</div>
+                  <div className="text-[10px] text-slate-400 truncate">{user.email}</div>
+                </div>
+              </div>
 
-        {/* Nav label */}
-        <div className="px-5 pt-4 pb-2">
-          <span className="text-[10px] font-bold uppercase tracking-widest text-slate-500">Navigation</span>
-        </div>
-
-        {/* Tab list */}
-        <div className="overflow-y-auto flex-1 px-4 pb-4 space-y-1.5">
-          {tabs.map(tab => {
-            const isActive = activeTabId === tab.id;
-            return (
+              <div className="flex items-center gap-1.5 flex-shrink-0">
+                <div className="flex items-center gap-1 bg-amber-500/15 border border-amber-500/30 px-2 py-1 rounded-xl">
+                  <Flame className="w-3.5 h-3.5 text-amber-400 animate-bounce" />
+                  <span className="text-[11px] font-black text-amber-300">{user.streak}d</span>
+                </div>
+                <button
+                  onClick={() => { handleLogout(); onClose(); }}
+                  className="p-1.5 rounded-xl bg-slate-900 hover:bg-rose-950 text-slate-400 hover:text-rose-300 transition-colors border border-slate-700"
+                  title="Log Out"
+                >
+                  <LogOut className="w-3.5 h-3.5" />
+                </button>
+              </div>
+            </div>
+          ) : (
+            <div className="flex items-center gap-2">
               <button
-                key={tab.id}
-                onClick={() => { onTabClick(tab.id); onClose(); }}
-                className={`w-full flex items-center gap-3.5 px-4 py-3.5 rounded-2xl transition-all text-left ${
-                  isActive
-                    ? `${accentGlow} border ${accentBorder} text-white`
-                    : 'bg-slate-800/50 border border-transparent hover:bg-slate-800 text-slate-300 hover:text-white'
-                }`}
+                onClick={() => { openLogin(); onClose(); }}
+                className="flex-1 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-700 text-white font-extrabold text-xs flex items-center justify-center gap-1.5 transition-all shadow-sm"
               >
-                <div className={`w-10 h-10 rounded-xl flex items-center justify-center text-lg flex-shrink-0 ${
-                  isActive ? `bg-gradient-to-br ${accent} shadow-md` : 'bg-slate-700/60'
-                }`}>
-                  <span>{tab.emoji}</span>
-                </div>
-                <div className="flex-1 min-w-0">
-                  <div className={`text-sm font-black ${isActive ? 'text-white' : ''}`}>{tab.label}</div>
-                  <div className={`text-[10px] truncate mt-0.5 ${isActive ? accentText : 'text-slate-500'}`}>{tab.sublabel}</div>
-                </div>
-                <div className="flex-shrink-0">
-                  {isActive ? (
-                    <div className={`w-1.5 h-6 rounded-full bg-gradient-to-b ${accent}`} />
-                  ) : (
-                    <ChevronRight className="w-4 h-4 text-slate-600" />
-                  )}
-                </div>
+                <LogIn className="w-3.5 h-3.5 text-indigo-400" />
+                <span>Sign In</span>
               </button>
-            );
-          })}
+              <button
+                onClick={() => { openSignup(); onClose(); }}
+                className="flex-1 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-extrabold text-xs flex items-center justify-center gap-1.5 shadow-glow transition-all"
+              >
+                <UserPlus className="w-3.5 h-3.5" />
+                <span>Sign Up Free</span>
+              </button>
+            </div>
+          )}
         </div>
 
-        {/* Language switcher */}
-        <div className="px-4 pb-5 pt-2 border-t border-slate-800">
+        {/* Scrollable Navigation Menu */}
+        <div className="overflow-y-auto flex-1 px-3 py-3 space-y-4 scrollbar-thin scrollbar-thumb-slate-800">
+          
+          {/* 1. Learning Curriculum Section */}
+          <div className="space-y-1">
+            <div className="px-3 pb-1 text-[10px] font-extrabold uppercase tracking-widest text-slate-500 flex items-center justify-between">
+              <span>Curriculum Modules</span>
+              <span className="text-slate-600 font-mono text-[9px]">{learningTabs.length} Tabs</span>
+            </div>
+
+            {learningTabs.map((tab) => {
+              const Icon = tab.icon;
+              const isActive = activeTabId === tab.id;
+
+              return (
+                <button
+                  key={tab.id}
+                  onClick={() => { onTabClick(tab.id); onClose(); }}
+                  className={`w-full flex items-center gap-3 px-3 py-3 rounded-2xl transition-all text-left group ${
+                    isActive
+                      ? `${activeBg}`
+                      : 'bg-slate-950/40 hover:bg-slate-800/80 border border-slate-800/80 text-slate-300 hover:text-white'
+                  }`}
+                >
+                  <div className={`w-9 h-9 rounded-xl flex items-center justify-center text-base flex-shrink-0 transition-transform group-hover:scale-105 ${
+                    isActive ? 'bg-white/20 text-white' : 'bg-slate-800 border border-slate-700/80 text-slate-300'
+                  }`}>
+                    {tab.emoji}
+                  </div>
+
+                  <div className="flex-1 min-w-0">
+                    <div className="text-xs font-black leading-tight truncate">{tab.label}</div>
+                    <div className={`text-[10px] truncate mt-0.5 ${isActive ? 'text-slate-100 opacity-90' : 'text-slate-400'}`}>
+                      {tab.sublabel}
+                    </div>
+                  </div>
+
+                  <ChevronRight className={`w-4 h-4 flex-shrink-0 ${isActive ? 'text-white' : 'text-slate-600 group-hover:text-slate-300'}`} />
+                </button>
+              );
+            })}
+          </div>
+
+          {/* 2. Tools & Utilities Section */}
+          <div className="space-y-1 pt-1 border-t border-slate-800/60">
+            <div className="px-3 py-1 text-[10px] font-extrabold uppercase tracking-widest text-slate-500 flex items-center justify-between">
+              <span>Tools &amp; Analytics</span>
+            </div>
+
+            {toolTabs.map((tab) => {
+              const Icon = tab.icon;
+              const isActive = activeTabId === tab.id;
+
+              return (
+                <button
+                  key={tab.id}
+                  onClick={() => { onTabClick(tab.id); onClose(); }}
+                  className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-2xl transition-all text-left group ${
+                    isActive
+                      ? `${activeBg}`
+                      : 'bg-slate-950/40 hover:bg-slate-800/80 border border-slate-800/80 text-slate-300 hover:text-white'
+                  }`}
+                >
+                  <div className={`w-8 h-8 rounded-xl flex items-center justify-center text-sm flex-shrink-0 ${
+                    isActive ? 'bg-white/20 text-white' : 'bg-slate-800 border border-slate-700/80 text-slate-400'
+                  }`}>
+                    {tab.emoji}
+                  </div>
+
+                  <div className="flex-1 min-w-0">
+                    <div className="text-xs font-black leading-tight truncate">{tab.label}</div>
+                    <div className={`text-[9px] truncate ${isActive ? 'text-slate-100 opacity-90' : 'text-slate-400'}`}>
+                      {tab.sublabel}
+                    </div>
+                  </div>
+
+                  <ChevronRight className={`w-3.5 h-3.5 flex-shrink-0 ${isActive ? 'text-white' : 'text-slate-600'}`} />
+                </button>
+              );
+            })}
+          </div>
+        </div>
+
+        {/* Bottom Platform Switcher Button */}
+        <div className="p-3.5 border-t border-slate-800 bg-slate-950/80 space-y-2">
           <button
             onClick={() => { onSwitchLanguage(); onClose(); }}
-            className="w-full py-3 rounded-2xl bg-slate-800/80 border border-slate-700 text-slate-300 hover:text-white font-bold text-xs flex items-center justify-center gap-2 transition-all hover:bg-slate-700"
+            className="w-full py-2.5 rounded-2xl bg-slate-800/90 hover:bg-slate-700 border border-slate-700 text-slate-200 font-extrabold text-xs flex items-center justify-center gap-2 transition-all shadow-sm"
           >
-            <span>{isJapanese ? '🇰🇷' : '🇯🇵'}</span>
+            <span className="text-base">{isJapanese ? '🇰🇷' : '🇯🇵'}</span>
             <span>Switch to {isJapanese ? 'Korean' : 'Japanese'} Platform</span>
-            <ChevronRight className="w-3.5 h-3.5" />
+            <ChevronRight className="w-3.5 h-3.5 text-slate-400" />
           </button>
+
+          <div className="text-[10px] text-slate-500 text-center flex items-center justify-center gap-2 pt-1 font-mono">
+            <span>LanguageGuru v2.4</span>
+            <span>•</span>
+            <span>SM-2 SRS Engine</span>
+          </div>
         </div>
-      </div>
+      </aside>
     </>
   );
 };
@@ -646,7 +722,7 @@ export default function HomePage() {
       />
 
       {/* Desktop tab bar */}
-      <div className="hidden sm:block sticky top-[68px] z-40 bg-slate-950/95 backdrop-blur-md border-b border-slate-800/60 px-6">
+      <div className="hidden sm:block sticky top-[68px] z-30 bg-slate-950/95 backdrop-blur-md border-b border-slate-800/60 px-6">
         <div className="max-w-7xl mx-auto py-2.5 flex items-center gap-2 overflow-x-auto scrollbar-none">
           {tabs.map(tab => {
             const Icon = tab.icon;
@@ -670,28 +746,29 @@ export default function HomePage() {
         </div>
       </div>
 
-      {/* Mobile: current tab tap-to-open */}
-      <div className="sm:hidden sticky top-[57px] z-40 bg-slate-950/95 backdrop-blur-md border-b border-slate-800/60 px-3 py-2">
+      {/* Mobile: current tab tap-to-open bar */}
+      <div className="sm:hidden sticky top-[57px] z-30 bg-slate-950/95 backdrop-blur-md border-b border-slate-800/60 px-3 py-2">
         <button
           onClick={() => setDrawerOpen(true)}
-          className={`w-full flex items-center justify-between gap-3 px-4 py-2.5 rounded-xl border transition-all ${
-            isJapanese ? 'bg-rose-600/10 border-rose-500/30 text-rose-300' : 'bg-emerald-600/10 border-emerald-500/30 text-emerald-300'
+          className={`w-full flex items-center justify-between gap-3 px-4 py-2.5 rounded-2xl border transition-all shadow-md active:scale-98 ${
+            isJapanese ? 'bg-rose-950/40 border-rose-500/30 text-rose-300' : 'bg-emerald-950/40 border-emerald-500/30 text-emerald-300'
           }`}
         >
           <div className="flex items-center gap-2.5">
-            <span className="text-base">{activeDef?.emoji}</span>
+            <span className="text-lg">{activeDef?.emoji}</span>
             <div className="text-left">
               <div className="text-xs font-black text-white">{activeDef?.label}</div>
-              <div className="text-[10px] opacity-70">{activeDef?.sublabel}</div>
+              <div className="text-[10px] text-slate-400 truncate max-w-[190px]">{activeDef?.sublabel}</div>
             </div>
           </div>
-          <div className="flex items-center gap-1.5 text-[10px] font-bold opacity-70">
-            <Menu className="w-3.5 h-3.5" /><span>Menu</span>
+          <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-xl bg-slate-900 border border-slate-700 text-[10px] font-extrabold text-white">
+            <Menu className="w-3.5 h-3.5 text-rose-400" />
+            <span>Menu</span>
           </div>
         </button>
       </div>
 
-      {/* Mobile Drawer */}
+      {/* Mobile Left Drawer */}
       <MobileDrawer
         open={drawerOpen}
         onClose={() => setDrawerOpen(false)}
@@ -703,9 +780,10 @@ export default function HomePage() {
         onSwitchLanguage={() => setViewMode(isJapanese ? 'KOREAN' : 'JAPANESE')}
         openLogin={openLogin}
         openSignup={openSignup}
+        handleLogout={handleLogout}
       />
 
-      {/* Content area — Direct UI display, no blocking screens */}
+      {/* Content area */}
       <div className="flex-1 max-w-7xl mx-auto w-full px-3 sm:px-6 py-4 sm:py-8">
         {isJapanese  && jpTab === 'VOCAB_EXPLORER'   && <VocabularyExplorer />}
         {isJapanese  && jpTab === 'KANJI_SRS'        && <KanjiCard />}
