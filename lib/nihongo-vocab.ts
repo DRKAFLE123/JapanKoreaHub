@@ -1,10 +1,15 @@
 // ============================================================
 // NIHONGO VOCAB - Full Minna no Nihongo Curriculum
-// JLPT N5 (Lessons 1-25)
+// JLPT N5 (Lessons 1-25) — Full entries in n5-lessons-1to5.ts
 // JLPT N4 (Lessons 26-50) - COMPLETE HANDBOOK
 // JLPT N3 (Lessons 51-75)
 // With English & Nepali Translations + Grammar Example Sentences
 // ============================================================
+import { N5_LESSONS_1TO5 } from './n5-lessons-1to5';
+import { N5_LESSONS_6TO10 } from './n5-lessons-6to10';
+import { N5_LESSONS_11TO15 } from './n5-lessons-11to15';
+import { N5_LESSONS_16TO20 } from './n5-lessons-16to20';
+import { N5_LESSONS_21TO25 } from './n5-lessons-21to25';
 
 export interface GrammarSentence {
   japanese: string;
@@ -29,18 +34,13 @@ export interface VocabItem {
 export const NIHONGO_VOCAB_DATA: VocabItem[] = [
 
   // ─────────────────────────────────────────────
-  // N5 (LESSONS 1 - 25) — Summary entries
+  // N5 LESSONS 1–25 — COMPLETE CURRICULUM
   // ─────────────────────────────────────────────
-  { id:'v1_1', lesson:1, level:'N5', word:'私', reading:'わたし', meaning:'I, Me', meaningNepali:'म', kanjiCharacters:['私'], partOfSpeech:'Pronoun', grammarSentences:[{japanese:'私はマリアです。', reading:'わたしはマリアです。', english:'I am Maria.', nepali:'म मारिया हुँ।'}] },
-  { id:'v1_2', lesson:1, level:'N5', word:'先生', reading:'せんせい', meaning:'Teacher', meaningNepali:'शिक्षक / गुरु', kanjiCharacters:['先','生'], partOfSpeech:'Noun', grammarSentences:[{japanese:'サントスさんは先生です。', reading:'サントスさんはせんせいです。', english:'Mr. Santos is a teacher.', nepali:'सान्तोस-जी शिक्षक हुनुहुन्छ।'}] },
-  { id:'v1_3', lesson:1, level:'N5', word:'学生', reading:'がくせい', meaning:'Student', meaningNepali:'विद्यार्थी', kanjiCharacters:['学','生'], partOfSpeech:'Noun' },
-  { id:'v1_4', lesson:1, level:'N5', word:'会社員', reading:'かいしゃいん', meaning:'Company Employee', meaningNepali:'कम्पनी कर्मचारी', kanjiCharacters:['会','社','員'], partOfSpeech:'Noun' },
-  { id:'v1_5', lesson:1, level:'N5', word:'医者', reading:'いしゃ', meaning:'Doctor', meaningNepali:'डाक्टर', kanjiCharacters:['医','者'], partOfSpeech:'Noun' },
-  { id:'v2_1', lesson:2, level:'N5', word:'本', reading:'ほん', meaning:'Book', meaningNepali:'किताब', kanjiCharacters:['本'], grammarSentences:[{japanese:'これは本です。', reading:'これはほんです。', english:'This is a book.', nepali:'यो किताब हो।'}] },
-  { id:'v3_1', lesson:3, level:'N5', word:'教室', reading:'きょうしつ', meaning:'Classroom', meaningNepali:'कक्षाकोठा', kanjiCharacters:['教','室'] },
-  { id:'v6_1', lesson:6, level:'N5', word:'食べます', reading:'たべます', meaning:'To eat', meaningNepali:'खानु', kanjiCharacters:['食'], grammarSentences:[{japanese:'朝ごはんを食べます。', reading:'あさごはんをたべます。', english:'I eat breakfast.', nepali:'म बिहानको खाना खान्छु।'}] },
-  { id:'v6_2', lesson:6, level:'N5', word:'飲みます', reading:'のみます', meaning:'To drink', meaningNepali:'पिउनु', kanjiCharacters:['飲'] },
-  { id:'v6_3', lesson:6, level:'N5', word:'見ます', reading:'みます', meaning:'To watch', meaningNepali:'हेर्नु', kanjiCharacters:['見'] },
+  ...N5_LESSONS_1TO5,
+  ...N5_LESSONS_6TO10,
+  ...N5_LESSONS_11TO15,
+  ...N5_LESSONS_16TO20,
+  ...N5_LESSONS_21TO25,
 
   // ─────────────────────────────────────────────
   // ■■■ N4 COMPLETE HANDBOOK ■■■

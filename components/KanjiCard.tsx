@@ -232,19 +232,61 @@ export const KanjiCard: React.FC = () => {
 
               {/* Tracing Grid */}
               <div>
-                <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-2 block text-left">
-                  Handwriting Tracing / Practice Grid
+                <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-2.5 block text-left">
+                  Handwriting Tracing / Practice Grid (手書き練習)
                 </span>
-                <div className="flex items-center gap-3">
-                  {[1, 2, 3, 4].map((gridNum) => (
+                {/* Trace-over guide cells (ghost kanji visible) */}
+                <div className="text-[9px] text-slate-500 font-semibold mb-1.5 uppercase tracking-wider">
+                  ① Trace over the guide character:
+                </div>
+                <div className="flex flex-wrap gap-2 mb-3">
+                  {[1, 2, 3, 4].map((n) => (
                     <div
-                      key={gridNum}
-                      className="w-12 h-12 rounded-xl bg-slate-950 border-2 border-dashed border-slate-800 flex items-center justify-center relative overflow-hidden transition-colors hover:border-indigo-500/40"
+                      key={n}
+                      className="relative w-16 h-16 rounded-xl bg-slate-950 border border-slate-700 overflow-hidden flex-shrink-0"
                     >
-                      <div className="absolute inset-0 border-t border-dashed border-slate-900/50 top-1/2 -translate-y-1/2" />
-                      <div className="absolute inset-0 border-l border-dashed border-slate-900/50 left-1/2 -translate-x-1/2" />
-                      <span className="text-2xl font-jp font-bold text-slate-850 select-none">
-                        {currentKanji.character}
+                      {/* SVG Guide Lines */}
+                      <svg className="absolute inset-0 w-full h-full" xmlns="http://www.w3.org/2000/svg">
+                        {/* Outer border */}
+                        <rect x="0" y="0" width="100%" height="100%" fill="none" stroke="#334155" strokeWidth="1" />
+                        {/* Horizontal center */}
+                        <line x1="0" y1="50%" x2="100%" y2="50%" stroke="#1e3a5f" strokeWidth="1" strokeDasharray="3,3" />
+                        {/* Vertical center */}
+                        <line x1="50%" y1="0" x2="50%" y2="100%" stroke="#1e3a5f" strokeWidth="1" strokeDasharray="3,3" />
+                        {/* Diagonal top-left to bottom-right */}
+                        <line x1="0" y1="0" x2="100%" y2="100%" stroke="#1e293b" strokeWidth="1" />
+                        {/* Diagonal top-right to bottom-left */}
+                        <line x1="100%" y1="0" x2="0" y2="100%" stroke="#1e293b" strokeWidth="1" />
+                      </svg>
+                      {/* Ghost Character */}
+                      <div className="absolute inset-0 flex items-center justify-center">
+                        <span className="text-3xl font-jp font-black text-slate-600/60 select-none pointer-events-none leading-none">
+                          {currentKanji.character}
+                        </span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+
+                {/* Free practice cells (blank) */}
+                <div className="text-[9px] text-slate-500 font-semibold mb-1.5 uppercase tracking-wider">
+                  ② Free write practice (blank):
+                </div>
+                <div className="flex flex-wrap gap-2">
+                  {[1, 2, 3, 4, 5, 6].map((n) => (
+                    <div
+                      key={n}
+                      className="relative w-16 h-16 rounded-xl bg-slate-950 border border-dashed border-slate-700 overflow-hidden flex-shrink-0"
+                    >
+                      <svg className="absolute inset-0 w-full h-full" xmlns="http://www.w3.org/2000/svg">
+                        <line x1="0" y1="50%" x2="100%" y2="50%" stroke="#1e3a5f" strokeWidth="1" strokeDasharray="3,3" />
+                        <line x1="50%" y1="0" x2="50%" y2="100%" stroke="#1e3a5f" strokeWidth="1" strokeDasharray="3,3" />
+                        <line x1="0" y1="0" x2="100%" y2="100%" stroke="#1e293b" strokeWidth="1" />
+                        <line x1="100%" y1="0" x2="0" y2="100%" stroke="#1e293b" strokeWidth="1" />
+                      </svg>
+                      {/* Stroke count hint */}
+                      <span className="absolute bottom-0.5 right-1 text-[8px] text-slate-700 font-bold select-none">
+                        {n}
                       </span>
                     </div>
                   ))}

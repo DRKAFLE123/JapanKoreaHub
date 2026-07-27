@@ -1,8 +1,8 @@
 // ============================================================
 // GRAMMAR GUIDE DATASET (JAPANESE & KOREAN)
-// Complete N4 Lesson Grammar Explanations in English & Nepali
-// Lessons 26–50 All Covered
+// Complete N5 (Lessons 1-25) & N4 (Lessons 26-50) Handbook
 // ============================================================
+import { N5_GRAMMAR_GUIDES } from './n5-grammar-guides';
 
 export interface GrammarPoint {
   title: string;
@@ -26,33 +26,10 @@ export interface LessonGrammarGuide {
 }
 
 // ────────────────────────────────────────────────────────────
-// JAPANESE — JLPT N5 (Lesson 1)
+// JAPANESE — JLPT N5 (Lessons 1 to 25 Complete)
 // ────────────────────────────────────────────────────────────
 export const JAPANESE_GRAMMAR_GUIDES: LessonGrammarGuide[] = [
-  {
-    language: 'JAPANESE', level: 'N5', lesson: 1,
-    lessonTitle: 'Introductions & Identity (自己紹介と身分)',
-    grammarPoints: [
-      {
-        title: '1. Topic Marker は & Identity です',
-        pattern: '[N1] は [N2] です',
-        explanationEnglish: 'The particle は (wa) marks the topic. です (desu) means "is/am/are".',
-        explanationNepali: 'は (वा) निपातले विषय जनाउँछ। です (देसु) ले "हो/हुँ" जनाउँछ।',
-        examples: [
-          { target: '私は学生です。', reading: 'わたしはがくせいです。', english: 'I am a student.', nepali: 'म विद्यार्थी हुँ।' },
-        ]
-      },
-      {
-        title: '2. Negative じゃありません',
-        pattern: '[N1] は [N2] じゃありません',
-        explanationEnglish: 'じゃありません (ja arimasen) is the polite negative of です.',
-        explanationNepali: 'じゃありません ले "होइन" अर्थ दिन्छ।',
-        examples: [
-          { target: '私は医者じゃありません。', reading: 'わたしはいしゃじゃありません。', english: 'I am not a doctor.', nepali: 'म डाक्टर होइन।' },
-        ]
-      }
-    ]
-  },
+  ...N5_GRAMMAR_GUIDES,
 
   // ════════════════════════════════════
   // N4 COMPLETE — LESSONS 26 TO 50

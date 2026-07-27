@@ -16,11 +16,11 @@ const LEVEL_LABELS: Record<'N5' | 'N4' | 'N3', string> = {
 };
 
 const LESSON_TOPICS: Record<number, string> = {
-  1: 'Introductions & Jobs', 2: 'Things & Belongings', 3: 'Location & Directions', 4: 'Time Expressions', 5: 'Shopping & Numbers',
-  6: 'Daily Actions', 7: 'Family & People', 8: 'Transportation', 9: 'Shops & Places', 10: 'Adjectives',
-  11: 'Frequency', 12: 'Comparisons', 13: 'Desires (〜たい)', 14: 'Activities', 15: 'て Form Rules',
-  16: 'Hobbies', 17: 'Giving & Receiving', 18: 'Past Events', 19: 'Experience (〜たことがある)', 20: 'Plans (〜つもり)',
-  21: 'Conditionals (〜たら)', 22: 'Reasons (〜ので)', 23: 'Potential (できます)', 24: 'Advice', 25: 'Casual Speech',
+  1: 'Introductions & Identity (は・です)', 2: 'Demonstratives (これ・それ・あれ)', 3: 'Location (ここ・そこ・あそこ)', 4: 'Time & Verb Tenses (〜ます)', 5: 'Movement & Transport (へ・で)',
+  6: 'Objects & Invitations (を・ませんか)', 7: 'Tools, Giving & Receiving (で・あげる・もらう)', 8: 'Adjectives (い形・な形)', 9: 'Preferences & Reasons (が好き・から)', 10: 'Existence & Location (あります・います)',
+  11: 'Counters & Frequency (助数詞・〜に〜回)', 12: 'Comparisons & Superlatives (〜より・一番)', 13: 'Desires & Purpose (欲しい・〜たい・に)', 14: 'Te-form Conjugation & Requests (〜てください)', 15: 'Permission & Prohibition (〜てもいい・〜てはいけない)',
+  16: 'Connecting & Sequence (〜て・〜てから)', 17: 'Nai-form & Obligations (〜なければ)', 18: 'Dictionary Form & Ability (〜ことができる)', 19: 'Ta-form & Experience (〜たことがある)', 20: 'Plain Speech Style (普通体)',
+  21: 'Opinions & Quotes (〜と思います)', 22: 'Relative Clauses (連体修飾)', 23: 'Time Clauses & Conditionals (とき・と)', 24: 'Giving & Receiving Favors (〜てくれる)', 25: 'Conditionals & Concessions (〜たら・〜ても)',
   26: 'Explanatory (〜んです)', 27: 'Potential Verbs', 28: 'Simultaneous Actions (〜ながら)', 29: 'States of Being', 30: 'Preparatory Action (〜ておく)',
   31: 'Volitional Form (おう/よう)', 32: 'Advice & Probabilities', 33: 'Imperative & Prohibition', 34: 'Instructions (〜通りに)', 35: 'Conditional (〜ば)',
   36: 'Habits (〜ようにする)', 37: 'Passive Voice (〜れる/られる)', 38: 'Nominalization (〜の)', 39: 'Causes & Reasons', 40: 'Embedded Questions (〜かどうか)',
@@ -28,6 +28,7 @@ const LESSON_TOPICS: Record<number, string> = {
   46: 'Timing (〜ところ)', 47: 'Hearsay (〜そうです)', 48: 'Causative (〜させる)', 49: 'Honorific Keigo (尊敬語)', 50: 'Humble Keigo (謙譲語)',
   51: 'Must Be (〜に違いない)', 52: 'Regarding (〜に関して)', 53: 'Centered On (〜を中心に)', 54: 'Through (〜を通じて)', 55: 'Depending On (〜によって)',
 };
+
 
 // Kanji Details Dataset Lookup
 const KANJI_LOOKUP_DATABASE: Record<string, KanjiItem> = {
@@ -527,17 +528,17 @@ export const VocabularyExplorer: React.FC = () => {
                     <th className="py-2.5 px-3.5 w-1/4 text-amber-400 print:text-black">4. Nepali Meaning (नेपाली अर्थ)</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-slate-800/60 text-xs font-sans print:divide-black">
+                <tbody className="divide-y divide-slate-800/60 text-sm font-sans print:divide-black">
                   {lessonVocab.map((v, i) => (
                     <tr
                       key={v.id || i}
                       onClick={() => playPronunciation(v.reading)}
                       className="hover:bg-blue-950/30 transition-colors cursor-pointer group print:hover:bg-transparent"
                     >
-                      <td className="py-2.5 px-3.5 font-jp font-bold text-rose-300 group-hover:text-rose-200 border-r border-slate-800/40 print:text-black print:border-black">
+                      <td className="py-2.5 px-3.5 font-jp font-bold text-base sm:text-lg text-rose-300 group-hover:text-rose-200 border-r border-slate-800/40 print:text-black print:border-black">
                         {v.reading}
                       </td>
-                      <td className="py-2.5 px-3.5 font-jp font-bold text-white text-sm border-r border-slate-800/40 print:text-black print:border-black">
+                      <td className="py-2.5 px-3.5 font-jp font-bold text-white text-lg border-r border-slate-800/40 print:text-black print:border-black">
                         {v.word !== v.reading && /[\u4e00-\u9faf]/.test(v.word) ? v.word : ''}
                       </td>
                       <td className="py-2.5 px-3.5 text-slate-200 font-medium border-r border-slate-800/40 print:text-black print:border-black">

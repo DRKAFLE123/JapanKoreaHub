@@ -16,41 +16,116 @@ export interface ExamQuestion {
 }
 
 const JAPANESE_QUESTIONS: ExamQuestion[] = [
-  // N5 Questions
+  // ==========================================
+  // JLPT N5 QUESTION SET
+  // ==========================================
+  // --- Section 1: Kanji & Vocabulary (文字・語彙) ---
   {
     id: 'jp_n5_1',
     level: 'N5',
     type: 'MULTIPLE_CHOICE',
-    prompt: '下線の言葉のひらがなを選んでください: 私は毎日日本のご飯を【食べます】。',
+    prompt: '【問題1】下線の言葉のひらがなを選んでください: 私は毎日日本のご飯を【食べます】。',
     options: ['のみます', 'たべます', 'いきます', 'きます'],
     correctAnswer: 'たべます',
-    explanation: '「食べます」のひらがな読みは「たべます」です。',
+    explanation: '「食」は「た(べます)」と読みます。ご飯を食べる = Eat rice/meal.',
   },
   {
     id: 'jp_n5_2',
     level: 'N5',
-    type: 'FILL_BLANK',
-    prompt: '正しい助詞(particle)を入れてください: 私はバス____学校へ行きます。',
-    options: ['に', 'で', 'を', 'が'],
-    correctAnswer: 'で',
-    explanation: '手段(by means of)を表す助詞は「で」を使います。「バスで行きます」 = Go by bus.',
+    type: 'MULTIPLE_CHOICE',
+    prompt: '【問題2】下線の漢字を選んでください: つくえのうえに【ほん】があります。',
+    options: ['本', '木', '休', '体'],
+    correctAnswer: '本',
+    explanation: '「ほん」(Book)の漢字は「本」です。',
   },
   {
     id: 'jp_n5_3',
     level: 'N5',
     type: 'MULTIPLE_CHOICE',
-    prompt: '【明日】の正しい読み方を選んでください。',
-    options: ['あした', 'きょう', 'きのう', 'あさって'],
-    correctAnswer: 'あした',
-    explanation: '「明日」の読み方は「あした」(Tomorrow)です。',
+    prompt: '【問題3】正しい意味の言葉を選んでください: きょうはとても【あつい】ですね。',
+    options: ['Hot', 'Cold', 'Warm', 'Cool'],
+    correctAnswer: 'Hot',
+    explanation: '「あつい」(暑い/熱い)の意味は「Hot」です。',
+  },
+  {
+    id: 'jp_n5_4',
+    level: 'N5',
+    type: 'MULTIPLE_CHOICE',
+    prompt: '【問題4】適切な言葉を選んでください: 毎朝6時に【_____】。',
+    options: ['おきます', 'ねます', 'のみます', 'かいます'],
+    correctAnswer: 'おきます',
+    explanation: '朝6時に起きる(Wake up at 6 a.m.)が文脈に合います。',
   },
 
-  // N4 Questions
+  // --- Section 2: Grammar & Reading (文法・読解) ---
+  {
+    id: 'jp_n5_5',
+    level: 'N5',
+    type: 'FILL_BLANK',
+    prompt: '【問題5】正しい助詞を入れてください: 私はバス【_____】学校へ行きます。',
+    options: ['に', 'で', 'を', 'が'],
+    correctAnswer: 'で',
+    explanation: '交通手段(by means of transport)を表す助詞は「で」を使います。',
+  },
+  {
+    id: 'jp_n5_6',
+    level: 'N5',
+    type: 'FILL_BLANK',
+    prompt: '【問題6】文法: 部屋に田中さん【_____】います。',
+    options: ['が', 'を', 'へ', 'で'],
+    correctAnswer: 'が',
+    explanation: '人や動物の存在を表す文(There is someone)の主語には「が」を使います。',
+  },
+  {
+    id: 'jp_n5_7',
+    level: 'N5',
+    type: 'FILL_BLANK',
+    prompt: '【問題7】文法の順番 (★に入る言葉): 昨日 映画【 ___ 】【 ___ 】【 ★ 】【 ___ 】。',
+    options: ['を', '見に', '行きました', '映画館へ'],
+    correctAnswer: '行きました',
+    explanation: '文の正しい順番: 「昨日 映画を 映画館へ 見に 行きました。」★の位置は「行きました」。',
+  },
+  {
+    id: 'jp_n5_8',
+    level: 'N5',
+    type: 'MULTIPLE_CHOICE',
+    prompt: '【問題8】読解(Short Reading): 「マリアさんは毎朝7時に起きて、コーヒーを飲みます。それから8時にバスで会社へ行きます。」マリアさんは何で会社へ行きますか。',
+    options: ['電車', 'バス', '自転車', '歩いて'],
+    correctAnswer: 'バス',
+    explanation: '文章に「8時にバスで会社へ行きます」と書いてあります。',
+  },
+
+  // --- Section 3: Listening (聴解) ---
+  {
+    id: 'jp_n5_9',
+    level: 'N5',
+    type: 'LISTENING',
+    prompt: '【問題9 聴解】音声を聞いて、男の人と女の人が何時に会うか選んでください。',
+    audioUrl: '/audio/n5/minna_shokyu_1_001.mp3',
+    options: ['10時', '10時半', '11時', '11時半'],
+    correctAnswer: '10時半',
+    explanation: '音声トラック「10時半に会いましょう」より、正解は10時半です。',
+  },
+  {
+    id: 'jp_n5_10',
+    level: 'N5',
+    type: 'LISTENING',
+    prompt: '【問題10 聴解】会話を聞いて、女の人は何を注文しましたか。',
+    audioUrl: '/audio/n5/minna_shokyu_1_002.mp3',
+    options: ['コーヒー', 'こうちゃ', 'ジュース', 'みず'],
+    correctAnswer: 'こうちゃ',
+    explanation: '音声会話で「紅茶をひとつお願いします」と言っています。',
+  },
+
+  // ==========================================
+  // JLPT N4 QUESTION SET
+  // ==========================================
+  // --- Section 1: Kanji & Vocabulary (文字・語彙) ---
   {
     id: 'jp_n4_1',
     level: 'N4',
     type: 'MULTIPLE_CHOICE',
-    prompt: '【準備】の正しい読み方を選んでください。',
+    prompt: '【問題1】下線の言葉の読み方を選んでください: 旅行の【準備】をします。',
     options: ['じゅんび', 'しょんび', 'じゅうび', 'ちゅんび'],
     correctAnswer: 'じゅんび',
     explanation: '「準備」の読み方は「じゅんび」(Preparation)です。',
@@ -58,23 +133,75 @@ const JAPANESE_QUESTIONS: ExamQuestion[] = [
   {
     id: 'jp_n4_2',
     level: 'N4',
-    type: 'FILL_BLANK',
-    prompt: '適切な文法を選んでください: 雨が_____そうだから、傘を持っていきましょう。',
-    options: ['ふり', 'ふって', 'ふった', 'ふりそう'],
-    correctAnswer: 'ふり',
-    explanation: '動詞のます形語幹 ＋ そう (Look like it is going to rain).',
+    type: 'MULTIPLE_CHOICE',
+    prompt: '【問題2】下線の漢字を選んでください: 部屋を【かたづけます】。',
+    options: ['片付けます', '形付けます', '方付けます', '向付けます'],
+    correctAnswer: '片付けます',
+    explanation: '「かたづける」(Tidy up)の漢字は「片付ける」です。',
   },
   {
     id: 'jp_n4_3',
     level: 'N4',
-    type: 'FILL_BLANK',
-    prompt: '日本語を勉強したい_____、いい先生を紹介していただけませんか。',
-    options: ['んですが', 'のに', 'ので', 'から'],
-    correctAnswer: 'んですが',
-    explanation: '依頼・質問の前に状況を導入する「〜んですが」を使います。',
+    type: 'MULTIPLE_CHOICE',
+    prompt: '【問題3】反対の意味の言葉を選んでください: 「複雑(ふくざつ)」の対義語',
+    options: ['簡単', '親切', '便利', '賑やか'],
+    correctAnswer: '簡単',
+    explanation: '「複雑」(Complex)の反対語は「簡単」(Simple)です。',
   },
 
-  // N3 Questions
+  // --- Section 2: Grammar & Reading (文法・読解) ---
+  {
+    id: 'jp_n4_4',
+    level: 'N4',
+    type: 'FILL_BLANK',
+    prompt: '【問題4】適切な文法を選んでください: 雨が_____そうだから、傘を持っていきましょう。',
+    options: ['ふり', 'ふって', 'ふった', 'ふりそう'],
+    correctAnswer: 'ふり',
+    explanation: '動詞のます形語幹 ＋ そう (It looks like it will rain).',
+  },
+  {
+    id: 'jp_n4_5',
+    level: 'N4',
+    type: 'FILL_BLANK',
+    prompt: '【問題5】文法: 日本語を勉強したい_____、いい先生を紹介していただけませんか。',
+    options: ['んですが', 'のに', 'ので', 'から'],
+    correctAnswer: 'んですが',
+    explanation: '依頼の前提を述べる「〜んですが」が最も適切です。',
+  },
+  {
+    id: 'jp_n4_6',
+    level: 'N4',
+    type: 'FILL_BLANK',
+    prompt: '【問題6】文法: どんなに難しくても、最後まであきらめる_____。',
+    options: ['わけにはいかない', 'はずがない', 'わけがない', 'に違いない'],
+    correctAnswer: 'わけにはいかない',
+    explanation: '「〜わけにはいかない」 = Cannot afford to / Must not.',
+  },
+  {
+    id: 'jp_n4_7',
+    level: 'N4',
+    type: 'MULTIPLE_CHOICE',
+    prompt: '【問題7】読解(Reading): 「日本では、ゴミを捨てる時に分別しなければなりません。燃えるゴミ、燃えないゴミ、ペットボトルなどを分けて出します。」ゴミを捨てる時どうしますか。',
+    options: ['一緒に捨てる', '分別して捨てる', '夜に捨てる', '海に捨てる'],
+    correctAnswer: '分別して捨てる',
+    explanation: '文章に「分別しなければなりません」と書かれています。',
+  },
+
+  // --- Section 3: Listening (聴解) ---
+  {
+    id: 'jp_n4_8',
+    level: 'N4',
+    type: 'LISTENING',
+    prompt: '【問題8 聴解】会話を聞いて、男の人は明日の朝何時に出発しますか。',
+    audioUrl: '/audio/n5/minna_shokyu_1_003.mp3',
+    options: ['6時半', '7時', '7時半', '8時'],
+    correctAnswer: '7時半',
+    explanation: '会話の「7時半に駅で待ち合わせましょう」より正解は7時半です。',
+  },
+
+  // ==========================================
+  // JLPT N3 & N2 EXAM SAMPLE QUESTIONS
+  // ==========================================
   {
     id: 'jp_n3_1',
     level: 'N3',
@@ -93,8 +220,6 @@ const JAPANESE_QUESTIONS: ExamQuestion[] = [
     correctAnswer: '違いない',
     explanation: '「〜に違いない」 = Must be ~ without doubt.',
   },
-
-  // N2 Questions
   {
     id: 'jp_n2_1',
     level: 'N2',
@@ -240,12 +365,22 @@ export const TimedExamEngine: React.FC<TimedExamEngineProps> = ({
     if (!currentQ) return;
     const currentPlays = audioPlaysCount[currentQ.id] || 0;
     if (currentPlays >= 2) {
-      alert('Rule: Audio can only be replayed a maximum of 2 times.');
+      alert('Rule: Audio can only be replayed a maximum of 2 times in official JLPT exams.');
       return;
     }
     setAudioPlaysCount({ ...audioPlaysCount, [currentQ.id]: currentPlays + 1 });
 
-    if ('speechSynthesis' in window) {
+    if (currentQ.audioUrl) {
+      const audio = new Audio(currentQ.audioUrl);
+      audio.play().catch(() => {
+        // Fallback to speech synthesis if audio file loading fails
+        if ('speechSynthesis' in window) {
+          const utterance = new SpeechSynthesisUtterance(currentQ.prompt);
+          utterance.lang = activeLanguage === 'JAPANESE' ? 'ja-JP' : 'ko-KR';
+          window.speechSynthesis.speak(utterance);
+        }
+      });
+    } else if ('speechSynthesis' in window) {
       const utterance = new SpeechSynthesisUtterance(currentQ.prompt);
       utterance.lang = activeLanguage === 'JAPANESE' ? 'ja-JP' : 'ko-KR';
       window.speechSynthesis.speak(utterance);
