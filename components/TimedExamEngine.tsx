@@ -64,11 +64,11 @@ const MOCK_TEST_CATALOG: MockTestInfo[] = [
     language: 'JAPANESE',
     title: 'JLPT N5 Official Mock Test - Paper 1',
     japaneseTitle: 'JLPT N5 公式模擬試験 第1集',
-    description: 'Complete JLPT N5 paper covering Kanji & Vocabulary, Grammar patterns, Reading comprehension, and Audio Listening.',
-    timeLimitMinutes: 50,
-    questionCount: 10,
-    sections: ['文字・語彙 (Kanji & Vocab)', '文法・読解 (Grammar & Reading)', '聴解 (Audio Listening)'],
-    audioCount: 2,
+    description: 'Full official JLPT N5 paper covering Kanji & Vocabulary (15Q), Grammar (15Q), Reading comprehension (6Q), and Audio Listening (8Q).',
+    timeLimitMinutes: 60,
+    questionCount: 44,
+    sections: ['文字・語彙 (Kanji & Vocab)', '文法 (Grammar)', '読解 (Reading)', '聴解 (Audio Listening)'],
+    audioCount: 8,
     badgeColor: 'from-rose-600 to-pink-600',
   },
   {
@@ -78,11 +78,39 @@ const MOCK_TEST_CATALOG: MockTestInfo[] = [
     language: 'JAPANESE',
     title: 'JLPT N5 Official Mock Test - Paper 2',
     japaneseTitle: 'JLPT N5 公式模擬試験 第2集',
-    description: 'Second full N5 exam set focused on Minna no Nihongo I concepts, particles (~てもいい, ~から), te-form verbs, and audio dialogs.',
-    timeLimitMinutes: 105,
-    questionCount: 25,
-    sections: ['文字・語彙 (Kanji & Vocab)', '文法・読解 (Grammar & Reading)', '聴解 (Audio Listening)'],
-    audioCount: 4,
+    description: 'Second full N5 paper covering particles (~てもいい, ~から), te-form verbs, reading passages, and audio dialogue tracks.',
+    timeLimitMinutes: 60,
+    questionCount: 44,
+    sections: ['文字・語彙 (Kanji & Vocab)', '文法 (Grammar)', '読解 (Reading)', '聴解 (Audio Listening)'],
+    audioCount: 8,
+    badgeColor: 'from-rose-600 to-pink-600',
+  },
+  {
+    id: 'n5-mock-3',
+    mockSet: 'N5_SET_3',
+    level: 'N5',
+    language: 'JAPANESE',
+    title: 'JLPT N5 Official Mock Test - Paper 3',
+    japaneseTitle: 'JLPT N5 公式模擬試験 第3集',
+    description: 'Third full N5 practice paper with authentic listening dialogues, sentence ordering (★), reading notices, and vocabulary.',
+    timeLimitMinutes: 60,
+    questionCount: 44,
+    sections: ['文字・語彙 (Kanji & Vocab)', '文法 (Grammar)', '読解 (Reading)', '聴解 (Audio Listening)'],
+    audioCount: 8,
+    badgeColor: 'from-rose-600 to-pink-600',
+  },
+  {
+    id: 'n5-mock-4',
+    mockSet: 'N5_SET_4',
+    level: 'N5',
+    language: 'JAPANESE',
+    title: 'JLPT N5 Official Mock Test - Paper 4',
+    japaneseTitle: 'JLPT N5 公式模擬試験 第4集',
+    description: 'Fourth full N5 practice paper covering advanced N5 expressions, store announcements, daily conversations, and listening audio.',
+    timeLimitMinutes: 60,
+    questionCount: 44,
+    sections: ['文字・語彙 (Kanji & Vocab)', '文法 (Grammar)', '読解 (Reading)', '聴解 (Audio Listening)'],
+    audioCount: 8,
     badgeColor: 'from-rose-600 to-pink-600',
   },
   {
@@ -93,10 +121,10 @@ const MOCK_TEST_CATALOG: MockTestInfo[] = [
     title: 'JLPT N4 Standard Practice Exam - Paper 1',
     japaneseTitle: 'JLPT N4 標準模擬試験 第1集',
     description: 'Full N4 exam covering intermediate verb conjugations, passive/causative forms, and conversation listening.',
-    timeLimitMinutes: 55,
-    questionCount: 8,
+    timeLimitMinutes: 60,
+    questionCount: 15,
     sections: ['文字・語彙 (Vocab)', '文法・読解 (Grammar)', '聴解 (Listening)'],
-    audioCount: 1,
+    audioCount: 3,
     badgeColor: 'from-indigo-600 to-purple-600',
   },
   {
@@ -108,7 +136,7 @@ const MOCK_TEST_CATALOG: MockTestInfo[] = [
     japaneseTitle: 'JLPT N3 中級模擬試験',
     description: 'N3 level grammar nuances, honorifics, complex reading, and inference questions.',
     timeLimitMinutes: 60,
-    questionCount: 2,
+    questionCount: 5,
     sections: ['言語知識 (Language Knowledge)', '読解 (Reading)'],
     audioCount: 0,
     badgeColor: 'from-amber-600 to-orange-600',
@@ -122,7 +150,7 @@ const MOCK_TEST_CATALOG: MockTestInfo[] = [
     japaneseTitle: 'JLPT N2 上級模擬試験',
     description: 'N2 advanced expressions, business Japanese structures, and deep comprehension.',
     timeLimitMinutes: 65,
-    questionCount: 1,
+    questionCount: 5,
     sections: ['言語知識 (Language Knowledge)'],
     audioCount: 0,
     badgeColor: 'from-emerald-600 to-teal-600',
@@ -135,8 +163,8 @@ const MOCK_TEST_CATALOG: MockTestInfo[] = [
     title: 'EPS-TOPIK Industry & General Worker Exam',
     description: 'Standard EPS-TOPIK evaluation paper covering factory vocabulary, safety rules, and daily Korean.',
     timeLimitMinutes: 50,
-    questionCount: 3,
-    sections: ['어휘 (Vocabulary)', '문법 (Grammar)', '안전 수칙 (Safety)'],
+    questionCount: 5,
+    sections: ['어휘 (Vocabulary)', '문법 (Grammar)', '안戦 (Safety)'],
     audioCount: 0,
     badgeColor: 'from-emerald-600 to-teal-600',
   },
@@ -148,7 +176,7 @@ const MOCK_TEST_CATALOG: MockTestInfo[] = [
     title: 'TOPIK I (Level 2) Official Practice Exam',
     description: 'Official TOPIK Level 2 practice exam for basic conversation and reading comprehension.',
     timeLimitMinutes: 50,
-    questionCount: 1,
+    questionCount: 5,
     sections: ['읽기 (Reading)'],
     audioCount: 0,
     badgeColor: 'from-indigo-600 to-blue-600',
@@ -161,653 +189,2733 @@ const MOCK_TEST_CATALOG: MockTestInfo[] = [
     title: 'TOPIK II (Level 3 & 4) Intermediate Exam',
     description: 'Advanced grammar, newspaper headlines, societal issues, and academic Korean.',
     timeLimitMinutes: 60,
-    questionCount: 2,
+    questionCount: 5,
     sections: ['읽기 (Reading)', '문形 (Grammar Patterns)'],
     audioCount: 0,
     badgeColor: 'from-purple-600 to-pink-600',
   },
 ];
 
+
 const JAPANESE_QUESTIONS: ExamQuestion[] = [
-  // ==========================================
-  // JLPT N5 MOCK TEST SET 1 (模擬試験 1)
-  // ==========================================
   {
-    id: 'jp_n5_1_1',
-    level: 'N5',
-    mockSet: 'N5_SET_1',
-    type: 'MULTIPLE_CHOICE',
-    prompt: '【問題1 文字・語彙】下線の言葉のひらがなを選んでください: 私は毎日日本のご飯を【食べます】。',
-    options: ['のみます', 'たべます', 'いきます', 'きます'],
-    correctAnswer: 'たべます',
-    explanation: '「食」は「た(べます)」と読みます。ご飯を食べる = Eat rice/meal.',
+    "id": "jp_n5_set1_1",
+    "level": "N5",
+    "mockSet": "N5_SET_1",
+    "type": "MULTIPLE_CHOICE",
+    "prompt": "【語彙・漢字 Q1】わたしは まいにち 学校 へ 行きます。",
+    "options": [
+      "がっこう",
+      "がくこう",
+      "かっこう",
+      "がいこう"
+    ],
+    "correctAnswer": "がっこう",
+    "explanation": "正解は「A」の「がっこう」です。"
   },
   {
-    id: 'jp_n5_1_2',
-    level: 'N5',
-    mockSet: 'N5_SET_1',
-    type: 'MULTIPLE_CHOICE',
-    prompt: '【問題2 文字・語彙】下線の漢字を選んでください: つくえのうえに【ほん】があります。',
-    options: ['本', '木', '休', '体'],
-    correctAnswer: '本',
-    explanation: '「ほん」(Book)の漢字は「本」です。',
+    "id": "jp_n5_set1_2",
+    "level": "N5",
+    "mockSet": "N5_SET_1",
+    "type": "MULTIPLE_CHOICE",
+    "prompt": "【語彙・漢字 Q2】今日 は 天気が いいです。",
+    "options": [
+      "きょう",
+      "こんじつ",
+      "いまび",
+      "こんび"
+    ],
+    "correctAnswer": "きょう",
+    "explanation": "正解は「A」の「きょう」です。"
   },
   {
-    id: 'jp_n5_1_3',
-    level: 'N5',
-    mockSet: 'N5_SET_1',
-    type: 'MULTIPLE_CHOICE',
-    prompt: '【問題3 文字・語彙】正しい意味の言葉を選んでください: きょうはとても【あつい】ですね。',
-    options: ['Hot', 'Cold', 'Warm', 'Cool'],
-    correctAnswer: 'Hot',
-    explanation: '「あつい」(暑い/熱い)の意味は「Hot」です。',
+    "id": "jp_n5_set1_3",
+    "level": "N5",
+    "mockSet": "N5_SET_1",
+    "type": "MULTIPLE_CHOICE",
+    "prompt": "【語彙・漢字 Q3】兄は 会社員 です。",
+    "options": [
+      "かいしゃいん",
+      "かいしゃにん",
+      "がいしゃいん",
+      "かいじゃいん"
+    ],
+    "correctAnswer": "かいしゃいん",
+    "explanation": "正解は「A」の「かいしゃいん」です。"
   },
   {
-    id: 'jp_n5_1_4',
-    level: 'N5',
-    mockSet: 'N5_SET_1',
-    type: 'MULTIPLE_CHOICE',
-    prompt: '【問題4 文字・語彙】適切な言葉を選んでください: 毎朝6時に【_____】。',
-    options: ['おきます', 'ねます', 'のみます', 'かいます'],
-    correctAnswer: 'おきます',
-    explanation: '朝6時に起きる(Wake up at 6 a.m.)が文脈に合います。',
+    "id": "jp_n5_set1_4",
+    "level": "N5",
+    "mockSet": "N5_SET_1",
+    "type": "MULTIPLE_CHOICE",
+    "prompt": "【語彙・漢字 Q4】病院 は えきの ちかくに あります。",
+    "options": [
+      "びょういん",
+      "びよういん",
+      "びょうえん",
+      "びよいん"
+    ],
+    "correctAnswer": "びょういん",
+    "explanation": "正解は「A」の「びょういん」です。"
   },
   {
-    id: 'jp_n5_1_5',
-    level: 'N5',
-    mockSet: 'N5_SET_1',
-    type: 'FILL_BLANK',
-    prompt: '【問題5 文法】正しい助詞を入れてください: 私はバス【_____】学校へ行きます。',
-    options: ['に', 'で', 'を', 'が'],
-    correctAnswer: 'で',
-    explanation: '交通手段(by means of transport)を表す助詞は「で」を使います。',
+    "id": "jp_n5_set1_5",
+    "level": "N5",
+    "mockSet": "N5_SET_1",
+    "type": "MULTIPLE_CHOICE",
+    "prompt": "【語彙・漢字 Q5】毎朝 、六時に おきます。",
+    "options": [
+      "まいあさ",
+      "まいちょう",
+      "めいあさ",
+      "まいてん"
+    ],
+    "correctAnswer": "まいあさ",
+    "explanation": "正解は「A」の「まいあさ」です。"
   },
   {
-    id: 'jp_n5_1_6',
-    level: 'N5',
-    mockSet: 'N5_SET_1',
-    type: 'FILL_BLANK',
-    prompt: '【問題6 文法】適切な助詞を入れてください: 部屋に田中さん【_____】います。',
-    options: ['が', 'を', 'へ', 'で'],
-    correctAnswer: 'が',
-    explanation: '人や動物の存在を表す文(There is someone)の主語には「が」を使います。',
+    "id": "jp_n5_set1_6",
+    "level": "N5",
+    "mockSet": "N5_SET_1",
+    "type": "MULTIPLE_CHOICE",
+    "prompt": "【語彙・漢字 Q6】あしたは にちようびですから、がっこうは ___です。",
+    "options": [
+      "やすみ",
+      "しごと",
+      "しゅくだい",
+      "じかん"
+    ],
+    "correctAnswer": "やすみ",
+    "explanation": "正解は「A」の「やすみ」です。"
   },
   {
-    id: 'jp_n5_1_7',
-    level: 'N5',
-    mockSet: 'N5_SET_1',
-    type: 'FILL_BLANK',
-    prompt: '【問題7 文法★並べ替え】文法の順番 (★に入る言葉): 昨日 映画【 ___ 】【 ___ 】【 ★ 】【 ___ 】。',
-    options: ['を', '見に', '行きました', '映画館へ'],
-    correctAnswer: '行きました',
-    explanation: '文の正しい順番: 「昨日 映画を 映画館へ 見に 行きました。」★の位置は「行きました」。',
+    "id": "jp_n5_set1_7",
+    "level": "N5",
+    "mockSet": "N5_SET_1",
+    "type": "MULTIPLE_CHOICE",
+    "prompt": "【語彙・漢字 Q7】のどが かわきましたから、___を のみたいです。",
+    "options": [
+      "みず",
+      "えんぴつ",
+      "かさ",
+      "しんぶん"
+    ],
+    "correctAnswer": "みず",
+    "explanation": "正解は「A」の「みず」です。"
   },
   {
-    id: 'jp_n5_1_8',
-    level: 'N5',
-    mockSet: 'N5_SET_1',
-    type: 'MULTIPLE_CHOICE',
-    prompt: '【問題8 読解】「マリアさんは毎朝7時に起きて、コーヒーを飲みます。それから8時にバスで会社へ行きます。」マリアさんは何で会社へ行きますか。',
-    options: ['電車', 'バス', '自転車', '歩いて'],
-    correctAnswer: 'バス',
-    explanation: '文章に「8時にバスで会社へ行きます」と書いてあります。',
+    "id": "jp_n5_set1_8",
+    "level": "N5",
+    "mockSet": "N5_SET_1",
+    "type": "MULTIPLE_CHOICE",
+    "prompt": "【語彙・漢字 Q8】きのう えいがを 見て、とても ___でした。",
+    "options": [
+      "おもしろかった",
+      "たかかった",
+      "やすかった",
+      "ひろかった"
+    ],
+    "correctAnswer": "おもしろかった",
+    "explanation": "正解は「A」の「おもしろかった」です。"
   },
   {
-    id: 'jp_n5_1_9',
-    level: 'N5',
-    mockSet: 'N5_SET_1',
-    type: 'LISTENING',
-    prompt: '【問題9 聴解】音声を聞いて、男の人と女の人が何時に会うか選んでください。',
-    audioUrl: '/audio/n5/minna_shokyu_1_001.mp3',
-    options: ['10時', '10時半', '11時', '11時半'],
-    correctAnswer: '10時半',
-    explanation: '音声トラック「10時半に会いましょう」より、正解は10時半です。',
+    "id": "jp_n5_set1_9",
+    "level": "N5",
+    "mockSet": "N5_SET_1",
+    "type": "MULTIPLE_CHOICE",
+    "prompt": "【語彙・漢字 Q9】まいにち にほんごを べんきょうして、すこし ___に なりました。",
+    "options": [
+      "じょうずに",
+      "げんきに",
+      "しずかに",
+      "ひまに"
+    ],
+    "correctAnswer": "じょうずに",
+    "explanation": "正解は「A」の「じょうずに」です。"
   },
   {
-    id: 'jp_n5_1_10',
-    level: 'N5',
-    mockSet: 'N5_SET_1',
-    type: 'LISTENING',
-    prompt: '【問題10 聴解】会話を聞いて、女の人は何を注文しましたか。',
-    audioUrl: '/audio/n5/minna_shokyu_1_002.mp3',
-    options: ['コーヒー', 'こうちゃ', 'ジュース', 'みず'],
-    correctAnswer: 'こうちゃ',
-    explanation: '音声会話で「紅茶をひとつお願いします」と言っています。',
-  },
-
-  // ==========================================
-  // JLPT N5 SET 1 — ADDITIONAL QUESTIONS (11-25)
-  // ==========================================
-  {
-    id: 'jp_n5_1_11',
-    level: 'N5',
-    mockSet: 'N5_SET_1',
-    type: 'MULTIPLE_CHOICE',
-    prompt: '【問題11 文字・語彙】下線の読み方を選んでください: 今日は【月曜日】です。',
-    options: ['にちようび', 'げつようび', 'かようび', 'すいようび'],
-    correctAnswer: 'げつようび',
-    explanation: '「月曜日」の読み方は「げつようび」(Monday)です。',
+    "id": "jp_n5_set1_10",
+    "level": "N5",
+    "mockSet": "N5_SET_1",
+    "type": "MULTIPLE_CHOICE",
+    "prompt": "【語彙・漢字 Q10】でんしゃが おくれましたから、かいしゃに ___しました。",
+    "options": [
+      "ちこく",
+      "りょこう",
+      "せんたく",
+      "そうじ"
+    ],
+    "correctAnswer": "ちこく",
+    "explanation": "正解は「A」の「ちこく」です。"
   },
   {
-    id: 'jp_n5_1_12',
-    level: 'N5',
-    mockSet: 'N5_SET_1',
-    type: 'MULTIPLE_CHOICE',
-    prompt: '【問題12 文字・語彙】下線の漢字を選んでください: にほんごを【はなします】。',
-    options: ['話します', '読みます', '書きます', '聞きます'],
-    correctAnswer: '話します',
-    explanation: '「はなします」(Speak)の漢字は「話します」です。',
+    "id": "jp_n5_set1_11",
+    "level": "N5",
+    "mockSet": "N5_SET_1",
+    "type": "MULTIPLE_CHOICE",
+    "prompt": "【語彙・漢字 Q11】わたしは まいにち がっこう に いきます。",
+    "options": [
+      "学校",
+      "字校",
+      "学枚",
+      "字枚"
+    ],
+    "correctAnswer": "学校",
+    "explanation": "正解は「A」の「学校」です。"
   },
   {
-    id: 'jp_n5_1_13',
-    level: 'N5',
-    mockSet: 'N5_SET_1',
-    type: 'MULTIPLE_CHOICE',
-    prompt: '【問題13 文字・語彙】正しい意味を選んでください: 「しんぶん」とは何ですか。',
-    options: ['Newspaper', 'Book', 'Magazine', 'Letter'],
-    correctAnswer: 'Newspaper',
-    explanation: '「新聞」(しんぶん) means Newspaper.',
+    "id": "jp_n5_set1_12",
+    "level": "N5",
+    "mockSet": "N5_SET_1",
+    "type": "MULTIPLE_CHOICE",
+    "prompt": "【語彙・漢字 Q12】やま に のぼりました。",
+    "options": [
+      "山",
+      "川",
+      "田",
+      "出"
+    ],
+    "correctAnswer": "山",
+    "explanation": "正解は「A」の「山」です。"
   },
   {
-    id: 'jp_n5_1_14',
-    level: 'N5',
-    mockSet: 'N5_SET_1',
-    type: 'MULTIPLE_CHOICE',
-    prompt: '【問題14 文字・語彙】数字を選んでください: 【三百五十】はいくつですか。',
-    options: ['305', '350', '3050', '3500'],
-    correctAnswer: '350',
-    explanation: '三百(300) + 五十(50) = 350です。',
+    "id": "jp_n5_set1_13",
+    "level": "N5",
+    "mockSet": "N5_SET_1",
+    "type": "MULTIPLE_CHOICE",
+    "prompt": "【語彙・漢字 Q13】きょうは あめ です。",
+    "options": [
+      "雨",
+      "雪",
+      "電",
+      "雲"
+    ],
+    "correctAnswer": "雨",
+    "explanation": "正解は「A」の「雨」です。"
   },
   {
-    id: 'jp_n5_1_15',
-    level: 'N5',
-    mockSet: 'N5_SET_1',
-    type: 'MULTIPLE_CHOICE',
-    prompt: '【問題15 文字・語彙】正しい言葉を選んでください: 昨日の夜、【___】をしました。(Had dinner)',
-    options: ['ゆうしょく', 'あさごはん', 'ひるごはん', 'おやつ'],
-    correctAnswer: 'ゆうしょく',
-    explanation: '「夕食(ゆうしょく)」は夕ご飯、つまり Dinner です。',
+    "id": "jp_n5_set1_14",
+    "level": "N5",
+    "mockSet": "N5_SET_1",
+    "type": "MULTIPLE_CHOICE",
+    "prompt": "【語彙・漢字 Q14】この もんだいは かんたんです。",
+    "options": [
+      "この もんだいは やさしいです。",
+      "この もんだいは むずかしいです。",
+      "この もんだいは ながいです。",
+      "この もんだいは たかいです。"
+    ],
+    "correctAnswer": "この もんだいは やさしいです。",
+    "explanation": "正解は「A」の「この もんだいは やさしいです。」です。"
   },
   {
-    id: 'jp_n5_1_16',
-    level: 'N5',
-    mockSet: 'N5_SET_1',
-    type: 'FILL_BLANK',
-    prompt: '【問題16 文法】正しい助詞を選んでください: 図書館【___】本を借ります。',
-    options: ['に', 'で', 'を', 'の'],
-    correctAnswer: 'で',
-    explanation: '行動が行われる場所を示す助詞は「で」を使います。(library = place of action)',
+    "id": "jp_n5_set1_15",
+    "level": "N5",
+    "mockSet": "N5_SET_1",
+    "type": "MULTIPLE_CHOICE",
+    "prompt": "【語彙・漢字 Q15】わたしは まいばん 11時に ねます。",
+    "options": [
+      "わたしは よる 11時に ねます。",
+      "わたしは あさ 11時に おきます。",
+      "わたしは ひる 11時に たべます。",
+      "わたしは まいあさ 11時に でかけます。"
+    ],
+    "correctAnswer": "わたしは よる 11時に ねます。",
+    "explanation": "正解は「A」の「わたしは よる 11時に ねます。」です。"
   },
   {
-    id: 'jp_n5_1_17',
-    level: 'N5',
-    mockSet: 'N5_SET_1',
-    type: 'FILL_BLANK',
-    prompt: '【問題17 文法】正しい形を選んでください: 明日、学校へ行き【___】。(～たいです)',
-    options: ['ます', 'たい', 'たいです', 'たかった'],
-    correctAnswer: 'たいです',
-    explanation: '「～たいです」は話し手の希望・願望を表す文型です。(I want to go to school tomorrow)',
+    "id": "jp_n5_set1_16",
+    "level": "N5",
+    "mockSet": "N5_SET_1",
+    "type": "FILL_BLANK",
+    "prompt": "【文法 Q1】わたし ___ がくせいです。",
+    "options": [
+      "は",
+      "を",
+      "に",
+      "で"
+    ],
+    "correctAnswer": "は",
+    "explanation": "正解は「A」の「は」です。"
   },
   {
-    id: 'jp_n5_1_18',
-    level: 'N5',
-    mockSet: 'N5_SET_1',
-    type: 'FILL_BLANK',
-    prompt: '【問題18 文法】正しい形を選んでください: 田中さんは背が【___】です。(tall)',
-    options: ['たかい', 'たかく', 'たかくない', 'たかくて'],
-    correctAnswer: 'たかい',
-    explanation: '「背が高い」(tall) — い形容詞の辞書形で終わります。',
+    "id": "jp_n5_set1_17",
+    "level": "N5",
+    "mockSet": "N5_SET_1",
+    "type": "FILL_BLANK",
+    "prompt": "【文法 Q2】まいあさ パン ___ たべます。",
+    "options": [
+      "は",
+      "を",
+      "が",
+      "と"
+    ],
+    "correctAnswer": "を",
+    "explanation": "正解は「B」の「を」です。"
   },
   {
-    id: 'jp_n5_1_19',
-    level: 'N5',
-    mockSet: 'N5_SET_1',
-    type: 'FILL_BLANK',
-    prompt: '【問題19 文法】正しいて形を選んでください: 手を洗って【___】ください。',
-    options: ['から', 'ください', 'ほしい', 'あげて'],
-    correctAnswer: 'から',
-    explanation: '「手を洗ってから」= After washing hands. 「～てから」は順序を表します。',
+    "id": "jp_n5_set1_18",
+    "level": "N5",
+    "mockSet": "N5_SET_1",
+    "type": "FILL_BLANK",
+    "prompt": "【文法 Q3】がっこう ___ バスで いきます。",
+    "options": [
+      "は",
+      "を",
+      "に",
+      "と"
+    ],
+    "correctAnswer": "に",
+    "explanation": "正解は「C」の「に」です。"
   },
   {
-    id: 'jp_n5_1_20',
-    level: 'N5',
-    mockSet: 'N5_SET_1',
-    type: 'FILL_BLANK',
-    prompt: '【問題20 文法 ★並べ替え】(★)の位置に入る語句を選んでください: 私は___ ___ ★ ___ がすきです。',
-    options: ['くだもの', 'の中で', 'いちばん', 'りんごが'],
-    correctAnswer: 'いちばん',
-    explanation: '「くだものの中でりんごがいちばんすきです。」★の位置は「いちばん」。',
+    "id": "jp_n5_set1_19",
+    "level": "N5",
+    "mockSet": "N5_SET_1",
+    "type": "FILL_BLANK",
+    "prompt": "【文法 Q4】これ ___ わたしの ほんです。",
+    "options": [
+      "の",
+      "は",
+      "を",
+      "で"
+    ],
+    "correctAnswer": "は",
+    "explanation": "正解は「B」の「は」です。"
   },
   {
-    id: 'jp_n5_1_21',
-    level: 'N5',
-    mockSet: 'N5_SET_1',
-    type: 'MULTIPLE_CHOICE',
-    prompt: '【問題21 読解】次の文章を読んで質問に答えてください:\n「わたしは毎朝7時に起きます。まず顔を洗って、朝ごはんを食べます。それから8時に家を出て学校へ行きます。学校は9時から3時までです。」\n\nこの人は何時に学校へ行きますか。',
-    options: ['7時', '8時', '9時', '3時'],
-    correctAnswer: '8時',
-    explanation: '「8時に家を出て学校へ行きます」とあるので、正解は8時です。',
+    "id": "jp_n5_set1_20",
+    "level": "N5",
+    "mockSet": "N5_SET_1",
+    "type": "FILL_BLANK",
+    "prompt": "【文法 Q5】きょうしつ ___ がくせいが 五人 います。",
+    "options": [
+      "に",
+      "で",
+      "を",
+      "は"
+    ],
+    "correctAnswer": "に",
+    "explanation": "正解は「A」の「に」です。"
   },
   {
-    id: 'jp_n5_1_22',
-    level: 'N5',
-    mockSet: 'N5_SET_1',
-    type: 'MULTIPLE_CHOICE',
-    prompt: '【問題22 読解】同じ文章:\n「わたしは毎朝7時に起きます。まず顔を洗って、朝ごはんを食べます。それから8時に家を出て学校へ行きます。学校は9時から3時までです。」\n\nこの人は朝ごはんの前に何をしますか。',
-    options: ['学校へ行く', '顔を洗う', '家を出る', '寝る'],
-    correctAnswer: '顔を洗う',
-    explanation: '「まず顔を洗って、朝ごはんを食べます」の順序から、朝ごはんの前に顔を洗います。',
+    "id": "jp_n5_set1_21",
+    "level": "N5",
+    "mockSet": "N5_SET_1",
+    "type": "FILL_BLANK",
+    "prompt": "【文法 Q6】わたしは まいにち にほんご ___ べんきょうします。",
+    "options": [
+      "を",
+      "が",
+      "に",
+      "と"
+    ],
+    "correctAnswer": "を",
+    "explanation": "正解は「A」の「を」です。"
   },
   {
-    id: 'jp_n5_1_23',
-    level: 'N5',
-    mockSet: 'N5_SET_1',
-    type: 'MULTIPLE_CHOICE',
-    prompt: '【問題23 文字・語彙】反対の意味を持つ言葉を選んでください: 「おおきい」',
-    options: ['ちいさい', 'ながい', 'みじかい', 'かるい'],
-    correctAnswer: 'ちいさい',
-    explanation: '「大きい」(Big)の反対は「小さい」(Small)です。',
+    "id": "jp_n5_set1_22",
+    "level": "N5",
+    "mockSet": "N5_SET_1",
+    "type": "FILL_BLANK",
+    "prompt": "【文法 Q7】あした 友だち ___ えいがを 見ます。",
+    "options": [
+      "が",
+      "と",
+      "を",
+      "の"
+    ],
+    "correctAnswer": "と",
+    "explanation": "正解は「B」の「と」です。"
   },
   {
-    id: 'jp_n5_1_24',
-    level: 'N5',
-    mockSet: 'N5_SET_1',
-    type: 'LISTENING',
-    prompt: '【問題24 聴解】音声を聞いて、女の人はどこで買い物しますか。',
-    audioUrl: '/audio/n5/minna_shokyu_1_006.mp3',
-    options: ['スーパー', 'コンビニ', 'デパート', '市場'],
-    correctAnswer: 'デパート',
-    explanation: '会話の「デパートで買い物します」より正解はデパートです。',
+    "id": "jp_n5_set1_23",
+    "level": "N5",
+    "mockSet": "N5_SET_1",
+    "type": "FILL_BLANK",
+    "prompt": "【文法 Q8】この ペン ___ あの ペン ___ どちらが いいですか。",
+    "options": [
+      "と、と",
+      "は、が",
+      "の、を",
+      "を、に"
+    ],
+    "correctAnswer": "と、と",
+    "explanation": "正解は「A」の「と、と」です。"
   },
   {
-    id: 'jp_n5_1_25',
-    level: 'N5',
-    mockSet: 'N5_SET_1',
-    type: 'LISTENING',
-    prompt: '【問題25 聴解】会話を聞いて、二人は週末に何をする予定ですか。',
-    audioUrl: '/audio/n5/minna_shokyu_1_007.mp3',
-    options: ['映画を見る', '買い物をする', '公園へ行く', '家で勉強する'],
-    correctAnswer: '映画を見る',
-    explanation: '会話「週末は映画を見に行きましょう」より正解は「映画を見る」です。',
-  },
-
-  // ==========================================
-  // JLPT N5 MOCK TEST SET 2 (模擬試験 2)
-  // ==========================================
-  {
-    id: 'jp_n5_2_1',
-    level: 'N5',
-    mockSet: 'N5_SET_2',
-    type: 'MULTIPLE_CHOICE',
-    prompt: '【問題1 文字・語彙】下線の言葉のひらがなを選んでください: 田中さんは【来週】日本へ来ます。',
-    options: ['らいしゅう', 'こんしゅう', 'せんしゅう', 'まいしゅう'],
-    correctAnswer: 'らいしゅう',
-    explanation: '「来週」の読み方は「らいしゅう」(Next week)です。',
+    "id": "jp_n5_set1_24",
+    "level": "N5",
+    "mockSet": "N5_SET_1",
+    "type": "FILL_BLANK",
+    "prompt": "【文法 Q9】「日本語 / を / 一年 / 勉強しました」",
+    "options": [
+      "一年 日本語を 勉強しました",
+      "日本語 一年を 勉強しました",
+      "を 日本語 一年 勉強しました",
+      "勉強しました 一年を 日本語"
+    ],
+    "correctAnswer": "一年 日本語を 勉強しました",
+    "explanation": "正解は「A」の「一年 日本語を 勉強しました」です。"
   },
   {
-    id: 'jp_n5_2_2',
-    level: 'N5',
-    mockSet: 'N5_SET_2',
-    type: 'MULTIPLE_CHOICE',
-    prompt: '【問題2 文字・語彙】下線の漢字を選んでください: 昨日は【あめ】がふりました。',
-    options: ['雨', '天', '雪', '水'],
-    correctAnswer: '雨',
-    explanation: '「あめ」(Rain)の漢字は「雨」です。',
+    "id": "jp_n5_set1_25",
+    "level": "N5",
+    "mockSet": "N5_SET_1",
+    "type": "FILL_BLANK",
+    "prompt": "【文法 Q10】「テレビ / 見ながら / を / ごはんを 食べます」",
+    "options": [
+      "テレビを 見ながら ごはんを 食べます",
+      "ごはんを 見ながら テレビを 食べます",
+      "テレビ ごはんを 見ながら を 食べます",
+      "見ながら テレビを ごはんを 食べます"
+    ],
+    "correctAnswer": "テレビを 見ながら ごはんを 食べます",
+    "explanation": "正解は「A」の「テレビを 見ながら ごはんを 食べます」です。"
   },
   {
-    id: 'jp_n5_2_3',
-    level: 'N5',
-    mockSet: 'N5_SET_2',
-    type: 'MULTIPLE_CHOICE',
-    prompt: '【問題3 文字・語彙】反対の言葉を選んでください: 「たかい (高い)」の対義語は何ですか。',
-    options: ['ひくい', 'みじかい', 'ちいさい', 'おそい'],
-    correctAnswer: 'ひくい',
-    explanation: '「高い」(High/Expensive)の対義語は「低い」(Low)です。',
+    "id": "jp_n5_set1_26",
+    "level": "N5",
+    "mockSet": "N5_SET_1",
+    "type": "FILL_BLANK",
+    "prompt": "【文法 Q11】「駅 / の / 前に / 銀行 / が あります」",
+    "options": [
+      "駅の 前に 銀行が あります",
+      "銀行の 前に 駅が あります",
+      "前に 駅の 銀行が あります",
+      "駅が 前に 銀行の あります"
+    ],
+    "correctAnswer": "駅の 前に 銀行が あります",
+    "explanation": "正解は「A」の「駅の 前に 銀行が あります」です。"
   },
   {
-    id: 'jp_n5_2_4',
-    level: 'N5',
-    mockSet: 'N5_SET_2',
-    type: 'MULTIPLE_CHOICE',
-    prompt: '【問題4 文字・語彙】適切な言葉を選んでください: デパートで新しい服を【_____】。',
-    options: ['かいました', 'ききました', 'あいました', 'いいました'],
-    correctAnswer: 'かいました',
-    explanation: '服を買う (Bought new clothes at the department store).',
+    "id": "jp_n5_set1_27",
+    "level": "N5",
+    "mockSet": "N5_SET_1",
+    "type": "FILL_BLANK",
+    "prompt": "【文法 Q12】「窓 / を / 開けても / いいですか」",
+    "options": [
+      "窓を 開けても いいですか",
+      "窓 開けても を いいですか",
+      "開けても 窓を いいですか",
+      "いいですか 窓を 開けても"
+    ],
+    "correctAnswer": "窓を 開けても いいですか",
+    "explanation": "正解は「A」の「窓を 開けても いいですか」です。"
   },
   {
-    id: 'jp_n5_2_5',
-    level: 'N5',
-    mockSet: 'N5_SET_2',
-    type: 'FILL_BLANK',
-    prompt: '【問題5 文法】正しい助詞を入れてください: 日曜日に友達【_____】映画を見に行きます。',
-    options: ['と', 'に', 'へ', 'を'],
-    correctAnswer: 'と',
-    explanation: '「〜と一緒に」(Together with)を表す助詞は「と」です。',
+    "id": "jp_n5_set1_28",
+    "level": "N5",
+    "mockSet": "N5_SET_1",
+    "type": "FILL_BLANK",
+    "prompt": "【文法 Q13】（13）に 入るのは どれですか。",
+    "options": [
+      "おきます",
+      "ねます",
+      "かえります",
+      "はいります"
+    ],
+    "correctAnswer": "おきます",
+    "explanation": "正解は「A」の「おきます」です。"
   },
   {
-    id: 'jp_n5_2_6',
-    level: 'N5',
-    mockSet: 'N5_SET_2',
-    type: 'FILL_BLANK',
-    prompt: '【問題6 文法】文法: ここで写真を【_____】もいいですか。 (Permission ~てもいい)',
-    options: ['とっ', 'とる', 'とり', 'とって'],
-    correctAnswer: 'とって',
-    explanation: '動詞て形 ＋ もいいですか (May I take photos here?). 「撮って」が正解です。',
+    "id": "jp_n5_set1_29",
+    "level": "N5",
+    "mockSet": "N5_SET_1",
+    "type": "FILL_BLANK",
+    "prompt": "【文法 Q14】（14）に 入るのは どれですか。",
+    "options": [
+      "たべます",
+      "のみます",
+      "つくります",
+      "かいます"
+    ],
+    "correctAnswer": "たべます",
+    "explanation": "正解は「A」の「たべます」です。"
   },
   {
-    id: 'jp_n5_2_7',
-    level: 'N5',
-    mockSet: 'N5_SET_2',
-    type: 'FILL_BLANK',
-    prompt: '【問題7 文法】文法: 会議は9時【_____】12時まで行われます。',
-    options: ['から', 'まで', 'に', 'で'],
-    correctAnswer: 'から',
-    explanation: '時間の起点(From 9 o\'clock)を表す助詞は「から」です。',
+    "id": "jp_n5_set1_30",
+    "level": "N5",
+    "mockSet": "N5_SET_1",
+    "type": "FILL_BLANK",
+    "prompt": "【文法 Q15】（15）に 入るのは どれですか。",
+    "options": [
+      "へ",
+      "を",
+      "の",
+      "が"
+    ],
+    "correctAnswer": "へ",
+    "explanation": "正解は「A」の「へ」です。"
   },
   {
-    id: 'jp_n5_2_8',
-    level: 'N5',
-    mockSet: 'N5_SET_2',
-    type: 'MULTIPLE_CHOICE',
-    prompt: '【問題8 読解】「山田さんは日本語の先生です。月曜日から金曜日まで大学で教えます。土曜日と日曜日は休みです。」山田さんはいつ休みですか。',
-    options: ['月曜日', '金曜日', '土曜日と日曜日', '毎日'],
-    correctAnswer: '土曜日と日曜日',
-    explanation: '文章に「土曜日と日曜日は休みです」と書かれています。',
+    "id": "jp_n5_set1_31",
+    "level": "N5",
+    "mockSet": "N5_SET_1",
+    "type": "MULTIPLE_CHOICE",
+    "prompt": "【読解 Q1】Reading (どっかい)\nわたしの 家族は 四人です。父と 母と 妹と わたしです。父は 会社員で、母は 先生です。妹は まだ 学校に 行っていません。毎週 日曜日に、家族で 公園へ 行きます。\n\n質問: 「わたし」の 家族は 何人ですか。",
+    "options": [
+      "三人",
+      "四人",
+      "五人",
+      "二人"
+    ],
+    "correctAnswer": "四人",
+    "explanation": "正解は「B」の「四人」です。"
   },
   {
-    id: 'jp_n5_2_9',
-    level: 'N5',
-    mockSet: 'N5_SET_2',
-    type: 'LISTENING',
-    prompt: '【問題9 聴解】音声を聞いて、明日の天気はどうなりますか。',
-    audioUrl: '/audio/n5/minna_shokyu_1_004.mp3',
-    options: ['はれ', 'あめ', 'くもり', 'ゆき'],
-    correctAnswer: 'あめ',
-    explanation: '音声会話の天気予報「明日は雨が降るでしょう」より正解は「あめ」です。',
+    "id": "jp_n5_set1_32",
+    "level": "N5",
+    "mockSet": "N5_SET_1",
+    "type": "MULTIPLE_CHOICE",
+    "prompt": "【読解 Q2】Reading (どっかい)\nわたしの 家族は 四人です。父と 母と 妹と わたしです。父は 会社員で、母は 先生です。妹は まだ 学校に 行っていません。毎週 日曜日に、家族で 公園へ 行きます。\n\n質問: お母さんの しごとは 何ですか。",
+    "options": [
+      "会社員",
+      "先生",
+      "医者",
+      "学生"
+    ],
+    "correctAnswer": "先生",
+    "explanation": "正解は「B」の「先生」です。"
   },
   {
-    id: 'jp_n5_2_10',
-    level: 'N5',
-    mockSet: 'N5_SET_2',
-    type: 'LISTENING',
-    prompt: '【問題10 聴解】会話を聞いて、男の人は何で学校へ行きますか。',
-    audioUrl: '/audio/n5/minna_shokyu_1_005.mp3',
-    options: ['でんしゃ', 'バス', 'じてんしゃ', 'あるいて'],
-    correctAnswer: 'じてんしゃ',
-    explanation: '会話の「自転車で通っています」より正解は「じてんしゃ」です。',
-  },
-
-  // ==========================================
-  // JLPT N5 SET 2 — ADDITIONAL QUESTIONS (11-25)
-  // ==========================================
-  {
-    id: 'jp_n5_2_11',
-    level: 'N5',
-    mockSet: 'N5_SET_2',
-    type: 'MULTIPLE_CHOICE',
-    prompt: '【問題11 文字・語彙】下線の読み方を選んでください: 【右】に曲がってください。',
-    options: ['みぎ', 'ひだり', 'まえ', 'うしろ'],
-    correctAnswer: 'みぎ',
-    explanation: '「右」の読み方は「みぎ」(Right direction)です。',
+    "id": "jp_n5_set1_33",
+    "level": "N5",
+    "mockSet": "N5_SET_1",
+    "type": "MULTIPLE_CHOICE",
+    "prompt": "【読解 Q3】Reading (どっかい)\nわたしの 家族は 四人です。父と 母と 妹と わたしです。父は 会社員で、母は 先生です。妹は まだ 学校に 行っていません。毎週 日曜日に、家族で 公園へ 行きます。\nきのう、友だちと デパートへ 行きました。わたしは くつを 買いました。友だちは 何も 買いませんでした。デパートの 中の レストランで ひるごはんを 食べてから、うちへ 帰りました。\n\n質問: 「わたし」は デパートで 何を しましたか。",
+    "options": [
+      "くつを 買った",
+      "本を 買った",
+      "えいがを 見た",
+      "何も しなかった"
+    ],
+    "correctAnswer": "くつを 買った",
+    "explanation": "正解は「A」の「くつを 買った」です。"
   },
   {
-    id: 'jp_n5_2_12',
-    level: 'N5',
-    mockSet: 'N5_SET_2',
-    type: 'MULTIPLE_CHOICE',
-    prompt: '【問題12 文字・語彙】下線の漢字を選んでください: このえいがは【たのしい】です。',
-    options: ['楽しい', '悲しい', '難しい', '嬉しい'],
-    correctAnswer: '楽しい',
-    explanation: '「たのしい」(Fun / Enjoyable)の漢字は「楽しい」です。',
+    "id": "jp_n5_set1_34",
+    "level": "N5",
+    "mockSet": "N5_SET_1",
+    "type": "MULTIPLE_CHOICE",
+    "prompt": "【読解 Q4】Reading (どっかい)\nわたしの 家族は 四人です。父と 母と 妹と わたしです。父は 会社員で、母は 先生です。妹は まだ 学校に 行っていません。毎週 日曜日に、家族で 公園へ 行きます。\nきのう、友だちと デパートへ 行きました。わたしは くつを 買いました。友だちは 何も 買いませんでした。デパートの 中の レストランで ひるごはんを 食べてから、うちへ 帰りました。\n\n質問: 友だちは デパートで 何を 買いましたか。",
+    "options": [
+      "くつ",
+      "ふく",
+      "何も 買わなかった",
+      "本"
+    ],
+    "correctAnswer": "何も 買わなかった",
+    "explanation": "正解は「C」の「何も 買わなかった」です。"
   },
   {
-    id: 'jp_n5_2_13',
-    level: 'N5',
-    mockSet: 'N5_SET_2',
-    type: 'MULTIPLE_CHOICE',
-    prompt: '【問題13 文字・語彙】正しい意味を選んでください: 「びょういん」',
-    options: ['Hospital', 'School', 'Station', 'Hotel'],
-    correctAnswer: 'Hospital',
-    explanation: '「病院」(びょういん) means Hospital.',
+    "id": "jp_n5_set1_35",
+    "level": "N5",
+    "mockSet": "N5_SET_1",
+    "type": "MULTIPLE_CHOICE",
+    "prompt": "【読解 Q5】Reading (どっかい)\nわたしの 家族は 四人です。父と 母と 妹と わたしです。父は 会社員で、母は 先生です。妹は まだ 学校に 行っていません。毎週 日曜日に、家族で 公園へ 行きます。\nきのう、友だちと デパートへ 行きました。わたしは くつを 買いました。友だちは 何も 買いませんでした。デパートの 中の レストランで ひるごはんを 食べてから、うちへ 帰りました。\nとしょかんの おしらせ\n・としょかんは 月曜日から 土曜日まで あいています。\n・日曜日は やすみです。\n・じかんは 朝 9時から 夜 7時までです。\n・本は 2週間 かりることが できます。\n\n質問: 日曜日に としょかんへ 行っても いいですか。",
+    "options": [
+      "はい、行っても いいです。",
+      "いいえ、その日は やすみです。",
+      "朝だけ あいています。",
+      "夜だけ あいています。"
+    ],
+    "correctAnswer": "いいえ、その日は やすみです。",
+    "explanation": "正解は「B」の「いいえ、その日は やすみです。」です。"
   },
   {
-    id: 'jp_n5_2_14',
-    level: 'N5',
-    mockSet: 'N5_SET_2',
-    type: 'MULTIPLE_CHOICE',
-    prompt: '【問題14 文字・語彙】数字を選んでください: 【二千四百】はいくつですか。',
-    options: ['240', '2004', '2400', '24000'],
-    correctAnswer: '2400',
-    explanation: '二千(2000) + 四百(400) = 2400です。',
+    "id": "jp_n5_set1_36",
+    "level": "N5",
+    "mockSet": "N5_SET_1",
+    "type": "MULTIPLE_CHOICE",
+    "prompt": "【読解 Q6】Reading (どっかい)\nわたしの 家族は 四人です。父と 母と 妹と わたしです。父は 会社員で、母は 先生です。妹は まだ 学校に 行っていません。毎週 日曜日に、家族で 公園へ 行きます。\nきのう、友だちと デパートへ 行きました。わたしは くつを 買いました。友だちは 何も 買いませんでした。デパートの 中の レストランで ひるごはんを 食べてから、うちへ 帰りました。\nとしょかんの おしらせ\n・としょかんは 月曜日から 土曜日まで あいています。\n・日曜日は やすみです。\n・じかんは 朝 9時から 夜 7時までです。\n・本は 2週間 かりることが できます。\n\n質問: 本は どのくらい かりることが できますか。",
+    "options": [
+      "1週間",
+      "2週間",
+      "1か月",
+      "3日間"
+    ],
+    "correctAnswer": "2週間",
+    "explanation": "正解は「B」の「2週間」です。"
   },
   {
-    id: 'jp_n5_2_15',
-    level: 'N5',
-    mockSet: 'N5_SET_2',
-    type: 'MULTIPLE_CHOICE',
-    prompt: '【問題15 文字・語彙】正しい言葉を選んでください: 電車の時間を【___】します。(Check/Confirm)',
-    options: ['かくにん', 'れんしゅう', 'べんきょう', 'さんぽ'],
-    correctAnswer: 'かくにん',
-    explanation: '「確認(かくにん)」= Confirmation / Checking. 時刻表を確認します。',
+    "id": "jp_n5_set1_37",
+    "level": "N5",
+    "mockSet": "N5_SET_1",
+    "type": "LISTENING",
+    "prompt": "【聴解 Q1】男の人：すみません、駅は どこですか。\n女の人：まっすぐ 行って、二つ目の かどを 右に まがってください。\n\n質問: 駅は どこに ありますか。",
+    "options": [
+      "まっすぐ 行って 右",
+      "まっすぐ 行って 左",
+      "すぐ 左",
+      "すぐ 右"
+    ],
+    "correctAnswer": "まっすぐ 行って 右",
+    "explanation": "正解は「A」の「まっすぐ 行って 右」です。",
+    "audioUrl": "/audio/n5/minna_shokyu_1_003.mp3"
   },
   {
-    id: 'jp_n5_2_16',
-    level: 'N5',
-    mockSet: 'N5_SET_2',
-    type: 'FILL_BLANK',
-    prompt: '【問題16 文法】正しい助詞を選んでください: 山田さん【___】プレゼントをあげました。',
-    options: ['に', 'を', 'が', 'で'],
-    correctAnswer: 'に',
-    explanation: '贈り物をする相手(recipient)は「に」で表します。(Gave a present TO Yamada-san)',
+    "id": "jp_n5_set1_38",
+    "level": "N5",
+    "mockSet": "N5_SET_1",
+    "type": "LISTENING",
+    "prompt": "【聴解 Q2】女の人：明日 なんじに 会いましょうか。\n男の人：じゅう時は どうですか。\n女の人：ちょっと 早いですから、じゅういち時に しましょう。\n\n質問: 二人は 明日 なんじに 会いますか。",
+    "options": [
+      "9時",
+      "10時",
+      "11時",
+      "12時"
+    ],
+    "correctAnswer": "11時",
+    "explanation": "正解は「C」の「11時」です。",
+    "audioUrl": "/audio/n5/minna_shokyu_1_006.mp3"
   },
   {
-    id: 'jp_n5_2_17',
-    level: 'N5',
-    mockSet: 'N5_SET_2',
-    type: 'FILL_BLANK',
-    prompt: '【問題17 文法】正しい形を選んでください: もっとゆっくり話して【___】ですか。(Could you speak more slowly?)',
-    options: ['もらえません', 'もらいません', 'あげません', 'くれません'],
-    correctAnswer: 'もらえません',
-    explanation: '「～てもらえませんか」= Could you please do ~ for me? (polite request form)',
+    "id": "jp_n5_set1_39",
+    "level": "N5",
+    "mockSet": "N5_SET_1",
+    "type": "LISTENING",
+    "prompt": "【聴解 Q3】店員：いらっしゃいませ。\n客：この りんごを 5つと、みかんを 3つ ください。\n\n質問: 客は 何を 買いますか。",
+    "options": [
+      "りんご5つ、みかん3つ",
+      "りんご3つ、みかん5つ",
+      "りんご5つだけ",
+      "みかん3つだけ"
+    ],
+    "correctAnswer": "りんご5つ、みかん3つ",
+    "explanation": "正解は「A」の「りんご5つ、みかん3つ」です。",
+    "audioUrl": "/audio/n5/minna_shokyu_1_009.mp3"
   },
   {
-    id: 'jp_n5_2_18',
-    level: 'N5',
-    mockSet: 'N5_SET_2',
-    type: 'FILL_BLANK',
-    prompt: '【問題18 文法】正しい形を選んでください: 部屋が【___】なりました。(became clean)',
-    options: ['きれいに', 'きれいく', 'きれいな', 'きれいが'],
-    correctAnswer: 'きれいに',
-    explanation: 'な形容詞 ＋ になる = become ~. 「きれいに」が正しい形です。',
+    "id": "jp_n5_set1_40",
+    "level": "N5",
+    "mockSet": "N5_SET_1",
+    "type": "LISTENING",
+    "prompt": "【聴解 Q4】男の人：しゅくだいは もう おわりましたか。\n女の人：いいえ、まだです。今晩 やります。\n\n質問: 女の人は しゅくだいを もう しましたか。",
+    "options": [
+      "もう しました",
+      "まだ していません",
+      "きのう しました",
+      "あした します"
+    ],
+    "correctAnswer": "まだ していません",
+    "explanation": "正解は「B」の「まだ していません」です。",
+    "audioUrl": "/audio/n5/minna_shokyu_1_012.mp3"
   },
   {
-    id: 'jp_n5_2_19',
-    level: 'N5',
-    mockSet: 'N5_SET_2',
-    type: 'FILL_BLANK',
-    prompt: '【問題19 文法】～てはいけません: ここでタバコを【___】はいけません。',
-    options: ['すって', 'すった', 'すう', 'すい'],
-    correctAnswer: 'すって',
-    explanation: '「～てはいけません」は禁止の文型です。「すって」はて形(smoke → smoked → te-form)。',
+    "id": "jp_n5_set1_41",
+    "level": "N5",
+    "mockSet": "N5_SET_1",
+    "type": "LISTENING",
+    "prompt": "【聴解 Q5】天気よほう：あしたは 朝は くもりですが、午後から 雨が ふるでしょう。\n\n質問: あしたの 午後の 天気は どうですか。",
+    "options": [
+      "はれ",
+      "くもり",
+      "雨",
+      "ゆき"
+    ],
+    "correctAnswer": "雨",
+    "explanation": "正解は「C」の「雨」です。",
+    "audioUrl": "/audio/n5/minna_shokyu_1_015.mp3"
   },
   {
-    id: 'jp_n5_2_20',
-    level: 'N5',
-    mockSet: 'N5_SET_2',
-    type: 'FILL_BLANK',
-    prompt: '【問題20 文法 ★並べ替え】(★)の位置を選んでください: 母は ___ ___ ★ ___ います。',
-    options: ['台所で', 'を', '料理', 'して'],
-    correctAnswer: 'して',
-    explanation: '「母は台所で料理をしています。」★の位置は「して」です。',
+    "id": "jp_n5_set1_42",
+    "level": "N5",
+    "mockSet": "N5_SET_1",
+    "type": "LISTENING",
+    "prompt": "【聴解 Q6】女の人：この しゅくだい、いつまでに 出せば いいですか。\n先生：金曜日までに 出してください。\n\n質問: しゅくだいは いつまでに 出しますか。",
+    "options": [
+      "月曜日",
+      "水曜日",
+      "金曜日",
+      "日曜日"
+    ],
+    "correctAnswer": "金曜日",
+    "explanation": "正解は「C」の「金曜日」です。",
+    "audioUrl": "/audio/n5/minna_shokyu_1_018.mp3"
   },
   {
-    id: 'jp_n5_2_21',
-    level: 'N5',
-    mockSet: 'N5_SET_2',
-    type: 'MULTIPLE_CHOICE',
-    prompt: '【問題21 読解】次の文章を読んで質問に答えてください:\n「わたしの名前はアミラです。エジプト出身で、今日本語を勉強しています。週3回、日本語学校に通っています。日本語はむずかしいですが、とても楽しいです。」\n\nアミラさんはどこの人ですか。',
-    options: ['日本人', 'エジプト人', 'ブラジル人', '中国人'],
-    correctAnswer: 'エジプト人',
-    explanation: '「エジプト出身で」とあるので正解はエジプト人です。',
+    "id": "jp_n5_set1_43",
+    "level": "N5",
+    "mockSet": "N5_SET_1",
+    "type": "LISTENING",
+    "prompt": "【聴解 Q7】男の人：コーヒーを 一つと ケーキを 二つ お願いします。\n店員：かしこまりました。\n\n質問: 男の人は 何を たのみましたか。",
+    "options": [
+      "コーヒー1、ケーキ2",
+      "コーヒー2、ケーキ1",
+      "コーヒー1、ケーキ1",
+      "コーヒー2、ケーキ2"
+    ],
+    "correctAnswer": "コーヒー1、ケーキ2",
+    "explanation": "正解は「A」の「コーヒー1、ケーキ2」です。",
+    "audioUrl": "/audio/n5/minna_shokyu_1_021.mp3"
   },
   {
-    id: 'jp_n5_2_22',
-    level: 'N5',
-    mockSet: 'N5_SET_2',
-    type: 'MULTIPLE_CHOICE',
-    prompt: '【問題22 読解】同じ文章:\n「わたしの名前はアミラです。エジプト出身で、今日本語を勉強しています。週3回、日本語学校に通っています。日本語はむずかしいですが、とても楽しいです。」\n\nアミラさんは日本語についてどう思っていますか。',
-    options: ['むずかしくてつまらない', 'むずかしいが楽しい', 'かんたんで楽しい', '楽しくない'],
-    correctAnswer: 'むずかしいが楽しい',
-    explanation: '「日本語はむずかしいですが、とても楽しいです」より正解はむずかしいが楽しいです。',
+    "id": "jp_n5_set1_44",
+    "level": "N5",
+    "mockSet": "N5_SET_1",
+    "type": "LISTENING",
+    "prompt": "【聴解 Q8】女の人：この かばん、いくらですか。\n店員：3,500円です。\n女の人：じゃあ、それを ください。\n\n質問: かばんは いくらですか。",
+    "options": [
+      "3,000円",
+      "3,500円",
+      "5,300円",
+      "3,050円"
+    ],
+    "correctAnswer": "3,500円",
+    "explanation": "正解は「B」の「3,500円」です。",
+    "audioUrl": "/audio/n5/minna_shokyu_1_024.mp3"
   },
   {
-    id: 'jp_n5_2_23',
-    level: 'N5',
-    mockSet: 'N5_SET_2',
-    type: 'MULTIPLE_CHOICE',
-    prompt: '【問題23 文字・語彙】同じ意味の言葉を選んでください: 「あした」',
-    options: ['明日', '今日', '昨日', '来週'],
-    correctAnswer: '明日',
-    explanation: '「あした」の漢字表記は「明日」(Tomorrow)です。',
+    "id": "jp_n5_set2_1",
+    "level": "N5",
+    "mockSet": "N5_SET_2",
+    "type": "MULTIPLE_CHOICE",
+    "prompt": "【語彙・漢字 Q1】弟 は 今年 学生に なりました。",
+    "options": [
+      "おとうと",
+      "いもうと",
+      "あに",
+      "あね"
+    ],
+    "correctAnswer": "おとうと",
+    "explanation": "正解は「A」の「おとうと」です。"
   },
   {
-    id: 'jp_n5_2_24',
-    level: 'N5',
-    mockSet: 'N5_SET_2',
-    type: 'LISTENING',
-    prompt: '【問題24 聴解】音声を聞いて、男の人はどんな料理が好きですか。',
-    audioUrl: '/audio/n5/minna_shokyu_1_008.mp3',
-    options: ['すし', 'ラーメン', 'てんぷら', 'カレー'],
-    correctAnswer: 'すし',
-    explanation: '会話中「すしがいちばん好きです」より正解はすしです。',
+    "id": "jp_n5_set2_2",
+    "level": "N5",
+    "mockSet": "N5_SET_2",
+    "type": "MULTIPLE_CHOICE",
+    "prompt": "【語彙・漢字 Q2】来週 、旅行に 行きます。",
+    "options": [
+      "らいしゅう",
+      "こんしゅう",
+      "せんしゅう",
+      "まいしゅう"
+    ],
+    "correctAnswer": "らいしゅう",
+    "explanation": "正解は「A」の「らいしゅう」です。"
   },
   {
-    id: 'jp_n5_2_25',
-    level: 'N5',
-    mockSet: 'N5_SET_2',
-    type: 'LISTENING',
-    prompt: '【問題25 聴解】会話を聞いて、女の人は昨日どこへ行きましたか。',
-    audioUrl: '/audio/n5/minna_shokyu_1_009.mp3',
-    options: ['スーパー', '図書館', '公園', '友達の家'],
-    correctAnswer: '図書館',
-    explanation: '「昨日は図書館へ行きました」より正解は図書館です。',
-  },
-
-  // ==========================================
-  // JLPT N4 QUESTION SET (模擬試験 N4)
-  // ==========================================
-  {
-    id: 'jp_n4_1_1',
-    level: 'N4',
-    mockSet: 'N4_SET_1',
-    type: 'MULTIPLE_CHOICE',
-    prompt: '【問題1 文字・語彙】下線の言葉の読み方を選んでください: 旅行の【準備】をします。',
-    options: ['じゅんび', 'しょんび', 'じゅうび', 'ちゅんび'],
-    correctAnswer: 'じゅんび',
-    explanation: '「準備」の読み方は「じゅんび」(Preparation)です。',
+    "id": "jp_n5_set2_3",
+    "level": "N5",
+    "mockSet": "N5_SET_2",
+    "type": "MULTIPLE_CHOICE",
+    "prompt": "【語彙・漢字 Q3】教室 に 学生が たくさん います。",
+    "options": [
+      "きょうしつ",
+      "きょうしゅつ",
+      "がくしつ",
+      "きょうしち"
+    ],
+    "correctAnswer": "きょうしつ",
+    "explanation": "正解は「A」の「きょうしつ」です。"
   },
   {
-    id: 'jp_n4_1_2',
-    level: 'N4',
-    mockSet: 'N4_SET_1',
-    type: 'MULTIPLE_CHOICE',
-    prompt: '【問題2 文字・語彙】下線の漢字を選んでください: 部屋を【かたづけます】。',
-    options: ['片付けます', '形付けます', '方付けます', '向付けます'],
-    correctAnswer: '片付けます',
-    explanation: '「かたづける」(Tidy up)の漢字は「片付ける」です。',
+    "id": "jp_n5_set2_4",
+    "level": "N5",
+    "mockSet": "N5_SET_2",
+    "type": "MULTIPLE_CHOICE",
+    "prompt": "【語彙・漢字 Q4】財布 を 忘れました。",
+    "options": [
+      "さいふ",
+      "ざいふ",
+      "さいぶ",
+      "ざいぶ"
+    ],
+    "correctAnswer": "さいふ",
+    "explanation": "正解は「A」の「さいふ」です。"
   },
   {
-    id: 'jp_n4_1_3',
-    level: 'N4',
-    mockSet: 'N4_SET_1',
-    type: 'MULTIPLE_CHOICE',
-    prompt: '【問題3 文字・語彙】反対の意味の言葉を選んでください: 「複雑(ふくざつ)」の対義語',
-    options: ['簡単', '親切', '便利', '賑やか'],
-    correctAnswer: '簡単',
-    explanation: '「複雑」(Complex)の反対語は「簡単」(Simple)です。',
+    "id": "jp_n5_set2_5",
+    "level": "N5",
+    "mockSet": "N5_SET_2",
+    "type": "MULTIPLE_CHOICE",
+    "prompt": "【語彙・漢字 Q5】夕方 、雨が 降りました。",
+    "options": [
+      "ゆうがた",
+      "ゆうほう",
+      "せきがた",
+      "ゆがた"
+    ],
+    "correctAnswer": "ゆうがた",
+    "explanation": "正解は「A」の「ゆうがた」です。"
   },
   {
-    id: 'jp_n4_1_4',
-    level: 'N4',
-    mockSet: 'N4_SET_1',
-    type: 'FILL_BLANK',
-    prompt: '【問題4 文法】適切な文法を選んでください: 雨が_____そうだから、傘を持っていきましょう。',
-    options: ['ふり', 'ふって', 'ふった', 'ふりそう'],
-    correctAnswer: 'ふり',
-    explanation: '動詞のます形語幹 ＋ そう (It looks like it will rain).',
+    "id": "jp_n5_set2_6",
+    "level": "N5",
+    "mockSet": "N5_SET_2",
+    "type": "MULTIPLE_CHOICE",
+    "prompt": "【語彙・漢字 Q6】からだの ちょうしが わるいですから、___へ 行きます。",
+    "options": [
+      "びょういん",
+      "としょかん",
+      "ぎんこう",
+      "ゆうびんきょく"
+    ],
+    "correctAnswer": "びょういん",
+    "explanation": "正解は「A」の「びょういん」です。"
   },
   {
-    id: 'jp_n4_1_5',
-    level: 'N4',
-    mockSet: 'N4_SET_1',
-    type: 'FILL_BLANK',
-    prompt: '【問題5 文法】文法: 日本語を勉強したい_____、いい先生を紹介していただけませんか。',
-    options: ['んですが', 'のに', 'ので', 'から'],
-    correctAnswer: 'んですが',
-    explanation: '依頼の前提を述べる「〜んですが」が最も適切です。',
+    "id": "jp_n5_set2_7",
+    "level": "N5",
+    "mockSet": "N5_SET_2",
+    "type": "MULTIPLE_CHOICE",
+    "prompt": "【語彙・漢字 Q7】この にくは ___から、よく やいて ください。",
+    "options": [
+      "なま",
+      "からい",
+      "あまい",
+      "すっぱい"
+    ],
+    "correctAnswer": "なま",
+    "explanation": "正解は「A」の「なま」です。"
   },
   {
-    id: 'jp_n4_1_6',
-    level: 'N4',
-    mockSet: 'N4_SET_1',
-    type: 'FILL_BLANK',
-    prompt: '【問題6 文法】文法: どんなに難しくても、最後まであきらめる_____。',
-    options: ['わけにはいかない', 'はずがない', 'わけがない', 'に違いない'],
-    correctAnswer: 'わけにはいかない',
-    explanation: '「〜わけにはいかない」 = Cannot afford to / Must not.',
+    "id": "jp_n5_set2_8",
+    "level": "N5",
+    "mockSet": "N5_SET_2",
+    "type": "MULTIPLE_CHOICE",
+    "prompt": "【語彙・漢字 Q8】でんきを けして ねましたが、へやが まだ ___です。",
+    "options": [
+      "あかるい",
+      "くらい",
+      "しずか",
+      "にぎやか"
+    ],
+    "correctAnswer": "くらい",
+    "explanation": "正解は「B」の「くらい」です。"
   },
   {
-    id: 'jp_n4_1_7',
-    level: 'N4',
-    mockSet: 'N4_SET_1',
-    type: 'MULTIPLE_CHOICE',
-    prompt: '【問題7 読解】「日本では、ゴミを捨てる時に分別しなければなりません。燃えるゴミ、燃えないゴミ、ペットボトルなどを分けて出します。」ゴミを捨てる時どうしますか。',
-    options: ['一緒に捨てる', '分別して捨てる', '夜に捨てる', '海に捨てる'],
-    correctAnswer: '分別して捨てる',
-    explanation: '文章に「分別しなければなりません」と書かれています。',
+    "id": "jp_n5_set2_9",
+    "level": "N5",
+    "mockSet": "N5_SET_2",
+    "type": "MULTIPLE_CHOICE",
+    "prompt": "【語彙・漢字 Q9】しあいに まけて、みんな とても ___そうでした。",
+    "options": [
+      "うれし",
+      "かなし",
+      "たのし",
+      "いそがし"
+    ],
+    "correctAnswer": "かなし",
+    "explanation": "正解は「B」の「かなし」です。"
   },
   {
-    id: 'jp_n4_1_8',
-    level: 'N4',
-    mockSet: 'N4_SET_1',
-    type: 'LISTENING',
-    prompt: '【問題8 聴解】会話を聞いて、男の人は明日の朝何時に出発しますか。',
-    audioUrl: '/audio/n5/minna_shokyu_1_003.mp3',
-    options: ['6時半', '7時', '7時半', '8時'],
-    correctAnswer: '7時半',
-    explanation: '会話の「7時半に駅で待ち合わせましょう」より正解は7時半です。',
-  },
-
-  // ==========================================
-  // JLPT N3 & N2 SAMPLE EXAM QUESTIONS
-  // ==========================================
-  {
-    id: 'jp_n3_1',
-    level: 'N3',
-    type: 'MULTIPLE_CHOICE',
-    prompt: '「環境問題について_____。」に続く最も適切な表現を選びなさい。',
-    options: ['議論するべきだ', '食べるべきだ', '走るべきだ', '寝るべきだ'],
-    correctAnswer: '議論するべきだ',
-    explanation: '環境問題(Environmental problems)について議論する(discuss)べきです。',
+    "id": "jp_n5_set2_10",
+    "level": "N5",
+    "mockSet": "N5_SET_2",
+    "type": "MULTIPLE_CHOICE",
+    "prompt": "【語彙・漢字 Q10】あのレストランは やすくて ___ですから、いつも こんでいます。",
+    "options": [
+      "おいしい",
+      "まずい",
+      "きたない",
+      "せまい"
+    ],
+    "correctAnswer": "おいしい",
+    "explanation": "正解は「A」の「おいしい」です。"
   },
   {
-    id: 'jp_n3_2',
-    level: 'N3',
-    type: 'FILL_BLANK',
-    prompt: '彼が犯人に_____。証拠が揃っている。',
-    options: ['違いない', 'かもしれない', 'はずがない', 'わけがない'],
-    correctAnswer: '違いない',
-    explanation: '「〜に違いない」 = Must be ~ without doubt.',
+    "id": "jp_n5_set2_11",
+    "level": "N5",
+    "mockSet": "N5_SET_2",
+    "type": "MULTIPLE_CHOICE",
+    "prompt": "【語彙・漢字 Q11】あさ、 かお を あらいます。",
+    "options": [
+      "顔",
+      "頭",
+      "手",
+      "足"
+    ],
+    "correctAnswer": "顔",
+    "explanation": "正解は「A」の「顔」です。"
   },
   {
-    id: 'jp_n2_1',
-    level: 'N2',
-    type: 'FILL_BLANK',
-    prompt: 'どんなに困難であっても、最後まであきらめる____。',
-    options: ['べきではない', 'わけにはいかない', 'にほかならない', 'にすぎない'],
-    correctAnswer: 'わけにはいかない',
-    explanation: '「あきらめるわけにはいかない」 = Cannot afford to give up.',
+    "id": "jp_n5_set2_12",
+    "level": "N5",
+    "mockSet": "N5_SET_2",
+    "type": "MULTIPLE_CHOICE",
+    "prompt": "【語彙・漢字 Q12】きょうは はれ です。",
+    "options": [
+      "晴",
+      "雨",
+      "雪",
+      "曇"
+    ],
+    "correctAnswer": "晴",
+    "explanation": "正解は「A」の「晴」です。"
   },
+  {
+    "id": "jp_n5_set2_13",
+    "level": "N5",
+    "mockSet": "N5_SET_2",
+    "type": "MULTIPLE_CHOICE",
+    "prompt": "【語彙・漢字 Q13】でんしゃの中で ほん を よみます。",
+    "options": [
+      "本",
+      "木",
+      "木本",
+      "大"
+    ],
+    "correctAnswer": "本",
+    "explanation": "正解は「A」の「本」です。"
+  },
+  {
+    "id": "jp_n5_set2_14",
+    "level": "N5",
+    "mockSet": "N5_SET_2",
+    "type": "MULTIPLE_CHOICE",
+    "prompt": "【語彙・漢字 Q14】この へやは とても しずかです。",
+    "options": [
+      "この へやは あまり うるさくないです。",
+      "この へやは とても にぎやかです。",
+      "この へやは あまり ひろくないです。",
+      "この へやは とても あかるいです。"
+    ],
+    "correctAnswer": "この へやは あまり うるさくないです。",
+    "explanation": "正解は「A」の「この へやは あまり うるさくないです。」です。"
+  },
+  {
+    "id": "jp_n5_set2_15",
+    "level": "N5",
+    "mockSet": "N5_SET_2",
+    "type": "MULTIPLE_CHOICE",
+    "prompt": "【語彙・漢字 Q15】わたしは まいにち 8時間 はたらきます。",
+    "options": [
+      "わたしは まいにち 8時間 しごとを します。",
+      "わたしは まいにち 8時間 ねます。",
+      "わたしは まいにち 8時間 やすみます。",
+      "わたしは まいにち 8時間 べんきょうします。"
+    ],
+    "correctAnswer": "わたしは まいにち 8時間 しごとを します。",
+    "explanation": "正解は「A」の「わたしは まいにち 8時間 しごとを します。」です。"
+  },
+  {
+    "id": "jp_n5_set2_16",
+    "level": "N5",
+    "mockSet": "N5_SET_2",
+    "type": "FILL_BLANK",
+    "prompt": "【文法 Q1】明日 雨 ___ ふったら、うちに います。",
+    "options": [
+      "が",
+      "を",
+      "は",
+      "の"
+    ],
+    "correctAnswer": "が",
+    "explanation": "正解は「A」の「が」です。"
+  },
+  {
+    "id": "jp_n5_set2_17",
+    "level": "N5",
+    "mockSet": "N5_SET_2",
+    "type": "FILL_BLANK",
+    "prompt": "【文法 Q2】この しごとは あした ___ おわらせなければ なりません。",
+    "options": [
+      "までに",
+      "まで",
+      "から",
+      "より"
+    ],
+    "correctAnswer": "までに",
+    "explanation": "正解は「A」の「までに」です。"
+  },
+  {
+    "id": "jp_n5_set2_18",
+    "level": "N5",
+    "mockSet": "N5_SET_2",
+    "type": "FILL_BLANK",
+    "prompt": "【文法 Q3】かぜを ひいた ___ 、がっこうへ 行きました。",
+    "options": [
+      "ので",
+      "から",
+      "のに",
+      "と"
+    ],
+    "correctAnswer": "のに",
+    "explanation": "正解は「C」の「のに」です。"
+  },
+  {
+    "id": "jp_n5_set2_19",
+    "level": "N5",
+    "mockSet": "N5_SET_2",
+    "type": "FILL_BLANK",
+    "prompt": "【文法 Q4】この 漢字の 読み方 ___ わかりません。",
+    "options": [
+      "が",
+      "を",
+      "に",
+      "で"
+    ],
+    "correctAnswer": "が",
+    "explanation": "正解は「A」の「が」です。"
+  },
+  {
+    "id": "jp_n5_set2_20",
+    "level": "N5",
+    "mockSet": "N5_SET_2",
+    "type": "FILL_BLANK",
+    "prompt": "【文法 Q5】たなかさんは ギターを ひく ___ できます。",
+    "options": [
+      "こと が",
+      "もの が",
+      "の を",
+      "ところ が"
+    ],
+    "correctAnswer": "こと が",
+    "explanation": "正解は「A」の「こと が」です。"
+  },
+  {
+    "id": "jp_n5_set2_21",
+    "level": "N5",
+    "mockSet": "N5_SET_2",
+    "type": "FILL_BLANK",
+    "prompt": "【文法 Q6】でかける ___ に、まどを しめて ください。",
+    "options": [
+      "前",
+      "後",
+      "中",
+      "間"
+    ],
+    "correctAnswer": "前",
+    "explanation": "正解は「A」の「前」です。"
+  },
+  {
+    "id": "jp_n5_set2_22",
+    "level": "N5",
+    "mockSet": "N5_SET_2",
+    "type": "FILL_BLANK",
+    "prompt": "【文法 Q7】この コンピューターは あの コンピューター ___ 高いです。",
+    "options": [
+      "より",
+      "ほど",
+      "から",
+      "まで"
+    ],
+    "correctAnswer": "より",
+    "explanation": "正解は「A」の「より」です。"
+  },
+  {
+    "id": "jp_n5_set2_23",
+    "level": "N5",
+    "mockSet": "N5_SET_2",
+    "type": "FILL_BLANK",
+    "prompt": "【文法 Q8】どうぞ、はいって ___。",
+    "options": [
+      "ください",
+      "あげます",
+      "もらいます",
+      "やります"
+    ],
+    "correctAnswer": "ください",
+    "explanation": "正解は「A」の「ください」です。"
+  },
+  {
+    "id": "jp_n5_set2_24",
+    "level": "N5",
+    "mockSet": "N5_SET_2",
+    "type": "FILL_BLANK",
+    "prompt": "【文法 Q9】「宿題 / を / 終わってから / テレビを 見ます」",
+    "options": [
+      "宿題を 終わってから テレビを 見ます",
+      "テレビを 終わってから 宿題を 見ます",
+      "終わってから 宿題を テレビを 見ます",
+      "宿題 テレビを 終わってから を 見ます"
+    ],
+    "correctAnswer": "宿題を 終わってから テレビを 見ます",
+    "explanation": "正解は「A」の「宿題を 終わってから テレビを 見ます」です。"
+  },
+  {
+    "id": "jp_n5_set2_25",
+    "level": "N5",
+    "mockSet": "N5_SET_2",
+    "type": "FILL_BLANK",
+    "prompt": "【文法 Q10】「駅 / まで / 歩いて / 十五分 かかります」",
+    "options": [
+      "駅まで 歩いて 十五分 かかります",
+      "十五分まで 駅を 歩いて かかります",
+      "歩いて 十五分 駅まで かかります",
+      "十五分 歩いて 駅まで かかります"
+    ],
+    "correctAnswer": "駅まで 歩いて 十五分 かかります",
+    "explanation": "正解は「A」の「駅まで 歩いて 十五分 かかります」です。"
+  },
+  {
+    "id": "jp_n5_set2_26",
+    "level": "N5",
+    "mockSet": "N5_SET_2",
+    "type": "FILL_BLANK",
+    "prompt": "【文法 Q11】「友達 / に / 誕生日の プレゼントを / もらいました」",
+    "options": [
+      "友達に 誕生日の プレゼントを もらいました",
+      "誕生日の プレゼントに 友達を もらいました",
+      "もらいました 友達に 誕生日の プレゼントを",
+      "友達を 誕生日の プレゼントに もらいました"
+    ],
+    "correctAnswer": "友達に 誕生日の プレゼントを もらいました",
+    "explanation": "正解は「A」の「友達に 誕生日の プレゼントを もらいました」です。"
+  },
+  {
+    "id": "jp_n5_set2_27",
+    "level": "N5",
+    "mockSet": "N5_SET_2",
+    "type": "FILL_BLANK",
+    "prompt": "【文法 Q12】「エアコン / を / つけたまま / 出かけました」",
+    "options": [
+      "エアコンを つけたまま 出かけました",
+      "エアコン 出かけました つけたまま を",
+      "つけたまま エアコンを 出かけました",
+      "出かけました エアコンを つけたまま"
+    ],
+    "correctAnswer": "エアコンを つけたまま 出かけました",
+    "explanation": "正解は「A」の「エアコンを つけたまま 出かけました」です。"
+  },
+  {
+    "id": "jp_n5_set2_28",
+    "level": "N5",
+    "mockSet": "N5_SET_2",
+    "type": "FILL_BLANK",
+    "prompt": "【文法 Q13】（13）に 入るのは どれですか。",
+    "options": [
+      "のぼりました",
+      "およぎました",
+      "はしりました",
+      "とびました"
+    ],
+    "correctAnswer": "のぼりました",
+    "explanation": "正解は「A」の「のぼりました」です。"
+  },
+  {
+    "id": "jp_n5_set2_29",
+    "level": "N5",
+    "mockSet": "N5_SET_2",
+    "type": "FILL_BLANK",
+    "prompt": "【文法 Q14】（14）に 入るのは どれですか。",
+    "options": [
+      "見ました",
+      "見えました",
+      "見せました",
+      "見られました"
+    ],
+    "correctAnswer": "見えました",
+    "explanation": "正解は「B」の「見えました」です。"
+  },
+  {
+    "id": "jp_n5_set2_30",
+    "level": "N5",
+    "mockSet": "N5_SET_2",
+    "type": "FILL_BLANK",
+    "prompt": "【文法 Q15】（15）に 入るのは どれですか。",
+    "options": [
+      "たべました",
+      "のみました",
+      "つくりました",
+      "かいました"
+    ],
+    "correctAnswer": "たべました",
+    "explanation": "正解は「A」の「たべました」です。"
+  },
+  {
+    "id": "jp_n5_set2_31",
+    "level": "N5",
+    "mockSet": "N5_SET_2",
+    "type": "MULTIPLE_CHOICE",
+    "prompt": "【読解 Q1】Reading (どっかい)\nわたしは 毎朝 6時に 起きて、ジョギングを します。それから シャワーを あびて、朝ごはんを 食べます。会社は 9時からですが、いつも 8時半に 着きます。仕事が おわるのは 6時ごろです。\n\n質問: 「わたし」の 朝の 正しい 順番は どれですか。",
+    "options": [
+      "おきる→ジョギング→シャワー→朝ごはん",
+      "おきる→シャワー→ジョギング→朝ごはん",
+      "ジョギング→おきる→朝ごはん→シャワー",
+      "おきる→朝ごはん→ジョギング→シャワー"
+    ],
+    "correctAnswer": "おきる→ジョギング→シャワー→朝ごはん",
+    "explanation": "正解は「A」の「おきる→ジョギング→シャワー→朝ごはん」です。"
+  },
+  {
+    "id": "jp_n5_set2_32",
+    "level": "N5",
+    "mockSet": "N5_SET_2",
+    "type": "MULTIPLE_CHOICE",
+    "prompt": "【読解 Q2】Reading (どっかい)\nわたしは 毎朝 6時に 起きて、ジョギングを します。それから シャワーを あびて、朝ごはんを 食べます。会社は 9時からですが、いつも 8時半に 着きます。仕事が おわるのは 6時ごろです。\n\n質問: 会社は 何時に はじまりますか。",
+    "options": [
+      "8時",
+      "8時半",
+      "9時",
+      "6時"
+    ],
+    "correctAnswer": "9時",
+    "explanation": "正解は「C」の「9時」です。"
+  },
+  {
+    "id": "jp_n5_set2_33",
+    "level": "N5",
+    "mockSet": "N5_SET_2",
+    "type": "MULTIPLE_CHOICE",
+    "prompt": "【読解 Q3】Reading (どっかい)\nわたしは 毎朝 6時に 起きて、ジョギングを します。それから シャワーを あびて、朝ごはんを 食べます。会社は 9時からですが、いつも 8時半に 着きます。仕事が おわるのは 6時ごろです。\n田中さんは 来月 大阪に 引っ越します。仕事の ために、家族で 引っ越すことに なりました。子どもたちは 新しい 学校に かようことに なり、少し 心配していますが、たのしみにも しています。\n\n質問: 田中さんは なぜ 引っ越しますか。",
+    "options": [
+      "学校の ため",
+      "仕事の ため",
+      "家族の ため",
+      "旅行の ため"
+    ],
+    "correctAnswer": "仕事の ため",
+    "explanation": "正解は「B」の「仕事の ため」です。"
+  },
+  {
+    "id": "jp_n5_set2_34",
+    "level": "N5",
+    "mockSet": "N5_SET_2",
+    "type": "MULTIPLE_CHOICE",
+    "prompt": "【読解 Q4】Reading (どっかい)\nわたしは 毎朝 6時に 起きて、ジョギングを します。それから シャワーを あびて、朝ごはんを 食べます。会社は 9時からですが、いつも 8時半に 着きます。仕事が おわるのは 6時ごろです。\n田中さんは 来月 大阪に 引っ越します。仕事の ために、家族で 引っ越すことに なりました。子どもたちは 新しい 学校に かようことに なり、少し 心配していますが、たのしみにも しています。\n\n質問: 子どもたちは どんな 気持ちですか。",
+    "options": [
+      "うれしいだけ",
+      "かなしいだけ",
+      "心配と 楽しみと 両方",
+      "何も 感じていない"
+    ],
+    "correctAnswer": "心配と 楽しみと 両方",
+    "explanation": "正解は「C」の「心配と 楽しみと 両方」です。"
+  },
+  {
+    "id": "jp_n5_set2_35",
+    "level": "N5",
+    "mockSet": "N5_SET_2",
+    "type": "MULTIPLE_CHOICE",
+    "prompt": "【読解 Q5】Reading (どっかい)\nわたしは 毎朝 6時に 起きて、ジョギングを します。それから シャワーを あびて、朝ごはんを 食べます。会社は 9時からですが、いつも 8時半に 着きます。仕事が おわるのは 6時ごろです。\n田中さんは 来月 大阪に 引っ越します。仕事の ために、家族で 引っ越すことに なりました。子どもたちは 新しい 学校に かようことに なり、少し 心配していますが、たのしみにも しています。\nプールの りよう時間の おしらせ\n・りよう時間：午前10時〜午後8時\n・休みの日：毎週 水曜日\n・6歳未満の お子さんは 大人と いっしょに 入って ください。\n・タオルは 持って きて ください。\n\n質問: 水曜日に プールへ 行っても いいですか。",
+    "options": [
+      "はい、いつでも 入れます。",
+      "いいえ、水曜日は 休みです。",
+      "午前中だけ あいています。",
+      "大人だけ 入れます。"
+    ],
+    "correctAnswer": "いいえ、水曜日は 休みです。",
+    "explanation": "正解は「B」の「いいえ、水曜日は 休みです。」です。"
+  },
+  {
+    "id": "jp_n5_set2_36",
+    "level": "N5",
+    "mockSet": "N5_SET_2",
+    "type": "MULTIPLE_CHOICE",
+    "prompt": "【読解 Q6】Reading (どっかい)\nわたしは 毎朝 6時に 起きて、ジョギングを します。それから シャワーを あびて、朝ごはんを 食べます。会社は 9時からですが、いつも 8時半に 着きます。仕事が おわるのは 6時ごろです。\n田中さんは 来月 大阪に 引っ越します。仕事の ために、家族で 引っ越すことに なりました。子どもたちは 新しい 学校に かようことに なり、少し 心配していますが、たのしみにも しています。\nプールの りよう時間の おしらせ\n・りよう時間：午前10時〜午後8時\n・休みの日：毎週 水曜日\n・6歳未満の お子さんは 大人と いっしょに 入って ください。\n・タオルは 持って きて ください。\n\n質問: 5歳の 子どもは どうやって プールに 入りますか。",
+    "options": [
+      "一人で 入る",
+      "大人と いっしょに 入る",
+      "入れない",
+      "先生と 入る"
+    ],
+    "correctAnswer": "大人と いっしょに 入る",
+    "explanation": "正解は「B」の「大人と いっしょに 入る」です。"
+  },
+  {
+    "id": "jp_n5_set2_37",
+    "level": "N5",
+    "mockSet": "N5_SET_2",
+    "type": "LISTENING",
+    "prompt": "【聴解 Q1】女の人：すみません、この ちかくに ゆうびんきょくは ありますか。\n男の人：はい、この 道を まっすぐ 行くと、右がわに あります。\n\n質問: ゆうびんきょくは どこに ありますか。",
+    "options": [
+      "まっすぐ行って 右",
+      "まっすぐ行って 左",
+      "すぐ 後ろ",
+      "この 道の 反対側"
+    ],
+    "correctAnswer": "まっすぐ行って 右",
+    "explanation": "正解は「A」の「まっすぐ行って 右」です。",
+    "audioUrl": "/audio/n5/minna_shokyu_1_027.mp3"
+  },
+  {
+    "id": "jp_n5_set2_38",
+    "level": "N5",
+    "mockSet": "N5_SET_2",
+    "type": "LISTENING",
+    "prompt": "【聴解 Q2】男の人：来週の パーティーは 何時からですか。\n女の人：6時からですが、5時半に 集まりましょう。\n\n質問: 二人は 何時に 集まりますか。",
+    "options": [
+      "5時",
+      "5時半",
+      "6時",
+      "6時半"
+    ],
+    "correctAnswer": "5時半",
+    "explanation": "正解は「B」の「5時半」です。",
+    "audioUrl": "/audio/n5/minna_shokyu_1_030.mp3"
+  },
+  {
+    "id": "jp_n5_set2_39",
+    "level": "N5",
+    "mockSet": "N5_SET_2",
+    "type": "LISTENING",
+    "prompt": "【聴解 Q3】店員：ご注文は。\n客：コーヒーを 二つと、サンドイッチを 一つ お願いします。\n\n質問: 客は 何を 注文しましたか。",
+    "options": [
+      "コーヒー2、サンドイッチ1",
+      "コーヒー1、サンドイッチ2",
+      "コーヒー2、サンドイッチ2",
+      "コーヒー1、サンドイッチ1"
+    ],
+    "correctAnswer": "コーヒー2、サンドイッチ1",
+    "explanation": "正解は「A」の「コーヒー2、サンドイッチ1」です。",
+    "audioUrl": "/audio/n5/minna_shokyu_1_033.mp3"
+  },
+  {
+    "id": "jp_n5_set2_40",
+    "level": "N5",
+    "mockSet": "N5_SET_2",
+    "type": "LISTENING",
+    "prompt": "【聴解 Q4】女の人：レポートは もう 書きましたか。\n男の人：半分ぐらい 書きました。今晩 終わらせます。\n\n質問: 男の人の レポートは どのくらい できていますか。",
+    "options": [
+      "全部 できた",
+      "半分ぐらい できた",
+      "まだ 何も していない",
+      "もう 出した"
+    ],
+    "correctAnswer": "半分ぐらい できた",
+    "explanation": "正解は「B」の「半分ぐらい できた」です。",
+    "audioUrl": "/audio/n5/minna_shokyu_1_036.mp3"
+  },
+  {
+    "id": "jp_n5_set2_41",
+    "level": "N5",
+    "mockSet": "N5_SET_2",
+    "type": "LISTENING",
+    "prompt": "【聴解 Q5】天気よほう：今日は 一日中 晴れですが、夜から 風が 強くなるでしょう。\n\n質問: 今日の 夜は どうなりますか。",
+    "options": [
+      "雨が ふる",
+      "風が 強くなる",
+      "雪が ふる",
+      "晴れが つづく"
+    ],
+    "correctAnswer": "風が 強くなる",
+    "explanation": "正解は「B」の「風が 強くなる」です。",
+    "audioUrl": "/audio/n5/minna_shokyu_1_039.mp3"
+  },
+  {
+    "id": "jp_n5_set2_42",
+    "level": "N5",
+    "mockSet": "N5_SET_2",
+    "type": "LISTENING",
+    "prompt": "【聴解 Q6】先生：レポートは いつまでに 出しますか。\n\n質問: レポートは いつまでに 出しますか。",
+    "options": [
+      "今週の 金曜日",
+      "来週の 月曜日",
+      "来週の 金曜日",
+      "今週の 月曜日"
+    ],
+    "correctAnswer": "来週の 月曜日",
+    "explanation": "正解は「B」の「来週の 月曜日」です。",
+    "audioUrl": "/audio/n5/minna_shokyu_1_042.mp3"
+  },
+  {
+    "id": "jp_n5_set2_43",
+    "level": "N5",
+    "mockSet": "N5_SET_2",
+    "type": "LISTENING",
+    "prompt": "【聴解 Q7】男の人：この 靴、いくらですか。\n店員：もともと 5,000円ですが、今は 半額です。\n\n質問: 靴は 今 いくらですか。",
+    "options": [
+      "5,000円",
+      "2,500円",
+      "1,000円",
+      "4,500円"
+    ],
+    "correctAnswer": "2,500円",
+    "explanation": "正解は「B」の「2,500円」です。",
+    "audioUrl": "/audio/n5/minna_shokyu_1_045.mp3"
+  },
+  {
+    "id": "jp_n5_set2_44",
+    "level": "N5",
+    "mockSet": "N5_SET_2",
+    "type": "LISTENING",
+    "prompt": "【聴解 Q8】女の人：明日、映画を 見に 行きませんか。\n男の人：いいですね。何時に 会いましょうか。\n女の人：映画は 2時からですから、1時半に 駅で 会いましょう。\n\n質問: 二人は 何時に、どこで 会いますか。",
+    "options": [
+      "1時半、駅",
+      "2時、駅",
+      "1時半、映画館",
+      "2時、映画館"
+    ],
+    "correctAnswer": "1時半、駅",
+    "explanation": "正解は「A」の「1時半、駅」です。",
+    "audioUrl": "/audio/n5/minna_shokyu_1_048.mp3"
+  },
+  {
+    "id": "jp_n5_set3_1",
+    "level": "N5",
+    "mockSet": "N5_SET_3",
+    "type": "MULTIPLE_CHOICE",
+    "prompt": "【語彙・漢字 Q1】妹は 来年 大学生に なります。",
+    "options": [
+      "いもうと",
+      "おとうと",
+      "あね",
+      "あに"
+    ],
+    "correctAnswer": "いもうと",
+    "explanation": "正解は「A」の「いもうと」です。"
+  },
+  {
+    "id": "jp_n5_set3_2",
+    "level": "N5",
+    "mockSet": "N5_SET_3",
+    "type": "MULTIPLE_CHOICE",
+    "prompt": "【語彙・漢字 Q2】昨日 は とても さむかったです。",
+    "options": [
+      "きのう",
+      "さくび",
+      "せんじつ",
+      "きょう"
+    ],
+    "correctAnswer": "きのう",
+    "explanation": "正解は「A」の「きのう」です。"
+  },
+  {
+    "id": "jp_n5_set3_3",
+    "level": "N5",
+    "mockSet": "N5_SET_3",
+    "type": "MULTIPLE_CHOICE",
+    "prompt": "【語彙・漢字 Q3】図書館 で 本を かりました。",
+    "options": [
+      "としょかん",
+      "どしょかん",
+      "としょうかん",
+      "とうしょかん"
+    ],
+    "correctAnswer": "としょかん",
+    "explanation": "正解は「A」の「としょかん」です。"
+  },
+  {
+    "id": "jp_n5_set3_4",
+    "level": "N5",
+    "mockSet": "N5_SET_3",
+    "type": "MULTIPLE_CHOICE",
+    "prompt": "【語彙・漢字 Q4】台所 で 料理を しています。",
+    "options": [
+      "だいどころ",
+      "だいところ",
+      "たいどころ",
+      "だいとこ"
+    ],
+    "correctAnswer": "だいどころ",
+    "explanation": "正解は「A」の「だいどころ」です。"
+  },
+  {
+    "id": "jp_n5_set3_5",
+    "level": "N5",
+    "mockSet": "N5_SET_3",
+    "type": "MULTIPLE_CHOICE",
+    "prompt": "【語彙・漢字 Q5】今晩 は うちで ごはんを 食べます。",
+    "options": [
+      "こんばん",
+      "こんや",
+      "いまばん",
+      "けさ"
+    ],
+    "correctAnswer": "こんばん",
+    "explanation": "正解は「A」の「こんばん」です。"
+  },
+  {
+    "id": "jp_n5_set3_6",
+    "level": "N5",
+    "mockSet": "N5_SET_3",
+    "type": "MULTIPLE_CHOICE",
+    "prompt": "【語彙・漢字 Q6】あついですから、まどを ___ください。",
+    "options": [
+      "あけて",
+      "しめて",
+      "けして",
+      "つけて"
+    ],
+    "correctAnswer": "あけて",
+    "explanation": "正解は「A」の「あけて」です。"
+  },
+  {
+    "id": "jp_n5_set3_7",
+    "level": "N5",
+    "mockSet": "N5_SET_3",
+    "type": "MULTIPLE_CHOICE",
+    "prompt": "【語彙・漢字 Q7】この しごとは とても ___ですから、てつだって ください。",
+    "options": [
+      "いそがしい",
+      "ひまな",
+      "やさしい",
+      "かんたんな"
+    ],
+    "correctAnswer": "いそがしい",
+    "explanation": "正解は「A」の「いそがしい」です。"
+  },
+  {
+    "id": "jp_n5_set3_8",
+    "level": "N5",
+    "mockSet": "N5_SET_3",
+    "type": "MULTIPLE_CHOICE",
+    "prompt": "【語彙・漢字 Q8】でんしゃの なかで さいふを ___しまいました。",
+    "options": [
+      "なくして",
+      "みつけて",
+      "かって",
+      "うって"
+    ],
+    "correctAnswer": "なくして",
+    "explanation": "正解は「A」の「なくして」です。"
+  },
+  {
+    "id": "jp_n5_set3_9",
+    "level": "N5",
+    "mockSet": "N5_SET_3",
+    "type": "MULTIPLE_CHOICE",
+    "prompt": "【語彙・漢字 Q9】あめが ふっていますから、かさを ___ください。",
+    "options": [
+      "もって行って",
+      "おいて行って",
+      "わすれて",
+      "すてて"
+    ],
+    "correctAnswer": "もって行って",
+    "explanation": "正解は「A」の「もって行って」です。"
+  },
+  {
+    "id": "jp_n5_set3_10",
+    "level": "N5",
+    "mockSet": "N5_SET_3",
+    "type": "MULTIPLE_CHOICE",
+    "prompt": "【語彙・漢字 Q10】びょうきの とき、___へ 行きます。",
+    "options": [
+      "びょういん",
+      "がっこう",
+      "ぎんこう",
+      "こうえん"
+    ],
+    "correctAnswer": "びょういん",
+    "explanation": "正解は「A」の「びょういん」です。"
+  },
+  {
+    "id": "jp_n5_set3_11",
+    "level": "N5",
+    "mockSet": "N5_SET_3",
+    "type": "MULTIPLE_CHOICE",
+    "prompt": "【語彙・漢字 Q11】きょうは でんき を つかいません。",
+    "options": [
+      "電気",
+      "電木",
+      "電池",
+      "雨気"
+    ],
+    "correctAnswer": "電気",
+    "explanation": "正解は「A」の「電気」です。"
+  },
+  {
+    "id": "jp_n5_set3_12",
+    "level": "N5",
+    "mockSet": "N5_SET_3",
+    "type": "MULTIPLE_CHOICE",
+    "prompt": "【語彙・漢字 Q12】あには くるま を うんてんします。",
+    "options": [
+      "車",
+      "軍",
+      "東",
+      "連"
+    ],
+    "correctAnswer": "車",
+    "explanation": "正解は「A」の「車」です。"
+  },
+  {
+    "id": "jp_n5_set3_13",
+    "level": "N5",
+    "mockSet": "N5_SET_3",
+    "type": "MULTIPLE_CHOICE",
+    "prompt": "【語彙・漢字 Q13】まいばん ほし を 見ます。",
+    "options": [
+      "星",
+      "晴",
+      "雲",
+      "日"
+    ],
+    "correctAnswer": "星",
+    "explanation": "正解は「A」の「星」です。"
+  },
+  {
+    "id": "jp_n5_set3_14",
+    "level": "N5",
+    "mockSet": "N5_SET_3",
+    "type": "MULTIPLE_CHOICE",
+    "prompt": "【語彙・漢字 Q14】この みちは とても せまいです。",
+    "options": [
+      "この みちは ひろくないです。",
+      "この みちは ひろいです。",
+      "この みちは ながいです。",
+      "この みちは あかるいです。"
+    ],
+    "correctAnswer": "この みちは ひろくないです。",
+    "explanation": "正解は「A」の「この みちは ひろくないです。」です。"
+  },
+  {
+    "id": "jp_n5_set3_15",
+    "level": "N5",
+    "mockSet": "N5_SET_3",
+    "type": "MULTIPLE_CHOICE",
+    "prompt": "【語彙・漢字 Q15】わたしは まいにち くるまで かいしゃへ 行きます。",
+    "options": [
+      "わたしは まいにち くるまを うんてんして かいしゃへ 行きます。",
+      "わたしは まいにち あるいて かいしゃへ 行きます。",
+      "わたしは まいにち でんしゃで かいしゃへ 行きます。",
+      "わたしは まいにち じてんしゃで かいしゃへ 行きます。"
+    ],
+    "correctAnswer": "わたしは まいにち くるまを うんてんして かいしゃへ 行きます。",
+    "explanation": "正解は「A」の「わたしは まいにち くるまを うんてんして かいしゃへ 行きます。」です。"
+  },
+  {
+    "id": "jp_n5_set3_16",
+    "level": "N5",
+    "mockSet": "N5_SET_3",
+    "type": "FILL_BLANK",
+    "prompt": "【文法 Q1】わたしは いぬ ___ ねこと どちらが すきですか。",
+    "options": [
+      "と",
+      "を",
+      "が",
+      "に"
+    ],
+    "correctAnswer": "と",
+    "explanation": "正解は「A」の「と」です。"
+  },
+  {
+    "id": "jp_n5_set3_17",
+    "level": "N5",
+    "mockSet": "N5_SET_3",
+    "type": "FILL_BLANK",
+    "prompt": "【文法 Q2】まど ___ あいていますから、さむいです。",
+    "options": [
+      "が",
+      "を",
+      "に",
+      "へ"
+    ],
+    "correctAnswer": "が",
+    "explanation": "正解は「A」の「が」です。"
+  },
+  {
+    "id": "jp_n5_set3_18",
+    "level": "N5",
+    "mockSet": "N5_SET_3",
+    "type": "FILL_BLANK",
+    "prompt": "【文法 Q3】この りょうりは からい ___ 、おいしいです。",
+    "options": [
+      "ですが",
+      "でも",
+      "し",
+      "と"
+    ],
+    "correctAnswer": "ですが",
+    "explanation": "正解は「A」の「ですが」です。"
+  },
+  {
+    "id": "jp_n5_set3_19",
+    "level": "N5",
+    "mockSet": "N5_SET_3",
+    "type": "FILL_BLANK",
+    "prompt": "【文法 Q4】こどもの とき、よく ここ ___ あそびました。",
+    "options": [
+      "で",
+      "に",
+      "を",
+      "へ"
+    ],
+    "correctAnswer": "で",
+    "explanation": "正解は「A」の「で」です。"
+  },
+  {
+    "id": "jp_n5_set3_20",
+    "level": "N5",
+    "mockSet": "N5_SET_3",
+    "type": "FILL_BLANK",
+    "prompt": "【文法 Q5】かいぎは 3時 ___ はじまります。",
+    "options": [
+      "から",
+      "まで",
+      "より",
+      "ので"
+    ],
+    "correctAnswer": "から",
+    "explanation": "正解は「A」の「から」です。"
+  },
+  {
+    "id": "jp_n5_set3_21",
+    "level": "N5",
+    "mockSet": "N5_SET_3",
+    "type": "FILL_BLANK",
+    "prompt": "【文法 Q6】せんせいに しつもん ___ しました。",
+    "options": [
+      "を",
+      "が",
+      "に",
+      "で"
+    ],
+    "correctAnswer": "を",
+    "explanation": "正解は「A」の「を」です。"
+  },
+  {
+    "id": "jp_n5_set3_22",
+    "level": "N5",
+    "mockSet": "N5_SET_3",
+    "type": "FILL_BLANK",
+    "prompt": "【文法 Q7】この かびんは そぼ ___ もらいました。",
+    "options": [
+      "に",
+      "で",
+      "を",
+      "が"
+    ],
+    "correctAnswer": "に",
+    "explanation": "正解は「A」の「に」です。"
+  },
+  {
+    "id": "jp_n5_set3_23",
+    "level": "N5",
+    "mockSet": "N5_SET_3",
+    "type": "FILL_BLANK",
+    "prompt": "【文法 Q8】あめ ___ ふっても、しあいは あります。",
+    "options": [
+      "が",
+      "を",
+      "に",
+      "で"
+    ],
+    "correctAnswer": "が",
+    "explanation": "正解は「A」の「が」です。"
+  },
+  {
+    "id": "jp_n5_set3_24",
+    "level": "N5",
+    "mockSet": "N5_SET_3",
+    "type": "FILL_BLANK",
+    "prompt": "【文法 Q9】「本 / を / 読みながら / お茶を 飲みます」",
+    "options": [
+      "本を 読みながら お茶を 飲みます",
+      "お茶を 読みながら 本を 飲みます",
+      "読みながら 本を お茶を 飲みます",
+      "本 お茶を 読みながら を 飲みます"
+    ],
+    "correctAnswer": "本を 読みながら お茶を 飲みます",
+    "explanation": "正解は「A」の「本を 読みながら お茶を 飲みます」です。"
+  },
+  {
+    "id": "jp_n5_set3_25",
+    "level": "N5",
+    "mockSet": "N5_SET_3",
+    "type": "FILL_BLANK",
+    "prompt": "【文法 Q10】「明日 / まで / に / レポートを 出して ください」",
+    "options": [
+      "明日までに レポートを 出して ください",
+      "レポートまでに 明日を 出して ください",
+      "までに 明日 レポートを 出して ください",
+      "出して ください 明日までに レポートを"
+    ],
+    "correctAnswer": "明日までに レポートを 出して ください",
+    "explanation": "正解は「A」の「明日までに レポートを 出して ください」です。"
+  },
+  {
+    "id": "jp_n5_set3_26",
+    "level": "N5",
+    "mockSet": "N5_SET_3",
+    "type": "FILL_BLANK",
+    "prompt": "【文法 Q11】「今日 / の / 会議 / は / 中止に なりました」",
+    "options": [
+      "今日の 会議は 中止に なりました",
+      "会議の 今日は 中止に なりました",
+      "中止に 今日の 会議は なりました",
+      "なりました 今日の 会議は 中止に"
+    ],
+    "correctAnswer": "今日の 会議は 中止に なりました",
+    "explanation": "正解は「A」の「今日の 会議は 中止に なりました」です。"
+  },
+  {
+    "id": "jp_n5_set3_27",
+    "level": "N5",
+    "mockSet": "N5_SET_3",
+    "type": "FILL_BLANK",
+    "prompt": "【文法 Q12】「友だち / と / いっしょに / 旅行に 行きます」",
+    "options": [
+      "友だちと いっしょに 旅行に 行きます",
+      "いっしょに 友だちと 旅行に 行きます",
+      "旅行に 友だちと いっしょに 行きます",
+      "行きます 友だちと いっしょに 旅行に"
+    ],
+    "correctAnswer": "友だちと いっしょに 旅行に 行きます",
+    "explanation": "正解は「A」の「友だちと いっしょに 旅行に 行きます」です。"
+  },
+  {
+    "id": "jp_n5_set3_28",
+    "level": "N5",
+    "mockSet": "N5_SET_3",
+    "type": "FILL_BLANK",
+    "prompt": "【文法 Q13】（13）に 入るのは どれですか。",
+    "options": [
+      "しました",
+      "行きました",
+      "あげました",
+      "かいました"
+    ],
+    "correctAnswer": "しました",
+    "explanation": "正解は「A」の「しました」です。"
+  },
+  {
+    "id": "jp_n5_set3_29",
+    "level": "N5",
+    "mockSet": "N5_SET_3",
+    "type": "FILL_BLANK",
+    "prompt": "【文法 Q14】（14）に 入るのは どれですか。",
+    "options": [
+      "歌いました",
+      "聞きました",
+      "話しました",
+      "読みました"
+    ],
+    "correctAnswer": "歌いました",
+    "explanation": "正解は「A」の「歌いました」です。"
+  },
+  {
+    "id": "jp_n5_set3_30",
+    "level": "N5",
+    "mockSet": "N5_SET_3",
+    "type": "FILL_BLANK",
+    "prompt": "【文法 Q15】（15）に 入るのは どれですか。",
+    "options": [
+      "あそびました",
+      "ねました",
+      "はたらきました",
+      "べんきょうしました"
+    ],
+    "correctAnswer": "あそびました",
+    "explanation": "正解は「A」の「あそびました」です。"
+  },
+  {
+    "id": "jp_n5_set3_31",
+    "level": "N5",
+    "mockSet": "N5_SET_3",
+    "type": "MULTIPLE_CHOICE",
+    "prompt": "【読解 Q1】Reading (どっかい)\nわたしは 先週から 新しい アルバイトを はじめました。スーパーで レジの しごとを しています。はじめは たいへんでしたが、今は 少し なれました。時給は 1,000円で、一週間に 三回 はたらいています。\n\n質問: 「わたし」は どこで アルバイトを していますか。",
+    "options": [
+      "スーパー",
+      "レストラン",
+      "としょかん",
+      "がっこう"
+    ],
+    "correctAnswer": "スーパー",
+    "explanation": "正解は「A」の「スーパー」です。"
+  },
+  {
+    "id": "jp_n5_set3_32",
+    "level": "N5",
+    "mockSet": "N5_SET_3",
+    "type": "MULTIPLE_CHOICE",
+    "prompt": "【読解 Q2】Reading (どっかい)\nわたしは 先週から 新しい アルバイトを はじめました。スーパーで レジの しごとを しています。はじめは たいへんでしたが、今は 少し なれました。時給は 1,000円で、一週間に 三回 はたらいています。\n\n質問: 一週間に 何回 はたらきますか。",
+    "options": [
+      "一回",
+      "二回",
+      "三回",
+      "五回"
+    ],
+    "correctAnswer": "三回",
+    "explanation": "正解は「C」の「三回」です。"
+  },
+  {
+    "id": "jp_n5_set3_33",
+    "level": "N5",
+    "mockSet": "N5_SET_3",
+    "type": "MULTIPLE_CHOICE",
+    "prompt": "【読解 Q3】Reading (どっかい)\nわたしは 先週から 新しい アルバイトを はじめました。スーパーで レジの しごとを しています。はじめは たいへんでしたが、今は 少し なれました。時給は 1,000円で、一週間に 三回 はたらいています。\n山田さんは 動物が 大好きです。家で 犬を 二匹と ねこを 一匹 かっています。毎朝 犬と さんぽに 行きます。休みの日には 動物園へ 行くことも あります。\n\n質問: 山田さんは 何を かっていますか。",
+    "options": [
+      "犬2匹と ねこ1匹",
+      "犬1匹と ねこ2匹",
+      "犬だけ",
+      "ねこだけ"
+    ],
+    "correctAnswer": "犬2匹と ねこ1匹",
+    "explanation": "正解は「A」の「犬2匹と ねこ1匹」です。"
+  },
+  {
+    "id": "jp_n5_set3_34",
+    "level": "N5",
+    "mockSet": "N5_SET_3",
+    "type": "MULTIPLE_CHOICE",
+    "prompt": "【読解 Q4】Reading (どっかい)\nわたしは 先週から 新しい アルバイトを はじめました。スーパーで レジの しごとを しています。はじめは たいへんでしたが、今は 少し なれました。時給は 1,000円で、一週間に 三回 はたらいています。\n山田さんは 動物が 大好きです。家で 犬を 二匹と ねこを 一匹 かっています。毎朝 犬と さんぽに 行きます。休みの日には 動物園へ 行くことも あります。\n\n質問: 山田さんは 毎朝 何を しますか。",
+    "options": [
+      "犬と さんぽに 行く",
+      "動物園へ 行く",
+      "ねこと あそぶ",
+      "しごとに 行く"
+    ],
+    "correctAnswer": "犬と さんぽに 行く",
+    "explanation": "正解は「A」の「犬と さんぽに 行く」です。"
+  },
+  {
+    "id": "jp_n5_set3_35",
+    "level": "N5",
+    "mockSet": "N5_SET_3",
+    "type": "MULTIPLE_CHOICE",
+    "prompt": "【読解 Q5】Reading (どっかい)\nわたしは 先週から 新しい アルバイトを はじめました。スーパーで レジの しごとを しています。はじめは たいへんでしたが、今は 少し なれました。時給は 1,000円で、一週間に 三回 はたらいています。\n山田さんは 動物が 大好きです。家で 犬を 二匹と ねこを 一匹 かっています。毎朝 犬と さんぽに 行きます。休みの日には 動物園へ 行くことも あります。\nえいがかんの おしらせ\n・上映時間：10:00 / 13:00 / 16:00 / 19:00\n・学生は チケットが 半額に なります（学生証が ひつようです）。\n・月に 一回、第一月曜日は「サービスデー」で、全員 1,000円です。\n\n質問: 学生が やすく 見るには 何が ひつようですか。",
+    "options": [
+      "お金",
+      "学生証",
+      "チケット2枚",
+      "よやく"
+    ],
+    "correctAnswer": "学生証",
+    "explanation": "正解は「B」の「学生証」です。"
+  },
+  {
+    "id": "jp_n5_set3_36",
+    "level": "N5",
+    "mockSet": "N5_SET_3",
+    "type": "MULTIPLE_CHOICE",
+    "prompt": "【読解 Q6】Reading (どっかい)\nわたしは 先週から 新しい アルバイトを はじめました。スーパーで レジの しごとを しています。はじめは たいへんでしたが、今は 少し なれました。時給は 1,000円で、一週間に 三回 はたらいています。\n山田さんは 動物が 大好きです。家で 犬を 二匹と ねこを 一匹 かっています。毎朝 犬と さんぽに 行きます。休みの日には 動物園へ 行くことも あります。\nえいがかんの おしらせ\n・上映時間：10:00 / 13:00 / 16:00 / 19:00\n・学生は チケットが 半額に なります（学生証が ひつようです）。\n・月に 一回、第一月曜日は「サービスデー」で、全員 1,000円です。\n\n質問: 「サービスデー」は いつですか。",
+    "options": [
+      "毎週月曜日",
+      "第一月曜日",
+      "毎月最後の日",
+      "日曜日"
+    ],
+    "correctAnswer": "第一月曜日",
+    "explanation": "正解は「B」の「第一月曜日」です。"
+  },
+  {
+    "id": "jp_n5_set3_37",
+    "level": "N5",
+    "mockSet": "N5_SET_3",
+    "type": "LISTENING",
+    "prompt": "【聴解 Q1】男の人：会議室は どこですか。\n女の人：2階の 一番 奥の へやです。エレベーターの 前を 通って まっすぐです。\n\n質問: 会議室は どこに ありますか。",
+    "options": [
+      "2階のいちばん奥",
+      "1階の入口",
+      "3階の左側",
+      "地下"
+    ],
+    "correctAnswer": "2階のいちばん奥",
+    "explanation": "正解は「A」の「2階のいちばん奥」です。",
+    "audioUrl": "/audio/n5/minna_shokyu_1_051.mp3"
+  },
+  {
+    "id": "jp_n5_set3_38",
+    "level": "N5",
+    "mockSet": "N5_SET_3",
+    "type": "LISTENING",
+    "prompt": "【聴解 Q2】女の人：チケットは 何枚 いりますか。\n男の人：大人が 二枚と 子どもが 一枚です。\n\n質問: チケットは 何枚 いりますか。",
+    "options": [
+      "大人2枚子ども1枚",
+      "大人1枚子ども2枚",
+      "大人3枚",
+      "子ども3枚"
+    ],
+    "correctAnswer": "大人2枚子ども1枚",
+    "explanation": "正解は「A」の「大人2枚子ども1枚」です。",
+    "audioUrl": "/audio/n5/minna_shokyu_1_054.mp3"
+  },
+  {
+    "id": "jp_n5_set3_39",
+    "level": "N5",
+    "mockSet": "N5_SET_3",
+    "type": "LISTENING",
+    "prompt": "【聴解 Q3】店員：サイズは いかがですか。\n客：Mサイズは ちょっと 小さいので、Lサイズを ください。\n\n質問: 客は どのサイズを 買いますか。",
+    "options": [
+      "S",
+      "M",
+      "L",
+      "XL"
+    ],
+    "correctAnswer": "L",
+    "explanation": "正解は「C」の「L」です。",
+    "audioUrl": "/audio/n5/minna_shokyu_1_057.mp3"
+  },
+  {
+    "id": "jp_n5_set3_40",
+    "level": "N5",
+    "mockSet": "N5_SET_3",
+    "type": "LISTENING",
+    "prompt": "【聴解 Q4】男の人：あしたの テストの じゅんびは できましたか。\n女の人：まだです。今から 図書館で べんきょうします。\n\n質問: 女の人は これから 何を しますか。",
+    "options": [
+      "テストを 受ける",
+      "図書館で 勉強する",
+      "家に 帰る",
+      "寝る"
+    ],
+    "correctAnswer": "図書館で 勉強する",
+    "explanation": "正解は「B」の「図書館で 勉強する」です。",
+    "audioUrl": "/audio/n5/minna_shokyu_1_060.mp3"
+  },
+  {
+    "id": "jp_n5_set3_41",
+    "level": "N5",
+    "mockSet": "N5_SET_3",
+    "type": "LISTENING",
+    "prompt": "【聴解 Q5】天気よほう：今夜は 気温が 下がって、寒く なるでしょう。あたたかい ふくを きて ください。\n\n質問: 今夜の 天気は どうですか。",
+    "options": [
+      "あたたかい",
+      "寒くなる",
+      "雨がふる",
+      "かわらない"
+    ],
+    "correctAnswer": "寒くなる",
+    "explanation": "正解は「B」の「寒くなる」です。",
+    "audioUrl": "/audio/n5/minna_shokyu_1_063.mp3"
+  },
+  {
+    "id": "jp_n5_set3_42",
+    "level": "N5",
+    "mockSet": "N5_SET_3",
+    "type": "LISTENING",
+    "prompt": "【聴解 Q6】先生：しゅくだいは ノートに 書いて、来週 出して ください。\n\n質問: しゅくだいは いつ 出しますか。",
+    "options": [
+      "今日",
+      "明日",
+      "来週",
+      "来月"
+    ],
+    "correctAnswer": "来週",
+    "explanation": "正解は「C」の「来週」です。",
+    "audioUrl": "/audio/n5/minna_shokyu_1_066.mp3"
+  },
+  {
+    "id": "jp_n5_set3_43",
+    "level": "N5",
+    "mockSet": "N5_SET_3",
+    "type": "LISTENING",
+    "prompt": "【聴解 Q7】男の人：この コート、試着しても いいですか。\n店員：はい、どうぞ。あちらの 試着室を お使い ください。\n\n質問: 男の人は 何を しますか。",
+    "options": [
+      "コートを 試着する",
+      "コートを 買う",
+      "コートを 返す",
+      "コートを 見るだけ"
+    ],
+    "correctAnswer": "コートを 試着する",
+    "explanation": "正解は「A」の「コートを 試着する」です。",
+    "audioUrl": "/audio/n5/minna_shokyu_1_069.mp3"
+  },
+  {
+    "id": "jp_n5_set3_44",
+    "level": "N5",
+    "mockSet": "N5_SET_3",
+    "type": "LISTENING",
+    "prompt": "【聴解 Q8】女の人：駅までは バスで どのくらい かかりますか。\n男の人：15分ぐらいです。でも 今の 時間は こんでいますから、20分ぐらい かかるかもしれません。\n\n質問: 駅まで バスで だいたい どのくらい かかりますか。",
+    "options": [
+      "10分",
+      "15〜20分",
+      "30分",
+      "1時間"
+    ],
+    "correctAnswer": "15〜20分",
+    "explanation": "正解は「B」の「15〜20分」です。",
+    "audioUrl": "/audio/n5/minna_shokyu_1_072.mp3"
+  },
+  {
+    "id": "jp_n5_set4_1",
+    "level": "N5",
+    "mockSet": "N5_SET_4",
+    "type": "MULTIPLE_CHOICE",
+    "prompt": "【語彙・漢字 Q1】姉は 看護師です。",
+    "options": [
+      "あね",
+      "いもうと",
+      "あに",
+      "おとうと"
+    ],
+    "correctAnswer": "あね",
+    "explanation": "正解は「A」の「あね」です。"
+  },
+  {
+    "id": "jp_n5_set4_2",
+    "level": "N5",
+    "mockSet": "N5_SET_4",
+    "type": "MULTIPLE_CHOICE",
+    "prompt": "【語彙・漢字 Q2】今朝 は はやく おきました。",
+    "options": [
+      "けさ",
+      "こんあさ",
+      "いまあさ",
+      "きょうあさ"
+    ],
+    "correctAnswer": "けさ",
+    "explanation": "正解は「A」の「けさ」です。"
+  },
+  {
+    "id": "jp_n5_set4_3",
+    "level": "N5",
+    "mockSet": "N5_SET_4",
+    "type": "MULTIPLE_CHOICE",
+    "prompt": "【語彙・漢字 Q3】郵便局 で きってを 買いました。",
+    "options": [
+      "ゆうびんきょく",
+      "ゆびんきょく",
+      "ゆうべんきょく",
+      "ようびんきょく"
+    ],
+    "correctAnswer": "ゆうびんきょく",
+    "explanation": "正解は「A」の「ゆうびんきょく」です。"
+  },
+  {
+    "id": "jp_n5_set4_4",
+    "level": "N5",
+    "mockSet": "N5_SET_4",
+    "type": "MULTIPLE_CHOICE",
+    "prompt": "【語彙・漢字 Q4】冷蔵庫 に ぎゅうにゅうが あります。",
+    "options": [
+      "れいぞうこ",
+      "れいぞうご",
+      "れいそうこ",
+      "れいぞうごう"
+    ],
+    "correctAnswer": "れいぞうこ",
+    "explanation": "正解は「A」の「れいぞうこ」です。"
+  },
+  {
+    "id": "jp_n5_set4_5",
+    "level": "N5",
+    "mockSet": "N5_SET_4",
+    "type": "MULTIPLE_CHOICE",
+    "prompt": "【語彙・漢字 Q5】来月 りょこうに 行きます。",
+    "options": [
+      "らいげつ",
+      "こんげつ",
+      "せんげつ",
+      "まいつき"
+    ],
+    "correctAnswer": "らいげつ",
+    "explanation": "正解は「A」の「らいげつ」です。"
+  },
+  {
+    "id": "jp_n5_set4_6",
+    "level": "N5",
+    "mockSet": "N5_SET_4",
+    "type": "MULTIPLE_CHOICE",
+    "prompt": "【語彙・漢字 Q6】さむいですから、コートを ___ください。",
+    "options": [
+      "きて",
+      "ぬいで",
+      "かって",
+      "うって"
+    ],
+    "correctAnswer": "きて",
+    "explanation": "正解は「A」の「きて」です。"
+  },
+  {
+    "id": "jp_n5_set4_7",
+    "level": "N5",
+    "mockSet": "N5_SET_4",
+    "type": "MULTIPLE_CHOICE",
+    "prompt": "【語彙・漢字 Q7】しゅくだいが おおくて、とても ___です。",
+    "options": [
+      "たいへん",
+      "ひま",
+      "かんたん",
+      "しずか"
+    ],
+    "correctAnswer": "たいへん",
+    "explanation": "正解は「A」の「たいへん」です。"
+  },
+  {
+    "id": "jp_n5_set4_8",
+    "level": "N5",
+    "mockSet": "N5_SET_4",
+    "type": "MULTIPLE_CHOICE",
+    "prompt": "【語彙・漢字 Q8】でんわばんごうを ___しまいました。",
+    "options": [
+      "わすれて",
+      "おぼえて",
+      "かいて",
+      "よんで"
+    ],
+    "correctAnswer": "わすれて",
+    "explanation": "正解は「A」の「わすれて」です。"
+  },
+  {
+    "id": "jp_n5_set4_9",
+    "level": "N5",
+    "mockSet": "N5_SET_4",
+    "type": "MULTIPLE_CHOICE",
+    "prompt": "【語彙・漢字 Q9】こうつうじこが あって、でんしゃが ___。",
+    "options": [
+      "とまりました",
+      "はしりました",
+      "でました",
+      "つきました"
+    ],
+    "correctAnswer": "とまりました",
+    "explanation": "正解は「A」の「とまりました」です。"
+  },
+  {
+    "id": "jp_n5_set4_10",
+    "level": "N5",
+    "mockSet": "N5_SET_4",
+    "type": "MULTIPLE_CHOICE",
+    "prompt": "【語彙・漢字 Q10】しあいに かって、みんな とても ___。",
+    "options": [
+      "よろこびました",
+      "おこりました",
+      "なきました",
+      "こまりました"
+    ],
+    "correctAnswer": "よろこびました",
+    "explanation": "正解は「A」の「よろこびました」です。"
+  },
+  {
+    "id": "jp_n5_set4_11",
+    "level": "N5",
+    "mockSet": "N5_SET_4",
+    "type": "MULTIPLE_CHOICE",
+    "prompt": "【語彙・漢字 Q11】まいにち みず を のみます。",
+    "options": [
+      "水",
+      "氷",
+      "木",
+      "雨"
+    ],
+    "correctAnswer": "水",
+    "explanation": "正解は「A」の「水」です。"
+  },
+  {
+    "id": "jp_n5_set4_12",
+    "level": "N5",
+    "mockSet": "N5_SET_4",
+    "type": "MULTIPLE_CHOICE",
+    "prompt": "【語彙・漢字 Q12】きょうは つき が きれいです。",
+    "options": [
+      "月",
+      "日",
+      "星",
+      "雲"
+    ],
+    "correctAnswer": "月",
+    "explanation": "正解は「A」の「月」です。"
+  },
+  {
+    "id": "jp_n5_set4_13",
+    "level": "N5",
+    "mockSet": "N5_SET_4",
+    "type": "MULTIPLE_CHOICE",
+    "prompt": "【語彙・漢字 Q13】あには いしゃ です。",
+    "options": [
+      "医者",
+      "委者",
+      "医社",
+      "歯医者"
+    ],
+    "correctAnswer": "医者",
+    "explanation": "正解は「A」の「医者」です。"
+  },
+  {
+    "id": "jp_n5_set4_14",
+    "level": "N5",
+    "mockSet": "N5_SET_4",
+    "type": "MULTIPLE_CHOICE",
+    "prompt": "【語彙・漢字 Q14】この もんだいは とても むずかしいです。",
+    "options": [
+      "この もんだいは かんたんじゃないです。",
+      "この もんだいは かんたんです。",
+      "この もんだいは みじかいです。",
+      "この もんだいは やすいです。"
+    ],
+    "correctAnswer": "この もんだいは かんたんじゃないです。",
+    "explanation": "正解は「A」の「この もんだいは かんたんじゃないです。」です。"
+  },
+  {
+    "id": "jp_n5_set4_15",
+    "level": "N5",
+    "mockSet": "N5_SET_4",
+    "type": "MULTIPLE_CHOICE",
+    "prompt": "【語彙・漢字 Q15】わたしは いつも でんしゃの 中で ねます。",
+    "options": [
+      "わたしは でんしゃに のっている あいだ、ねます。",
+      "わたしは でんしゃを うんてんします。",
+      "わたしは でんしゃを まちます。",
+      "わたしは でんしゃで しごとを します。"
+    ],
+    "correctAnswer": "わたしは でんしゃに のっている あいだ、ねます。",
+    "explanation": "正解は「A」の「わたしは でんしゃに のっている あいだ、ねます。」です。"
+  },
+  {
+    "id": "jp_n5_set4_16",
+    "level": "N5",
+    "mockSet": "N5_SET_4",
+    "type": "FILL_BLANK",
+    "prompt": "【文法 Q1】きょうしつ ___ だれも いません。",
+    "options": [
+      "に",
+      "で",
+      "を",
+      "と"
+    ],
+    "correctAnswer": "に",
+    "explanation": "正解は「A」の「に」です。"
+  },
+  {
+    "id": "jp_n5_set4_17",
+    "level": "N5",
+    "mockSet": "N5_SET_4",
+    "type": "FILL_BLANK",
+    "prompt": "【文法 Q2】わたしは あさごはん ___ たべないで、がっこうへ 行きました。",
+    "options": [
+      "を",
+      "が",
+      "に",
+      "で"
+    ],
+    "correctAnswer": "を",
+    "explanation": "正解は「A」の「を」です。"
+  },
+  {
+    "id": "jp_n5_set4_18",
+    "level": "N5",
+    "mockSet": "N5_SET_4",
+    "type": "FILL_BLANK",
+    "prompt": "【文法 Q3】つかれた ___ 、はやく ねました。",
+    "options": [
+      "ので",
+      "のに",
+      "けど",
+      "し"
+    ],
+    "correctAnswer": "ので",
+    "explanation": "正解は「A」の「ので」です。"
+  },
+  {
+    "id": "jp_n5_set4_19",
+    "level": "N5",
+    "mockSet": "N5_SET_4",
+    "type": "FILL_BLANK",
+    "prompt": "【文法 Q4】この みちは くるま ___ とおれません。",
+    "options": [
+      "が",
+      "を",
+      "で",
+      "は"
+    ],
+    "correctAnswer": "が",
+    "explanation": "正解は「A」の「が」です。"
+  },
+  {
+    "id": "jp_n5_set4_20",
+    "level": "N5",
+    "mockSet": "N5_SET_4",
+    "type": "FILL_BLANK",
+    "prompt": "【文法 Q5】わからない ___ あったら、しつもんして ください。",
+    "options": [
+      "ことが",
+      "ものが",
+      "のが",
+      "ところが"
+    ],
+    "correctAnswer": "ことが",
+    "explanation": "正解は「A」の「ことが」です。"
+  },
+  {
+    "id": "jp_n5_set4_21",
+    "level": "N5",
+    "mockSet": "N5_SET_4",
+    "type": "FILL_BLANK",
+    "prompt": "【文法 Q6】しごとが おわった ___ 、いえに かえります。",
+    "options": [
+      "あとで",
+      "まえに",
+      "ときに",
+      "あいだに"
+    ],
+    "correctAnswer": "あとで",
+    "explanation": "正解は「A」の「あとで」です。"
+  },
+  {
+    "id": "jp_n5_set4_22",
+    "level": "N5",
+    "mockSet": "N5_SET_4",
+    "type": "FILL_BLANK",
+    "prompt": "【文法 Q7】この カメラは あの カメラ ___ かるいです。",
+    "options": [
+      "より",
+      "ほど",
+      "から",
+      "まで"
+    ],
+    "correctAnswer": "より",
+    "explanation": "正解は「A」の「より」です。"
+  },
+  {
+    "id": "jp_n5_set4_23",
+    "level": "N5",
+    "mockSet": "N5_SET_4",
+    "type": "FILL_BLANK",
+    "prompt": "【文法 Q8】どうぞ、めしあがって ___。",
+    "options": [
+      "ください",
+      "あげます",
+      "くれます",
+      "やります"
+    ],
+    "correctAnswer": "ください",
+    "explanation": "正解は「A」の「ください」です。"
+  },
+  {
+    "id": "jp_n5_set4_24",
+    "level": "N5",
+    "mockSet": "N5_SET_4",
+    "type": "FILL_BLANK",
+    "prompt": "【文法 Q9】「宿題 / が / 終わらなくて / 困っています」",
+    "options": [
+      "宿題が 終わらなくて 困っています",
+      "困っています 宿題が 終わらなくて",
+      "終わらなくて 宿題が 困っています",
+      "宿題 困っています 終わらなくて が"
+    ],
+    "correctAnswer": "宿題が 終わらなくて 困っています",
+    "explanation": "正解は「A」の「宿題が 終わらなくて 困っています」です。"
+  },
+  {
+    "id": "jp_n5_set4_25",
+    "level": "N5",
+    "mockSet": "N5_SET_4",
+    "type": "FILL_BLANK",
+    "prompt": "【文法 Q10】「駅前 / に / 新しい / 店が できました」",
+    "options": [
+      "駅前に 新しい 店が できました",
+      "新しい 駅前に 店が できました",
+      "店が 駅前に 新しい できました",
+      "できました 駅前に 新しい 店が"
+    ],
+    "correctAnswer": "駅前に 新しい 店が できました",
+    "explanation": "正解は「A」の「駅前に 新しい 店が できました」です。"
+  },
+  {
+    "id": "jp_n5_set4_26",
+    "level": "N5",
+    "mockSet": "N5_SET_4",
+    "type": "FILL_BLANK",
+    "prompt": "【文法 Q11】「テスト / の / 結果 / が / 心配です」",
+    "options": [
+      "テストの 結果が 心配です",
+      "結果の テストが 心配です",
+      "心配です テストの 結果が",
+      "テストが 結果の 心配です"
+    ],
+    "correctAnswer": "テストの 結果が 心配です",
+    "explanation": "正解は「A」の「テストの 結果が 心配です」です。"
+  },
+  {
+    "id": "jp_n5_set4_27",
+    "level": "N5",
+    "mockSet": "N5_SET_4",
+    "type": "FILL_BLANK",
+    "prompt": "【文法 Q12】「早く / 元気に / なって / ください」",
+    "options": [
+      "早く 元気に なって ください",
+      "元気に 早く なって ください",
+      "なって 早く 元気に ください",
+      "ください 早く 元気に なって"
+    ],
+    "correctAnswer": "早く 元気に なって ください",
+    "explanation": "正解は「A」の「早く 元気に なって ください」です。"
+  },
+  {
+    "id": "jp_n5_set4_28",
+    "level": "N5",
+    "mockSet": "N5_SET_4",
+    "type": "FILL_BLANK",
+    "prompt": "【文法 Q13】（13）に 入るのは どれですか。",
+    "options": [
+      "休みました",
+      "行きました",
+      "はじめました",
+      "わすれました"
+    ],
+    "correctAnswer": "休みました",
+    "explanation": "正解は「A」の「休みました」です。"
+  },
+  {
+    "id": "jp_n5_set4_29",
+    "level": "N5",
+    "mockSet": "N5_SET_4",
+    "type": "FILL_BLANK",
+    "prompt": "【文法 Q14】（14）に 入るのは どれですか。",
+    "options": [
+      "元気",
+      "病気",
+      "だめ",
+      "心配"
+    ],
+    "correctAnswer": "元気",
+    "explanation": "正解は「A」の「元気」です。"
+  },
+  {
+    "id": "jp_n5_set4_30",
+    "level": "N5",
+    "mockSet": "N5_SET_4",
+    "type": "FILL_BLANK",
+    "prompt": "【文法 Q15】（15）に 入るのは どれですか。",
+    "options": [
+      "がんばる",
+      "やすむ",
+      "わすれる",
+      "たべる"
+    ],
+    "correctAnswer": "がんばる",
+    "explanation": "正解は「A」の「がんばる」です。"
+  },
+  {
+    "id": "jp_n5_set4_31",
+    "level": "N5",
+    "mockSet": "N5_SET_4",
+    "type": "MULTIPLE_CHOICE",
+    "prompt": "【読解 Q1】Reading (どっかい)\nわたしの 趣味は 料理です。週末に よく 新しい りょうりを 作ります。先週は カレーを 作りました。少し からかったですが、家族は「おいしい」と 言って くれました。\n\n質問: 「わたし」の 趣味は 何ですか。",
+    "options": [
+      "料理",
+      "読書",
+      "スポーツ",
+      "音楽"
+    ],
+    "correctAnswer": "料理",
+    "explanation": "正解は「A」の「料理」です。"
+  },
+  {
+    "id": "jp_n5_set4_32",
+    "level": "N5",
+    "mockSet": "N5_SET_4",
+    "type": "MULTIPLE_CHOICE",
+    "prompt": "【読解 Q2】Reading (どっかい)\nわたしの 趣味は 料理です。週末に よく 新しい りょうりを 作ります。先週は カレーを 作りました。少し からかったですが、家族は「おいしい」と 言って くれました。\n\n質問: 先週 何を 作りましたか。",
+    "options": [
+      "カレー",
+      "ラーメン",
+      "サラダ",
+      "ケーキ"
+    ],
+    "correctAnswer": "カレー",
+    "explanation": "正解は「A」の「カレー」です。"
+  },
+  {
+    "id": "jp_n5_set4_33",
+    "level": "N5",
+    "mockSet": "N5_SET_4",
+    "type": "MULTIPLE_CHOICE",
+    "prompt": "【読解 Q3】Reading (どっかい)\nわたしの 趣味は 料理です。週末に よく 新しい りょうりを 作ります。先週は カレーを 作りました。少し からかったですが、家族は「おいしい」と 言って くれました。\n鈴木さんは 毎年 夏休みに 海外旅行に 行きます。今年は タイへ 行く よていです。飛行機の チケットは もう 買いましたが、ホテルは まだ 予約していません。\n\n質問: 鈴木さんは 今年 どこへ 行きますか。",
+    "options": [
+      "タイ",
+      "日本",
+      "アメリカ",
+      "中国"
+    ],
+    "correctAnswer": "タイ",
+    "explanation": "正解は「A」の「タイ」です。"
+  },
+  {
+    "id": "jp_n5_set4_34",
+    "level": "N5",
+    "mockSet": "N5_SET_4",
+    "type": "MULTIPLE_CHOICE",
+    "prompt": "【読解 Q4】Reading (どっかい)\nわたしの 趣味は 料理です。週末に よく 新しい りょうりを 作ります。先週は カレーを 作りました。少し からかったですが、家族は「おいしい」と 言って くれました。\n鈴木さんは 毎年 夏休みに 海外旅行に 行きます。今年は タイへ 行く よていです。飛行機の チケットは もう 買いましたが、ホテルは まだ 予約していません。\n\n質問: まだ していないことは 何ですか。",
+    "options": [
+      "チケットを 買うこと",
+      "ホテルを 予約すること",
+      "旅行の 計画を 立てること",
+      "パスポートを 作ること"
+    ],
+    "correctAnswer": "ホテルを 予約すること",
+    "explanation": "正解は「B」の「ホテルを 予約すること」です。"
+  },
+  {
+    "id": "jp_n5_set4_35",
+    "level": "N5",
+    "mockSet": "N5_SET_4",
+    "type": "MULTIPLE_CHOICE",
+    "prompt": "【読解 Q5】Reading (どっかい)\nわたしの 趣味は 料理です。週末に よく 新しい りょうりを 作ります。先週は カレーを 作りました。少し からかったですが、家族は「おいしい」と 言って くれました。\n鈴木さんは 毎年 夏休みに 海外旅行に 行きます。今年は タイへ 行く よていです。飛行機の チケットは もう 買いましたが、ホテルは まだ 予約していません。\nアパートの ごみ出しについて\n・もえるごみ：火曜日と 金曜日\n・もえないごみ：第2・第4水曜日\n・出す時間：朝8時までに 出して ください。\n・ごみは かならず とうめいの ふくろに 入れて ください。\n\n質問: もえるごみは いつ 出しますか。",
+    "options": [
+      "月曜日と木曜日",
+      "火曜日と金曜日",
+      "毎日",
+      "水曜日だけ"
+    ],
+    "correctAnswer": "火曜日と金曜日",
+    "explanation": "正解は「B」の「火曜日と金曜日」です。"
+  },
+  {
+    "id": "jp_n5_set4_36",
+    "level": "N5",
+    "mockSet": "N5_SET_4",
+    "type": "MULTIPLE_CHOICE",
+    "prompt": "【読解 Q6】Reading (どっかい)\nわたしの 趣味は 料理です。週末に よく 新しい りょうりを 作ります。先週は カレーを 作りました。少し からかったですが、家族は「おいしい」と 言って くれました。\n鈴木さんは 毎年 夏休みに 海外旅行に 行きます。今年は タイへ 行く よていです。飛行機の チケットは もう 買いましたが、ホテルは まだ 予約していません。\nアパートの ごみ出しについて\n・もえるごみ：火曜日と 金曜日\n・もえないごみ：第2・第4水曜日\n・出す時間：朝8時までに 出して ください。\n・ごみは かならず とうめいの ふくろに 入れて ください。\n\n質問: ごみは 何時までに 出しますか。",
+    "options": [
+      "朝7時",
+      "朝8時",
+      "夜8時",
+      "夜10時"
+    ],
+    "correctAnswer": "朝8時",
+    "explanation": "正解は「B」の「朝8時」です。"
+  },
+  {
+    "id": "jp_n5_set4_37",
+    "level": "N5",
+    "mockSet": "N5_SET_4",
+    "type": "LISTENING",
+    "prompt": "【聴解 Q1】女の人：郵便局は どこですか。\n男の人：あの 信号を 渡って、すぐ 左です。\n\n質問: 郵便局は どこに ありますか。",
+    "options": [
+      "信号を渡って左",
+      "信号を渡って右",
+      "信号の前",
+      "信号を渡らない"
+    ],
+    "correctAnswer": "信号を渡って左",
+    "explanation": "正解は「A」の「信号を渡って左」です。",
+    "audioUrl": "/audio/n5/minna_shokyu_1_075.mp3"
+  },
+  {
+    "id": "jp_n5_set4_38",
+    "level": "N5",
+    "mockSet": "N5_SET_4",
+    "type": "LISTENING",
+    "prompt": "【聴解 Q2】男の人：会議は 何時からですか。\n女の人：10時からですが、資料は 9時半までに 準備して ください。\n\n質問: 資料は 何時までに 準備しますか。",
+    "options": [
+      "9時",
+      "9時半",
+      "10時",
+      "10時半"
+    ],
+    "correctAnswer": "9時半",
+    "explanation": "正解は「B」の「9時半」です。",
+    "audioUrl": "/audio/n5/minna_shokyu_1_077.mp3"
+  },
+  {
+    "id": "jp_n5_set4_39",
+    "level": "N5",
+    "mockSet": "N5_SET_4",
+    "type": "LISTENING",
+    "prompt": "【聴解 Q3】店員：お飲み物は 何に なさいますか。\n客：アイスコーヒーを 一つ お願いします。\n\n質問: 客は 何を 頼みましたか。",
+    "options": [
+      "アイスコーヒー",
+      "ホットコーヒー",
+      "紅茶",
+      "ジュース"
+    ],
+    "correctAnswer": "アイスコーヒー",
+    "explanation": "正解は「A」の「アイスコーヒー」です。",
+    "audioUrl": "/audio/n5/minna_shokyu_1_079.mp3"
+  },
+  {
+    "id": "jp_n5_set4_40",
+    "level": "N5",
+    "mockSet": "N5_SET_4",
+    "type": "LISTENING",
+    "prompt": "【聴解 Q4】女の人：宿題、終わりましたか。\n男の人：あと 少しです。あと 10分ぐらいで 終わります。\n\n質問: 男の人の 宿題は どのくらいで 終わりますか。",
+    "options": [
+      "すぐ終わる",
+      "あと10分",
+      "あと1時間",
+      "もう終わった"
+    ],
+    "correctAnswer": "あと10分",
+    "explanation": "正解は「B」の「あと10分」です。",
+    "audioUrl": "/audio/n5/minna_shokyu_1_081.mp3"
+  },
+  {
+    "id": "jp_n5_set4_41",
+    "level": "N5",
+    "mockSet": "N5_SET_4",
+    "type": "LISTENING",
+    "prompt": "【聴解 Q5】天気よほう：明日は 朝から 雪が 降るでしょう。道が 滑りやすく なりますので、気をつけて ください。\n\n質問: 明日の 天気は どうですか。",
+    "options": [
+      "晴れ",
+      "雨",
+      "雪",
+      "曇り"
+    ],
+    "correctAnswer": "雪",
+    "explanation": "正解は「C」の「雪」です。",
+    "audioUrl": "/audio/n5/minna_shokyu_1_083.mp3"
+  },
+  {
+    "id": "jp_n5_set4_42",
+    "level": "N5",
+    "mockSet": "N5_SET_4",
+    "type": "LISTENING",
+    "prompt": "【聴解 Q6】先生：次の 授業は 教室じゃなくて、体育館で やります。\n\n質問: 次の 授業は どこで やりますか。",
+    "options": [
+      "教室",
+      "体育館",
+      "図書館",
+      "校庭"
+    ],
+    "correctAnswer": "体育館",
+    "explanation": "正解は「B」の「体育館」です。",
+    "audioUrl": "/audio/n5/minna_shokyu_1_084.mp3"
+  },
+  {
+    "id": "jp_n5_set4_43",
+    "level": "N5",
+    "mockSet": "N5_SET_4",
+    "type": "LISTENING",
+    "prompt": "【聴解 Q7】男の人：この シャツ、色違いは ありますか。\n店員：はい、青と 白が あります。\n\n質問: シャツには どんな 色が ありますか。",
+    "options": [
+      "青と白",
+      "赤と黒",
+      "緑と黄色",
+      "白だけ"
+    ],
+    "correctAnswer": "青と白",
+    "explanation": "正解は「A」の「青と白」です。",
+    "audioUrl": "/audio/n5/minna_shokyu_1_085.mp3"
+  },
+  {
+    "id": "jp_n5_set4_44",
+    "level": "N5",
+    "mockSet": "N5_SET_4",
+    "type": "LISTENING",
+    "prompt": "【聴解 Q8】女の人：空港まで タクシーで どのくらい かかりますか。\n男の人：普通は 30分ですが、渋滞していたら 1時間ぐらい かかります。\n\n質問: 渋滞していたら 空港まで どのくらい かかりますか。",
+    "options": [
+      "30分",
+      "45分",
+      "1時間",
+      "2時間"
+    ],
+    "correctAnswer": "1時間",
+    "explanation": "正解は「C」の「1時間」です。",
+    "audioUrl": "/audio/n5/minna_shokyu_1_087.mp3"
+  },
+  {
+    "id": "jp_n4_1_1",
+    "level": "N4",
+    "mockSet": "N4_SET_1",
+    "type": "MULTIPLE_CHOICE",
+    "prompt": "【N4 文字・語彙】下線の言葉のひらがなを選んでください: 先生に【相談】しました。",
+    "options": [
+      "そうだん",
+      "しょうだん",
+      "さくだん",
+      "しょくだん"
+    ],
+    "correctAnswer": "そうだん",
+    "explanation": "「相談」は「そうだん」(Consultation)と読みます。"
+  },
+  {
+    "id": "jp_n4_1_2",
+    "level": "N4",
+    "mockSet": "N4_SET_1",
+    "type": "FILL_BLANK",
+    "prompt": "【N4 文法】適切な形を入れてください: 雨が【_____】から、傘を持っていきます。",
+    "options": [
+      "ふりそう",
+      "ふり",
+      "ふりつづけて",
+      "ふりそうに"
+    ],
+    "correctAnswer": "ふりそう",
+    "explanation": "「〜そうです」(Looks like it will rain)は動詞のます形語幹につきます。"
+  },
+  {
+    "id": "jp_n4_1_3",
+    "level": "N4",
+    "mockSet": "N4_SET_1",
+    "type": "LISTENING",
+    "prompt": "【N4 聴解】音声を聞いて、男の人と女の人が何時に出会うか選んでください。",
+    "audioUrl": "/audio/n5/minna_shokyu_1_025.mp3",
+    "options": [
+      "2時",
+      "2時半",
+      "3時",
+      "3時半"
+    ],
+    "correctAnswer": "2時半",
+    "explanation": "音声会話より正解は2時半です。"
+  }
 ];
 
 const KOREAN_QUESTIONS: ExamQuestion[] = [
