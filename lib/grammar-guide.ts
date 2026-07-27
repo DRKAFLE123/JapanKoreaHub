@@ -102,24 +102,61 @@ export const JAPANESE_GRAMMAR_GUIDES: LessonGrammarGuide[] = [
 
   {
     language: 'JAPANESE', level: 'N4', lesson: 28,
-    lessonTitle: 'Simultaneous Actions 〜ながら / Multiple Reasons 〜し〜し',
+    lessonTitle: 'Lesson 28 – Simultaneous Actions 〜ながら & Multiple Reasons 〜し〜し',
     grammarPoints: [
       {
-        title: '1. Simultaneous Action 〜ながら',
+        title: '1. Simultaneous Action (〜ながら)',
         pattern: '[Verb ます-stem] + ながら + [Main Verb]',
-        explanationEnglish: '〜ながら connects two actions happening at the same time by the same subject. The main action is the second verb.',
-        explanationNepali: '〜ながら ले एकै समयमा एउटै व्यक्तिले दुई काम गर्दा प्रयोग हुन्छ। मुख्य काम दोस्रो क्रियामा हुन्छ।',
+        explanationEnglish: '〜ながら connects two actions occurring simultaneously by the same subject. The main/primary action is expressed by the second verb.',
+        explanationNepali: '〜ながら ले एउटै व्यक्तिले एकैसाथ दुईवटा काम गरिरहेको जनाउँछ। मुख्य काम दोस्रो क्रियामा हुन्छ।',
         examples: [
           { target: '音楽を聞きながら勉強します。', reading: 'おんがくをききながらべんきょうします。', english: 'I study while listening to music.', nepali: 'सङ्गीत सुन्दै पढ्छु।' },
+          { target: '歩きながらスマホを見ないでください。', reading: 'あるきながらスマホをみないでください。', english: 'Please do not look at your smartphone while walking.', nepali: 'हिँड्दै स्मार्टफोन नहेर्नुस्।' }
         ]
       },
       {
-        title: '2. Listing Reasons 〜し、〜し、',
-        pattern: '[Sentence 1] し、[Sentence 2] し、[Conclusion]',
-        explanationEnglish: '〜し lists multiple reasons or characteristics, often leading to a conclusion. It is softer and more conversational than だから.',
-        explanationNepali: '〜し ले धेरै कारण वा विशेषता सूचीबद्ध गर्दछ। यो だから भन्दा नरम र बोलचालमा बढी प्रयोग हुन्छ।',
+        title: '2. Habitual Action (〜ています)',
+        pattern: '[Verb て-form] + います',
+        explanationEnglish: '〜ています describes a continuous habit, routine, or repeated behavior over a long period.',
+        explanationNepali: '〜ています ले लामो समयसम्म निरन्तर गरिने बानी वा नियमित दिनचर्या व्यक्त गर्दछ।',
         examples: [
-          { target: 'この町は静かだし、空気もいいし、気に入っています。', reading: 'このまちはしずかだし、くうきもいいし、きにいっています。', english: 'This town is quiet and the air is clean, so I like it.', nepali: 'यो सहर शान्त पनि छ, हावा पनि सफा छ, त्यसैले मन पर्छ।' },
+          { target: '毎朝ジョギングをしています。', reading: 'まいあさジョギングをしています。', english: 'I go jogging every morning.', nepali: 'म हरेक बिहान जोगिङ गर्छु।' }
+        ]
+      },
+      {
+        title: '3. Listing Reasons (〜し、〜し、)',
+        pattern: '[Plain form] し、[Plain form] し、[Conclusion]',
+        explanationEnglish: '〜し lists multiple reasons or supporting arguments for a situation or conclusion.',
+        explanationNepali: '〜し ले धेरै कारणहरू र तर्कहरू सूचीबद्ध गर्दछ।',
+        examples: [
+          { target: 'この町は静かだし、空気もいいし、大好きです。', reading: 'このまちはしずかだし、くうきもいいし、だいすきです。', english: 'This town is quiet, the air is clean, so I love it.', nepali: 'यो सहर शान्त छ, हावा पनि सफा छ, त्यसैले मलाई ज्यादै मन पर्छ।' }
+        ]
+      }
+    ]
+  },
+  {
+    language: 'JAPANESE', level: 'N4', lesson: 29,
+    lessonTitle: 'Lesson 29 – Resulting State 〜ています & Regret 〜てしまいました',
+    grammarPoints: [
+      {
+        title: '1. Intransitive Verbs Resulting State (N が Intransitive V-て います)',
+        pattern: '[Noun] が [Intransitive Verb て-form] ＋ います',
+        explanationEnglish: 'Describes a state or condition that remains after an event occurs (e.g. The door is open, the window is broken). Notice particle が is used.',
+        explanationNepali: 'कुनै घटनापछि कायम रहेको अवस्था वा स्थिति दर्शाउँछ (जस्तै: ढोका खोलिएको छ, झ्याल बिग्रिएको छ)।',
+        examples: [
+          { target: 'ドアが開いています。', reading: 'ドアがあいています。', english: 'The door is open.', nepali: 'ढोका खोलिएको छ।' },
+          { target: '電気についています。', reading: 'でんきについています。', english: 'The light is on.', nepali: 'बत्ती बलिरहेको छ।' },
+          { target: '茶碗が割れています。', reading: 'ちゃわんがわれています。', english: 'The rice bowl is broken.', nepali: 'कटोरा फुटेको छ।' }
+        ]
+      },
+      {
+        title: '2. Completion of Action (〜てしまいました / 〜てしまう)',
+        pattern: '[Verb て-form] ＋ しまいました',
+        explanationEnglish: '1) Expresses that an action has been completely finished. 2) Expresses regret, mistake, or an unintended unfortunate result.',
+        explanationNepali: '१) कुनै काम पूर्ण रूपमा सकियो भन्ने जनाउँछ। २) पश्चात्ताप, गल्ती वा नसोचेको नराम्रो परिणाम व्यक्त गर्दछ।',
+        examples: [
+          { target: '宿題を全部やってしまいました。', reading: 'しゅくだいをぜんぶやってしまいました。', english: 'I have finished all my homework.', nepali: 'गृहकार्य सबै सकेँ।' },
+          { target: 'パスポートを落としてしまいました。', reading: 'パスポートをおとしてしまいました。', english: 'I accidentally dropped my passport!', nepali: 'राहदानी खसालेछौँ (दूःखको कुरा)!' }
         ]
       }
     ]
