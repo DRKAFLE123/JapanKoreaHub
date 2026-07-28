@@ -405,46 +405,45 @@ export const KanjiCard: React.FC = () => {
 
       {/* ── CARD HEADER COUNTER & PROMINENT LESSON TRACKER ── */}
       {currentCard ? (
-        <div className="bg-slate-900/80 backdrop-blur-md border border-slate-800 rounded-2xl p-3.5 flex items-center justify-between shadow-glow">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-rose-600 to-pink-600 flex items-center justify-center text-white font-black text-xl shadow-md font-jp">
+        <div className="bg-slate-900/80 backdrop-blur-md border border-slate-800 rounded-2xl p-3 sm:p-3.5 flex items-center justify-between gap-2 shadow-glow">
+          <div className="flex items-center gap-2.5 min-w-0">
+            <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-gradient-to-tr from-rose-600 to-pink-600 flex items-center justify-center text-white font-black text-lg sm:text-xl shadow-md font-jp flex-shrink-0">
               {currentCard.japaneseWord[0] || '字'}
             </div>
-            <div>
-              <div className="flex items-center gap-2 flex-wrap">
+            <div className="min-w-0">
+              <div className="flex items-center gap-1.5 flex-wrap">
                 {/* PROMINENT LESSON BADGE */}
-                <span className="text-xs font-black uppercase tracking-wider text-rose-400 bg-rose-500/15 border border-rose-500/30 px-2.5 py-0.5 rounded-lg flex items-center gap-1">
+                <span className="text-[10px] sm:text-xs font-black uppercase tracking-wider text-rose-400 bg-rose-500/15 border border-rose-500/30 px-2 py-0.5 rounded-lg flex items-center gap-1 whitespace-nowrap">
                   <BookOpen className="w-3 h-3 text-rose-400" />
                   <span>JLPT {selectedLevel} • {currentCard.lessonLabel}</span>
                 </span>
-                <span className="px-2 py-0.5 rounded-md bg-slate-950 text-[10px] font-bold text-amber-400 border border-slate-800">
-                  {isMeaningFront ? 'Meaning → Japanese' : 'Japanese → Meaning'}
-                </span>
-                <span className="px-2 py-0.5 rounded-md bg-slate-950 text-[10px] font-bold text-indigo-300 border border-slate-800">
-                  {currentCard.itemType}
+                <span className="px-1.5 py-0.5 rounded-md bg-slate-950 text-[10px] font-bold text-amber-400 border border-slate-800 hidden xs:inline-block">
+                  {isMeaningFront ? 'Meaning → JP' : 'JP → Meaning'}
                 </span>
               </div>
-              <div className="text-xs font-bold text-slate-300 mt-1">
-                Card {safeIndex + 1} of {currentListLength} {isShuffled && '(Random order)'}
+              <div className="text-[11px] sm:text-xs font-bold text-slate-300 mt-0.5 truncate">
+                Card {safeIndex + 1} of {currentListLength} {isShuffled && '(Random)'}
               </div>
             </div>
           </div>
 
           {/* Prev / Next Buttons */}
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-1.5 flex-shrink-0">
             <button
               onClick={handlePrev}
               disabled={safeIndex === 0}
-              className="p-2 rounded-xl bg-slate-800 disabled:opacity-40 hover:bg-indigo-600 text-white transition-all border border-slate-700"
+              className="px-2.5 py-1.5 sm:px-3 sm:py-2 rounded-xl bg-slate-800 disabled:opacity-30 hover:bg-indigo-600 text-white transition-all border border-slate-700 text-xs font-bold flex items-center gap-1 cursor-pointer"
               title="Previous card"
             >
               <ChevronLeft className="w-4 h-4" />
+              <span className="hidden sm:inline">Prev</span>
             </button>
             <button
               onClick={handleNext}
-              className="p-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white transition-all border border-slate-750 shadow-glow"
+              className="px-3 py-1.5 sm:px-4 sm:py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white transition-all border border-indigo-500/50 shadow-glow text-xs font-extrabold flex items-center gap-1 cursor-pointer"
               title="Next card"
             >
+              <span>Next</span>
               <ChevronRight className="w-4 h-4" />
             </button>
           </div>
@@ -490,7 +489,7 @@ export const KanjiCard: React.FC = () => {
             {/* ════════════════════════════════════════════════════════ */}
             {/* CARD FRONT                                                */}
             {/* ════════════════════════════════════════════════════════ */}
-            {!isFlipped ? (
+            {!isFlipped && (
               !isMeaningFront ? (
                 /* JAPANESE-FIRST FRONT */
                 <div className="my-auto py-8 space-y-6 text-center">
@@ -531,10 +530,40 @@ export const KanjiCard: React.FC = () => {
                   </div>
                 </div>
               )
-            ) : (
-              /* ════════════════════════════════════════════════════════ */
-              /* CARD BACK (ANSWER FLIPPED)                              */
-              /* ════════════════════════════════════════════════════════ */
+            )}
+
+            {/* Front Card Navigation Bar */}
+            {!isFlipped && (
+              <div className="pt-4 mt-auto border-t border-slate-800/80 flex items-center justify-between gap-2">
+                <button
+                  onClick={handlePrev}
+                  disabled={safeIndex === 0}
+                  className="px-3 py-2.5 rounded-xl bg-slate-800/90 disabled:opacity-30 hover:bg-slate-700 text-slate-200 text-xs font-bold flex items-center gap-1 transition-all border border-slate-700 cursor-pointer"
+                >
+                  <ChevronLeft className="w-4 h-4" />
+                  <span className="hidden xs:inline">Prev</span>
+                </button>
+
+                <button
+                  onClick={() => setIsFlipped(true)}
+                  className="flex-1 py-2.5 px-4 rounded-xl bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white text-xs sm:text-sm font-extrabold flex items-center justify-center gap-2 shadow-glow transition-all cursor-pointer"
+                >
+                  <Eye className="w-4 h-4" />
+                  <span>Show Answer</span>
+                </button>
+
+                <button
+                  onClick={handleNext}
+                  className="px-3.5 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold flex items-center gap-1 transition-all border border-indigo-500/50 shadow-md cursor-pointer"
+                >
+                  <span>Next</span>
+                  <ChevronRight className="w-4 h-4" />
+                </button>
+              </div>
+            )}
+
+            {/* CARD BACK (ANSWER FLIPPED) */}
+            {isFlipped && (
               <div className="my-auto py-4 space-y-5 text-left">
                 {/* Japanese Word & Pronunciation */}
                 <div className="flex items-center justify-between gap-4 p-4 rounded-2xl bg-slate-950/80 border border-slate-800">

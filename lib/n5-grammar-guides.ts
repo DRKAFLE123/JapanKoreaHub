@@ -430,6 +430,7 @@ export const N5_GRAMMAR_GUIDES: LessonGrammarGuide[] = [
   },
 
   // ────────────────────────────────────────────────────────────
+  // ────────────────────────────────────────────────────────────
   // LESSON 13
   // ────────────────────────────────────────────────────────────
   {
@@ -437,35 +438,65 @@ export const N5_GRAMMAR_GUIDES: LessonGrammarGuide[] = [
     lessonTitle: 'Desires & Purpose of Movement (欲しい・〜たい・目的)',
     grammarPoints: [
       {
-        title: '1. Desiring an Object N が 欲しいです',
-        pattern: '[N] が 欲しいです',
-        explanationEnglish: '欲しい (hoshii) is an i-adjective expressing desire for a physical thing/object.',
-        explanationNepali: '欲しい (चाहिनु) ले भौतिक वस्तुको चाहना जनाउँछ।',
+        title: '1. Nが ほしいです',
+        pattern: '1. Nが ほしいです',
+        explanationEnglish: 'Expresses the speaker\'s desire to possess/have an object; also used to ask what the listener wants. The object is marked by が. ほしい is an い-adjective.',
+        explanationNepali: 'N が ほしいです ले कुनै भौतिक वस्तुको चाहना (\'मलाई... चाहिएको छ\') व्यक्त गर्दछ।',
         examples: [
-          { target: '新しい車が欲しいです。', reading: 'あたらしいくるまがほしいです。', english: 'I want a new car.', nepali: 'मलाई नयाँ कार चाहिएको छ।' }
+          { target: 'わたしは 友だちが ほしいです。', reading: 'わたしは 友だちが ほしいです。', english: 'I want a friend.', nepali: 'मलाई साथी चाहिएको छ।' },
+          { target: '今 何が いちばん ほしいですか。― 車が いちばん ほしいです。', reading: '今 何が いちばん ほしいですか。― 車が いちばん ほしいです。', english: '今 何が いちばん ほしいですか。― 車が いちばん ほしいです。', nepali: '今 何が いちばん ほしいですか。― 車が いちばん ほしいです。' }
         ]
       },
       {
-        title: '2. Desiring to do an Action V[masu-stem] たいです',
-        pattern: 'V[masu-stem] + たいです',
-        explanationEnglish: 'Replace ます with たいです to express "want to do [verb]". Object particle を can change to が.',
-        explanationNepali: 'ます को ठाउँमा たいです थपेर "गर्न चाहन्छु" भन्ने अर्थ दिन्छ।',
+        title: '2. Verb ます-form → ます-stem; V(ます-stem)たいです',
+        pattern: '2. Verb ます-form → ます-stem; V(ます-stem)たいです',
+        explanationEnglish: 'Expresses the speaker\'s desire to do something; also used to ask the listener\'s wish. The object particle を can be replaced by が (only in this construction). たい inflects like an い-adjective. Cannot be used for a third person\'s desire; not used to offer something (use くださいませんか / いかがですか instead).',
+        explanationNepali: 'Verb ます-stem + たいです ले कुनै कार्य गर्ने इच्छा (\'गर्न चाहन्छु\') व्यक्त गर्दछ।',
         examples: [
-          { target: '日本へ行きたいです。', reading: 'にほんへいきたいです。', english: 'I want to go to Japan.', nepali: 'म जापान जान चाहन्छु।' }
+          { target: 'おきなわへ 行きたいです。', reading: 'おきなわへ 行きたいです。', english: 'I want to go to Okinawa.', nepali: 'I want to go to Okinawa. (नेपाली)' },
+          { target: 'てんぷらが/を 食べたいです。', reading: 'てんぷらが/を 食べたいです。', english: 'てんぷらが/を 食べたいです。', nepali: 'てんぷらが/を 食べたいです。' }
         ]
       },
       {
-        title: '3. Purpose of Movement N(place) へ V[masu-stem] に 行きます',
-        pattern: '[Place] へ [V-stem / Noun] に 行きます / 来ます',
-        explanationEnglish: 'Particle に marks the purpose of going or coming to a place.',
-        explanationNepali: 'निपात に ले कुनै ठाउँमा जानु वा आउनुको उद्देश्य जनाउँछ।',
+        title: '3. V(ます-stem)に 行きます／来ます／帰ります — Purpose of movement',
+        pattern: '3. V(ます-stem)に 行きます／来ます／帰ります — Purpose of movement',
+        explanationEnglish: 'Expresses the purpose of going/coming/returning, marked with に. A noun before に must denote an action (or an event such as a festival/concert).',
+        explanationNepali: 'V(dictionary form) / Nの まえに ले कुनै कार्य गर्नुअघि (\'गर्नुअघि\') अर्को कार्य हुनु जनाउँछ।',
         examples: [
-          { target: 'デパートへ買い物に行きます。', reading: 'デパートへかいものにいきます。', english: 'I am going to the department store to shop.', nepali: 'म किनमेल गर्न डिपार्टमेन्ट स्टोर जान्छु।' }
+          { target: '神戸へ インド料理を 食べに 行きます。', reading: '神戸へ インド料理を 食べに 行きます。', english: 'I\'m going to Kobe to eat Indian food.', nepali: 'I\'m going to Kobe to eat Indian food. (नेपाली)' },
+          { target: '買い物に 行きます。', reading: '買い物に 行きます。', english: '買い物に 行きます。', nepali: '買い物に 行きます。' }
         ]
-      }
+      },
+      {
+        title: '4. Nに 乗ります／Nを 降ります',
+        pattern: '4. Nに 乗ります／Nを 降ります',
+        explanationEnglish: 'に marks the goal with verbs like 乗ります(get on); を marks the starting point with verbs like 降ります(get off), 出ます(leave).',
+        explanationNepali: 'に marks the goal with verbs like 乗ります(get on); を marks the starting point with verbs like 降ります(get off), 出ます(leave). (नेपाली व्याख्या)',
+        examples: [
+          { target: 'あの きっさてんに 入りましょう。', reading: 'あの きっさてんに 入りましょう。', english: 'あの きっさてんに 入りましょう。', nepali: 'あの きっさてんに 入りましょう。' }
+        ]
+      },
+      {
+        title: '5. どこか／なにか',
+        pattern: '5. どこか／なにか',
+        explanationEnglish: 'どこか = anywhere/somewhere; なにか = anything/something. The particles に and を can be omitted.',
+        explanationNepali: 'どこか = anywhere/somewhere; なにか = anything/something. The particles に and を can be omitted. (नेपाली व्याख्या)',
+        examples: [
+          { target: '冬休みは どこか 行きましたか。― ええ、行きました。', reading: '冬休みは どこか 行きましたか。― ええ、行きました。', english: '冬休みは どこか 行きましたか。― ええ、行きました。', nepali: '冬休みは どこか 行きましたか。― ええ、行きました。' },
+          { target: 'のどが かわきましたから、何か 飲みたいです。', reading: 'のどが かわきましたから、何か 飲みたいです。', english: 'のどが かわきましたから、何か 飲みたいです。', nepali: 'のどが かわきましたから、何か 飲みたいです。' }
+        ]
+      },
+      {
+        title: '6. ご~',
+        pattern: '6. ご~',
+        explanationEnglish: 'A prefix added to some words to express respect/politeness.',
+        explanationNepali: 'A prefix added to some words to express respect/politeness. (नेपाली व्याख्या)',
+        examples: [
+          { target: 'ごちゅうもんは。', reading: 'ごちゅうもんは。', english: 'May I have your order?', nepali: 'May I have your order? (नेपाली)' }
+        ]
+      },
     ]
   },
-
   // ────────────────────────────────────────────────────────────
   // LESSON 14
   // ────────────────────────────────────────────────────────────
@@ -474,35 +505,73 @@ export const N5_GRAMMAR_GUIDES: LessonGrammarGuide[] = [
     lessonTitle: 'Te-Form Conjugation & Polite Requests (て形と依頼)',
     grammarPoints: [
       {
-        title: '1. Verb Te-Form Rules (て形)',
-        pattern: 'Gr.1: い/ち/り->て, み/び/に->んで, き->いて, ぎ->いで | Gr.2: ~て | Gr.3: して/きて',
-        explanationEnglish: 'Group 1: う/つ/る->て, む/ぶ/ぬ->んで, く->いて, ぐ->いで, す->して. (Exception: 行く->行って). Group 2: drop ます add て.',
-        explanationNepali: 'समूह-१: う/つ/る->て, む/ぶ/ぬ->んで, く->いて. (अपवाद: 行く->行って)। समूह-२: ます झिकेर て थप्ने।',
+        title: '1. Verb conjugation & verb groups',
+        pattern: '1. Verb conjugation & verb groups',
+        explanationEnglish: 'Japanese verbs conjugate and are divided into three groups. Group I: ます-stem ends in an い-line sound (かきます, のみます). Group II: ます-stem mostly ends in an え-line sound, some in い-line (たべます, みせます, みます). Group III: irregular — します and \'noun+します\', and きます.',
+        explanationNepali: 'Japanese verbs conjugate and are divided into three groups. Group I: ます-stem ends in an い-line sound (かきます, のみます). Group II: ます-stem mostly ends in an え-line sound, some in い-line (たべます, みせます, みます). Group III: irregular — します and \'noun+します\', and きます. (नेपाली व्याख्या)',
         examples: [
-          { target: '本を買って、読みます。', reading: 'ほんをかって、よみます。', english: 'I buy a book and read it.', nepali: 'म किताब किनेर पढ्छु।' }
+
         ]
       },
       {
-        title: '2. Polite Request Vて ください',
-        pattern: 'Vて + ください',
-        explanationEnglish: 'Used to politely ask or instruct someone to do something.',
-        explanationNepali: 'कृपया केही गर्न अनुरोध गर्दा Vて + ください प्रयोग गरिन्छ।',
+        title: '2. Verb て-form',
+        pattern: '2. Verb て-form',
+        explanationEnglish: 'The verb form ending in て or で is called the て-form. Group I: formed depending on the last sound of the ます-form (see conjugation table; いきます→いって is an exception). Group II: attach て to the ます-stem. Group III: attach て to the ます-stem (します→して, きます→きて).',
+        explanationNepali: 'The verb form ending in て or で is called the て-form. Group I: formed depending on the last sound of the ます-form (see conjugation table; いきます→いって is an exception). Group II: attach て to the ます-stem. Group III: attach て to the ます-stem (します→して, きます→きて). (नेपाली व्याख्या)',
         examples: [
-          { target: 'ここに名前を書いてください。', reading: 'ここになまえをかいてください。', english: 'Please write your name here.', nepali: 'कृपया यहाँ आफ्नो नाम लेख्नुहोस्।' }
+
         ]
       },
       {
-        title: '3. Action in Progress Vて います',
-        pattern: 'Vて + います',
-        explanationEnglish: 'Expresses an action currently taking place (present continuous "-ing").',
-        explanationNepali: 'अहिले भइरहेको काम (निरन्तर वर्तमान) जनाउँछ।',
+        title: '3. Vて-form ください',
+        pattern: '3. Vて-form ください',
+        explanationEnglish: 'Used to ask, instruct, or encourage the listener to do something (not for superiors). すみませんが is often added before the request to make it more polite.',
+        explanationNepali: 'V(dictionary form) / Nの まえに ले कुनै कार्य गर्नुअघि (\'गर्नुअघि\') अर्को कार्य हुनु जनाउँछ।',
         examples: [
-          { target: '今雨が降っています。', reading: 'いまあめがふっています。', english: 'It is raining right now.', nepali: 'अहिले पानी परिरहेको छ।' }
+          { target: 'ここに 名前と 住所を 書いて ください。', reading: 'ここに 名前と 住所を 書いて ください。', english: 'Please write your name and address here.', nepali: 'कृपया यहाँ आफ्नो नाम लेख्नुहोस्।' },
+          { target: 'すみませんが、この かんじの 読み方を 教えて ください。', reading: 'すみませんが、この かんじの 読み方を 教えて ください。', english: 'すみませんが、この かんじの 読み方を 教えて ください。', nepali: 'すみませんが、この かんじの 読み方を 教えて ください。' }
         ]
-      }
+      },
+      {
+        title: '4. Vて-form います (progressive)',
+        pattern: '4. Vて-form います (progressive)',
+        explanationEnglish: 'Indicates that an action/motion is currently in progress.',
+        explanationNepali: 'Indicates that an action/motion is currently in progress. (नेपाली व्याख्या)',
+        examples: [
+          { target: 'ミラーさんは 今 電話を かけて います。', reading: 'ミラーさんは 今 電話を かけて います。', english: 'Mr. Miller is making a phone call now.', nepali: 'Mr. Miller is making a phone call now. (नेपाली)' },
+          { target: '今 雨が 降って いますか。', reading: '今 雨が 降って いますか。', english: '今 雨が 降って いますか。', nepali: '今 雨が 降って いますか。' }
+        ]
+      },
+      {
+        title: '5. Vます-stem ましょうか',
+        pattern: '5. Vます-stem ましょうか',
+        explanationEnglish: 'Used when the speaker offers to do something for the listener.',
+        explanationNepali: 'Vましょうか ले सुन्ने व्यक्तिका लागि मद्दत वा कार्य गर्ने प्रस्ताव गर्दा प्रयोग गरिन्छ।',
+        examples: [
+          { target: '明日も 来ましょうか。― ええ、10時に 来て ください。/ かさを 貸しましょうか。― ええ、お願いします。', reading: '明日も 来ましょうか。― ええ、10時に 来て ください。/ かさを 貸しましょうか。― ええ、お願いします。', english: '明日も 来ましょうか。― ええ、10時に 来て ください。/ かさを 貸しましょうか。― ええ、お願いします。', nepali: '明日も 来ましょうか。― ええ、10時に 来て ください。/ かさを 貸しましょうか。― ええ、お願いします。' }
+        ]
+      },
+      {
+        title: '6. ～が (light connective)',
+        pattern: '6. ～が (light connective)',
+        explanationEnglish: 'The conjunctive particle が, learned in Lesson 8, is also used—losing its original contrastive meaning—to lightly connect two sentences as an introductory remark.',
+        explanationNepali: 'The conjunctive particle が, learned in Lesson 8, is also used—losing its original contrastive meaning—to lightly connect two sentences as an introductory remark. (नेपाली व्याख्या)',
+        examples: [
+          { target: 'すみませんが、お名前は。', reading: 'すみませんが、お名前は。', english: 'すみませんが、お名前は。', nepali: 'すみませんが、お名前は。' },
+          { target: 'すみませんが、塩を 取って ください。', reading: 'すみませんが、塩を 取って ください。', english: 'すみませんが、塩を 取って ください。', nepali: 'すみませんが、塩を 取って ください。' }
+        ]
+      },
+      {
+        title: '7. Nが (subject of natural phenomena)',
+        pattern: '7. Nが (subject of natural phenomena)',
+        explanationEnglish: 'When describing a natural phenomenon, the subject is marked with が.',
+        explanationNepali: 'When describing a natural phenomenon, the subject is marked with が. (नेपाली व्याख्या)',
+        examples: [
+          { target: '雨が 降って います。', reading: '雨が 降って います。', english: 'It is raining.', nepali: 'अहिले पानी परिरहेको छ।' }
+        ]
+      },
     ]
   },
-
   // ────────────────────────────────────────────────────────────
   // LESSON 15
   // ────────────────────────────────────────────────────────────
@@ -511,138 +580,263 @@ export const N5_GRAMMAR_GUIDES: LessonGrammarGuide[] = [
     lessonTitle: 'Permission, Prohibition & States (許可・禁止・状態)',
     grammarPoints: [
       {
-        title: '1. Asking & Giving Permission Vて もいいです',
-        pattern: 'Vて + もいいですか',
-        explanationEnglish: 'Expresses "May I do [verb]?" or "You may do [verb]".',
-        explanationNepali: '"के म गर्न सक्छु?" वा "गरे हुन्छ" भन्ने अनुमति जनाउँछ।',
+        title: '1. Vて-form も いいです',
+        pattern: '1. Vて-form も いいです',
+        explanationEnglish: 'Grants permission (\'you may do...\'). Question form used to ask permission; euphemistic phrasing (すみません、ちょっと…) used to deny it.',
+        explanationNepali: 'Vて もいいです ले कुनै काम गर्ने अनुमति (\'गरे हुन्छ\') व्यक्त गर्दछ।',
         examples: [
-          { target: '写真を撮ってもいいですか。', reading: 'しゃしんをとってもいいですか。', english: 'May I take a photo?', nepali: 'के म फोटो खिच्न सक्छु?' }
+          { target: '写真を 撮っても いいです。', reading: '写真を 撮っても いいです。', english: 'You may take pictures.', nepali: 'You may take pictures. (नेपाली)' },
+          { target: 'たばこを 吸っても いいですか。― ええ、いいですよ。／すみません、ちょっと…。', reading: 'たばこを 吸っても いいですか。― ええ、いいですよ。／すみません、ちょっと…。', english: 'たばこを 吸っても いいですか。― ええ、いいですよ。／すみません、ちょっと…。', nepali: 'たばこを 吸っても いいですか。― ええ、いいですよ。／すみません、ちょっと…。' }
         ]
       },
       {
-        title: '2. Prohibition Vて はいけません',
-        pattern: 'Vて + はいけません',
-        explanationEnglish: 'Expresses strict prohibition: "You must not do [verb]".',
-        explanationNepali: 'कडा मनाही: "गर्न पाइँदैन/हुँदैन"।',
+        title: '2. Vて-form は いけません',
+        pattern: '2. Vて-form は いけません',
+        explanationEnglish: 'Expresses prohibition (\'you must not do...\'). Cannot be used by an inferior toward a superior.',
+        explanationNepali: 'Vて は いけません ले कडा मनाही (\'गर्नु हुँदैन\') व्यक्त गर्दछ।',
         examples: [
-          { target: 'ここで煙草を吸ってはいけません。', reading: 'ここであばこをすってはいけません。', english: 'You must not smoke here.', nepali: 'यहाँ चुरोट पिउन पाइँदैन।' }
+          { target: 'ここで たばこを 吸っては いけません。ここは きんえんですから。', reading: 'ここで たばこを 吸っては いけません。ここは きんえんですから。', english: 'You must not smoke here — this is a no-smoking area.', nepali: 'यहाँ धुम्रपान गर्नु हुँदैन।' }
         ]
       },
       {
-        title: '3. Resulting State & Status Vて います',
-        pattern: 'Vて + います (Resulting state)',
-        explanationEnglish: 'Expresses a continuous state resulting from past action (e.g. 知っています, 結婚しています, 住んでいます).',
-        explanationNepali: 'विगतको कामको निरन्तर अवस्था जनाउँछ (जस्तै: थाहा छ, बिहे भएको छ, बसोबास छ)।',
+        title: '3. Vて-form います (resulting state)',
+        pattern: '3. Vて-form います (resulting state)',
+        explanationEnglish: 'In addition to the progressive meaning (Lesson 14), て-form います also describes a continuing state resulting from a past action.',
+        explanationNepali: 'Vて います ले हाल भइरहेको कार्य (निरन्तर वर्तमान) वा कार्यको नतिजाको स्थिति जनाउँछ।',
         examples: [
-          { target: '私は結婚しています。', reading: 'わたしはけっこんしています。', english: 'I am married.', nepali: 'मेरो बिहे भइसकेको छ।' }
+          { target: '結婚して います。', reading: '結婚して います。', english: 'I\'m married.', nepali: 'म विवाहित हुँ।' },
+          { target: '田中さんを 知って います。', reading: '田中さんを 知って います。', english: 'I know Mr. Tanaka.', nepali: 'म तानाका-जीलाई चिन्छु।' },
+          { target: '大阪に 住んで います。', reading: '大阪に 住んで います。', english: '大阪に 住んで います。', nepali: '大阪に 住んで います。' },
+          { target: 'カメラを 持って います。', reading: 'カメラを 持って います。', english: '持って います also means \'possess\'.', nepali: '持って います also means \'possess\'. (नेपाली)' }
         ]
-      }
+      },
+      {
+        title: '4. Vて-form います (habitual action)',
+        pattern: '4. Vて-form います (habitual action)',
+        explanationEnglish: 'Also describes a habitual/repeated action — expressing one\'s occupation.',
+        explanationNepali: 'Also describes a habitual/repeated action — expressing one\'s occupation. (नेपाली व्याख्या)',
+        examples: [
+          { target: 'IMCは コンピューターの ソフトを 作って います。', reading: 'IMCは コンピューターの ソフトを 作って います。', english: 'IMC makes computer software.', nepali: 'IMC makes computer software. (नेपाली)' },
+          { target: 'ミラーさんは IMCで 働いて います。', reading: 'ミラーさんは IMCで 働いて います。', english: 'ミラーさんは IMCで 働いて います。', nepali: 'ミラーさんは IMCで 働いて います。' }
+        ]
+      },
+      {
+        title: '5. Negative of 知って います',
+        pattern: '5. Negative of 知って います',
+        explanationEnglish: 'The negative of 知って います is 知りません (not 知って いません).',
+        explanationNepali: 'The negative of 知って います is 知りません (not 知って いません). (नेपाली व्याख्या)',
+        examples: [
+          { target: '市役所の 電話番号を 知って いますか。― はい、知って います。／いいえ、知りません。', reading: '市役所の 電話番号を 知って いますか。― はい、知って います。／いいえ、知りません。', english: '市役所の 電話番号を 知って いますか。― はい、知って います。／いいえ、知りません。', nepali: '市役所の 電話番号を 知って いますか。― はい、知って います。／いいえ、知りません。' }
+        ]
+      },
     ]
   },
-
   // ────────────────────────────────────────────────────────────
   // LESSON 16
   // ────────────────────────────────────────────────────────────
   {
     language: 'JAPANESE', level: 'N5', lesson: 16,
-    lessonTitle: 'Connecting Sentences & Sequence (て形接続と順番)',
+    lessonTitle: 'Connecting Sentences & Actions in Sequence (文の接続)',
     grammarPoints: [
       {
-        title: '1. Connecting Verbs & Adjectives in Sequence',
-        pattern: 'Verbs: V1て, V2て, V3ます | i-adj: 〜くて | na-adj/N: 〜で',
-        explanationEnglish: 'Connect multiple actions chronologically with て. i-adj replaces い with くて. na-adj and Nouns take で.',
-        explanationNepali: 'क्रमानुसार काम जोड्न て प्रयोग गरिन्छ। i-विशेषणमा い को ठाउँमा くて र na-विशेषण/नाममा で आउँछ।',
+        title: '1. Vて-form, Vて-form, ~',
+        pattern: '1. Vて-form, Vて-form, ~',
+        explanationEnglish: 'Used to connect verb sentences where two or more actions occur in succession, in the order mentioned. Sentence tense is determined by the last verb.',
+        explanationNepali: 'Used to connect verb sentences where two or more actions occur in succession, in the order mentioned. Sentence tense is determined by the last verb. (नेपाली व्याख्या)',
         examples: [
-          { target: '朝起きて、顔を洗って、朝ごはんを食べます。', reading: 'あさおきて、かおをあらって、あさごはんをたべます。', english: 'In the morning I wake up, wash my face, and eat breakfast.', nepali: 'बिहान उठेर, अनुहार धुएर, बिहानको खाना खान्छु।' },
-          { target: '東京は賑やかで、面白いです。', reading: 'とうきょうはにぎやかで、おもしろいです。', english: 'Tokyo is lively and interesting.', nepali: 'टोक्यो चहलपहल भएको र रोचक छ।' }
+          { target: '朝 ジョギングを して、シャワーを あびて、会社へ 行きます。/ 神戸へ 行って、映画を 見て、お茶を 飲みました。', reading: '朝 ジョギングを して、シャワーを あびて、会社へ 行きます。/ 神戸へ 行って、映画を 見て、お茶を 飲みました。', english: '朝 ジョギングを して、シャワーを あびて、会社へ 行きます。/ 神戸へ 行って、映画を 見て、お茶を 飲みました。', nepali: '朝 ジョギングを して、シャワーを あびて、会社へ 行きます。/ 神戸へ 行って、映画を 見て、お茶を 飲みました。' }
         ]
       },
       {
-        title: '2. Sequence "After doing" V1て から, V2',
-        pattern: 'V1て + から、V2ます',
-        explanationEnglish: 'Means "After doing V1, then V2". Emphasizes that V1 must complete before V2 begins.',
-        explanationNepali: 'V1 गरेपछि मात्र V2 गर्ने ("V1 गरेपछि")।',
+        title: '2. い-adjective(～い→～くて), ~',
+        pattern: '2. い-adjective(～い→～くて), ~',
+        explanationEnglish: 'When joining an い-adjective sentence to another, drop い and attach くて (いい becomes よくて, exceptionally).',
+        explanationNepali: 'い-adj(く) / な-adj(に) / N(に) なります ले स्थितिमा परिवर्तन (\'हुनु / बन्नु\') जनाउँछ।',
         examples: [
-          { target: '仕事が終わってから、映画をみます。', reading: 'しごとがおわってから、えいがをみます。', english: 'After work ends, I will watch a movie.', nepali: 'काम सकिएपछि म फिल्म हेर्छु।' }
+          { target: 'ミラーさんは 若くて 元気です。', reading: 'ミラーさんは 若くて 元気です。', english: 'Mr. Miller is young and lively.', nepali: 'मिलर-जी जवान र ऊर्जावान हुनुहुन्छ।' },
+          { target: 'きのうは いい天気で、暑かったです。', reading: 'きのうは いい天気で、暑かったです。', english: 'きのうは いい天気で、暑かったです。', nepali: 'きのうは いい天気で、暑かったです。' }
         ]
-      }
+      },
+      {
+        title: '3. N／な-adjective, ~ (です→で)',
+        pattern: '3. N／な-adjective, ~ (です→で)',
+        explanationEnglish: 'When joining noun sentences or な-adjective sentences, です changes to で. Can connect sentences about different topics; not used to connect sentences of contradictory meaning (use が instead).',
+        explanationNepali: 'When joining noun sentences or な-adjective sentences, です changes to で. Can connect sentences about different topics; not used to connect sentences of contradictory meaning (use が instead). (नेपाली व्याख्या)',
+        examples: [
+          { target: 'カリナさんは インドネシア人で、京都大学の 学生です。/ この 部屋は 小さいですが、きれいです。', reading: 'カリナさんは インドネシア人で、京都大学の 学生です。/ この 部屋は 小さいですが、きれいです。', english: 'カリナさんは インドネシア人で、京都大学の 学生です。/ この 部屋は 小さいですが、きれいです。', nepali: 'カリナさんは インドネシア人で、京都大学の 学生です。/ この 部屋は 小さいですが、きれいです。' }
+        ]
+      },
+      {
+        title: '4. V1て-form から、V2',
+        pattern: '4. V1て-form から、V2',
+        explanationEnglish: 'Indicates that upon completion of V1, the action of V2 is conducted. Tense determined by the last verb. The subject of a subordinate clause is marked with が.',
+        explanationNepali: 'Indicates that upon completion of V1, the action of V2 is conducted. Tense determined by the last verb. The subject of a subordinate clause is marked with が. (नेपाली व्याख्या)',
+        examples: [
+          { target: '国へ 帰ってから、父の 会社で 働きます。/ コンサートが 終わってから、レストランで 食事しました。', reading: '国へ 帰ってから、父の 会社で 働きます。/ コンサートが 終わってから、レストランで 食事しました。', english: '国へ 帰ってから、父の 会社で 働きます。/ コンサートが 終わってから、レストランで 食事しました。', nepali: '国へ 帰ってから、父の 会社で 働きます。/ コンサートが 終わってから、レストランで 食事しました。' }
+        ]
+      },
+      {
+        title: '5. N1は N2が [な-adjective]',
+        pattern: '5. N1は N2が [な-adjective]',
+        explanationEnglish: 'Describes an attribute of a thing or person. N1 is the topic; N2 is the subject of the adjective\'s description.',
+        explanationNepali: 'Describes an attribute of a thing or person. N1 is the topic; N2 is the subject of the adjective\'s description. (नेपाली व्याख्या)',
+        examples: [
+          { target: '大阪は 食べ物が おいしいです。/ マリアさんは 髪が 長いです。', reading: '大阪は 食べ物が おいしいです。/ マリアさんは 髪が 長いです。', english: '大阪は 食べ物が おいしいです。/ マリアさんは 髪が 長いです。', nepali: '大阪は 食べ物が おいしいです。/ マリアさんは 髪が 長いです。' }
+        ]
+      },
+      {
+        title: '6. どうやって',
+        pattern: '6. どうやって',
+        explanationEnglish: 'Used to ask the way/method of doing something; answered using the て-form connective pattern.',
+        explanationNepali: 'Used to ask the way/method of doing something; answered using the て-form connective pattern. (नेपाली व्याख्या)',
+        examples: [
+          { target: '大学まで どうやって 行きますか。― 京都駅から 16番の バスに 乗って、大学前で 降ります。', reading: '大学まで どうやって 行きますか。― 京都駅から 16番の バスに 乗って、大学前で 降ります。', english: '大学まで どうやって 行きますか。― 京都駅から 16番の バスに 乗って、大学前で 降ります。', nepali: '大学まで どうやって 行きますか。― 京都駅から 16番の バスに 乗って、大学前で 降ります。' }
+        ]
+      },
+      {
+        title: '7. どの',
+        pattern: '7. どの',
+        explanationEnglish: 'どの asks the listener to identify one among more than two concrete items.',
+        explanationNepali: 'どの asks the listener to identify one among more than two concrete items. (नेपाली व्याख्या)',
+        examples: [
+          { target: 'サントスさんは どの 人ですか。― あの 髪の 黒い、背の 高い 人です。', reading: 'サントスさんは どの 人ですか。― あの 髪の 黒い、背の 高い 人です。', english: 'サントスさんは どの 人ですか。― あの 髪の 黒い、背の 高い 人です。', nepali: 'サントスさんは どの 人ですか。― あの 髪の 黒い、背の 高い 人です。' }
+        ]
+      },
     ]
   },
-
   // ────────────────────────────────────────────────────────────
   // LESSON 17
   // ────────────────────────────────────────────────────────────
   {
     language: 'JAPANESE', level: 'N5', lesson: 17,
-    lessonTitle: 'Nai-Form, Negative Requests & Obligations (ない形と義務)',
+    lessonTitle: 'Nai-Form, Instructions & Must-Do Rules (ない形と義務)',
     grammarPoints: [
       {
-        title: '1. Verb Nai-Form Rules (ない形)',
-        pattern: 'Gr.1: u-vowel -> a-vowel + ない (う->わない) | Gr.2: ~ない | Gr.3: しない/こない',
-        explanationEnglish: 'Group 1 changes final u-sound to a-sound + ない (e.g. 書く->書かない, 言う->言わない). Group 2 adds ない to stem. する->しない, 来る->こない.',
-        explanationNepali: 'समूह-१: う अक्षरलाई あ अक्षरमा बदलेर ない थप्ने। समूह-२: ます को ठाउँमा ない।',
+        title: '1. Verb い-form',
+        pattern: '1. Verb い-form',
+        explanationEnglish: 'The verb form used with た/たり is called the い-form (e.g., かいて\'s かい is the い-form of かきます). Group I: replace the い-line ます-stem sound with the appropriate sound (いきます is an exception: いって→いい-form). Group II: same as the ます-form. Group III: same as the ます-form (します→して, きます→きて — pattern parallels て-form).',
+        explanationNepali: 'The verb form used with た/たり is called the い-form (e.g., かいて\'s かい is the い-form of かきます). Group I: replace the い-line ます-stem sound with the appropriate sound (いきます is an exception: いって→いい-form). Group II: same as the ます-form. Group III: same as the ます-form (します→して, きます→きて — pattern parallels て-form). (नेपाली व्याख्या)',
         examples: [
-          { target: '写真を撮らないでください。', reading: 'しゃしんをとらないでください。', english: 'Please do not take photos.', nepali: 'कृपया फोटो नखिच्नुहोस्।' }
+
         ]
       },
       {
-        title: '2. Obligation "Must do" Vなければ なりません',
-        pattern: 'V[nai-stem] + なければ なりません',
-        explanationEnglish: 'Drop ない and add なければ なりません to express mandatory obligation ("must do").',
-        explanationNepali: '"मैले गर्नै पर्छ" भन्ने अनिवार्यता जनाउँछ।',
+        title: '2. Vない-form ないで ください',
+        pattern: '2. Vない-form ないで ください',
+        explanationEnglish: 'Used to ask or instruct someone NOT to do something.',
+        explanationNepali: 'Vないで ください ले कृपया कुनै काम नगर्न अनुरोध (\'नगर्नुहोस्\') गर्दा प्रयोग गरिन्छ।',
         examples: [
-          { target: '毎日薬をのまなければなりません。', reading: 'まいにちくすりをのまなければなりません。', english: 'I must take medicine every day.', nepali: 'मैले हरेक दिन औषधि खानै पर्छ।' }
+          { target: '心配しないで ください。', reading: '心配しないで ください。', english: 'Please don\'t worry.', nepali: 'Please don\'t worry. (नेपाली)' },
+          { target: 'ここで 写真を 撮らないで ください。', reading: 'ここで 写真を 撮らないで ください。', english: 'ここで 写真を 撮らないで ください。', nepali: 'ここで 写真を 撮らないで ください。' }
         ]
       },
       {
-        title: '3. Lack of Obligation "Don\'t have to" Vなくても いいです',
-        pattern: 'V[nai-stem] + なくても いいです',
-        explanationEnglish: 'Expresses that doing an action is optional ("you don\'t have to do it").',
-        explanationNepali: '"गर्नु पर्दैन / नगरे पनि हुन्छ" भन्ने अर्थ दिन्छ।',
+        title: '3. Vない-form なければ なりません',
+        pattern: '3. Vない-form なければ なりません',
+        explanationEnglish: 'Means something must be done regardless of the actor\'s will. Not a negative meaning despite the ない form.',
+        explanationNepali: 'Vなければ なりません ले अनिवार्य रूपमा गर्नुपर्ने दायित्व (\'गर्नै पर्छ\') व्यक्त गर्दछ।',
         examples: [
-          { target: '明日は来なくてもいいです。', reading: 'あしたはこなくてもいいです。', english: 'You don\'t have to come tomorrow.', nepali: 'भोलि नआए पनि हुन्छ।' }
+          { target: '薬を 飲まなければ なりません。', reading: '薬を 飲まなければ なりません。', english: 'I must take medicine.', nepali: 'मलाई औषधि खानै पर्छ।' }
         ]
-      }
+      },
+      {
+        title: '4. Vない-form なくても いいです',
+        pattern: '4. Vない-form なくても いいです',
+        explanationEnglish: 'Indicates that the action described does not have to be done.',
+        explanationNepali: 'Vて もいいです ले कुनै काम गर्ने अनुमति (\'गरे हुन्छ\') व्यक्त गर्दछ।',
+        examples: [
+          { target: '明日 来なくても いいです。', reading: '明日 来なくても いいです。', english: 'You don\'t have to come tomorrow.', nepali: 'You don\'t have to come tomorrow. (नेपाली)' }
+        ]
+      },
+      {
+        title: '5. N(object)は',
+        pattern: '5. N(object)は',
+        explanationEnglish: 'The direct-object particle を can be replaced by は to make the object a topic.',
+        explanationNepali: 'The direct-object particle を can be replaced by は to make the object a topic. (नेपाली व्याख्या)',
+        examples: [
+          { target: '荷物は ここに 置かないで ください。', reading: '荷物は ここに 置かないで ください。', english: 'As for the parcel, please don\'t put it here.', nepali: 'As for the parcel, please don\'t put it here. (नेपाली)' },
+          { target: '昼ごはんは 会社の食堂で 食べます。', reading: '昼ごはんは 会社の食堂で 食べます。', english: '昼ごはんは 会社の食堂で 食べます。', nepali: '昼ごはんは 会社の食堂で 食べます。' }
+        ]
+      },
+      {
+        title: '6. N(time)までに',
+        pattern: '6. N(time)までに',
+        explanationEnglish: 'までに marks the time limit by which an action must be completed (contrast with まで, meaning \'until\', L.4).',
+        explanationNepali: 'までに marks the time limit by which an action must be completed (contrast with まで, meaning \'until\', L.4). (नेपाली व्याख्या)',
+        examples: [
+          { target: '会議は 5時までに 終わります。/ 土曜日までに 本を 返さなければ なりません。', reading: '会議は 5時までに 終わります。/ 土曜日までに 本を 返さなければ なりません。', english: '会議は 5時までに 終わります。/ 土曜日までに 本を 返さなければ なりません。', nepali: '会議は 5時までに 終わります。/ 土曜日までに 本を 返さなければ なりません。' }
+        ]
+      },
     ]
   },
-
   // ────────────────────────────────────────────────────────────
   // LESSON 18
   // ────────────────────────────────────────────────────────────
   {
     language: 'JAPANESE', level: 'N5', lesson: 18,
-    lessonTitle: 'Dictionary Form & Abilities (辞書形と可能)',
+    lessonTitle: 'Dictionary Form & Expressing Ability/Hobbies (辞書形と可能)',
     grammarPoints: [
       {
-        title: '1. Ability V[dict-form] ことができます',
-        pattern: 'V[dictionary-form] + ことができます / N が できます',
-        explanationEnglish: 'Expresses capability or possibility ("can do [verb]").',
-        explanationNepali: '"गर्न सक्छु / क्षमता छ" भन्ने अर्थ दिन्छ।',
+        title: '1. Verb dictionary form',
+        pattern: '1. Verb dictionary form',
+        explanationEnglish: 'The basic (plain, non-past affirmative) form. Group I: replace the い-line ます-stem sound with a う-line sound. Group II: attach る to the ます-stem. Group III: します→する, きます→くる.',
+        explanationNepali: 'The basic (plain, non-past affirmative) form. Group I: replace the い-line ます-stem sound with a う-line sound. Group II: attach る to the ます-stem. Group III: します→する, きます→くる. (नेपाली व्याख्या)',
         examples: [
-          { target: '私は日本語を話すことができます。', reading: 'わたしはにほんごをはなすことができます。', english: 'I can speak Japanese.', nepali: 'म जापानी भाषा बोल्न सक्छु।' }
+
         ]
       },
       {
-        title: '2. Expressing Hobbies 趣味は V[dict-form] ことです',
-        pattern: '趣味は V[dictionary-form] ことです',
-        explanationEnglish: 'Nominator こと converts a verb into a noun phrase to describe hobbies.',
-        explanationNepali: 'रुचि व्यक्त गर्दा V[dictionary-form] + ことです प्रयोग गरिन्छ।',
+        title: '2. N／V dictionary form こと が できます — can...',
+        pattern: '2. N／V dictionary form こと が できます — can...',
+        explanationEnglish: 'できます expresses ability/possibility. A noun (denoting an action) or a nominalized verb phrase (dictionary form + こと) marks what one can do.',
+        explanationNepali: 'N / V(dictionary form) ことが できます ले क्षमता वा सम्भावना (\'गर्न सक्नु\') व्यक्त गर्दछ।',
         examples: [
-          { target: '私の趣味は音楽を聴くことです。', reading: 'わたしのしゅみはおんがくをきくことです。', english: 'My hobby is listening to music.', nepali: 'मेरो रुचि सङ्गीत सुन्नु हो।' }
+          { target: 'ミラーさんは 日本語を 話す ことが できます。', reading: 'ミラーさんは 日本語を 話す ことが できます。', english: 'Mr. Miller can speak Japanese.', nepali: 'मिलर-जी जापानी बोल्न सक्नुहुन्छ।' },
+          { target: 'ミラーさんは 漢字を 読む ことが できます。', reading: 'ミラーさんは 漢字を 読む ことが できます。', english: 'ミラーさんは 漢字を 読む ことが できます。', nepali: 'ミラーさんは 漢字を 読む ことが できます。' },
+          { target: 'クレジットカードで 払う ことが できます。', reading: 'クレジットカードで 払う ことが できます。', english: 'クレジットカードで 払う ことが できます。', nepali: 'クレジットカードで 払う ことが できます。' }
         ]
       },
       {
-        title: '3. Before doing V1[dict-form] 前に, V2',
-        pattern: 'V1[dictionary-form] / N の + 前に、V2',
-        explanationEnglish: 'Means "Before doing V1, V2 is performed". Always uses dictionary form before 前に.',
-        explanationNepali: 'V1 गर्नुअघि V2 गर्ने ("गर्नुअघि")।',
+        title: '3. わたしの しゅみは N／V dictionary form こと です — My hobby is...',
+        pattern: '3. わたしの しゅみは N／V dictionary form こと です — My hobby is...',
+        explanationEnglish: 'V dictionary form こと can express the content of a hobby more concretely than a noun alone.',
+        explanationNepali: 'わたしの しゅみは V(dictionary form) ことです ले आफ्नो रुचि/हबी स्पष्ट रूपमा व्यक्त गर्दछ।',
         examples: [
-          { target: '寝る前に、日記を書きます。', reading: 'ねるまえに、にっきをかきます。', english: 'Before going to bed, I write a diary.', nepali: 'सुत्नुअघि म डायरी लेख्छु।' }
+          { target: 'わたしの しゅみは 音楽です。／わたしの しゅみは 音楽を 聞く ことです。', reading: 'わたしの しゅみは 音楽です。／わたしの しゅみは 音楽を 聞く ことです。', english: 'わたしの しゅみは 音楽です。／わたしの しゅみは 音楽を 聞く ことです。', nepali: 'わたしの しゅみは 音楽です。／わたしの しゅみは 音楽を 聞く ことです。' }
         ]
-      }
+      },
+      {
+        title: '4. V dictionary form／N の まえに、~ — before...',
+        pattern: '4. V dictionary form／N の まえに、~ — before...',
+        explanationEnglish: 'Indicates that the action of the main clause occurs before that of the subordinate clause. The subordinate verb is always in the dictionary form, regardless of the main clause\'s tense. With a noun, の is inserted; with a quantifier (period of time), no particle is needed.',
+        explanationNepali: 'V(dictionary form) / Nの まえに ले कुनै कार्य गर्नुअघि (\'गर्नुअघि\') अर्को कार्य हुनु जनाउँछ।',
+        examples: [
+          { target: '日本へ 来る まえに、日本語を 勉強しました。', reading: '日本へ 来る まえに、日本語を 勉強しました。', english: 'I studied Japanese before I came to Japan.', nepali: 'I studied Japanese before I came to Japan. (नेपाली)' },
+          { target: '食事の まえに、手を 洗います。', reading: '食事の まえに、手を 洗います。', english: '食事の まえに、手を 洗います。', nepali: '食事の まえに、手を 洗います。' },
+          { target: '田中さんは 1時間まえに 帰りました。', reading: '田中さんは 1時間まえに 帰りました。', english: '田中さんは 1時間まえに 帰りました。', nepali: '田中さんは 1時間まえに 帰りました。' }
+        ]
+      },
+      {
+        title: '5. あまり～ (negative)',
+        pattern: '5. あまり～ (negative)',
+        explanationEnglish: 'When paired with a negative, あまり means \'not easily\' or \'not as expected\'.',
+        explanationNepali: 'When paired with a negative, あまり means \'not easily\' or \'not as expected\'. (नेपाली व्याख्या)',
+        examples: [
+          { target: '日本では あまり 馬を 見る ことが できません。', reading: '日本では あまり 馬を 見る ことが できません。', english: 'In Japan we can rarely see horses.', nepali: 'In Japan we can rarely see horses. (नेपाली)' }
+        ]
+      },
+      {
+        title: '6. ぜひ',
+        pattern: '6. ぜひ',
+        explanationEnglish: 'Used with expressions of hope/request (~たいです, ~ませんか, ~てください) to emphasize the wish.',
+        explanationNepali: 'Used with expressions of hope/request (~たいです, ~ませんか, ~てください) to emphasize the wish. (नेपाली व्याख्या)',
+        examples: [
+          { target: 'ぜひ 北海道へ 行きたいです。', reading: 'ぜひ 北海道へ 行きたいです。', english: 'I really want to go to Hokkaido.', nepali: 'I really want to go to Hokkaido. (नेपाली)' },
+          { target: 'ぜひ 家へ 来て ください。', reading: 'ぜひ 家へ 来て ください。', english: 'ぜひ 家へ 来て ください。', nepali: 'ぜひ 家へ 来て ください。' }
+        ]
+      },
     ]
   },
-
   // ────────────────────────────────────────────────────────────
   // LESSON 19
   // ────────────────────────────────────────────────────────────
@@ -651,35 +845,54 @@ export const N5_GRAMMAR_GUIDES: LessonGrammarGuide[] = [
     lessonTitle: 'Ta-Form & Past Experiences (た形と経験)',
     grammarPoints: [
       {
-        title: '1. Past Experience Vた ことがあります',
-        pattern: 'V[ta-form] + ことがあります',
-        explanationEnglish: 'Expresses past personal experience ("have ever done [verb]"). Ta-form is conjugated identically to te-form (て->た, んで->んだ).',
-        explanationNepali: 'विगतको अनुभव ("पहिले गरेको छु") जनाउँछ। た-form को रूप て-form जस्तै हुन्छ।',
+        title: '1. Verb た-form',
+        pattern: '1. Verb た-form',
+        explanationEnglish: 'Formed by changing て/で of the て-form to た/だ respectively (e.g., 買って→買った; 飲んで→飲んだ). Same grouping pattern as the て-form.',
+        explanationNepali: 'Formed by changing て/で of the て-form to た/だ respectively (e.g., 買って→買った; 飲んで→飲んだ). Same grouping pattern as the て-form. (नेपाली व्याख्या)',
         examples: [
-          { target: '富士山にのぼったことがあります。', reading: 'ふじさんにのぼったことがあります。', english: 'I have climbed Mt. Fuji before.', nepali: 'म पहिले फूजी पर्वत चढेको छु।' }
+
         ]
       },
       {
-        title: '2. Listing Actions Non-sequentially V1たり, V2たり します',
-        pattern: 'V1た り、V2た り します',
-        explanationEnglish: 'Lists representative actions among others without strict time order ("do things like A and B").',
-        explanationNepali: 'क्रमैसँग नभई विभिन्न कामहरू उदाहरणीय रूपमा सूचीबद्ध गर्दा प्रयोग गरिन्छ।',
+        title: '2. Vた-form ことが あります — have the experience of...',
+        pattern: '2. Vた-form ことが あります — have the experience of...',
+        explanationEnglish: 'Describes a past experience (parallels N/普通形+んです patterns from L.9). The content of the experience is the nominalized phrase Vた-form こと.',
+        explanationNepali: 'Vた ことがあります ले विगतको व्यक्तिगत अनुभव (\'पहिले गरेको छु\') व्यक्त गर्दछ।',
         examples: [
-          { target: '日曜日は部屋を掃除したり、本を読んだりします。', reading: 'にちようびはへやをそうじしたり、ほんをよんだりします。', english: 'On Sundays I do things like clean my room and read books.', nepali: 'आइतबार म कोठा सफा गर्ने, किताब पढ्ने जस्ता काम गर्छु।' }
+          { target: '馬に 乗った ことが あります。(I have ridden a horse.) — distinct from a sentence simply stating that something happened at a fixed past time.', reading: '馬に 乗った ことが あります。(I have ridden a horse.) — distinct from a sentence simply stating that something happened at a fixed past time.', english: '馬に 乗った ことが あります。(I have ridden a horse.) — distinct from a sentence simply stating that something happened at a fixed past time.', nepali: '馬に 乗った ことが あります。(I have ridden a horse.) — distinct from a sentence simply stating that something happened at a fixed past time.' }
         ]
       },
       {
-        title: '3. Becoming / Change of State 〜になります',
-        pattern: 'い-adj(〜く) / な-adj(に) / N(に) + なります',
-        explanationEnglish: 'Indicates a change in condition or state ("become Adj/Noun").',
-        explanationNepali: 'अवस्थामा परिवर्तन आउनु ("हुनु / बन्नु")।',
+        title: '3. Vた-form り、Vた-form り します — do such things as V, V, and so on',
+        pattern: '3. Vた-form り、Vた-form り します — do such things as V, V, and so on',
+        explanationEnglish: 'Refers to some (not all) actions among several, similar to ～や～(など) for nouns (L.10). Sentence-final tense shows overall tense.',
+        explanationNepali: 'Refers to some (not all) actions among several, similar to ～や～(など) for nouns (L.10). Sentence-final tense shows overall tense. (नेपाली व्याख्या)',
         examples: [
-          { target: '寒くなります。', reading: 'さむくなります。', english: 'It becomes cold.', nepali: 'जाडो हुँदै जान्छ।' }
+          { target: '日曜日は テニスを したり、映画を 見たり します。(On Sundays I do things like play tennis, see a movie, etc.) — Note: distinct from a plain て-form sequence, which implies a fixed chronological order; たり implies example activities, not necessarily sequential or exhaustive.', reading: '日曜日は テニスを したり、映画を 見たり します。(On Sundays I do things like play tennis, see a movie, etc.) — Note: distinct from a plain て-form sequence, which implies a fixed chronological order; たり implies example activities, not necessarily sequential or exhaustive.', english: '日曜日は テニスを したり、映画を 見たり します。(On Sundays I do things like play tennis, see a movie, etc.) — Note: distinct from a plain て-form sequence, which implies a fixed chronological order; たり implies example activities, not necessarily sequential or exhaustive.', nepali: '日曜日は テニスを したり、映画を 見たり します。(On Sundays I do things like play tennis, see a movie, etc.) — Note: distinct from a plain て-form sequence, which implies a fixed chronological order; たり implies example activities, not necessarily sequential or exhaustive.' }
         ]
-      }
+      },
+      {
+        title: '4. い-adjective(～い→～く)/な-adjective(に) なります — become...',
+        pattern: '4. い-adjective(～い→～く)/な-adjective(に) なります — become...',
+        explanationEnglish: 'なります indicates a change of state or condition. い-adjective: drop い, add く; な-adjective/noun: add に before なります.',
+        explanationNepali: 'V(dictionary form) / Nの まえに ले कुनै कार्य गर्नुअघि (\'गर्नुअघि\') अर्को कार्य हुनु जनाउँछ।',
+        examples: [
+          { target: '寒く なります。', reading: '寒く なります。', english: 'It becomes cold.', nepali: 'जाडो हुँदै जान्छ।' },
+          { target: '元気に なります。', reading: '元気に なります。', english: 'become well', nepali: 'become well (नेपाली)' },
+          { target: '25歳に なります。', reading: '25歳に なります。', english: 'turn 25', nepali: 'turn 25 (नेपाली)' }
+        ]
+      },
+      {
+        title: '5. そうですね',
+        pattern: '5. そうですね',
+        explanationEnglish: 'Used to agree/sympathize with the conversation partner. Differs from そうですか (an exclamation upon learning new information); そうですね expresses agreement with something already known/shared.',
+        explanationNepali: 'Used to agree/sympathize with the conversation partner. Differs from そうですか (an exclamation upon learning new information); そうですね expresses agreement with something already known/shared. (नेपाली व्याख्या)',
+        examples: [
+          { target: '寒く なりましたね。― そうですね。', reading: '寒く なりましたね。― そうですね。', english: 'It\'s gotten cold, hasn\'t it? — Yes, it has.', nepali: 'It\'s gotten cold, hasn\'t it? — Yes, it has. (नेपाली)' }
+        ]
+      },
     ]
   },
-
   // ────────────────────────────────────────────────────────────
   // LESSON 20
   // ────────────────────────────────────────────────────────────
@@ -688,18 +901,39 @@ export const N5_GRAMMAR_GUIDES: LessonGrammarGuide[] = [
     lessonTitle: 'Casual & Plain Speech Style (普通体と会話)',
     grammarPoints: [
       {
-        title: '1. Plain vs. Polite Form Rules',
-        pattern: 'Polite (丁寧体) vs. Plain (普通体)',
-        explanationEnglish: 'Polite forms (〜ます/〜です) are used with strangers/superiors. Plain forms (Dictionary, Nai, Ta) are used with friends/family.',
-        explanationNepali: 'नम्र भाषा (〜ます/〜です) अपरिचित/मान्यजनसँग। साधारण भाषा (辞書形/ない形/た形) साथी/परिवारसँग।',
+        title: '1. Polite style and plain style',
+        pattern: '1. Polite style and plain style',
+        explanationEnglish: 'Japanese has two speech styles: polite style (です/ます forms) and plain style (だ / plain verb forms). Predicates accompanied by です or ます are the polite form; predicates in plain-style sentences are the plain form.',
+        explanationNepali: 'जापानी भाषामा दुई शैली हुन्छन्: नम्र शैली (です/ます) र साधारण शैली (普通体 - साथी र परिवारका बीच)।',
         examples: [
-          { target: '明日東京へ行く？－うん、行く。', reading: 'あしたとうきょうへいく？－うん、いく。', english: 'Going to Tokyo tomorrow? - Yeah, going. (casual)', nepali: 'भोलि टोक्यो जाने हो? - अँ, जाने। (अनौपचारिक)' }
+          { target: '明日 東京へ 行きます。／明日 東京へ 行く。 (polite', reading: '明日 東京へ 行きます。／明日 東京へ 行く。 (polite', english: '明日 東京へ 行きます。／明日 東京へ 行く。 (polite', nepali: '明日 東京へ 行きます。／明日 東京へ 行く。 (polite' },
+          { target: 'plain) — 忙しいです。／忙しい。 — すもうが 好きです。／すもうが 好きだ。', reading: 'plain) — 忙しいです。／忙しい。 — すもうが 好きです。／すもうが 好きだ。', english: 'plain) — 忙しいです。／忙しい。 — すもうが 好きです。／すもうが 好きだ。', nepali: 'plain) — 忙しいです。／忙しい。 — すもうが 好きです。／すもうが 好きだ。' }
         ]
-      }
+      },
+      {
+        title: '2. Proper use of polite and plain style',
+        pattern: '2. Proper use of polite and plain style',
+        explanationEnglish: 'Polite style can be used at any time, in any place, to anybody — it is the standard for conversation between adults who aren\'t close, with strangers, superiors, or people of similar age one isn\'t close to. Plain style is used with close friends, colleagues, and family. Using plain style inappropriately can sound rude, so when unsure, polite style is safer. Plain style is also standard in written work (newspapers, books, theses, diaries); most letters use polite style.',
+        explanationNepali: 'जापानी भाषामा दुई शैली हुन्छन्: नम्र शैली (です/ます) र साधारण शैली (普通体 - साथी र परिवारका बीच)।',
+        examples: [
+
+        ]
+      },
+      {
+        title: '3. Conversation in the plain style',
+        pattern: '3. Conversation in the plain style',
+        explanationEnglish: '(1) Questions omit か and end with a rising intonation. (2) In noun/な-adjective questions, plain-form だ is omitted (affirmative answers ending flatly in だ can sound rough; women rarely use だ). (3) Certain particles (を, へ, etc.) are often dropped when meaning is clear from context, though が, は, で, と, etc. are usually kept. (4) In plain style, the い of Vて-form いい is often dropped (e.g., 持って(い)る).',
+        explanationNepali: 'जापानी भाषामा दुई शैली हुन्छन्: नम्र शैली (です/ます) र साधारण शैली (普通体 - साथी र परिवारका बीच)।',
+        examples: [
+          { target: 'コーヒー 飲む？― うん、飲む。', reading: 'コーヒー 飲む？― うん、飲む。', english: 'コーヒー 飲む？― うん、飲む。', nepali: 'コーヒー 飲む？― うん、飲む。' },
+          { target: '今晩 暇？― うん、暇。(men) ／ ええ、暇。(women) ― ううん、暇じゃない。', reading: '今晩 暇？― うん、暇。(men) ／ ええ、暇。(women) ― ううん、暇じゃない。', english: '今晩 暇？― うん、暇。(men) ／ ええ、暇。(women) ― ううん、暇じゃない。', nepali: '今晩 暇？― うん、暇。(men) ／ ええ、暇。(women) ― ううん、暇じゃない。' },
+          { target: 'ご飯[を] 食べる？', reading: 'ご飯[を] 食べる？', english: 'ご飯[を] 食べる？', nepali: 'ご飯[を] 食べる？' },
+          { target: '辞書 持ってる？― うん、持ってる。／ううん、持ってない。', reading: '辞書 持ってる？― うん、持ってる。／ううん、持ってない。', english: '辞書 持ってる？― うん、持ってる。／ううん、持ってない。', nepali: '辞書 持ってる？― うん、持ってる。／ううん、持ってない。' }
+        ]
+      },
     ]
   },
 
-  // ────────────────────────────────────────────────────────────
   // LESSON 21
   // ────────────────────────────────────────────────────────────
   {

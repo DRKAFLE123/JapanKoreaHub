@@ -1,0 +1,807 @@
+{
+  "21": {
+    "vocab": [
+      {
+        "japanese": "おもいます",
+        "romaji": "omoimasu",
+        "english": "think"
+      },
+      {
+        "japanese": "いいます",
+        "romaji": "iimasu",
+        "english": "say"
+      },
+      {
+        "japanese": "たります",
+        "romaji": "tarimasu",
+        "english": "be enough, be sufficient"
+      },
+      {
+        "japanese": "かちます",
+        "romaji": "kachimasu",
+        "english": "win"
+      },
+      {
+        "japanese": "まけます",
+        "romaji": "makemasu",
+        "english": "lose, be beaten"
+      },
+      {
+        "japanese": "あります",
+        "romaji": "arimasu",
+        "english": "[a festival] be held, take place (おまつりが あります)"
+      },
+      {
+        "japanese": "やくに たちます",
+        "romaji": "yaku ni tachimasu",
+        "english": "be useful"
+      },
+      {
+        "japanese": "もったいない",
+        "romaji": "mottainai",
+        "english": "wasteful"
+      },
+      {
+        "japanese": "ふべん(な)",
+        "romaji": "fuben(na)",
+        "english": "inconvenient"
+      },
+      {
+        "japanese": "おなじ",
+        "romaji": "onaji",
+        "english": "the same"
+      },
+      {
+        "japanese": "すごい",
+        "romaji": "sugoi",
+        "english": "awful, great (astonishment or admiration)"
+      },
+      {
+        "japanese": "そうりだいじん",
+        "romaji": "souri daijin",
+        "english": "prime minister"
+      },
+      {
+        "japanese": "だいとうりょう",
+        "romaji": "daitouryou",
+        "english": "president"
+      },
+      {
+        "japanese": "せいじ",
+        "romaji": "seiji",
+        "english": "politics"
+      },
+      {
+        "japanese": "ニュース",
+        "romaji": "nyuusu",
+        "english": "news"
+      },
+      {
+        "japanese": "スピーチ",
+        "romaji": "supiichi",
+        "english": "speech (スピーチを します: make a speech)"
+      },
+      {
+        "japanese": "しあい",
+        "romaji": "shiai",
+        "english": "game, match"
+      },
+      {
+        "japanese": "アルバイト",
+        "romaji": "arubaito",
+        "english": "side job (アルバイトを します: work part time)"
+      },
+      {
+        "japanese": "いけん",
+        "romaji": "iken",
+        "english": "opinion"
+      },
+      {
+        "japanese": "はなし",
+        "romaji": "hanashi",
+        "english": "talk, speech, story (はなしを します: talk, tell a story)"
+      },
+      {
+        "japanese": "ユーモア",
+        "romaji": "yuumoa",
+        "english": "humor"
+      },
+      {
+        "japanese": "むだ",
+        "romaji": "muda",
+        "english": "waste"
+      },
+      {
+        "japanese": "デザイン",
+        "romaji": "dezain",
+        "english": "design"
+      },
+      {
+        "japanese": "こうつう",
+        "romaji": "koutsuu",
+        "english": "transportation, traffic"
+      },
+      {
+        "japanese": "ラッシュ",
+        "romaji": "rasshu",
+        "english": "rush hour"
+      },
+      {
+        "japanese": "さいきん",
+        "romaji": "saikin",
+        "english": "recently, these days"
+      },
+      {
+        "japanese": "たぶん",
+        "romaji": "tabun",
+        "english": "probably, perhaps, maybe"
+      },
+      {
+        "japanese": "きっと",
+        "romaji": "kitto",
+        "english": "surely"
+      },
+      {
+        "japanese": "ほんとうに",
+        "romaji": "hontou ni",
+        "english": "really"
+      },
+      {
+        "japanese": "あまり",
+        "romaji": "amari",
+        "english": "not so much (used with negatives)"
+      },
+      {
+        "japanese": "～について",
+        "romaji": "~ni tsuite",
+        "english": "about ~, concerning ~"
+      },
+      {
+        "japanese": "しかたが ないです。",
+        "romaji": "Shikata ga nai desu.",
+        "english": "There is no other choice./It can't be helped."
+      },
+      {
+        "japanese": "おひさしぶりです。",
+        "romaji": "Ohisashiburi desu.",
+        "english": "It's been a long time (since I last saw you)./Long time no see."
+      },
+      {
+        "japanese": "～でも のみませんか。",
+        "romaji": "~demo nomimasen ka.",
+        "english": "How about drinking ~ or something?"
+      },
+      {
+        "japanese": "みなくちゃ。",
+        "romaji": "Minakucha.",
+        "english": "I've got to watch it."
+      },
+      {
+        "japanese": "もちろん",
+        "romaji": "mochiron",
+        "english": "of course"
+      },
+      {
+        "japanese": "カンガルー",
+        "romaji": "kangaruu",
+        "english": "kangaroo"
+      },
+      {
+        "japanese": "キャプテン・クック",
+        "romaji": "Kyaputen Kukku",
+        "english": "Captain James Cook (1728-79)"
+      }
+    ],
+    "grammar": [
+      {
+        "title": "1. Plain form + と おもいます - I think that...",
+        "explanation": "The idea/information expressed with おもいます is marked by the particle と. When the conjecture is negative, the clause before と is made negative (not the main verb). Also used to state one's opinion; the question form ~は どう おもいますか is used to ask someone's opinion (と is unnecessary after that question). Agreement/disagreement with others' opinions can be expressed simply with そう おもいます / そう おもいません。",
+        "examples": "あした 雨が 降ると おもいます。(I think it will rain tomorrow.) / ミラーさんは この ニュースを 知って いると おもいますか。― いいえ、知らないと おもいます。"
+      },
+      {
+        "title": "2. Plain form + と いいます - say...",
+        "explanation": "The content expressed with いいます is marked with と. Direct quotes repeat the exact words; indirect quotes use the plain form before と, and the quoted clause's tense is unaffected by the main clause's tense.",
+        "examples": "寝る まえに『おやすみなさい』と 言います。 / ミラーさんは 来週 東京へ 出張すると 言いました。"
+      },
+      {
+        "title": "3. Plain form + でしょう? - ..., isn't it? (confirming agreement)",
+        "explanation": "Used with a rising intonation when the speaker expects the listener has relevant knowledge and will agree with the speaker's view.",
+        "examples": "あした パーティーに 行くでしょう? ― ええ、行きます。 / 北海道は 寒かったでしょう? ― いいえ、そんなに 寒くなかったです。"
+      },
+      {
+        "title": "4. N(place)で N(event)が あります - an event takes place/is held",
+        "explanation": "When N expresses an event (party, concert, festival, incident, disaster, etc.), あります means 'to take place' or 'to be held'.",
+        "examples": "東京で 日本と ブラジルの サッカーの 試合が あります。(A football match between Japan and Brazil will be held in Tokyo.)"
+      },
+      {
+        "title": "5. N(occasion)で - at, on (an occasion)",
+        "explanation": "Marks the occasion on which some action takes place.",
+        "examples": "会議で 意見を 言いましたか。(Did you give your opinion at the meeting?)"
+      },
+      {
+        "title": "6. N でも V - how about V-ing (something like N)",
+        "explanation": "でも gives an example out of a category (e.g., drinks) when encouraging, suggesting, or advising. Formed by omitting いかがですか from Vます-stemでも いかがですか, similar to Vます-stemませんか (Lesson 17).",
+        "examples": "ビールでも 飲みませんか。(Shall we drink beer or something?)"
+      }
+    ]
+  },
+  "22": {
+    "vocab": [
+      {
+        "japanese": "きます",
+        "romaji": "kimasu",
+        "english": "put on [a shirt, etc.] (うわぎを きます)"
+      },
+      {
+        "japanese": "はきます",
+        "romaji": "hakimasu",
+        "english": "put on [shoes, trousers, etc.]"
+      },
+      {
+        "japanese": "かぶります",
+        "romaji": "kaburimasu",
+        "english": "put on [a hat, etc.]"
+      },
+      {
+        "japanese": "かけます",
+        "romaji": "kakemasu",
+        "english": "put on [glasses]"
+      },
+      {
+        "japanese": "うまれます",
+        "romaji": "umaremasu",
+        "english": "be born"
+      },
+      {
+        "japanese": "コート",
+        "romaji": "kooto",
+        "english": "coat"
+      },
+      {
+        "japanese": "スーツ",
+        "romaji": "suutsu",
+        "english": "suit"
+      },
+      {
+        "japanese": "セーター",
+        "romaji": "seetaa",
+        "english": "sweater"
+      },
+      {
+        "japanese": "ぼうし",
+        "romaji": "boushi",
+        "english": "hat, cap"
+      },
+      {
+        "japanese": "めがね",
+        "romaji": "megane",
+        "english": "glasses"
+      },
+      {
+        "japanese": "よく",
+        "romaji": "yoku",
+        "english": "often"
+      },
+      {
+        "japanese": "おめでとうございます。",
+        "romaji": "Omedetou gozaimasu.",
+        "english": "Congratulations. (birthdays, weddings, New Year's Day, etc.)"
+      },
+      {
+        "japanese": "こちら",
+        "romaji": "kochira",
+        "english": "this (polite equivalent of これ)"
+      },
+      {
+        "japanese": "やちん",
+        "romaji": "yachin",
+        "english": "house rent"
+      },
+      {
+        "japanese": "そうですねえ。",
+        "romaji": "Sou desu nee.",
+        "english": "Let me see."
+      },
+      {
+        "japanese": "ダイニングキッチン(DK)",
+        "romaji": "dainingu kicchin",
+        "english": "kitchen with a dining area"
+      },
+      {
+        "japanese": "わしつ",
+        "romaji": "washitsu",
+        "english": "Japanese-style room"
+      },
+      {
+        "japanese": "おしいれ",
+        "romaji": "oshiire",
+        "english": "Japanese-style closet"
+      },
+      {
+        "japanese": "ふとん",
+        "romaji": "futon",
+        "english": "Japanese-style mattress and quilt"
+      },
+      {
+        "japanese": "アパート",
+        "romaji": "apaato",
+        "english": "apartment"
+      },
+      {
+        "japanese": "パリ",
+        "romaji": "Pari",
+        "english": "Paris"
+      },
+      {
+        "japanese": "万里の長城",
+        "romaji": "Banri no Choujou",
+        "english": "the Great Wall of China"
+      },
+      {
+        "japanese": "レジャー開発センター",
+        "romaji": "rejaa kaihatsu sentaa",
+        "english": "Center for Developing Leisure Activities"
+      },
+      {
+        "japanese": "レジャー白書",
+        "romaji": "rejaa hakusho",
+        "english": "white paper on leisure"
+      }
+    ],
+    "grammar": [
+      {
+        "title": "1. Noun modification (review)",
+        "explanation": "Simple noun modification learned in Lessons 2 and 8: a possessive/adjective phrase always comes before the noun it modifies (ミラーさんの 家 / 新しい 家 / きれいな 家).",
+        "examples": ""
+      },
+      {
+        "title": "2. Noun modification by sentences",
+        "explanation": "The predicate of a sentence modifying a noun is in the plain form (い-adjective ~い stays; な-adjective/noun's だ becomes な). Nouns that are elements of a modifying sentence (subject, object, place, etc.) are picked out and modified by that sentence; the particle attached to that noun within the clause (を, で, に, etc.) is dropped when it becomes the modified noun.",
+        "examples": "京都へ 行く／行かない 人 (a person who goes/doesn't go to Kyoto) / せが 高くて、髪が 黒い 人 (a person who is tall with black hair) / 先週 私が 見た 映画 (the movie that I saw last week) / ワンさんが 働いて いる 病院 (the hospital where Mr. Wang works)"
+      },
+      {
+        "title": "3. Position of the noun modified by a sentence",
+        "explanation": "The noun modified by a sentence can serve in various roles within the larger sentence (subject, topic, object, etc.).",
+        "examples": "これは ミラーさんが 住んで いた 家です。(This is the house where Mr. Miller lived.) / ミラーさんが 住んで いた 家は 古いです。/ ミラーさんが 住んで いた 家を 買いました。"
+      },
+      {
+        "title": "4. Nが (subject within a modifying clause)",
+        "explanation": "When a sentence modifies a noun, the subject within that modifying clause is marked with が (not は).",
+        "examples": "これは ミラーさんが 焼いた ケーキです。(This is the cake Mr. Miller baked.) / わたしは カリナさんが かいた 絵が すきです。"
+      },
+      {
+        "title": "5. V dictionary form + じかん／よてい／こと が あります",
+        "explanation": "Puts the dictionary form of an activity before 時間 (time), 予定 (plan/arrangement), or こと (thing) to express having time for, an arrangement to, or something to do.",
+        "examples": "朝ご飯を 食べる 時間が ありません。(I have no time to eat breakfast.) / 友だちと 映画を 見る 予定が あります。/ 今日は 市役所で する ことが あります。"
+      }
+    ]
+  },
+  "23": {
+    "vocab": [
+      {
+        "japanese": "ききます",
+        "romaji": "kikimasu",
+        "english": "ask [the teacher] (せんせいに ききます)"
+      },
+      {
+        "japanese": "まわします",
+        "romaji": "mawashimasu",
+        "english": "turn"
+      },
+      {
+        "japanese": "ひきます",
+        "romaji": "hikimasu",
+        "english": "pull"
+      },
+      {
+        "japanese": "かえます",
+        "romaji": "kaemasu",
+        "english": "change"
+      },
+      {
+        "japanese": "さわります",
+        "romaji": "sawarimasu",
+        "english": "touch [a door] (ドアに さわります)"
+      },
+      {
+        "japanese": "でます",
+        "romaji": "demasu",
+        "english": "[change] come out (おつりが でます)"
+      },
+      {
+        "japanese": "うごきます",
+        "romaji": "ugokimasu",
+        "english": "[a watch] move, work (とけいが うごきます)"
+      },
+      {
+        "japanese": "あるきます",
+        "romaji": "arukimasu",
+        "english": "walk [along a road] (みちを あるきます)"
+      },
+      {
+        "japanese": "わたります",
+        "romaji": "watarimasu",
+        "english": "cross [a bridge] (はしを わたります)"
+      },
+      {
+        "japanese": "きを つけます",
+        "romaji": "ki o tsukemasu",
+        "english": "pay attention [to cars], take care (くるまに きを つけます)"
+      },
+      {
+        "japanese": "ひっこしします",
+        "romaji": "hikkoshi shimasu",
+        "english": "move (house)"
+      },
+      {
+        "japanese": "でんきや",
+        "romaji": "denkiya",
+        "english": "electrician, electrical shop"
+      },
+      {
+        "japanese": "~や",
+        "romaji": "~ya",
+        "english": "person of ~ shop"
+      },
+      {
+        "japanese": "サイズ",
+        "romaji": "saizu",
+        "english": "size"
+      },
+      {
+        "japanese": "おと",
+        "romaji": "oto",
+        "english": "sound"
+      },
+      {
+        "japanese": "きかい",
+        "romaji": "kikai",
+        "english": "machine"
+      },
+      {
+        "japanese": "つまみ",
+        "romaji": "tsumami",
+        "english": "knob"
+      },
+      {
+        "japanese": "こしょう",
+        "romaji": "koshou",
+        "english": "breakdown (こしょうします: break down)"
+      },
+      {
+        "japanese": "みち",
+        "romaji": "michi",
+        "english": "road, way"
+      },
+      {
+        "japanese": "こうさてん",
+        "romaji": "kousaten",
+        "english": "crossroad, intersection"
+      },
+      {
+        "japanese": "しんごう",
+        "romaji": "shingou",
+        "english": "traffic light"
+      },
+      {
+        "japanese": "かど",
+        "romaji": "kado",
+        "english": "corner"
+      },
+      {
+        "japanese": "はし",
+        "romaji": "hashi",
+        "english": "bridge"
+      },
+      {
+        "japanese": "ちゅうしゃじょう",
+        "romaji": "chuushajou",
+        "english": "parking lot, car park"
+      },
+      {
+        "japanese": "~ばんめ",
+        "romaji": "~banme",
+        "english": "the -th (indicating order)"
+      },
+      {
+        "japanese": "おしょうがつ",
+        "romaji": "oshougatsu",
+        "english": "New Year's Day"
+      },
+      {
+        "japanese": "ごちそうさまでした。",
+        "romaji": "Gochisousama deshita.",
+        "english": "That was delicious. (said after eating/drinking)"
+      },
+      {
+        "japanese": "たてもの",
+        "romaji": "tatemono",
+        "english": "building"
+      },
+      {
+        "japanese": "がいこくじん とうろくしょう",
+        "romaji": "gaikokujin touroku shou",
+        "english": "alien registration card"
+      },
+      {
+        "japanese": "しょうとくたいし",
+        "romaji": "Shoutoku Taishi",
+        "english": "Prince Shotoku (574-622)"
+      },
+      {
+        "japanese": "ほうりゅうじ",
+        "romaji": "Houryuuji",
+        "english": "Horyuji Temple, built by Prince Shotoku in Nara Prefecture in the early 7th century"
+      },
+      {
+        "japanese": "げんきちゃ",
+        "romaji": "genki-cha",
+        "english": "fictitious tea"
+      }
+    ],
+    "grammar": [
+      {
+        "title": "1. V dictionary form／V た-form／い-adj／な-adj な／N の + とき、~ — When...",
+        "explanation": "とき connects two sentences to express the time when the state/action in the main clause exists or occurs. The forms connected to とき are the same as when modifying a noun.",
+        "examples": "図書館で 本を 借りる とき、カードが 要ります。(When you borrow books from the library, you need a card.) / 使い方が わからない とき、私に 聞いて ください。/ 元気が ない とき、げんき茶を 飲みます。/ 暇な とき、うちへ 来ませんか。/ 子どもの とき、川で 泳ぎました。"
+      },
+      {
+        "title": "2. V dictionary form とき vs. V た-form とき",
+        "explanation": "The dictionary form before とき indicates the action is not yet completed at the time referred to; the た-form before とき indicates the action was already completed.",
+        "examples": "国へ 帰る とき、かばんを 買いました。(I bought a bag [while still travelling] on the way back to my country.) / 国へ 帰った とき、かばんを 買いました。(I bought a bag after arriving back in my country.)"
+      },
+      {
+        "title": "3. V dictionary form + と、~ — ..., then (inevitably)...",
+        "explanation": "Used when, as a result of an action, another action or event inevitably follows. Expressions of will, hope, invitation, or request cannot follow ~と (use ~たら instead, Lesson 25).",
+        "examples": "このボタンを 押すと、おつりが 出ます。(Press this button, and the change comes out.) / これを 回すと、音が 大きく なります。/ 右へ 曲がると、郵便局が あります。"
+      },
+      {
+        "title": "4. Nが [adjective/verb] — describing a state or scene",
+        "explanation": "As with natural phenomena (Lesson 14), が also marks the subject when describing a state or scene as it is.",
+        "examples": "音が 小さいです。(The volume/sound is low.) / 明かりが 明るく なりました。/ このボタンを 押すと、切符が 出ます。"
+      },
+      {
+        "title": "5. N(place)を V(verb of movement)",
+        "explanation": "を marks the place a person or thing passes through/along, used with verbs of movement such as 散歩します, 渡ります, 歩きます, etc.",
+        "examples": "道を 歩きます。(I walk along the road.) / 橋を 渡ります。(I cross the bridge.) / 交差点を 右へ 曲がります。(I turn right at the intersection.)"
+      }
+    ]
+  },
+  "24": {
+    "vocab": [
+      {
+        "japanese": "くれます",
+        "romaji": "kuremasu",
+        "english": "give (me)"
+      },
+      {
+        "japanese": "つれて いきます",
+        "romaji": "tsurete ikimasu",
+        "english": "take (someone)"
+      },
+      {
+        "japanese": "つれて きます",
+        "romaji": "tsurete kimasu",
+        "english": "bring (someone)"
+      },
+      {
+        "japanese": "おくります",
+        "romaji": "okurimasu",
+        "english": "see off, take/send (someone/something)"
+      },
+      {
+        "japanese": "しょうかいします",
+        "romaji": "shoukai shimasu",
+        "english": "introduce"
+      },
+      {
+        "japanese": "あんないします",
+        "romaji": "annai shimasu",
+        "english": "show around, show the way"
+      },
+      {
+        "japanese": "せつめいします",
+        "romaji": "setsumei shimasu",
+        "english": "explain"
+      },
+      {
+        "japanese": "いれます",
+        "romaji": "iremasu",
+        "english": "make [coffee] (コーヒーを いれます)"
+      },
+      {
+        "japanese": "おじいさん",
+        "romaji": "ojiisan",
+        "english": "grandfather, old man"
+      },
+      {
+        "japanese": "おばあさん",
+        "romaji": "obaasan",
+        "english": "grandmother, old woman"
+      },
+      {
+        "japanese": "じゅんび",
+        "romaji": "junbi",
+        "english": "preparation (じゅんびします: prepare)"
+      },
+      {
+        "japanese": "いみ",
+        "romaji": "imi",
+        "english": "meaning"
+      },
+      {
+        "japanese": "おかし",
+        "romaji": "okashi",
+        "english": "sweets, snacks"
+      },
+      {
+        "japanese": "みんな",
+        "romaji": "minna",
+        "english": "all"
+      },
+      {
+        "japanese": "ひとりで",
+        "romaji": "hitori de",
+        "english": "by oneself"
+      },
+      {
+        "japanese": "ほかに",
+        "romaji": "hoka ni",
+        "english": "besides"
+      },
+      {
+        "japanese": "ワゴンしゃ",
+        "romaji": "wagon-sha",
+        "english": "station wagon"
+      },
+      {
+        "japanese": "おべんとう",
+        "romaji": "obentou",
+        "english": "box lunch"
+      },
+      {
+        "japanese": "ははの ひ",
+        "romaji": "haha no hi",
+        "english": "Mother's Day"
+      }
+    ],
+    "grammar": [
+      {
+        "title": "1. あげます／もらいます (review) and くれます (new)",
+        "explanation": "Review: N1は N2に Nを あげます (N1 gives to N2); N1は N2に Nを もらいます (N1 receives from N2). New: N1は わたし(に) Nを くれます — used specifically when N1 gives something to the speaker (or the speaker's in-group); くれます can never be used for the speaker giving to someone else.",
+        "examples": "佐藤さんは わたしに クリスマスカードを くれました。(Ms. Sato gave me a Christmas card.) / 木村さんに 本を 貸しました。(I lent Ms. Kimura a book.)"
+      },
+      {
+        "title": "2. N1は N2に Vて-form もらいます — have/get someone do something for me",
+        "explanation": "Describes receiving a favor: N2 performs the action, and the speaker (N1) benefits/receives it. The person who does the action is marked with に.",
+        "examples": "わたしは 山田さんに 病院の 電話番号を 教えて もらいました。(I was told the hospital's phone number by Mr. Yamada — lit. I received the telling from Mr. Yamada.)"
+      },
+      {
+        "title": "3. N1は N2に Vて-form くれます — someone does something for me as a favor",
+        "explanation": "Parallel to くれます above but with a verb: N2 does the action for the benefit of the speaker (or speaker's in-group), expressed with the て-form + くれます.",
+        "examples": "母は わたしに セーターを 送って くれました。(My mother sent me a sweater.) / 山田さんが 車で 送って くれました。(Mr. Yamada drove me [as a favor].)"
+      },
+      {
+        "title": "4. Choosing あげます／もらいます／くれます with て-form verbs",
+        "explanation": "The three-way choice depends on point of view: あげます (I do something for someone), もらいます (I receive the action, marked with に for the doer), くれます (someone does something for me/us). The lesson's example sentences and conversation illustrate all three in parallel て-form constructions.",
+        "examples": "ミラーさんは 手伝って くれました。(Mr. Miller helped me [for my benefit].) / ワンさんは 山田さんに 車を 貸して もらいました。(Mr. Wang had Mr. Yamada lend him the car.)"
+      }
+    ]
+  },
+  "25": {
+    "vocab": [
+      {
+        "japanese": "かんがえます",
+        "romaji": "kangaemasu",
+        "english": "think, consider"
+      },
+      {
+        "japanese": "つきます",
+        "romaji": "tsukimasu",
+        "english": "arrive [at the station]"
+      },
+      {
+        "japanese": "りゅうがくします",
+        "romaji": "ryuugaku shimasu",
+        "english": "study abroad"
+      },
+      {
+        "japanese": "としを とります",
+        "romaji": "toshi o torimasu",
+        "english": "grow old"
+      },
+      {
+        "japanese": "いなか",
+        "romaji": "inaka",
+        "english": "countryside, hometown"
+      },
+      {
+        "japanese": "たいしかん",
+        "romaji": "taishikan",
+        "english": "embassy"
+      },
+      {
+        "japanese": "グループ",
+        "romaji": "guruupu",
+        "english": "group"
+      },
+      {
+        "japanese": "チャンス",
+        "romaji": "chansu",
+        "english": "chance"
+      },
+      {
+        "japanese": "おく",
+        "romaji": "oku",
+        "english": "hundred million"
+      },
+      {
+        "japanese": "もし~",
+        "romaji": "moshi~",
+        "english": "if ~"
+      },
+      {
+        "japanese": "~ても",
+        "romaji": "~temo",
+        "english": "however ~, even if ~"
+      },
+      {
+        "japanese": "てんきん",
+        "romaji": "tenkin",
+        "english": "transfer (てんきんします: be transferred to another office)"
+      },
+      {
+        "japanese": "こと",
+        "romaji": "koto",
+        "english": "thing, matter (~の ことです: it's about ~)"
+      },
+      {
+        "japanese": "いっしょに のみましょう。",
+        "romaji": "Issho ni nomimashou.",
+        "english": "Let's have a drink together."
+      },
+      {
+        "japanese": "いろいろ おせわに なりました。",
+        "romaji": "Iroiro osewa ni narimashita.",
+        "english": "Thank you for everything you have done for me."
+      },
+      {
+        "japanese": "がんばります",
+        "romaji": "ganbarimasu",
+        "english": "do one's best"
+      },
+      {
+        "japanese": "おげんきで。",
+        "romaji": "Ogenki de.",
+        "english": "Best of luck. (said when expecting a long separation)"
+      }
+    ],
+    "grammar": [
+      {
+        "title": "1. Plain past form + ら、~ — If...",
+        "explanation": "Attaching ら to the past-tense plain form of a verb, adjective, etc., turns the preceding clause into a conditional ('if'). Used when the speaker states an opinion, situation, request, etc., contingent on that condition.",
+        "examples": "お金が あったら、旅行します。(If I had money, I would travel.) / 暇だったら、手伝って ください。(If you are free, please give me a hand.) / 天気が よかったら、散歩しませんか。"
+      },
+      {
+        "title": "2. Vた-form + ら、~ — When.../After... (near-certain future events)",
+        "explanation": "The same ~たら pattern is also used for a matter that is sure to happen in the future — expressing what will be done once it is completed/reached. The main clause is always in the present tense in this usage.",
+        "examples": "10時に なったら、出かけましょう。(Let's go out when it's ten o'clock.) / 家に 帰ったら、すぐ シャワーを あびます。(I take a shower as soon as I get home.)"
+      },
+      {
+        "title": "3. Vて-form／い-adj(~く)て／な-adj/N で + も、~ — Even if...",
+        "explanation": "Presents a 'reverse condition': unlike plain-past-form ら, this expresses that an expected natural outcome does NOT occur, or the result is contrary to what would normally be expected.",
+        "examples": "雨が 降っても、洗たくします。(Even if it rains, I'll do the laundry.) / グループ旅行は 安くても、好きじゃありません。(Even if group tours are cheap, I don't like them.) / 日曜日でも、働きます。(Even if it's Sunday, I work.)"
+      },
+      {
+        "title": "4. たとえ／いくら ~ても — no matter how... / even if...",
+        "explanation": "たとえ and いくら both emphasize the ~ても (reverse-conditional) pattern. たとえ stresses the speaker's supposition; いくら stresses the degree of the condition.",
+        "examples": "1億円 あったら、いろいろな 国を 旅行したいです。 / いくら 考えても、わかりません。(No matter how much I think about it, I don't understand.) / いくら 高くても、買います。(No matter how expensive, I'll buy it.)"
+      },
+      {
+        "title": "5. Nが (subject of a subordinate clause) — extended review",
+        "explanation": "As noted in Lesson 16, the subject of a subordinate clause is marked with が. This also applies in clauses using ~たら, ~とき, ~まえに, ~かどうか, etc.",
+        "examples": "友だちが 来る まえに、部屋を 掃除します。(L.18) / 妻が 病気の とき、会社を 休みます。(L.23) / 友だちが 時間どおりに 来なかったら、どうしますか。(If your friend doesn't come on time, what will you do?)"
+      }
+    ]
+  }
+}

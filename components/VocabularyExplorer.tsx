@@ -134,6 +134,7 @@ export const VocabularyExplorer: React.FC = () => {
   const [showGrammarModal, setShowGrammarModal] = useState<boolean>(false);
   const [showScannedSheetModal, setShowScannedSheetModal] = useState<boolean>(false);
   const [showShortNoteModal, setShowShortNoteModal] = useState<boolean>(false);
+  const [modalLangMode, setModalLangMode] = useState<'en' | 'np' | 'both'>('both');
   const [basicsSubTab, setBasicsSubTab] = useState<BasicsSubTab>('HIRAGANA');
   const [activeKanaChar, setActiveKanaChar] = useState<string | null>(null);
 
@@ -246,7 +247,7 @@ export const VocabularyExplorer: React.FC = () => {
             }`}
           >
             <Sprout className="w-3.5 h-3.5" />
-            <span>🌱 Basics (ひらがな)</span>
+            <span>Basics</span>
           </button>
 
           {/* N5 / N4 / N3 tabs */}
@@ -506,9 +507,11 @@ export const VocabularyExplorer: React.FC = () => {
                       </div>
                     );
                   })()}
-                  <button onClick={() => setShowScannedSheetModal(true)} className="px-2.5 py-1 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white text-[11px] font-extrabold flex items-center gap-1 shadow-sm transition-all whitespace-nowrap cursor-pointer" title="View scanned Minna no Nihongo textbook image">
-                    <span>🖼️ Scanned Book Sheet (Lesson {selectedLesson})</span>
-                  </button>
+                  {selectedLesson > 25 && (
+                    <button onClick={() => setShowScannedSheetModal(true)} className="px-2.5 py-1 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white text-[11px] font-extrabold flex items-center gap-1 shadow-sm transition-all whitespace-nowrap cursor-pointer" title="View scanned Minna no Nihongo textbook image">
+                      <span>🖼️ Scanned Book Sheet (Lesson {selectedLesson})</span>
+                    </button>
+                  )}
                   <button onClick={() => setShowShortNoteModal(true)} className="px-2.5 py-1 rounded-lg bg-blue-600 hover:bg-blue-500 text-white text-[11px] font-extrabold flex items-center gap-1 shadow-sm transition-all whitespace-nowrap cursor-pointer">
                     <FileText className="w-3 h-3" /><span>Meanings</span>
                   </button>
@@ -660,25 +663,63 @@ export const VocabularyExplorer: React.FC = () => {
                 <button onClick={() => setShowShortNoteModal(false)} className="p-2 rounded-xl bg-slate-800 hover:bg-rose-600 text-slate-400 hover:text-white transition-all border border-slate-700"><X className="w-4 h-4" /></button>
               </div>
             </div>
+            {/* Language View Switcher */}
+            <div className="flex flex-wrap items-center justify-between gap-2 bg-slate-950 p-2.5 rounded-2xl border border-slate-800 text-xs print:hidden">
+              <div className="flex items-center gap-1.5 text-slate-400 font-bold text-[11px] sm:text-xs">
+                <span>View Language:</span>
+                <span className="text-[10px] font-medium text-slate-500 hidden sm:inline">(Toggle or slide right to view translations)</span>
+              </div>
+              <div className="flex items-center gap-1 bg-slate-900 p-1 rounded-xl border border-slate-800">
+                <button
+                  onClick={() => setModalLangMode('en')}
+                  className={`px-2.5 py-1 rounded-lg font-bold transition-all text-xs cursor-pointer ${modalLangMode === 'en' ? 'bg-blue-600 text-white shadow-sm' : 'text-slate-400 hover:text-white'}`}
+                >
+                  🇬🇧 English
+                </button>
+                <button
+                  onClick={() => setModalLangMode('np')}
+                  className={`px-2.5 py-1 rounded-lg font-bold transition-all text-xs cursor-pointer ${modalLangMode === 'np' ? 'bg-amber-600 text-white shadow-sm' : 'text-slate-400 hover:text-white'}`}
+                >
+                  🇳🇵 नेपाली
+                </button>
+                <button
+                  onClick={() => setModalLangMode('both')}
+                  className={`px-2.5 py-1 rounded-lg font-bold transition-all text-xs cursor-pointer ${modalLangMode === 'both' ? 'bg-emerald-600 text-white shadow-sm' : 'text-slate-400 hover:text-white'}`}
+                >
+                  🌐 Both
+                </button>
+              </div>
+            </div>
+
             <div className="overflow-x-auto rounded-2xl border border-slate-800">
-              <table className="w-full text-left text-xs border-collapse">
+              <table className={`w-full text-left text-xs border-collapse ${modalLangMode === 'both' ? 'min-w-[540px]' : ''}`}>
                 <thead>
                   <tr className="bg-slate-950 text-slate-400 border-b border-slate-800 font-bold uppercase text-[10px]">
-                    <th className="py-2.5 px-3.5 border-r border-slate-800">No.</th>
-                    <th className="py-2.5 px-3.5 border-r border-slate-800">Kanji (अक्षर)</th>
-                    <th className="py-2.5 px-3.5 border-r border-slate-800">Reading (उच्चारण)</th>
-                    <th className="py-2.5 px-3.5 border-r border-slate-800">English (अंग्रेजी)</th>
-                    <th className="py-2.5 px-3.5">Nepali (नेपाली)</th>
+                    <th className="py-2.5 px-2 sm:px-3.5 border-r border-slate-800 whitespace-nowrap text-center">No.</th>
+                    <th className="py-2.5 px-2.5 sm:px-3.5 border-r border-slate-800 whitespace-nowrap">Kanji (अक्षर)</th>
+                    <th className="py-2.5 px-2.5 sm:px-3.5 border-r border-slate-800 whitespace-nowrap">Reading (उच्चारण)</th>
+                    {(modalLangMode === 'en' || modalLangMode === 'both') && (
+                      <th className="py-2.5 px-2.5 sm:px-3.5 border-r border-slate-800 whitespace-nowrap">English (अंग्रेजी)</th>
+                    )}
+                    {(modalLangMode === 'np' || modalLangMode === 'both') && (
+                      <th className="py-2.5 px-2.5 sm:px-3.5 whitespace-nowrap">Nepali (नेपाली)</th>
+                    )}
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-slate-800/80 bg-slate-900/60">
                   {lessonVocab.map((v, i) => (
                     <tr key={v.id} onClick={() => playPronunciation(v.reading)} className="hover:bg-slate-800/60 cursor-pointer transition-colors">
-                      <td className="py-2.5 px-3.5 font-bold text-slate-500 border-r border-slate-800/40 text-center">{i + 1}</td>
-                      <td className="py-2.5 px-3.5 font-jp font-bold text-lg text-white border-r border-slate-800/40">{v.word}</td>
-                      <td className="py-2.5 px-3.5 font-jp text-base sm:text-lg text-rose-300 font-bold border-r border-slate-800/40">{v.reading}</td>
-                      <td className="py-2.5 px-3.5 text-slate-200 font-medium border-r border-slate-800/40">{v.meaning}</td>
-                      <td className="py-2.5 px-3.5 text-amber-300 font-semibold">{v.meaningNepali}</td>
+                      <td className="py-2 px-1.5 sm:py-2.5 sm:px-3.5 font-bold text-slate-500 border-r border-slate-800/40 text-center text-xs sm:text-sm">{i + 1}</td>
+                      <td className="py-2 px-2 sm:py-2.5 sm:px-3.5 font-jp font-bold text-sm sm:text-lg text-white border-r border-slate-800/40 whitespace-nowrap">
+                        {/[\u4e00-\u9faf]/.test(v.word) ? v.word : '—'}
+                      </td>
+                      <td className="py-2 px-2 sm:py-2.5 sm:px-3.5 font-jp text-xs sm:text-base text-rose-300 font-bold border-r border-slate-800/40 whitespace-nowrap">{v.reading}</td>
+                      {(modalLangMode === 'en' || modalLangMode === 'both') && (
+                        <td className="py-2 px-2 sm:py-2.5 sm:px-3.5 text-slate-200 font-medium border-r border-slate-800/40 text-xs sm:text-sm">{v.meaning}</td>
+                      )}
+                      {(modalLangMode === 'np' || modalLangMode === 'both') && (
+                        <td className="py-2 px-2 sm:py-2.5 sm:px-3.5 text-amber-300 font-semibold text-xs sm:text-sm">{v.meaningNepali}</td>
+                      )}
                     </tr>
                   ))}
                 </tbody>
@@ -712,8 +753,8 @@ export const VocabularyExplorer: React.FC = () => {
         </div>
       )}
     
-      {/* SCANNED TEXTBOOK VOCABULARY SHEET MODAL (public/N4-26-50-vocab/lesson{N}.jpg) */}
-      {showScannedSheetModal && (
+      {/* SCANNED TEXTBOOK VOCABULARY SHEET MODAL (N4 & N3 ONLY) */}
+      {showScannedSheetModal && selectedLesson > 25 && (
         <div className="fixed inset-0 z-50 bg-slate-950/90 backdrop-blur-md flex items-center justify-center p-3 sm:p-6 animate-fade-in">
           <div className="bg-slate-900 border border-slate-800 rounded-3xl p-4 sm:p-6 max-w-4xl w-full max-h-[92vh] flex flex-col justify-between shadow-2xl space-y-4">
             <div className="flex items-center justify-between border-b border-slate-800 pb-3">
@@ -750,7 +791,7 @@ export const VocabularyExplorer: React.FC = () => {
             </div>
 
             <div className="flex items-center justify-between pt-2 border-t border-slate-800 text-xs text-slate-400">
-              <span>Lesson {selectedLesson}: {LESSON_TOPICS[selectedLesson] || 'N4 Vocabulary'}</span>
+              <span>Lesson {selectedLesson}: {LESSON_TOPICS[selectedLesson] || 'Vocabulary'}</span>
               <button
                 onClick={() => setShowScannedSheetModal(false)}
                 className="px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-white font-bold text-xs transition-colors cursor-pointer"
