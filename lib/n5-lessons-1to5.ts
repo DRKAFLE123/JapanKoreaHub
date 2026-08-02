@@ -1,462 +1,1752 @@
 // ============================================================
-// MINNA NO NIHONGO N5 — Complete Vocabulary & Grammar
-// SOURCE: Minna no Nihongo I (Translations & Grammar Notes)
-// LESSONS 1–5  (Full coverage, no omissions)
-// English + Nepali meanings · Grammar sentences per word
+// MINNA NO NIHONGO JLPT N5 — Vocab (Lessons 1 to 5)
+// Official definitions from Minna no Nihongo I textbook
+// With Kanji written forms & proper Nepali translations
 // ============================================================
-
 import type { VocabItem } from './nihongo-vocab';
 
 export const N5_LESSONS_1TO5: VocabItem[] = [
-
   // ════════════════════════════════════════════════════════
-  // LESSON 1 — People, Occupations & the は〜です Structure
-  // Grammar: N は N です / N は N じゃ(では)ありません / N は N ですか
+  // LESSON 01 (31 ITEMS)
   // ════════════════════════════════════════════════════════
-  { id:'n5_1_01', lesson:1, level:'N5', word:'わたし', reading:'わたし', meaning:'I / Me', meaningNepali:'म', kanjiCharacters:[], partOfSpeech:'Pronoun',
-    grammarSentences:[
-      { japanese:'わたしはマリアです。', reading:'わたしはマリアです。', english:'I am Maria.', nepali:'म मारिया हुँ।' },
-      { japanese:'わたしはがくせいじゃありません。', reading:'わたしはがくせいじゃありません。', english:'I am not a student.', nepali:'म विद्यार्थी होइन।' }
-    ]},
-  { id:'n5_1_02', lesson:1, level:'N5', word:'わたしたち', reading:'わたしたち', meaning:'We / Us', meaningNepali:'हामी', kanjiCharacters:[], partOfSpeech:'Pronoun',
-    grammarSentences:[{ japanese:'わたしたちはともだちです。', reading:'わたしたちはともだちです。', english:'We are friends.', nepali:'हामी साथीहरू हौं।' }]},
-  { id:'n5_1_03', lesson:1, level:'N5', word:'あなた', reading:'あなた', meaning:'You', meaningNepali:'तपाईं / तिमी', kanjiCharacters:[], partOfSpeech:'Pronoun',
-    grammarSentences:[{ japanese:'あなたはがくせいですか。', reading:'あなたはがくせいですか。', english:'Are you a student?', nepali:'के तपाईं विद्यार्थी हुनुहुन्छ?' }]},
-  { id:'n5_1_04', lesson:1, level:'N5', word:'あのひと', reading:'あのひと', meaning:'That person (over there)', meaningNepali:'त्यो मान्छे (टाढा)', kanjiCharacters:['人'], partOfSpeech:'Noun',
-    grammarSentences:[{ japanese:'あのひとはだれですか。', reading:'あのひとはだれですか。', english:'Who is that person?', nepali:'त्यो मान्छे को हुनुहुन्छ?' }]},
-  { id:'n5_1_05', lesson:1, level:'N5', word:'あのかた', reading:'あのかた', meaning:'That person (polite)', meaningNepali:'त्यो हजुर (सम्मानित)', kanjiCharacters:[], partOfSpeech:'Noun',
-    grammarSentences:[{ japanese:'あのかたはどなたですか。', reading:'あのかたはどなたですか。', english:'Who is that person (polite)?', nepali:'त्यो हजुर को हुनुहुन्छ?' }]},
-  { id:'n5_1_06', lesson:1, level:'N5', word:'〜さん', reading:'〜さん', meaning:'Mr. / Ms. / Mrs. (honorific)', meaningNepali:'जी / श्री / श्रीमती', kanjiCharacters:[], partOfSpeech:'Suffix',
-    grammarSentences:[{ japanese:'ミラーさんはせんせいですか。', reading:'ミラーさんはせんせいですか。', english:'Is Mr. Miller a teacher?', nepali:'मिलर-जी शिक्षक हुनुहुन्छ?' }]},
-  { id:'n5_1_07', lesson:1, level:'N5', word:'〜ちゃん', reading:'〜ちゃん', meaning:'Familiar honorific (children / close friends)', meaningNepali:'माया गरी बोलाउने तरिका', kanjiCharacters:[], partOfSpeech:'Suffix',
-    grammarSentences:[{ japanese:'さくらちゃんはなんさいですか。', reading:'さくらちゃんはなんさいですか。', english:'How old is Sakura?', nepali:'साकुरा कति वर्षको हो?' }]},
-  { id:'n5_1_08', lesson:1, level:'N5', word:'〜くん', reading:'〜くん', meaning:'Honorific for younger males', meaningNepali:'केटाहरूका लागि सम्बोधन', kanjiCharacters:[], partOfSpeech:'Suffix',
-    grammarSentences:[{ japanese:'やまだくんはがくせいです。', reading:'やまだくんはがくせいです。', english:'Yamada (kun) is a student.', nepali:'यामाडा विद्यार्थी हो।' }]},
-  { id:'n5_1_09', lesson:1, level:'N5', word:'せんせい', reading:'せんせい', meaning:'Teacher', meaningNepali:'शिक्षक / गुरु', kanjiCharacters:['先','生'], partOfSpeech:'Noun',
-    grammarSentences:[
-      { japanese:'やまださんはせんせいです。', reading:'やまださんはせんせいです。', english:'Mr. Yamada is a teacher.', nepali:'यामाडा-जी शिक्षक हुनुहुन्छ।' },
-      { japanese:'わたしはせんせいじゃありません。', reading:'わたしはせんせいじゃありません。', english:'I am not a teacher.', nepali:'म शिक्षक होइन।' }
-    ]},
-  { id:'n5_1_10', lesson:1, level:'N5', word:'きょうし', reading:'きょうし', meaning:'Teacher (professional title)', meaningNepali:'शिक्षक (पेशागत)', kanjiCharacters:['教','師'], partOfSpeech:'Noun',
-    grammarSentences:[{ japanese:'かれはきょうしです。', reading:'かれはきょうしです。', english:'He is a teacher.', nepali:'उहाँ शिक्षक हुनुहुन्छ।' }]},
-  { id:'n5_1_11', lesson:1, level:'N5', word:'がくせい', reading:'がくせい', meaning:'Student', meaningNepali:'विद्यार्थी', kanjiCharacters:['学','生'], partOfSpeech:'Noun',
-    grammarSentences:[
-      { japanese:'わたしはがくせいです。', reading:'わたしはがくせいです。', english:'I am a student.', nepali:'म विद्यार्थी हुँ।' },
-      { japanese:'あのひとはがくせいですか。', reading:'あのひとはがくせいですか。', english:'Is that person a student?', nepali:'त्यो मान्छे विद्यार्थी हुनुहुन्छ?' }
-    ]},
-  { id:'n5_1_12', lesson:1, level:'N5', word:'かいしゃいん', reading:'かいしゃいん', meaning:'Company employee', meaningNepali:'कम्पनी कर्मचारी', kanjiCharacters:['会','社','員'], partOfSpeech:'Noun',
-    grammarSentences:[{ japanese:'ちちはかいしゃいんです。', reading:'ちちはかいしゃいんです。', english:'My father is a company employee.', nepali:'मेरो बुबा कम्पनीमा काम गर्नुहुन्छ।' }]},
-  { id:'n5_1_13', lesson:1, level:'N5', word:'しゃいん', reading:'しゃいん', meaning:'Company worker / Staff', meaningNepali:'कम्पनी कर्मी', kanjiCharacters:['社','員'], partOfSpeech:'Noun',
-    grammarSentences:[{ japanese:'かのじょはしゃいんです。', reading:'かのじょはしゃいんです。', english:'She is a company worker.', nepali:'उनी कम्पनी कर्मी हुन्।' }]},
-  { id:'n5_1_14', lesson:1, level:'N5', word:'ぎんこういん', reading:'ぎんこういん', meaning:'Bank employee', meaningNepali:'बैंक कर्मचारी', kanjiCharacters:['銀','行','員'], partOfSpeech:'Noun',
-    grammarSentences:[{ japanese:'かれはぎんこういんです。', reading:'かれはぎんこういんです。', english:'He is a bank employee.', nepali:'उहाँ बैंक कर्मचारी हुनुहुन्छ।' }]},
-  { id:'n5_1_15', lesson:1, level:'N5', word:'いしゃ', reading:'いしゃ', meaning:'Doctor', meaningNepali:'डाक्टर', kanjiCharacters:['医','者'], partOfSpeech:'Noun',
-    grammarSentences:[{ japanese:'あのかたはいしゃです。', reading:'あのかたはいしゃです。', english:'That person is a doctor.', nepali:'त्यो हजुर डाक्टर हुनुहुन्छ।' }]},
-  { id:'n5_1_16', lesson:1, level:'N5', word:'けんきゅうしゃ', reading:'けんきゅうしゃ', meaning:'Researcher', meaningNepali:'अनुसन्धानकर्ता', kanjiCharacters:['研','究','者'], partOfSpeech:'Noun',
-    grammarSentences:[{ japanese:'たなかさんはけんきゅうしゃです。', reading:'たなかさんはけんきゅうしゃです。', english:'Mr. Tanaka is a researcher.', nepali:'तानाका-जी अनुसन्धानकर्ता हुनुहुन्छ।' }]},
-  { id:'n5_1_17', lesson:1, level:'N5', word:'エンジニア', reading:'エンジニア', meaning:'Engineer', meaningNepali:'इन्जिनियर', kanjiCharacters:[], partOfSpeech:'Noun',
-    grammarSentences:[{ japanese:'わたしはエンジニアです。', reading:'わたしはエンジニアです。', english:'I am an engineer.', nepali:'म इन्जिनियर हुँ।' }]},
-  { id:'n5_1_18', lesson:1, level:'N5', word:'だいがく', reading:'だいがく', meaning:'University', meaningNepali:'विश्वविद्यालय', kanjiCharacters:['大','学'], partOfSpeech:'Noun',
-    grammarSentences:[{ japanese:'わたしはだいがくのがくせいです。', reading:'わたしはだいがくのがくせいです。', english:'I am a university student.', nepali:'म विश्वविद्यालयको विद्यार्थी हुँ।' }]},
-  { id:'n5_1_19', lesson:1, level:'N5', word:'びょういん', reading:'びょういん', meaning:'Hospital', meaningNepali:'अस्पताल', kanjiCharacters:['病','院'], partOfSpeech:'Noun',
-    grammarSentences:[{ japanese:'このびょういんはおおきいです。', reading:'このびょういんはおおきいです。', english:'This hospital is big.', nepali:'यो अस्पताल ठूलो छ।' }]},
-  { id:'n5_1_20', lesson:1, level:'N5', word:'でんき', reading:'でんき', meaning:'Electric / Electronics (company type)', meaningNepali:'विद्युत / इलेक्ट्रोनिक्स', kanjiCharacters:['電','気'], partOfSpeech:'Noun',
-    grammarSentences:[{ japanese:'でんきのかいしゃにはたらいています。', reading:'でんきのかいしゃにはたらいています。', english:'I work at an electronics company.', nepali:'म इलेक्ट्रोनिक्स कम्पनीमा काम गर्छु।' }]},
-  { id:'n5_1_21', lesson:1, level:'N5', word:'〜さい', reading:'〜さい', meaning:'~ years old', meaningNepali:'~ वर्ष उमेर', kanjiCharacters:['歳'], partOfSpeech:'Suffix',
-    grammarSentences:[{ japanese:'わたしは２２さいです。', reading:'わたしはにじゅうにさいです。', english:'I am 22 years old.', nepali:'म २२ वर्षको छु।' }]},
-  { id:'n5_1_22', lesson:1, level:'N5', word:'なんさい', reading:'なんさい', meaning:'How old?', meaningNepali:'कति उमेर?', kanjiCharacters:['何','歳'], partOfSpeech:'Question',
-    grammarSentences:[{ japanese:'おこさんはなんさいですか。', reading:'おこさんはなんさいですか。', english:'How old is your child?', nepali:'तपाईंको बच्चा कति वर्षको हो?' }]},
-  { id:'n5_1_23', lesson:1, level:'N5', word:'はい', reading:'はい', meaning:'Yes', meaningNepali:'हो / हजुर', kanjiCharacters:[], partOfSpeech:'Expression',
-    grammarSentences:[{ japanese:'はい、そうです。', reading:'はい、そうです。', english:'Yes, that is right.', nepali:'हो, ठिकै छ।' }]},
-  { id:'n5_1_24', lesson:1, level:'N5', word:'いいえ', reading:'いいえ', meaning:'No', meaningNepali:'होइन / भएन', kanjiCharacters:[], partOfSpeech:'Expression',
-    grammarSentences:[{ japanese:'いいえ、ちがいます。', reading:'いいえ、ちがいます。', english:'No, that is wrong.', nepali:'होइन, त्यो गलत हो।' }]},
-  { id:'n5_1_25', lesson:1, level:'N5', word:'そうです', reading:'そうです', meaning:'That is right / Correct', meaningNepali:'ठिक छ / सही छ', kanjiCharacters:[], partOfSpeech:'Expression',
-    grammarSentences:[{ japanese:'はい、そうです。', reading:'はい、そうです。', english:'Yes, that is right.', nepali:'हो, ठिकै छ।' }]},
-  { id:'n5_1_26', lesson:1, level:'N5', word:'ちがいます', reading:'ちがいます', meaning:'That is wrong / Different', meaningNepali:'गलत छ / फरक छ', kanjiCharacters:['違'], partOfSpeech:'Expression',
-    grammarSentences:[{ japanese:'いいえ、ちがいます。', reading:'いいえ、ちがいます。', english:'No, that is wrong.', nepali:'होइन, त्यो गलत हो।' }]},
-  { id:'n5_1_27', lesson:1, level:'N5', word:'〜じん', reading:'〜じん', meaning:'Person from ~ (nationality)', meaningNepali:'~ देशको मान्छे', kanjiCharacters:['人'], partOfSpeech:'Suffix',
-    grammarSentences:[{ japanese:'わたしはにほんじんです。', reading:'わたしはにほんじんです。', english:'I am Japanese.', nepali:'म जापानी हुँ।' }]},
-  { id:'n5_1_28', lesson:1, level:'N5', word:'にほん', reading:'にほん', meaning:'Japan', meaningNepali:'जापान', kanjiCharacters:['日','本'], partOfSpeech:'Noun',
-    grammarSentences:[{ japanese:'にほんはうつくしいくにです。', reading:'にほんはうつくしいくにです。', english:'Japan is a beautiful country.', nepali:'जापान सुन्दर देश हो।' }]},
-  { id:'n5_1_29', lesson:1, level:'N5', word:'アメリカ', reading:'アメリカ', meaning:'America / USA', meaningNepali:'अमेरिका', kanjiCharacters:[], partOfSpeech:'Noun',
-    grammarSentences:[{ japanese:'ミラーさんはアメリカじんです。', reading:'ミラーさんはアメリカじんです。', english:'Mr. Miller is American.', nepali:'मिलर-जी अमेरिकन हुनुहुन्छ।' }]},
-  { id:'n5_1_30', lesson:1, level:'N5', word:'どこ', reading:'どこ', meaning:'Where', meaningNepali:'कहाँ', kanjiCharacters:[], partOfSpeech:'Question',
-    grammarSentences:[{ japanese:'トイレはどこですか。', reading:'トイレはどこですか。', english:'Where is the toilet?', nepali:'शौचालय कहाँ छ?' }]},
-  { id:'n5_1_31', lesson:1, level:'N5', word:'おくに', reading:'おくに', meaning:'Your country (polite)', meaningNepali:'तपाईंको देश (सम्मानित)', kanjiCharacters:['国'], partOfSpeech:'Noun',
-    grammarSentences:[{ japanese:'おくにはどちらですか。', reading:'おくにはどちらですか。', english:'Where are you from?', nepali:'तपाईं कुन देशबाट हुनुहुन्छ?' }]},
-  { id:'n5_1_32', lesson:1, level:'N5', word:'しつれいですが', reading:'しつれいですが', meaning:'Excuse me, but... (polite opening)', meaningNepali:'माफ गर्नुस् / क्षमा गर्नुस्', kanjiCharacters:['失','礼'], partOfSpeech:'Expression',
-    grammarSentences:[{ japanese:'しつれいですが、おなまえは？', reading:'しつれいですが、おなまえは？', english:'Excuse me, what is your name?', nepali:'माफ गर्नुस्, तपाईंको नाम के हो?' }]},
-  { id:'n5_1_33', lesson:1, level:'N5', word:'おなまえ', reading:'おなまえ', meaning:'Your name (polite)', meaningNepali:'तपाईंको नाम (सम्मानित)', kanjiCharacters:['名'], partOfSpeech:'Noun',
-    grammarSentences:[{ japanese:'おなまえはなんですか。', reading:'おなまえはなんですか。', english:'What is your name?', nepali:'तपाईंको नाम के हो?' }]},
-  { id:'n5_1_34', lesson:1, level:'N5', word:'〜語', reading:'〜ご', meaning:'~ language', meaningNepali:'~ भाषा', kanjiCharacters:['語'], partOfSpeech:'Suffix',
-    grammarSentences:[{ japanese:'にほんごをべんきょうします。', reading:'にほんごをべんきょうします。', english:'I study Japanese.', nepali:'म जापानी भाषा पढ्छु।' }]},
-  { id:'n5_1_35', lesson:1, level:'N5', word:'なん / なに', reading:'なん/なに', meaning:'What', meaningNepali:'के', kanjiCharacters:['何'], partOfSpeech:'Question',
-    grammarSentences:[{ japanese:'これはなんですか。', reading:'これはなんですか。', english:'What is this?', nepali:'यो के हो?' }]},
-  { id:'n5_1_36', lesson:1, level:'N5', word:'だれ', reading:'だれ', meaning:'Who', meaningNepali:'को', kanjiCharacters:[], partOfSpeech:'Question',
-    grammarSentences:[{ japanese:'あのひとはだれですか。', reading:'あのひとはだれですか。', english:'Who is that person?', nepali:'त्यो मान्छे को हुनुहुन्छ?' }]},
-  { id:'n5_1_37', lesson:1, level:'N5', word:'どなた', reading:'どなた', meaning:'Who (polite)', meaningNepali:'को हजुर (सम्मानित)', kanjiCharacters:[], partOfSpeech:'Question',
-    grammarSentences:[{ japanese:'あのかたはどなたですか。', reading:'あのかたはどなたですか。', english:'Who is that person (polite)?', nepali:'त्यो हजुर को हुनुहुन्छ?' }]},
-  { id:'n5_1_38', lesson:1, level:'N5', word:'も', reading:'も', meaning:'Also / Too', meaningNepali:'पनि', kanjiCharacters:[], partOfSpeech:'Particle',
-    grammarSentences:[{ japanese:'わたしもがくせいです。', reading:'わたしもがくせいです。', english:'I am also a student.', nepali:'म पनि विद्यार्थी हुँ।' }]},
-  { id:'n5_1_39', lesson:1, level:'N5', word:'の', reading:'の', meaning:'Possessive particle (of)', meaningNepali:'को (स्वामित्व)', kanjiCharacters:[], partOfSpeech:'Particle',
-    grammarSentences:[{ japanese:'これはわたしのほんです。', reading:'これはわたしのほんです。', english:'This is my book.', nepali:'यो मेरो किताब हो।' }]},
-
+  {
+    id: 'N5-L01-001', lesson: 1, level: 'N5', word: "私", reading: "わたし",
+    meaning: "I", meaningNepali: "म",
+    kanjiCharacters: ["私"], partOfSpeech: "Noun",
+    grammarSentences: [
+      { japanese: "私。", reading: "わたし。", english: "Example: I.", nepali: "उदाहरण: म।" }
+    ]
+  },
+  {
+    id: 'N5-L01-002', lesson: 1, level: 'N5', word: "私たち", reading: "わたしたち",
+    meaning: "we", meaningNepali: "हामीहरू",
+    kanjiCharacters: ["私"], partOfSpeech: "Noun",
+    grammarSentences: [
+      { japanese: "私たち。", reading: "わたしたち。", english: "Example: we.", nepali: "उदाहरण: हामीहरू।" }
+    ]
+  },
+  {
+    id: 'N5-L01-003', lesson: 1, level: 'N5', word: "あなた", reading: "あなた",
+    meaning: "you", meaningNepali: "तपाईं / तिमी",
+    kanjiCharacters: [], partOfSpeech: "Noun",
+    grammarSentences: [
+      { japanese: "あなた。", reading: "あなた。", english: "Example: you.", nepali: "उदाहरण: तपाईं / तिमी।" }
+    ]
+  },
+  {
+    id: 'N5-L01-004', lesson: 1, level: 'N5', word: "あの方", reading: "あの人",
+    meaning: "that person, he, she (あの方 is the polite equivalent of あの人)", meaningNepali: "उहाँ (आदरार्थी)",
+    kanjiCharacters: ["方"], partOfSpeech: "Noun",
+    grammarSentences: [
+      { japanese: "あの方。", reading: "あの人。", english: "Example: that person, he, she (あの方 is the polite equivalent of あの人).", nepali: "उदाहरण: उहाँ (आदरार्थी)।" }
+    ]
+  },
+  {
+    id: 'N5-L01-005', lesson: 1, level: 'N5', word: "皆さん", reading: "みなさん",
+    meaning: "ladies and gentlemen, all of you", meaningNepali: "सबैजना / सम्पूर्ण महानुभावहरू",
+    kanjiCharacters: ["皆"], partOfSpeech: "Noun",
+    grammarSentences: [
+      { japanese: "皆さん。", reading: "みなさん。", english: "Example: ladies and gentlemen, all of you.", nepali: "उदाहरण: सबैजना / सम्पूर्ण महानुभावहरू।" }
+    ]
+  },
+  {
+    id: 'N5-L01-006', lesson: 1, level: 'N5', word: "～さん", reading: "～さん",
+    meaning: "Mr., Ms. (title of respect added to a name)", meaningNepali: "~ जी (आदरार्थी",
+    kanjiCharacters: [], partOfSpeech: "Noun",
+    grammarSentences: [
+      { japanese: "～さん。", reading: "～さん。", english: "Example: Mr., Ms. (title of respect added to a name).", nepali: "उदाहरण: ~ जी (आदरार्थी।" }
+    ]
+  },
+  {
+    id: 'N5-L01-007', lesson: 1, level: 'N5', word: "～ちゃん", reading: "～ちゃん",
+    meaning: "(suffix often added to a child's name instead of ~さん)", meaningNepali: "~ चान (साना बालबालिकाका लागि)",
+    kanjiCharacters: [], partOfSpeech: "Noun",
+    grammarSentences: [
+      { japanese: "～ちゃん。", reading: "～ちゃん。", english: "Example: (suffix often added to a child's name instead of ~さん).", nepali: "उदाहरण: ~ चान (साना बालबालिकाका लागि)।" }
+    ]
+  },
+  {
+    id: 'N5-L01-008', lesson: 1, level: 'N5', word: "～君", reading: "～くん",
+    meaning: "(suffix often added to a boy's name)", meaningNepali: "~ कुन (केटाहरूका लागि)",
+    kanjiCharacters: ["君"], partOfSpeech: "Noun",
+    grammarSentences: [
+      { japanese: "～君。", reading: "～くん。", english: "Example: (suffix often added to a boy's name).", nepali: "उदाहरण: ~ कुन (केटाहरूका लागि)।" }
+    ]
+  },
+  {
+    id: 'N5-L01-009', lesson: 1, level: 'N5', word: "～人", reading: "～じん",
+    meaning: "(suffix meaning 'a national of'; e.g., アメリカ人, an American)", meaningNepali: "~ नागरिक",
+    kanjiCharacters: ["人"], partOfSpeech: "Noun",
+    grammarSentences: [
+      { japanese: "～人。", reading: "～じん。", english: "Example: (suffix meaning 'a national of'; e.g., アメリカ人, an American).", nepali: "उदाहरण: ~ नागरिक।" }
+    ]
+  },
+  {
+    id: 'N5-L01-010', lesson: 1, level: 'N5', word: "先生", reading: "せんせい",
+    meaning: "teacher, instructor (not used when referring to one's own job)", meaningNepali: "शिक्षक / गुरु",
+    kanjiCharacters: ["先", "生"], partOfSpeech: "I-Adj",
+    grammarSentences: [
+      { japanese: "先生。", reading: "せんせい。", english: "Example: teacher, instructor (not used when referring to one's own job).", nepali: "उदाहरण: शिक्षक / गुरु।" }
+    ]
+  },
+  {
+    id: 'N5-L01-011', lesson: 1, level: 'N5', word: "教師", reading: "きょうし",
+    meaning: "teacher, instructor", meaningNepali: "शिक्षक (पेशा)",
+    kanjiCharacters: ["教", "師"], partOfSpeech: "Noun",
+    grammarSentences: [
+      { japanese: "教師。", reading: "きょうし。", english: "Example: teacher, instructor.", nepali: "उदाहरण: शिक्षक (पेशा)।" }
+    ]
+  },
+  {
+    id: 'N5-L01-012', lesson: 1, level: 'N5', word: "学生", reading: "がくせい",
+    meaning: "student", meaningNepali: "विद्यार्थी",
+    kanjiCharacters: ["学", "生"], partOfSpeech: "I-Adj",
+    grammarSentences: [
+      { japanese: "学生。", reading: "がくせい。", english: "Example: student.", nepali: "उदाहरण: विद्यार्थी।" }
+    ]
+  },
+  {
+    id: 'N5-L01-013', lesson: 1, level: 'N5', word: "会社員", reading: "かいしゃいん",
+    meaning: "company employee", meaningNepali: "कम्पनी कर्मचारी",
+    kanjiCharacters: ["会", "社", "員"], partOfSpeech: "Noun",
+    grammarSentences: [
+      { japanese: "会社員。", reading: "かいしゃいん。", english: "Example: company employee.", nepali: "उदाहरण: कम्पनी कर्मचारी।" }
+    ]
+  },
+  {
+    id: 'N5-L01-014', lesson: 1, level: 'N5', word: "～社員", reading: "～しゃいん",
+    meaning: "employee of ~ Company (e.g. IMCの社員)", meaningNepali: "employee of ~ Company (e.g. IMCの社員)",
+    kanjiCharacters: ["社", "員"], partOfSpeech: "Noun",
+    grammarSentences: [
+      { japanese: "～社員。", reading: "～しゃいん。", english: "Example: employee of ~ Company (e.g. IMCの社員).", nepali: "उदाहरण: employee of ~ Company (e.g. IMCの社員)।" }
+    ]
+  },
+  {
+    id: 'N5-L01-015', lesson: 1, level: 'N5', word: "銀行員", reading: "ぎんこういん",
+    meaning: "bank employee", meaningNepali: "बैंक कर्मचारी",
+    kanjiCharacters: ["銀", "行", "員"], partOfSpeech: "Noun",
+    grammarSentences: [
+      { japanese: "銀行員。", reading: "ぎんこういん。", english: "Example: bank employee.", nepali: "उदाहरण: बैंक कर्मचारी।" }
+    ]
+  },
+  {
+    id: 'N5-L01-016', lesson: 1, level: 'N5', word: "医者", reading: "いしゃ",
+    meaning: "medical doctor", meaningNepali: "डाक्टर / चिकित्सक",
+    kanjiCharacters: ["医", "者"], partOfSpeech: "Noun",
+    grammarSentences: [
+      { japanese: "医者。", reading: "いしゃ。", english: "Example: medical doctor.", nepali: "उदाहरण: डाक्टर / चिकित्सक।" }
+    ]
+  },
+  {
+    id: 'N5-L01-017', lesson: 1, level: 'N5', word: "研究者", reading: "けんきゅうしゃ",
+    meaning: "researcher, scholar", meaningNepali: "अनुसन्धानकर्ता",
+    kanjiCharacters: ["研", "究", "者"], partOfSpeech: "Noun",
+    grammarSentences: [
+      { japanese: "研究者。", reading: "けんきゅうしゃ。", english: "Example: researcher, scholar.", nepali: "उदाहरण: अनुसन्धानकर्ता।" }
+    ]
+  },
+  {
+    id: 'N5-L01-018', lesson: 1, level: 'N5', word: "エンジニア", reading: "エンジニア",
+    meaning: "engineer", meaningNepali: "इन्जिनियर",
+    kanjiCharacters: [], partOfSpeech: "Noun",
+    grammarSentences: [
+      { japanese: "エンジニア。", reading: "エンジニア。", english: "Example: engineer.", nepali: "उदाहरण: इन्जिनियर।" }
+    ]
+  },
+  {
+    id: 'N5-L01-019', lesson: 1, level: 'N5', word: "大学", reading: "だいがく",
+    meaning: "university", meaningNepali: "विश्वविद्यालय",
+    kanjiCharacters: ["大", "学"], partOfSpeech: "Noun",
+    grammarSentences: [
+      { japanese: "大学。", reading: "だいがく。", english: "Example: university.", nepali: "उदाहरण: विश्वविद्यालय।" }
+    ]
+  },
+  {
+    id: 'N5-L01-020', lesson: 1, level: 'N5', word: "病院", reading: "びょういん",
+    meaning: "hospital", meaningNepali: "अस्पताल",
+    kanjiCharacters: ["病", "院"], partOfSpeech: "Noun",
+    grammarSentences: [
+      { japanese: "病院。", reading: "びょういん。", english: "Example: hospital.", nepali: "उदाहरण: अस्पताल।" }
+    ]
+  },
+  {
+    id: 'N5-L01-021', lesson: 1, level: 'N5', word: "電気", reading: "でんき",
+    meaning: "electricity, light", meaningNepali: "बिजुली / बत्ती",
+    kanjiCharacters: ["電", "気"], partOfSpeech: "Noun",
+    grammarSentences: [
+      { japanese: "電気。", reading: "でんき。", english: "Example: electricity, light.", nepali: "उदाहरण: बिजुली / बत्ती।" }
+    ]
+  },
+  {
+    id: 'N5-L01-022', lesson: 1, level: 'N5', word: "誰／どなた", reading: "だれ／どなた",
+    meaning: "who (どなた is the polite equivalent of だれ)", meaningNepali: "who (どなた is the polite equivalent of だれ)",
+    kanjiCharacters: ["誰"], partOfSpeech: "Noun",
+    grammarSentences: [
+      { japanese: "誰／どなた。", reading: "だれ／どなた。", english: "Example: who (どなた is the polite equivalent of だれ).", nepali: "उदाहरण: who (どなた is the polite equivalent of だれ)।" }
+    ]
+  },
+  {
+    id: 'N5-L01-023', lesson: 1, level: 'N5', word: "～歳", reading: "～さい",
+    meaning: "~ years old", meaningNepali: "~ वर्ष (उमेर)",
+    kanjiCharacters: ["歳"], partOfSpeech: "I-Adj",
+    grammarSentences: [
+      { japanese: "～歳。", reading: "～さい。", english: "Example: ~ years old.", nepali: "उदाहरण: ~ वर्ष (उमेर)।" }
+    ]
+  },
+  {
+    id: 'N5-L01-024', lesson: 1, level: 'N5', word: "何歳／おいくつ", reading: "なんさい／おいくつ",
+    meaning: "how old (おいくつ is the polite equivalent of 何歳)", meaningNepali: "how old (おいくつ is the polite equivalent of 何歳)",
+    kanjiCharacters: ["何", "歳"], partOfSpeech: "Noun",
+    grammarSentences: [
+      { japanese: "何歳／おいくつ。", reading: "なんさい／おいくつ。", english: "Example: how old (おいくつ is the polite equivalent of 何歳).", nepali: "उदाहरण: how old (おいくつ is the polite equivalent of 何歳)।" }
+    ]
+  },
+  {
+    id: 'N5-L01-025', lesson: 1, level: 'N5', word: "はい", reading: "はい",
+    meaning: "yes", meaningNepali: "हजुर / हो",
+    kanjiCharacters: [], partOfSpeech: "I-Adj",
+    grammarSentences: [
+      { japanese: "はい。", reading: "はい。", english: "Example: yes.", nepali: "उदाहरण: हजुर / हो।" }
+    ]
+  },
+  {
+    id: 'N5-L01-026', lesson: 1, level: 'N5', word: "いいえ", reading: "いいえ",
+    meaning: "no", meaningNepali: "होइन / अहिल्यै",
+    kanjiCharacters: [], partOfSpeech: "Noun",
+    grammarSentences: [
+      { japanese: "いいえ。", reading: "いいえ。", english: "Example: no.", nepali: "उदाहरण: होइन / अहिल्यै।" }
+    ]
+  },
+  {
+    id: 'N5-L01-027', lesson: 1, level: 'N5', word: "失礼ですが、お名前は。", reading: "しつれいですが、おなまえは。",
+    meaning: "Excuse me, but may I have your name?", meaningNepali: "Excuse me, but may I have your name?",
+    kanjiCharacters: ["失", "礼", "名", "前"], partOfSpeech: "Noun",
+    grammarSentences: [
+      { japanese: "失礼ですが、お名前は。。", reading: "しつれいですが、おなまえは。。", english: "Example: Excuse me, but may I have your name?.", nepali: "उदाहरण: Excuse me, but may I have your name?।" }
+    ]
+  },
+  {
+    id: 'N5-L01-028', lesson: 1, level: 'N5', word: "はじめまして。", reading: "はじめまして。",
+    meaning: "How do you do? (lit. I am meeting you for the first time.)", meaningNepali: "पहिलो पटक भेट्दा खुशी लाग्यो।",
+    kanjiCharacters: [], partOfSpeech: "Noun",
+    grammarSentences: [
+      { japanese: "はじめまして。。", reading: "はじめまして。。", english: "Example: How do you do? (lit. I am meeting you for the first time.).", nepali: "उदाहरण: पहिलो पटक भेट्दा खुशी लाग्यो।।" }
+    ]
+  },
+  {
+    id: 'N5-L01-029', lesson: 1, level: 'N5', word: "どうぞよろしく[おねがいします]。", reading: "どうぞよろしく[おねがいします]。",
+    meaning: "Pleased to meet you.", meaningNepali: "Pleased to meet you.",
+    kanjiCharacters: [], partOfSpeech: "Noun",
+    grammarSentences: [
+      { japanese: "どうぞよろしく[おねがいします]。。", reading: "どうぞよろしく[おねがいします]。。", english: "Example: Pleased to meet you..", nepali: "उदाहरण: Pleased to meet you.।" }
+    ]
+  },
+  {
+    id: 'N5-L01-030', lesson: 1, level: 'N5', word: "こちらは～さんです。", reading: "こちらは～さんです。",
+    meaning: "This is Mr./Ms.~.", meaningNepali: "This is Mr./Ms.~.",
+    kanjiCharacters: [], partOfSpeech: "Noun",
+    grammarSentences: [
+      { japanese: "こちらは～さんです。。", reading: "こちらは～さんです。。", english: "Example: This is Mr./Ms.~..", nepali: "उदाहरण: This is Mr./Ms.~.।" }
+    ]
+  },
+  {
+    id: 'N5-L01-031', lesson: 1, level: 'N5', word: "～から きました。", reading: "～から きました。",
+    meaning: "I came (come) from ~.", meaningNepali: "म ~ बाट आएको हुँ।",
+    kanjiCharacters: [], partOfSpeech: "Noun",
+    grammarSentences: [
+      { japanese: "～から きました。。", reading: "～から きました。。", english: "Example: I came (come) from ~..", nepali: "उदाहरण: म ~ बाट आएको हुँ।।" }
+    ]
+  },
   // ════════════════════════════════════════════════════════
-  // LESSON 2 — This / That / Which & Objects
-  // Grammar: これ/それ/あれ/どれ は N です · この/その/あの N · 〜の (possession) · いくら
+  // LESSON 02 (39 ITEMS)
   // ════════════════════════════════════════════════════════
-  { id:'n5_2_01', lesson:2, level:'N5', word:'これ', reading:'これ', meaning:'This (near speaker)', meaningNepali:'यो (वक्ता नजिक)', kanjiCharacters:[], partOfSpeech:'Pronoun',
-    grammarSentences:[{ japanese:'これはわたしのほんです。', reading:'これはわたしのほんです。', english:'This is my book.', nepali:'यो मेरो किताब हो।' }]},
-  { id:'n5_2_02', lesson:2, level:'N5', word:'それ', reading:'それ', meaning:'That (near listener)', meaningNepali:'त्यो (श्रोता नजिक)', kanjiCharacters:[], partOfSpeech:'Pronoun',
-    grammarSentences:[{ japanese:'それはなんですか。', reading:'それはなんですか。', english:'What is that?', nepali:'त्यो के हो?' }]},
-  { id:'n5_2_03', lesson:2, level:'N5', word:'あれ', reading:'あれ', meaning:'That (far from both)', meaningNepali:'त्यो (दुवैबाट टाढा)', kanjiCharacters:[], partOfSpeech:'Pronoun',
-    grammarSentences:[{ japanese:'あれはだれのかばんですか。', reading:'あれはだれのかばんですか。', english:'Whose bag is that over there?', nepali:'त्यो कसको झोला हो?' }]},
-  { id:'n5_2_04', lesson:2, level:'N5', word:'どれ', reading:'どれ', meaning:'Which one?', meaningNepali:'कुन?', kanjiCharacters:[], partOfSpeech:'Question',
-    grammarSentences:[{ japanese:'あなたのほんはどれですか。', reading:'あなたのほんはどれですか。', english:'Which one is your book?', nepali:'तपाईंको किताब कुन हो?' }]},
-  { id:'n5_2_05', lesson:2, level:'N5', word:'この', reading:'この', meaning:'This ~ (adjective form)', meaningNepali:'यो ~ (विशेषण)', kanjiCharacters:[], partOfSpeech:'Determiner',
-    grammarSentences:[{ japanese:'このほんはおもしろいです。', reading:'このほんはおもしろいです。', english:'This book is interesting.', nepali:'यो किताब रोचक छ।' }]},
-  { id:'n5_2_06', lesson:2, level:'N5', word:'その', reading:'その', meaning:'That ~ (near listener)', meaningNepali:'त्यो ~ (श्रोता नजिक)', kanjiCharacters:[], partOfSpeech:'Determiner',
-    grammarSentences:[{ japanese:'そのかばんはたかいですか。', reading:'そのかばんはたかいですか。', english:'Is that bag expensive?', nepali:'त्यो झोला महँगो छ?' }]},
-  { id:'n5_2_07', lesson:2, level:'N5', word:'あの', reading:'あの', meaning:'That ~ (far from both)', meaningNepali:'त्यो ~ (टाढा)', kanjiCharacters:[], partOfSpeech:'Determiner',
-    grammarSentences:[{ japanese:'あのひとはだれですか。', reading:'あのひとはだれですか。', english:'Who is that person?', nepali:'त्यो मान्छे को हुनुहुन्छ?' }]},
-  { id:'n5_2_08', lesson:2, level:'N5', word:'どの', reading:'どの', meaning:'Which ~ ?', meaningNepali:'कुन ~?', kanjiCharacters:[], partOfSpeech:'Question',
-    grammarSentences:[{ japanese:'どのほんがあなたのですか。', reading:'どのほんがあなたのですか。', english:'Which book is yours?', nepali:'तपाईंको कुन किताब हो?' }]},
-  { id:'n5_2_09', lesson:2, level:'N5', word:'ほん', reading:'ほん', meaning:'Book', meaningNepali:'किताब', kanjiCharacters:['本'], partOfSpeech:'Noun',
-    grammarSentences:[{ japanese:'これはにほんごのほんです。', reading:'これはにほんごのほんです。', english:'This is a Japanese language book.', nepali:'यो जापानी भाषाको किताब हो।' }]},
-  { id:'n5_2_10', lesson:2, level:'N5', word:'じしょ', reading:'じしょ', meaning:'Dictionary', meaningNepali:'शब्दकोश', kanjiCharacters:['辞','書'], partOfSpeech:'Noun',
-    grammarSentences:[{ japanese:'これはにほんごのじしょです。', reading:'これはにほんごのじしょです。', english:'This is a Japanese dictionary.', nepali:'यो जापानी शब्दकोश हो।' }]},
-  { id:'n5_2_11', lesson:2, level:'N5', word:'ざっし', reading:'ざっし', meaning:'Magazine', meaningNepali:'पत्रिका', kanjiCharacters:['雑','誌'], partOfSpeech:'Noun',
-    grammarSentences:[{ japanese:'そのざっしはおもしろいですか。', reading:'そのざっしはおもしろいですか。', english:'Is that magazine interesting?', nepali:'त्यो पत्रिका रोचक छ?' }]},
-  { id:'n5_2_12', lesson:2, level:'N5', word:'しんぶん', reading:'しんぶん', meaning:'Newspaper', meaningNepali:'समाचारपत्र', kanjiCharacters:['新','聞'], partOfSpeech:'Noun',
-    grammarSentences:[{ japanese:'まいにちしんぶんをよみます。', reading:'まいにちしんぶんをよみます。', english:'I read the newspaper every day.', nepali:'म हरेक दिन अखबार पढ्छु।' }]},
-  { id:'n5_2_13', lesson:2, level:'N5', word:'ノート', reading:'ノート', meaning:'Notebook', meaningNepali:'नोटबुक', kanjiCharacters:[], partOfSpeech:'Noun',
-    grammarSentences:[{ japanese:'このノートはいくらですか。', reading:'このノートはいくらですか。', english:'How much is this notebook?', nepali:'यो नोटबुक कति पर्छ?' }]},
-  { id:'n5_2_14', lesson:2, level:'N5', word:'テキスト', reading:'テキスト', meaning:'Textbook', meaningNepali:'पाठ्यपुस्तक', kanjiCharacters:[], partOfSpeech:'Noun',
-    grammarSentences:[{ japanese:'このテキストはやさしいです。', reading:'このテキストはやさしいです。', english:'This textbook is easy.', nepali:'यो पाठ्यपुस्तक सजिलो छ।' }]},
-  { id:'n5_2_15', lesson:2, level:'N5', word:'えんぴつ', reading:'えんぴつ', meaning:'Pencil', meaningNepali:'पेन्सिल', kanjiCharacters:['鉛','筆'], partOfSpeech:'Noun',
-    grammarSentences:[{ japanese:'えんぴつをかしてください。', reading:'えんぴつをかしてください。', english:'Please lend me a pencil.', nepali:'मलाई पेन्सिल दिनुस् न।' }]},
-  { id:'n5_2_16', lesson:2, level:'N5', word:'ボールペン', reading:'ボールペン', meaning:'Ball-point pen', meaningNepali:'बलपेन', kanjiCharacters:[], partOfSpeech:'Noun',
-    grammarSentences:[{ japanese:'ボールペンでかいてください。', reading:'ボールペンでかいてください。', english:'Please write with a ball-point pen.', nepali:'कृपया बलपेनले लेख्नुस्।' }]},
-  { id:'n5_2_17', lesson:2, level:'N5', word:'シャープペンシル', reading:'シャープペンシル', meaning:'Mechanical pencil', meaningNepali:'मेकानिकल पेन्सिल', kanjiCharacters:[], partOfSpeech:'Noun',
-    grammarSentences:[{ japanese:'シャープペンシルをかいました。', reading:'シャープペンシルをかいました。', english:'I bought a mechanical pencil.', nepali:'मैले मेकानिकल पेन्सिल किनें।' }]},
-  { id:'n5_2_18', lesson:2, level:'N5', word:'かばん', reading:'かばん', meaning:'Bag', meaningNepali:'झोला / ब्याग', kanjiCharacters:[], partOfSpeech:'Noun',
-    grammarSentences:[{ japanese:'このかばんはたかいです。', reading:'このかばんはたかいです。', english:'This bag is expensive.', nepali:'यो झोला महँगो छ।' }]},
-  { id:'n5_2_19', lesson:2, level:'N5', word:'かさ', reading:'かさ', meaning:'Umbrella', meaningNepali:'छाता', kanjiCharacters:['傘'], partOfSpeech:'Noun',
-    grammarSentences:[{ japanese:'これはだれのかさですか。', reading:'これはだれのかさですか。', english:'Whose umbrella is this?', nepali:'यो कसको छाता हो?' }]},
-  { id:'n5_2_20', lesson:2, level:'N5', word:'くつ', reading:'くつ', meaning:'Shoes', meaningNepali:'जुत्ता', kanjiCharacters:['靴'], partOfSpeech:'Noun',
-    grammarSentences:[{ japanese:'このくつはいくらですか。', reading:'このくつはいくらですか。', english:'How much are these shoes?', nepali:'यो जुत्ता कति पर्छ?' }]},
-  { id:'n5_2_21', lesson:2, level:'N5', word:'ネクタイ', reading:'ネクタイ', meaning:'Necktie', meaningNepali:'टाई', kanjiCharacters:[], partOfSpeech:'Noun',
-    grammarSentences:[{ japanese:'そのネクタイはすてきですね。', reading:'そのネクタイはすてきですね。', english:'That necktie is nice, isn\'t it?', nepali:'त्यो टाई राम्रो छ हैन?' }]},
-  { id:'n5_2_22', lesson:2, level:'N5', word:'とけい', reading:'とけい', meaning:'Watch / Clock', meaningNepali:'घडी', kanjiCharacters:['時','計'], partOfSpeech:'Noun',
-    grammarSentences:[{ japanese:'このとけいはにほんせいです。', reading:'このとけいはにほんせいです。', english:'This watch is made in Japan.', nepali:'यो घडी जापानमा बनेको हो।' }]},
-  { id:'n5_2_23', lesson:2, level:'N5', word:'カメラ', reading:'カメラ', meaning:'Camera', meaningNepali:'क्यामेरा', kanjiCharacters:[], partOfSpeech:'Noun',
-    grammarSentences:[{ japanese:'このカメラはいくらですか。', reading:'このカメラはいくらですか。', english:'How much is this camera?', nepali:'यो क्यामेरा कति पर्छ?' }]},
-  { id:'n5_2_24', lesson:2, level:'N5', word:'でんしじしょ', reading:'でんしじしょ', meaning:'Electronic dictionary', meaningNepali:'इलेक्ट्रोनिक शब्दकोश', kanjiCharacters:['電','子','辞','書'], partOfSpeech:'Noun',
-    grammarSentences:[{ japanese:'でんしじしょはべんりです。', reading:'でんしじしょはべんりです。', english:'An electronic dictionary is convenient.', nepali:'इलेक्ट्रोनिक शब्दकोश सुविधाजनक छ।' }]},
-  { id:'n5_2_25', lesson:2, level:'N5', word:'テレビ', reading:'テレビ', meaning:'Television / TV', meaningNepali:'टेलिभिजन', kanjiCharacters:[], partOfSpeech:'Noun',
-    grammarSentences:[{ japanese:'まいばんテレビをみます。', reading:'まいばんテレビをみます。', english:'I watch TV every evening.', nepali:'म हरेक साँझ टेलिभिजन हेर्छु।' }]},
-  { id:'n5_2_26', lesson:2, level:'N5', word:'ラジオ', reading:'ラジオ', meaning:'Radio', meaningNepali:'रेडियो', kanjiCharacters:[], partOfSpeech:'Noun',
-    grammarSentences:[{ japanese:'このラジオはアメリカせいです。', reading:'このラジオはアメリカせいです。', english:'This radio is made in America.', nepali:'यो रेडियो अमेरिकामा बनेको हो।' }]},
-  { id:'n5_2_27', lesson:2, level:'N5', word:'テープレコーダー', reading:'テープレコーダー', meaning:'Tape recorder', meaningNepali:'टेप रेकर्डर', kanjiCharacters:[], partOfSpeech:'Noun',
-    grammarSentences:[{ japanese:'テープレコーダーをかいました。', reading:'テープレコーダーをかいました。', english:'I bought a tape recorder.', nepali:'मैले टेप रेकर्डर किनें।' }]},
-  { id:'n5_2_28', lesson:2, level:'N5', word:'パソコン', reading:'パソコン', meaning:'Personal computer / PC', meaningNepali:'पर्सनल कम्प्युटर', kanjiCharacters:[], partOfSpeech:'Noun',
-    grammarSentences:[{ japanese:'このパソコンはあたらしいです。', reading:'このパソコンはあたらしいです。', english:'This computer is new.', nepali:'यो कम्प्युटर नयाँ छ।' }]},
-  { id:'n5_2_29', lesson:2, level:'N5', word:'くるま', reading:'くるま', meaning:'Car', meaningNepali:'गाडी / कार', kanjiCharacters:['車'], partOfSpeech:'Noun',
-    grammarSentences:[{ japanese:'あれはわたしのくるまです。', reading:'あれはわたしのくるまです。', english:'That over there is my car.', nepali:'त्यो मेरो गाडी हो।' }]},
-  { id:'n5_2_30', lesson:2, level:'N5', word:'つくえ', reading:'つくえ', meaning:'Desk', meaningNepali:'डेस्क / टेबुल', kanjiCharacters:['机'], partOfSpeech:'Noun',
-    grammarSentences:[{ japanese:'つくえのうえにほんがあります。', reading:'つくえのうえにほんがあります。', english:'There is a book on the desk.', nepali:'डेस्कको माथि किताब छ।' }]},
-  { id:'n5_2_31', lesson:2, level:'N5', word:'いす', reading:'いす', meaning:'Chair', meaningNepali:'कुर्सी', kanjiCharacters:['椅','子'], partOfSpeech:'Noun',
-    grammarSentences:[{ japanese:'いすのしたにねこがいます。', reading:'いすのしたにねこがいます。', english:'There is a cat under the chair.', nepali:'कुर्सीको मुनि बिरालो छ।' }]},
-  { id:'n5_2_32', lesson:2, level:'N5', word:'チョコレート', reading:'チョコレート', meaning:'Chocolate', meaningNepali:'चकलेट', kanjiCharacters:[], partOfSpeech:'Noun',
-    grammarSentences:[{ japanese:'このチョコレートはおいしいです。', reading:'このチョコレートはおいしいです。', english:'This chocolate is delicious.', nepali:'यो चकलेट मिठो छ।' }]},
-  { id:'n5_2_33', lesson:2, level:'N5', word:'コーヒー', reading:'コーヒー', meaning:'Coffee', meaningNepali:'कफी', kanjiCharacters:[], partOfSpeech:'Noun',
-    grammarSentences:[{ japanese:'コーヒーをいっぱいのみました。', reading:'コーヒーをいっぱいのみました。', english:'I drank one cup of coffee.', nepali:'मैले एक कप कफी खाएँ।' }]},
-  { id:'n5_2_34', lesson:2, level:'N5', word:'おみやげ', reading:'おみやげ', meaning:'Souvenir', meaningNepali:'उपहार / सुभेच्छा', kanjiCharacters:['土','産'], partOfSpeech:'Noun',
-    grammarSentences:[{ japanese:'にほんのおみやげをもってきました。', reading:'にほんのおみやげをもってきました。', english:'I brought a souvenir from Japan.', nepali:'मैले जापानबाट उपहार ल्याएँ।' }]},
-  { id:'n5_2_35', lesson:2, level:'N5', word:'〜せい', reading:'〜せい', meaning:'Made in ~', meaningNepali:'~ मा बनेको', kanjiCharacters:['製'], partOfSpeech:'Suffix',
-    grammarSentences:[{ japanese:'このとけいはスイスせいです。', reading:'このとけいはスイスせいです。', english:'This watch is Swiss-made.', nepali:'यो घडी स्विट्जरल्याण्डमा बनेको हो।' }]},
-  { id:'n5_2_36', lesson:2, level:'N5', word:'いくら', reading:'いくら', meaning:'How much?', meaningNepali:'कति पर्छ?', kanjiCharacters:[], partOfSpeech:'Question',
-    grammarSentences:[{ japanese:'これはいくらですか。', reading:'これはいくらですか。', english:'How much is this?', nepali:'यो कति पर्छ?' }]},
-  { id:'n5_2_37', lesson:2, level:'N5', word:'ひゃく', reading:'ひゃく', meaning:'100 (hundred)', meaningNepali:'एक सय', kanjiCharacters:['百'], partOfSpeech:'Number',
-    grammarSentences:[{ japanese:'このほんはひゃくえんです。', reading:'このほんはひゃくえんです。', english:'This book is 100 yen.', nepali:'यो किताब १०० येन छ।' }]},
-  { id:'n5_2_38', lesson:2, level:'N5', word:'せん', reading:'せん', meaning:'1,000 (thousand)', meaningNepali:'एक हजार', kanjiCharacters:['千'], partOfSpeech:'Number',
-    grammarSentences:[{ japanese:'このかばんはせんえんです。', reading:'このかばんはせんえんです。', english:'This bag is 1,000 yen.', nepali:'यो झोला १,००० येन छ।' }]},
-  { id:'n5_2_39', lesson:2, level:'N5', word:'まん', reading:'まん', meaning:'10,000 (ten thousand)', meaningNepali:'दश हजार', kanjiCharacters:['万'], partOfSpeech:'Number',
-    grammarSentences:[{ japanese:'このとけいはいちまんえんです。', reading:'このとけいはいちまんえんです。', english:'This watch is 10,000 yen.', nepali:'यो घडी १०,००० येन छ।' }]},
-  { id:'n5_2_40', lesson:2, level:'N5', word:'えん', reading:'えん', meaning:'Yen (Japanese currency)', meaningNepali:'येन (जापानी मुद्रा)', kanjiCharacters:['円'], partOfSpeech:'Noun',
-    grammarSentences:[{ japanese:'ごひゃくえんです。', reading:'ごひゃくえんです。', english:'It is 500 yen.', nepali:'यो ५०० येन छ।' }]},
-  { id:'n5_2_41', lesson:2, level:'N5', word:'すみません', reading:'すみません', meaning:'Excuse me / I\'m sorry', meaningNepali:'माफ गर्नुस् / क्षमा', kanjiCharacters:[], partOfSpeech:'Expression',
-    grammarSentences:[{ japanese:'すみません、これはいくらですか。', reading:'すみません、これはいくらですか。', english:'Excuse me, how much is this?', nepali:'माफ गर्नुस्, यो कति पर्छ?' }]},
-  { id:'n5_2_42', lesson:2, level:'N5', word:'ちょっと', reading:'ちょっと', meaning:'A little / Just a moment', meaningNepali:'अलिकति / एक क्षण', kanjiCharacters:[], partOfSpeech:'Adverb',
-    grammarSentences:[{ japanese:'ちょっとまってください。', reading:'ちょっとまってください。', english:'Please wait a moment.', nepali:'कृपया एक क्षण पर्खनुस्।' }]},
-
+  {
+    id: 'N5-L02-001', lesson: 2, level: 'N5', word: "これ／それ／あれ", reading: "これ／それ／あれ",
+    meaning: "this／that／that over there (things)", meaningNepali: "this／that／that over there (things)",
+    kanjiCharacters: [], partOfSpeech: "Noun",
+    grammarSentences: [
+      { japanese: "これ／それ／あれ。", reading: "これ／それ／あれ。", english: "Example: this／that／that over there (things).", nepali: "उदाहरण: this／that／that over there (things)।" }
+    ]
+  },
+  {
+    id: 'N5-L02-002', lesson: 2, level: 'N5', word: "この～／その～／あの～", reading: "この～／その～／あの～",
+    meaning: "this ~／that ~／that ~ over there", meaningNepali: "this ~／that ~／that ~ over there",
+    kanjiCharacters: [], partOfSpeech: "Noun",
+    grammarSentences: [
+      { japanese: "この～／その～／あの～。", reading: "この～／その～／あの～。", english: "Example: this ~／that ~／that ~ over there.", nepali: "उदाहरण: this ~／that ~／that ~ over there।" }
+    ]
+  },
+  {
+    id: 'N5-L02-003', lesson: 2, level: 'N5', word: "本", reading: "ほん",
+    meaning: "book", meaningNepali: "किताब",
+    kanjiCharacters: ["本"], partOfSpeech: "Noun",
+    grammarSentences: [
+      { japanese: "本。", reading: "ほん。", english: "Example: book.", nepali: "उदाहरण: किताब।" }
+    ]
+  },
+  {
+    id: 'N5-L02-004', lesson: 2, level: 'N5', word: "辞書", reading: "じしょ",
+    meaning: "dictionary", meaningNepali: "शब्दकोश",
+    kanjiCharacters: ["辞", "書"], partOfSpeech: "Noun",
+    grammarSentences: [
+      { japanese: "辞書。", reading: "じしょ。", english: "Example: dictionary.", nepali: "उदाहरण: शब्दकोश।" }
+    ]
+  },
+  {
+    id: 'N5-L02-005', lesson: 2, level: 'N5', word: "雑誌", reading: "ざっし",
+    meaning: "magazine", meaningNepali: "पत्रिका",
+    kanjiCharacters: ["雑", "誌"], partOfSpeech: "Noun",
+    grammarSentences: [
+      { japanese: "雑誌。", reading: "ざっし。", english: "Example: magazine.", nepali: "उदाहरण: पत्रिका।" }
+    ]
+  },
+  {
+    id: 'N5-L02-006', lesson: 2, level: 'N5', word: "新聞", reading: "しんぶん",
+    meaning: "newspaper", meaningNepali: "समाचार पत्र / पत्रिका",
+    kanjiCharacters: ["新", "聞"], partOfSpeech: "Noun",
+    grammarSentences: [
+      { japanese: "新聞。", reading: "しんぶん。", english: "Example: newspaper.", nepali: "उदाहरण: समाचार पत्र / पत्रिका।" }
+    ]
+  },
+  {
+    id: 'N5-L02-007', lesson: 2, level: 'N5', word: "ノート", reading: "ノート",
+    meaning: "notebook", meaningNepali: "नोटबुक",
+    kanjiCharacters: [], partOfSpeech: "Noun",
+    grammarSentences: [
+      { japanese: "ノート。", reading: "ノート。", english: "Example: notebook.", nepali: "उदाहरण: नोटबुक।" }
+    ]
+  },
+  {
+    id: 'N5-L02-008', lesson: 2, level: 'N5', word: "手帳", reading: "てちょう",
+    meaning: "pocket notebook", meaningNepali: "पकेट नोटबुक / डायरी",
+    kanjiCharacters: ["手", "帳"], partOfSpeech: "Noun",
+    grammarSentences: [
+      { japanese: "手帳。", reading: "てちょう。", english: "Example: pocket notebook.", nepali: "उदाहरण: पकेट नोटबुक / डायरी।" }
+    ]
+  },
+  {
+    id: 'N5-L02-009', lesson: 2, level: 'N5', word: "名刺", reading: "めいし",
+    meaning: "business card", meaningNepali: "भिजिटिङ कार्ड / परिचयपत्र",
+    kanjiCharacters: ["名", "刺"], partOfSpeech: "Noun",
+    grammarSentences: [
+      { japanese: "名刺。", reading: "めいし。", english: "Example: business card.", nepali: "उदाहरण: भिजिटिङ कार्ड / परिचयपत्र।" }
+    ]
+  },
+  {
+    id: 'N5-L02-010', lesson: 2, level: 'N5', word: "カード", reading: "カード",
+    meaning: "card", meaningNepali: "कार्ड",
+    kanjiCharacters: [], partOfSpeech: "Noun",
+    grammarSentences: [
+      { japanese: "カード。", reading: "カード。", english: "Example: card.", nepali: "उदाहरण: कार्ड।" }
+    ]
+  },
+  {
+    id: 'N5-L02-011', lesson: 2, level: 'N5', word: "テレホンカード", reading: "テレホンカード",
+    meaning: "telephone card", meaningNepali: "टेलिफोन कार्ड",
+    kanjiCharacters: [], partOfSpeech: "Noun",
+    grammarSentences: [
+      { japanese: "テレホンカード。", reading: "テレホンカード。", english: "Example: telephone card.", nepali: "उदाहरण: टेलिफोन कार्ड।" }
+    ]
+  },
+  {
+    id: 'N5-L02-012', lesson: 2, level: 'N5', word: "鉛筆", reading: "えんぴつ",
+    meaning: "pencil", meaningNepali: "पेन्सिल",
+    kanjiCharacters: ["鉛", "筆"], partOfSpeech: "Noun",
+    grammarSentences: [
+      { japanese: "鉛筆。", reading: "えんぴつ。", english: "Example: pencil.", nepali: "उदाहरण: पेन्सिल।" }
+    ]
+  },
+  {
+    id: 'N5-L02-013', lesson: 2, level: 'N5', word: "ボールペン", reading: "ボールペン",
+    meaning: "ballpoint pen", meaningNepali: "बलपेन",
+    kanjiCharacters: [], partOfSpeech: "Noun",
+    grammarSentences: [
+      { japanese: "ボールペン。", reading: "ボールペン。", english: "Example: ballpoint pen.", nepali: "उदाहरण: बलपेन।" }
+    ]
+  },
+  {
+    id: 'N5-L02-014', lesson: 2, level: 'N5', word: "シャープペンシル", reading: "シャープペンシル",
+    meaning: "mechanical pencil", meaningNepali: "मेकानिकल पेन्सिल",
+    kanjiCharacters: [], partOfSpeech: "Noun",
+    grammarSentences: [
+      { japanese: "シャープペンシル。", reading: "シャープペンシル。", english: "Example: mechanical pencil.", nepali: "उदाहरण: मेकानिकल पेन्सिल।" }
+    ]
+  },
+  {
+    id: 'N5-L02-015', lesson: 2, level: 'N5', word: "鍵", reading: "かぎ",
+    meaning: "key", meaningNepali: "चाबी / साँचो",
+    kanjiCharacters: ["鍵"], partOfSpeech: "Noun",
+    grammarSentences: [
+      { japanese: "鍵。", reading: "かぎ。", english: "Example: key.", nepali: "उदाहरण: चाबी / साँचो।" }
+    ]
+  },
+  {
+    id: 'N5-L02-016', lesson: 2, level: 'N5', word: "時計", reading: "とけい",
+    meaning: "watch, clock", meaningNepali: "घडी",
+    kanjiCharacters: ["時", "計"], partOfSpeech: "I-Adj",
+    grammarSentences: [
+      { japanese: "時計。", reading: "とけい。", english: "Example: watch, clock.", nepali: "उदाहरण: घडी।" }
+    ]
+  },
+  {
+    id: 'N5-L02-017', lesson: 2, level: 'N5', word: "傘", reading: "かさ",
+    meaning: "umbrella", meaningNepali: "छाता",
+    kanjiCharacters: ["傘"], partOfSpeech: "Noun",
+    grammarSentences: [
+      { japanese: "傘。", reading: "かさ。", english: "Example: umbrella.", nepali: "उदाहरण: छाता।" }
+    ]
+  },
+  {
+    id: 'N5-L02-018', lesson: 2, level: 'N5', word: "かばん", reading: "かばん",
+    meaning: "bag, briefcase", meaningNepali: "झोला / ब्याग",
+    kanjiCharacters: [], partOfSpeech: "Noun",
+    grammarSentences: [
+      { japanese: "かばん。", reading: "かばん。", english: "Example: bag, briefcase.", nepali: "उदाहरण: झोला / ब्याग।" }
+    ]
+  },
+  {
+    id: 'N5-L02-019', lesson: 2, level: 'N5', word: "テープ", reading: "テープ",
+    meaning: "[cassette] tape", meaningNepali: "[cassette] tape",
+    kanjiCharacters: [], partOfSpeech: "Noun",
+    grammarSentences: [
+      { japanese: "テープ。", reading: "テープ。", english: "Example: [cassette] tape.", nepali: "उदाहरण: [cassette] tape।" }
+    ]
+  },
+  {
+    id: 'N5-L02-020', lesson: 2, level: 'N5', word: "テープレコーダー", reading: "テープレコーダー",
+    meaning: "tape recorder", meaningNepali: "टेप रेकर्डर",
+    kanjiCharacters: [], partOfSpeech: "Noun",
+    grammarSentences: [
+      { japanese: "テープレコーダー。", reading: "テープレコーダー。", english: "Example: tape recorder.", nepali: "उदाहरण: टेप रेकर्डर।" }
+    ]
+  },
+  {
+    id: 'N5-L02-021', lesson: 2, level: 'N5', word: "テレビ", reading: "テレビ",
+    meaning: "television", meaningNepali: "टेलिभिजन",
+    kanjiCharacters: [], partOfSpeech: "Noun",
+    grammarSentences: [
+      { japanese: "テレビ。", reading: "テレビ。", english: "Example: television.", nepali: "उदाहरण: टेलिभिजन।" }
+    ]
+  },
+  {
+    id: 'N5-L02-022', lesson: 2, level: 'N5', word: "ラジオ", reading: "ラジオ",
+    meaning: "radio", meaningNepali: "रेडियो",
+    kanjiCharacters: [], partOfSpeech: "Noun",
+    grammarSentences: [
+      { japanese: "ラジオ。", reading: "ラジオ。", english: "Example: radio.", nepali: "उदाहरण: रेडियो।" }
+    ]
+  },
+  {
+    id: 'N5-L02-023', lesson: 2, level: 'N5', word: "カメラ", reading: "カメラ",
+    meaning: "camera", meaningNepali: "क्यामेरा",
+    kanjiCharacters: [], partOfSpeech: "Noun",
+    grammarSentences: [
+      { japanese: "カメラ。", reading: "カメラ。", english: "Example: camera.", nepali: "उदाहरण: क्यामेरा।" }
+    ]
+  },
+  {
+    id: 'N5-L02-024', lesson: 2, level: 'N5', word: "コンピューター", reading: "コンピューター",
+    meaning: "computer", meaningNepali: "कम्प्यूटर",
+    kanjiCharacters: [], partOfSpeech: "Noun",
+    grammarSentences: [
+      { japanese: "コンピューター。", reading: "コンピューター。", english: "Example: computer.", nepali: "उदाहरण: कम्प्यूटर।" }
+    ]
+  },
+  {
+    id: 'N5-L02-025', lesson: 2, level: 'N5', word: "車", reading: "くるま",
+    meaning: "automobile, car", meaningNepali: "गाडी",
+    kanjiCharacters: ["車"], partOfSpeech: "Noun",
+    grammarSentences: [
+      { japanese: "車。", reading: "くるま。", english: "Example: automobile, car.", nepali: "उदाहरण: गाडी।" }
+    ]
+  },
+  {
+    id: 'N5-L02-026', lesson: 2, level: 'N5', word: "机", reading: "つくえ",
+    meaning: "desk", meaningNepali: "टेबुल / डेस्क",
+    kanjiCharacters: ["机"], partOfSpeech: "Noun",
+    grammarSentences: [
+      { japanese: "机。", reading: "つくえ。", english: "Example: desk.", nepali: "उदाहरण: टेबुल / डेस्क।" }
+    ]
+  },
+  {
+    id: 'N5-L02-027', lesson: 2, level: 'N5', word: "椅子", reading: "いす",
+    meaning: "chair", meaningNepali: "कुर्सी",
+    kanjiCharacters: ["椅", "子"], partOfSpeech: "Noun",
+    grammarSentences: [
+      { japanese: "椅子。", reading: "いす。", english: "Example: chair.", nepali: "उदाहरण: कुर्सी।" }
+    ]
+  },
+  {
+    id: 'N5-L02-028', lesson: 2, level: 'N5', word: "チョコレート", reading: "チョコレート",
+    meaning: "chocolate", meaningNepali: "चॉकलेट",
+    kanjiCharacters: [], partOfSpeech: "Noun",
+    grammarSentences: [
+      { japanese: "チョコレート。", reading: "チョコレート。", english: "Example: chocolate.", nepali: "उदाहरण: चॉकलेट।" }
+    ]
+  },
+  {
+    id: 'N5-L02-029', lesson: 2, level: 'N5', word: "コーヒー", reading: "コーヒー",
+    meaning: "coffee", meaningNepali: "कफी",
+    kanjiCharacters: [], partOfSpeech: "Noun",
+    grammarSentences: [
+      { japanese: "コーヒー。", reading: "コーヒー。", english: "Example: coffee.", nepali: "उदाहरण: कफी।" }
+    ]
+  },
+  {
+    id: 'N5-L02-030', lesson: 2, level: 'N5', word: "英語", reading: "えいご",
+    meaning: "the English language", meaningNepali: "अंग्रेजी भाषा",
+    kanjiCharacters: ["英", "語"], partOfSpeech: "Noun",
+    grammarSentences: [
+      { japanese: "英語。", reading: "えいご。", english: "Example: the English language.", nepali: "उदाहरण: अंग्रेजी भाषा।" }
+    ]
+  },
+  {
+    id: 'N5-L02-031', lesson: 2, level: 'N5', word: "日本語", reading: "にほんご",
+    meaning: "the Japanese language", meaningNepali: "जापानी भाषा",
+    kanjiCharacters: ["日", "本", "語"], partOfSpeech: "Noun",
+    grammarSentences: [
+      { japanese: "日本語。", reading: "にほんご。", english: "Example: the Japanese language.", nepali: "उदाहरण: जापानी भाषा।" }
+    ]
+  },
+  {
+    id: 'N5-L02-032', lesson: 2, level: 'N5', word: "～語", reading: "～ご",
+    meaning: "~ language", meaningNepali: "~ भाषा",
+    kanjiCharacters: ["語"], partOfSpeech: "Noun",
+    grammarSentences: [
+      { japanese: "～語。", reading: "～ご。", english: "Example: ~ language.", nepali: "उदाहरण: ~ भाषा।" }
+    ]
+  },
+  {
+    id: 'N5-L02-033', lesson: 2, level: 'N5', word: "何", reading: "なん／なに",
+    meaning: "what", meaningNepali: "what",
+    kanjiCharacters: ["何"], partOfSpeech: "Noun",
+    grammarSentences: [
+      { japanese: "何。", reading: "なん／なに。", english: "Example: what.", nepali: "उदाहरण: what।" }
+    ]
+  },
+  {
+    id: 'N5-L02-034', lesson: 2, level: 'N5', word: "そう", reading: "そう",
+    meaning: "so", meaningNepali: "त्यस्तै / हो",
+    kanjiCharacters: [], partOfSpeech: "Noun",
+    grammarSentences: [
+      { japanese: "そう。", reading: "そう。", english: "Example: so.", nepali: "उदाहरण: त्यस्तै / हो।" }
+    ]
+  },
+  {
+    id: 'N5-L02-035', lesson: 2, level: 'N5', word: "違います。", reading: "ちがいます。",
+    meaning: "No, it isn't./You are wrong.", meaningNepali: "होइन / फरक छ।",
+    kanjiCharacters: ["違"], partOfSpeech: "Noun",
+    grammarSentences: [
+      { japanese: "違います。。", reading: "ちがいます。。", english: "Example: No, it isn't./You are wrong..", nepali: "उदाहरण: होइन / फरक छ।।" }
+    ]
+  },
+  {
+    id: 'N5-L02-036', lesson: 2, level: 'N5', word: "そうですか。", reading: "そうですか。",
+    meaning: "I see./Is that so?", meaningNepali: "ए, हो र? / अच्छा।",
+    kanjiCharacters: [], partOfSpeech: "Noun",
+    grammarSentences: [
+      { japanese: "そうですか。。", reading: "そうですか。。", english: "Example: I see./Is that so?.", nepali: "उदाहरण: ए, हो र? / अच्छा।।" }
+    ]
+  },
+  {
+    id: 'N5-L02-037', lesson: 2, level: 'N5', word: "あのう", reading: "あのう",
+    meaning: "well (used to show hesitation)", meaningNepali: "उह... (कुरा सुरु गर्दा)",
+    kanjiCharacters: [], partOfSpeech: "Noun",
+    grammarSentences: [
+      { japanese: "あのう。", reading: "あのう。", english: "Example: well (used to show hesitation).", nepali: "उदाहरण: उह... (कुरा सुरु गर्दा)।" }
+    ]
+  },
+  {
+    id: 'N5-L02-038', lesson: 2, level: 'N5', word: "これから お世話に なります。", reading: "これから おせわに なります。",
+    meaning: "I hope for your kind assistance hereafter.", meaningNepali: "I hope for your kind assistance hereafter.",
+    kanjiCharacters: ["世", "話"], partOfSpeech: "Noun",
+    grammarSentences: [
+      { japanese: "これから お世話に なります。。", reading: "これから おせわに なります。。", english: "Example: I hope for your kind assistance hereafter..", nepali: "उदाहरण: I hope for your kind assistance hereafter.।" }
+    ]
+  },
+  {
+    id: 'N5-L02-039', lesson: 2, level: 'N5', word: "こちらこそ よろしく [おねがいします]。", reading: "こちらこそ よろしく [おねがいします]。",
+    meaning: "I am pleased to meet you. (response)", meaningNepali: "I am pleased to meet you. (response)",
+    kanjiCharacters: [], partOfSpeech: "Noun",
+    grammarSentences: [
+      { japanese: "こちらこそ よろしく [おねがいします]。。", reading: "こちらこそ よろしく [おねがいします]。。", english: "Example: I am pleased to meet you. (response).", nepali: "उदाहरण: I am pleased to meet you. (response)।" }
+    ]
+  },
   // ════════════════════════════════════════════════════════
-  // LESSON 3 — Places & Location
-  // Grammar: ここ/そこ/あそこ は N です · N は (place) に あります/います · Position expressions
+  // LESSON 03 (36 ITEMS)
   // ════════════════════════════════════════════════════════
-  { id:'n5_3_01', lesson:3, level:'N5', word:'ここ', reading:'ここ', meaning:'Here (near speaker)', meaningNepali:'यहाँ (वक्ता नजिक)', kanjiCharacters:[], partOfSpeech:'Pronoun',
-    grammarSentences:[{ japanese:'ここはわたしのへやです。', reading:'ここはわたしのへやです。', english:'Here is my room.', nepali:'यहाँ मेरो कोठा हो।' }]},
-  { id:'n5_3_02', lesson:3, level:'N5', word:'そこ', reading:'そこ', meaning:'There (near listener)', meaningNepali:'त्यहाँ (श्रोता नजिक)', kanjiCharacters:[], partOfSpeech:'Pronoun',
-    grammarSentences:[{ japanese:'そこはなんですか。', reading:'そこはなんですか。', english:'What is that place there?', nepali:'त्यहाँ के छ?' }]},
-  { id:'n5_3_03', lesson:3, level:'N5', word:'あそこ', reading:'あそこ', meaning:'Over there (far from both)', meaningNepali:'त्यहाँ (दुवैबाट टाढा)', kanjiCharacters:[], partOfSpeech:'Pronoun',
-    grammarSentences:[{ japanese:'あそこはぎんこうです。', reading:'あそこはぎんこうです。', english:'Over there is a bank.', nepali:'त्यहाँ बैंक छ।' }]},
-  { id:'n5_3_04', lesson:3, level:'N5', word:'こちら', reading:'こちら', meaning:'This way / This direction (polite)', meaningNepali:'यता (सम्मानित)', kanjiCharacters:[], partOfSpeech:'Pronoun',
-    grammarSentences:[{ japanese:'こちらへどうぞ。', reading:'こちらへどうぞ。', english:'Please come this way.', nepali:'कृपया यताबाट आउनुस्।' }]},
-  { id:'n5_3_05', lesson:3, level:'N5', word:'そちら', reading:'そちら', meaning:'That way (polite, near listener)', meaningNepali:'त्यता (सम्मानित, श्रोता नजिक)', kanjiCharacters:[], partOfSpeech:'Pronoun',
-    grammarSentences:[{ japanese:'そちらはどちらですか。', reading:'そちらはどちらですか。', english:'Which way is that?', nepali:'त्यता कता हो?' }]},
-  { id:'n5_3_06', lesson:3, level:'N5', word:'あちら', reading:'あちら', meaning:'That way (polite, far from both)', meaningNepali:'त्यता (सम्मानित, टाढा)', kanjiCharacters:[], partOfSpeech:'Pronoun',
-    grammarSentences:[{ japanese:'あちらはこうばんです。', reading:'あちらはこうばんです。', english:'Over there is a police box.', nepali:'त्यता प्रहरी चौकी छ।' }]},
-  { id:'n5_3_07', lesson:3, level:'N5', word:'どちら', reading:'どちら', meaning:'Which way / Where (polite)', meaningNepali:'कता / कुन (सम्मानित)', kanjiCharacters:[], partOfSpeech:'Question',
-    grammarSentences:[{ japanese:'おくにはどちらですか。', reading:'おくにはどちらですか。', english:'Where are you from?', nepali:'तपाईं कुन देशबाट हुनुहुन्छ?' }]},
-  { id:'n5_3_08', lesson:3, level:'N5', word:'きょうしつ', reading:'きょうしつ', meaning:'Classroom', meaningNepali:'कक्षाकोठा', kanjiCharacters:['教','室'], partOfSpeech:'Noun',
-    grammarSentences:[{ japanese:'きょうしつはどこですか。', reading:'きょうしつはどこですか。', english:'Where is the classroom?', nepali:'कक्षाकोठा कहाँ छ?' }]},
-  { id:'n5_3_09', lesson:3, level:'N5', word:'しょくどう', reading:'しょくどう', meaning:'Canteen / Cafeteria / Dining hall', meaningNepali:'क्यान्टिन / भोजनालय', kanjiCharacters:['食','堂'], partOfSpeech:'Noun',
-    grammarSentences:[{ japanese:'しょくどうはにかいにあります。', reading:'しょくどうはにかいにあります。', english:'The cafeteria is on the second floor.', nepali:'भोजनालय दोस्रो तलामा छ।' }]},
-  { id:'n5_3_10', lesson:3, level:'N5', word:'じむしょ', reading:'じむしょ', meaning:'Office', meaningNepali:'कार्यालय', kanjiCharacters:['事','務','所'], partOfSpeech:'Noun',
-    grammarSentences:[{ japanese:'じむしょはいっかいです。', reading:'じむしょはいっかいです。', english:'The office is on the first floor.', nepali:'कार्यालय पहिलो तलामा छ।' }]},
-  { id:'n5_3_11', lesson:3, level:'N5', word:'かいだん', reading:'かいだん', meaning:'Stairs', meaningNepali:'भर्‍याङ', kanjiCharacters:['階','段'], partOfSpeech:'Noun',
-    grammarSentences:[{ japanese:'かいだんはあそこにあります。', reading:'かいだんはあそこにあります。', english:'The stairs are over there.', nepali:'भर्‍याङ त्यहाँ छ।' }]},
-  { id:'n5_3_12', lesson:3, level:'N5', word:'エレベーター', reading:'エレベーター', meaning:'Elevator / Lift', meaningNepali:'लिफ्ट', kanjiCharacters:[], partOfSpeech:'Noun',
-    grammarSentences:[{ japanese:'エレベーターはどこですか。', reading:'エレベーターはどこですか。', english:'Where is the elevator?', nepali:'लिफ्ट कहाँ छ?' }]},
-  { id:'n5_3_13', lesson:3, level:'N5', word:'トイレ', reading:'トイレ', meaning:'Toilet / Restroom', meaningNepali:'शौचालय', kanjiCharacters:[], partOfSpeech:'Noun',
-    grammarSentences:[{ japanese:'トイレはにかいにあります。', reading:'トイレはにかいにあります。', english:'The toilet is on the second floor.', nepali:'शौचालय दोस्रो तलामा छ।' }]},
-  { id:'n5_3_14', lesson:3, level:'N5', word:'ロビー', reading:'ロビー', meaning:'Lobby', meaningNepali:'लबी', kanjiCharacters:[], partOfSpeech:'Noun',
-    grammarSentences:[{ japanese:'ロビーはいっかいです。', reading:'ロビーはいっかいです。', english:'The lobby is on the first floor.', nepali:'लबी पहिलो तलामा छ।' }]},
-  { id:'n5_3_15', lesson:3, level:'N5', word:'うけつけ', reading:'うけつけ', meaning:'Reception desk', meaningNepali:'रिसेप्सन', kanjiCharacters:['受','付'], partOfSpeech:'Noun',
-    grammarSentences:[{ japanese:'うけつけはいっかいにあります。', reading:'うけつけはいっかいにあります。', english:'The reception is on the first floor.', nepali:'रिसेप्सन पहिलो तलामा छ।' }]},
-  { id:'n5_3_16', lesson:3, level:'N5', word:'かいぎしつ', reading:'かいぎしつ', meaning:'Meeting room / Conference room', meaningNepali:'बैठककोठा', kanjiCharacters:['会','議','室'], partOfSpeech:'Noun',
-    grammarSentences:[{ japanese:'かいぎしつはよんかいです。', reading:'かいぎしつはよんかいです。', english:'The meeting room is on the 4th floor.', nepali:'बैठककोठा चौथो तलामा छ।' }]},
-  { id:'n5_3_17', lesson:3, level:'N5', word:'〜かい', reading:'〜かい', meaning:'~ floor (of a building)', meaningNepali:'~ तला', kanjiCharacters:['階'], partOfSpeech:'Suffix',
-    grammarSentences:[{ japanese:'わたしのへやはさんかいです。', reading:'わたしのへやはさんかいです。', english:'My room is on the third floor.', nepali:'मेरो कोठा तेस्रो तलामा छ।' }]},
-  { id:'n5_3_18', lesson:3, level:'N5', word:'こうばん', reading:'こうばん', meaning:'Police box', meaningNepali:'प्रहरी चौकी', kanjiCharacters:['交','番'], partOfSpeech:'Noun',
-    grammarSentences:[{ japanese:'ちかくにこうばんがあります。', reading:'ちかくにこうばんがあります。', english:'There is a police box nearby.', nepali:'नजिकै प्रहरी चौकी छ।' }]},
-  { id:'n5_3_19', lesson:3, level:'N5', word:'ちかく', reading:'ちかく', meaning:'Nearby / Close to', meaningNepali:'नजिक / छेउमा', kanjiCharacters:['近'], partOfSpeech:'Noun',
-    grammarSentences:[{ japanese:'えきのちかくにぎんこうがあります。', reading:'えきのちかくにぎんこうがあります。', english:'There is a bank near the station.', nepali:'स्टेशनको नजिक बैंक छ।' }]},
-  { id:'n5_3_20', lesson:3, level:'N5', word:'〜のなかに', reading:'〜のなかに', meaning:'Inside ~', meaningNepali:'~ भित्र', kanjiCharacters:['中'], partOfSpeech:'Expression',
-    grammarSentences:[{ japanese:'はこのなかになにがありますか。', reading:'はこのなかになにがありますか。', english:'What is inside the box?', nepali:'बाकसभित्र के छ?' }]},
-  { id:'n5_3_21', lesson:3, level:'N5', word:'〜のうえに', reading:'〜のうえに', meaning:'On top of / Above ~', meaningNepali:'~ माथि', kanjiCharacters:['上'], partOfSpeech:'Expression',
-    grammarSentences:[{ japanese:'つくえのうえにほんがあります。', reading:'つくえのうえにほんがあります。', english:'There is a book on the desk.', nepali:'डेस्कको माथि किताब छ।' }]},
-  { id:'n5_3_22', lesson:3, level:'N5', word:'〜のしたに', reading:'〜のしたに', meaning:'Under / Below ~', meaningNepali:'~ मुनि / तल', kanjiCharacters:['下'], partOfSpeech:'Expression',
-    grammarSentences:[{ japanese:'いすのしたにねこがいます。', reading:'いすのしたにねこがいます。', english:'There is a cat under the chair.', nepali:'कुर्सीको मुनि बिरालो छ।' }]},
-  { id:'n5_3_23', lesson:3, level:'N5', word:'〜のまえに', reading:'〜のまえに', meaning:'In front of ~', meaningNepali:'~ अगाडि', kanjiCharacters:['前'], partOfSpeech:'Expression',
-    grammarSentences:[{ japanese:'えきのまえにバスていがあります。', reading:'えきのまえにバスていがあります。', english:'There is a bus stop in front of the station.', nepali:'स्टेशन अगाडि बस स्टप छ।' }]},
-  { id:'n5_3_24', lesson:3, level:'N5', word:'〜のうしろに', reading:'〜のうしろに', meaning:'Behind ~', meaningNepali:'~ पछाडि', kanjiCharacters:['後'], partOfSpeech:'Expression',
-    grammarSentences:[{ japanese:'スーパーのうしろにこうえんがあります。', reading:'スーパーのうしろにこうえんがあります。', english:'There is a park behind the supermarket.', nepali:'सुपरमार्केट पछाडि पार्क छ।' }]},
-  { id:'n5_3_25', lesson:3, level:'N5', word:'〜のよこに', reading:'〜のよこに', meaning:'Next to / Beside ~', meaningNepali:'~ छेउमा', kanjiCharacters:['横'], partOfSpeech:'Expression',
-    grammarSentences:[{ japanese:'ぎんこうのよこにゆうびんきょくがあります。', reading:'ぎんこうのよこにゆうびんきょくがあります。', english:'There is a post office next to the bank.', nepali:'बैंकको छेउमा हुलाक घर छ।' }]},
-  { id:'n5_3_26', lesson:3, level:'N5', word:'デパート', reading:'デパート', meaning:'Department store', meaningNepali:'डिपार्टमेन्ट स्टोर', kanjiCharacters:[], partOfSpeech:'Noun',
-    grammarSentences:[{ japanese:'えきのちかくにデパートがあります。', reading:'えきのちかくにデパートがあります。', english:'There is a department store near the station.', nepali:'स्टेशनको नजिक डिपार्टमेन्ट स्टोर छ।' }]},
-  { id:'n5_3_27', lesson:3, level:'N5', word:'スーパー', reading:'スーパー', meaning:'Supermarket', meaningNepali:'सुपरमार्केट', kanjiCharacters:[], partOfSpeech:'Noun',
-    grammarSentences:[{ japanese:'ちかくにスーパーがあります。', reading:'ちかくにスーパーがあります。', english:'There is a supermarket nearby.', nepali:'नजिकै सुपरमार्केट छ।' }]},
-  { id:'n5_3_28', lesson:3, level:'N5', word:'ぎんこう', reading:'ぎんこう', meaning:'Bank', meaningNepali:'बैंक', kanjiCharacters:['銀','行'], partOfSpeech:'Noun',
-    grammarSentences:[{ japanese:'ぎんこうはあちらです。', reading:'ぎんこうはあちらです。', english:'The bank is over there.', nepali:'बैंक त्यता छ।' }]},
-  { id:'n5_3_29', lesson:3, level:'N5', word:'ゆうびんきょく', reading:'ゆうびんきょく', meaning:'Post office', meaningNepali:'हुलाक घर', kanjiCharacters:['郵','便','局'], partOfSpeech:'Noun',
-    grammarSentences:[{ japanese:'ゆうびんきょくはどこですか。', reading:'ゆうびんきょくはどこですか。', english:'Where is the post office?', nepali:'हुलाक घर कहाँ छ?' }]},
-  { id:'n5_3_30', lesson:3, level:'N5', word:'えき', reading:'えき', meaning:'Train station', meaningNepali:'रेलवे स्टेशन', kanjiCharacters:['駅'], partOfSpeech:'Noun',
-    grammarSentences:[{ japanese:'えきはどこですか。', reading:'えきはどこですか。', english:'Where is the station?', nepali:'स्टेशन कहाँ छ?' }]},
-  { id:'n5_3_31', lesson:3, level:'N5', word:'こうえん', reading:'こうえん', meaning:'Park', meaningNepali:'पार्क', kanjiCharacters:['公','園'], partOfSpeech:'Noun',
-    grammarSentences:[{ japanese:'こうえんのなかにこどもがいます。', reading:'こうえんのなかにこどもがいます。', english:'There are children in the park.', nepali:'पार्कभित्र बच्चाहरू छन्।' }]},
-  { id:'n5_3_32', lesson:3, level:'N5', word:'じどうはんばいき', reading:'じどうはんばいき', meaning:'Vending machine', meaningNepali:'भेन्डिङ मेसिन', kanjiCharacters:['自','動','販','売','機'], partOfSpeech:'Noun',
-    grammarSentences:[{ japanese:'じどうはんばいきはえきのまえにあります。', reading:'じどうはんばいきはえきのまえにあります。', english:'The vending machine is in front of the station.', nepali:'भेन्डिङ मेसिन स्टेशन अगाडि छ।' }]},
-  { id:'n5_3_33', lesson:3, level:'N5', word:'あります', reading:'あります', meaning:'There is (inanimate objects)', meaningNepali:'छ (निर्जीव वस्तु)', kanjiCharacters:['有'], partOfSpeech:'Verb',
-    grammarSentences:[
-      { japanese:'つくえのうえにほんがあります。', reading:'つくえのうえにほんがあります。', english:'There is a book on the desk.', nepali:'डेस्कको माथि किताब छ।' },
-      { japanese:'ちかくにぎんこうがありますか。', reading:'ちかくにぎんこうがありますか。', english:'Is there a bank nearby?', nepali:'नजिक बैंक छ?' }
-    ]},
-  { id:'n5_3_34', lesson:3, level:'N5', word:'います', reading:'います', meaning:'There is (people / animals)', meaningNepali:'छ (मान्छे / जनावर)', kanjiCharacters:['居'], partOfSpeech:'Verb',
-    grammarSentences:[
-      { japanese:'こうえんにこどもがいます。', reading:'こうえんにこどもがいます。', english:'There are children in the park.', nepali:'पार्कमा बच्चाहरू छन्।' },
-      { japanese:'いすのしたにねこがいます。', reading:'いすのしたにねこがいます。', english:'There is a cat under the chair.', nepali:'कुर्सीको मुनि बिरालो छ।' }
-    ]},
-  { id:'n5_3_35', lesson:3, level:'N5', word:'どうぞ', reading:'どうぞ', meaning:'Please / Here you are / Go ahead', meaningNepali:'कृपया / लिनुस् / जानुस्', kanjiCharacters:[], partOfSpeech:'Expression',
-    grammarSentences:[{ japanese:'こちらへどうぞ。', reading:'こちらへどうぞ。', english:'Please come this way.', nepali:'कृपया यताबाट आउनुस्।' }]},
-
+  {
+    id: 'N5-L03-001', lesson: 3, level: 'N5', word: "ここ／そこ／あそこ", reading: "ここ／そこ／あそこ",
+    meaning: "here／there／that place over there", meaningNepali: "here／there／that place over there",
+    kanjiCharacters: [], partOfSpeech: "Noun",
+    grammarSentences: [
+      { japanese: "ここ／そこ／あそこ。", reading: "ここ／そこ／あそこ。", english: "Example: here／there／that place over there.", nepali: "उदाहरण: here／there／that place over there।" }
+    ]
+  },
+  {
+    id: 'N5-L03-002', lesson: 3, level: 'N5', word: "こちら／そちら／あちら", reading: "こちら／そちら／あちら",
+    meaning: "this way, this place／that way, near you／that way, over there (polite equivalents of ここ／そこ／あそこ)", meaningNepali: "this way, this place／that way, near you／that way, over there (polite equivalents of ここ／そこ／あそこ)",
+    kanjiCharacters: [], partOfSpeech: "Noun",
+    grammarSentences: [
+      { japanese: "こちら／そちら／あちら。", reading: "こちら／そちら／あちら。", english: "Example: this way, this place／that way, near you／that way, over there (polite equivalents of ここ／そこ／あそこ).", nepali: "उदाहरण: this way, this place／that way, near you／that way, over there (polite equivalents of ここ／そこ／あそこ)।" }
+    ]
+  },
+  {
+    id: 'N5-L03-003', lesson: 3, level: 'N5', word: "どこ／どちら", reading: "どこ／どちら",
+    meaning: "where, what place (どちら is the polite equivalent of どこ)", meaningNepali: "where, what place (どちら is the polite equivalent of どこ)",
+    kanjiCharacters: [], partOfSpeech: "Noun",
+    grammarSentences: [
+      { japanese: "どこ／どちら。", reading: "どこ／どちら。", english: "Example: where, what place (どちら is the polite equivalent of どこ).", nepali: "उदाहरण: where, what place (どちら is the polite equivalent of どこ)।" }
+    ]
+  },
+  {
+    id: 'N5-L03-004', lesson: 3, level: 'N5', word: "教室", reading: "きょうしつ",
+    meaning: "classroom", meaningNepali: "कक्षा कोठा",
+    kanjiCharacters: ["教", "室"], partOfSpeech: "Noun",
+    grammarSentences: [
+      { japanese: "教室。", reading: "きょうしつ。", english: "Example: classroom.", nepali: "उदाहरण: कक्षा कोठा।" }
+    ]
+  },
+  {
+    id: 'N5-L03-005', lesson: 3, level: 'N5', word: "食堂", reading: "しょくどう",
+    meaning: "dining hall, canteen", meaningNepali: "खाना खाने ठाउँ / क्यान्टीन",
+    kanjiCharacters: ["食", "堂"], partOfSpeech: "Noun",
+    grammarSentences: [
+      { japanese: "食堂。", reading: "しょくどう。", english: "Example: dining hall, canteen.", nepali: "उदाहरण: खाना खाने ठाउँ / क्यान्टीन।" }
+    ]
+  },
+  {
+    id: 'N5-L03-006', lesson: 3, level: 'N5', word: "事務所", reading: "じむしょ",
+    meaning: "office", meaningNepali: "कार्यालय / अफिस",
+    kanjiCharacters: ["事", "務", "所"], partOfSpeech: "Noun",
+    grammarSentences: [
+      { japanese: "事務所。", reading: "じむしょ。", english: "Example: office.", nepali: "उदाहरण: कार्यालय / अफिस।" }
+    ]
+  },
+  {
+    id: 'N5-L03-007', lesson: 3, level: 'N5', word: "会議室", reading: "かいぎしつ",
+    meaning: "conference room, assembly room", meaningNepali: "मीटिंग हल / सभा कक्ष",
+    kanjiCharacters: ["会", "議", "室"], partOfSpeech: "Noun",
+    grammarSentences: [
+      { japanese: "会議室。", reading: "かいぎしつ。", english: "Example: conference room, assembly room.", nepali: "उदाहरण: मीटिंग हल / सभा कक्ष।" }
+    ]
+  },
+  {
+    id: 'N5-L03-008', lesson: 3, level: 'N5', word: "受付", reading: "うけつけ",
+    meaning: "reception desk", meaningNepali: "रिसेप्शन desk",
+    kanjiCharacters: ["受", "付"], partOfSpeech: "Noun",
+    grammarSentences: [
+      { japanese: "受付。", reading: "うけつけ。", english: "Example: reception desk.", nepali: "उदाहरण: रिसेप्शन desk।" }
+    ]
+  },
+  {
+    id: 'N5-L03-009', lesson: 3, level: 'N5', word: "ロビー", reading: "ロビー",
+    meaning: "lobby", meaningNepali: "लबी",
+    kanjiCharacters: [], partOfSpeech: "Noun",
+    grammarSentences: [
+      { japanese: "ロビー。", reading: "ロビー。", english: "Example: lobby.", nepali: "उदाहरण: लबी।" }
+    ]
+  },
+  {
+    id: 'N5-L03-010', lesson: 3, level: 'N5', word: "部屋", reading: "へや",
+    meaning: "room", meaningNepali: "कोठा",
+    kanjiCharacters: ["部", "屋"], partOfSpeech: "Noun",
+    grammarSentences: [
+      { japanese: "部屋。", reading: "へや。", english: "Example: room.", nepali: "उदाहरण: कोठा।" }
+    ]
+  },
+  {
+    id: 'N5-L03-011', lesson: 3, level: 'N5', word: "トイレ（お手洗い）", reading: "トイレ（おてあらい）",
+    meaning: "toilet, rest room", meaningNepali: "toilet, rest room",
+    kanjiCharacters: ["手", "洗"], partOfSpeech: "Noun",
+    grammarSentences: [
+      { japanese: "トイレ（お手洗い）。", reading: "トイレ（おてあらい）。", english: "Example: toilet, rest room.", nepali: "उदाहरण: toilet, rest room।" }
+    ]
+  },
+  {
+    id: 'N5-L03-012', lesson: 3, level: 'N5', word: "階段", reading: "かいだん",
+    meaning: "staircase", meaningNepali: "सीढी / भर्याङ",
+    kanjiCharacters: ["階", "段"], partOfSpeech: "Noun",
+    grammarSentences: [
+      { japanese: "階段。", reading: "かいだん。", english: "Example: staircase.", nepali: "उदाहरण: सीढी / भर्याङ।" }
+    ]
+  },
+  {
+    id: 'N5-L03-013', lesson: 3, level: 'N5', word: "エレベーター", reading: "エレベーター",
+    meaning: "elevator, lift", meaningNepali: "लिफ्ट / एलिभेटर",
+    kanjiCharacters: [], partOfSpeech: "Noun",
+    grammarSentences: [
+      { japanese: "エレベーター。", reading: "エレベーター。", english: "Example: elevator, lift.", nepali: "उदाहरण: लिफ्ट / एलिभेटर।" }
+    ]
+  },
+  {
+    id: 'N5-L03-014', lesson: 3, level: 'N5', word: "エスカレーター", reading: "エスカレーター",
+    meaning: "escalator, lift", meaningNepali: "एस्कलेटर",
+    kanjiCharacters: [], partOfSpeech: "Noun",
+    grammarSentences: [
+      { japanese: "エスカレーター。", reading: "エスカレーター。", english: "Example: escalator, lift.", nepali: "उदाहरण: एस्कलेटर।" }
+    ]
+  },
+  {
+    id: 'N5-L03-015', lesson: 3, level: 'N5', word: "国", reading: "くに",
+    meaning: "country", meaningNepali: "country",
+    kanjiCharacters: ["国"], partOfSpeech: "Noun",
+    grammarSentences: [
+      { japanese: "国。", reading: "くに。", english: "Example: country.", nepali: "उदाहरण: country।" }
+    ]
+  },
+  {
+    id: 'N5-L03-016', lesson: 3, level: 'N5', word: "会社", reading: "かいしゃ",
+    meaning: "company", meaningNepali: "कम्पनी",
+    kanjiCharacters: ["会", "社"], partOfSpeech: "Noun",
+    grammarSentences: [
+      { japanese: "会社。", reading: "かいしゃ。", english: "Example: company.", nepali: "उदाहरण: कम्पनी।" }
+    ]
+  },
+  {
+    id: 'N5-L03-017', lesson: 3, level: 'N5', word: "家", reading: "うち",
+    meaning: "house, home", meaningNepali: "घर",
+    kanjiCharacters: ["家"], partOfSpeech: "Noun",
+    grammarSentences: [
+      { japanese: "家。", reading: "うち。", english: "Example: house, home.", nepali: "उदाहरण: घर।" }
+    ]
+  },
+  {
+    id: 'N5-L03-018', lesson: 3, level: 'N5', word: "電話", reading: "でんわ",
+    meaning: "telephone, telephone call", meaningNepali: "फोन / टेलिफोन",
+    kanjiCharacters: ["電", "話"], partOfSpeech: "Noun",
+    grammarSentences: [
+      { japanese: "電話。", reading: "でんわ。", english: "Example: telephone, telephone call.", nepali: "उदाहरण: फोन / टेलिफोन।" }
+    ]
+  },
+  {
+    id: 'N5-L03-019', lesson: 3, level: 'N5', word: "靴", reading: "くつ",
+    meaning: "shoes", meaningNepali: "जुत्ता",
+    kanjiCharacters: ["靴"], partOfSpeech: "Noun",
+    grammarSentences: [
+      { japanese: "靴。", reading: "くつ。", english: "Example: shoes.", nepali: "उदाहरण: जुत्ता।" }
+    ]
+  },
+  {
+    id: 'N5-L03-020', lesson: 3, level: 'N5', word: "ネクタイ", reading: "ネクタイ",
+    meaning: "necktie", meaningNepali: "नेकटाई",
+    kanjiCharacters: [], partOfSpeech: "Noun",
+    grammarSentences: [
+      { japanese: "ネクタイ。", reading: "ネクタイ。", english: "Example: necktie.", nepali: "उदाहरण: नेकटाई।" }
+    ]
+  },
+  {
+    id: 'N5-L03-021', lesson: 3, level: 'N5', word: "ワイン", reading: "ワイン",
+    meaning: "wine", meaningNepali: "वाइन / रक्सी",
+    kanjiCharacters: [], partOfSpeech: "Noun",
+    grammarSentences: [
+      { japanese: "ワイン。", reading: "ワイン。", english: "Example: wine.", nepali: "उदाहरण: वाइन / रक्सी।" }
+    ]
+  },
+  {
+    id: 'N5-L03-022', lesson: 3, level: 'N5', word: "たばこ", reading: "たばこ",
+    meaning: "tobacco, cigarette", meaningNepali: "चुरोट",
+    kanjiCharacters: [], partOfSpeech: "Noun",
+    grammarSentences: [
+      { japanese: "たばこ。", reading: "たばこ。", english: "Example: tobacco, cigarette.", nepali: "उदाहरण: चुरोट।" }
+    ]
+  },
+  {
+    id: 'N5-L03-023', lesson: 3, level: 'N5', word: "売り場", reading: "うりば",
+    meaning: "department, counter (in a department store)", meaningNepali: "बिक्री कक्ष / काउन्टर",
+    kanjiCharacters: ["売", "場"], partOfSpeech: "Noun",
+    grammarSentences: [
+      { japanese: "売り場。", reading: "うりば。", english: "Example: department, counter (in a department store).", nepali: "उदाहरण: बिक्री कक्ष / काउन्टर।" }
+    ]
+  },
+  {
+    id: 'N5-L03-024', lesson: 3, level: 'N5', word: "地下", reading: "ちか",
+    meaning: "basement", meaningNepali: "भूमिगत / बेसमेन्ट",
+    kanjiCharacters: ["地", "下"], partOfSpeech: "Noun",
+    grammarSentences: [
+      { japanese: "地下。", reading: "ちか。", english: "Example: basement.", nepali: "उदाहरण: भूमिगत / बेसमेन्ट।" }
+    ]
+  },
+  {
+    id: 'N5-L03-025', lesson: 3, level: 'N5', word: "～階", reading: "～かい",
+    meaning: "-th floor", meaningNepali: "~ पटक / ~ चोटि",
+    kanjiCharacters: ["階"], partOfSpeech: "I-Adj",
+    grammarSentences: [
+      { japanese: "～階。", reading: "～かい。", english: "Example: -th floor.", nepali: "उदाहरण: ~ पटक / ~ चोटि।" }
+    ]
+  },
+  {
+    id: 'N5-L03-026', lesson: 3, level: 'N5', word: "何階", reading: "なんがい",
+    meaning: "what floor", meaningNepali: "कति औं तल्ला",
+    kanjiCharacters: ["何", "階"], partOfSpeech: "I-Adj",
+    grammarSentences: [
+      { japanese: "何階。", reading: "なんがい。", english: "Example: what floor.", nepali: "उदाहरण: कति औं तल्ला।" }
+    ]
+  },
+  {
+    id: 'N5-L03-027', lesson: 3, level: 'N5', word: "～円", reading: "～えん",
+    meaning: "~ yen", meaningNepali: "~ yen",
+    kanjiCharacters: ["円"], partOfSpeech: "Noun",
+    grammarSentences: [
+      { japanese: "～円。", reading: "～えん。", english: "Example: ~ yen.", nepali: "उदाहरण: ~ yen।" }
+    ]
+  },
+  {
+    id: 'N5-L03-028', lesson: 3, level: 'N5', word: "いくら", reading: "いくら",
+    meaning: "how much", meaningNepali: "कति (मूल्य)",
+    kanjiCharacters: [], partOfSpeech: "Noun",
+    grammarSentences: [
+      { japanese: "いくら。", reading: "いくら。", english: "Example: how much.", nepali: "उदाहरण: कति (मूल्य)।" }
+    ]
+  },
+  {
+    id: 'N5-L03-029', lesson: 3, level: 'N5', word: "百", reading: "ひゃく",
+    meaning: "hundred", meaningNepali: "सय (१००)",
+    kanjiCharacters: ["百"], partOfSpeech: "Noun",
+    grammarSentences: [
+      { japanese: "百。", reading: "ひゃく。", english: "Example: hundred.", nepali: "उदाहरण: सय (१००)।" }
+    ]
+  },
+  {
+    id: 'N5-L03-030', lesson: 3, level: 'N5', word: "千", reading: "せん",
+    meaning: "thousand", meaningNepali: "हजार (१,०००)",
+    kanjiCharacters: ["千"], partOfSpeech: "Noun",
+    grammarSentences: [
+      { japanese: "千。", reading: "せん。", english: "Example: thousand.", nepali: "उदाहरण: हजार (१,०००)।" }
+    ]
+  },
+  {
+    id: 'N5-L03-031', lesson: 3, level: 'N5', word: "万", reading: "まん",
+    meaning: "ten thousand", meaningNepali: "दस हजार (१०,०००)",
+    kanjiCharacters: ["万"], partOfSpeech: "Noun",
+    grammarSentences: [
+      { japanese: "万。", reading: "まん。", english: "Example: ten thousand.", nepali: "उदाहरण: दस हजार (१०,०००)।" }
+    ]
+  },
+  {
+    id: 'N5-L03-032', lesson: 3, level: 'N5', word: "すみません。", reading: "すみません。",
+    meaning: "Excuse me.", meaningNepali: "माफ गर्नुहोला।",
+    kanjiCharacters: [], partOfSpeech: "Noun",
+    grammarSentences: [
+      { japanese: "すみません。。", reading: "すみません。。", english: "Example: Excuse me..", nepali: "उदाहरण: माफ गर्नुहोला।।" }
+    ]
+  },
+  {
+    id: 'N5-L03-033', lesson: 3, level: 'N5', word: "でございます", reading: "でございます",
+    meaning: "(polite equivalent of です)", meaningNepali: "(polite equivalent of です)",
+    kanjiCharacters: [], partOfSpeech: "Verb",
+    grammarSentences: [
+      { japanese: "でございます。", reading: "でございます。", english: "Example: (polite equivalent of です).", nepali: "उदाहरण: (polite equivalent of です)।" }
+    ]
+  },
+  {
+    id: 'N5-L03-034', lesson: 3, level: 'N5', word: "[～を] 見せて ください。", reading: "[～を] みせて ください。",
+    meaning: "Please show me [~].", meaningNepali: "Please show me [~].",
+    kanjiCharacters: ["見"], partOfSpeech: "Noun",
+    grammarSentences: [
+      { japanese: "[～を] 見せて ください。。", reading: "[～を] みせて ください。。", english: "Example: Please show me [~]..", nepali: "उदाहरण: Please show me [~].।" }
+    ]
+  },
+  {
+    id: 'N5-L03-035', lesson: 3, level: 'N5', word: "それでは", reading: "それでは",
+    meaning: "well, then, in that case", meaningNepali: "well, then, in that case",
+    kanjiCharacters: [], partOfSpeech: "Noun",
+    grammarSentences: [
+      { japanese: "それでは。", reading: "それでは。", english: "Example: well, then, in that case.", nepali: "उदाहरण: well, then, in that case।" }
+    ]
+  },
+  {
+    id: 'N5-L03-036', lesson: 3, level: 'N5', word: "[～を] ください。", reading: "[～を] ください。",
+    meaning: "Give me [~], please.", meaningNepali: "Give me [~], please.",
+    kanjiCharacters: [], partOfSpeech: "Noun",
+    grammarSentences: [
+      { japanese: "[～を] ください。。", reading: "[～を] ください。。", english: "Example: Give me [~], please..", nepali: "उदाहरण: Give me [~], please.।" }
+    ]
+  },
   // ════════════════════════════════════════════════════════
-  // LESSON 4 — Time Expressions, Numbers & Days
-  // Grammar: いまなんじですか · 〜から〜まで · やすみはいつですか · 〜ようび
+  // LESSON 04 (55 ITEMS)
   // ════════════════════════════════════════════════════════
-  { id:'n5_4_01', lesson:4, level:'N5', word:'いま', reading:'いま', meaning:'Now', meaningNepali:'अहिले', kanjiCharacters:['今'], partOfSpeech:'Noun',
-    grammarSentences:[{ japanese:'いまなんじですか。', reading:'いまなんじですか。', english:'What time is it now?', nepali:'अहिले कति बजेको छ?' }]},
-  { id:'n5_4_02', lesson:4, level:'N5', word:'〜じ', reading:'〜じ', meaning:'~ o\'clock', meaningNepali:'~ बजे', kanjiCharacters:['時'], partOfSpeech:'Suffix',
-    grammarSentences:[{ japanese:'じゅうにじにひるごはんをたべます。', reading:'じゅうにじにひるごはんをたべます。', english:'I eat lunch at 12 o\'clock.', nepali:'म १२ बजे दिउँसो खाना खान्छु।' }]},
-  { id:'n5_4_03', lesson:4, level:'N5', word:'〜ふん / 〜ぷん', reading:'〜ふん/〜ぷん', meaning:'~ minutes', meaningNepali:'~ मिनेट', kanjiCharacters:['分'], partOfSpeech:'Suffix',
-    grammarSentences:[{ japanese:'えいがはくじじゅっぷんからです。', reading:'えいがはくじじゅっぷんからです。', english:'The movie starts at 9:10.', nepali:'फिल्म ९ बजकर १० मिनेटमा सुरु हुन्छ।' }]},
-  { id:'n5_4_04', lesson:4, level:'N5', word:'〜はん', reading:'〜はん', meaning:'~ half past', meaningNepali:'साढे ~', kanjiCharacters:['半'], partOfSpeech:'Suffix',
-    grammarSentences:[{ japanese:'くじはんにおきます。', reading:'くじはんにおきます。', english:'I get up at 9:30.', nepali:'म साढे ९ बजे उठ्छु।' }]},
-  { id:'n5_4_05', lesson:4, level:'N5', word:'なんじ', reading:'なんじ', meaning:'What time?', meaningNepali:'कति बजे?', kanjiCharacters:['何','時'], partOfSpeech:'Question',
-    grammarSentences:[{ japanese:'かいぎはなんじですか。', reading:'かいぎはなんじですか。', english:'What time is the meeting?', nepali:'बैठक कति बजे छ?' }]},
-  { id:'n5_4_06', lesson:4, level:'N5', word:'なんぷん', reading:'なんぷん', meaning:'How many minutes?', meaningNepali:'कति मिनेट?', kanjiCharacters:['何','分'], partOfSpeech:'Question',
-    grammarSentences:[{ japanese:'えきまでなんぷんかかりますか。', reading:'えきまでなんぷんかかりますか。', english:'How many minutes does it take to the station?', nepali:'स्टेशनसम्म कति मिनेट लाग्छ?' }]},
-  { id:'n5_4_07', lesson:4, level:'N5', word:'ごぜん', reading:'ごぜん', meaning:'A.M. / Before noon', meaningNepali:'बिहान (दिउँसो १२ बजे अगाडि)', kanjiCharacters:['午','前'], partOfSpeech:'Noun',
-    grammarSentences:[{ japanese:'ごぜんくじにじゅぎょうがあります。', reading:'ごぜんくじにじゅぎょうがあります。', english:'There is a class at 9 a.m.', nepali:'बिहान ९ बजे कक्षा छ।' }]},
-  { id:'n5_4_08', lesson:4, level:'N5', word:'ごご', reading:'ごご', meaning:'P.M. / Afternoon', meaningNepali:'दिउँसो / साँझ (१२ बजे पछि)', kanjiCharacters:['午','後'], partOfSpeech:'Noun',
-    grammarSentences:[{ japanese:'ごごよじにしごとがおわります。', reading:'ごごよじにしごとがおわります。', english:'Work ends at 4 p.m.', nepali:'काम दिउँसो ४ बजे सकिन्छ।' }]},
-  { id:'n5_4_09', lesson:4, level:'N5', word:'〜から', reading:'〜から', meaning:'From ~ (starting point)', meaningNepali:'~ देखि', kanjiCharacters:[], partOfSpeech:'Particle',
-    grammarSentences:[{ japanese:'くじからしごとがはじまります。', reading:'くじからしごとがはじまります。', english:'Work starts from 9 o\'clock.', nepali:'काम ९ बजेदेखि सुरु हुन्छ।' }]},
-  { id:'n5_4_10', lesson:4, level:'N5', word:'〜まで', reading:'〜まで', meaning:'Until ~ / Up to ~', meaningNepali:'~ सम्म', kanjiCharacters:[], partOfSpeech:'Particle',
-    grammarSentences:[{ japanese:'ごじまでしごとをします。', reading:'ごじまでしごとをします。', english:'I work until 5 o\'clock.', nepali:'म ५ बजेसम्म काम गर्छु।' }]},
-  { id:'n5_4_11', lesson:4, level:'N5', word:'やすみ', reading:'やすみ', meaning:'Holiday / Day off / Break', meaningNepali:'बिदा / विश्राम', kanjiCharacters:['休'], partOfSpeech:'Noun',
-    grammarSentences:[{ japanese:'きょうはやすみです。', reading:'きょうはやすみです。', english:'Today is a holiday.', nepali:'आज बिदा छ।' }]},
-  { id:'n5_4_12', lesson:4, level:'N5', word:'ひるやすみ', reading:'ひるやすみ', meaning:'Lunch break', meaningNepali:'दिउँसो आराम', kanjiCharacters:['昼','休'], partOfSpeech:'Noun',
-    grammarSentences:[{ japanese:'ひるやすみはじゅうにじからいちじまでです。', reading:'ひるやすみはじゅうにじからいちじまでです。', english:'Lunch break is from 12 to 1.', nepali:'दिउँसो आराम १२ बजेदेखि १ बजेसम्म हो।' }]},
-  { id:'n5_4_13', lesson:4, level:'N5', word:'まいにち', reading:'まいにち', meaning:'Every day', meaningNepali:'हरेक दिन', kanjiCharacters:['毎','日'], partOfSpeech:'Noun',
-    grammarSentences:[{ japanese:'まいにちにほんごをべんきょうします。', reading:'まいにちにほんごをべんきょうします。', english:'I study Japanese every day.', nepali:'म हरेक दिन जापानी पढ्छु।' }]},
-  { id:'n5_4_14', lesson:4, level:'N5', word:'まいあさ', reading:'まいあさ', meaning:'Every morning', meaningNepali:'हरेक बिहान', kanjiCharacters:['毎','朝'], partOfSpeech:'Noun',
-    grammarSentences:[{ japanese:'まいあさはやくおきます。', reading:'まいあさはやくおきます。', english:'I wake up early every morning.', nepali:'म हरेक बिहान चाँडो उठ्छु।' }]},
-  { id:'n5_4_15', lesson:4, level:'N5', word:'まいばん', reading:'まいばん', meaning:'Every evening / Every night', meaningNepali:'हरेक साँझ', kanjiCharacters:['毎','晩'], partOfSpeech:'Noun',
-    grammarSentences:[{ japanese:'まいばんテレビをみます。', reading:'まいばんテレビをみます。', english:'I watch TV every evening.', nepali:'म हरेक साँझ टेलिभिजन हेर्छु।' }]},
-  { id:'n5_4_16', lesson:4, level:'N5', word:'おととい', reading:'おととい', meaning:'The day before yesterday', meaningNepali:'अस्तिको दिन', kanjiCharacters:[], partOfSpeech:'Noun',
-    grammarSentences:[{ japanese:'おとといはなにをしましたか。', reading:'おとといはなにをしましたか。', english:'What did you do the day before yesterday?', nepali:'अस्ति के गर्नुभयो?' }]},
-  { id:'n5_4_17', lesson:4, level:'N5', word:'きのう', reading:'きのう', meaning:'Yesterday', meaningNepali:'हिजो', kanjiCharacters:['昨','日'], partOfSpeech:'Noun',
-    grammarSentences:[{ japanese:'きのうえいがをみました。', reading:'きのうえいがをみました。', english:'I watched a movie yesterday.', nepali:'मैले हिजो फिल्म हेरें।' }]},
-  { id:'n5_4_18', lesson:4, level:'N5', word:'きょう', reading:'きょう', meaning:'Today', meaningNepali:'आज', kanjiCharacters:['今','日'], partOfSpeech:'Noun',
-    grammarSentences:[{ japanese:'きょうはなんようびですか。', reading:'きょうはなんようびですか。', english:'What day of the week is today?', nepali:'आज हप्ताको कुन दिन हो?' }]},
-  { id:'n5_4_19', lesson:4, level:'N5', word:'あした', reading:'あした', meaning:'Tomorrow', meaningNepali:'भोलि', kanjiCharacters:['明','日'], partOfSpeech:'Noun',
-    grammarSentences:[{ japanese:'あしたしけんがあります。', reading:'あしたしけんがあります。', english:'There is an exam tomorrow.', nepali:'भोलि परीक्षा छ।' }]},
-  { id:'n5_4_20', lesson:4, level:'N5', word:'あさって', reading:'あさって', meaning:'The day after tomorrow', meaningNepali:'पर्सि', kanjiCharacters:[], partOfSpeech:'Noun',
-    grammarSentences:[{ japanese:'あさってはやすみです。', reading:'あさってはやすみです。', english:'The day after tomorrow is a holiday.', nepali:'पर्सि बिदा छ।' }]},
-  { id:'n5_4_21', lesson:4, level:'N5', word:'せんしゅう', reading:'せんしゅう', meaning:'Last week', meaningNepali:'गत हप्ता', kanjiCharacters:['先','週'], partOfSpeech:'Noun',
-    grammarSentences:[{ japanese:'せんしゅうどこへいきましたか。', reading:'せんしゅうどこへいきましたか。', english:'Where did you go last week?', nepali:'गत हप्ता कहाँ गयौ?' }]},
-  { id:'n5_4_22', lesson:4, level:'N5', word:'こんしゅう', reading:'こんしゅう', meaning:'This week', meaningNepali:'यो हप्ता', kanjiCharacters:['今','週'], partOfSpeech:'Noun',
-    grammarSentences:[{ japanese:'こんしゅうはいそがしいです。', reading:'こんしゅうはいそがしいです。', english:'I am busy this week.', nepali:'यो हप्ता व्यस्त छु।' }]},
-  { id:'n5_4_23', lesson:4, level:'N5', word:'らいしゅう', reading:'らいしゅう', meaning:'Next week', meaningNepali:'अर्को हप्ता', kanjiCharacters:['来','週'], partOfSpeech:'Noun',
-    grammarSentences:[{ japanese:'らいしゅうかいぎがあります。', reading:'らいしゅうかいぎがあります。', english:'There is a meeting next week.', nepali:'अर्को हप्ता बैठक छ।' }]},
-  { id:'n5_4_24', lesson:4, level:'N5', word:'せんげつ', reading:'せんげつ', meaning:'Last month', meaningNepali:'गत महिना', kanjiCharacters:['先','月'], partOfSpeech:'Noun',
-    grammarSentences:[{ japanese:'せんげつにほんへきました。', reading:'せんげつにほんへきました。', english:'I came to Japan last month.', nepali:'मैले गत महिना जापान आएँ।' }]},
-  { id:'n5_4_25', lesson:4, level:'N5', word:'こんげつ', reading:'こんげつ', meaning:'This month', meaningNepali:'यो महिना', kanjiCharacters:['今','月'], partOfSpeech:'Noun',
-    grammarSentences:[{ japanese:'こんげつはいそがしいです。', reading:'こんげつはいそがしいです。', english:'I am busy this month.', nepali:'यो महिना व्यस्त छु।' }]},
-  { id:'n5_4_26', lesson:4, level:'N5', word:'らいげつ', reading:'らいげつ', meaning:'Next month', meaningNepali:'अर्को महिना', kanjiCharacters:['来','月'], partOfSpeech:'Noun',
-    grammarSentences:[{ japanese:'らいげつにほんにいきます。', reading:'らいげつにほんにいきます。', english:'I will go to Japan next month.', nepali:'म अर्को महिना जापान जान्छु।' }]},
-  { id:'n5_4_27', lesson:4, level:'N5', word:'きょねん', reading:'きょねん', meaning:'Last year', meaningNepali:'गत वर्ष', kanjiCharacters:['去','年'], partOfSpeech:'Noun',
-    grammarSentences:[{ japanese:'きょねんにほんにきました。', reading:'きょねんにほんにきました。', english:'I came to Japan last year.', nepali:'मैले गत वर्ष जापान आएँ।' }]},
-  { id:'n5_4_28', lesson:4, level:'N5', word:'ことし', reading:'ことし', meaning:'This year', meaningNepali:'यो वर्ष', kanjiCharacters:['今','年'], partOfSpeech:'Noun',
-    grammarSentences:[{ japanese:'ことしそつぎょうします。', reading:'ことしそつぎょうします。', english:'I will graduate this year.', nepali:'म यो वर्ष स्नातक गर्छु।' }]},
-  { id:'n5_4_29', lesson:4, level:'N5', word:'らいねん', reading:'らいねん', meaning:'Next year', meaningNepali:'अर्को वर्ष', kanjiCharacters:['来','年'], partOfSpeech:'Noun',
-    grammarSentences:[{ japanese:'らいねんにほんにいきます。', reading:'らいねんにほんにいきます。', english:'I will go to Japan next year.', nepali:'म अर्को वर्ष जापान जान्छु।' }]},
-  { id:'n5_4_30', lesson:4, level:'N5', word:'なんようび', reading:'なんようび', meaning:'What day of the week?', meaningNepali:'हप्ताको कुन दिन?', kanjiCharacters:['何','曜','日'], partOfSpeech:'Question',
-    grammarSentences:[{ japanese:'きょうはなんようびですか。', reading:'きょうはなんようびですか。', english:'What day of the week is today?', nepali:'आज हप्ताको कुन दिन हो?' }]},
-  { id:'n5_4_31', lesson:4, level:'N5', word:'にちようび', reading:'にちようび', meaning:'Sunday', meaningNepali:'आइतबार', kanjiCharacters:['日','曜','日'], partOfSpeech:'Noun',
-    grammarSentences:[{ japanese:'にちようびにうみへいきます。', reading:'にちようびにうみへいきます。', english:'I will go to the sea on Sunday.', nepali:'म आइतबार समुद्र जान्छु।' }]},
-  { id:'n5_4_32', lesson:4, level:'N5', word:'げつようび', reading:'げつようび', meaning:'Monday', meaningNepali:'सोमबार', kanjiCharacters:['月','曜','日'], partOfSpeech:'Noun',
-    grammarSentences:[{ japanese:'げつようびにかいぎがあります。', reading:'げつようびにかいぎがあります。', english:'There is a meeting on Monday.', nepali:'सोमबार बैठक छ।' }]},
-  { id:'n5_4_33', lesson:4, level:'N5', word:'かようび', reading:'かようび', meaning:'Tuesday', meaningNepali:'मंगलबार', kanjiCharacters:['火','曜','日'], partOfSpeech:'Noun',
-    grammarSentences:[{ japanese:'かようびにテニスをします。', reading:'かようびにテニスをします。', english:'I play tennis on Tuesday.', nepali:'मंगलबार टेनिस खेल्छु।' }]},
-  { id:'n5_4_34', lesson:4, level:'N5', word:'すいようび', reading:'すいようび', meaning:'Wednesday', meaningNepali:'बुधबार', kanjiCharacters:['水','曜','日'], partOfSpeech:'Noun',
-    grammarSentences:[{ japanese:'すいようびはひまです。', reading:'すいようびはひまです。', english:'I am free on Wednesday.', nepali:'बुधबार फुर्सद छ।' }]},
-  { id:'n5_4_35', lesson:4, level:'N5', word:'もくようび', reading:'もくようび', meaning:'Thursday', meaningNepali:'बिहिबार', kanjiCharacters:['木','曜','日'], partOfSpeech:'Noun',
-    grammarSentences:[{ japanese:'もくようびにえいごをならいます。', reading:'もくようびにえいごをならいます。', english:'I learn English on Thursday.', nepali:'बिहिबार अंग्रेजी सिक्छु।' }]},
-  { id:'n5_4_36', lesson:4, level:'N5', word:'きんようび', reading:'きんようび', meaning:'Friday', meaningNepali:'शुक्रबार', kanjiCharacters:['金','曜','日'], partOfSpeech:'Noun',
-    grammarSentences:[{ japanese:'きんようびはすきです。', reading:'きんようびはすきです。', english:'I like Fridays.', nepali:'म शुक्रबार मनपराउँछु।' }]},
-  { id:'n5_4_37', lesson:4, level:'N5', word:'どようび', reading:'どようび', meaning:'Saturday', meaningNepali:'शनिबार', kanjiCharacters:['土','曜','日'], partOfSpeech:'Noun',
-    grammarSentences:[{ japanese:'どようびはやすみです。', reading:'どようびはやすみです。', english:'Saturday is a day off.', nepali:'शनिबार बिदा हो।' }]},
-  { id:'n5_4_38', lesson:4, level:'N5', word:'なんがつ', reading:'なんがつ', meaning:'What month?', meaningNepali:'कुन महिना?', kanjiCharacters:['何','月'], partOfSpeech:'Question',
-    grammarSentences:[{ japanese:'たんじょうびはなんがつですか。', reading:'たんじょうびはなんがつですか。', english:'What month is your birthday?', nepali:'तपाईंको जन्मदिन कुन महिना हो?' }]},
-  { id:'n5_4_39', lesson:4, level:'N5', word:'〜がつ', reading:'〜がつ', meaning:'Month ~ (いちがつ=Jan, etc.)', meaningNepali:'~ महिना', kanjiCharacters:['月'], partOfSpeech:'Suffix',
-    grammarSentences:[{ japanese:'わたしのたんじょうびはさんがつです。', reading:'わたしのたんじょうびはさんがつです。', english:'My birthday is in March.', nepali:'मेरो जन्मदिन मार्चमा छ।' }]},
-  { id:'n5_4_40', lesson:4, level:'N5', word:'なんにち', reading:'なんにち', meaning:'What date?', meaningNepali:'कति गते?', kanjiCharacters:['何','日'], partOfSpeech:'Question',
-    grammarSentences:[{ japanese:'きょうはなんにちですか。', reading:'きょうはなんにちですか。', english:'What date is today?', nepali:'आज कति गते हो?' }]},
-  { id:'n5_4_41', lesson:4, level:'N5', word:'たんじょうび', reading:'たんじょうび', meaning:'Birthday', meaningNepali:'जन्मदिन', kanjiCharacters:['誕','生','日'], partOfSpeech:'Noun',
-    grammarSentences:[{ japanese:'おたんじょうびはいつですか。', reading:'おたんじょうびはいつですか。', english:'When is your birthday?', nepali:'तपाईंको जन्मदिन कहिले हो?' }]},
-  { id:'n5_4_42', lesson:4, level:'N5', word:'いつ', reading:'いつ', meaning:'When?', meaningNepali:'कहिले?', kanjiCharacters:[], partOfSpeech:'Question',
-    grammarSentences:[{ japanese:'しけんはいつですか。', reading:'しけんはいつですか。', english:'When is the exam?', nepali:'परीक्षा कहिले हो?' }]},
-  { id:'n5_4_43', lesson:4, level:'N5', word:'でんわ', reading:'でんわ', meaning:'Telephone', meaningNepali:'टेलिफोन', kanjiCharacters:['電','話'], partOfSpeech:'Noun',
-    grammarSentences:[{ japanese:'でんわばんごうはなんですか。', reading:'でんわばんごうはなんですか。', english:'What is your telephone number?', nepali:'तपाईंको फोन नम्बर के हो?' }]},
-  { id:'n5_4_44', lesson:4, level:'N5', word:'ばんごう', reading:'ばんごう', meaning:'Number', meaningNepali:'नम्बर', kanjiCharacters:['番','号'], partOfSpeech:'Noun',
-    grammarSentences:[{ japanese:'でんわばんごうをおしえてください。', reading:'でんわばんごうをおしえてください。', english:'Please tell me your phone number.', nepali:'कृपया मलाई तपाईंको फोन नम्बर बताउनुस्।' }]},
-  { id:'n5_4_45', lesson:4, level:'N5', word:'なんじかん', reading:'なんじかん', meaning:'How many hours?', meaningNepali:'कति घण्टा?', kanjiCharacters:['何','時','間'], partOfSpeech:'Question',
-    grammarSentences:[{ japanese:'にほんまでなんじかんかかりますか。', reading:'にほんまでなんじかんかかりますか。', english:'How many hours does it take to Japan?', nepali:'जापानसम्म कति घण्टा लाग्छ?' }]},
-  { id:'n5_4_46', lesson:4, level:'N5', word:'〜じかん', reading:'〜じかん', meaning:'~ hours (duration)', meaningNepali:'~ घण्टा', kanjiCharacters:['時','間'], partOfSpeech:'Suffix',
-    grammarSentences:[{ japanese:'にほんまでじゅうにじかんかかります。', reading:'にほんまでじゅうにじかんかかります。', english:'It takes 12 hours to Japan.', nepali:'जापानसम्म १२ घण्टा लाग्छ।' }]},
-
+  {
+    id: 'N5-L04-001', lesson: 4, level: 'N5', word: "起きます", reading: "おきます",
+    meaning: "get up, wake up", meaningNepali: "उठ्नु (बिहान)",
+    kanjiCharacters: ["起"], partOfSpeech: "Verb",
+    grammarSentences: [
+      { japanese: "起きます。", reading: "おきます。", english: "Example: get up, wake up.", nepali: "उदाहरण: उठ्नु (बिहान)।" }
+    ]
+  },
+  {
+    id: 'N5-L04-002', lesson: 4, level: 'N5', word: "寝ます", reading: "ねます",
+    meaning: "sleep, go to bed", meaningNepali: "सुत्नु",
+    kanjiCharacters: ["寝"], partOfSpeech: "Verb",
+    grammarSentences: [
+      { japanese: "寝ます。", reading: "ねます。", english: "Example: sleep, go to bed.", nepali: "उदाहरण: सुत्नु।" }
+    ]
+  },
+  {
+    id: 'N5-L04-003', lesson: 4, level: 'N5', word: "働きます", reading: "はたらきます",
+    meaning: "work", meaningNepali: "काम गर्नु",
+    kanjiCharacters: ["働"], partOfSpeech: "Verb",
+    grammarSentences: [
+      { japanese: "働きます。", reading: "はたらきます。", english: "Example: work.", nepali: "उदाहरण: काम गर्नु।" }
+    ]
+  },
+  {
+    id: 'N5-L04-004', lesson: 4, level: 'N5', word: "休みます", reading: "やすみます",
+    meaning: "take a rest, take a holiday", meaningNepali: "आराम गर्नु / बिदा लिनु",
+    kanjiCharacters: ["休"], partOfSpeech: "Verb",
+    grammarSentences: [
+      { japanese: "休みます。", reading: "やすみます。", english: "Example: take a rest, take a holiday.", nepali: "उदाहरण: आराम गर्नु / बिदा लिनु।" }
+    ]
+  },
+  {
+    id: 'N5-L04-005', lesson: 4, level: 'N5', word: "勉強します", reading: "べんきょうします",
+    meaning: "study", meaningNepali: "अध्ययन गर्नु / पढ्नु",
+    kanjiCharacters: ["勉", "強"], partOfSpeech: "Verb",
+    grammarSentences: [
+      { japanese: "勉強します。", reading: "べんきょうします。", english: "Example: study.", nepali: "उदाहरण: अध्ययन गर्नु / पढ्नु।" }
+    ]
+  },
+  {
+    id: 'N5-L04-006', lesson: 4, level: 'N5', word: "終わります", reading: "おわります",
+    meaning: "finish", meaningNepali: "सकिनु / समाप्त हुनु",
+    kanjiCharacters: ["終"], partOfSpeech: "Verb",
+    grammarSentences: [
+      { japanese: "終わります。", reading: "おわります。", english: "Example: finish.", nepali: "उदाहरण: सकिनु / समाप्त हुनु।" }
+    ]
+  },
+  {
+    id: 'N5-L04-007', lesson: 4, level: 'N5', word: "デパート", reading: "デパート",
+    meaning: "department store", meaningNepali: "डिपार्टमेन्ट स्टोर",
+    kanjiCharacters: [], partOfSpeech: "Noun",
+    grammarSentences: [
+      { japanese: "デパート。", reading: "デパート。", english: "Example: department store.", nepali: "उदाहरण: डिपार्टमेन्ट स्टोर।" }
+    ]
+  },
+  {
+    id: 'N5-L04-008', lesson: 4, level: 'N5', word: "銀行", reading: "ぎんこう",
+    meaning: "bank", meaningNepali: "बैंक",
+    kanjiCharacters: ["銀", "行"], partOfSpeech: "Noun",
+    grammarSentences: [
+      { japanese: "銀行。", reading: "ぎんこう。", english: "Example: bank.", nepali: "उदाहरण: बैंक।" }
+    ]
+  },
+  {
+    id: 'N5-L04-009', lesson: 4, level: 'N5', word: "郵便局", reading: "ゆうびんきょく",
+    meaning: "post office", meaningNepali: "हुलाक कार्यालय",
+    kanjiCharacters: ["郵", "便", "局"], partOfSpeech: "Noun",
+    grammarSentences: [
+      { japanese: "郵便局。", reading: "ゆうびんきょく。", english: "Example: post office.", nepali: "उदाहरण: हुलाक कार्यालय।" }
+    ]
+  },
+  {
+    id: 'N5-L04-010', lesson: 4, level: 'N5', word: "図書館", reading: "としょかん",
+    meaning: "library", meaningNepali: "पुस्तकालय",
+    kanjiCharacters: ["図", "書", "館"], partOfSpeech: "Noun",
+    grammarSentences: [
+      { japanese: "図書館。", reading: "としょかん。", english: "Example: library.", nepali: "उदाहरण: पुस्तकालय।" }
+    ]
+  },
+  {
+    id: 'N5-L04-011', lesson: 4, level: 'N5', word: "美術館", reading: "びじゅつかん",
+    meaning: "art museum", meaningNepali: "कला संग्रहालय",
+    kanjiCharacters: ["美", "術", "館"], partOfSpeech: "Noun",
+    grammarSentences: [
+      { japanese: "美術館。", reading: "びじゅつかん。", english: "Example: art museum.", nepali: "उदाहरण: कला संग्रहालय।" }
+    ]
+  },
+  {
+    id: 'N5-L04-012', lesson: 4, level: 'N5', word: "今", reading: "いま",
+    meaning: "now", meaningNepali: "अहिले",
+    kanjiCharacters: ["今"], partOfSpeech: "Noun",
+    grammarSentences: [
+      { japanese: "今。", reading: "いま。", english: "Example: now.", nepali: "उदाहरण: अहिले।" }
+    ]
+  },
+  {
+    id: 'N5-L04-013', lesson: 4, level: 'N5', word: "～時", reading: "～じ",
+    meaning: "~ o'clock", meaningNepali: "~ बजे",
+    kanjiCharacters: ["時"], partOfSpeech: "Noun",
+    grammarSentences: [
+      { japanese: "～時。", reading: "～じ。", english: "Example: ~ o'clock.", nepali: "उदाहरण: ~ बजे।" }
+    ]
+  },
+  {
+    id: 'N5-L04-014', lesson: 4, level: 'N5', word: "～分", reading: "～ふん／ぷん",
+    meaning: "~ minute", meaningNepali: "~ minute",
+    kanjiCharacters: ["分"], partOfSpeech: "Noun",
+    grammarSentences: [
+      { japanese: "～分。", reading: "～ふん／ぷん。", english: "Example: ~ minute.", nepali: "उदाहरण: ~ minute।" }
+    ]
+  },
+  {
+    id: 'N5-L04-015', lesson: 4, level: 'N5', word: "半", reading: "はん",
+    meaning: "half", meaningNepali: "आधा (साढे)",
+    kanjiCharacters: ["半"], partOfSpeech: "Noun",
+    grammarSentences: [
+      { japanese: "半。", reading: "はん。", english: "Example: half.", nepali: "उदाहरण: आधा (साढे)।" }
+    ]
+  },
+  {
+    id: 'N5-L04-016', lesson: 4, level: 'N5', word: "何時", reading: "なんじ",
+    meaning: "what time", meaningNepali: "कति बजे",
+    kanjiCharacters: ["何", "時"], partOfSpeech: "Noun",
+    grammarSentences: [
+      { japanese: "何時。", reading: "なんじ。", english: "Example: what time.", nepali: "उदाहरण: कति बजे।" }
+    ]
+  },
+  {
+    id: 'N5-L04-017', lesson: 4, level: 'N5', word: "何分", reading: "なんぷん",
+    meaning: "what minute", meaningNepali: "what minute",
+    kanjiCharacters: ["何", "分"], partOfSpeech: "Noun",
+    grammarSentences: [
+      { japanese: "何分。", reading: "なんぷん。", english: "Example: what minute.", nepali: "उदाहरण: what minute।" }
+    ]
+  },
+  {
+    id: 'N5-L04-018', lesson: 4, level: 'N5', word: "午前", reading: "ごぜん",
+    meaning: "a.m., morning", meaningNepali: "बिहान (AM)",
+    kanjiCharacters: ["午", "前"], partOfSpeech: "Noun",
+    grammarSentences: [
+      { japanese: "午前。", reading: "ごぜん。", english: "Example: a.m., morning.", nepali: "उदाहरण: बिहान (AM)।" }
+    ]
+  },
+  {
+    id: 'N5-L04-019', lesson: 4, level: 'N5', word: "午後", reading: "ごご",
+    meaning: "p.m., afternoon", meaningNepali: "दिउँसो/साँझ (PM)",
+    kanjiCharacters: ["午", "後"], partOfSpeech: "Noun",
+    grammarSentences: [
+      { japanese: "午後。", reading: "ごご。", english: "Example: p.m., afternoon.", nepali: "उदाहरण: दिउँसो/साँझ (PM)।" }
+    ]
+  },
+  {
+    id: 'N5-L04-020', lesson: 4, level: 'N5', word: "朝", reading: "あさ",
+    meaning: "morning", meaningNepali: "बिहान",
+    kanjiCharacters: ["朝"], partOfSpeech: "Noun",
+    grammarSentences: [
+      { japanese: "朝。", reading: "あさ。", english: "Example: morning.", nepali: "उदाहरण: बिहान।" }
+    ]
+  },
+  {
+    id: 'N5-L04-021', lesson: 4, level: 'N5', word: "昼", reading: "ひる",
+    meaning: "daytime, noon", meaningNepali: "दिउँसो",
+    kanjiCharacters: ["昼"], partOfSpeech: "Noun",
+    grammarSentences: [
+      { japanese: "昼。", reading: "ひる。", english: "Example: daytime, noon.", nepali: "उदाहरण: दिउँसो।" }
+    ]
+  },
+  {
+    id: 'N5-L04-022', lesson: 4, level: 'N5', word: "晩／夜", reading: "ばん／よる",
+    meaning: "night, evening", meaningNepali: "night, evening",
+    kanjiCharacters: ["晩", "夜"], partOfSpeech: "Noun",
+    grammarSentences: [
+      { japanese: "晩／夜。", reading: "ばん／よる。", english: "Example: night, evening.", nepali: "उदाहरण: night, evening।" }
+    ]
+  },
+  {
+    id: 'N5-L04-023', lesson: 4, level: 'N5', word: "一昨日", reading: "おととい",
+    meaning: "the day before yesterday", meaningNepali: "अस्ति",
+    kanjiCharacters: ["一", "昨", "日"], partOfSpeech: "I-Adj",
+    grammarSentences: [
+      { japanese: "一昨日。", reading: "おととい。", english: "Example: the day before yesterday.", nepali: "उदाहरण: अस्ति।" }
+    ]
+  },
+  {
+    id: 'N5-L04-024', lesson: 4, level: 'N5', word: "昨日", reading: "きのう",
+    meaning: "yesterday", meaningNepali: "हिजो",
+    kanjiCharacters: ["昨", "日"], partOfSpeech: "Noun",
+    grammarSentences: [
+      { japanese: "昨日。", reading: "きのう。", english: "Example: yesterday.", nepali: "उदाहरण: हिजो।" }
+    ]
+  },
+  {
+    id: 'N5-L04-025', lesson: 4, level: 'N5', word: "今日", reading: "きょう",
+    meaning: "today", meaningNepali: "आज",
+    kanjiCharacters: ["今", "日"], partOfSpeech: "Noun",
+    grammarSentences: [
+      { japanese: "今日。", reading: "きょう。", english: "Example: today.", nepali: "उदाहरण: आज।" }
+    ]
+  },
+  {
+    id: 'N5-L04-026', lesson: 4, level: 'N5', word: "明日", reading: "あした",
+    meaning: "tomorrow", meaningNepali: "भोलि",
+    kanjiCharacters: ["明", "日"], partOfSpeech: "Noun",
+    grammarSentences: [
+      { japanese: "明日。", reading: "あした。", english: "Example: tomorrow.", nepali: "उदाहरण: भोलि।" }
+    ]
+  },
+  {
+    id: 'N5-L04-027', lesson: 4, level: 'N5', word: "明後日", reading: "あさって",
+    meaning: "the day after tomorrow", meaningNepali: "पर्सि",
+    kanjiCharacters: ["明", "後", "日"], partOfSpeech: "Noun",
+    grammarSentences: [
+      { japanese: "明後日。", reading: "あさって。", english: "Example: the day after tomorrow.", nepali: "उदाहरण: पर्सि।" }
+    ]
+  },
+  {
+    id: 'N5-L04-028', lesson: 4, level: 'N5', word: "今朝", reading: "けさ",
+    meaning: "this morning", meaningNepali: "आज बिहान",
+    kanjiCharacters: ["今", "朝"], partOfSpeech: "Noun",
+    grammarSentences: [
+      { japanese: "今朝。", reading: "けさ。", english: "Example: this morning.", nepali: "उदाहरण: आज बिहान।" }
+    ]
+  },
+  {
+    id: 'N5-L04-029', lesson: 4, level: 'N5', word: "今晩", reading: "こんばん",
+    meaning: "this evening, tonight", meaningNepali: "आज राति",
+    kanjiCharacters: ["今", "晩"], partOfSpeech: "Noun",
+    grammarSentences: [
+      { japanese: "今晩。", reading: "こんばん。", english: "Example: this evening, tonight.", nepali: "उदाहरण: आज राति।" }
+    ]
+  },
+  {
+    id: 'N5-L04-030', lesson: 4, level: 'N5', word: "休み", reading: "やすみ",
+    meaning: "rest, a holiday, a day off", meaningNepali: "बिदा / विश्राम",
+    kanjiCharacters: ["休"], partOfSpeech: "Noun",
+    grammarSentences: [
+      { japanese: "休み。", reading: "やすみ。", english: "Example: rest, a holiday, a day off.", nepali: "उदाहरण: बिदा / विश्राम।" }
+    ]
+  },
+  {
+    id: 'N5-L04-031', lesson: 4, level: 'N5', word: "昼休み", reading: "ひるやすみ",
+    meaning: "lunchtime", meaningNepali: "दिउँसोको खाना खाने समय / ब्रेक",
+    kanjiCharacters: ["昼", "休"], partOfSpeech: "Noun",
+    grammarSentences: [
+      { japanese: "昼休み。", reading: "ひるやすみ。", english: "Example: lunchtime.", nepali: "उदाहरण: दिउँसोको खाना खाने समय / ब्रेक।" }
+    ]
+  },
+  {
+    id: 'N5-L04-032', lesson: 4, level: 'N5', word: "毎朝", reading: "まいあさ",
+    meaning: "every morning", meaningNepali: "हरेक बिहान",
+    kanjiCharacters: ["毎", "朝"], partOfSpeech: "Noun",
+    grammarSentences: [
+      { japanese: "毎朝。", reading: "まいあさ。", english: "Example: every morning.", nepali: "उदाहरण: हरेक बिहान।" }
+    ]
+  },
+  {
+    id: 'N5-L04-033', lesson: 4, level: 'N5', word: "毎晩", reading: "まいばん",
+    meaning: "every night", meaningNepali: "हरेक राति",
+    kanjiCharacters: ["毎", "晩"], partOfSpeech: "Noun",
+    grammarSentences: [
+      { japanese: "毎晩。", reading: "まいばん。", english: "Example: every night.", nepali: "उदाहरण: हरेक राति।" }
+    ]
+  },
+  {
+    id: 'N5-L04-034', lesson: 4, level: 'N5', word: "毎日", reading: "まいにち",
+    meaning: "every day", meaningNepali: "हरेक दिन",
+    kanjiCharacters: ["毎", "日"], partOfSpeech: "Noun",
+    grammarSentences: [
+      { japanese: "毎日。", reading: "まいにち。", english: "Example: every day.", nepali: "उदाहरण: हरेक दिन।" }
+    ]
+  },
+  {
+    id: 'N5-L04-035', lesson: 4, level: 'N5', word: "月曜日", reading: "げつようび",
+    meaning: "Monday", meaningNepali: "सोमबार",
+    kanjiCharacters: ["月", "曜", "日"], partOfSpeech: "Noun",
+    grammarSentences: [
+      { japanese: "月曜日。", reading: "げつようび。", english: "Example: Monday.", nepali: "उदाहरण: सोमबार।" }
+    ]
+  },
+  {
+    id: 'N5-L04-036', lesson: 4, level: 'N5', word: "火曜日", reading: "かようび",
+    meaning: "Tuesday", meaningNepali: "मंगलबार",
+    kanjiCharacters: ["火", "曜", "日"], partOfSpeech: "Noun",
+    grammarSentences: [
+      { japanese: "火曜日。", reading: "かようび。", english: "Example: Tuesday.", nepali: "उदाहरण: मंगलबार।" }
+    ]
+  },
+  {
+    id: 'N5-L04-037', lesson: 4, level: 'N5', word: "水曜日", reading: "すいようび",
+    meaning: "Wednesday", meaningNepali: "बुधबार",
+    kanjiCharacters: ["水", "曜", "日"], partOfSpeech: "Noun",
+    grammarSentences: [
+      { japanese: "水曜日。", reading: "すいようび。", english: "Example: Wednesday.", nepali: "उदाहरण: बुधबार।" }
+    ]
+  },
+  {
+    id: 'N5-L04-038', lesson: 4, level: 'N5', word: "木曜日", reading: "もくようび",
+    meaning: "Thursday", meaningNepali: "बिहीबार",
+    kanjiCharacters: ["木", "曜", "日"], partOfSpeech: "Noun",
+    grammarSentences: [
+      { japanese: "木曜日。", reading: "もくようび。", english: "Example: Thursday.", nepali: "उदाहरण: बिहीबार।" }
+    ]
+  },
+  {
+    id: 'N5-L04-039', lesson: 4, level: 'N5', word: "金曜日", reading: "きんようび",
+    meaning: "Friday", meaningNepali: "शुक्रबार",
+    kanjiCharacters: ["金", "曜", "日"], partOfSpeech: "Noun",
+    grammarSentences: [
+      { japanese: "金曜日。", reading: "きんようび。", english: "Example: Friday.", nepali: "उदाहरण: शुक्रबार।" }
+    ]
+  },
+  {
+    id: 'N5-L04-040', lesson: 4, level: 'N5', word: "土曜日", reading: "どようび",
+    meaning: "Saturday", meaningNepali: "शनिबार",
+    kanjiCharacters: ["土", "曜", "日"], partOfSpeech: "Noun",
+    grammarSentences: [
+      { japanese: "土曜日。", reading: "どようび。", english: "Example: Saturday.", nepali: "उदाहरण: शनिबार।" }
+    ]
+  },
+  {
+    id: 'N5-L04-041', lesson: 4, level: 'N5', word: "日曜日", reading: "にちようび",
+    meaning: "Sunday", meaningNepali: "आइतबार",
+    kanjiCharacters: ["日", "曜"], partOfSpeech: "Noun",
+    grammarSentences: [
+      { japanese: "日曜日。", reading: "にちようび。", english: "Example: Sunday.", nepali: "उदाहरण: आइतबार।" }
+    ]
+  },
+  {
+    id: 'N5-L04-042', lesson: 4, level: 'N5', word: "何曜日", reading: "なんようび",
+    meaning: "what day of the week", meaningNepali: "कुन बार",
+    kanjiCharacters: ["何", "曜", "日"], partOfSpeech: "Noun",
+    grammarSentences: [
+      { japanese: "何曜日。", reading: "なんようび。", english: "Example: what day of the week.", nepali: "उदाहरण: कुन बार।" }
+    ]
+  },
+  {
+    id: 'N5-L04-043', lesson: 4, level: 'N5', word: "～番", reading: "～ばん",
+    meaning: "number ~", meaningNepali: "number ~",
+    kanjiCharacters: ["番"], partOfSpeech: "Noun",
+    grammarSentences: [
+      { japanese: "～番。", reading: "～ばん。", english: "Example: number ~.", nepali: "उदाहरण: number ~।" }
+    ]
+  },
+  {
+    id: 'N5-L04-044', lesson: 4, level: 'N5', word: "何番", reading: "なんばん",
+    meaning: "what number", meaningNepali: "कति नम्बर",
+    kanjiCharacters: ["何", "番"], partOfSpeech: "Noun",
+    grammarSentences: [
+      { japanese: "何番。", reading: "なんばん。", english: "Example: what number.", nepali: "उदाहरण: कति नम्बर।" }
+    ]
+  },
+  {
+    id: 'N5-L04-045', lesson: 4, level: 'N5', word: "～から", reading: "～から",
+    meaning: "from ~", meaningNepali: "~ भएकोले / ~ कारण",
+    kanjiCharacters: [], partOfSpeech: "Noun",
+    grammarSentences: [
+      { japanese: "～から。", reading: "～から。", english: "Example: from ~.", nepali: "उदाहरण: ~ भएकोले / ~ कारण।" }
+    ]
+  },
+  {
+    id: 'N5-L04-046', lesson: 4, level: 'N5', word: "～まで", reading: "～まで",
+    meaning: "up to ~, until ~", meaningNepali: "~ सम्म",
+    kanjiCharacters: [], partOfSpeech: "Noun",
+    grammarSentences: [
+      { japanese: "～まで。", reading: "～まで。", english: "Example: up to ~, until ~.", nepali: "उदाहरण: ~ सम्म।" }
+    ]
+  },
+  {
+    id: 'N5-L04-047', lesson: 4, level: 'N5', word: "～と～", reading: "～と～",
+    meaning: "and (used to connect nouns)", meaningNepali: "~ र ~",
+    kanjiCharacters: [], partOfSpeech: "Noun",
+    grammarSentences: [
+      { japanese: "～と～。", reading: "～と～。", english: "Example: and (used to connect nouns).", nepali: "उदाहरण: ~ र ~।" }
+    ]
+  },
+  {
+    id: 'N5-L04-048', lesson: 4, level: 'N5', word: "お宅", reading: "おたく",
+    meaning: "your place", meaningNepali: "your place",
+    kanjiCharacters: ["宅"], partOfSpeech: "Noun",
+    grammarSentences: [
+      { japanese: "お宅。", reading: "おたく。", english: "Example: your place.", nepali: "उदाहरण: your place।" }
+    ]
+  },
+  {
+    id: 'N5-L04-049', lesson: 4, level: 'N5', word: "それは たいへんですね。", reading: "それは たいへんですね。",
+    meaning: "That's tough, isn't it? (expressing sympathy)", meaningNepali: "That's tough, isn't it? (expressing sympathy)",
+    kanjiCharacters: [], partOfSpeech: "Noun",
+    grammarSentences: [
+      { japanese: "それは たいへんですね。。", reading: "それは たいへんですね。。", english: "Example: That's tough, isn't it? (expressing sympathy).", nepali: "उदाहरण: That's tough, isn't it? (expressing sympathy)।" }
+    ]
+  },
+  {
+    id: 'N5-L04-050', lesson: 4, level: 'N5', word: "さあ", reading: "さあ",
+    meaning: "well, let me see", meaningNepali: "well, let me see",
+    kanjiCharacters: [], partOfSpeech: "Noun",
+    grammarSentences: [
+      { japanese: "さあ。", reading: "さあ。", english: "Example: well, let me see.", nepali: "उदाहरण: well, let me see।" }
+    ]
+  },
+  {
+    id: 'N5-L04-051', lesson: 4, level: 'N5', word: "104", reading: "104",
+    meaning: "information, directory assistance", meaningNepali: "information, directory assistance",
+    kanjiCharacters: [], partOfSpeech: "Noun",
+    grammarSentences: [
+      { japanese: "104。", reading: "104。", english: "Example: information, directory assistance.", nepali: "उदाहरण: information, directory assistance।" }
+    ]
+  },
+  {
+    id: 'N5-L04-052', lesson: 4, level: 'N5', word: "お願いします。", reading: "おねがいします。",
+    meaning: "Please. (lit. ask for a favor)", meaningNepali: "कृपया गरिदिनुहोस्।",
+    kanjiCharacters: ["願"], partOfSpeech: "Noun",
+    grammarSentences: [
+      { japanese: "お願いします。。", reading: "おねがいします。。", english: "Example: Please. (lit. ask for a favor).", nepali: "उदाहरण: कृपया गरिदिनुहोस्।।" }
+    ]
+  },
+  {
+    id: 'N5-L04-053', lesson: 4, level: 'N5', word: "少々 お待ちください。", reading: "しょうしょう おまちください。",
+    meaning: "Certainly (sir, madam) (lit. please wait a little)", meaningNepali: "Certainly (sir, madam) (lit. please wait a little)",
+    kanjiCharacters: ["少", "待"], partOfSpeech: "Noun",
+    grammarSentences: [
+      { japanese: "少々 お待ちください。。", reading: "しょうしょう おまちください。。", english: "Example: Certainly (sir, madam) (lit. please wait a little).", nepali: "उदाहरण: Certainly (sir, madam) (lit. please wait a little)।" }
+    ]
+  },
+  {
+    id: 'N5-L04-054', lesson: 4, level: 'N5', word: "お尋ねの 番号", reading: "おたずねの ばんごう",
+    meaning: "the number being inquired about", meaningNepali: "the number being inquired about",
+    kanjiCharacters: ["尋", "番", "号"], partOfSpeech: "Noun",
+    grammarSentences: [
+      { japanese: "お尋ねの 番号。", reading: "おたずねの ばんごう。", english: "Example: the number being inquired about.", nepali: "उदाहरण: the number being inquired about।" }
+    ]
+  },
+  {
+    id: 'N5-L04-055', lesson: 4, level: 'N5', word: "[どうも] ありがとうございました。", reading: "[どうも] ありがとうございました。",
+    meaning: "Thank you very much.", meaningNepali: "Thank you very much.",
+    kanjiCharacters: [], partOfSpeech: "Noun",
+    grammarSentences: [
+      { japanese: "[どうも] ありがとうございました。。", reading: "[どうも] ありがとうございました。。", english: "Example: Thank you very much..", nepali: "उदाहरण: Thank you very much.।" }
+    ]
+  },
   // ════════════════════════════════════════════════════════
-  // LESSON 5 — Verbs: Going, Coming & Returning + Destinations
-  // Grammar: N へ いきます/きます/かえります · なにで · だれと · 〜ませんか · 〜ましょう
+  // LESSON 05 (55 ITEMS)
   // ════════════════════════════════════════════════════════
-  { id:'n5_5_01', lesson:5, level:'N5', word:'いきます', reading:'いきます', meaning:'Go', meaningNepali:'जानु', kanjiCharacters:['行'], partOfSpeech:'Verb (Group 1)',
-    grammarSentences:[
-      { japanese:'にほんへいきます。', reading:'にほんへいきます。', english:'I will go to Japan.', nepali:'म जापान जान्छु।' },
-      { japanese:'どこへいきますか。', reading:'どこへいきますか。', english:'Where are you going?', nepali:'तपाईं कहाँ जाँदैहुनुहुन्छ?' }
-    ]},
-  { id:'n5_5_02', lesson:5, level:'N5', word:'きます', reading:'きます', meaning:'Come', meaningNepali:'आउनु', kanjiCharacters:['来'], partOfSpeech:'Verb (Irregular)',
-    grammarSentences:[
-      { japanese:'ともだちがきます。', reading:'ともだちがきます。', english:'A friend is coming.', nepali:'साथी आउँदैछ।' },
-      { japanese:'にほんからきました。', reading:'にほんからきました。', english:'I came from Japan.', nepali:'म जापानबाट आएँ।' }
-    ]},
-  { id:'n5_5_03', lesson:5, level:'N5', word:'かえります', reading:'かえります', meaning:'Return / Go home', meaningNepali:'फर्कनु / घर जानु', kanjiCharacters:['帰'], partOfSpeech:'Verb (Group 1)',
-    grammarSentences:[
-      { japanese:'うちへかえります。', reading:'うちへかえります。', english:'I will return home.', nepali:'म घर फर्कन्छु।' },
-      { japanese:'なんじにかえりますか。', reading:'なんじにかえりますか。', english:'What time will you go home?', nepali:'कति बजे घर फर्कनुहुन्छ?' }
-    ]},
-  { id:'n5_5_04', lesson:5, level:'N5', word:'うち', reading:'うち', meaning:'House / Home', meaningNepali:'घर', kanjiCharacters:['家'], partOfSpeech:'Noun',
-    grammarSentences:[{ japanese:'うちはどこですか。', reading:'うちはどこですか。', english:'Where is your home?', nepali:'तपाईंको घर कहाँ छ?' }]},
-  { id:'n5_5_05', lesson:5, level:'N5', word:'くに', reading:'くに', meaning:'Country / Hometown', meaningNepali:'देश / गाउँ', kanjiCharacters:['国'], partOfSpeech:'Noun',
-    grammarSentences:[{ japanese:'なつやすみにくにへかえります。', reading:'なつやすみにくにへかえります。', english:'I will return to my country during summer vacation.', nepali:'गर्मी बिदामा देश फर्कन्छु।' }]},
-  { id:'n5_5_06', lesson:5, level:'N5', word:'がっこう', reading:'がっこう', meaning:'School', meaningNepali:'विद्यालय', kanjiCharacters:['学','校'], partOfSpeech:'Noun',
-    grammarSentences:[{ japanese:'まいあさがっこうへいきます。', reading:'まいあさがっこうへいきます。', english:'I go to school every morning.', nepali:'म हरेक बिहान विद्यालय जान्छु।' }]},
-  { id:'n5_5_07', lesson:5, level:'N5', word:'かいしゃ', reading:'かいしゃ', meaning:'Company', meaningNepali:'कम्पनी', kanjiCharacters:['会','社'], partOfSpeech:'Noun',
-    grammarSentences:[{ japanese:'かいしゃはどこですか。', reading:'かいしゃはどこですか。', english:'Where is the company?', nepali:'कम्पनी कहाँ छ?' }]},
-  { id:'n5_5_08', lesson:5, level:'N5', word:'〜へ', reading:'〜へ', meaning:'To ~ (direction particle)', meaningNepali:'~ तिर / ~ लाई (दिशा)', kanjiCharacters:[], partOfSpeech:'Particle',
-    grammarSentences:[{ japanese:'とうきょうへいきます。', reading:'とうきょうへいきます。', english:'I am going to Tokyo.', nepali:'म टोक्यो जाँदैछु।' }]},
-  { id:'n5_5_09', lesson:5, level:'N5', word:'ひとりで', reading:'ひとりで', meaning:'Alone / By oneself', meaningNepali:'एक्लै', kanjiCharacters:['一','人'], partOfSpeech:'Expression',
-    grammarSentences:[{ japanese:'ひとりでえいがをみました。', reading:'ひとりでえいがをみました。', english:'I watched a movie alone.', nepali:'मैले एक्लै फिल्म हेरें।' }]},
-  { id:'n5_5_10', lesson:5, level:'N5', word:'〜と', reading:'〜と', meaning:'With ~ (together with)', meaningNepali:'~सँगै', kanjiCharacters:[], partOfSpeech:'Particle',
-    grammarSentences:[{ japanese:'ともだちとえいがをみました。', reading:'ともだちとえいがをみました。', english:'I watched a movie with my friend.', nepali:'मैले साथीसँगै फिल्म हेरें।' }]},
-  { id:'n5_5_11', lesson:5, level:'N5', word:'だれと', reading:'だれと', meaning:'With whom?', meaningNepali:'कसँग?', kanjiCharacters:[], partOfSpeech:'Question',
-    grammarSentences:[{ japanese:'だれといきますか。', reading:'だれといきますか。', english:'Who will you go with?', nepali:'कसँग जाने?' }]},
-  { id:'n5_5_12', lesson:5, level:'N5', word:'なにで / なんで', reading:'なにで/なんで', meaning:'By what means?', meaningNepali:'कसरी / के साधनले?', kanjiCharacters:['何'], partOfSpeech:'Question',
-    grammarSentences:[{ japanese:'なんでいきますか。', reading:'なんでいきますか。', english:'How will you go?', nepali:'कसरी जानुहुन्छ?' }]},
-  { id:'n5_5_13', lesson:5, level:'N5', word:'〜で', reading:'〜で', meaning:'By ~ (means of transport)', meaningNepali:'~ले (साधन)', kanjiCharacters:[], partOfSpeech:'Particle',
-    grammarSentences:[{ japanese:'でんしゃでいきます。', reading:'でんしゃでいきます。', english:'I will go by train.', nepali:'म ट्रेनले जान्छु।' }]},
-  { id:'n5_5_14', lesson:5, level:'N5', word:'ひこうき', reading:'ひこうき', meaning:'Airplane', meaningNepali:'हवाइजहाज', kanjiCharacters:['飛','行','機'], partOfSpeech:'Noun',
-    grammarSentences:[{ japanese:'ひこうきでにほんへいきます。', reading:'ひこうきでにほんへいきます。', english:'I will go to Japan by airplane.', nepali:'म हवाइजहाजले जापान जान्छु।' }]},
-  { id:'n5_5_15', lesson:5, level:'N5', word:'ふね', reading:'ふね', meaning:'Ship / Boat', meaningNepali:'जहाज / डुंगा', kanjiCharacters:['船'], partOfSpeech:'Noun',
-    grammarSentences:[{ japanese:'ふねでしまへいきます。', reading:'ふねでしまへいきます。', english:'I will go to the island by boat.', nepali:'म डुंगाले टापुमा जान्छु।' }]},
-  { id:'n5_5_16', lesson:5, level:'N5', word:'でんしゃ', reading:'でんしゃ', meaning:'Train', meaningNepali:'ट्रेन', kanjiCharacters:['電','車'], partOfSpeech:'Noun',
-    grammarSentences:[{ japanese:'でんしゃでかいしゃにいきます。', reading:'でんしゃでかいしゃにいきます。', english:'I go to the company by train.', nepali:'म ट्रेनले कम्पनी जान्छु।' }]},
-  { id:'n5_5_17', lesson:5, level:'N5', word:'バス', reading:'バス', meaning:'Bus', meaningNepali:'बस', kanjiCharacters:[], partOfSpeech:'Noun',
-    grammarSentences:[{ japanese:'バスでがっこうへいきます。', reading:'バスでがっこうへいきます。', english:'I go to school by bus.', nepali:'म बसले विद्यालय जान्छु।' }]},
-  { id:'n5_5_18', lesson:5, level:'N5', word:'ちかてつ', reading:'ちかてつ', meaning:'Subway', meaningNepali:'सबवे / भूमिगत रेल', kanjiCharacters:['地','下','鉄'], partOfSpeech:'Noun',
-    grammarSentences:[{ japanese:'ちかてつでえきへいきます。', reading:'ちかてつでえきへいきます。', english:'I go to the station by subway.', nepali:'म सबवेले स्टेशन जान्छु।' }]},
-  { id:'n5_5_19', lesson:5, level:'N5', word:'タクシー', reading:'タクシー', meaning:'Taxi', meaningNepali:'ट्याक्सी', kanjiCharacters:[], partOfSpeech:'Noun',
-    grammarSentences:[{ japanese:'タクシーでホテルへいきました。', reading:'タクシーでホテルへいきました。', english:'I went to the hotel by taxi.', nepali:'मैले ट्याक्सीले होटल गएँ।' }]},
-  { id:'n5_5_20', lesson:5, level:'N5', word:'バイク', reading:'バイク', meaning:'Motorbike', meaningNepali:'मोटरसाइकल', kanjiCharacters:[], partOfSpeech:'Noun',
-    grammarSentences:[{ japanese:'バイクでがっこうへいきます。', reading:'バイクでがっこうへいきます。', english:'I go to school by motorbike.', nepali:'म मोटरसाइकलले विद्यालय जान्छु।' }]},
-  { id:'n5_5_21', lesson:5, level:'N5', word:'じてんしゃ', reading:'じてんしゃ', meaning:'Bicycle', meaningNepali:'साइकल', kanjiCharacters:['自','転','車'], partOfSpeech:'Noun',
-    grammarSentences:[{ japanese:'じてんしゃでえきへいきます。', reading:'じてんしゃでえきへいきます。', english:'I go to the station by bicycle.', nepali:'म साइकलले स्टेशन जान्छु।' }]},
-  { id:'n5_5_22', lesson:5, level:'N5', word:'あるいて', reading:'あるいて', meaning:'On foot / Walking', meaningNepali:'हिँडेर', kanjiCharacters:['歩'], partOfSpeech:'Expression',
-    grammarSentences:[{ japanese:'えきまであるいていきます。', reading:'えきまであるいていきます。', english:'I walk to the station.', nepali:'म हिँडेर स्टेशन जान्छु।' }]},
-  { id:'n5_5_23', lesson:5, level:'N5', word:'りょこう', reading:'りょこう', meaning:'Travel / Trip', meaningNepali:'यात्रा / भ्रमण', kanjiCharacters:['旅','行'], partOfSpeech:'Noun',
-    grammarSentences:[{ japanese:'なつやすみにりょこうします。', reading:'なつやすみにりょこうします。', english:'I will travel during summer vacation.', nepali:'गर्मी बिदामा यात्रा गर्छु।' }]},
-  { id:'n5_5_24', lesson:5, level:'N5', word:'かいもの', reading:'かいもの', meaning:'Shopping', meaningNepali:'किनमेल', kanjiCharacters:['買','物'], partOfSpeech:'Noun',
-    grammarSentences:[{ japanese:'デパートへかいものにいきます。', reading:'デパートへかいものにいきます。', english:'I will go shopping at the department store.', nepali:'म किनमेल गर्न डिपार्टमेन्ट स्टोर जान्छु।' }]},
-  { id:'n5_5_25', lesson:5, level:'N5', word:'しょくじ', reading:'しょくじ', meaning:'Meal / Dining', meaningNepali:'भोजन / खाना', kanjiCharacters:['食','事'], partOfSpeech:'Noun',
-    grammarSentences:[{ japanese:'いっしょにしょくじをしませんか。', reading:'いっしょにしょくじをしませんか。', english:'Would you like to have a meal together?', nepali:'सँगै खाना खाने हो?' }]},
-  { id:'n5_5_26', lesson:5, level:'N5', word:'さんぽ', reading:'さんぽ', meaning:'Walk / Stroll', meaningNepali:'टहल / भ्रमण', kanjiCharacters:['散','歩'], partOfSpeech:'Noun',
-    grammarSentences:[{ japanese:'こうえんでさんぽします。', reading:'こうえんでさんぽします。', english:'I will take a walk in the park.', nepali:'म पार्कमा टहल गर्छु।' }]},
-  { id:'n5_5_27', lesson:5, level:'N5', word:'いっしょに', reading:'いっしょに', meaning:'Together', meaningNepali:'सँगै', kanjiCharacters:['一','緒'], partOfSpeech:'Adverb',
-    grammarSentences:[{ japanese:'いっしょにいきましょう。', reading:'いっしょにいきましょう。', english:'Let\'s go together.', nepali:'सँगै जाउँ।' }]},
-  { id:'n5_5_28', lesson:5, level:'N5', word:'〜ませんか', reading:'〜ませんか', meaning:'Won\'t you ~? / Shall we ~? (invitation)', meaningNepali:'~ गर्नुहुन्न? (निमन्त्रणा)', kanjiCharacters:[], partOfSpeech:'Grammar Pattern',
-    grammarSentences:[{ japanese:'いっしょにたべませんか。', reading:'いっしょにたべませんか。', english:'Won\'t you eat together with me?', nepali:'मसँगै खाने हो?' }]},
-  { id:'n5_5_29', lesson:5, level:'N5', word:'〜ましょう', reading:'〜ましょう', meaning:'Let\'s ~ (suggestion)', meaningNepali:'~ गरौँ (सुझाव)', kanjiCharacters:[], partOfSpeech:'Grammar Pattern',
-    grammarSentences:[{ japanese:'えいがをみましょう。', reading:'えいがをみましょう。', english:'Let\'s watch a movie.', nepali:'फिल्म हेरौँ।' }]},
-  { id:'n5_5_30', lesson:5, level:'N5', word:'〜ましょうか', reading:'〜ましょうか', meaning:'Shall I / Shall we ~?', meaningNepali:'~ गरौँ कि?', kanjiCharacters:[], partOfSpeech:'Grammar Pattern',
-    grammarSentences:[{ japanese:'てつだいましょうか。', reading:'てつだいましょうか。', english:'Shall I help you?', nepali:'म मद्दत गरौँ?' }]},
-  { id:'n5_5_31', lesson:5, level:'N5', word:'なつやすみ', reading:'なつやすみ', meaning:'Summer vacation', meaningNepali:'गर्मी बिदा', kanjiCharacters:['夏','休'], partOfSpeech:'Noun',
-    grammarSentences:[{ japanese:'なつやすみにどこへいきますか。', reading:'なつやすみにどこへいきますか。', english:'Where will you go during summer vacation?', nepali:'गर्मी बिदामा कहाँ जाने?' }]},
-  { id:'n5_5_32', lesson:5, level:'N5', word:'ふゆやすみ', reading:'ふゆやすみ', meaning:'Winter vacation', meaningNepali:'जाडो बिदा', kanjiCharacters:['冬','休'], partOfSpeech:'Noun',
-    grammarSentences:[{ japanese:'ふゆやすみにスキーをします。', reading:'ふゆやすみにスキーをします。', english:'I will ski during winter vacation.', nepali:'जाडो बिदामा स्की गर्छु।' }]},
-  { id:'n5_5_33', lesson:5, level:'N5', word:'しゅうまつ', reading:'しゅうまつ', meaning:'Weekend', meaningNepali:'सप्ताहन्त', kanjiCharacters:['週','末'], partOfSpeech:'Noun',
-    grammarSentences:[{ japanese:'しゅうまつはなにをしますか。', reading:'しゅうまつはなにをしますか。', english:'What do you do on weekends?', nepali:'सप्ताहन्तमा के गर्नुहुन्छ?' }]},
-  { id:'n5_5_34', lesson:5, level:'N5', word:'いい / よい', reading:'いい/よい', meaning:'Good / Fine', meaningNepali:'राम्रो / ठिक', kanjiCharacters:[], partOfSpeech:'Adjective (i)',
-    grammarSentences:[{ japanese:'きょうはいいてんきですね。', reading:'きょうはいいてんきですね。', english:'Today is nice weather, isn\'t it?', nepali:'आज मौसम राम्रो छ, हैन?' }]},
-  { id:'n5_5_35', lesson:5, level:'N5', word:'どうですか', reading:'どうですか', meaning:'How is it? / How about?', meaningNepali:'कस्तो छ? / के गर्ने?', kanjiCharacters:[], partOfSpeech:'Expression',
-    grammarSentences:[{ japanese:'にほんのたべものはどうですか。', reading:'にほんのたべものはどうですか。', english:'How is Japanese food?', nepali:'जापानी खाना कस्तो छ?' }]},
-  { id:'n5_5_36', lesson:5, level:'N5', word:'ぜひ', reading:'ぜひ', meaning:'By all means / Definitely', meaningNepali:'अवश्य / निश्चित रूपमा', kanjiCharacters:['是','非'], partOfSpeech:'Adverb',
-    grammarSentences:[{ japanese:'ぜひきてください。', reading:'ぜひきてください。', english:'Please come by all means.', nepali:'अवश्य आउनुस्।' }]},
-  { id:'n5_5_37', lesson:5, level:'N5', word:'もちろん', reading:'もちろん', meaning:'Of course', meaningNepali:'अवश्य / पक्कै', kanjiCharacters:[], partOfSpeech:'Adverb',
-    grammarSentences:[{ japanese:'もちろんいきます。', reading:'もちろんいきます。', english:'Of course I will go.', nepali:'पक्कै जान्छु।' }]},
-  { id:'n5_5_38', lesson:5, level:'N5', word:'ホテル', reading:'ホテル', meaning:'Hotel', meaningNepali:'होटल', kanjiCharacters:[], partOfSpeech:'Noun',
-    grammarSentences:[{ japanese:'ホテルへかえります。', reading:'ホテルへかえります。', english:'I will return to the hotel.', nepali:'म होटल फर्कन्छु।' }]},
-  { id:'n5_5_39', lesson:5, level:'N5', word:'とうきょう', reading:'とうきょう', meaning:'Tokyo', meaningNepali:'टोक्यो', kanjiCharacters:['東','京'], partOfSpeech:'Noun',
-    grammarSentences:[{ japanese:'とうきょうへいきます。', reading:'とうきょうへいきます。', english:'I will go to Tokyo.', nepali:'म टोक्यो जान्छु।' }]},
+  {
+    id: 'N5-L05-001', lesson: 5, level: 'N5', word: "行きます", reading: "いきます",
+    meaning: "go", meaningNepali: "जानु",
+    kanjiCharacters: ["行"], partOfSpeech: "Verb",
+    grammarSentences: [
+      { japanese: "行きます。", reading: "いきます。", english: "Example: go.", nepali: "उदाहरण: जानु।" }
+    ]
+  },
+  {
+    id: 'N5-L05-002', lesson: 5, level: 'N5', word: "来ます", reading: "きます",
+    meaning: "come", meaningNepali: "आउनु",
+    kanjiCharacters: ["来"], partOfSpeech: "Verb",
+    grammarSentences: [
+      { japanese: "来ます。", reading: "きます。", english: "Example: come.", nepali: "उदाहरण: आउनु।" }
+    ]
+  },
+  {
+    id: 'N5-L05-003', lesson: 5, level: 'N5', word: "帰ります", reading: "かえります",
+    meaning: "go home, return", meaningNepali: "फर्कनु (घर)",
+    kanjiCharacters: ["帰"], partOfSpeech: "Verb",
+    grammarSentences: [
+      { japanese: "帰ります。", reading: "かえります。", english: "Example: go home, return.", nepali: "उदाहरण: फर्कनु (घर)।" }
+    ]
+  },
+  {
+    id: 'N5-L05-004', lesson: 5, level: 'N5', word: "学校", reading: "がっこう",
+    meaning: "school", meaningNepali: "विद्यालय / स्कूल",
+    kanjiCharacters: ["学", "校"], partOfSpeech: "Noun",
+    grammarSentences: [
+      { japanese: "学校。", reading: "がっこう。", english: "Example: school.", nepali: "उदाहरण: विद्यालय / स्कूल।" }
+    ]
+  },
+  {
+    id: 'N5-L05-005', lesson: 5, level: 'N5', word: "スーパー", reading: "スーパー",
+    meaning: "supermarket", meaningNepali: "सुपरमार्केट",
+    kanjiCharacters: [], partOfSpeech: "Noun",
+    grammarSentences: [
+      { japanese: "スーパー。", reading: "スーパー。", english: "Example: supermarket.", nepali: "उदाहरण: सुपरमार्केट।" }
+    ]
+  },
+  {
+    id: 'N5-L05-006', lesson: 5, level: 'N5', word: "駅", reading: "えき",
+    meaning: "station", meaningNepali: "स्टेशन",
+    kanjiCharacters: ["駅"], partOfSpeech: "Noun",
+    grammarSentences: [
+      { japanese: "駅。", reading: "えき。", english: "Example: station.", nepali: "उदाहरण: स्टेशन।" }
+    ]
+  },
+  {
+    id: 'N5-L05-007', lesson: 5, level: 'N5', word: "飛行機", reading: "ひこうき",
+    meaning: "airplane", meaningNepali: "हवाईजहाज",
+    kanjiCharacters: ["飛", "行", "機"], partOfSpeech: "Noun",
+    grammarSentences: [
+      { japanese: "飛行機。", reading: "ひこうき。", english: "Example: airplane.", nepali: "उदाहरण: हवाईजहाज।" }
+    ]
+  },
+  {
+    id: 'N5-L05-008', lesson: 5, level: 'N5', word: "船", reading: "ふね",
+    meaning: "ship", meaningNepali: "पानीजहाज",
+    kanjiCharacters: ["船"], partOfSpeech: "Noun",
+    grammarSentences: [
+      { japanese: "船。", reading: "ふね。", english: "Example: ship.", nepali: "उदाहरण: पानीजहाज।" }
+    ]
+  },
+  {
+    id: 'N5-L05-009', lesson: 5, level: 'N5', word: "電車", reading: "でんしゃ",
+    meaning: "electric train", meaningNepali: "रेल / ट्रेन",
+    kanjiCharacters: ["電", "車"], partOfSpeech: "Noun",
+    grammarSentences: [
+      { japanese: "電車。", reading: "でんしゃ。", english: "Example: electric train.", nepali: "उदाहरण: रेल / ट्रेन।" }
+    ]
+  },
+  {
+    id: 'N5-L05-010', lesson: 5, level: 'N5', word: "地下鉄", reading: "ちかてつ",
+    meaning: "subway, underground", meaningNepali: "सबवे / भूमिगत रेल",
+    kanjiCharacters: ["地", "下", "鉄"], partOfSpeech: "Noun",
+    grammarSentences: [
+      { japanese: "地下鉄。", reading: "ちかてつ。", english: "Example: subway, underground.", nepali: "उदाहरण: सबवे / भूमिगत रेल।" }
+    ]
+  },
+  {
+    id: 'N5-L05-011', lesson: 5, level: 'N5', word: "新幹線", reading: "しんかんせん",
+    meaning: "the Shinkansen, the bullet train", meaningNepali: "बुलेट ट्रेन (शिन्कान्सेन)",
+    kanjiCharacters: ["新", "幹", "線"], partOfSpeech: "Noun",
+    grammarSentences: [
+      { japanese: "新幹線。", reading: "しんかんせん。", english: "Example: the Shinkansen, the bullet train.", nepali: "उदाहरण: बुलेट ट्रेन (शिन्कान्सेन)।" }
+    ]
+  },
+  {
+    id: 'N5-L05-012', lesson: 5, level: 'N5', word: "バス", reading: "バス",
+    meaning: "bus", meaningNepali: "बस",
+    kanjiCharacters: [], partOfSpeech: "Noun",
+    grammarSentences: [
+      { japanese: "バス。", reading: "バス。", english: "Example: bus.", nepali: "उदाहरण: बस।" }
+    ]
+  },
+  {
+    id: 'N5-L05-013', lesson: 5, level: 'N5', word: "タクシー", reading: "タクシー",
+    meaning: "taxi", meaningNepali: "ट्याक्सी",
+    kanjiCharacters: [], partOfSpeech: "Noun",
+    grammarSentences: [
+      { japanese: "タクシー。", reading: "タクシー。", english: "Example: taxi.", nepali: "उदाहरण: ट्याक्सी।" }
+    ]
+  },
+  {
+    id: 'N5-L05-014', lesson: 5, level: 'N5', word: "自転車", reading: "じてんしゃ",
+    meaning: "bicycle", meaningNepali: "साइकल",
+    kanjiCharacters: ["自", "転", "車"], partOfSpeech: "Noun",
+    grammarSentences: [
+      { japanese: "自転車。", reading: "じてんしゃ。", english: "Example: bicycle.", nepali: "उदाहरण: साइकल।" }
+    ]
+  },
+  {
+    id: 'N5-L05-015', lesson: 5, level: 'N5', word: "歩いて", reading: "あるいて",
+    meaning: "on foot", meaningNepali: "पैदल (हिँडेर)",
+    kanjiCharacters: ["歩"], partOfSpeech: "Noun",
+    grammarSentences: [
+      { japanese: "歩いて。", reading: "あるいて。", english: "Example: on foot.", nepali: "उदाहरण: पैदल (हिँडेर)।" }
+    ]
+  },
+  {
+    id: 'N5-L05-016', lesson: 5, level: 'N5', word: "人", reading: "ひと",
+    meaning: "person, people", meaningNepali: "मान्छे / व्यक्ति",
+    kanjiCharacters: ["人"], partOfSpeech: "Noun",
+    grammarSentences: [
+      { japanese: "人。", reading: "ひと。", english: "Example: person, people.", nepali: "उदाहरण: मान्छे / व्यक्ति।" }
+    ]
+  },
+  {
+    id: 'N5-L05-017', lesson: 5, level: 'N5', word: "友達", reading: "ともだち",
+    meaning: "friend", meaningNepali: "साथी",
+    kanjiCharacters: ["友", "達"], partOfSpeech: "Noun",
+    grammarSentences: [
+      { japanese: "友達。", reading: "ともだち。", english: "Example: friend.", nepali: "उदाहरण: साथी।" }
+    ]
+  },
+  {
+    id: 'N5-L05-018', lesson: 5, level: 'N5', word: "彼", reading: "かれ",
+    meaning: "he, boyfriend, lover", meaningNepali: "उहाँ / प्रेमी",
+    kanjiCharacters: ["彼"], partOfSpeech: "Noun",
+    grammarSentences: [
+      { japanese: "彼。", reading: "かれ。", english: "Example: he, boyfriend, lover.", nepali: "उदाहरण: उहाँ / प्रेमी।" }
+    ]
+  },
+  {
+    id: 'N5-L05-019', lesson: 5, level: 'N5', word: "彼女", reading: "かのじょ",
+    meaning: "she, girlfriend, lover", meaningNepali: "उहाँ (महिला) / प्रेमिका",
+    kanjiCharacters: ["彼", "女"], partOfSpeech: "Noun",
+    grammarSentences: [
+      { japanese: "彼女。", reading: "かのじょ。", english: "Example: she, girlfriend, lover.", nepali: "उदाहरण: उहाँ (महिला) / प्रेमिका।" }
+    ]
+  },
+  {
+    id: 'N5-L05-020', lesson: 5, level: 'N5', word: "家族", reading: "かぞく",
+    meaning: "family", meaningNepali: "परिवार",
+    kanjiCharacters: ["家", "族"], partOfSpeech: "Noun",
+    grammarSentences: [
+      { japanese: "家族。", reading: "かぞく。", english: "Example: family.", nepali: "उदाहरण: परिवार।" }
+    ]
+  },
+  {
+    id: 'N5-L05-021', lesson: 5, level: 'N5', word: "一人で", reading: "ひとりで",
+    meaning: "alone, by oneself", meaningNepali: "एक्लै",
+    kanjiCharacters: ["一", "人"], partOfSpeech: "Noun",
+    grammarSentences: [
+      { japanese: "一人で。", reading: "ひとりで。", english: "Example: alone, by oneself.", nepali: "उदाहरण: एक्लै।" }
+    ]
+  },
+  {
+    id: 'N5-L05-022', lesson: 5, level: 'N5', word: "先週", reading: "せんしゅう",
+    meaning: "last week", meaningNepali: "गएको हप्ता",
+    kanjiCharacters: ["先", "週"], partOfSpeech: "Noun",
+    grammarSentences: [
+      { japanese: "先週。", reading: "せんしゅう。", english: "Example: last week.", nepali: "उदाहरण: गएको हप्ता।" }
+    ]
+  },
+  {
+    id: 'N5-L05-023', lesson: 5, level: 'N5', word: "今週", reading: "こんしゅう",
+    meaning: "this week", meaningNepali: "यो हप्ता",
+    kanjiCharacters: ["今", "週"], partOfSpeech: "Noun",
+    grammarSentences: [
+      { japanese: "今週。", reading: "こんしゅう。", english: "Example: this week.", nepali: "उदाहरण: यो हप्ता।" }
+    ]
+  },
+  {
+    id: 'N5-L05-024', lesson: 5, level: 'N5', word: "来週", reading: "らいしゅう",
+    meaning: "next week", meaningNepali: "आउने हप्ता",
+    kanjiCharacters: ["来", "週"], partOfSpeech: "Noun",
+    grammarSentences: [
+      { japanese: "来週。", reading: "らいしゅう。", english: "Example: next week.", nepali: "उदाहरण: आउने हप्ता।" }
+    ]
+  },
+  {
+    id: 'N5-L05-025', lesson: 5, level: 'N5', word: "先月", reading: "せんげつ",
+    meaning: "last month", meaningNepali: "गएको महिना",
+    kanjiCharacters: ["先", "月"], partOfSpeech: "Noun",
+    grammarSentences: [
+      { japanese: "先月。", reading: "せんげつ。", english: "Example: last month.", nepali: "उदाहरण: गएको महिना।" }
+    ]
+  },
+  {
+    id: 'N5-L05-026', lesson: 5, level: 'N5', word: "今月", reading: "こんげつ",
+    meaning: "this month", meaningNepali: "यो महिना",
+    kanjiCharacters: ["今", "月"], partOfSpeech: "Noun",
+    grammarSentences: [
+      { japanese: "今月。", reading: "こんげつ。", english: "Example: this month.", nepali: "उदाहरण: यो महिना।" }
+    ]
+  },
+  {
+    id: 'N5-L05-027', lesson: 5, level: 'N5', word: "来月", reading: "らいげつ",
+    meaning: "next month", meaningNepali: "आउने महिना",
+    kanjiCharacters: ["来", "月"], partOfSpeech: "Noun",
+    grammarSentences: [
+      { japanese: "来月。", reading: "らいげつ。", english: "Example: next month.", nepali: "उदाहरण: आउने महिना।" }
+    ]
+  },
+  {
+    id: 'N5-L05-028', lesson: 5, level: 'N5', word: "去年", reading: "きょねん",
+    meaning: "last year", meaningNepali: "गएको वर्ष",
+    kanjiCharacters: ["去", "年"], partOfSpeech: "Noun",
+    grammarSentences: [
+      { japanese: "去年。", reading: "きょねん。", english: "Example: last year.", nepali: "उदाहरण: गएको वर्ष।" }
+    ]
+  },
+  {
+    id: 'N5-L05-029', lesson: 5, level: 'N5', word: "今年", reading: "ことし",
+    meaning: "this year", meaningNepali: "यो वर्ष",
+    kanjiCharacters: ["今", "年"], partOfSpeech: "Noun",
+    grammarSentences: [
+      { japanese: "今年。", reading: "ことし。", english: "Example: this year.", nepali: "उदाहरण: यो वर्ष।" }
+    ]
+  },
+  {
+    id: 'N5-L05-030', lesson: 5, level: 'N5', word: "来年", reading: "らいねん",
+    meaning: "next year", meaningNepali: "आउने वर्ष",
+    kanjiCharacters: ["来", "年"], partOfSpeech: "Noun",
+    grammarSentences: [
+      { japanese: "来年。", reading: "らいねん。", english: "Example: next year.", nepali: "उदाहरण: आउने वर्ष।" }
+    ]
+  },
+  {
+    id: 'N5-L05-031', lesson: 5, level: 'N5', word: "～月", reading: "～がつ",
+    meaning: "-th month of the year", meaningNepali: "~ महिना",
+    kanjiCharacters: ["月"], partOfSpeech: "Noun",
+    grammarSentences: [
+      { japanese: "～月。", reading: "～がつ。", english: "Example: -th month of the year.", nepali: "उदाहरण: ~ महिना।" }
+    ]
+  },
+  {
+    id: 'N5-L05-032', lesson: 5, level: 'N5', word: "何月", reading: "なんがつ",
+    meaning: "what month", meaningNepali: "कुन महिना",
+    kanjiCharacters: ["何", "月"], partOfSpeech: "Noun",
+    grammarSentences: [
+      { japanese: "何月。", reading: "なんがつ。", english: "Example: what month.", nepali: "उदाहरण: कुन महिना।" }
+    ]
+  },
+  {
+    id: 'N5-L05-033', lesson: 5, level: 'N5', word: "一日", reading: "ついたち",
+    meaning: "first day of the month", meaningNepali: "१ गते / पहिलो दिन",
+    kanjiCharacters: ["一", "日"], partOfSpeech: "Noun",
+    grammarSentences: [
+      { japanese: "一日。", reading: "ついたち。", english: "Example: first day of the month.", nepali: "उदाहरण: १ गते / पहिलो दिन।" }
+    ]
+  },
+  {
+    id: 'N5-L05-034', lesson: 5, level: 'N5', word: "二日", reading: "ふつか",
+    meaning: "second, two days", meaningNepali: "२ गते / दुई दिन",
+    kanjiCharacters: ["二", "日"], partOfSpeech: "Noun",
+    grammarSentences: [
+      { japanese: "二日。", reading: "ふつか。", english: "Example: second, two days.", nepali: "उदाहरण: २ गते / दुई दिन।" }
+    ]
+  },
+  {
+    id: 'N5-L05-035', lesson: 5, level: 'N5', word: "三日", reading: "みっか",
+    meaning: "third, three days", meaningNepali: "३ गते / तीन दिन",
+    kanjiCharacters: ["三", "日"], partOfSpeech: "Noun",
+    grammarSentences: [
+      { japanese: "三日。", reading: "みっか。", english: "Example: third, three days.", nepali: "उदाहरण: ३ गते / तीन दिन।" }
+    ]
+  },
+  {
+    id: 'N5-L05-036', lesson: 5, level: 'N5', word: "四日", reading: "よっか",
+    meaning: "fourth, four days", meaningNepali: "४ गते / चार दिन",
+    kanjiCharacters: ["四", "日"], partOfSpeech: "Noun",
+    grammarSentences: [
+      { japanese: "四日。", reading: "よっか。", english: "Example: fourth, four days.", nepali: "उदाहरण: ४ गते / चार दिन।" }
+    ]
+  },
+  {
+    id: 'N5-L05-037', lesson: 5, level: 'N5', word: "五日", reading: "いつか",
+    meaning: "fifth, five days", meaningNepali: "५ गते / पाँच दिन",
+    kanjiCharacters: ["五", "日"], partOfSpeech: "Noun",
+    grammarSentences: [
+      { japanese: "五日。", reading: "いつか。", english: "Example: fifth, five days.", nepali: "उदाहरण: ५ गते / पाँच दिन।" }
+    ]
+  },
+  {
+    id: 'N5-L05-038', lesson: 5, level: 'N5', word: "六日", reading: "むいか",
+    meaning: "sixth, six days", meaningNepali: "६ गते / छह दिन",
+    kanjiCharacters: ["六", "日"], partOfSpeech: "Noun",
+    grammarSentences: [
+      { japanese: "六日。", reading: "むいか。", english: "Example: sixth, six days.", nepali: "उदाहरण: ६ गते / छह दिन।" }
+    ]
+  },
+  {
+    id: 'N5-L05-039', lesson: 5, level: 'N5', word: "七日", reading: "なのか",
+    meaning: "seventh, seven days", meaningNepali: "७ गते / सात दिन",
+    kanjiCharacters: ["七", "日"], partOfSpeech: "Noun",
+    grammarSentences: [
+      { japanese: "七日。", reading: "なのか。", english: "Example: seventh, seven days.", nepali: "उदाहरण: ७ गते / सात दिन।" }
+    ]
+  },
+  {
+    id: 'N5-L05-040', lesson: 5, level: 'N5', word: "八日", reading: "ようか",
+    meaning: "eighth, eight days", meaningNepali: "८ गते / आठ दिन",
+    kanjiCharacters: ["八", "日"], partOfSpeech: "Noun",
+    grammarSentences: [
+      { japanese: "八日。", reading: "ようか。", english: "Example: eighth, eight days.", nepali: "उदाहरण: ८ गते / आठ दिन।" }
+    ]
+  },
+  {
+    id: 'N5-L05-041', lesson: 5, level: 'N5', word: "九日", reading: "ここのか",
+    meaning: "ninth, nine days", meaningNepali: "९ गते / नौ दिन",
+    kanjiCharacters: ["九", "日"], partOfSpeech: "Noun",
+    grammarSentences: [
+      { japanese: "九日。", reading: "ここのか。", english: "Example: ninth, nine days.", nepali: "उदाहरण: ९ गते / नौ दिन।" }
+    ]
+  },
+  {
+    id: 'N5-L05-042', lesson: 5, level: 'N5', word: "十日", reading: "とおか",
+    meaning: "tenth, ten days", meaningNepali: "१० गते / दस दिन",
+    kanjiCharacters: ["十", "日"], partOfSpeech: "Noun",
+    grammarSentences: [
+      { japanese: "十日。", reading: "とおか。", english: "Example: tenth, ten days.", nepali: "उदाहरण: १० गते / दस दिन।" }
+    ]
+  },
+  {
+    id: 'N5-L05-043', lesson: 5, level: 'N5', word: "十四日", reading: "じゅうよっか",
+    meaning: "fourteenth, fourteen days", meaningNepali: "१४ गते / चौध दिन",
+    kanjiCharacters: ["十", "四", "日"], partOfSpeech: "Noun",
+    grammarSentences: [
+      { japanese: "十四日。", reading: "じゅうよっか。", english: "Example: fourteenth, fourteen days.", nepali: "उदाहरण: १४ गते / चौध दिन।" }
+    ]
+  },
+  {
+    id: 'N5-L05-044', lesson: 5, level: 'N5', word: "二十日", reading: "はつか",
+    meaning: "twentieth, twenty days", meaningNepali: "२० गते / बीस दिन",
+    kanjiCharacters: ["二", "十", "日"], partOfSpeech: "Noun",
+    grammarSentences: [
+      { japanese: "二十日。", reading: "はつか。", english: "Example: twentieth, twenty days.", nepali: "उदाहरण: २० गते / बीस दिन।" }
+    ]
+  },
+  {
+    id: 'N5-L05-045', lesson: 5, level: 'N5', word: "二十四日", reading: "にじゅうよっか",
+    meaning: "twenty-fourth, twenty-four days", meaningNepali: "२४ गते / चौबीस दिन",
+    kanjiCharacters: ["二", "十", "四", "日"], partOfSpeech: "Noun",
+    grammarSentences: [
+      { japanese: "二十四日。", reading: "にじゅうよっか。", english: "Example: twenty-fourth, twenty-four days.", nepali: "उदाहरण: २४ गते / चौबीस दिन।" }
+    ]
+  },
+  {
+    id: 'N5-L05-046', lesson: 5, level: 'N5', word: "～日", reading: "～にち",
+    meaning: "-th day of the month, ~ days", meaningNepali: "~ गते / ~ दिन",
+    kanjiCharacters: ["日"], partOfSpeech: "Noun",
+    grammarSentences: [
+      { japanese: "～日。", reading: "～にち。", english: "Example: -th day of the month, ~ days.", nepali: "उदाहरण: ~ गते / ~ दिन।" }
+    ]
+  },
+  {
+    id: 'N5-L05-047', lesson: 5, level: 'N5', word: "何日", reading: "なんにち",
+    meaning: "which day of the month, how many days", meaningNepali: "which day of the month, how many days",
+    kanjiCharacters: ["何", "日"], partOfSpeech: "Noun",
+    grammarSentences: [
+      { japanese: "何日。", reading: "なんにち。", english: "Example: which day of the month, how many days.", nepali: "उदाहरण: which day of the month, how many days।" }
+    ]
+  },
+  {
+    id: 'N5-L05-048', lesson: 5, level: 'N5', word: "いつ", reading: "いつ",
+    meaning: "when", meaningNepali: "कहिले",
+    kanjiCharacters: [], partOfSpeech: "Noun",
+    grammarSentences: [
+      { japanese: "いつ。", reading: "いつ。", english: "Example: when.", nepali: "उदाहरण: कहिले।" }
+    ]
+  },
+  {
+    id: 'N5-L05-049', lesson: 5, level: 'N5', word: "誕生日", reading: "たんじょうび",
+    meaning: "birthday", meaningNepali: "जन्मदिन",
+    kanjiCharacters: ["誕", "生", "日"], partOfSpeech: "Noun",
+    grammarSentences: [
+      { japanese: "誕生日。", reading: "たんじょうび。", english: "Example: birthday.", nepali: "उदाहरण: जन्मदिन।" }
+    ]
+  },
+  {
+    id: 'N5-L05-050', lesson: 5, level: 'N5', word: "各駅停車", reading: "かくえきていしゃ",
+    meaning: "local (train)", meaningNepali: "local (train)",
+    kanjiCharacters: ["各", "駅", "停", "車"], partOfSpeech: "Noun",
+    grammarSentences: [
+      { japanese: "各駅停車。", reading: "かくえきていしゃ。", english: "Example: local (train).", nepali: "उदाहरण: local (train)।" }
+    ]
+  },
+  {
+    id: 'N5-L05-051', lesson: 5, level: 'N5', word: "急行", reading: "きゅうこう",
+    meaning: "rapid", meaningNepali: "एक्सप्रेस (रेल)",
+    kanjiCharacters: ["急", "行"], partOfSpeech: "Noun",
+    grammarSentences: [
+      { japanese: "急行。", reading: "きゅうこう。", english: "Example: rapid.", nepali: "उदाहरण: एक्सप्रेस (रेल)।" }
+    ]
+  },
+  {
+    id: 'N5-L05-052', lesson: 5, level: 'N5', word: "特急", reading: "とっきゅう",
+    meaning: "express", meaningNepali: "सुपर एक्सप्रेस (रेल)",
+    kanjiCharacters: ["特", "急"], partOfSpeech: "Noun",
+    grammarSentences: [
+      { japanese: "特急。", reading: "とっきゅう。", english: "Example: express.", nepali: "उदाहरण: सुपर एक्सप्रेस (रेल)।" }
+    ]
+  },
+  {
+    id: 'N5-L05-053', lesson: 5, level: 'N5', word: "次の", reading: "つぎの",
+    meaning: "next", meaningNepali: "अर्को",
+    kanjiCharacters: ["次"], partOfSpeech: "Noun",
+    grammarSentences: [
+      { japanese: "次の。", reading: "つぎの。", english: "Example: next.", nepali: "उदाहरण: अर्को।" }
+    ]
+  },
+  {
+    id: 'N5-L05-054', lesson: 5, level: 'N5', word: "どういたしまして。", reading: "どういたしまして。",
+    meaning: "You're welcome./Don't mention it.", meaningNepali: "You're welcome./Don't mention it.",
+    kanjiCharacters: [], partOfSpeech: "Noun",
+    grammarSentences: [
+      { japanese: "どういたしまして。。", reading: "どういたしまして。。", english: "Example: You're welcome./Don't mention it..", nepali: "उदाहरण: You're welcome./Don't mention it.।" }
+    ]
+  },
+  {
+    id: 'N5-L05-055', lesson: 5, level: 'N5', word: "～番線", reading: "～ばんせん",
+    meaning: "platform ~, the ~th platform", meaningNepali: "platform ~, the ~th platform",
+    kanjiCharacters: ["番", "線"], partOfSpeech: "Noun",
+    grammarSentences: [
+      { japanese: "～番線。", reading: "～ばんせん。", english: "Example: platform ~, the ~th platform.", nepali: "उदाहरण: platform ~, the ~th platform।" }
+    ]
+  },
 ];

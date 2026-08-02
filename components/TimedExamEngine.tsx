@@ -25,7 +25,8 @@ import {
   RotateCcw,
   BarChart3,
   CheckSquare,
-  AlertTriangle
+  AlertTriangle,
+  Globe
 } from 'lucide-react';
 import { validateExamSubmission } from '@/lib/auth-security';
 
@@ -54,7 +55,7 @@ export interface MockTestInfo {
   sections: string[];
   audioCount: number;
   badgeColor: string;
-  examFormat: 'JLPT_PAPER' | 'JFT_CBT';
+  examFormat: 'JLPT_PAPER' | 'JFT_CBT' | 'EPS_CBT';
 }
 
 const MOCK_TEST_CATALOG: MockTestInfo[] = [
@@ -243,13 +244,13 @@ const MOCK_TEST_CATALOG: MockTestInfo[] = [
     mockSet: 'EPS_SET_1',
     level: 'EPS',
     language: 'KOREAN',
-    examFormat: 'JFT_CBT',
-    title: 'EPS-TOPIK Industry & General Worker Exam',
-    description: 'Standard EPS-TOPIK evaluation paper covering factory vocabulary, safety rules, and daily Korean.',
+    examFormat: 'EPS_CBT',
+    title: 'EPS-TOPIK Complete CBT Mock Exam',
+    description: 'Official EPS-TOPIK CBT examination paper containing 20 Reading (읽기) and 20 Listening (듣기) questions. Continuous test flow with free navigation between all 40 questions.',
     timeLimitMinutes: 50,
-    questionCount: 5,
-    sections: ['어휘 (Vocabulary)', '문법 (Grammar)', '안戦 (Safety)'],
-    audioCount: 0,
+    questionCount: 40,
+    sections: ['읽기 (Reading Q1–20)', '듣기 (Listening Q21–40)'],
+    audioCount: 20,
     badgeColor: 'from-emerald-600 to-teal-600',
   },
 ];
@@ -503,6 +504,25 @@ const JAPANESE_QUESTIONS: ExamQuestion[] = [
   {"id": "jft_set5_47", "level": "JFT", "mockSet": "JFT_SET_5", "type": "MULTIPLE_CHOICE", "prompt": "[Set 5] 【読解 Q47】＜貼り紙＞ 本日の 営業は 台風のため 15時で 終了いたします。\n\n質問: 本日は 何時に 店が 閉まりますか。", "options": ["15時", "17時", "20時", "閉まらない"], "correctAnswer": "15時", "explanation": "「15時で終了いたします」より 15時 が正解です。"},
   {"id": "jft_set5_48", "level": "JFT", "mockSet": "JFT_SET_5", "type": "MULTIPLE_CHOICE", "prompt": "[Set 5] 【読解 Q48】＜マンション掲示＞ 清掃作業のため 10:00〜12:00 は 断水（水が出ない）します。\n\n質問: 水が 出なくなる 時間は いつですか。", "options": ["10:00〜12:00", "8:00〜10:00", "12:00〜14:00", "終日"], "correctAnswer": "10:00〜12:00", "explanation": "「10:00〜12:00は断水します」が正解です。"},
   // ==========================================
+  // JLPT N4 OFFICIAL PRACTICE EXAM (N4_SET_1)
+  // ==========================================
+  {"id": "n4_set1_1", "level": "N4", "mockSet": "N4_SET_1", "type": "MULTIPLE_CHOICE", "prompt": "【文字・語彙 Q1】下線の言葉のひらがなを選んでください: 昨日の【試合】は とても 面白かったです。", "options": ["しあい", "しがい", "じあい", "じがい"], "correctAnswer": "しあい", "explanation": "「試合」は「しあい」(Match / Game)と読みます。"},
+  {"id": "n4_set1_2", "level": "N4", "mockSet": "N4_SET_1", "type": "MULTIPLE_CHOICE", "prompt": "【文字・語彙 Q2】( )に入るのに最もよいものを選んでください: バスが 遅れたので、約束の 時間に ( ) でした。", "options": ["間に合いません", "間に合いそう", "遅れました", "間に合わなかった"], "correctAnswer": "間に合わなかった", "explanation": "過去の否定「間に合わなかった」(Did not make it in time)が適切です。"},
+  {"id": "n4_set1_3", "level": "N4", "mockSet": "N4_SET_1", "type": "MULTIPLE_CHOICE", "prompt": "【文法 Q3】( )に入るのに最もよいものを選んでください: 頭が 痛い ( )、今日は 早く 帰ります。", "options": ["ので", "のに", "ても", "ながら"], "correctAnswer": "ので", "explanation": "客観的な理由を表す「〜ので」(Because/Since)が適切です。"},
+  {"id": "n4_set1_4", "level": "N4", "mockSet": "N4_SET_1", "type": "MULTIPLE_CHOICE", "prompt": "【文法 Q4】( )に入るのに最もよいものを選んでください: 漢字が ( ) ように、毎日 練習しています。", "options": ["書ける", "書く", "書かない", "書かれた"], "correctAnswer": "書ける", "explanation": "目的・能力の目標を表す「〜可能形＋ように」(So that I can write)が正解です。"},
+  {"id": "n4_set1_5", "level": "N4", "mockSet": "N4_SET_1", "type": "MULTIPLE_CHOICE", "prompt": "【文法 Q5】( )に入るのに最もよいものを選んでください: 母に 部屋を ( )、困りました。", "options": ["汚されて", "汚して", "汚させて", "汚れた"], "correctAnswer": "汚されて", "explanation": "迷惑の受身形「〜に〜される」(Suffered from having room dirtied)が正解です。"},
+  {"id": "n4_set1_6", "level": "N4", "mockSet": "N4_SET_1", "type": "MULTIPLE_CHOICE", "prompt": "【文法 Q6】( )に入るのに最もよいものを選んでください: 明日 雨が 降ったら、旅行は ( ) に なります。", "options": ["中止", "開始", "参加", "出発"], "correctAnswer": "中止", "explanation": "「中止になる」(Be canceled)が適切です。"},
+  {"id": "n4_set1_7", "level": "N4", "mockSet": "N4_SET_1", "type": "MULTIPLE_CHOICE", "prompt": "【文法 Q7】( )に入るのに最もよいものを選んでください: 田中さんは 来月 結婚する ( ) です。", "options": ["そう", "らしい", "みたい", "つもり"], "correctAnswer": "そう", "explanation": "伝聞の「〜そうです」(I heard that...)が適切です。"},
+  {"id": "n4_set1_8", "level": "N4", "mockSet": "N4_SET_1", "type": "MULTIPLE_CHOICE", "prompt": "【文法 Q8】( )に入るのに最もよいものを選んでください: ドアが ( ) いますから、気をつけてください。", "options": ["開いて", "開けて", "開けられて", "開こう"], "correctAnswer": "開いて", "explanation": "自動詞＋ています「開いています」(Is open)が状態を表します。"},
+  {"id": "n4_set1_9", "level": "N4", "mockSet": "N4_SET_1", "type": "MULTIPLE_CHOICE", "prompt": "【文法 Q9】( )に入るのに最もよいものを選んでください: 先生に 本を ( ) いただきました。", "options": ["貸して", "借りて", "見せて", "送って"], "correctAnswer": "貸して", "explanation": "目上からの恩恵「〜ていただく」(Received the favor of lending)です。"},
+  {"id": "n4_set1_10", "level": "N4", "mockSet": "N4_SET_1", "type": "MULTIPLE_CHOICE", "prompt": "【読解 Q10】＜メール＞ 山田さんへ。明日の 会議は 14時から 3階の 第1会議室で 行います。資料は 事前に 読んでおいてください。\n\n質問: 山田さんは 会議の 前に 何を しなければなりませんか。", "options": ["資料を事前に読んでおく", "資料を10部コピーする", "3階を清掃する", "14時に出張する"], "correctAnswer": "資料を事前に読んでおく", "explanation": "メールより「事前に読んでおいてください」が正解です。"},
+  {"id": "n4_set1_11", "level": "N4", "mockSet": "N4_SET_1", "type": "LISTENING", "prompt": "【聴解 Q11】男の人：この 書類、明日までに 提出しなければなりませんか。\n女の人：いいえ、来週の 月曜日までに 出せば いいですよ。\n\n質問: 書類は いつまでに 提出しますか。", "options": ["来週の月曜日", "明日", "今日", "来週の金曜日"], "correctAnswer": "来週の月曜日", "explanation": "会話より「来週の月曜日までに」が正解です。"},
+  {"id": "n4_set1_12", "level": "N4", "mockSet": "N4_SET_1", "type": "LISTENING", "prompt": "【聴解 Q12】女の人：すみません、図書館は どこですか。\n男の人：あの 角を 右へ 曲がって、100メートルほど 直進すると 左側に あります。\n\n質問: 図書館は どこに ありますか。", "options": ["角を右へ曲がって直進した左側", "角を左へ曲がってすぐ", "駅の目の前", "信号を渡った右側"], "correctAnswer": "角を右へ曲がって直進した左側", "explanation": "「角を右へ曲がって100m直進した左側」が正解です。"},
+  {"id": "n4_set1_13", "level": "N4", "mockSet": "N4_SET_1", "type": "MULTIPLE_CHOICE", "prompt": "【文字・語彙 Q13】下線の言葉のひらがなを選んでください: 事故の 原因を【調査】しています。", "options": ["ちょうさ", "ちょうしゃ", "ちょさ", "てんさ"], "correctAnswer": "ちょうさ", "explanation": "「調査」は「ちょうさ」(Investigation/Research)と読みます。"},
+  {"id": "n4_set1_14", "level": "N4", "mockSet": "N4_SET_1", "type": "MULTIPLE_CHOICE", "prompt": "【文法 Q14】( )に入るのに最もよいものを選んでください: 風邪を ひいたので、薬を 飲んで ( ) 寝ます。", "options": ["すぐ", "やっと", "かならず", "ぜんぜん"], "correctAnswer": "すぐ", "explanation": "「すぐ寝ます」(Go to sleep right away)が自然です。"},
+  {"id": "n4_set1_15", "level": "N4", "mockSet": "N4_SET_1", "type": "MULTIPLE_CHOICE", "prompt": "【読解 Q15】＜お知らせ＞ 台風の影響で、明日の 授業は 休講となります。補講は 来週 土曜日に 行います。\n\n質問: 明日の 授業は どうなりますか。", "options": ["休講になる", "通常通り行う", "オンラインで行う", "試験を行う"], "correctAnswer": "休講になる", "explanation": "お知らせより「休講となります」が正解です。"},
+
+  // ==========================================
   // JLPT N3 OFFICIAL PRACTICE BOOK VOLUME 1 (65 QUESTIONS: GRAMMAR, READING, LISTENING)
   // ==========================================
   {"id": "jpn3_v1_1", "level": "N3", "mockSet": "N3_SET_1", "type": "MULTIPLE_CHOICE", "prompt": "【文法 Q26】雨が降る（　　　）、試合は中止になります。", "options": ["とき", "と", "なら", "まで"], "correctAnswer": "と", "explanation": "条件・仮定を表す接続助詞「と」が正解です。"},
@@ -573,34 +593,55 @@ const JAPANESE_QUESTIONS: ExamQuestion[] = [
 ];
 
 const KOREAN_QUESTIONS: ExamQuestion[] = [
-  // EPS-TOPIK
-  {
-    id: 'ko_eps_1',
-    level: 'EPS',
-    type: 'MULTIPLE_CHOICE',
-    prompt: '다음 단어와 관계있는 것은 무엇입니까? (다음: 사과, 배, 수박)',
-    options: ['야채', '과일', '음료수', '가구'],
-    correctAnswer: '과일',
-    explanation: '사과(Apple), 배(Pear), 수박(Watermelon)은 모두 과일(Fruit)입니다.',
-  },
-  {
-    id: 'ko_eps_2',
-    level: 'EPS',
-    type: 'FILL_BLANK',
-    prompt: '빈칸에 들어갈 가장 알맞은 것을 골라주십시오: 한국어 시험이 _____ 너무 떨려요.',
-    options: ['어려워서', '쉬워서', '재미있어서', '좋아서'],
-    correctAnswer: '어려워서',
-    explanation: '시험이 어려워서(Because test is difficult) 떨립니다.',
-  },
-  {
-    id: 'ko_eps_3',
-    level: 'EPS',
-    type: 'MULTIPLE_CHOICE',
-    prompt: '공장에서 일할 때 반드시 착용해야 하는 안전 장구는 무엇입니까?',
-    options: ['안전모', '운동화', '모자', '슬리퍼'],
-    correctAnswer: '안전모',
-    explanation: '공장에서는 머리를保護하기 위해 안전모(Safety Helmet)를 착용해야 합니다.',
-  },
+  // ============================================================
+  // EPS-TOPIK CBT MOCK TEST SET 1 (40 COMPLETE QUESTIONS)
+  // Section 1: Reading 읽기 (Q1–Q20)
+  // Section 2: Listening 듣기 (Q21–Q40)
+  // ============================================================
+  
+  // ── READING (읽기) Q1 – Q20 ──
+  { id: 'eps_s1_1', level: 'EPS', mockSet: 'EPS_SET_1', type: 'MULTIPLE_CHOICE', prompt: '【읽기 Q1: 그림 보기】 다음 그림을 보고 맞는 단어를 고르십시오.\n[🖼️ 밭을 일구는 농기구 "호미"]', options: ['호미', '낫', '괭이', '삽'], correctAnswer: '호미', explanation: '그림의 농기구는 흙을 파거나 잡초를 뽑을 때 쓰는 "호미"(Hand Hoe)입니다.' },
+  { id: 'eps_s1_2', level: 'EPS', mockSet: 'EPS_SET_1', type: 'MULTIPLE_CHOICE', prompt: '【읽기 Q2: 그림 보기】 건설 현장에서 머리를 보호하기 위해 착용하는 안전 용구는 무엇입니까?', options: ['안전모', '안전화', '보안경', '귀마개'], correctAnswer: '안전모', explanation: '머리를 보호하는 장비는 "안전모"(Safety Helmet)입니다.' },
+  { id: 'eps_s1_3', level: 'EPS', mockSet: 'EPS_SET_1', type: 'MULTIPLE_CHOICE', prompt: '【읽기 Q3: 어휘 관계】 다음 단어와 관계있는 것은 무엇입니까?\n[보기: 사과, 배, 수박, 딸기]', options: ['과일', '야채', '음료수', '가구'], correctAnswer: '과일', explanation: '사과, 배, 수박, 딸기는 모두 "과일"(Fruit)입니다.' },
+  { id: 'eps_s1_4', level: 'EPS', mockSet: 'EPS_SET_1', type: 'MULTIPLE_CHOICE', prompt: '【읽기 Q4: 반대말】 다음 단어의 반대말은 무엇입니까?\n[보기: 가깝다]', options: ['멀다', '높다', '넓다', '길다'], correctAnswer: '멀다', explanation: '"가깝다"(Close/Near)의 반대말은 "멀다"(Far)입니다.' },
+  { id: 'eps_s1_5', level: 'EPS', mockSet: 'EPS_SET_1', type: 'MULTIPLE_CHOICE', prompt: '【읽기 Q5: 비슷한 말】 다음 단어와 뜻이 비슷한 말은 무엇입니까?\n[보기: 고치다]', options: ['수리하다', '청소하다', '운전하다', '요리하다'], correctAnswer: '수리하다', explanation: '"고치다"(To repair/fix)와 비슷한 말은 "수리하다"(To repair)입니다.' },
+  { id: 'eps_s1_6', level: 'EPS', mockSet: 'EPS_SET_1', type: 'FILL_BLANK', prompt: '【읽기 Q6: 빈칸 채우기】 식당에서 음식을 먹은 후에 계산대에서 _____(을/를) 냅니다.', options: ['밥값', '차비', '월세', '입장료'], correctAnswer: '밥값', explanation: '식당에서 음식을 먹은 후 내는 돈은 "밥값"(Meal bill)입니다.' },
+  { id: 'eps_s1_7', level: 'EPS', mockSet: 'EPS_SET_1', type: 'FILL_BLANK', prompt: '【읽기 Q7: 빈칸 채우기】 작업장에서는 위험하니까 반드시 _____(을/를) 착용해야 합니다.', options: ['안전복', '양복', '수영복', '한복'], correctAnswer: '안전복', explanation: '작업장에서 위험을 예방하기 위해 입는 옷은 "안전복"(Safety Overalls)입니다.' },
+  { id: 'eps_s1_8', level: 'EPS', mockSet: 'EPS_SET_1', type: 'FILL_BLANK', prompt: '【읽기 Q8: 문법 채우기】 한국어 시험이 생각보다 _____ 너무 기뻐요.', options: ['쉬워서', '어려워서', '복잡해서', '무거워서'], correctAnswer: '쉬워서', explanation: '기쁜 이유로 알맞은 것은 시험이 "쉬워서"(Because it was easy)입니다.' },
+  { id: 'eps_s1_9', level: 'EPS', mockSet: 'EPS_SET_1', type: 'FILL_BLANK', prompt: '【읽기 Q9: 조사 선택】 저는 매일 아침 8시에 회사_____ 출근합니다.', options: ['에', '에서', '를', '과'], correctAnswer: '에', explanation: '도착/도착 목적지 뒤에는 조사 "에"를 사용합니다 (회사에 출근하다).' },
+  { id: 'eps_s1_10', level: 'EPS', mockSet: 'EPS_SET_1', type: 'FILL_BLANK', prompt: '【읽기 Q10: 문법 선택】 이번 주말에는 친구와 같이 영화를 _____.', options: ['보고 싶어요', '보지 마세요', '볼 수 없어요', '보면 안 돼요'], correctAnswer: '보고 싶어요', explanation: '주말 희망 표현으로 "-고 싶어요"(Want to watch)가 정답입니다.' },
+  { id: 'eps_s1_11', level: 'EPS', mockSet: 'EPS_SET_1', type: 'MULTIPLE_CHOICE', prompt: '【읽기 Q11: 표지판 이해】 다음 표지판이 의미하는 것은 무엇입니까?\n[⚠️ "관계자 외 출입 금지"]', options: ['허가받지 않은 사람은 들어올 수 없습니다', '담배를 피우지 마십시오', '안전모를 반드시 쓰십시오', '물건을 놓지 마십시오'], correctAnswer: '허가받지 않은 사람은 들어올 수 없습니다', explanation: '"관계자 외 출입 금지"는 허가받지 않은 사람의 출입 금지를 뜻합니다.' },
+  { id: 'eps_s1_12', level: 'EPS', mockSet: 'EPS_SET_1', type: 'MULTIPLE_CHOICE', prompt: '【읽기 Q12: 표지판 이해】 다음 중 "손대지 마시오(손질 금지)"를 뜻하는 표지판은 무엇입니까?', options: ['손 대지 마시오 표지', '화기 엄금 표지', '보안경 착용 표지', '보행 금지 표지'], correctAnswer: '손 대지 마시오 표지', explanation: '기계 조작 금지나 위험물에는 "손대지 마시오"(Do not touch) 표지가 붙습니다.' },
+  { id: 'eps_s1_13', level: 'EPS', mockSet: 'EPS_SET_1', type: 'MULTIPLE_CHOICE', prompt: '【읽기 Q13: 안내문 이해】 다음 안내문의 내용과 다른 것은 무엇입니까?\n＜공장 휴무 안내＞\n추석 연휴로 인해 9월 15일부터 9월 17일까지 휴무입니다.\n9월 18일(목)부터 정상 근무합니다.', options: ['9월 18일에는 일하지 않습니다', '9월 15일부터 17일까지 쉬어갑니다', '추석 연휴 때문에 휴무합니다', '목요일부터 정상 근무합니다'], correctAnswer: '9월 18일에는 일하지 않습니다', explanation: '안내문에 9월 18일부터 정상 근무한다고 되어 있으므로 일하지 않는다는 설명이 틀렸습니다.' },
+  { id: 'eps_s1_14', level: 'EPS', mockSet: 'EPS_SET_1', type: 'MULTIPLE_CHOICE', prompt: '【읽기 Q14: 그래프 이해】 직장인들의 퇴근 후 활동 조사 결과에서 가장 많은 비율을 차지한 것은 무엇입니까?\n[운동 45%, 취미 25%, 공부 20%, 기타 10%]', options: ['운동', '취미', '공부', '기타'], correctAnswer: '운동', explanation: '45%로 가장 높은 비율을 차지한 것은 "운동"(Exercise)입니다.' },
+  { id: 'eps_s1_15', level: 'EPS', mockSet: 'EPS_SET_1', type: 'FILL_BLANK', prompt: '【읽기 Q15: 빈칸 채우기】 월급날이 되면 통장에 월급이 들어옵니다. 내일은 _____(을/를) 찾으러 은행에 갑니다.', options: ['현금', '우표', '여권', '비자'], correctAnswer: '현금', explanation: '은행에서 인출하는 것은 "현금"(Cash)입니다.' },
+  { id: 'eps_s1_16', level: 'EPS', mockSet: 'EPS_SET_1', type: 'MULTIPLE_CHOICE', prompt: '【읽기 Q16: 글 이해】 다음 글의 내용과 같은 것을 고르십시오.\n"투안 씨는 매일 아침 7시 30분에 기숙사에서 나와 버스를 타고 회사에 갑니다. 회사까지는 20분 정도 걸립니다."', options: ['투안 씨는 버스로 출근합니다', '투안 씨는 걸어서 출근합니다', '기숙사에서 회사까지 1시간 걸립니다', '투안 씨는 8시에 기숙사에서 나옵니다'], correctAnswer: '투안 씨는 버스로 출근합니다', explanation: '글에서 "버스를 타고 회사에 갑니다"라고 언급되었습니다.' },
+  { id: 'eps_s1_17', level: 'EPS', mockSet: 'EPS_SET_1', type: 'MULTIPLE_CHOICE', prompt: '【읽기 Q17: 직장 생활】 한국 공장에서 일할 때 안전사고를 예방하기 위해 가장 먼저 해야 할 일은 무엇입니까?', options: ['작업 전 안전 점검과 보호구 착용', '작업 속도를 빨리 올리기', '휴식 시간을 늘리기', '기계를 임의로 개조하기'], correctAnswer: '작업 전 안전 점검과 보호구 착용', explanation: '사고 예방의 기본은 작업 전 사전 안전 점검과 보호구 착용입니다.' },
+  { id: 'eps_s1_18', level: 'EPS', mockSet: 'EPS_SET_1', type: 'FILL_BLANK', prompt: '【읽기 Q18: 어휘 선택】 몸이 아파서 출근하지 못할 때는 반장님께 사유를 이야기하고 _____(을/를) 신청해야 합니다.', options: ['병가(결근)', '퇴직금', '잔업', '야근'], correctAnswer: '병가(결근)', explanation: '아파서 쉬는 휴가는 "병가"(Sick leave)입니다.' },
+  { id: 'eps_s1_19', level: 'EPS', mockSet: 'EPS_SET_1', type: 'MULTIPLE_CHOICE', prompt: '【읽기 Q19: 글 이해】 다음 글을 읽고 물음에 답하십시오.\n"한국에서는 어른께 물건을 드릴 때 두 손으로 드려야 합니다. 그리고 고개를 약간 숙여 인사하는 것이 예의입니다."', options: ['어른께 물건을 드릴 때는 두 손을 사용합니다', '한 손으로 드리는 것이 예의입니다', '인사를 하지 않아도 됩니다', '어른보다 먼저 식사를 시작합니다'], correctAnswer: '어른께 물건을 드릴 때는 두 손을 사용합니다', explanation: '글의 핵심 내용은 어른께 두 손으로 물건을 드리는 한국 예절입니다.' },
+  { id: 'eps_s1_20', level: 'EPS', mockSet: 'EPS_SET_1', type: 'MULTIPLE_CHOICE', prompt: '【읽기 Q20: 종합 이해】 다음 단어들의 공통점은 무엇입니까?\n[소화기, 비상구, 안전모, 보안경]', options: ['안전 및 비상 대피 용품', '주방 요리 도구', '사무실 학용품', '교통 수단'], correctAnswer: '안전 및 비상 대피 용품', explanation: '소화기, 비상구, 안전모, 보안경은 모두 안전 및 비상 대피 관련 용품입니다.' },
+
+  // ── LISTENING (듣기) Q21 – Q40 ──
+  { id: 'eps_s1_21', level: 'EPS', mockSet: 'EPS_SET_1', type: 'LISTENING', prompt: '【듣기 Q21: 단어 들으시오】 들려주는 단어를 고르십시오.\n🎧 "공구함"', options: ['공구함', '안전모', '작업대', '스위치'], correctAnswer: '공구함', explanation: '음성에서 "공구함"(Toolbox)을 발음했습니다.' },
+  { id: 'eps_s1_22', level: 'EPS', mockSet: 'EPS_SET_1', type: 'LISTENING', prompt: '【듣기 Q22: 숫자 들으시오】 들려주는 금액을 고르십시오.\n🎧 "삼만 오천 원"', options: ['35,000원', '3,500원', '53,000원', '50,000원'], correctAnswer: '35,000원', explanation: '음성에서 "삼만 오천 원"(35,000 Won)을 들려주었습니다.' },
+  { id: 'eps_s1_23', level: 'EPS', mockSet: 'EPS_SET_1', type: 'LISTENING', prompt: '【듣기 Q23: 시각 들으시오】 들려주는 시간을 고르십시오.\n🎧 "두 시 삼십 분"', options: ['2:30', '3:20', '12:30', '2:00'], correctAnswer: '2:30', explanation: '음성에서 "두 시 삼십 분"(2:30)을 들려주었습니다.' },
+  { id: 'eps_s1_24', level: 'EPS', mockSet: 'EPS_SET_1', type: 'LISTENING', prompt: '【듣기 Q24: 동작 듣기】 들려주는 대화 내용을 보고 알맞은 그림 행동을 고르십시오.\n🎧 "지금 용접 작업을 하고 있습니다."', options: ['용접 작업', '페인트 칠', '청소하기', '운전하기'], correctAnswer: '용접 작업', explanation: '음성에서 "용접 작업"(Welding work)을 언급했습니다.' },
+  { id: 'eps_s1_25', level: 'EPS', mockSet: 'EPS_SET_1', type: 'LISTENING', prompt: '【듣기 Q25: 동작 듣기】 질문을 듣고 알맞은 답을 고르십시오.\n🎧 "지금 무엇을 하고 있습니까?" -> "작업장을 청소하고 있습니다."', options: ['청소하고 있습니다', '식사하고 있습니다', '잠을 자고 있습니다', '전화를 받고 있습니다'], correctAnswer: '청소하고 있습니다', explanation: '음성에서 "청소하고 있습니다"(Cleaning the workshop)가 정답입니다.' },
+  { id: 'eps_s1_26', level: 'EPS', mockSet: 'EPS_SET_1', type: 'LISTENING', prompt: '【듣기 Q26: 대화 응답】 들려주는 말에 이어질 알맞은 대답을 고르십시오.\n🎧 "처음 뵙겠습니다. 잘 부탁드립니다."', options: ['반갑습니다. 잘 부탁드립니다', '안녕히 가세요', '죄송합니다', '괜찮습니다'], correctAnswer: '반갑습니다. 잘 부탁드립니다', explanation: '첫인사에 대한 알맞은 응답은 "반갑습니다. 잘 부탁드립니다"입니다.' },
+  { id: 'eps_s1_27', level: 'EPS', mockSet: 'EPS_SET_1', type: 'LISTENING', prompt: '【듣기 Q27: 대화 응답】 들려주는 말에 이어질 알맞은 대답을 고르십시오.\n🎧 "투안 씨, 이 상자 좀 같이 옮겨 줄래요?"', options: ['네, 알겠습니다. 지금 도울게요', '아니요, 먹지 않겠습니다', '네, 어제 갔습니다', '아니요, 아주 쉬워요'], correctAnswer: '네, 알겠습니다. 지금 도울게요', explanation: '도움 요청에 대한 알맞은 응답은 "네, 알겠습니다. 지금 도울게요"입니다.' },
+  { id: 'eps_s1_28', level: 'EPS', mockSet: 'EPS_SET_1', type: 'LISTENING', prompt: '【듣기 Q28: 위치 안내】 들려주는 대화를 듣고 화장실의 위치를 고르십시오.\n🎧 "실례합니다, 화장실이 어디에 있어요?" -> "복도 끝 오른쪽으로 가시면 있습니다."', options: ['복도 끝 오른쪽', '1층 엘리베이터 앞', '건물 밖 주차장', '사무실 안쪽'], correctAnswer: '복도 끝 오른쪽', explanation: '대화에서 "복도 끝 오른쪽"이라고 알려주었습니다.' },
+  { id: 'eps_s1_29', level: 'EPS', mockSet: 'EPS_SET_1', type: 'LISTENING', prompt: '【듣기 Q29: 시간 문의】 들려주는 대화를 듣고 퇴근 시간을 고르십시오.\n🎧 "오늘 몇 시에 퇴근해요?" -> "6시에 퇴근해요."', options: ['6시', '5시', '7시', '8시'], correctAnswer: '6시', explanation: '대화에서 "6시"에 퇴근한다고 했습니다.' },
+  { id: 'eps_s1_30', level: 'EPS', mockSet: 'EPS_SET_1', type: 'LISTENING', prompt: '【듣기 Q30: 사유 문의】 들려주는 대화를 듣고 늦은 이유를 고르십시오.\n🎧 "오늘 왜 늦었어요?" -> "도로에 차가 너무 막혀서 늦었습니다."', options: ['차가 막혀서', '늦게 깨어나서', '버스를 놓쳐서', '비가 와서'], correctAnswer: '차가 막혀서', explanation: '지각 사유는 "차가 막혀서"(Traffic jam)입니다.' },
+  { id: 'eps_s1_31', level: 'EPS', mockSet: 'EPS_SET_1', type: 'LISTENING', prompt: '【듣기 Q31: 작업 지시】 반장님의 지시 사항을 들으시오.\n🎧 "작업을 시작하기 전에 반드시 안전모와 안전장갑을 착용하세요."', options: ['안전모와 안전장갑 착용', '스위치 켜기', '청소도구 가져오기', '퇴근 준비하기'], correctAnswer: '안전모와 안전장갑 착용', explanation: '지시 사항은 "안전모와 안전장갑 착용"입니다.' },
+  { id: 'eps_s1_32', level: 'EPS', mockSet: 'EPS_SET_1', type: 'LISTENING', prompt: '【듣기 Q32: 작업 지시】 기계 작업 후 지시 사항을 들으시오.\n🎧 "작업이 끝나면 반드시 메인 전원 스위치를 끄세요."', options: ['전원 스위치 끄기', '기계 기름칠하기', '창문 열기', '문 잠그기'], correctAnswer: '전원 스위치 끄기', explanation: '종료 후 지시 사항은 "전원 스위치 끄기"입니다.' },
+  { id: 'eps_s1_33', level: 'EPS', mockSet: 'EPS_SET_1', type: 'LISTENING', prompt: '【듣기 Q33: 안전 지시】 높은 곳 작업 시 지시 사항을 들으시오.\n🎧 "높은 곳에서 일할 때는 추락 예방을 위해 안전대를 걸어야 합니다."', options: ['안전대 걸기', '안경 쓰기', '귀마개 끼기', '마스크 쓰기'], correctAnswer: '안전대 걸기', explanation: '고소 작업 안전 지시는 "안전대 걸기"(Safety belt hook)입니다.' },
+  { id: 'eps_s1_34', level: 'EPS', mockSet: 'EPS_SET_1', type: 'LISTENING', prompt: '【듣기 Q34: 업무 대화】 대화를 듣고 남자가 옮겨야 할 수량을 고르십시오.\n🎧 "이 부품 상자 10개만 2층 창고로 옮겨 주세요."', options: ['10개', '5개', '20개', '15개'], correctAnswer: '10개', explanation: '옮길 수량은 "10개"입니다.' },
+  { id: 'eps_s1_35', level: 'EPS', mockSet: 'EPS_SET_1', type: 'LISTENING', prompt: '【듣기 Q35: 업무 대화】 대화를 듣고 오늘 야간 잔업 여부를 고르십시오.\n🎧 "오늘 납품 물량이 많아서 2시간 잔업을 해야 합니다."', options: ['2시간 잔업 함', '잔업 없음', '휴무함', '조퇴함'], correctAnswer: '2시간 잔업 함', explanation: '물량이 많아 "2시간 잔업을 해야 합니다"가 정답입니다.' },
+  { id: 'eps_s1_36', level: 'EPS', mockSet: 'EPS_SET_1', type: 'LISTENING', prompt: '【듣기 Q36: 안내 방송】 공장 안내 방송을 듣고 내일 교육 시간을 고르십시오.\n🎧 "안내해 드립니다. 내일 오전 10시에 강당에서 안전 교육이 있습니다."', options: ['오전 10시', '오후 2시', '오전 9시', '오후 4시'], correctAnswer: '오전 10시', explanation: '안내 방송 교육 시간은 "오전 10시"입니다.' },
+  { id: 'eps_s1_37', level: 'EPS', mockSet: 'EPS_SET_1', type: 'LISTENING', prompt: '【듣기 Q37: 안내 방송】 회사 식당 안내를 들으시오.\n🎧 "오늘 점심 메뉴는 비빔밥과 불고기입니다. 식당은 12시부터 이용 가능합니다."', options: ['12시부터 식당 이용', '11시부터 식당 이용', '1시부터 식당 이용', '식당 휴업'], correctAnswer: '12시부터 식당 이용', explanation: '식당 이용 시작 시각은 "12시부터"입니다.' },
+  { id: 'eps_s1_38', level: 'EPS', mockSet: 'EPS_SET_1', type: 'LISTENING', prompt: '【듣기 Q38: 담화 듣기】 남자의 한국 생활 적응 소감을 들으시오.\n🎧 "처음에는 한국어가 어려웠지만, 공장 동료들이 도와줘서 지금은 즐겁게 일하고 있습니다."', options: ['동료들의 도움으로 즐겁게 일함', '한국 생활이 너무 힘들어서 돌아감', '일이 없어서 심심함', '동료들과 싸움'], correctAnswer: '동료들의 도움으로 즐겁게 일함', explanation: '소감의 핵심은 "동료들의 도움으로 즐겁게 일하고 있다"는 점입니다.' },
+  { id: 'eps_s1_39', level: 'EPS', mockSet: 'EPS_SET_1', type: 'LISTENING', prompt: '【듣기 Q39: 안내 방송】 급여 및 보너스 지급 안내를 들으시오.\n🎧 "이번 달 25일에 명절 보너스가 기본급의 50% 함께 지급됩니다."', options: ['25일에 명절 보너스 지급', '다음 달 10일에 지급', '보너스 지급 취소', '기본급 100% 삭감'], correctAnswer: '25일에 명절 보너스 지급', explanation: '방송 내용은 "25일에 명절 보너스 50% 지급"입니다.' },
+  { id: 'eps_s1_40', level: 'EPS', mockSet: 'EPS_SET_1', type: 'LISTENING', prompt: '【듣기 Q40: 대화 듣기】 회식 약속 장소를 들으시오.\n🎧 "오늘 퇴근하고 회사 앞 삼겹살집에서 회식을 합시다. 6시 30분까지 오세요."', options: ['회사 앞 삼겹살집', '기숙사 휴게실', '역 앞 치킨집', '공장 강당'], correctAnswer: '회사 앞 삼겹살집', explanation: '회식 장소는 "회사 앞 삼겹살집"입니다.' },
 
   // TOPIK 2
   {
@@ -618,7 +659,7 @@ const KOREAN_QUESTIONS: ExamQuestion[] = [
     id: 'ko_t3_1',
     level: 'TOPIK3',
     type: 'FILL_BLANK',
-    prompt: '환경 오염이 심각해ジムに _____ 정부는 새로운 정책을 발표했다.',
+    prompt: '환경 오염이 심각해짐에 _____ 정부는 새로운 정책을 발표했다.',
     options: ['따라', '대해', '관해', '위해'],
     correctAnswer: '따라',
     explanation: '~에 따라 = according to / as a consequence of.',
@@ -632,7 +673,7 @@ const KOREAN_QUESTIONS: ExamQuestion[] = [
     prompt: '다음 중 문맥상 의미가 가장 어색한 표현을 고르시오.',
     options: ['경제 성장이 가속화되고 있다', '기술 혁신이 침체되고 있다', '물가가 지속적으로 상승한다', '고용 시장이 활성화된다'],
     correctAnswer: '기술 혁신이 침체되고 있다',
-    explanation: '문맥 및 일반적 표현 비교 시 적절性を 평가합니다.',
+    explanation: '문맥 및 일반적 표현 비교 시 적절성을 평가합니다.',
   },
 ];
 
@@ -640,21 +681,38 @@ const KOREAN_QUESTIONS: ExamQuestion[] = [
 
 export interface TimedExamEngineProps {
   activeLanguage?: 'JAPANESE' | 'KOREAN';
-  onCompleteExam?: (result: { score: number; passed: boolean; timeSpentSeconds: number }) => void;
-}
-
-export interface TimedExamEngineProps {
-  activeLanguage?: 'JAPANESE' | 'KOREAN';
+  preselectedLevel?: string;
+  hideLevelSelector?: boolean;
+  hideCategorySelector?: boolean;
   onCompleteExam?: (result: { score: number; passed: boolean; timeSpentSeconds: number }) => void;
 }
 
 export const TimedExamEngine: React.FC<TimedExamEngineProps> = ({
   activeLanguage = 'JAPANESE',
+  preselectedLevel,
+  hideLevelSelector = false,
+  hideCategorySelector = false,
   onCompleteExam,
 }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const [isFullscreen, setIsFullscreen] = useState(false);
+
+  // Category Track state (Japanese JLPT/JFT vs Korean EPS/TOPIK)
+  const [currentTrack, setCurrentTrack] = useState<'JAPANESE' | 'KOREAN'>(activeLanguage);
+
+  React.useEffect(() => {
+    setCurrentTrack(activeLanguage);
+  }, [activeLanguage]);
+
+  // Filter state for preselectedLevel
+  const [selectedLevelFilter, setSelectedLevelFilter] = useState<string>(preselectedLevel || 'ALL');
+
+  React.useEffect(() => {
+    if (preselectedLevel) {
+      setSelectedLevelFilter(preselectedLevel);
+    }
+  }, [preselectedLevel]);
 
   // Flow State
   const [isExamActive, setIsExamActive] = useState(false);
@@ -670,8 +728,6 @@ export const TimedExamEngine: React.FC<TimedExamEngineProps> = ({
   const [showExitConfirmModal, setShowExitConfirmModal] = useState(false);
   const [showBreakModal, setShowBreakModal] = useState(false);
   const [breakTimerSeconds, setBreakTimerSeconds] = useState(15 * 60);
-
-  const [selectedLevelFilter, setSelectedLevelFilter] = useState<string>('ALL');
   const [currentIndex, setCurrentIndex] = useState(0);
   const [selectedAnswers, setSelectedAnswers] = useState<Record<string, string>>({});
   const [flaggedQuestions, setFlaggedQuestions] = useState<Record<string, boolean>>({});
@@ -694,9 +750,10 @@ export const TimedExamEngine: React.FC<TimedExamEngineProps> = ({
   } | null>(null);
   const [reviewFilter, setReviewFilter] = useState<'ALL' | 'INCORRECT' | 'FLAGGED'>('ALL');
 
-  const allQuestions = activeLanguage === 'JAPANESE' ? JAPANESE_QUESTIONS : KOREAN_QUESTIONS;
+  const allQuestions = currentTrack === 'JAPANESE' ? JAPANESE_QUESTIONS : KOREAN_QUESTIONS;
 
-  const isJFT = selectedMockTest?.examFormat === 'JFT_CBT' || selectedMockTest?.level === 'JFT';
+  const isJFT = (selectedMockTest?.examFormat === 'JFT_CBT' || selectedMockTest?.level === 'JFT') && selectedMockTest?.language === 'JAPANESE';
+  const isEPS = selectedMockTest?.level === 'EPS' || selectedMockTest?.examFormat === 'EPS_CBT' || selectedMockTest?.language === 'KOREAN';
 
   const rawQuestions = React.useMemo(() => {
     if (!selectedMockTest) return allQuestions;
@@ -705,6 +762,9 @@ export const TimedExamEngine: React.FC<TimedExamEngineProps> = ({
     );
     if (filtered.length === 0 && isJFT) {
       filtered = allQuestions.filter((q) => q.level === 'JFT');
+    }
+    if (filtered.length === 0) {
+      filtered = allQuestions.filter((q) => q.level === selectedMockTest.level);
     }
     return filtered;
   }, [allQuestions, selectedMockTest, isJFT]);
@@ -725,10 +785,14 @@ export const TimedExamEngine: React.FC<TimedExamEngineProps> = ({
   }, [rawQuestions, currentPaperIndex, currentJftSectionIndex, selectedMockTest, isJFT]);
 
   const questions = currentPaperQuestions;
+  const effectiveLevelFilter = preselectedLevel || selectedLevelFilter;
 
   const filteredCatalog = MOCK_TEST_CATALOG.filter((test) => {
-    if (test.language !== activeLanguage) return false;
-    if (selectedLevelFilter !== 'ALL' && test.level !== selectedLevelFilter) return false;
+    if (test.language !== currentTrack) return false;
+    if (effectiveLevelFilter !== 'ALL') {
+      const activeLvl = (effectiveLevelFilter === 'JFT_BASIC' || effectiveLevelFilter === 'JFT') ? 'JFT' : effectiveLevelFilter;
+      if (test.level !== activeLvl) return false;
+    }
     return true;
   });
 
@@ -881,12 +945,12 @@ export const TimedExamEngine: React.FC<TimedExamEngineProps> = ({
     stopCurrentAudio();
     setIsExamActive(false);
     setSelectedMockTest(null);
-    setSelectedLevelFilter('ALL');
+    setSelectedLevelFilter(preselectedLevel || 'ALL');
     setIsSubmitted(false);
     setExamResult(null);
     setShowExitConfirmModal(false);
     setShowBreakModal(false);
-  }, [activeLanguage]);
+  }, [activeLanguage, preselectedLevel]);
 
   useEffect(() => {
     if (!isExamActive || isSubmitted || showBreakModal) return;
@@ -1045,67 +1109,106 @@ export const TimedExamEngine: React.FC<TimedExamEngineProps> = ({
   // ----------------------------------------------------
   if (!isExamActive) {
     return (
-      <div className="w-full max-w-5xl mx-auto font-sans space-y-6">
-        {/* Lobby Header */}
-        <div className="bg-slate-900/95 backdrop-blur-xl border border-slate-800 rounded-3xl p-6 shadow-2xl flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
-          <div>
-            <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-emerald-400 mb-1">
-              <Award className="w-4 h-4 text-amber-400" />
-              <span>Official Exam Simulator & Prometric CBT Center</span>
-            </div>
-            <h2 className="text-xl sm:text-2xl font-black text-white">
-              {activeLanguage === 'JAPANESE' ? 'JLPT Paper & JFT-Basic CBT Official Exam Center' : 'EPS-TOPIK & TOPIK I / II Mock Test Center'}
-            </h2>
-            <p className="text-xs text-slate-400 mt-1">
-              Supports both JLPT Official 2-Paper Booklet Exam (with 15-min Break) and JFT-Basic Computer Test (250 Marks Scale for SSW A2 Visa).
-            </p>
-          </div>
-        </div>
-
-        {/* Level Filter Bar */}
-        <div className="flex items-center gap-2 bg-slate-900/80 p-2 rounded-2xl border border-slate-800 flex-wrap">
-          <span className="text-xs font-bold text-slate-400 px-2 flex items-center gap-1.5">
-            <Layers className="w-4 h-4 text-indigo-400" /> Choose Level:
-          </span>
-          <button
-            onClick={() => setSelectedLevelFilter('ALL')}
-            className={`px-4 py-2 rounded-xl text-xs font-extrabold transition-all cursor-pointer ${
-              selectedLevelFilter === 'ALL' ? 'bg-indigo-600 text-white shadow-glow' : 'bg-slate-950 text-slate-400 hover:text-white border border-slate-800'
-            }`}
-          >
-            All Levels ({MOCK_TEST_CATALOG.filter(t => t.language === activeLanguage).length})
-          </button>
-          {activeLanguage === 'JAPANESE' ? (
-            ['JFT', 'N5', 'N4', 'N3', 'N2'].map((lvl) => (
+      <div className="w-full font-sans space-y-4">
+        {/* Category Track & Level Filter Bar */}
+        <div className="flex flex-col gap-3 bg-slate-900/90 p-3 rounded-2xl border border-slate-800 shadow-xl">
+          {/* Main Track Toggle: Japanese JLPT/JFT vs Korean EPS/TOPIK (Only rendered when in global mode without activeLanguage lock) */}
+          {!hideCategorySelector && !hideLevelSelector && (
+            <div className="flex items-center gap-2 border-b border-slate-800/80 pb-2.5 overflow-x-auto no-scrollbar">
+              <span className="text-xs font-bold text-slate-400 px-2 flex items-center gap-1.5 shrink-0">
+                <Globe className="w-4 h-4 text-indigo-400" /> Exam Category:
+              </span>
               <button
-                key={lvl}
-                onClick={() => setSelectedLevelFilter(lvl)}
-                className={`px-4 py-2 rounded-xl text-xs font-extrabold transition-all cursor-pointer ${
-                  selectedLevelFilter === lvl
-                    ? lvl === 'JFT' ? 'bg-cyan-600 text-white shadow-glow' : 'bg-rose-600 text-white shadow-glow'
+                onClick={() => {
+                  setCurrentTrack('JAPANESE');
+                  setSelectedLevelFilter('ALL');
+                }}
+                className={`px-4 py-2 rounded-xl text-xs font-extrabold transition-all flex items-center gap-2 cursor-pointer ${
+                  currentTrack === 'JAPANESE'
+                    ? 'bg-gradient-to-r from-rose-600 via-pink-600 to-indigo-600 text-white shadow-glow'
                     : 'bg-slate-950 text-slate-400 hover:text-white border border-slate-800'
                 }`}
               >
-                {lvl === 'JFT' ? '💻 JFT-Basic (250 Pts CBT)' : `JLPT ${lvl}`} ({MOCK_TEST_CATALOG.filter(t => t.language === 'JAPANESE' && t.level === lvl).length})
+                <span>🇯🇵 JLPT &amp; JFT-Basic Exams</span>
+                <span className="px-2 py-0.5 rounded-full bg-rose-950/80 text-rose-300 text-[10px] font-bold border border-rose-500/30">
+                  {MOCK_TEST_CATALOG.filter(t => t.language === 'JAPANESE').length} Sets
+                </span>
               </button>
-            ))
-          ) : (
-            ['EPS', 'TOPIK2', 'TOPIK3'].map((lvl) => (
               <button
-                key={lvl}
-                onClick={() => setSelectedLevelFilter(lvl)}
-                className={`px-4 py-2 rounded-xl text-xs font-extrabold transition-all cursor-pointer ${
-                  selectedLevelFilter === lvl ? 'bg-emerald-600 text-white shadow-glow' : 'bg-slate-950 text-slate-400 hover:text-white border border-slate-800'
+                onClick={() => {
+                  setCurrentTrack('KOREAN');
+                  setSelectedLevelFilter('ALL');
+                }}
+                className={`px-4 py-2 rounded-xl text-xs font-extrabold transition-all flex items-center gap-2 cursor-pointer ${
+                  currentTrack === 'KOREAN'
+                    ? 'bg-gradient-to-r from-emerald-600 to-teal-600 text-white shadow-glow'
+                    : 'bg-slate-950 text-slate-400 hover:text-white border border-slate-800'
                 }`}
               >
-                {lvl} ({MOCK_TEST_CATALOG.filter(t => t.language === 'KOREAN' && t.level === lvl).length})
+                <span>🇰🇷 EPS-TOPIK &amp; TOPIK Exams</span>
+                <span className="px-2 py-0.5 rounded-full bg-emerald-950/80 text-emerald-300 text-[10px] font-bold border border-emerald-500/30">
+                  {MOCK_TEST_CATALOG.filter(t => t.language === 'KOREAN').length} Sets
+                </span>
               </button>
-            ))
+            </div>
+          )}
+
+          {/* Level Filter Pills (Only rendered when not locked to a preselected level) */}
+          {!hideLevelSelector && !preselectedLevel ? (
+            <div className="flex items-center gap-2 flex-wrap">
+              <span className="text-xs font-bold text-slate-400 px-2 flex items-center gap-1.5">
+                <Layers className="w-4 h-4 text-indigo-400" /> Filter Level:
+              </span>
+              <button
+                onClick={() => setSelectedLevelFilter('ALL')}
+                className={`px-3.5 py-1.5 rounded-xl text-xs font-extrabold transition-all cursor-pointer ${
+                  selectedLevelFilter === 'ALL' ? 'bg-indigo-600 text-white shadow-glow' : 'bg-slate-950 text-slate-400 hover:text-white border border-slate-800'
+                }`}
+              >
+                All {currentTrack === 'JAPANESE' ? 'JLPT & JFT' : 'EPS & TOPIK'} ({MOCK_TEST_CATALOG.filter(t => t.language === currentTrack).length})
+              </button>
+              {currentTrack === 'JAPANESE' ? (
+                ['JFT', 'N5', 'N4', 'N3', 'N2'].map((lvl) => (
+                  <button
+                    key={lvl}
+                    onClick={() => setSelectedLevelFilter(lvl)}
+                    className={`px-3.5 py-1.5 rounded-xl text-xs font-extrabold transition-all cursor-pointer ${
+                      selectedLevelFilter === lvl
+                        ? lvl === 'JFT' ? 'bg-cyan-600 text-white shadow-glow' : 'bg-rose-600 text-white shadow-glow'
+                        : 'bg-slate-950 text-slate-400 hover:text-white border border-slate-800'
+                    }`}
+                  >
+                    {lvl === 'JFT' ? '💻 JFT-Basic (250 Pts CBT)' : `JLPT ${lvl}`} ({MOCK_TEST_CATALOG.filter(t => t.language === 'JAPANESE' && t.level === lvl).length})
+                  </button>
+                ))
+              ) : (
+                ['EPS', 'TOPIK2', 'TOPIK3'].map((lvl) => (
+                  <button
+                    key={lvl}
+                    onClick={() => setSelectedLevelFilter(lvl)}
+                    className={`px-3.5 py-1.5 rounded-xl text-xs font-extrabold transition-all cursor-pointer ${
+                      selectedLevelFilter === lvl ? 'bg-emerald-600 text-white shadow-glow' : 'bg-slate-950 text-slate-400 hover:text-white border border-slate-800'
+                    }`}
+                  >
+                    {lvl === 'EPS' ? '🇰🇷 EPS-TOPIK 1-60' : `TOPIK ${lvl}`} ({MOCK_TEST_CATALOG.filter(t => t.language === 'KOREAN' && t.level === lvl).length})
+                  </button>
+                ))
+              )}
+            </div>
+          ) : (
+            <div className="flex items-center gap-2 px-3.5 py-1.5 rounded-xl bg-slate-950 border border-slate-800 text-xs font-black text-amber-300">
+              <Sparkles className="w-4 h-4 text-amber-400" />
+              <span>
+                {selectedLevelFilter === 'JFT' || selectedLevelFilter === 'JFT_BASIC'
+                  ? 'JFT-Basic CBT Official Exam Center'
+                  : `JLPT ${selectedLevelFilter} Official Mock Examination Center`}
+              </span>
+            </div>
           )}
         </div>
 
         {/* Mock Test Cards Directory */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
           {filteredCatalog.map((test) => (
             <div
               key={test.id}
@@ -1115,7 +1218,7 @@ export const TimedExamEngine: React.FC<TimedExamEngineProps> = ({
                 <div className="flex items-center justify-between gap-2 mb-3">
                   <div className="flex items-center gap-2 flex-wrap">
                     <span className={`px-3 py-1 rounded-xl text-xs font-black text-white bg-gradient-to-r ${test.badgeColor} shadow-md`}>
-                      {test.examFormat === 'JFT_CBT' ? '💻 JFT-Basic CBT (250 Marks)' : `📄 JLPT ${test.level} Official Paper`}
+                      {test.examFormat === 'EPS_CBT' ? '🇰🇷 EPS-TOPIK CBT (40 Qs)' : test.examFormat === 'JFT_CBT' ? '💻 JFT-Basic CBT (250 Marks)' : `📄 JLPT ${test.level} Official Paper`}
                     </span>
                     {test.mockSet && (
                       <span className="px-2.5 py-0.5 rounded-lg bg-indigo-500/20 text-indigo-300 border border-indigo-500/30 text-xs font-black">
@@ -1125,7 +1228,7 @@ export const TimedExamEngine: React.FC<TimedExamEngineProps> = ({
                   </div>
                   <div className="flex items-center gap-1.5 text-xs font-bold text-amber-400 bg-slate-950 px-2.5 py-1 rounded-lg border border-slate-800">
                     <Clock className="w-3.5 h-3.5" />
-                    <span>{test.examFormat === 'JFT_CBT' ? '4 Sections • 60 Mins' : '2 Papers • 90 Mins'}</span>
+                    <span>{test.examFormat === 'EPS_CBT' ? '2 Sections • 50 Mins' : test.examFormat === 'JFT_CBT' ? '4 Sections • 60 Mins' : '2 Papers • 90 Mins'}</span>
                   </div>
                 </div>
 
@@ -1143,7 +1246,19 @@ export const TimedExamEngine: React.FC<TimedExamEngineProps> = ({
 
                 {/* Section tags */}
                 <div className="flex flex-wrap gap-1.5 mb-4">
-                  {test.examFormat === 'JFT_CBT' ? (
+                  {test.examFormat === 'EPS_CBT' ? (
+                    <>
+                      <span className="px-2.5 py-1 rounded-lg bg-emerald-950/80 border border-emerald-500/40 text-[10px] font-bold text-emerald-300">
+                        💻 Prometric CBT Computer Interface
+                      </span>
+                      <span className="px-2.5 py-1 rounded-lg bg-teal-950/80 border border-teal-500/40 text-[10px] font-bold text-teal-300">
+                        🎯 110 / 200 Pass Benchmark
+                      </span>
+                      <span className="px-2.5 py-1 rounded-lg bg-cyan-950/80 border border-cyan-500/40 text-[10px] font-bold text-cyan-300">
+                        🔄 Continuous 40-Q Navigation (No Lock)
+                      </span>
+                    </>
+                  ) : test.examFormat === 'JFT_CBT' ? (
                     <>
                       <span className="px-2.5 py-1 rounded-lg bg-cyan-950/80 border border-cyan-500/40 text-[10px] font-bold text-cyan-300">
                         💻 Prometric CBT Computer Interface

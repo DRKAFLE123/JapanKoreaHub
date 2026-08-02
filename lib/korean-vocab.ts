@@ -12,6 +12,8 @@ export interface KoreanGrammarSentence {
   nepali: string;
 }
 
+export type KoreanVocabLevel = 'EPS' | 'EPS_MFG' | 'EPS_AGR' | 'EPS_CON' | 'EPS_FISH' | 'EPS_SAFETY' | 'TOPIK1_L1' | 'TOPIK2' | 'TOPIK3' | 'TOPIK4' | 'TOPIK2_L5' | 'TOPIK2_L6' | string;
+
 export interface KoreanVocabItem {
   id: string;
   word: string;           // Korean word (Hangul)
@@ -19,8 +21,10 @@ export interface KoreanVocabItem {
   meaning: string;        // English meaning
   meaningNepali: string;  // Nepali meaning
   lesson: number;
-  level: 'EPS' | 'TOPIK2' | 'TOPIK3' | 'TOPIK4';
+  level: KoreanVocabLevel;
   partOfSpeech?: string;
+  topic?: string;
+  industry?: string;
   grammarSentences?: KoreanGrammarSentence[];
 }
 
@@ -206,6 +210,16 @@ export function getKoreanVocabByLevelAndLesson(level: KoreanVocabItem['level'], 
   return KOREAN_VOCAB_DATA.filter(v => v.level === level && v.lesson === lesson);
 }
 
+export function getKoreanVocabByIndustry(industry: string): KoreanVocabItem[] {
+  return KOREAN_VOCAB_DATA.filter(v => v.industry === industry || v.level === industry);
+}
+
+export function getKoreanVocabByTopic(topic: string, level?: KoreanVocabItem['level']): KoreanVocabItem[] {
+  return KOREAN_VOCAB_DATA.filter(v =>
+    v.topic === topic && (level ? v.level === level : true)
+  );
+}
+
 export function getAvailableKoreanLevels(): KoreanVocabItem['level'][] {
   return ['EPS', 'TOPIK2', 'TOPIK3', 'TOPIK4'];
 }
@@ -218,4 +232,9 @@ export function getAvailableKoreanLessons(level: KoreanVocabItem['level']): numb
   }
   const data = getKoreanVocabByLevel(level);
   return [...new Set(data.map(v => v.lesson))].sort((a, b) => a - b);
+}
+
+export function getAvailableTopics(level: KoreanVocabItem['level']): string[] {
+  const data = getKoreanVocabByLevel(level);
+  return [...new Set(data.map(v => v.topic).filter(Boolean))] as string[];
 }

@@ -30,3 +30,7 @@ Thumbs.db
 
 # IDE
 .vscode/settings.json
+
+# Python
+__pycache__/
+*.pyc

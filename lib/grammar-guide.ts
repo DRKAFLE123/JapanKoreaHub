@@ -3,6 +3,7 @@
 // Complete N5 (Lessons 1-25) & N4 (Lessons 26-50) Handbook
 // ============================================================
 import { N5_GRAMMAR_GUIDES } from './n5-grammar-guides';
+import { EPS_60_LESSONS_GRAMMAR } from './korean-eps-syllabus-grammar';
 
 export interface GrammarPoint {
   title: string;
@@ -721,19 +722,814 @@ export const JAPANESE_GRAMMAR_GUIDES: LessonGrammarGuide[] = [
   },
 
   // ─────────────────────────────────────────────
-  // N3 (Lesson 51)
-  // ─────────────────────────────────────────────
+
+  // ════════════════════════════════════════════════════════
+  // N3 COMPLETE — LESSONS 51 TO 60
+  // ════════════════════════════════════════════════════════
   {
-    language: 'JAPANESE', level: 'N3', lesson: 51,
-    lessonTitle: 'Strong Certainty 〜に違いない / Expectation 〜はずだ',
-    grammarPoints: [
+    "language": "JAPANESE",
+    "level": "N3",
+    "lesson": 60,
+    "lessonTitle": "Representation & Evaluation 〜をはじめとして / 〜に応えて",
+    "grammarPoints": [
       {
-        title: '1. Strong Certainty 〜に違いない',
-        pattern: '[Plain Verb / Adj / Noun] + に違いない',
-        explanationEnglish: 'Used when the speaker is strongly convinced that something is true without a doubt based on evidence or reasoning.',
-        explanationNepali: 'प्रमाण वा तर्कका आधारमा "नक्की हो / अवश्य हो" भन्ने दृढ विश्वास व्यक्त गर्दा प्रयोग।',
-        examples: [
-          { target: '彼は犯人に違いない。', reading: 'かれははんにんにちがいない。', english: 'He must be the culprit.', nepali: 'उ नै दोषी हुनुपर्छ।' },
+        "title": "1. Representative Example 〜をはじめとして",
+        "pattern": "[Noun] + をはじめ（として）",
+        "explanationEnglish": "Means 'starting with / including above all'.",
+        "explanationNepali": "~ लाई मुख्य उदाहरण मान्दै।",
+        "examples": [
+          {
+            "target": "社長をはじめ、スタッフ全員に感謝します。",
+            "reading": "しゃちょうをはじめ、すたっふぜんいんにかんしゃします。",
+            "english": "I thank everyone, starting with the president.",
+            "nepali": "अध्यक्षज्यू लगायत सम्पूर्ण कर्मचारी टोलीलाई धन्यवाद दिन्छु。"
+          }
+        ]
+      },
+      {
+        "title": "2. In Response To 〜に応えて",
+        "pattern": "[Noun] + にこたえて",
+        "explanationEnglish": "Means 'in response to / answering (expectations, requests)'.",
+        "explanationNepali": "~ को माग वा अपेक्षाको सम्बोधन गर्दै।",
+        "examples": [
+          {
+            "target": "ファンの期待に応えて素晴らしい演奏をした。",
+            "reading": "ふぁんのきたいにこたえてすばらしいえんそうをした。",
+            "english": "Performed wonderfully in response to fans' expectations.",
+            "nepali": "प्रशंसकहरूको अपेक्षा बमोजिम उत्कृष्ट प्रस्तुति दिइयो。"
+          }
+        ]
+      }
+    ]
+  },
+
+  // ════════════════════════════════════════════════════════
+  // N3 MASTER SYLLABUS GRAMMAR GUIDES (CHAPTERS 1-12)
+  // ════════════════════════════════════════════════════════
+  {
+    "language": "JAPANESE",
+    "level": "N3",
+    "lesson": 51,
+    "lessonTitle": "Chapter 1: Introducing Yourself & Daily Routines (自己紹介・日常生活)",
+    "grammarPoints": [
+      {
+        "title": "1. While a state lasts 〜うちに",
+        "pattern": "[Verb dictionary / Adj / Nの] + うちに",
+        "explanationEnglish": "Doing something while a current condition lasts, before it changes.",
+        "explanationNepali": "कुनै अवस्था कायम रहँदै गर्दा (परिवर्तन हुनुअघि) काम गर्नु।",
+        "examples": [
+          {
+            "target": "若いうちに、いろいろな経験をしたい。",
+            "reading": "わかいうちに、いろいろなけいけんをしたい。",
+            "english": "While I am young, I want to gain various experiences.",
+            "nepali": "जवान छँदै अनेकौँ अनुभव हासिल गर्न चाहन्छु।"
+          }
+        ]
+      },
+      {
+        "title": "2. As soon as / The moment 〜た途端",
+        "pattern": "[Verb た-form] + 途端（に）",
+        "explanationEnglish": "Just at the moment something happened, an unexpected event occurred.",
+        "explanationNepali": "बित्तिकै / त्यही क्षण (अप्रत्याशित घटना हुनु)।",
+        "examples": [
+          {
+            "target": "窓を開けた途端、強い風が入ってきた。",
+            "reading": "まどをあけたとたん、つよいかぜがはいってきた。",
+            "english": "The moment I opened the window, a strong wind blew in.",
+            "nepali": "झ्याल खोल्ने बित्तिकै बलियो हावा भित्र आयो।"
+          }
+        ]
+      },
+      {
+        "title": "3. Turning point 〜をきっかけに",
+        "pattern": "[Noun / Verbの] + をきっかけに（して）",
+        "explanationEnglish": "Using an event as a trigger or turning point to start something new.",
+        "explanationNepali": "~ लाई अवसर/मोड बनाएर (नयाँ कुरा सुरुवात गर्नु)।",
+        "examples": [
+          {
+            "target": "日本のアニメを見たのをきっかけに、日本語の勉強を始めた。",
+            "reading": "にほんのあにめをみたのをきっかけに、にほんごのべんきょうをはじめた。",
+            "english": "Triggered by watching Japanese anime, I started studying Japanese.",
+            "nepali": "जापानी एनिमे हेरेको अवसरलाई मोड बनाएर जापानी भाषा पढ्न थालेँ।"
+          }
+        ]
+      },
+      {
+        "title": "4. In the middle of 〜最中に",
+        "pattern": "[Verb ている / Nの] + 最中に",
+        "explanationEnglish": "Right in the middle of doing an action when an interruption happens.",
+        "explanationNepali": "कुनै काम गरिरहेकै मध्य समयमा (बाधा पर्नु)।",
+        "examples": [
+          {
+            "target": "食事の最中に電話がかかってきた。",
+            "reading": "しょくじのさいちゅうにでんわがかかってきた。",
+            "english": "A phone call came right in the middle of a meal.",
+            "nepali": "खाना खाइरहेकै बेला फोन आयो।"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "language": "JAPANESE",
+    "level": "N3",
+    "lesson": 52,
+    "lessonTitle": "Chapter 2: Shopping, Consumer Habits & Housing (買い物・住居)",
+    "grammarPoints": [
+      {
+        "title": "1. Contrast / Towards 〜に対して",
+        "pattern": "[Noun / Plain form] + に対して",
+        "explanationEnglish": "In contrast to A, B is different; or directed towards an object/person.",
+        "explanationNepali": "~ को तुलनामा / ~ प्रति।",
+        "examples": [
+          {
+            "target": "兄が活発なのに対して、弟は大人しい。",
+            "reading": "あにがかっぱつなのに対して、おとうとはおとなしい。",
+            "english": "In contrast to his active elder brother, the younger brother is quiet.",
+            "nepali": "दाइ चञ्चल भएको तुलनामा भाइ शान्त छ।"
+          }
+        ]
+      },
+      {
+        "title": "2. Standpoint 〜にとって",
+        "pattern": "[Noun] + にとって",
+        "explanationEnglish": "From the standpoint of someone ('for... / from the perspective of').",
+        "explanationNepali": "~ का लागि / ~ को दृष्टिकोणबाट।",
+        "examples": [
+          {
+            "target": "私にとって、家族が一番大切だ。",
+            "reading": "わたしにとって、かぞくがいちばんたいせつだ。",
+            "english": "For me, family is the most important.",
+            "nepali": "मेरो लागि परिवार नै सबैभन्दा महत्त्वपूर्ण हो।"
+          }
+        ]
+      },
+      {
+        "title": "3. Regarding 〜に関する / 〜に関して",
+        "pattern": "[Noun] + に関して / に関する [Noun]",
+        "explanationEnglish": "About / regarding a specific topic or field of study.",
+        "explanationNepali": "~ को बारेमा / ~ सँग सम्बन्धित।",
+        "examples": [
+          {
+            "target": "環境問題に関する記事を読む。",
+            "reading": "かんきょうもんだいにかんするきじをよむ。",
+            "english": "Read an article regarding environmental issues.",
+            "nepali": "वातावरणीय समस्यासम्बन्धी लेख पढ्नु।"
+          }
+        ]
+      },
+      {
+        "title": "4. Surrounding an Issue 〜をめぐって",
+        "pattern": "[Noun] + をめぐって",
+        "explanationEnglish": "Concerning / over a dispute, debate, or rumor among multiple people.",
+        "explanationNepali": "~ को विवाद वा विषयलाई लिएर।",
+        "examples": [
+          {
+            "target": "遺産の分配をめぐって兄弟が争った。",
+            "reading": "いさんのぶんぱいをめぐってきょうだいがあらそった。",
+            "english": "Brothers fought over the distribution of the inheritance.",
+            "nepali": "सम्पत्ति बाँडफाँडको विषयलाई लिएर दाजुभाइ झगडा गरे।"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "language": "JAPANESE",
+    "level": "N3",
+    "lesson": 53,
+    "lessonTitle": "Chapter 3: Visiting Friends & School Life (訪問・学校生活)",
+    "grammarPoints": [
+      {
+        "title": "1. Formal Setting Location 〜において",
+        "pattern": "[Noun] + において（は）",
+        "explanationEnglish": "In / at / on (formal marker for location, era, or field).",
+        "explanationNepali": "~ मा / ~ को क्षेत्रमा (औपचारिक स्थान/अवधि)।",
+        "examples": [
+          {
+            "target": "現代社会において、インターネットは不可欠だ。",
+            "reading": "げんだいしゃかいにおいて、インターネットはふかけつだ。",
+            "english": "In modern society, the internet is indispensable.",
+            "nepali": "आधुनिक समाजमा इन्टरनेट अपरिहार्य छ।"
+          }
+        ]
+      },
+      {
+        "title": "2. Based On 〜に基づいて",
+        "pattern": "[Noun] + に基づいて",
+        "explanationEnglish": "Based on data, facts, laws, or principles.",
+        "explanationNepali": "~ को आधारमा / ~ अनुसार।",
+        "examples": [
+          {
+            "target": "事実に基づいて報告書を作成した。",
+            "reading": "じじつにもとづいてほうこくしょをさくせいした。",
+            "english": "Created the report based on facts.",
+            "nepali": "तथ्यको आधारमा प्रतिवेदन तयार गरियो।"
+          }
+        ]
+      },
+      {
+        "title": "3. Through / Throughout 〜を通じて / 〜を通して",
+        "pattern": "[Noun] + を通じて / を通して",
+        "explanationEnglish": "Through the medium of; or throughout an entire time period.",
+        "explanationNepali": "~ को माध्यमबाट / ~ भरि।",
+        "examples": [
+          {
+            "target": "友だちを通じて彼と知り合った。",
+            "reading": "ともだちをつうじてかれとしりあった。",
+            "english": "Got to know him through a friend.",
+            "nepali": "साथीको माध्यमबाट उहाँसँग चिनजान भयो।"
+          }
+        ]
+      },
+      {
+        "title": "4. In Response To 〜に応じて",
+        "pattern": "[Noun] + に応じて",
+        "explanationEnglish": "Depending on / in response to changes in situation or request.",
+        "explanationNepali": "~ को आवश्यकता वा माग अनुसार।",
+        "examples": [
+          {
+            "target": "予算に応じてプランを選べます。",
+            "reading": "よさんにおうじてプランをえらべます。",
+            "english": "You can choose a plan depending on your budget.",
+            "nepali": "बजेट अनुसार योजना रोज्न सक्नुहुन्छ।"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "language": "JAPANESE",
+    "level": "N3",
+    "lesson": 54,
+    "lessonTitle": "Chapter 4: Dining Out & Culinary Culture (外食・料理)",
+    "grammarPoints": [
+      {
+        "title": "1. Instead of 〜代わりに",
+        "pattern": "[Verb plain / Nの] + 代わりに",
+        "explanationEnglish": "Instead of doing something, or in exchange for something.",
+        "explanationNepali": "~ को सट्टामा।",
+        "examples": [
+          {
+            "target": "コーヒーの代わりに、お茶を飲む。",
+            "reading": "コーヒーのかわりに、おちゃをのむ。",
+            "english": "Drink tea instead of coffee.",
+            "nepali": "कफीको सट्टामा चिया पिउनु।"
+          }
+        ]
+      },
+      {
+        "title": "2. Without 〜ぬきで / 〜ぬきにして",
+        "pattern": "[Noun] + ぬきで / ぬきにして",
+        "explanationEnglish": "Without / leaving out an element.",
+        "explanationNepali": "~ बिना / ~ लाई छोडेर।",
+        "examples": [
+          {
+            "target": "わさびぬきで寿司を注文した。",
+            "reading": "わさびぬきですしをちゅうもんした。",
+            "english": "Ordered sushi without wasabi.",
+            "nepali": "वासाबी बिना सुशी अर्डर गरियो।"
+          }
+        ]
+      },
+      {
+        "title": "3. On the other hand 〜反面",
+        "pattern": "[Plain form] + 反面",
+        "explanationEnglish": "On one hand A, but on the other hand B (contrasting aspect).",
+        "explanationNepali": "एकातिर ~ तर अर्कातिर ~।",
+        "examples": [
+          {
+            "target": "便利である反面、危険も伴う。",
+            "reading": "べんりであるはんめん、きけんもともなう。",
+            "english": "While convenient, it also carries risks.",
+            "nepali": "सुविधाजनक हुनुका साथै खतरा पनि जोडिएको छ।"
+          }
+        ]
+      },
+      {
+        "title": "4. On one hand... while... 〜一方（で）",
+        "pattern": "[Plain form] + 一方で",
+        "explanationEnglish": "While one situation develops, another situation exists simultaneously.",
+        "explanationNepali": "एकातिर ~ हुँदा उस्तै समयमा अर्कातिर ~।",
+        "examples": [
+          {
+            "target": "都市の開発が進む一方で、自然が失われている。",
+            "reading": "と知のかいはつがすすむいっぽうで、しぜんがうしなわれている。",
+            "english": "While urban development progresses, nature is being lost.",
+            "nepali": "सहरको विकास भइरहँदा अर्कातिर प्रकृति नासिँदैछ।"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "language": "JAPANESE",
+    "level": "N3",
+    "lesson": 55,
+    "lessonTitle": "Chapter 5: Physical Health & Medical Care (健康・医療)",
+    "grammarPoints": [
+      {
+        "title": "1. Purpose / Reason 〜ために",
+        "pattern": "[Verb dict / Nの] + ために",
+        "explanationEnglish": "For the purpose of; or because of (reason).",
+        "explanationNepali": "~ को लागि / ~ को कारणले।",
+        "examples": [
+          {
+            "target": "健康のために、毎日運動している。",
+            "reading": "けんこうのために、まいにちうんどうしている。",
+            "english": "I exercise every day for my health.",
+            "nepali": "स्वास्थ्यको लागि म रोज व्यायाम गर्छु।"
+          }
+        ]
+      },
+      {
+        "title": "2. By means of / Due to 〜によって / 〜により",
+        "pattern": "[Noun] + によって / により",
+        "explanationEnglish": "Indicates cause, means, or agent of an action.",
+        "explanationNepali": "~ द्वारा / ~ को कारणले।",
+        "examples": [
+          {
+            "target": "台風によって、木が倒れた。",
+            "reading": "たいふうによって、きがたおれた。",
+            "english": "Due to the typhoon, trees collapsed.",
+            "nepali": "आँधीको कारणले रूख ढल्यो।"
+          }
+        ]
+      },
+      {
+        "title": "3. Thanks to (Positive) 〜おかげで",
+        "pattern": "[Plain form / Nの] + おかげで",
+        "explanationEnglish": "Expresses appreciation for a positive outcome.",
+        "explanationNepali": "~ को कृपाले (राम्रो नतिजा)।",
+        "examples": [
+          {
+            "target": "薬のおかげで、熱が下がった。",
+            "reading": "くすりのおかげで、ねつがさがった。",
+            "english": "Thanks to the medicine, the fever went down.",
+            "nepali": "औषधिको कृपाले जोरो घट्यो।"
+          }
+        ]
+      },
+      {
+        "title": "4. Blame / Due to (Negative) 〜せいで",
+        "pattern": "[Plain form / Nの] + せいで",
+        "explanationEnglish": "Blames a cause for a bad result.",
+        "explanationNepali": "~ को दोषले / कारणले (नराम्रो नतिजा)।",
+        "examples": [
+          {
+            "target": "寝不足のせいで、頭が痛い。",
+            "reading": "ねぶそくのせいで、あたまがいたい。",
+            "english": "Because of lack of sleep, I have a headache.",
+            "nepali": "निद्रा नपुगेको कारणले टाउको दुखेको छ।"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "language": "JAPANESE",
+    "level": "N3",
+    "lesson": 56,
+    "lessonTitle": "Chapter 6: Town Announcements & Transport (街のアナウンス・交通)",
+    "grammarPoints": [
+      {
+        "title": "1. Strong Resolve 〜からには",
+        "pattern": "[Verb plain] + からには",
+        "explanationEnglish": "Now that / since (expressing strong determination or responsibility).",
+        "explanationNepali": "~ भइसकेपछि त (दृढ सङ्कल्प)।",
+        "examples": [
+          {
+            "target": "引き受けたからには、最後までやり遂げる。",
+            "reading": "ひきうけたからには、さいごまでやりとげる。",
+            "english": "Now that I've accepted it, I will accomplish it to the end.",
+            "nepali": "जिम्मेवारी लिइसकेपछि त अन्त्यसम्म पूरा गर्नेछु।"
+          }
+        ]
+      },
+      {
+        "title": "2. Duty / Intent 〜以上（は）",
+        "pattern": "[Plain form] + 以上（は）",
+        "explanationEnglish": "Seeing that / since (implying natural duty or expectation).",
+        "explanationNepali": "~ भइसकेको अवस्थामा (कर्तव्य र दायित्व)।",
+        "examples": [
+          {
+            "target": "約束した以上は、守らなければならない。",
+            "reading": "やくそくしたいじょうは、まもらなければならない。",
+            "english": "Since I promised, I must keep it.",
+            "nepali": "वाचा गरिसकेको अवस्थामा पालना गर्नैपर्छ।"
+          }
+        ]
+      },
+      {
+        "title": "3. Formal Since 〜上は",
+        "pattern": "[Verb た-form / dict] + 上は",
+        "explanationEnglish": "Highly formal marker meaning 'now that / since'.",
+        "explanationNepali": "~ भइसकेको हुँदा (अत्यन्त औपचारिक)।",
+        "examples": [
+          {
+            "target": "試験を受ける上は、全力を尽くす。",
+            "reading": "しけんをうけるうえは、ぜんりょくをつくす。",
+            "english": "Now that I am taking the exam, I will do my best.",
+            "nepali": "परीक्षा दिने भइसकेपछि पूर्ण शक्ति लगाउनेछु।"
+          }
+        ]
+      },
+      {
+        "title": "4. Sole Condition 〜さえ〜ば",
+        "pattern": "[Noun] + さえ + [Verb ば-form]",
+        "explanationEnglish": "If only... then everything else will be fine.",
+        "explanationNepali": "केवल ~ मात्र भइदिए पुग्छ।",
+        "examples": [
+          {
+            "target": "体さえ丈夫なら、何でもできる。",
+            "reading": "からださえじょうぶなら、なんでもできる。",
+            "english": "If only your body is strong, you can do anything.",
+            "nepali": "शरीर मात्र बलियो भइदिए जे पनि गर्न सकिन्छ।"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "language": "JAPANESE",
+    "level": "N3",
+    "lesson": 57,
+    "lessonTitle": "Chapter 7: Festivals, Events & Local Traditions (祭り・行事)",
+    "grammarPoints": [
+      {
+        "title": "1. Left Running / Messy 〜っぱなし",
+        "pattern": "[Verb stem] + っぱなし",
+        "explanationEnglish": "Leaving something in an unfinished or messy state.",
+        "explanationNepali": "~ यत्तिकै छाडिदिनु (लापरवाहीपूर्वक)।",
+        "examples": [
+          {
+            "target": "電気をつけっぱなしで寝てしまった。",
+            "reading": "でんきをつけっぱなしでねてしまった。",
+            "english": "I fell asleep with the lights left on.",
+            "nepali": "बत्ती यत्तिकै बालेर सुतेछु।"
+          }
+        ]
+      },
+      {
+        "title": "2. Full of / Covered in 〜だらけ",
+        "pattern": "[Noun] + だらけ",
+        "explanationEnglish": "Covered in or full of undesirable things (dust, mistakes, blood).",
+        "explanationNepali": "~ ले भरिएको (प्रायः नराम्रो कुरा)।",
+        "examples": [
+          {
+            "target": "この答案用紙は間違いだらけだ。",
+            "reading": "このとうあんようしはまちがいだらけだ。",
+            "english": "This answer sheet is full of mistakes.",
+            "nepali": "यो उत्तरपुस्तिका गल्तीै गल्तीले भरिएको छ।"
+          }
+        ]
+      },
+      {
+        "title": "3. Prone to 〜がち",
+        "pattern": "[Verb stem / Noun] + がち",
+        "explanationEnglish": "Tending to do something frequently (usually bad habit).",
+        "explanationNepali": "प्रायः ~ हुने बानी हुनु।",
+        "examples": [
+          {
+            "target": "一人暮らしの時は野菜が不足しがちだ。",
+            "reading": "ひとりぐらしのときはやさいがふそくしがちだ。",
+            "english": "When living alone, one tends to lack vegetables.",
+            "nepali": "एक्लै बस्दा तरकारी पुग्दैन।"
+          }
+        ]
+      },
+      {
+        "title": "4. Slight Feeling 〜気味",
+        "pattern": "[Verb stem / Noun] + 気味（ぎみ）",
+        "explanationEnglish": "Feeling a little bit of a temporary negative state (cold, tired).",
+        "explanationNepali": "अलि अलि ~ को महसुस हुनु।",
+        "examples": [
+          {
+            "target": "少し風邪気味なので、早く寝ます。",
+            "reading": "すこしかぜぎみなので、はやくねます。",
+            "english": "I feel a bit of a cold, so I will sleep early.",
+            "nepali": "अलि रुघा लागे जस्तो छ, छिटो सुत्छु।"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "language": "JAPANESE",
+    "level": "N3",
+    "lesson": 58,
+    "lessonTitle": "Chapter 8: Sports & Leisure Time (スポーツ・余暇)",
+    "grammarPoints": [
+      {
+        "title": "1. Intended for 〜向け",
+        "pattern": "[Noun] + 向け",
+        "explanationEnglish": "Designed or created specifically for a target group.",
+        "explanationNepali": "~ का लागि लक्षित (डिजाइन गरिएको)।",
+        "examples": [
+          {
+            "target": "この本は初心者向けに書かれている。",
+            "reading": "このほんはしょしんしゃむけにかくれている。",
+            "english": "This book is written intended for beginners.",
+            "nepali": "यो किताब शुरुवाती सिक्नेहरूका लागि लक्षित गरी लेखिएको छ।"
+          }
+        ]
+      },
+      {
+        "title": "2. Suitable for 〜向き",
+        "pattern": "[Noun] + 向き",
+        "explanationEnglish": "Naturally suitable or fitting well for someone.",
+        "explanationNepali": "~ का लागि उपयुक्त।",
+        "examples": [
+          {
+            "target": "彼は子供の指導に向いている。",
+            "reading": "かれはこどものしどうにむいている。",
+            "english": "He is naturally suited for guiding children.",
+            "nepali": "उहाँ बालबालिकालाई सिकाउन उपयुक्त हुनुहुन्छ।"
+          }
+        ]
+      },
+      {
+        "title": "3. As soon as 〜次第",
+        "pattern": "[Verb stem] + 次第",
+        "explanationEnglish": "As soon as something happens, immediate action follows.",
+        "explanationNepali": "~ हुने बित्तिकै (तत्काल)।",
+        "examples": [
+          {
+            "target": "雨がやみ次第、出発しましょう。",
+            "reading": "あめがやみしだい、しゅっぱつしましょう。",
+            "english": "As soon as the rain stops, let's depart.",
+            "nepali": "पानी पर्न रोकिने बित्तिकै निस्कौँ।"
+          }
+        ]
+      },
+      {
+        "title": "4. Spanning Across 〜にわたって",
+        "pattern": "[Noun] + にわたって / にわたる [Noun]",
+        "explanationEnglish": "Spanning over a broad area, time period, or scope.",
+        "explanationNepali": "~ भरि / ~ सम्म फैलिएको।",
+        "examples": [
+          {
+            "target": "会議は3日間にわたって行われた。",
+            "reading": "かいぎはみっかかんにわたっておこなわれた。",
+            "english": "The conference was held spanning over three days.",
+            "nepali": "बैठक ३ दिनसम्म सञ्चालन भयो।"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "language": "JAPANESE",
+    "level": "N3",
+    "lesson": 59,
+    "lessonTitle": "Chapter 9: Weather Changes & Natural Environment (天候・自然)",
+    "grammarPoints": [
+      {
+        "title": "1. Even if 〜たとえ〜ても",
+        "pattern": "たとえ + [Verb て-form / Adj] + も",
+        "explanationEnglish": "Even if hypothetical situation A happens, B remains unchanged.",
+        "explanationNepali": "चाहे ~ भए तापनि।",
+        "examples": [
+          {
+            "target": "たとえ雨が降っても、試合は行われる。",
+            "reading": "たとえあめがふっても、しあいはおこなわれる。",
+            "english": "Even if it rains, the match will be held.",
+            "nepali": "चाहे पानी परे तापनि खेल हुनेछ।"
+          }
+        ]
+      },
+      {
+        "title": "2. Proportional change 〜ば 〜ほど",
+        "pattern": "[Verb ば-form] + [Verb dict] + ほど",
+        "explanationEnglish": "The more A happens, the more B changes proportionally.",
+        "explanationNepali": "जति ~ गर्यो त्यति नै ~।",
+        "examples": [
+          {
+            "target": "日本語は勉強すればするほど面白くなる。",
+            "reading": "にほんごはべんきょうすればするほどおもしろくなる。",
+            "english": "The more you study Japanese, the more interesting it gets.",
+            "nepali": "जापानी भाषा जति पढ्यो त्यति नै रमाइलो हुन्छ।"
+          }
+        ]
+      },
+      {
+        "title": "3. High Degree 〜くらい / 〜ほど",
+        "pattern": "[Plain form / Noun] + くらい / ほど",
+        "explanationEnglish": "To the extent that / so much that.",
+        "explanationNepali": "~ सम्मको हदमा।",
+        "examples": [
+          {
+            "target": "声が出ないほど喉が痛い。",
+            "reading": "こえがでないほどのおどがいたい。",
+            "english": "My throat hurts so much that I can't speak.",
+            "nepali": "आवाज ननिस्कने गरी घाँटी दुखेको छ।"
+          }
+        ]
+      },
+      {
+        "title": "4. Bound to be 〜に決まっている",
+        "pattern": "[Plain form] + に決まっている",
+        "explanationEnglish": "Expresses strong subjective certainty ('bound to be / definitely').",
+        "explanationNepali": "नक्की हो / अवश्य हुनुपर्छ।",
+        "examples": [
+          {
+            "target": "そんなの嘘に決まっている。",
+            "reading": "そんなのうそにきまっている。",
+            "english": "That is definitely a lie.",
+            "nepali": "त्यो त पक्कै झूट हो।"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "language": "JAPANESE",
+    "level": "N3",
+    "lesson": 60,
+    "lessonTitle": "Chapter 10: Business Operations & Workplace Communication (仕事・職場)",
+    "grammarPoints": [
+      {
+        "title": "1. Risk of negative event 〜おそれがある",
+        "pattern": "[Verb dict / Nの] + おそれがある",
+        "explanationEnglish": "There is a danger/risk that something bad might happen.",
+        "explanationNepali": "~ हुने खतरा/जोखिम छ।",
+        "examples": [
+          {
+            "target": "大雨で川が氾濫するおそれがある。",
+            "reading": "おおあめでかわがはんらんするおそれがある。",
+            "english": "There is a risk that the river may flood due to heavy rain.",
+            "nepali": "भारी वर्षाका कारण नदी थुनिने खतरा छ।"
+          }
+        ]
+      },
+      {
+        "title": "2. Certainty based on evidence 〜に違いない",
+        "pattern": "[Plain form] + に違いない",
+        "explanationEnglish": "Expresses strong objective certainty ('must be').",
+        "explanationNepali": "नक्की नै हो।",
+        "examples": [
+          {
+            "target": "彼が犯人に違いない。",
+            "reading": "かれがはんにんにちがいない。",
+            "english": "He must be the culprit.",
+            "nepali": "उही दोषी हुनुपर्छ।"
+          }
+        ]
+      },
+      {
+        "title": "3. Impossible expectation 〜はずがない",
+        "pattern": "[Plain form] + はずがない",
+        "explanationEnglish": "Strong conviction that something is logically impossible.",
+        "explanationNepali": "~ हुनै सक्दैन।",
+        "examples": [
+          {
+            "target": "真面目な彼が遅刻するはずがない。",
+            "reading": "まじめなかれがちこくするはずがない。",
+            "english": "A serious person like him cannot possibly be late.",
+            "nepali": "अनुशासित उहाँ ढिलो हुनु असम्भव छ।"
+          }
+        ]
+      },
+      {
+        "title": "4. Absolute denial 〜わけがない",
+        "pattern": "[Plain form] + わけがない",
+        "explanationEnglish": "Subjective strong denial ('there is no way that...').",
+        "explanationNepali": "~ हुने सम्भावना नै छैन।",
+        "examples": [
+          {
+            "target": "こんなに難しい問題が解けるわけがない。",
+            "reading": "こんなにむずかしいもんだいがとけるわけがない。",
+            "english": "There is no way I can solve such a difficult problem.",
+            "nepali": "यति गाह्रो प्रश्न हल गर्न सकिने कुरै छैन।"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "language": "JAPANESE",
+    "level": "N3",
+    "lesson": 61,
+    "lessonTitle": "Chapter 11: Advanced Social Register & Honorifics (敬語・社会)",
+    "grammarPoints": [
+      {
+        "title": "1. Humbly Receive Action お/ご〜いただく",
+        "pattern": "お + [Verb stem] + いただく / ご + [Noun] + いただく",
+        "explanationEnglish": "Humbly receiving an action performed by a superior.",
+        "explanationNepali": "माथिल्लो व्यक्तिबाट काम नम्रतासाथ ग्रहण गर्नु।",
+        "examples": [
+          {
+            "target": "社長にご説明いただきました。",
+            "reading": "しゃちょうにごせつめいいただきました。",
+            "english": "I humbly received an explanation from the president.",
+            "nepali": "अध्यक्षज्यूबाट व्याख्या सुन्न पाइयो।"
+          }
+        ]
+      },
+      {
+        "title": "2. Superior Performs Action お/ご〜くださる",
+        "pattern": "お + [Verb stem] + くださる / ご + [Noun] + くださる",
+        "explanationEnglish": "A superior kindly performs an action for me.",
+        "explanationNepali": "उच्च व्यक्तिले मेरो लागि काम गरिदिनु।",
+        "examples": [
+          {
+            "target": "先生が本をお貸しくださいました。",
+            "reading": "せんせいがほんをおかしくださいました。",
+            "english": "The teacher kindly lent me a book.",
+            "nepali": "शिक्षकले मलाई किताब पठाएर कृपा गर्नुभयो।"
+          }
+        ]
+      },
+      {
+        "title": "3. Honorific State 〜ていらっしゃる",
+        "pattern": "[Verb て-form] + いらっしゃる",
+        "explanationEnglish": "Honorific equivalent of 〜ている (doing action/state for superior).",
+        "explanationNepali": "गर्नुहुँदैछ (आदरार्थी)।",
+        "examples": [
+          {
+            "target": "社長は今、電話をなさっていらっしゃいます。",
+            "reading": "しゃちょうはいま、でんわをなさっていらっしゃいます。",
+            "english": "The president is currently making a call.",
+            "nepali": "अध्यक्षज्यू अहिले फोनमा कुरा गर्दैहुनुहुन्छ।"
+          }
+        ]
+      },
+      {
+        "title": "4. Humble State 〜てまいる",
+        "pattern": "[Verb て-form] + まいる",
+        "explanationEnglish": "Humble equivalent of 〜ていく / 〜てくる.",
+        "explanationNepali": "म जाने/आउने गर्छु (नम्र रूप)।",
+        "examples": [
+          {
+            "target": "後ほど資料をお持ちしてまいります。",
+            "reading": "のちほどしりょうをおもちしてまいります。",
+            "english": "I will bring the materials shortly.",
+            "nepali": "केही बेरमा कागजात लिएर आउनेछु।"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "language": "JAPANESE",
+    "level": "N3",
+    "lesson": 62,
+    "lessonTitle": "Chapter 12: Abstract Ideas & Final Test Reviews (抽象的概念・総まとめ)",
+    "grammarPoints": [
+      {
+        "title": "1. Partial Negation 〜わけではない",
+        "pattern": "[Plain form] + わけではない",
+        "explanationEnglish": "It doesn't mean that... (partial negation).",
+        "explanationNepali": "~ भन्ने चाहिँ होइन (आंशिक अस्वीकार)।",
+        "examples": [
+          {
+            "target": "嫌いなわけではないが、あまり食べない。",
+            "reading": "きらいなわけではないが、あまりたべない。",
+            "english": "It's not that I dislike it, but I don't eat it much.",
+            "nepali": "मन नपरेको त होइन, तर धेरै खाँदिन।"
+          }
+        ]
+      },
+      {
+        "title": "2. Soft Negation 〜というわけではない",
+        "pattern": "[Plain form] + というわけではない",
+        "explanationEnglish": "It isn't necessarily the case that...",
+        "explanationNepali": "~ नै हो भन्ने चाहिँ होइन।",
+        "examples": [
+          {
+            "target": "全員が賛成したというわけではない。",
+            "reading": "ぜんいんがさんせいしたというわけではない。",
+            "english": "It doesn't mean everyone agreed.",
+            "nepali": "सबैजना सहमत भए भन्ने चाहिँ होइन।"
+          }
+        ]
+      },
+      {
+        "title": "3. Not Limited To 〜に限らない",
+        "pattern": "[Noun / Plain form] + に限らない",
+        "explanationEnglish": "Not limited only to A (applies to others too).",
+        "explanationNepali": "केवल ~ मा मात्र सीमित छैन।",
+        "examples": [
+          {
+            "target": "この問題は若者に限らない。",
+            "reading": "このもんだいはわかものにかぎらない。",
+            "english": "This problem is not limited to young people.",
+            "nepali": "यो समस्या युवाहरूमा मात्र सीमित छैन।"
+          }
+        ]
+      },
+      {
+        "title": "4. Merely / Just 〜にすぎない",
+        "pattern": "[Plain form / Noun] + にすぎない",
+        "explanationEnglish": "Nothing more than / merely / just.",
+        "explanationNepali": "केवल ~ बाहेक अरू केही होइन।",
+        "examples": [
+          {
+            "target": "それは単なる噂にすぎない。",
+            "reading": "それはたんなるうわさにすぎない。",
+            "english": "That is merely a rumor.",
+            "nepali": "त्यो केवल एउटा हल्ला मात्र हो।"
+          }
         ]
       }
     ]
@@ -960,6 +1756,72 @@ function generateFallbackGrammarGuide(language: 'JAPANESE' | 'KOREAN', level: st
 }
 
 export function getGrammarGuide(language: 'JAPANESE' | 'KOREAN', level: string, lesson: number): LessonGrammarGuide {
+  // Connect Korean EPS Lessons to the official HRD Korea 60-Lesson Dataset
+  if (language === 'KOREAN' && (level === 'EPS' || level?.startsWith('EPS_'))) {
+    const epsLessonData = EPS_60_LESSONS_GRAMMAR.find(g => g.lesson === lesson);
+    if (epsLessonData) {
+      if (epsLessonData.isPreparatory) {
+        return {
+          language: 'KOREAN',
+          level,
+          lesson,
+          lessonTitle: `Lesson ${lesson}: ${epsLessonData.titleKorean} (${epsLessonData.titleEnglish})`,
+          grammarPoints: [
+            {
+              title: `ℹ️ Preparatory Orientation (वर्णमाला र आधारभूत परिचय)`,
+              pattern: `Hangeul Alphabet & Basic Greetings`,
+              explanationEnglish: `Lessons 1 to 5 are preparatory lessons focusing on the Hangeul alphabet, pronunciation, classroom commands, and basic greetings. According to the official HRD Korea syllabus, there are no formal grammar rules in Chapters 1–5. Formal workplace grammar begins in Lesson 6: 입니다 / 입니까?.`,
+              explanationNepali: `इपिएस पाठ १ देखि ५ सम्म हन्गुल वर्णमाला, उच्चारण र आधारभूत अभिवादन सिक्ने अभिमुखीकरण पाठहरू हुन्। HRD Korea को आधिकारिक पाठ्यक्रम अनुसार पाठ १-५ मा कुनै औपचारिक व्याकरण नियम छैन। औपचारिक व्याकरण पाठ ६ (입니다 / 입니까?) बाट सुरु हुन्छ।`,
+              examples: []
+            }
+          ]
+        };
+      }
+
+      const points: GrammarPoint[] = [];
+      if (epsLessonData.grammarPoint1) {
+        points.push({
+          title: `1. ${epsLessonData.grammarPoint1.title}`,
+          pattern: epsLessonData.grammarPoint1.pattern,
+          explanationEnglish: epsLessonData.grammarPoint1.explanationEnglish,
+          explanationNepali: epsLessonData.grammarPoint1.explanationNepali,
+          examples: epsLessonData.grammarPoint1.example ? [
+            {
+              target: epsLessonData.grammarPoint1.example.korean,
+              reading: epsLessonData.grammarPoint1.example.romanization,
+              english: epsLessonData.grammarPoint1.example.english,
+              nepali: epsLessonData.grammarPoint1.example.nepali
+            }
+          ] : []
+        });
+      }
+      if (epsLessonData.grammarPoint2) {
+        points.push({
+          title: `2. ${epsLessonData.grammarPoint2.title}`,
+          pattern: epsLessonData.grammarPoint2.pattern,
+          explanationEnglish: epsLessonData.grammarPoint2.explanationEnglish,
+          explanationNepali: epsLessonData.grammarPoint2.explanationNepali,
+          examples: epsLessonData.grammarPoint2.example ? [
+            {
+              target: epsLessonData.grammarPoint2.example.korean,
+              reading: epsLessonData.grammarPoint2.example.romanization,
+              english: epsLessonData.grammarPoint2.example.english,
+              nepali: epsLessonData.grammarPoint2.example.nepali
+            }
+          ] : []
+        });
+      }
+
+      return {
+        language: 'KOREAN',
+        level,
+        lesson,
+        lessonTitle: `Lesson ${lesson}: ${epsLessonData.titleKorean} (${epsLessonData.titleEnglish})`,
+        grammarPoints: points
+      };
+    }
+  }
+
   const dataset = language === 'JAPANESE' ? JAPANESE_GRAMMAR_GUIDES : KOREAN_GRAMMAR_GUIDES;
 
   // Strict match: same level AND same lesson

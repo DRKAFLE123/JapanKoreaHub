@@ -60,3 +60,67 @@ export function validateExamSubmission(
 
   return { valid: true };
 }
+
+// ────────────────────────────────────────────────────────────
+// JWT TOKEN AUTHENTICATION SYSTEM
+// ────────────────────────────────────────────────────────────
+import jwt from 'jsonwebtoken';
+
+const JWT_SECRET = process.env.JWT_SECRET || 'languageguru-secret-key-prod-2026';
+const JWT_EXPIRES_IN = '7d';
+
+export interface JwtUserPayload {
+  id: string;
+  email: string;
+  name?: string | null;
+  role: string;
+}
+
+/**
+ * Signs a JWT token containing user details.
+ */
+export function signJwtToken(payload: JwtUserPayload): string {
+  return jwt.sign(payload, JWT_SECRET, { expiresIn: JWT_EXPIRES_IN });
+}
+
+/**
+ * Verifies a JWT token and returns payload if valid, or null if invalid/expired.
+ */
+export function verifyJwtToken(token: string): JwtUserPayload | null {
+  try {
+    return jwt.verify(token, JWT_SECRET) as JwtUserPayload;
+  } catch {
+    return null;
+  }
+}
+
+/**
+ * Extracts and verifies JWT payload from request cookies or Authorization header.
+ */
+export function getAuthUserFromRequest(req: Request): JwtUserPayload | null {
+  try {
+    // 1. Check Authorization Header: Bearer <token>
+    const authHeader = req.headers.get('authorization');
+    if (authHeader && authHeader.startsWith('Bearer ')) {
+      const token = authHeader.substring(7);
+      const user = verifyJwtToken(token);
+      if (user) return user;
+    }
+
+    // 2. Check Cookies: auth_token=<token>
+    const cookieHeader = req.headers.get('cookie');
+    if (cookieHeader) {
+      const match = cookieHeader.match(/auth_token=([^;]+)/);
+      if (match) {
+        const token = match[1];
+        const user = verifyJwtToken(token);
+        if (user) return user;
+      }
+    }
+  } catch {
+    return null;
+  }
+
+  return null;
+}
+

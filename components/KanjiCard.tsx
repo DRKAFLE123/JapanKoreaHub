@@ -7,6 +7,7 @@ import {
   Sparkles,
   ChevronRight,
   ChevronLeft,
+  ChevronDown,
   Filter,
   CheckCircle,
   ArrowRight,
@@ -67,14 +68,29 @@ function shuffleArray<T>(array: T[], seed: number): T[] {
   return arr;
 }
 
-export const KanjiCard: React.FC = () => {
-  const [selectedLevel, setSelectedLevel] = useState<'N5' | 'N4' | 'N3' | 'N2'>('N5');
+export interface KanjiCardProps {
+  currentLevel?: 'N5' | 'N4' | 'N3' | 'N2';
+  hideLevelSelector?: boolean;
+}
+
+export const KanjiCard: React.FC<KanjiCardProps> = ({ currentLevel, hideLevelSelector = false }) => {
+  const [selectedLevel, setSelectedLevel] = useState<'N5' | 'N4' | 'N3' | 'N2'>(currentLevel || 'N5');
+
+  React.useEffect(() => {
+    if (currentLevel) {
+      setSelectedLevel(currentLevel);
+      setCurrentIndex(0);
+      setIsFlipped(false);
+    }
+  }, [currentLevel]);
+
   const [selectedLesson, setSelectedLesson] = useState<number | 'ALL'>('ALL');
   const [contentCategory, setContentCategory] = useState<ContentCategory>('KANJI');
   const [answerLang, setAnswerLang] = useState<AnswerLang>('BOTH');
   const [cardMode, setCardMode] = useState<FlashcardMode>('JAPANESE_FIRST');
   const [isShuffled, setIsShuffled] = useState<boolean>(true);
   const [shuffleSeed, setShuffleSeed] = useState<number>(() => Date.now());
+  const [showOptions, setShowOptions] = useState<boolean>(false);
 
   const [currentIndex, setCurrentIndex] = useState<number>(0);
   const [isFlipped, setIsFlipped] = useState<boolean>(false);
@@ -126,9 +142,11 @@ export const KanjiCard: React.FC = () => {
     }));
 
     let resultDeck: UnifiedCardItem[] = [];
-    if (contentCategory === 'VOCAB') resultDeck = vocabCards;
-    else if (contentCategory === 'KANJI') resultDeck = kanjiCards;
-    else {
+    if (contentCategory === 'VOCAB') {
+      resultDeck = vocabCards;
+    } else if (contentCategory === 'KANJI') {
+      resultDeck = kanjiCards;
+    } else {
       // ALL_MIXED: Interleave vocabulary & kanji cards
       const maxLen = Math.max(vocabCards.length, kanjiCards.length);
       for (let i = 0; i < maxLen; i++) {
@@ -151,20 +169,12 @@ export const KanjiCard: React.FC = () => {
   const isMeaningFront =
     cardMode === 'MEANING_FIRST' || (cardMode === 'MIXED' && safeIndex % 2 === 1);
 
-  // Stroke paths for Kanji view
-  const strokePaths = currentCard?.strokeSvgData || [
-    'M20,30 L80,30',
-    'M50,15 L50,85',
-    'M25,50 L75,50',
-    'M15,85 L85,85',
-  ];
-
   // SRS Engine Preview
   const currentSrsState: SrsItemState = { easeFactor: 2.5, intervalDays: 0, repetitions: 0 };
   const srsAgain = calculateSM2(currentSrsState, 1);
-  const srsHard  = calculateSM2(currentSrsState, 2);
-  const srsGood  = calculateSM2(currentSrsState, 3);
-  const srsEasy  = calculateSM2(currentSrsState, 4);
+  const srsHard = calculateSM2(currentSrsState, 2);
+  const srsGood = calculateSM2(currentSrsState, 3);
+  const srsEasy = calculateSM2(currentSrsState, 4);
 
   const playAudio = (text: string) => {
     if ('speechSynthesis' in window) {
@@ -214,276 +224,247 @@ export const KanjiCard: React.FC = () => {
   };
 
   return (
-    <div className="w-full max-w-3xl mx-auto font-sans space-y-4">
+    <div className="w-full max-w-3xl mx-auto font-sans space-y-3 sm:space-y-4">
 
-      {/* ── CONTROLS PANEL ── */}
-      <div className="bg-slate-900/95 backdrop-blur-xl border border-slate-800 rounded-3xl p-4 sm:p-5 shadow-2xl space-y-3.5">
-        
-        {/* Row 1: Level Selector & Category */}
-        <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
-          {/* JLPT Level Selector */}
-          <div className="flex items-center gap-1.5 bg-slate-950 p-1 rounded-2xl border border-slate-800 flex-1">
-            {(['N5', 'N4', 'N3', 'N2'] as const).map((lvl) => (
-              <button
-                key={lvl}
-                onClick={() => {
-                  setSelectedLevel(lvl);
-                  setSelectedLesson('ALL');
-                  setCurrentIndex(0);
-                  setIsFlipped(false);
-                }}
-                className={`flex-1 py-2 rounded-xl text-xs font-black transition-all ${
-                  selectedLevel === lvl
-                    ? 'bg-gradient-to-r from-rose-600 to-pink-600 text-white shadow-glow'
-                    : 'text-slate-400 hover:text-white'
-                }`}
-              >
-                JLPT {lvl}
-              </button>
-            ))}
-          </div>
+      {/* ── STREAMLINED CONTROLS STRIP (Only shown when not pre-selected) ── */}
+      {!hideLevelSelector && !currentLevel && (
+        <div className="bg-slate-900/95 backdrop-blur-xl border border-slate-800 rounded-2xl sm:rounded-3xl p-2.5 sm:p-3.5 shadow-xl space-y-3">
 
-          {/* Category Toggle: Kanji vs Vocab vs All Mix */}
-          <div className="flex items-center gap-1 bg-slate-950 p-1 rounded-2xl border border-slate-800 flex-wrap sm:flex-nowrap">
-            <button
-              onClick={() => { setContentCategory('KANJI'); setCurrentIndex(0); setIsFlipped(false); }}
-              className={`px-3 py-1.5 rounded-xl text-xs font-extrabold transition-all flex items-center gap-1.5 ${
-                contentCategory === 'KANJI'
-                  ? 'bg-rose-600 text-white shadow-glow'
-                  : 'text-slate-400 hover:text-white'
-              }`}
-            >
-              <Layers className="w-3.5 h-3.5" />
-              <span>Kanji</span>
-            </button>
-            <button
-              onClick={() => { setContentCategory('VOCAB'); setCurrentIndex(0); setIsFlipped(false); }}
-              className={`px-3 py-1.5 rounded-xl text-xs font-extrabold transition-all flex items-center gap-1.5 ${
-                contentCategory === 'VOCAB'
-                  ? 'bg-indigo-600 text-white shadow'
-                  : 'text-slate-400 hover:text-white'
-              }`}
-            >
-              <BookOpen className="w-3.5 h-3.5" />
-              <span>Vocab</span>
-            </button>
-            <button
-              onClick={() => { setContentCategory('ALL_MIXED'); setCurrentIndex(0); setIsFlipped(false); }}
-              className={`px-3 py-1.5 rounded-xl text-xs font-extrabold transition-all flex items-center gap-1.5 ${
-                contentCategory === 'ALL_MIXED'
-                  ? 'bg-gradient-to-r from-amber-600 to-orange-600 text-white shadow-glow'
-                  : 'text-slate-400 hover:text-white'
-              }`}
-              title="Practice Vocabulary & Kanji mixed together"
-            >
-              <Shuffle className="w-3.5 h-3.5" />
-              <span>🔀 Mix All</span>
-            </button>
-          </div>
-        </div>
-
-        {/* Row 2: Lesson Filter & Random Shuffle Control */}
-        <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 pt-2.5 border-t border-slate-800/80">
-          {/* Lesson Filter Dropdown */}
-          <div className="flex items-center gap-2 flex-1">
-            <span className="text-[11px] font-bold text-slate-400 whitespace-nowrap flex items-center gap-1">
-              <BookOpen className="w-3.5 h-3.5 text-emerald-400" /> Filter Lesson:
-            </span>
-            <select
-              value={selectedLesson}
-              onChange={(e) => {
-                const val = e.target.value === 'ALL' ? 'ALL' : Number(e.target.value);
-                setSelectedLesson(val);
-                setCurrentIndex(0);
-                setIsFlipped(false);
-              }}
-              className="bg-slate-950 border border-slate-800 text-white text-xs font-bold rounded-xl px-3 py-1.5 flex-1 focus:outline-none focus:border-rose-500"
-            >
-              <option value="ALL">All Lessons ({minLessonForLevel}–{maxLessonForLevel}) • Random Practice</option>
-              {Array.from({ length: maxLessonForLevel - minLessonForLevel + 1 }, (_, i) => minLessonForLevel + i).map((n) => (
-                <option key={n} value={n}>Lesson {n}</option>
+          {/* Primary Row: Level Tabs, Category Switcher, & Options Toggle */}
+          <div className="flex flex-wrap items-center justify-between gap-2">
+            {/* Level Selector */}
+            <div className="flex items-center gap-1 bg-slate-950 p-1 rounded-xl sm:rounded-2xl border border-slate-800 flex-1 min-w-[200px]">
+              {(['N5', 'N4', 'N3', 'N2'] as const).map((lvl) => (
+                <button
+                  key={lvl}
+                  onClick={() => {
+                    setSelectedLevel(lvl);
+                    setSelectedLesson('ALL');
+                    setCurrentIndex(0);
+                    setIsFlipped(false);
+                  }}
+                  className={`flex-1 py-1.5 rounded-lg sm:rounded-xl text-xs font-black transition-all ${selectedLevel === lvl
+                      ? 'bg-gradient-to-r from-rose-600 to-pink-600 text-white shadow-glow'
+                      : 'text-slate-400 hover:text-white'
+                    }`}
+                >
+                  JLPT {lvl}
+                </button>
               ))}
-            </select>
-          </div>
+            </div>
 
-          {/* Random Shuffle Toggle & Re-shuffle Button */}
-          <div className="flex items-center gap-2">
-            <button
-              onClick={triggerReshuffle}
-              className="px-3 py-1.5 rounded-xl bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white text-xs font-black flex items-center gap-1.5 shadow-md transition-all cursor-pointer whitespace-nowrap"
-              title="Reshuffle current deck randomly"
-            >
-              <Shuffle className="w-3.5 h-3.5" />
-              <span>🔀 Reshuffle Deck</span>
-            </button>
-
-            <button
-              onClick={() => setIsShuffled(!isShuffled)}
-              className={`px-3 py-1.5 rounded-xl border text-xs font-bold transition-all whitespace-nowrap ${
-                isShuffled
-                  ? 'bg-emerald-600/20 border-emerald-500/40 text-emerald-400'
-                  : 'bg-slate-950 border-slate-800 text-slate-400'
-              }`}
-            >
-              {isShuffled ? '🎲 Random Order' : '🔢 Serial Order'}
-            </button>
-          </div>
-        </div>
-
-        {/* Row 3: Answer Language & Card Order Mode */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2.5 border-t border-slate-800/80">
-          {/* Answer Language Choice */}
-          <div className="flex items-center gap-2">
-            <span className="text-[11px] font-bold text-slate-400 whitespace-nowrap flex items-center gap-1">
-              <Globe className="w-3.5 h-3.5 text-rose-400" /> Answer Lang:
-            </span>
-            <div className="flex items-center gap-1 bg-slate-950 p-1 rounded-xl border border-slate-800 flex-1">
+            {/* Category Toggle: Kanji vs Vocab vs Mix All */}
+            <div className="flex items-center gap-1 bg-slate-950 p-1 rounded-xl sm:rounded-2xl border border-slate-800">
               <button
-                onClick={() => setAnswerLang('ENGLISH')}
-                className={`flex-1 py-1 rounded-lg text-[11px] font-bold transition-all ${
-                  answerLang === 'ENGLISH' ? 'bg-blue-600 text-white shadow' : 'text-slate-400 hover:text-white'
-                }`}
+                onClick={() => { setContentCategory('KANJI'); setCurrentIndex(0); setIsFlipped(false); }}
+                className={`px-2.5 sm:px-3 py-1.5 rounded-lg sm:rounded-xl text-xs font-extrabold transition-all flex items-center gap-1 ${contentCategory === 'KANJI'
+                    ? 'bg-rose-600 text-white shadow-glow'
+                    : 'text-slate-400 hover:text-white'
+                  }`}
               >
-                🇬🇧 English
+                <Layers className="w-3.5 h-3.5" />
+                <span>Kanji</span>
               </button>
               <button
-                onClick={() => setAnswerLang('NEPALI')}
-                className={`flex-1 py-1 rounded-lg text-[11px] font-bold transition-all ${
-                  answerLang === 'NEPALI' ? 'bg-amber-600 text-white shadow' : 'text-slate-400 hover:text-white'
-                }`}
+                onClick={() => { setContentCategory('VOCAB'); setCurrentIndex(0); setIsFlipped(false); }}
+                className={`px-2.5 sm:px-3 py-1.5 rounded-lg sm:rounded-xl text-xs font-extrabold transition-all flex items-center gap-1 ${contentCategory === 'VOCAB'
+                    ? 'bg-indigo-600 text-white shadow'
+                    : 'text-slate-400 hover:text-white'
+                  }`}
               >
-                🇳🇵 नेपाली
+                <BookOpen className="w-3.5 h-3.5" />
+                <span>Vocab</span>
               </button>
               <button
-                onClick={() => setAnswerLang('BOTH')}
-                className={`flex-1 py-1 rounded-lg text-[11px] font-bold transition-all ${
-                  answerLang === 'BOTH' ? 'bg-emerald-600 text-white shadow' : 'text-slate-400 hover:text-white'
-                }`}
+                onClick={() => { setContentCategory('ALL_MIXED'); setCurrentIndex(0); setIsFlipped(false); }}
+                className={`px-2.5 sm:px-3 py-1.5 rounded-lg sm:rounded-xl text-xs font-extrabold transition-all flex items-center gap-1 ${contentCategory === 'ALL_MIXED'
+                    ? 'bg-gradient-to-r from-amber-600 to-orange-600 text-white shadow-glow'
+                    : 'text-slate-400 hover:text-white'
+                  }`}
+                title="Practice Vocabulary & Kanji mixed together"
               >
-                🌐 Both
+                <Shuffle className="w-3.5 h-3.5" />
+                <span>Mix</span>
               </button>
             </div>
-          </div>
 
-          {/* Flashcard Front Mode */}
-          <div className="flex items-center gap-2">
-            <span className="text-[11px] font-bold text-slate-400 whitespace-nowrap flex items-center gap-1">
-              <Filter className="w-3.5 h-3.5 text-indigo-400" /> Front Mode:
-            </span>
-            <div className="flex items-center gap-1 bg-slate-950 p-1 rounded-xl border border-slate-800 flex-1">
-              <button
-                onClick={() => { setCardMode('JAPANESE_FIRST'); setIsFlipped(false); }}
-                className={`flex-1 py-1 rounded-lg text-[11px] font-bold transition-all ${
-                  cardMode === 'JAPANESE_FIRST' ? 'bg-rose-600 text-white shadow' : 'text-slate-400 hover:text-white'
-                }`}
-                title="Japanese on front, answer hidden until flip"
-              >
-                🇯🇵 Japanese
-              </button>
-              <button
-                onClick={() => { setCardMode('MEANING_FIRST'); setIsFlipped(false); }}
-                className={`flex-1 py-1 rounded-lg text-[11px] font-bold transition-all ${
-                  cardMode === 'MEANING_FIRST' ? 'bg-emerald-600 text-white shadow' : 'text-slate-400 hover:text-white'
-                }`}
-                title="Meaning on front, Japanese hidden until flip"
-              >
-                🗣️ Meaning
-              </button>
-              <button
-                onClick={() => { setCardMode('MIXED'); setIsFlipped(false); }}
-                className={`flex-1 py-1 rounded-lg text-[11px] font-bold transition-all ${
-                  cardMode === 'MIXED' ? 'bg-amber-600 text-white shadow' : 'text-slate-400 hover:text-white'
-                }`}
-                title="Mix Japanese-first and Meaning-first randomly"
-              >
-                🔀 Mix
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* ── CARD HEADER COUNTER & PROMINENT LESSON TRACKER ── */}
-      {currentCard ? (
-        <div className="bg-slate-900/80 backdrop-blur-md border border-slate-800 rounded-2xl p-3 sm:p-3.5 flex items-center justify-between gap-2 shadow-glow">
-          <div className="flex items-center gap-2.5 min-w-0">
-            <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-gradient-to-tr from-rose-600 to-pink-600 flex items-center justify-center text-white font-black text-lg sm:text-xl shadow-md font-jp flex-shrink-0">
-              {currentCard.japaneseWord[0] || '字'}
-            </div>
-            <div className="min-w-0">
-              <div className="flex items-center gap-1.5 flex-wrap">
-                {/* PROMINENT LESSON BADGE */}
-                <span className="text-[10px] sm:text-xs font-black uppercase tracking-wider text-rose-400 bg-rose-500/15 border border-rose-500/30 px-2 py-0.5 rounded-lg flex items-center gap-1 whitespace-nowrap">
-                  <BookOpen className="w-3 h-3 text-rose-400" />
-                  <span>JLPT {selectedLevel} • {currentCard.lessonLabel}</span>
-                </span>
-                <span className="px-1.5 py-0.5 rounded-md bg-slate-950 text-[10px] font-bold text-amber-400 border border-slate-800 hidden xs:inline-block">
-                  {isMeaningFront ? 'Meaning → JP' : 'JP → Meaning'}
-                </span>
-              </div>
-              <div className="text-[11px] sm:text-xs font-bold text-slate-300 mt-0.5 truncate">
-                Card {safeIndex + 1} of {currentListLength} {isShuffled && '(Random)'}
-              </div>
-            </div>
-          </div>
-
-          {/* Prev / Next Buttons */}
-          <div className="flex items-center gap-1.5 flex-shrink-0">
+            {/* Options Toggle Button */}
             <button
-              onClick={handlePrev}
-              disabled={safeIndex === 0}
-              className="px-2.5 py-1.5 sm:px-3 sm:py-2 rounded-xl bg-slate-800 disabled:opacity-30 hover:bg-indigo-600 text-white transition-all border border-slate-700 text-xs font-bold flex items-center gap-1 cursor-pointer"
-              title="Previous card"
+              onClick={() => setShowOptions(!showOptions)}
+              className={`px-3 py-1.5 rounded-xl text-xs font-extrabold transition-all flex items-center gap-1.5 border cursor-pointer ${showOptions
+                  ? 'bg-indigo-600 text-white border-indigo-500 shadow-glow'
+                  : 'bg-slate-950 text-slate-300 border-slate-800 hover:text-white hover:border-slate-700'
+                }`}
+              title="Toggle Filter & Deck Options"
             >
-              <ChevronLeft className="w-4 h-4" />
-              <span className="hidden sm:inline">Prev</span>
-            </button>
-            <button
-              onClick={handleNext}
-              className="px-3 py-1.5 sm:px-4 sm:py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white transition-all border border-indigo-500/50 shadow-glow text-xs font-extrabold flex items-center gap-1 cursor-pointer"
-              title="Next card"
-            >
-              <span>Next</span>
-              <ChevronRight className="w-4 h-4" />
+              <Filter className="w-3.5 h-3.5" />
+              <span className="hidden xs:inline">Options</span>
+              <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-200 ${showOptions ? 'rotate-180' : ''}`} />
             </button>
           </div>
-        </div>
-      ) : (
-        <div className="bg-slate-900 p-8 rounded-2xl text-center text-slate-400 text-xs">
-          No cards found for this lesson filter. Please select "All Lessons".
         </div>
       )}
 
-      {/* ── FLASHCARD BOARD ── */}
-      {currentCard && (
+      {/* ── UNIFIED FLASHCARD BOARD ── */}
+      {currentCard ? (
         <div className="relative group">
           <div
-            className={`w-full min-h-[480px] bg-gradient-to-b from-slate-900 via-slate-900 to-slate-950 border border-slate-800 rounded-3xl p-6 shadow-2xl transition-all duration-300 flex flex-col justify-between ${
-              isFlipped ? 'border-indigo-500/60 shadow-glow' : 'hover:border-slate-700'
-            }`}
+            className={`w-full min-h-[320px] sm:min-h-[380px] bg-gradient-to-b from-slate-900 via-slate-900 to-slate-950 border border-slate-800 rounded-3xl p-4 sm:p-6 shadow-2xl transition-all duration-300 flex flex-col justify-between ${isFlipped ? 'border-indigo-500/60 shadow-glow' : 'hover:border-slate-700'
+              }`}
           >
-            {/* Top Card Bar */}
-            <div className="flex items-center justify-between pb-3 border-b border-slate-800">
-              <div className="flex items-center gap-2">
-                <span className="text-xs font-black text-rose-400 bg-slate-950 px-2.5 py-1 rounded-lg border border-slate-800">
-                  JLPT {selectedLevel} • {currentCard.lessonLabel}
-                </span>
-                <span className="text-xs uppercase tracking-wider font-bold text-slate-400">
-                  {currentCard.partOfSpeech || (currentCard.itemType === 'KANJI' ? 'Kanji Character' : 'Vocab')}
-                </span>
+            {/* Card Header Bar (Integrated Lesson Badge, Counter & Flip button) */}
+            <div className="flex items-center justify-between pb-3 border-b border-slate-800/80 gap-2">
+              <div className="flex items-center gap-2 min-w-0">
+                <div className="w-8 h-8 rounded-lg bg-gradient-to-tr from-rose-600 to-pink-600 flex items-center justify-center text-white font-black text-base shadow-md font-jp flex-shrink-0">
+                  {currentCard.japaneseWord[0] || '字'}
+                </div>
+                <div className="min-w-0">
+                  <div className="flex items-center gap-1.5 flex-wrap">
+                    <span className="text-[10px] sm:text-xs font-black uppercase text-rose-400 bg-rose-500/15 border border-rose-500/30 px-2 py-0.5 rounded-md flex items-center gap-1 whitespace-nowrap">
+                      <BookOpen className="w-3 h-3 text-rose-400" />
+                      <span>JLPT {selectedLevel} • {currentCard.lessonLabel}</span>
+                    </span>
+                    <span className={`text-[10px] font-black uppercase px-2 py-0.5 rounded-md border whitespace-nowrap ${currentCard.itemType === 'VOCAB' ? 'bg-indigo-500/20 text-indigo-300 border-indigo-500/40' : 'bg-amber-500/20 text-amber-300 border-amber-500/40'
+                      }`}>
+                      {currentCard.itemType === 'VOCAB' ? '📖 Vocab' : '🥞 Kanji'}
+                    </span>
+                  </div>
+                  <div className="text-[11px] font-bold text-slate-300 mt-0.5 truncate">
+                    Card {safeIndex + 1} of {currentListLength} {isShuffled && '(Random)'}
+                  </div>
+                </div>
               </div>
 
-              <button
-                onClick={() => setIsFlipped(!isFlipped)}
-                className={`text-xs font-extrabold px-4 py-2 rounded-xl transition-all flex items-center gap-2 shadow-md ${
-                  isFlipped
-                    ? 'bg-slate-800 text-slate-300 hover:text-white border border-slate-700'
-                    : 'bg-gradient-to-r from-indigo-600 to-purple-600 text-white hover:from-indigo-500 hover:to-purple-500 shadow-glow'
-                }`}
-              >
-                {isFlipped ? <RotateCcw className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
-                <span>{isFlipped ? 'Show Front' : 'Show Answer'}</span>
-              </button>
+              {/* Quick Header Flip Button & Controls */}
+              <div className="flex items-center gap-1.5 flex-shrink-0">
+                {/* 1. Filter Dropdown Button */}
+                <div className="relative">
+                  <button
+                    onClick={() => setShowOptions(!showOptions)}
+                    className="text-xs font-extrabold px-2.5 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 transition-all flex items-center gap-1.5 shadow-sm cursor-pointer"
+                    title="Filter Kanji, Vocab & Lessons"
+                  >
+                    <Filter className="w-3.5 h-3.5 text-rose-400" />
+                    <span className="hidden xs:inline">
+                      {contentCategory === 'KANJI' ? 'Kanji' : contentCategory === 'VOCAB' ? 'Vocab' : 'Mix'}
+                      {selectedLesson !== 'ALL' ? ` • L${selectedLesson}` : ''}
+                    </span>
+                    <ChevronDown className={`w-3.5 h-3.5 text-slate-400 transition-transform duration-200 ${showOptions ? 'rotate-180' : ''}`} />
+                  </button>
+
+                  {/* Filter Dropdown Popover */}
+                  {showOptions && (
+                    <>
+                      <div className="fixed inset-0 z-40" onClick={() => setShowOptions(false)} />
+                      <div className="absolute right-0 top-full mt-2 w-72 bg-slate-900/98 backdrop-blur-2xl border border-slate-800 rounded-2xl p-3.5 shadow-2xl z-50 space-y-3 font-sans text-left">
+                        <div className="flex items-center justify-between pb-2 border-b border-slate-800">
+                          <div className="flex items-center gap-1.5 text-xs font-black text-white">
+                            <Filter className="w-3.5 h-3.5 text-rose-400" />
+                            <span>Japanese Flashcard Filters</span>
+                          </div>
+                          <span className="text-[10px] text-slate-400 font-bold">{currentListLength} items</span>
+                        </div>
+
+                        {/* Content Category: Kanji / Vocab / Mix */}
+                        <div>
+                          <label className="text-[10px] font-black uppercase tracking-wider text-slate-400 block mb-1.5">
+                            Category Selection
+                          </label>
+                          <div className="flex items-center gap-1 bg-slate-950 p-1 rounded-xl sm:rounded-2xl border border-slate-800">
+                            <button
+                              onClick={() => { setContentCategory('KANJI'); setCurrentIndex(0); setIsFlipped(false); }}
+                              className={`px-2.5 sm:px-3 py-1.5 rounded-lg sm:rounded-xl text-xs font-extrabold transition-all flex items-center gap-1 ${
+                                contentCategory === 'KANJI'
+                                  ? 'bg-rose-600 text-white shadow-glow'
+                                  : 'text-slate-400 hover:text-white'
+                              }`}
+                              title="Show only Kanji study cards"
+                            >
+                              <Layers className="w-3.5 h-3.5" />
+                              <span>Kanji</span>
+                            </button>
+                            <button
+                              onClick={() => { setContentCategory('VOCAB'); setCurrentIndex(0); setIsFlipped(false); }}
+                              className={`px-2.5 sm:px-3 py-1.5 rounded-lg sm:rounded-xl text-xs font-extrabold transition-all flex items-center gap-1 ${
+                                contentCategory === 'VOCAB'
+                                  ? 'bg-indigo-600 text-white shadow-glow'
+                                  : 'text-slate-400 hover:text-white'
+                              }`}
+                              title="Show only Vocabulary cards (no kanji)"
+                            >
+                              <BookOpen className="w-3.5 h-3.5" />
+                              <span>Vocab</span>
+                            </button>
+                            <button
+                              onClick={() => { setContentCategory('ALL_MIXED'); setCurrentIndex(0); setIsFlipped(false); }}
+                              className={`px-2.5 sm:px-3 py-1.5 rounded-lg sm:rounded-xl text-xs font-extrabold transition-all flex items-center gap-1 ${
+                                contentCategory === 'ALL_MIXED'
+                                  ? 'bg-gradient-to-r from-amber-600 to-orange-600 text-white shadow-glow'
+                                  : 'text-slate-400 hover:text-white'
+                              }`}
+                              title="Practice Vocabulary & Kanji mixed together"
+                            >
+                              <Shuffle className="w-3.5 h-3.5" />
+                              <span>Mix</span>
+                            </button>
+                          </div>
+                        </div>
+
+                        {/* Lesson Selection */}
+                        <div>
+                          <label className="text-[10px] font-black uppercase tracking-wider text-slate-400 block mb-1">
+                            Lesson Filter
+                          </label>
+                          <select
+                            value={selectedLesson}
+                            onChange={(e) => {
+                              setSelectedLesson(e.target.value === 'ALL' ? 'ALL' : Number(e.target.value));
+                              setCurrentIndex(0);
+                              setIsFlipped(false);
+                            }}
+                            className="w-full bg-slate-950 border border-slate-800 rounded-xl px-2.5 py-1.5 text-xs text-white font-bold focus:outline-none focus:border-rose-500"
+                          >
+                            <option value="ALL">All Lessons ({minLessonForLevel}–{maxLessonForLevel})</option>
+                            {Array.from({ length: maxLessonForLevel - minLessonForLevel + 1 }, (_, i) => minLessonForLevel + i).map((n) => (
+                              <option key={n} value={n}>Lesson {n}</option>
+                            ))}
+                          </select>
+                        </div>
+
+                        {/* Shuffle Mode Toggle */}
+                        <div className="flex items-center justify-between pt-2 border-t border-slate-800">
+                          <div className="flex items-center gap-1.5 text-xs font-bold text-slate-300">
+                            <Shuffle className="w-3.5 h-3.5 text-indigo-400" />
+                            <span>Shuffle Order</span>
+                          </div>
+                          <button
+                            onClick={() => {
+                              setIsShuffled(!isShuffled);
+                              setCurrentIndex(0);
+                            }}
+                            className={`px-3 py-1 rounded-lg text-xs font-black transition-all cursor-pointer ${isShuffled ? 'bg-rose-600 text-white shadow-md' : 'bg-slate-800 text-slate-400'
+                              }`}
+                          >
+                            {isShuffled ? 'Random' : 'Serial'}
+                          </button>
+                        </div>
+                      </div>
+                    </>
+                  )}
+                </div>
+
+                {/* 2. Show Answer / Flip Button */}
+                <button
+                  onClick={() => setIsFlipped(!isFlipped)}
+                  className={`text-xs font-extrabold px-3 py-1.5 rounded-xl transition-all flex items-center gap-1.5 shadow-sm cursor-pointer border ${isFlipped
+                      ? 'bg-rose-600 text-white border-rose-400 shadow-glow'
+                      : 'bg-rose-600/20 text-rose-300 border-rose-500/30 hover:bg-rose-600 hover:text-white'
+                    }`}
+                >
+                  <Eye className="w-3.5 h-3.5 text-rose-400" />
+                  <span className="hidden xs:inline">{isFlipped ? 'Show Front' : 'Show Answer'}</span>
+                </button>
+              </div>
             </div>
 
             {/* ════════════════════════════════════════════════════════ */}
@@ -492,28 +473,28 @@ export const KanjiCard: React.FC = () => {
             {!isFlipped && (
               !isMeaningFront ? (
                 /* JAPANESE-FIRST FRONT */
-                <div className="my-auto py-8 space-y-6 text-center">
+                <div className="my-auto py-6 sm:py-8 space-y-4 text-center">
                   <div className="space-y-3">
-                    <div className="text-5xl sm:text-6xl font-jp font-black text-white tracking-wide">
+                    <div className="text-5xl sm:text-7xl font-jp font-black text-white tracking-wide drop-shadow-md">
                       {currentCard.japaneseWord}
                     </div>
                     <button
                       onClick={() => playAudio(currentCard.reading || currentCard.japaneseWord)}
-                      className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-slate-800/80 hover:bg-rose-600 text-slate-300 hover:text-white text-xs font-bold transition-all border border-slate-700"
+                      className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-slate-800 hover:bg-rose-600 text-slate-300 hover:text-white text-xs font-bold transition-all border border-slate-700 cursor-pointer shadow-sm"
                     >
-                      <Volume2 className="w-3.5 h-3.5" />
+                      <Volume2 className="w-4 h-4 text-rose-400 hover:text-white" />
                       <span>Play Audio</span>
                     </button>
                   </div>
-                  <div className="text-xs text-slate-500 font-semibold italic">
+                  <div className="text-[11px] sm:text-xs text-slate-500 font-semibold italic">
                     Tap "Show Answer" below to reveal reading and meaning
                   </div>
                 </div>
               ) : (
                 /* MEANING-FIRST FRONT */
-                <div className="my-auto py-8 space-y-6 text-center">
-                  <div className="space-y-3 max-w-lg mx-auto">
-                    <div className="text-xs font-bold uppercase tracking-widest text-amber-400">Meaning Prompt</div>
+                <div className="my-auto py-6 sm:py-8 space-y-4 text-center">
+                  <div className="space-y-2 max-w-lg mx-auto">
+                    <div className="text-[10px] sm:text-xs font-bold uppercase tracking-widest text-amber-400">Meaning Prompt</div>
                     {(answerLang === 'ENGLISH' || answerLang === 'BOTH') && (
                       <div className="text-2xl sm:text-3xl font-black text-white leading-snug">
                         🇬🇧 {currentCard.meaningEnglish}
@@ -525,7 +506,7 @@ export const KanjiCard: React.FC = () => {
                       </div>
                     )}
                   </div>
-                  <div className="text-xs text-slate-500 font-semibold italic">
+                  <div className="text-[11px] sm:text-xs text-slate-500 font-semibold italic">
                     Tap "Show Answer" to reveal Japanese Kanji & Reading
                   </div>
                 </div>
@@ -534,19 +515,19 @@ export const KanjiCard: React.FC = () => {
 
             {/* Front Card Navigation Bar */}
             {!isFlipped && (
-              <div className="pt-4 mt-auto border-t border-slate-800/80 flex items-center justify-between gap-2">
+              <div className="pt-3 mt-auto border-t border-slate-800/80 flex items-center justify-between gap-2">
                 <button
                   onClick={handlePrev}
                   disabled={safeIndex === 0}
-                  className="px-3 py-2.5 rounded-xl bg-slate-800/90 disabled:opacity-30 hover:bg-slate-700 text-slate-200 text-xs font-bold flex items-center gap-1 transition-all border border-slate-700 cursor-pointer"
+                  className="px-3 py-2 sm:px-4 sm:py-2.5 rounded-xl bg-slate-800/90 disabled:opacity-30 hover:bg-slate-700 text-slate-200 text-xs font-bold flex items-center gap-1 transition-all border border-slate-700 cursor-pointer"
                 >
                   <ChevronLeft className="w-4 h-4" />
-                  <span className="hidden xs:inline">Prev</span>
+                  <span>Prev</span>
                 </button>
 
                 <button
                   onClick={() => setIsFlipped(true)}
-                  className="flex-1 py-2.5 px-4 rounded-xl bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white text-xs sm:text-sm font-extrabold flex items-center justify-center gap-2 shadow-glow transition-all cursor-pointer"
+                  className="flex-1 max-w-xs py-2.5 px-4 rounded-xl bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white text-xs sm:text-sm font-extrabold flex items-center justify-center gap-2 shadow-glow transition-all cursor-pointer"
                 >
                   <Eye className="w-4 h-4" />
                   <span>Show Answer</span>
@@ -554,7 +535,7 @@ export const KanjiCard: React.FC = () => {
 
                 <button
                   onClick={handleNext}
-                  className="px-3.5 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold flex items-center gap-1 transition-all border border-indigo-500/50 shadow-md cursor-pointer"
+                  className="px-3 py-2 sm:px-4 sm:py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold flex items-center gap-1 transition-all border border-indigo-500/50 shadow-md cursor-pointer"
                 >
                   <span>Next</span>
                   <ChevronRight className="w-4 h-4" />
@@ -564,20 +545,20 @@ export const KanjiCard: React.FC = () => {
 
             {/* CARD BACK (ANSWER FLIPPED) */}
             {isFlipped && (
-              <div className="my-auto py-4 space-y-5 text-left">
+              <div className="my-auto py-3 space-y-4 text-left">
                 {/* Japanese Word & Pronunciation */}
-                <div className="flex items-center justify-between gap-4 p-4 rounded-2xl bg-slate-950/80 border border-slate-800">
+                <div className="flex items-center justify-between gap-3 p-3 sm:p-4 rounded-2xl bg-slate-950/80 border border-slate-800">
                   <div className="space-y-1">
                     <div className="text-3xl sm:text-4xl font-jp font-black text-white">
                       {currentCard.japaneseWord}
                     </div>
-                    <div className="text-sm font-jp font-bold text-rose-300">
+                    <div className="text-xs sm:text-sm font-jp font-bold text-rose-300">
                       Reading: {currentCard.reading}
                     </div>
                   </div>
                   <button
                     onClick={() => playAudio(currentCard.reading || currentCard.japaneseWord)}
-                    className="p-3 rounded-xl bg-slate-800 hover:bg-rose-600 text-slate-300 hover:text-white transition-all border border-slate-700"
+                    className="p-2.5 sm:p-3 rounded-xl bg-slate-800 hover:bg-rose-600 text-slate-300 hover:text-white transition-all border border-slate-700 cursor-pointer"
                     title="Play pronunciation"
                   >
                     <Volume2 className="w-5 h-5" />
@@ -585,48 +566,48 @@ export const KanjiCard: React.FC = () => {
                 </div>
 
                 {/* English & Nepali Meanings */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
                   {(answerLang === 'ENGLISH' || answerLang === 'BOTH') && (
-                    <div className="p-3.5 rounded-2xl bg-slate-950/60 border border-slate-800/80 space-y-1">
+                    <div className="p-3 rounded-2xl bg-slate-950/60 border border-slate-800/80 space-y-1">
                       <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400 block">English Meaning</span>
-                      <span className="text-sm font-bold text-white leading-relaxed">🇬🇧 {currentCard.meaningEnglish}</span>
+                      <span className="text-xs sm:text-sm font-bold text-white leading-relaxed">🇬🇧 {currentCard.meaningEnglish}</span>
                     </div>
                   )}
                   {(answerLang === 'NEPALI' || answerLang === 'BOTH') && (
-                    <div className="p-3.5 rounded-2xl bg-slate-950/60 border border-slate-800/80 space-y-1">
+                    <div className="p-3 rounded-2xl bg-slate-950/60 border border-slate-800/80 space-y-1">
                       <span className="text-[10px] font-bold uppercase tracking-wider text-amber-400 block">Nepali Meaning</span>
-                      <span className="text-sm font-bold text-amber-300 leading-relaxed">🇳🇵 {currentCard.meaningNepali}</span>
+                      <span className="text-xs sm:text-sm font-bold text-amber-300 leading-relaxed">🇳🇵 {currentCard.meaningNepali}</span>
                     </div>
                   )}
                 </div>
 
                 {/* Kanji Specific: Onyomi / Kunyomi / Stroke Count / Compounds */}
                 {currentCard.itemType === 'KANJI' && (
-                  <div className="p-4 rounded-2xl bg-slate-950/90 border border-indigo-900/40 space-y-3 text-xs">
-                    <div className="flex items-center justify-between border-b border-slate-800 pb-2">
-                      <span className="font-extrabold text-indigo-400 uppercase tracking-wider text-[11px]">Kanji Breakdown</span>
+                  <div className="p-3 sm:p-4 rounded-2xl bg-slate-950/90 border border-indigo-900/40 space-y-2.5 text-xs">
+                    <div className="flex items-center justify-between border-b border-slate-800 pb-1.5">
+                      <span className="font-extrabold text-indigo-400 uppercase tracking-wider text-[10px] sm:text-[11px]">Kanji Breakdown</span>
                       {currentCard.strokeCount && (
-                        <span className="text-slate-400 font-medium">Strokes: {currentCard.strokeCount}</span>
+                        <span className="text-slate-400 text-[11px] font-medium">Strokes: {currentCard.strokeCount}</span>
                       )}
                     </div>
-                    
+
                     <div className="grid grid-cols-2 gap-2 text-xs">
                       <div>
                         <span className="text-[10px] font-bold text-rose-400 block uppercase">Onyomi (音読み)</span>
-                        <span className="font-jp font-bold text-slate-200">{currentCard.onyomi?.join(', ') || '—'}</span>
+                        <span className="font-jp font-bold text-slate-200 text-[11px]">{currentCard.onyomi?.join(', ') || '—'}</span>
                       </div>
                       <div>
                         <span className="text-[10px] font-bold text-emerald-400 block uppercase">Kunyomi (訓読み)</span>
-                        <span className="font-jp font-bold text-slate-200">{currentCard.kunyomi?.join(', ') || '—'}</span>
+                        <span className="font-jp font-bold text-slate-200 text-[11px]">{currentCard.kunyomi?.join(', ') || '—'}</span>
                       </div>
                     </div>
 
                     {currentCard.compounds && currentCard.compounds.length > 0 && (
-                      <div className="space-y-1.5 pt-1">
+                      <div className="space-y-1 pt-1">
                         <span className="text-[10px] font-bold uppercase text-slate-400">Common Kanji Compounds:</span>
-                        <div className="flex flex-wrap gap-2">
+                        <div className="flex flex-wrap gap-1.5">
                           {currentCard.compounds.map((cp, cIdx) => (
-                            <div key={cIdx} className="px-2.5 py-1 rounded-lg bg-slate-900 border border-slate-800 text-[11px] font-jp">
+                            <div key={cIdx} className="px-2 py-0.5 rounded-lg bg-slate-900 border border-slate-800 text-[10px] sm:text-[11px] font-jp">
                               <span className="font-bold text-white">{cp.word}</span>
                               <span className="text-rose-300 ml-1">({cp.reading})</span>
                               <span className="text-slate-400 ml-1">— {cp.meaning}</span>
@@ -642,43 +623,63 @@ export const KanjiCard: React.FC = () => {
 
             {/* SRS Review Controls */}
             {isFlipped && (
-              <div className="pt-4 border-t border-slate-800 space-y-2">
-                <div className="text-[11px] font-bold text-slate-400 text-center uppercase tracking-wider">
+              <div className="pt-3 border-t border-slate-800 space-y-2">
+                <div className="text-[10px] font-bold text-slate-400 text-center uppercase tracking-wider">
                   Select SRS Rating to Advance:
                 </div>
-                <div className="grid grid-cols-4 gap-2">
+                <div className="grid grid-cols-4 gap-1.5 sm:gap-2">
                   <button
                     onClick={() => { setSelectedRating(1); handleNext(); }}
-                    className="p-2.5 rounded-xl bg-rose-950/80 hover:bg-rose-700 border border-rose-800 text-white text-xs font-bold transition-all text-center"
+                    className="p-2 sm:p-2.5 rounded-xl bg-rose-950/80 hover:bg-rose-700 border border-rose-800 text-white text-xs font-bold transition-all text-center cursor-pointer"
                   >
-                    <div className="font-black text-rose-400">Again</div>
-                    <div className="text-[10px] text-slate-400 mt-0.5">{srsAgain.intervalDays}d</div>
+                    <div className="font-black text-rose-400 text-xs">Again</div>
+                    <div className="text-[9px] sm:text-[10px] text-slate-400 mt-0.5">{srsAgain.intervalDays}d</div>
                   </button>
                   <button
                     onClick={() => { setSelectedRating(2); handleNext(); }}
-                    className="p-2.5 rounded-xl bg-amber-950/80 hover:bg-amber-700 border border-amber-800 text-white text-xs font-bold transition-all text-center"
+                    className="p-2 sm:p-2.5 rounded-xl bg-amber-950/80 hover:bg-amber-700 border border-amber-800 text-white text-xs font-bold transition-all text-center cursor-pointer"
                   >
-                    <div className="font-black text-amber-400">Hard</div>
-                    <div className="text-[10px] text-slate-400 mt-0.5">{srsHard.intervalDays}d</div>
+                    <div className="font-black text-amber-400 text-xs">Hard</div>
+                    <div className="text-[9px] sm:text-[10px] text-slate-400 mt-0.5">{srsHard.intervalDays}d</div>
                   </button>
                   <button
                     onClick={() => { setSelectedRating(3); handleNext(); }}
-                    className="p-2.5 rounded-xl bg-blue-950/80 hover:bg-blue-700 border border-blue-800 text-white text-xs font-bold transition-all text-center"
+                    className="p-2 sm:p-2.5 rounded-xl bg-blue-950/80 hover:bg-blue-700 border border-blue-800 text-white text-xs font-bold transition-all text-center cursor-pointer"
                   >
-                    <div className="font-black text-blue-400">Good</div>
-                    <div className="text-[10px] text-slate-400 mt-0.5">{srsGood.intervalDays}d</div>
+                    <div className="font-black text-blue-400 text-xs">Good</div>
+                    <div className="text-[9px] sm:text-[10px] text-slate-400 mt-0.5">{srsGood.intervalDays}d</div>
                   </button>
                   <button
                     onClick={() => { setSelectedRating(4); handleNext(); }}
-                    className="p-2.5 rounded-xl bg-emerald-950/80 hover:bg-emerald-700 border border-emerald-800 text-white text-xs font-bold transition-all text-center"
+                    className="p-2 sm:p-2.5 rounded-xl bg-emerald-950/80 hover:bg-emerald-700 border border-emerald-800 text-white text-xs font-bold transition-all text-center cursor-pointer"
                   >
-                    <div className="font-black text-emerald-400">Easy</div>
-                    <div className="text-[10px] text-slate-400 mt-0.5">{srsEasy.intervalDays}d</div>
+                    <div className="font-black text-emerald-400 text-xs">Easy</div>
+                    <div className="text-[9px] sm:text-[10px] text-slate-400 mt-0.5">{srsEasy.intervalDays}d</div>
                   </button>
                 </div>
               </div>
             )}
           </div>
+        </div>
+      ) : (
+        <div className="bg-slate-900 p-8 rounded-2xl text-center text-slate-400 text-xs">
+          No cards found for this lesson filter. Please select "All Lessons".
+        </div>
+      )}
+
+      {/* Reset Deck Option Below Card */}
+      {currentCard && (
+        <div className="flex items-center justify-center pt-1">
+          <button
+            onClick={() => {
+              setCurrentIndex(0);
+              setIsFlipped(false);
+            }}
+            className="text-xs font-extrabold text-slate-400 hover:text-rose-400 flex items-center gap-1.5 transition-colors cursor-pointer py-1.5 px-3.5 rounded-xl hover:bg-slate-900 border border-transparent hover:border-slate-800"
+          >
+            <RotateCcw className="w-3.5 h-3.5" />
+            <span>Reset Deck to Card 1</span>
+          </button>
         </div>
       )}
 

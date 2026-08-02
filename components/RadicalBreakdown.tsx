@@ -122,7 +122,7 @@ const DECOMPOSED_KANJI_DATABASE: KanjiDecomposition[] = [
     character: '森',
     reading: 'もり / しん (Mori / Shin)',
     meaning: 'Forest, Woods',
-    meaningNepali: 'जङ्गल, वन',
+    meaningNepali: 'घनाजङ्गल',
     jlpt: 'N4',
     totalStrokes: 12,
     parts: [
@@ -182,25 +182,25 @@ export const RadicalBreakdown: React.FC = () => {
   };
 
   return (
-    <div className="w-full max-w-5xl mx-auto font-sans space-y-6">
-      {/* Top Header Card */}
-      <div className="bg-slate-900/90 backdrop-blur-xl border border-slate-800 rounded-3xl p-6 shadow-2xl flex flex-col md:flex-row items-center justify-between gap-4">
+    <div className="w-full font-sans space-y-6">
+      {/* Top Header Card (White Book Paper Mode) */}
+      <div className="bg-white text-slate-900 border border-slate-200/90 rounded-3xl p-6 shadow-2xl flex flex-col md:flex-row items-center justify-between gap-4 font-sans">
         <div>
-          <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-amber-400">
-            <Layers className="w-4 h-4 text-amber-400" />
+          <div className="flex items-center gap-2 text-xs font-black uppercase tracking-wider text-amber-700">
+            <Layers className="w-4 h-4 text-amber-600" />
             <span>Kanji Structural Anatomy & Mnemonic Visualizer</span>
           </div>
-          <h2 className="text-xl font-bold text-white mt-1">
+          <h2 className="text-xl font-black text-slate-900 mt-1">
             Character Structural Decomposition (漢字部首分解 & 記憶法)
           </h2>
         </div>
 
         {/* Tab Buttons */}
-        <div className="flex items-center bg-slate-950 p-1 rounded-2xl border border-slate-800">
+        <div className="flex items-center bg-slate-100 p-1 rounded-2xl border border-slate-200">
           <button
             onClick={() => setActiveTab('VISUALIZER')}
-            className={`px-4 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-2 ${
-              activeTab === 'VISUALIZER' ? 'bg-amber-600 text-white shadow-lg' : 'text-slate-400 hover:text-white'
+            className={`px-4 py-2 rounded-xl text-xs font-black transition-all flex items-center gap-2 cursor-pointer ${
+              activeTab === 'VISUALIZER' ? 'bg-amber-600 text-white shadow-xs' : 'text-slate-700 hover:text-slate-900'
             }`}
           >
             <Sparkles className="w-3.5 h-3.5" />
@@ -208,8 +208,8 @@ export const RadicalBreakdown: React.FC = () => {
           </button>
           <button
             onClick={() => setActiveTab('POSITIONS_GUIDE')}
-            className={`px-4 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-2 ${
-              activeTab === 'POSITIONS_GUIDE' ? 'bg-indigo-600 text-white shadow-lg' : 'text-slate-400 hover:text-white'
+            className={`px-4 py-2 rounded-xl text-xs font-black transition-all flex items-center gap-2 cursor-pointer ${
+              activeTab === 'POSITIONS_GUIDE' ? 'bg-indigo-600 text-white shadow-xs' : 'text-slate-700 hover:text-slate-900'
             }`}
           >
             <Grid className="w-3.5 h-3.5" />
@@ -221,37 +221,37 @@ export const RadicalBreakdown: React.FC = () => {
       {activeTab === 'VISUALIZER' ? (
         <>
           {/* Kanji Selection Strip */}
-          <div className="bg-slate-900/90 border border-slate-800 rounded-3xl p-4 shadow-xl">
+          <div className="bg-white text-slate-900 border border-slate-200/90 rounded-3xl p-4 shadow-2xl font-sans">
             <div className="flex items-center justify-between gap-4 mb-3">
-              <div className="text-xs font-bold uppercase tracking-wider text-slate-400">
+              <div className="text-xs font-black uppercase tracking-wider text-slate-500">
                 Select Kanji to Decompose ({filteredKanjiList.length} items)
               </div>
               <div className="relative w-64">
-                <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-slate-500" />
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-slate-400" />
                 <input
                   type="text"
                   placeholder="Search Kanji, meaning, or Nepali..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full bg-slate-950 border border-slate-800 rounded-xl pl-9 pr-3 py-1.5 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-amber-500"
+                  className="w-full bg-slate-50 border border-slate-300 rounded-xl pl-9 pr-3 py-1.5 text-xs text-slate-900 placeholder-slate-400 focus:outline-none focus:border-amber-600 font-sans"
                 />
               </div>
             </div>
 
-            <div className="flex items-center gap-3 overflow-x-auto pb-2 scrollbar-thin scrollbar-thumb-slate-700">
+            <div className="flex items-center gap-3 overflow-x-auto pb-2 scrollbar-thin scrollbar-thumb-slate-300">
               {filteredKanjiList.map((item) => (
                 <button
                   key={item.character}
                   onClick={() => handleSelectKanji(item)}
                   className={`p-3 rounded-2xl border transition-all flex flex-col items-center justify-center min-w-[76px] cursor-pointer ${
                     selectedKanji.character === item.character
-                      ? 'bg-amber-600 border-amber-400 text-white scale-105 shadow-glow'
-                      : 'bg-slate-950/80 hover:bg-slate-800 border-slate-800 text-slate-300'
+                      ? 'bg-amber-600 border-amber-400 text-white scale-105 shadow-md font-black'
+                      : 'bg-slate-50 hover:bg-amber-50/70 border-slate-200 text-slate-900 font-bold'
                   }`}
                 >
                   <span className="text-2xl font-jp font-black">{item.character}</span>
-                  <span className="text-[10px] font-bold mt-1 text-amber-200">{item.jlpt}</span>
-                  <span className="text-[9px] text-slate-400 truncate max-w-[64px]">{item.meaning.split(',')[0]}</span>
+                  <span className={`text-[10px] font-extrabold mt-1 ${selectedKanji.character === item.character ? 'text-amber-100' : 'text-amber-700'}`}>{item.jlpt}</span>
+                  <span className={`text-[9px] truncate max-w-[64px] ${selectedKanji.character === item.character ? 'text-slate-100 font-medium' : 'text-slate-600 font-semibold'}`}>{item.meaning.split(',')[0]}</span>
                 </button>
               ))}
             </div>
@@ -260,43 +260,43 @@ export const RadicalBreakdown: React.FC = () => {
           {/* Main Visualizer Decomposition Display */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             {/* Left: Decomposed Structural Anatomy */}
-            <div className="bg-slate-900/90 border border-slate-800 rounded-3xl p-6 shadow-2xl flex flex-col justify-between space-y-6">
+            <div className="bg-white text-slate-900 border border-slate-200/90 rounded-3xl p-6 shadow-2xl flex flex-col justify-between space-y-6 font-sans">
               <div>
-                <div className="flex items-center justify-between pb-3 border-b border-slate-800">
-                  <span className="text-xs font-bold uppercase tracking-wider text-amber-400">
+                <div className="flex items-center justify-between pb-3 border-b border-slate-200">
+                  <span className="text-xs font-black uppercase tracking-wider text-amber-800">
                     Character Structural Anatomy
                   </span>
-                  <span className="px-2.5 py-0.5 rounded-lg bg-amber-500/20 text-amber-300 border border-amber-500/30 text-xs font-bold">
+                  <span className="px-2.5 py-0.5 rounded-lg bg-amber-100 text-amber-950 border border-amber-300 text-xs font-black">
                     JLPT {selectedKanji.jlpt} • {selectedKanji.totalStrokes} Strokes
                   </span>
                 </div>
 
                 {/* Target Kanji Character Box */}
                 <div className="my-6 text-center space-y-2">
-                  <div className="relative inline-flex items-center justify-center w-36 h-36 rounded-3xl bg-slate-950 border-2 border-amber-500/40 shadow-inner">
-                    <div className="text-7xl font-jp font-black text-transparent bg-clip-text bg-gradient-to-tr from-amber-300 via-yellow-100 to-white select-none">
+                  <div className="relative inline-flex items-center justify-center w-36 h-36 rounded-3xl bg-amber-50/60 border-2 border-amber-300 shadow-inner">
+                    <div className="text-7xl font-jp font-black text-slate-900 select-none">
                       {selectedKanji.character}
                     </div>
                   </div>
-                  <div className="text-xl font-extrabold text-white">{selectedKanji.meaning}</div>
-                  <div className="text-sm font-bold text-amber-400">🇳🇵 {selectedKanji.meaningNepali}</div>
-                  <div className="text-xs text-slate-400 italic">{selectedKanji.reading}</div>
+                  <div className="text-xl font-black text-slate-900">{selectedKanji.meaning}</div>
+                  <div className="text-sm font-extrabold text-amber-950">🇳🇵 {selectedKanji.meaningNepali}</div>
+                  <div className="text-xs text-emerald-700 italic font-bold">{selectedKanji.reading}</div>
                 </div>
 
                 {/* Radical Assembly Formula */}
                 <div>
-                  <div className="text-xs font-bold uppercase tracking-wider text-slate-400 mb-3 text-center">
+                  <div className="text-xs font-black uppercase tracking-wider text-slate-400 mb-3 text-center">
                     Structural Addition Formula
                   </div>
-                  <div className="flex items-center justify-center gap-3 flex-wrap p-4 rounded-2xl bg-slate-950 border border-slate-800">
+                  <div className="flex items-center justify-center gap-3 flex-wrap p-4 rounded-2xl bg-amber-50/40 border border-amber-200/80">
                     {selectedKanji.parts.map((part, idx) => (
                       <React.Fragment key={idx}>
-                        {idx > 0 && <span className="text-xl font-black text-slate-500">+</span>}
+                        {idx > 0 && <span className="text-xl font-black text-slate-400">+</span>}
                         <button
                           onClick={() => setActivePart(part)}
-                          className={`px-4 py-2 rounded-2xl font-jp font-black text-2xl shadow-lg transition-all border flex flex-col items-center cursor-pointer ${
+                          className={`px-4 py-2 rounded-2xl font-jp font-black text-2xl shadow-md transition-all border flex flex-col items-center cursor-pointer ${
                             activePart.radical === part.radical
-                              ? 'scale-110 ring-2 ring-white text-slate-950 shadow-glow'
+                              ? 'scale-110 ring-2 ring-amber-500 text-slate-950 shadow-lg'
                               : 'hover:scale-105 text-slate-950 opacity-90'
                           }`}
                           style={{ backgroundColor: part.color }}
@@ -307,7 +307,7 @@ export const RadicalBreakdown: React.FC = () => {
                       </React.Fragment>
                     ))}
                   </div>
-                  <div className="text-[11px] text-slate-400 text-center mt-2 font-medium">
+                  <div className="text-[11px] text-slate-500 text-center mt-2 font-bold">
                     Click any radical component above to inspect its position & meaning
                   </div>
                 </div>
@@ -315,9 +315,9 @@ export const RadicalBreakdown: React.FC = () => {
             </div>
 
             {/* Right: Selected Radical Mnemonic & Position Card */}
-            <div className="bg-slate-900/90 border border-slate-800 rounded-3xl p-6 shadow-2xl flex flex-col justify-between space-y-6">
+            <div className="bg-white text-slate-900 border border-slate-200/90 rounded-3xl p-6 shadow-2xl flex flex-col justify-between space-y-6 font-sans">
               <div>
-                <div className="flex items-center justify-between pb-3 border-b border-slate-800">
+                <div className="flex items-center justify-between pb-3 border-b border-slate-200">
                   <div className="flex items-center gap-2">
                     <span
                       className="px-3 py-1 rounded-xl font-jp font-black text-lg text-slate-950 shadow-md"
@@ -326,57 +326,53 @@ export const RadicalBreakdown: React.FC = () => {
                       {activePart.radical}
                     </span>
                     <div>
-                      <div className="text-xs font-bold text-white">{activePart.name}</div>
-                      <div className="text-[11px] text-amber-400 font-semibold">{activePart.position}</div>
+                      <div className="text-xs font-black text-slate-900">{activePart.name}</div>
+                      <div className="text-[11px] text-amber-800 font-extrabold">{activePart.position}</div>
                     </div>
                   </div>
-                  <span className="text-xs font-bold text-slate-400">{activePart.strokeCount} Strokes</span>
+                  <span className="text-xs font-black text-slate-500">{activePart.strokeCount} Strokes</span>
                 </div>
 
                 {/* Meaning & Nepali */}
                 <div className="my-4 space-y-3">
-                  <div className="bg-slate-950 p-3.5 rounded-2xl border border-slate-800 space-y-1">
-                    <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400 block">Radical Meaning</span>
-                    <div className="text-base font-extrabold text-white">🇬🇧 {activePart.meaning}</div>
-                    <div className="text-sm font-bold text-amber-400">🇳🇵 {activePart.meaningNepali}</div>
+                  <div className="bg-amber-50/50 p-3.5 rounded-2xl border border-amber-200/80 space-y-1">
+                    <span className="text-[10px] font-black uppercase tracking-wider text-slate-400 block">Radical Meaning</span>
+                    <div className="text-base font-black text-slate-900">🇬🇧 {activePart.meaning}</div>
+                    <div className="text-sm font-extrabold text-amber-950">🇳🇵 {activePart.meaningNepali}</div>
                   </div>
 
                   {/* Mnemonic Hook Cards */}
-                  <div className="bg-slate-950 p-4 rounded-2xl border border-slate-800 space-y-2">
-                    <div className="flex items-center gap-1.5 text-xs font-bold text-amber-400 uppercase tracking-wider">
-                      <Sparkles className="w-4 h-4" />
+                  <div className="bg-amber-50/50 p-4 rounded-2xl border border-amber-200/80 space-y-2">
+                    <div className="flex items-center gap-1.5 text-xs font-black text-amber-900 uppercase tracking-wider">
+                      <Sparkles className="w-4 h-4 text-amber-600" />
                       <span>Visual Mnemonic Memory Story (English)</span>
                     </div>
-                    <p className="text-xs text-slate-200 leading-relaxed font-medium">
+                    <p className="text-xs text-slate-800 leading-relaxed font-medium">
                       {selectedKanji.mnemonicEnglish}
                     </p>
                   </div>
 
-                  <div className="bg-slate-950 p-4 rounded-2xl border border-slate-800 space-y-2">
-                    <div className="flex items-center gap-1.5 text-xs font-bold text-emerald-400 uppercase tracking-wider">
-                      <span>🇳🇵 सम्झिने तरिका (Nepali Mnemonic Hook)</span>
+                  <div className="bg-amber-100/60 p-4 rounded-2xl border border-amber-300/80 space-y-2">
+                    <div className="flex items-center gap-1.5 text-xs font-black text-amber-950 uppercase tracking-wider">
+                      <Sparkles className="w-4 h-4 text-amber-700" />
+                      <span>कण्ठ पार्ने नेपाली कथा सूत्र</span>
                     </div>
-                    <p className="text-xs text-amber-300 leading-relaxed font-semibold">
+                    <p className="text-xs text-amber-950 leading-relaxed font-extrabold">
                       {selectedKanji.mnemonicNepali}
                     </p>
                   </div>
+                </div>
+              </div>
 
-                  {/* Related Kanji Chips */}
-                  <div className="bg-slate-950 p-4 rounded-2xl border border-slate-800">
-                    <span className="text-xs font-bold uppercase tracking-wider text-slate-400 block mb-2">
-                      Other Kanji Sharing Radical ({activePart.radical})
+              {/* Related Kanji */}
+              <div className="pt-3 border-t border-slate-200">
+                <div className="text-[11px] font-black uppercase text-slate-400 mb-2">Related Kanji Characters Sharing Structure:</div>
+                <div className="flex items-center gap-2 flex-wrap">
+                  {selectedKanji.relatedKanji.map((rk, idx) => (
+                    <span key={idx} className="w-8 h-8 rounded-xl bg-slate-100 border border-slate-300 font-jp font-black text-slate-900 flex items-center justify-center text-sm shadow-xs">
+                      {rk}
                     </span>
-                    <div className="flex flex-wrap gap-2">
-                      {selectedKanji.relatedKanji.map((k, idx) => (
-                        <span
-                          key={idx}
-                          className="px-3 py-1.5 rounded-xl bg-slate-900 border border-slate-800 font-jp font-bold text-base text-amber-300 hover:border-amber-500 hover:text-white transition-all cursor-pointer shadow"
-                        >
-                          {k}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
+                  ))}
                 </div>
               </div>
             </div>
@@ -384,32 +380,19 @@ export const RadicalBreakdown: React.FC = () => {
         </>
       ) : (
         /* 7 Radical Positions Reference Guide */
-        <div className="bg-slate-900/90 border border-slate-800 rounded-3xl p-6 shadow-2xl space-y-5">
-          <div className="pb-3 border-b border-slate-800">
-            <h3 className="text-lg font-extrabold text-white">
-              The 7 Structural Radical Positions in Kanji (漢字の七大位置)
-            </h3>
-            <p className="text-xs text-slate-400 mt-1">
-              Kanji radicals are placed in 7 main structural positions. Learning these positions makes character recognition 10x faster.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {RADICAL_POSITIONS_GUIDE.map((pos, idx) => (
-              <div
-                key={idx}
-                className="bg-slate-950 border border-slate-800 hover:border-indigo-500/50 rounded-2xl p-4 space-y-2 transition-all"
-              >
+        <div className="bg-white text-slate-900 border border-slate-200/90 rounded-3xl p-6 shadow-2xl space-y-4 font-sans">
+          <div className="text-xs font-black uppercase tracking-wider text-indigo-700">7 Fundamental Positions of Japanese Kanji Radicals</div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {RADICAL_POSITIONS_GUIDE.map((pos) => (
+              <div key={pos.code} className="p-4 rounded-2xl bg-amber-50/50 border border-amber-200/80 space-y-2 font-sans shadow-xs">
                 <div className="flex items-center justify-between">
-                  <span className="text-sm font-extrabold text-indigo-400">{pos.japanese}</span>
-                  <span className="px-2 py-0.5 rounded-md bg-indigo-500/20 text-indigo-300 text-[10px] font-bold border border-indigo-500/30">
-                    {pos.code}
-                  </span>
+                  <span className="text-sm font-black text-slate-900 font-jp">{pos.japanese}</span>
+                  <span className="text-xs font-mono font-black text-indigo-900 bg-indigo-100 border border-indigo-300 px-2 py-0.5 rounded-lg">{pos.code}</span>
                 </div>
-                <div className="text-xs font-bold text-white">{pos.english}</div>
-                <p className="text-xs text-slate-400 leading-relaxed">{pos.desc}</p>
-                <div className="text-xs text-amber-400 font-semibold pt-1 border-t border-slate-900">
-                  Examples: <span className="font-jp text-white font-bold">{pos.example}</span>
+                <div className="text-xs font-bold text-slate-800">🇬🇧 {pos.english}</div>
+                <div className="text-xs text-slate-700 font-medium leading-relaxed">{pos.desc}</div>
+                <div className="text-xs font-extrabold text-emerald-800 bg-emerald-100/70 p-2 rounded-xl border border-emerald-200">
+                  Examples: <span className="font-jp text-sm font-black ml-1">{pos.example}</span>
                 </div>
               </div>
             ))}

@@ -1,0 +1,3663 @@
+{
+  "1": {
+    "vocab": [
+      {
+        "kana": "わたし",
+        "kanji": "私",
+        "romaji": "watashi",
+        "english": "I"
+      },
+      {
+        "kana": "わたしたち",
+        "kanji": "私たち",
+        "romaji": "watashitachi",
+        "english": "we"
+      },
+      {
+        "kana": "あなた",
+        "kanji": "",
+        "romaji": "anata",
+        "english": "you"
+      },
+      {
+        "kana": "あの人",
+        "kanji": "あの方",
+        "romaji": "ano hito (ano kata)",
+        "english": "that person, he, she (あの方 is the polite equivalent of あの人)"
+      },
+      {
+        "kana": "みなさん",
+        "kanji": "皆さん",
+        "romaji": "minasan",
+        "english": "ladies and gentlemen, all of you"
+      },
+      {
+        "kana": "～さん",
+        "kanji": "",
+        "romaji": "~san",
+        "english": "Mr., Ms. (title of respect added to a name)"
+      },
+      {
+        "kana": "～ちゃん",
+        "kanji": "",
+        "romaji": "~chan",
+        "english": "(suffix often added to a child's name instead of ~さん)"
+      },
+      {
+        "kana": "～くん",
+        "kanji": "～君",
+        "romaji": "~kun",
+        "english": "(suffix often added to a boy's name)"
+      },
+      {
+        "kana": "～じん",
+        "kanji": "～人",
+        "romaji": "~jin",
+        "english": "(suffix meaning 'a national of'; e.g., アメリカ人, an American)"
+      },
+      {
+        "kana": "せんせい",
+        "kanji": "先生",
+        "romaji": "sensei",
+        "english": "teacher, instructor (not used when referring to one's own job)"
+      },
+      {
+        "kana": "きょうし",
+        "kanji": "教師",
+        "romaji": "kyoushi",
+        "english": "teacher, instructor"
+      },
+      {
+        "kana": "がくせい",
+        "kanji": "学生",
+        "romaji": "gakusei",
+        "english": "student"
+      },
+      {
+        "kana": "かいしゃいん",
+        "kanji": "会社員",
+        "romaji": "kaishain",
+        "english": "company employee"
+      },
+      {
+        "kana": "～しゃいん",
+        "kanji": "～社員",
+        "romaji": "~shain",
+        "english": "employee of ~ Company (e.g. IMCの社員)"
+      },
+      {
+        "kana": "ぎんこういん",
+        "kanji": "銀行員",
+        "romaji": "ginkouin",
+        "english": "bank employee"
+      },
+      {
+        "kana": "いしゃ",
+        "kanji": "医者",
+        "romaji": "isha",
+        "english": "medical doctor"
+      },
+      {
+        "kana": "けんきゅうしゃ",
+        "kanji": "研究者",
+        "romaji": "kenkyuusha",
+        "english": "researcher, scholar"
+      },
+      {
+        "kana": "エンジニア",
+        "kanji": "",
+        "romaji": "enjinia",
+        "english": "engineer"
+      },
+      {
+        "kana": "だいがく",
+        "kanji": "大学",
+        "romaji": "daigaku",
+        "english": "university"
+      },
+      {
+        "kana": "びょういん",
+        "kanji": "病院",
+        "romaji": "byouin",
+        "english": "hospital"
+      },
+      {
+        "kana": "でんき",
+        "kanji": "電気",
+        "romaji": "denki",
+        "english": "electricity, light"
+      },
+      {
+        "kana": "だれ／どなた",
+        "kanji": "誰／どなた",
+        "romaji": "dare／donata",
+        "english": "who (どなた is the polite equivalent of だれ)"
+      },
+      {
+        "kana": "～さい",
+        "kanji": "～歳",
+        "romaji": "~sai",
+        "english": "~ years old"
+      },
+      {
+        "kana": "なんさい／おいくつ",
+        "kanji": "何歳／おいくつ",
+        "romaji": "nansai／oikutsu",
+        "english": "how old (おいくつ is the polite equivalent of 何歳)"
+      },
+      {
+        "kana": "はい",
+        "kanji": "",
+        "romaji": "hai",
+        "english": "yes"
+      },
+      {
+        "kana": "いいえ",
+        "kanji": "",
+        "romaji": "iie",
+        "english": "no"
+      },
+      {
+        "kana": "しつれいですが、おなまえは。",
+        "kanji": "失礼ですが、お名前は。",
+        "romaji": "Shitsurei desu ga, onamae wa.",
+        "english": "Excuse me, but may I have your name?"
+      },
+      {
+        "kana": "はじめまして。",
+        "kanji": "",
+        "romaji": "Hajimemashite.",
+        "english": "How do you do? (lit. I am meeting you for the first time.)"
+      },
+      {
+        "kana": "どうぞよろしく[おねがいします]。",
+        "kanji": "",
+        "romaji": "Douzo yoroshiku [onegai shimasu].",
+        "english": "Pleased to meet you."
+      },
+      {
+        "kana": "こちらは～さんです。",
+        "kanji": "",
+        "romaji": "Kochira wa ~san desu.",
+        "english": "This is Mr./Ms.~."
+      },
+      {
+        "kana": "～から きました。",
+        "kanji": "",
+        "romaji": "~kara kimashita.",
+        "english": "I came (come) from ~."
+      }
+    ],
+    "grammar": [
+      {
+        "title": "1. N は N です",
+        "explanation": "The particle は marks the topic of the sentence; a noun is selected as the topic and a statement is made about it. です marks a noun predicate, indicating judgment/assertion and conveying politeness. は here is pronounced 'wa'.",
+        "examples": "わたしはマイク・ミラーです。(I am Mike Miller.) / わたしはエンジニアです。"
+      },
+      {
+        "title": "2. N1は N2じゃ(では) ありません",
+        "explanation": "じゃありません is the negative form of です, used in daily conversation (ではありません is used in formal speech/writing).",
+        "examples": "サントスさんは 学生じゃ ありません。(Mr. Santos is not a student.)"
+      },
+      {
+        "title": "3. N は N か — question with か",
+        "explanation": "A sentence becomes a question by simply adding か to the end, with a rising intonation; word order doesn't change. Answers begin はい or いいえ. Interrogatives replace the part being asked about, and か is still added at the end.",
+        "examples": "ミラーさんは アメリカ人ですか。― はい、アメリカ人です。 / あの人は どなたですか。― ミラーさんです。"
+      },
+      {
+        "title": "4. N も",
+        "explanation": "も is used after a topic instead of は when the statement about it matches the previous topic.",
+        "examples": "ミラーさんは 会社員です。グプタさんも 会社員です。(Mr. Miller is a company employee. Mr. Gupta is also a company employee.)"
+      },
+      {
+        "title": "5. N1の N2",
+        "explanation": "の connects two nouns; N1 modifies N2. In Lesson 1, N1 is an organization or group N2 belongs to.",
+        "examples": "ミラーさんは IMCの 社員です。(Mr. Miller is an employee of IMC.)"
+      },
+      {
+        "title": "6. ～さん",
+        "explanation": "さん is added to the listener's or a third person's name to show respect; it is never used with the speaker's own name.",
+        "examples": "あの方は ミラーさんです。(That's Mr. Miller.)"
+      }
+    ]
+  },
+  "2": {
+    "vocab": [
+      {
+        "kana": "これ／それ／あれ",
+        "kanji": "",
+        "romaji": "kore／sore／are",
+        "english": "this／that／that over there (things)"
+      },
+      {
+        "kana": "この～／その～／あの～",
+        "kanji": "",
+        "romaji": "kono～／sono～／ano～",
+        "english": "this ~／that ~／that ~ over there"
+      },
+      {
+        "kana": "ほん",
+        "kanji": "本",
+        "romaji": "hon",
+        "english": "book"
+      },
+      {
+        "kana": "じしょ",
+        "kanji": "辞書",
+        "romaji": "jisho",
+        "english": "dictionary"
+      },
+      {
+        "kana": "ざっし",
+        "kanji": "雑誌",
+        "romaji": "zasshi",
+        "english": "magazine"
+      },
+      {
+        "kana": "しんぶん",
+        "kanji": "新聞",
+        "romaji": "shinbun",
+        "english": "newspaper"
+      },
+      {
+        "kana": "ノート",
+        "kanji": "",
+        "romaji": "nooto",
+        "english": "notebook"
+      },
+      {
+        "kana": "てちょう",
+        "kanji": "手帳",
+        "romaji": "techou",
+        "english": "pocket notebook"
+      },
+      {
+        "kana": "めいし",
+        "kanji": "名刺",
+        "romaji": "meishi",
+        "english": "business card"
+      },
+      {
+        "kana": "カード",
+        "kanji": "",
+        "romaji": "kaado",
+        "english": "card"
+      },
+      {
+        "kana": "テレホンカード",
+        "kanji": "",
+        "romaji": "terehon kaado",
+        "english": "telephone card"
+      },
+      {
+        "kana": "えんぴつ",
+        "kanji": "鉛筆",
+        "romaji": "enpitsu",
+        "english": "pencil"
+      },
+      {
+        "kana": "ボールペン",
+        "kanji": "",
+        "romaji": "boorupen",
+        "english": "ballpoint pen"
+      },
+      {
+        "kana": "シャープペンシル",
+        "kanji": "",
+        "romaji": "shaapu penshiru",
+        "english": "mechanical pencil"
+      },
+      {
+        "kana": "かぎ",
+        "kanji": "鍵",
+        "romaji": "kagi",
+        "english": "key"
+      },
+      {
+        "kana": "とけい",
+        "kanji": "時計",
+        "romaji": "tokei",
+        "english": "watch, clock"
+      },
+      {
+        "kana": "かさ",
+        "kanji": "傘",
+        "romaji": "kasa",
+        "english": "umbrella"
+      },
+      {
+        "kana": "かばん",
+        "kanji": "",
+        "romaji": "kaban",
+        "english": "bag, briefcase"
+      },
+      {
+        "kana": "テープ",
+        "kanji": "",
+        "romaji": "teepu",
+        "english": "[cassette] tape"
+      },
+      {
+        "kana": "テープレコーダー",
+        "kanji": "",
+        "romaji": "teepu rekoodaa",
+        "english": "tape recorder"
+      },
+      {
+        "kana": "テレビ",
+        "kanji": "",
+        "romaji": "terebi",
+        "english": "television"
+      },
+      {
+        "kana": "ラジオ",
+        "kanji": "",
+        "romaji": "rajio",
+        "english": "radio"
+      },
+      {
+        "kana": "カメラ",
+        "kanji": "",
+        "romaji": "kamera",
+        "english": "camera"
+      },
+      {
+        "kana": "コンピューター",
+        "kanji": "",
+        "romaji": "konpyuutaa",
+        "english": "computer"
+      },
+      {
+        "kana": "くるま",
+        "kanji": "車",
+        "romaji": "kuruma",
+        "english": "automobile, car"
+      },
+      {
+        "kana": "つくえ",
+        "kanji": "机",
+        "romaji": "tsukue",
+        "english": "desk"
+      },
+      {
+        "kana": "いす",
+        "kanji": "椅子",
+        "romaji": "isu",
+        "english": "chair"
+      },
+      {
+        "kana": "チョコレート",
+        "kanji": "",
+        "romaji": "chokoreeto",
+        "english": "chocolate"
+      },
+      {
+        "kana": "コーヒー",
+        "kanji": "",
+        "romaji": "koohii",
+        "english": "coffee"
+      },
+      {
+        "kana": "えいご",
+        "kanji": "英語",
+        "romaji": "eigo",
+        "english": "the English language"
+      },
+      {
+        "kana": "にほんご",
+        "kanji": "日本語",
+        "romaji": "nihongo",
+        "english": "the Japanese language"
+      },
+      {
+        "kana": "～ご",
+        "kanji": "～語",
+        "romaji": "~go",
+        "english": "~ language"
+      },
+      {
+        "kana": "なん／なに",
+        "kanji": "何",
+        "romaji": "nan／nani",
+        "english": "what"
+      },
+      {
+        "kana": "そう",
+        "kanji": "",
+        "romaji": "sou",
+        "english": "so"
+      },
+      {
+        "kana": "ちがいます。",
+        "kanji": "違います。",
+        "romaji": "Chigaimasu.",
+        "english": "No, it isn't./You are wrong."
+      },
+      {
+        "kana": "そうですか。",
+        "kanji": "",
+        "romaji": "Sou desu ka.",
+        "english": "I see./Is that so?"
+      },
+      {
+        "kana": "あのう",
+        "kanji": "",
+        "romaji": "anou",
+        "english": "well (used to show hesitation)"
+      },
+      {
+        "kana": "これから おせわに なります。",
+        "kanji": "これから お世話に なります。",
+        "romaji": "Kore kara osewa ni narimasu.",
+        "english": "I hope for your kind assistance hereafter."
+      },
+      {
+        "kana": "こちらこそ よろしく [おねがいします]。",
+        "kanji": "",
+        "romaji": "Kochira koso yoroshiku [onegai shimasu].",
+        "english": "I am pleased to meet you. (response)"
+      }
+    ],
+    "grammar": [
+      {
+        "title": "1. これ／それ／あれ",
+        "explanation": "Demonstrative pronouns functioning as nouns. これ refers to a thing near the speaker; それ, near the listener; あれ, far from both.",
+        "examples": "それは 辞書ですか。(Is that a dictionary?)"
+      },
+      {
+        "title": "2. この／その／あの + N",
+        "explanation": "These modify nouns (never stand alone). このN = a thing/person near the speaker; そのN = near the listener; あのN = far from both.",
+        "examples": "この本は わたしのです。(This book is mine.) / あの人は どなたですか。"
+      },
+      {
+        "title": "3. そうです／そうじゃありません",
+        "explanation": "In noun sentences, そうです is often used to answer yes/no questions affirmatively; そうじゃ(では)ありません negatively. 違います can also mean 'No, that's not right.'",
+        "examples": "それは テレホンカードですか。― はい、そうです。／いいえ、そうじゃ ありません。"
+      },
+      {
+        "title": "4. S1か、S2か",
+        "explanation": "Asks the listener to choose between two alternatives; the answer states the chosen option directly (without はい/いいえ).",
+        "examples": "これは '9' ですか、'7' ですか。― '9' です。"
+      },
+      {
+        "title": "5. N1の N2",
+        "explanation": "の connecting two nouns can also mean: (1) N1 explains what N2 is about, or (2) N1 explains who owns N2. N1 can be omitted if obvious, but not when N1 denotes a person.",
+        "examples": "これは コンピューターの 本です。(This is a book on computers.) / これは わたしの 本です。(This is my book.)"
+      },
+      {
+        "title": "6. そうですか",
+        "explanation": "Used when the speaker receives new information and shows understanding of it.",
+        "examples": "このかさは ミラーさんのですか。― いいえ、シュミットさんのです。― そうですか。"
+      }
+    ]
+  },
+  "3": {
+    "vocab": [
+      {
+        "kana": "ここ／そこ／あそこ",
+        "kanji": "",
+        "romaji": "koko／soko／asoko",
+        "english": "here／there／that place over there"
+      },
+      {
+        "kana": "こちら／そちら／あちら",
+        "kanji": "",
+        "romaji": "kochira／sochira／achira",
+        "english": "this way, this place／that way, near you／that way, over there (polite equivalents of ここ／そこ／あそこ)"
+      },
+      {
+        "kana": "どこ／どちら",
+        "kanji": "",
+        "romaji": "doko／dochira",
+        "english": "where, what place (どちら is the polite equivalent of どこ)"
+      },
+      {
+        "kana": "きょうしつ",
+        "kanji": "教室",
+        "romaji": "kyoushitsu",
+        "english": "classroom"
+      },
+      {
+        "kana": "しょくどう",
+        "kanji": "食堂",
+        "romaji": "shokudou",
+        "english": "dining hall, canteen"
+      },
+      {
+        "kana": "じむしょ",
+        "kanji": "事務所",
+        "romaji": "jimusho",
+        "english": "office"
+      },
+      {
+        "kana": "かいぎしつ",
+        "kanji": "会議室",
+        "romaji": "kaigishitsu",
+        "english": "conference room, assembly room"
+      },
+      {
+        "kana": "うけつけ",
+        "kanji": "受付",
+        "romaji": "uketsuke",
+        "english": "reception desk"
+      },
+      {
+        "kana": "ロビー",
+        "kanji": "",
+        "romaji": "robii",
+        "english": "lobby"
+      },
+      {
+        "kana": "へや",
+        "kanji": "部屋",
+        "romaji": "heya",
+        "english": "room"
+      },
+      {
+        "kana": "トイレ（おてあらい）",
+        "kanji": "トイレ（お手洗い）",
+        "romaji": "toire (otearai)",
+        "english": "toilet, rest room"
+      },
+      {
+        "kana": "かいだん",
+        "kanji": "階段",
+        "romaji": "kaidan",
+        "english": "staircase"
+      },
+      {
+        "kana": "エレベーター",
+        "kanji": "",
+        "romaji": "erebeetaa",
+        "english": "elevator, lift"
+      },
+      {
+        "kana": "エスカレーター",
+        "kanji": "",
+        "romaji": "esukareetaa",
+        "english": "escalator, lift"
+      },
+      {
+        "kana": "くに",
+        "kanji": "国",
+        "romaji": "kuni",
+        "english": "country"
+      },
+      {
+        "kana": "かいしゃ",
+        "kanji": "会社",
+        "romaji": "kaisha",
+        "english": "company"
+      },
+      {
+        "kana": "うち",
+        "kanji": "家",
+        "romaji": "uchi",
+        "english": "house, home"
+      },
+      {
+        "kana": "でんわ",
+        "kanji": "電話",
+        "romaji": "denwa",
+        "english": "telephone, telephone call"
+      },
+      {
+        "kana": "くつ",
+        "kanji": "靴",
+        "romaji": "kutsu",
+        "english": "shoes"
+      },
+      {
+        "kana": "ネクタイ",
+        "kanji": "",
+        "romaji": "nekutai",
+        "english": "necktie"
+      },
+      {
+        "kana": "ワイン",
+        "kanji": "",
+        "romaji": "wain",
+        "english": "wine"
+      },
+      {
+        "kana": "たばこ",
+        "kanji": "",
+        "romaji": "tabako",
+        "english": "tobacco, cigarette"
+      },
+      {
+        "kana": "うりば",
+        "kanji": "売り場",
+        "romaji": "uriba",
+        "english": "department, counter (in a department store)"
+      },
+      {
+        "kana": "ちか",
+        "kanji": "地下",
+        "romaji": "chika",
+        "english": "basement"
+      },
+      {
+        "kana": "～かい",
+        "kanji": "～階",
+        "romaji": "~kai",
+        "english": "-th floor"
+      },
+      {
+        "kana": "なんがい",
+        "kanji": "何階",
+        "romaji": "nangai",
+        "english": "what floor"
+      },
+      {
+        "kana": "～えん",
+        "kanji": "～円",
+        "romaji": "~en",
+        "english": "~ yen"
+      },
+      {
+        "kana": "いくら",
+        "kanji": "",
+        "romaji": "ikura",
+        "english": "how much"
+      },
+      {
+        "kana": "ひゃく",
+        "kanji": "百",
+        "romaji": "hyaku",
+        "english": "hundred"
+      },
+      {
+        "kana": "せん",
+        "kanji": "千",
+        "romaji": "sen",
+        "english": "thousand"
+      },
+      {
+        "kana": "まん",
+        "kanji": "万",
+        "romaji": "man",
+        "english": "ten thousand"
+      },
+      {
+        "kana": "すみません。",
+        "kanji": "",
+        "romaji": "Sumimasen.",
+        "english": "Excuse me."
+      },
+      {
+        "kana": "でございます",
+        "kanji": "",
+        "romaji": "de gozaimasu",
+        "english": "(polite equivalent of です)"
+      },
+      {
+        "kana": "[～を] みせて ください。",
+        "kanji": "[～を] 見せて ください。",
+        "romaji": "[~o] misete kudasai.",
+        "english": "Please show me [~]."
+      },
+      {
+        "kana": "それでは",
+        "kanji": "",
+        "romaji": "sore dewa",
+        "english": "well, then, in that case"
+      },
+      {
+        "kana": "[～を] ください。",
+        "kanji": "",
+        "romaji": "[~o] kudasai.",
+        "english": "Give me [~], please."
+      }
+    ],
+    "grammar": [
+      {
+        "title": "1. ここ／そこ／あそこ, こちら／そちら／あちら",
+        "explanation": "These demonstratives refer to a place, unlike これ／それ／あれ (Lesson 2), which refer to a thing. こちら等 are politer than ここ等 and can also indicate direction.",
+        "examples": "電話は あそこです。(The telephone is over there.)"
+      },
+      {
+        "title": "2. N1は N2(place)です",
+        "explanation": "Explains where a place, thing, or person is.",
+        "examples": "お手洗いは あそこです。(The rest room is over there.) / 山田さんは 事務所です。(Mr. Yamada is in the office.)"
+      },
+      {
+        "title": "3. どこ／どちら",
+        "explanation": "どこ = where; どちら also means 'where' (politer) or 'which direction,' and is used to ask the name of a country, company, or school (なに cannot be used for this).",
+        "examples": "お国は どちらですか。(Where are you from?) / 会社は どちらですか。(What company do you work for?)"
+      },
+      {
+        "title": "4. N1の N2 (origin/maker)",
+        "explanation": "When N1 is a country or company and N2 is a product, の shows N2 is made in/by N1. どこ asks where/by whom N2 is made.",
+        "examples": "これは どこの コンピューターですか。― 日本の コンピューターです。(Where is this computer made? — It's made in Japan.)"
+      },
+      {
+        "title": "5. こ／そ／あ／ど demonstrative system",
+        "explanation": "A full paradigm table: things (これ/それ/あれ/どれ), things-modifying (この/その/あの/どの), people (この方 etc., L.16), places (ここ/そこ/あそこ/どこ), directions (こちら/そちら/あちら/どちら).",
+        "examples": ""
+      },
+      {
+        "title": "6. お～",
+        "explanation": "The prefix お is added to a word regarding the listener or a third person to express respect.",
+        "examples": "お国は どちらですか。(Where are you from?)"
+      }
+    ]
+  },
+  "4": {
+    "vocab": [
+      {
+        "kana": "おきます",
+        "kanji": "起きます",
+        "romaji": "okimasu",
+        "english": "get up, wake up"
+      },
+      {
+        "kana": "ねます",
+        "kanji": "寝ます",
+        "romaji": "nemasu",
+        "english": "sleep, go to bed"
+      },
+      {
+        "kana": "はたらきます",
+        "kanji": "働きます",
+        "romaji": "hatarakimasu",
+        "english": "work"
+      },
+      {
+        "kana": "やすみます",
+        "kanji": "休みます",
+        "romaji": "yasumimasu",
+        "english": "take a rest, take a holiday"
+      },
+      {
+        "kana": "べんきょうします",
+        "kanji": "勉強します",
+        "romaji": "benkyou shimasu",
+        "english": "study"
+      },
+      {
+        "kana": "おわります",
+        "kanji": "終わります",
+        "romaji": "owarimasu",
+        "english": "finish"
+      },
+      {
+        "kana": "デパート",
+        "kanji": "",
+        "romaji": "depaato",
+        "english": "department store"
+      },
+      {
+        "kana": "ぎんこう",
+        "kanji": "銀行",
+        "romaji": "ginkou",
+        "english": "bank"
+      },
+      {
+        "kana": "ゆうびんきょく",
+        "kanji": "郵便局",
+        "romaji": "yuubinkyoku",
+        "english": "post office"
+      },
+      {
+        "kana": "としょかん",
+        "kanji": "図書館",
+        "romaji": "toshokan",
+        "english": "library"
+      },
+      {
+        "kana": "びじゅつかん",
+        "kanji": "美術館",
+        "romaji": "bijutsukan",
+        "english": "art museum"
+      },
+      {
+        "kana": "いま",
+        "kanji": "今",
+        "romaji": "ima",
+        "english": "now"
+      },
+      {
+        "kana": "～じ",
+        "kanji": "～時",
+        "romaji": "~ji",
+        "english": "~ o'clock"
+      },
+      {
+        "kana": "～ふん／ぷん",
+        "kanji": "～分",
+        "romaji": "~fun／pun",
+        "english": "~ minute"
+      },
+      {
+        "kana": "はん",
+        "kanji": "半",
+        "romaji": "han",
+        "english": "half"
+      },
+      {
+        "kana": "なんじ",
+        "kanji": "何時",
+        "romaji": "nanji",
+        "english": "what time"
+      },
+      {
+        "kana": "なんぷん",
+        "kanji": "何分",
+        "romaji": "nanpun",
+        "english": "what minute"
+      },
+      {
+        "kana": "ごぜん",
+        "kanji": "午前",
+        "romaji": "gozen",
+        "english": "a.m., morning"
+      },
+      {
+        "kana": "ごご",
+        "kanji": "午後",
+        "romaji": "gogo",
+        "english": "p.m., afternoon"
+      },
+      {
+        "kana": "あさ",
+        "kanji": "朝",
+        "romaji": "asa",
+        "english": "morning"
+      },
+      {
+        "kana": "ひる",
+        "kanji": "昼",
+        "romaji": "hiru",
+        "english": "daytime, noon"
+      },
+      {
+        "kana": "ばん／よる",
+        "kanji": "晩／夜",
+        "romaji": "ban／yoru",
+        "english": "night, evening"
+      },
+      {
+        "kana": "おととい",
+        "kanji": "一昨日",
+        "romaji": "ototoi",
+        "english": "the day before yesterday"
+      },
+      {
+        "kana": "きのう",
+        "kanji": "昨日",
+        "romaji": "kinou",
+        "english": "yesterday"
+      },
+      {
+        "kana": "きょう",
+        "kanji": "今日",
+        "romaji": "kyou",
+        "english": "today"
+      },
+      {
+        "kana": "あした",
+        "kanji": "明日",
+        "romaji": "ashita",
+        "english": "tomorrow"
+      },
+      {
+        "kana": "あさって",
+        "kanji": "明後日",
+        "romaji": "asatte",
+        "english": "the day after tomorrow"
+      },
+      {
+        "kana": "けさ",
+        "kanji": "今朝",
+        "romaji": "kesa",
+        "english": "this morning"
+      },
+      {
+        "kana": "こんばん",
+        "kanji": "今晩",
+        "romaji": "konban",
+        "english": "this evening, tonight"
+      },
+      {
+        "kana": "やすみ",
+        "kanji": "休み",
+        "romaji": "yasumi",
+        "english": "rest, a holiday, a day off"
+      },
+      {
+        "kana": "ひるやすみ",
+        "kanji": "昼休み",
+        "romaji": "hiruyasumi",
+        "english": "lunchtime"
+      },
+      {
+        "kana": "まいあさ",
+        "kanji": "毎朝",
+        "romaji": "maiasa",
+        "english": "every morning"
+      },
+      {
+        "kana": "まいばん",
+        "kanji": "毎晩",
+        "romaji": "maiban",
+        "english": "every night"
+      },
+      {
+        "kana": "まいにち",
+        "kanji": "毎日",
+        "romaji": "mainichi",
+        "english": "every day"
+      },
+      {
+        "kana": "げつようび",
+        "kanji": "月曜日",
+        "romaji": "getsuyoubi",
+        "english": "Monday"
+      },
+      {
+        "kana": "かようび",
+        "kanji": "火曜日",
+        "romaji": "kayoubi",
+        "english": "Tuesday"
+      },
+      {
+        "kana": "すいようび",
+        "kanji": "水曜日",
+        "romaji": "suiyoubi",
+        "english": "Wednesday"
+      },
+      {
+        "kana": "もくようび",
+        "kanji": "木曜日",
+        "romaji": "mokuyoubi",
+        "english": "Thursday"
+      },
+      {
+        "kana": "きんようび",
+        "kanji": "金曜日",
+        "romaji": "kinyoubi",
+        "english": "Friday"
+      },
+      {
+        "kana": "どようび",
+        "kanji": "土曜日",
+        "romaji": "doyoubi",
+        "english": "Saturday"
+      },
+      {
+        "kana": "にちようび",
+        "kanji": "日曜日",
+        "romaji": "nichiyoubi",
+        "english": "Sunday"
+      },
+      {
+        "kana": "なんようび",
+        "kanji": "何曜日",
+        "romaji": "nanyoubi",
+        "english": "what day of the week"
+      },
+      {
+        "kana": "～ばん",
+        "kanji": "～番",
+        "romaji": "~ban",
+        "english": "number ~"
+      },
+      {
+        "kana": "なんばん",
+        "kanji": "何番",
+        "romaji": "nanban",
+        "english": "what number"
+      },
+      {
+        "kana": "～から",
+        "kanji": "",
+        "romaji": "~kara",
+        "english": "from ~"
+      },
+      {
+        "kana": "～まで",
+        "kanji": "",
+        "romaji": "~made",
+        "english": "up to ~, until ~"
+      },
+      {
+        "kana": "～と～",
+        "kanji": "",
+        "romaji": "~to~",
+        "english": "and (used to connect nouns)"
+      },
+      {
+        "kana": "おたく",
+        "kanji": "お宅",
+        "romaji": "otaku",
+        "english": "your place"
+      },
+      {
+        "kana": "それは たいへんですね。",
+        "kanji": "",
+        "romaji": "Sore wa taihen desu ne.",
+        "english": "That's tough, isn't it? (expressing sympathy)"
+      },
+      {
+        "kana": "さあ",
+        "kanji": "",
+        "romaji": "saa",
+        "english": "well, let me see"
+      },
+      {
+        "kana": "104",
+        "kanji": "",
+        "romaji": "hyaku-yon",
+        "english": "information, directory assistance"
+      },
+      {
+        "kana": "おねがいします。",
+        "kanji": "お願いします。",
+        "romaji": "Onegai shimasu.",
+        "english": "Please. (lit. ask for a favor)"
+      },
+      {
+        "kana": "しょうしょう おまちください。",
+        "kanji": "少々 お待ちください。",
+        "romaji": "Shoushou omachi kudasai.",
+        "english": "Certainly (sir, madam) (lit. please wait a little)"
+      },
+      {
+        "kana": "おたずねの ばんごう",
+        "kanji": "お尋ねの 番号",
+        "romaji": "otazune no bangou",
+        "english": "the number being inquired about"
+      },
+      {
+        "kana": "[どうも] ありがとうございました。",
+        "kanji": "",
+        "romaji": "[Doumo] arigatou gozaimashita.",
+        "english": "Thank you very much."
+      }
+    ],
+    "grammar": [
+      {
+        "title": "1. ～じ～ふん",
+        "explanation": "Time is expressed using the counter suffixes 時 (o'clock) and 分 (minutes), placed after numbers. 何時 asks the time.",
+        "examples": "今、何時ですか。― 7時10分です。(What time is it now? — It's 7:10.)"
+      },
+      {
+        "title": "2. ～ます",
+        "explanation": "Verbs ending in ます work as predicates; ます makes the sentence polite.",
+        "examples": "わたしは 毎日 勉強します。(I study every day.)"
+      },
+      {
+        "title": "3. Vます／Vません／Vました／Vませんでした",
+        "explanation": "ます is used for habitual actions, general truths, or future events. Non-past/past and affirmative/negative forms follow a regular table. Questions are formed the same way as noun sentences (add か).",
+        "examples": "毎朝 6時に 起きます。(I get up at 6 every morning.) / 今朝 6時に 起きました。(I got up at 6 this morning.)"
+      },
+      {
+        "title": "4. ～から～まで",
+        "explanation": "Marks the starting and ending points of a time range (or place). から and まで need not always be used together; です can be attached directly after either.",
+        "examples": "9時から 5時まで 働きます。(I work from 9 to 5.) / 銀行は 9時から 3時までです。"
+      },
+      {
+        "title": "5. N1と N2",
+        "explanation": "The particle と connects two nouns in a coordinate (equal) relationship.",
+        "examples": "銀行は 土曜日と 日曜日は 休みです。(The bank is closed on Saturdays and Sundays.)"
+      },
+      {
+        "title": "6. ね (sentence-final particle)",
+        "explanation": "Added at the end of a sentence to add feeling — expressing sympathy or seeking the listener's agreement/confirmation.",
+        "examples": "それは たいへんですね。(That must be hard, isn't it?) / 871-6813ですね。(That's 871-6813, right?)"
+      }
+    ]
+  },
+  "5": {
+    "vocab": [
+      {
+        "kana": "いきます",
+        "kanji": "行きます",
+        "romaji": "ikimasu",
+        "english": "go"
+      },
+      {
+        "kana": "きます",
+        "kanji": "来ます",
+        "romaji": "kimasu",
+        "english": "come"
+      },
+      {
+        "kana": "かえります",
+        "kanji": "帰ります",
+        "romaji": "kaerimasu",
+        "english": "go home, return"
+      },
+      {
+        "kana": "がっこう",
+        "kanji": "学校",
+        "romaji": "gakkou",
+        "english": "school"
+      },
+      {
+        "kana": "スーパー",
+        "kanji": "",
+        "romaji": "suupaa",
+        "english": "supermarket"
+      },
+      {
+        "kana": "えき",
+        "kanji": "駅",
+        "romaji": "eki",
+        "english": "station"
+      },
+      {
+        "kana": "ひこうき",
+        "kanji": "飛行機",
+        "romaji": "hikouki",
+        "english": "airplane"
+      },
+      {
+        "kana": "ふね",
+        "kanji": "船",
+        "romaji": "fune",
+        "english": "ship"
+      },
+      {
+        "kana": "でんしゃ",
+        "kanji": "電車",
+        "romaji": "densha",
+        "english": "electric train"
+      },
+      {
+        "kana": "ちかてつ",
+        "kanji": "地下鉄",
+        "romaji": "chikatetsu",
+        "english": "subway, underground"
+      },
+      {
+        "kana": "しんかんせん",
+        "kanji": "新幹線",
+        "romaji": "shinkansen",
+        "english": "the Shinkansen, the bullet train"
+      },
+      {
+        "kana": "バス",
+        "kanji": "",
+        "romaji": "basu",
+        "english": "bus"
+      },
+      {
+        "kana": "タクシー",
+        "kanji": "",
+        "romaji": "takushii",
+        "english": "taxi"
+      },
+      {
+        "kana": "じてんしゃ",
+        "kanji": "自転車",
+        "romaji": "jitensha",
+        "english": "bicycle"
+      },
+      {
+        "kana": "あるいて",
+        "kanji": "歩いて",
+        "romaji": "aruite",
+        "english": "on foot"
+      },
+      {
+        "kana": "ひと",
+        "kanji": "人",
+        "romaji": "hito",
+        "english": "person, people"
+      },
+      {
+        "kana": "ともだち",
+        "kanji": "友達",
+        "romaji": "tomodachi",
+        "english": "friend"
+      },
+      {
+        "kana": "かれ",
+        "kanji": "彼",
+        "romaji": "kare",
+        "english": "he, boyfriend, lover"
+      },
+      {
+        "kana": "かのじょ",
+        "kanji": "彼女",
+        "romaji": "kanojo",
+        "english": "she, girlfriend, lover"
+      },
+      {
+        "kana": "かぞく",
+        "kanji": "家族",
+        "romaji": "kazoku",
+        "english": "family"
+      },
+      {
+        "kana": "ひとりで",
+        "kanji": "一人で",
+        "romaji": "hitori de",
+        "english": "alone, by oneself"
+      },
+      {
+        "kana": "せんしゅう",
+        "kanji": "先週",
+        "romaji": "senshuu",
+        "english": "last week"
+      },
+      {
+        "kana": "こんしゅう",
+        "kanji": "今週",
+        "romaji": "konshuu",
+        "english": "this week"
+      },
+      {
+        "kana": "らいしゅう",
+        "kanji": "来週",
+        "romaji": "raishuu",
+        "english": "next week"
+      },
+      {
+        "kana": "せんげつ",
+        "kanji": "先月",
+        "romaji": "sengetsu",
+        "english": "last month"
+      },
+      {
+        "kana": "こんげつ",
+        "kanji": "今月",
+        "romaji": "kongetsu",
+        "english": "this month"
+      },
+      {
+        "kana": "らいげつ",
+        "kanji": "来月",
+        "romaji": "raigetsu",
+        "english": "next month"
+      },
+      {
+        "kana": "きょねん",
+        "kanji": "去年",
+        "romaji": "kyonen",
+        "english": "last year"
+      },
+      {
+        "kana": "ことし",
+        "kanji": "今年",
+        "romaji": "kotoshi",
+        "english": "this year"
+      },
+      {
+        "kana": "らいねん",
+        "kanji": "来年",
+        "romaji": "rainen",
+        "english": "next year"
+      },
+      {
+        "kana": "～がつ",
+        "kanji": "～月",
+        "romaji": "~gatsu",
+        "english": "-th month of the year"
+      },
+      {
+        "kana": "なんがつ",
+        "kanji": "何月",
+        "romaji": "nangatsu",
+        "english": "what month"
+      },
+      {
+        "kana": "ついたち",
+        "kanji": "一日",
+        "romaji": "tsuitachi",
+        "english": "first day of the month"
+      },
+      {
+        "kana": "ふつか",
+        "kanji": "二日",
+        "romaji": "futsuka",
+        "english": "second, two days"
+      },
+      {
+        "kana": "みっか",
+        "kanji": "三日",
+        "romaji": "mikka",
+        "english": "third, three days"
+      },
+      {
+        "kana": "よっか",
+        "kanji": "四日",
+        "romaji": "yokka",
+        "english": "fourth, four days"
+      },
+      {
+        "kana": "いつか",
+        "kanji": "五日",
+        "romaji": "itsuka",
+        "english": "fifth, five days"
+      },
+      {
+        "kana": "むいか",
+        "kanji": "六日",
+        "romaji": "muika",
+        "english": "sixth, six days"
+      },
+      {
+        "kana": "なのか",
+        "kanji": "七日",
+        "romaji": "nanoka",
+        "english": "seventh, seven days"
+      },
+      {
+        "kana": "ようか",
+        "kanji": "八日",
+        "romaji": "youka",
+        "english": "eighth, eight days"
+      },
+      {
+        "kana": "ここのか",
+        "kanji": "九日",
+        "romaji": "kokonoka",
+        "english": "ninth, nine days"
+      },
+      {
+        "kana": "とおか",
+        "kanji": "十日",
+        "romaji": "tooka",
+        "english": "tenth, ten days"
+      },
+      {
+        "kana": "じゅうよっか",
+        "kanji": "十四日",
+        "romaji": "juuyokka",
+        "english": "fourteenth, fourteen days"
+      },
+      {
+        "kana": "はつか",
+        "kanji": "二十日",
+        "romaji": "hatsuka",
+        "english": "twentieth, twenty days"
+      },
+      {
+        "kana": "にじゅうよっか",
+        "kanji": "二十四日",
+        "romaji": "nijuuyokka",
+        "english": "twenty-fourth, twenty-four days"
+      },
+      {
+        "kana": "～にち",
+        "kanji": "～日",
+        "romaji": "~nichi",
+        "english": "-th day of the month, ~ days"
+      },
+      {
+        "kana": "なんにち",
+        "kanji": "何日",
+        "romaji": "nannichi",
+        "english": "which day of the month, how many days"
+      },
+      {
+        "kana": "いつ",
+        "kanji": "",
+        "romaji": "itsu",
+        "english": "when"
+      },
+      {
+        "kana": "たんじょうび",
+        "kanji": "誕生日",
+        "romaji": "tanjoubi",
+        "english": "birthday"
+      },
+      {
+        "kana": "かくえきていしゃ",
+        "kanji": "各駅停車",
+        "romaji": "kakuekiteisha",
+        "english": "local (train)"
+      },
+      {
+        "kana": "きゅうこう",
+        "kanji": "急行",
+        "romaji": "kyuukou",
+        "english": "rapid"
+      },
+      {
+        "kana": "とっきゅう",
+        "kanji": "特急",
+        "romaji": "tokkyuu",
+        "english": "express"
+      },
+      {
+        "kana": "つぎの",
+        "kanji": "次の",
+        "romaji": "tsugi no",
+        "english": "next"
+      },
+      {
+        "kana": "どういたしまして。",
+        "kanji": "",
+        "romaji": "Dou itashimashite.",
+        "english": "You're welcome./Don't mention it."
+      },
+      {
+        "kana": "～ばんせん",
+        "kanji": "～番線",
+        "romaji": "~bansen",
+        "english": "platform ~, the ~th platform"
+      }
+    ],
+    "grammar": [
+      {
+        "title": "1. N(place)へ 行きます／来ます／帰ります",
+        "explanation": "へ marks the direction of movement (goal). へ used this way is read 'e'.",
+        "examples": "京都へ 行きます。(I will go to Kyoto.)"
+      },
+      {
+        "title": "2. N(vehicle)で 行きます／来ます／帰ります",
+        "explanation": "で marks the means of transportation.",
+        "examples": "タクシーで 帰ります。(I will go home by taxi.) / 歩いて 帰ります。(I go home on foot — no で with 歩いて.)"
+      },
+      {
+        "title": "3. N(person)と 行きます／来ます／帰ります",
+        "explanation": "と marks the person one does something with. If alone, ひとりで is used instead (と is not used).",
+        "examples": "家族と 日本へ 来ました。(I came to Japan with my family.) / 一人で 東京へ 行きます。(I'll go to Tokyo alone.)"
+      },
+      {
+        "title": "4. いつ",
+        "explanation": "いつ (when) is used without a particle, unlike time-counter interrogatives such as 何時 or 何日, which use に.",
+        "examples": "日本へ いつ 来ましたか。― 3月25日に 来ました。(When did you come to Japan? — I came on March 25th.)"
+      },
+      {
+        "title": "5. よ (sentence-final particle)",
+        "explanation": "Placed at the end of a sentence to emphasize information the listener doesn't know, or to state one's view assertively.",
+        "examples": "この電車は 甲子園へ 行きますか。― いいえ、行きません。次の各駅停車が 行きますよ。"
+      }
+    ]
+  },
+  "6": {
+    "vocab": [
+      {
+        "kana": "たべます",
+        "kanji": "食べます",
+        "romaji": "tabemasu",
+        "english": "eat"
+      },
+      {
+        "kana": "のみます",
+        "kanji": "飲みます",
+        "romaji": "nomimasu",
+        "english": "drink"
+      },
+      {
+        "kana": "すいます",
+        "kanji": "吸います",
+        "romaji": "suimasu",
+        "english": "smoke [a cigarette]"
+      },
+      {
+        "kana": "みます",
+        "kanji": "見ます",
+        "romaji": "mimasu",
+        "english": "see, look at, watch"
+      },
+      {
+        "kana": "ききます",
+        "kanji": "聞きます",
+        "romaji": "kikimasu",
+        "english": "hear, listen"
+      },
+      {
+        "kana": "よみます",
+        "kanji": "読みます",
+        "romaji": "yomimasu",
+        "english": "read"
+      },
+      {
+        "kana": "かきます",
+        "kanji": "書きます",
+        "romaji": "kakimasu",
+        "english": "write, draw, paint"
+      },
+      {
+        "kana": "かいます",
+        "kanji": "買います",
+        "romaji": "kaimasu",
+        "english": "buy"
+      },
+      {
+        "kana": "とります",
+        "kanji": "撮ります",
+        "romaji": "torimasu",
+        "english": "take [a photograph]"
+      },
+      {
+        "kana": "します",
+        "kanji": "",
+        "romaji": "shimasu",
+        "english": "do"
+      },
+      {
+        "kana": "あいます",
+        "kanji": "会います",
+        "romaji": "aimasu",
+        "english": "meet [a friend]"
+      },
+      {
+        "kana": "ごはん",
+        "kanji": "ご飯",
+        "romaji": "gohan",
+        "english": "a meal, cooked rice"
+      },
+      {
+        "kana": "あさごはん",
+        "kanji": "朝ご飯",
+        "romaji": "asagohan",
+        "english": "breakfast"
+      },
+      {
+        "kana": "ひるごはん",
+        "kanji": "昼ご飯",
+        "romaji": "hirugohan",
+        "english": "lunch"
+      },
+      {
+        "kana": "ばんごはん",
+        "kanji": "晩ご飯",
+        "romaji": "bangohan",
+        "english": "supper"
+      },
+      {
+        "kana": "パン",
+        "kanji": "",
+        "romaji": "pan",
+        "english": "bread"
+      },
+      {
+        "kana": "たまご",
+        "kanji": "卵",
+        "romaji": "tamago",
+        "english": "egg"
+      },
+      {
+        "kana": "にく",
+        "kanji": "肉",
+        "romaji": "niku",
+        "english": "meat"
+      },
+      {
+        "kana": "さかな",
+        "kanji": "魚",
+        "romaji": "sakana",
+        "english": "fish"
+      },
+      {
+        "kana": "やさい",
+        "kanji": "野菜",
+        "romaji": "yasai",
+        "english": "vegetable"
+      },
+      {
+        "kana": "くだもの",
+        "kanji": "果物",
+        "romaji": "kudamono",
+        "english": "fruit"
+      },
+      {
+        "kana": "みず",
+        "kanji": "水",
+        "romaji": "mizu",
+        "english": "water"
+      },
+      {
+        "kana": "おちゃ",
+        "kanji": "お茶",
+        "romaji": "ocha",
+        "english": "tea, green tea"
+      },
+      {
+        "kana": "こうちゃ",
+        "kanji": "紅茶",
+        "romaji": "koucha",
+        "english": "black tea"
+      },
+      {
+        "kana": "ぎゅうにゅう（ミルク）",
+        "kanji": "牛乳（ミルク）",
+        "romaji": "gyuunyuu (miruku)",
+        "english": "milk"
+      },
+      {
+        "kana": "ジュース",
+        "kanji": "",
+        "romaji": "juusu",
+        "english": "juice"
+      },
+      {
+        "kana": "ビール",
+        "kanji": "",
+        "romaji": "biiru",
+        "english": "beer"
+      },
+      {
+        "kana": "[お]さけ",
+        "kanji": "[お]酒",
+        "romaji": "[o]sake",
+        "english": "alcohol, Japanese rice wine"
+      },
+      {
+        "kana": "えいが",
+        "kanji": "映画",
+        "romaji": "eiga",
+        "english": "movie"
+      },
+      {
+        "kana": "CD",
+        "kanji": "",
+        "romaji": "shii dii",
+        "english": "CD, compact disc"
+      },
+      {
+        "kana": "てがみ",
+        "kanji": "手紙",
+        "romaji": "tegami",
+        "english": "letter"
+      },
+      {
+        "kana": "レポート",
+        "kanji": "",
+        "romaji": "repooto",
+        "english": "report"
+      },
+      {
+        "kana": "しゃしん",
+        "kanji": "写真",
+        "romaji": "shashin",
+        "english": "photograph"
+      },
+      {
+        "kana": "みせ",
+        "kanji": "店",
+        "romaji": "mise",
+        "english": "store, shop"
+      },
+      {
+        "kana": "レストラン",
+        "kanji": "",
+        "romaji": "resutoran",
+        "english": "restaurant"
+      },
+      {
+        "kana": "にわ",
+        "kanji": "庭",
+        "romaji": "niwa",
+        "english": "garden"
+      },
+      {
+        "kana": "しゅくだい",
+        "kanji": "宿題",
+        "romaji": "shukudai",
+        "english": "homework (宿題を します: do homework)"
+      },
+      {
+        "kana": "テニス",
+        "kanji": "",
+        "romaji": "tenisu",
+        "english": "tennis (テニスを します: play tennis)"
+      },
+      {
+        "kana": "サッカー",
+        "kanji": "",
+        "romaji": "sakkaa",
+        "english": "soccer, football (サッカーを します: play soccer)"
+      },
+      {
+        "kana": "おはなみ",
+        "kanji": "お花見",
+        "romaji": "ohanami",
+        "english": "cherry-blossom viewing (お花見を します: go cherry-blossom viewing)"
+      },
+      {
+        "kana": "なに／なん",
+        "kanji": "何",
+        "romaji": "nani／nan",
+        "english": "what"
+      },
+      {
+        "kana": "いっしょに",
+        "kanji": "一緒に",
+        "romaji": "issho ni",
+        "english": "together"
+      },
+      {
+        "kana": "ちょっと",
+        "kanji": "",
+        "romaji": "chotto",
+        "english": "a little while, a little bit"
+      },
+      {
+        "kana": "いつも",
+        "kanji": "",
+        "romaji": "itsumo",
+        "english": "always, usually"
+      },
+      {
+        "kana": "ときどき",
+        "kanji": "時々",
+        "romaji": "tokidoki",
+        "english": "sometimes"
+      },
+      {
+        "kana": "それから",
+        "kanji": "",
+        "romaji": "sorekara",
+        "english": "after that, and then"
+      },
+      {
+        "kana": "ええ",
+        "kanji": "",
+        "romaji": "ee",
+        "english": "yes"
+      },
+      {
+        "kana": "いいですね。",
+        "kanji": "",
+        "romaji": "Ii desu ne.",
+        "english": "That's good."
+      },
+      {
+        "kana": "そうですね。",
+        "kanji": "",
+        "romaji": "Sou desu ne.",
+        "english": "I see."
+      },
+      {
+        "kana": "あのう。",
+        "kanji": "",
+        "romaji": "Anou.",
+        "english": "Yes? (used to draw someone's attention)"
+      },
+      {
+        "kana": "では、また[あした]。",
+        "kanji": "",
+        "romaji": "Dewa, mata [ashita].",
+        "english": "See you [tomorrow]."
+      }
+    ],
+    "grammar": [
+      {
+        "title": "1. Vます-form を Vます (transitive verbs)",
+        "explanation": "を marks the direct object of the verb.",
+        "examples": "わたしは ジュースを 飲みます。(I drink juice.)"
+      },
+      {
+        "title": "2. N(place)で V",
+        "explanation": "で marks the location where an action takes place (distinct from に used for existence, L.10).",
+        "examples": "駅で 新聞を 買います。(I buy a newspaper at the station.)"
+      },
+      {
+        "title": "3. S1。それから、S2。",
+        "explanation": "それから connects two sentences to show sequence — 'and then.'",
+        "examples": "日本語を 勉強しました。それから、映画を 見ました。(I studied Japanese. Then I saw a movie.)"
+      },
+      {
+        "title": "4. 一緒に Vませんか — won't you join me?",
+        "explanation": "Vませんか invites the listener to do something together.",
+        "examples": "一緒に 神戸へ 行きませんか。(Won't you come to Kobe with me?) / ちょっと 休みましょう。(Let's take a short rest.)"
+      },
+      {
+        "title": "5. Vませんか vs. Vましょう",
+        "explanation": "Vませんか politely invites/asks the listener's will; Vましょう is used when the speaker is confident the listener will agree, or to actively suggest doing something together.",
+        "examples": "一緒に 昼ご飯を 食べませんか。― ええ、食べましょう。(Won't you have lunch with me? — Yes, let's eat.)"
+      },
+      {
+        "title": "6. お～ (review)",
+        "explanation": "As in Lesson 3, お is attached to words related to the listener, and also to various words when the speaker wants to sound polite (お酒, お花見); some words are habitually used with お without implying respect (お茶, お金).",
+        "examples": ""
+      }
+    ]
+  },
+  "7": {
+    "vocab": [
+      {
+        "kana": "きります",
+        "kanji": "切ります",
+        "romaji": "kirimasu",
+        "english": "cut, slice"
+      },
+      {
+        "kana": "おくります",
+        "kanji": "送ります",
+        "romaji": "okurimasu",
+        "english": "send"
+      },
+      {
+        "kana": "あげます",
+        "kanji": "",
+        "romaji": "agemasu",
+        "english": "give"
+      },
+      {
+        "kana": "もらいます",
+        "kanji": "",
+        "romaji": "moraimasu",
+        "english": "receive"
+      },
+      {
+        "kana": "かします",
+        "kanji": "貸します",
+        "romaji": "kashimasu",
+        "english": "lend"
+      },
+      {
+        "kana": "かります",
+        "kanji": "借ります",
+        "romaji": "karimasu",
+        "english": "borrow"
+      },
+      {
+        "kana": "おしえます",
+        "kanji": "教えます",
+        "romaji": "oshiemasu",
+        "english": "teach"
+      },
+      {
+        "kana": "ならいます",
+        "kanji": "習います",
+        "romaji": "naraimasu",
+        "english": "learn"
+      },
+      {
+        "kana": "かけます",
+        "kanji": "",
+        "romaji": "kakemasu",
+        "english": "make [a telephone call] (電話を かけます)"
+      },
+      {
+        "kana": "て",
+        "kanji": "手",
+        "romaji": "te",
+        "english": "hand, arm"
+      },
+      {
+        "kana": "はし",
+        "kanji": "箸",
+        "romaji": "hashi",
+        "english": "chopsticks"
+      },
+      {
+        "kana": "スプーン",
+        "kanji": "",
+        "romaji": "supuun",
+        "english": "spoon"
+      },
+      {
+        "kana": "ナイフ",
+        "kanji": "",
+        "romaji": "naifu",
+        "english": "knife"
+      },
+      {
+        "kana": "フォーク",
+        "kanji": "",
+        "romaji": "fooku",
+        "english": "fork"
+      },
+      {
+        "kana": "はさみ",
+        "kanji": "",
+        "romaji": "hasami",
+        "english": "scissors"
+      },
+      {
+        "kana": "ファックス",
+        "kanji": "",
+        "romaji": "fakkusu",
+        "english": "fax"
+      },
+      {
+        "kana": "ワープロ",
+        "kanji": "",
+        "romaji": "waapuro",
+        "english": "word processor"
+      },
+      {
+        "kana": "パソコン",
+        "kanji": "",
+        "romaji": "pasokon",
+        "english": "personal computer"
+      },
+      {
+        "kana": "パンチ",
+        "kanji": "",
+        "romaji": "panchi",
+        "english": "punch"
+      },
+      {
+        "kana": "ホッチキス",
+        "kanji": "",
+        "romaji": "hotchikisu",
+        "english": "stapler"
+      },
+      {
+        "kana": "セロテープ",
+        "kanji": "",
+        "romaji": "serouteepu",
+        "english": "Scotch tape, clear adhesive tape"
+      },
+      {
+        "kana": "けしゴム",
+        "kanji": "消しゴム",
+        "romaji": "keshigomu",
+        "english": "eraser"
+      },
+      {
+        "kana": "かみ",
+        "kanji": "紙",
+        "romaji": "kami",
+        "english": "paper"
+      },
+      {
+        "kana": "はな",
+        "kanji": "花",
+        "romaji": "hana",
+        "english": "flower, blossom"
+      },
+      {
+        "kana": "シャツ",
+        "kanji": "",
+        "romaji": "shatsu",
+        "english": "shirt"
+      },
+      {
+        "kana": "プレゼント",
+        "kanji": "",
+        "romaji": "purezento",
+        "english": "present, gift"
+      },
+      {
+        "kana": "にもつ",
+        "kanji": "荷物",
+        "romaji": "nimotsu",
+        "english": "baggage, parcel"
+      },
+      {
+        "kana": "おかね",
+        "kanji": "お金",
+        "romaji": "okane",
+        "english": "money"
+      },
+      {
+        "kana": "きっぷ",
+        "kanji": "切符",
+        "romaji": "kippu",
+        "english": "ticket"
+      },
+      {
+        "kana": "クリスマス",
+        "kanji": "",
+        "romaji": "kurisumasu",
+        "english": "Christmas"
+      },
+      {
+        "kana": "ちち",
+        "kanji": "父",
+        "romaji": "chichi",
+        "english": "(my) father"
+      },
+      {
+        "kana": "はは",
+        "kanji": "母",
+        "romaji": "haha",
+        "english": "(my) mother"
+      },
+      {
+        "kana": "おとうさん",
+        "kanji": "お父さん",
+        "romaji": "otousan",
+        "english": "(someone else's) father"
+      },
+      {
+        "kana": "おかあさん",
+        "kanji": "お母さん",
+        "romaji": "okaasan",
+        "english": "(someone else's) mother"
+      },
+      {
+        "kana": "もう",
+        "kanji": "",
+        "romaji": "mou",
+        "english": "already"
+      },
+      {
+        "kana": "まだ",
+        "kanji": "",
+        "romaji": "mada",
+        "english": "not yet"
+      },
+      {
+        "kana": "これから",
+        "kanji": "",
+        "romaji": "korekara",
+        "english": "from now on, soon"
+      },
+      {
+        "kana": "すてきな[～]ですね。",
+        "kanji": "素敵な[～]ですね。",
+        "romaji": "Suteki na [~] desu ne.",
+        "english": "What a nice [~]!"
+      },
+      {
+        "kana": "ごめんください。",
+        "kanji": "",
+        "romaji": "Gomen kudasai.",
+        "english": "Excuse me./Anybody home?/May I come in?"
+      },
+      {
+        "kana": "いらっしゃい。",
+        "kanji": "",
+        "romaji": "Irasshai.",
+        "english": "How nice of you to come. (lit. Welcome.)"
+      },
+      {
+        "kana": "どうぞ おはいりください。",
+        "kanji": "どうぞ お入りください。",
+        "romaji": "Douzo ohairi kudasai.",
+        "english": "Do come in."
+      },
+      {
+        "kana": "おじゃまします。",
+        "kanji": "お邪魔します。",
+        "romaji": "Ojama shimasu.",
+        "english": "Thank you/May I? (lit. I'm afraid I'll be disturbing you.)"
+      },
+      {
+        "kana": "[～を] どうぞ。",
+        "kanji": "",
+        "romaji": "[~o] douzo.",
+        "english": "Won't you have [~]?/Would you like to have [~]?"
+      },
+      {
+        "kana": "いただきます。",
+        "kanji": "",
+        "romaji": "Itadakimasu.",
+        "english": "Thank you./I accept. (said before eating or drinking)"
+      },
+      {
+        "kana": "りょこう",
+        "kanji": "旅行",
+        "romaji": "ryokou",
+        "english": "trip, tour (旅行します: travel, make a trip)"
+      },
+      {
+        "kana": "おみやげ",
+        "kanji": "お土産",
+        "romaji": "omiyage",
+        "english": "souvenir, present"
+      }
+    ],
+    "grammar": [
+      {
+        "title": "1. N1は N2に Nを あげます／貸します／教えます／etc.",
+        "explanation": "N1 gives/lends/teaches N to N2; the recipient is marked with に.",
+        "examples": "わたしは 木村さんに 花を あげます。(I will give some flowers to Ms. Kimura.)"
+      },
+      {
+        "title": "2. N1は N2に Nを もらいます／借ります／習います",
+        "explanation": "N1 receives/borrows/learns from N2; the source/giver is marked with に (or から for things like letters/money).",
+        "examples": "わたしは カリナさんに チョコレートを もらいました。(I received some chocolates from Ms. Karina.)"
+      },
+      {
+        "title": "3. N(method/means)で — by means of",
+        "explanation": "で, previously used for transportation (L.5) and location (L.6), is also used to mark the tool, material, or language/method by which an action is carried out.",
+        "examples": "わたしは ワープロで 手紙を 書きます。(I write letters with a word processor.) / レポートは 日本語で 書きます。"
+      },
+      {
+        "title": "4. ～は 日本語で 何と 言いますか — how do you say ~ in Japanese?",
+        "explanation": "Asks how to express something in a given language, using 何と言いますか.",
+        "examples": "'Good-bye' は 日本語で 何と言いますか。― 'さようなら' です。"
+      },
+      {
+        "title": "5. もう／まだ + affirmative／negative",
+        "explanation": "もう + affirmative = already done; まだ + negative = not yet done.",
+        "examples": "もう 昼ご飯を 食べましたか。― いいえ、まだです。今から 食べます。(Have you had lunch? — Not yet. I'm going to eat now.)"
+      },
+      {
+        "title": "6. これから",
+        "explanation": "Means 'from now on' or 'soon,' often used in set greetings.",
+        "examples": "これから お世話に なります。(I hope for your kind assistance hereafter, L.2.)"
+      }
+    ]
+  },
+  "8": {
+    "vocab": [
+      {
+        "kana": "ハンサム[な]",
+        "kanji": "",
+        "romaji": "hansamu[na]",
+        "english": "handsome"
+      },
+      {
+        "kana": "きれい[な]",
+        "kanji": "綺麗[な]",
+        "romaji": "kirei[na]",
+        "english": "beautiful, clean"
+      },
+      {
+        "kana": "しずか[な]",
+        "kanji": "静か[な]",
+        "romaji": "shizuka[na]",
+        "english": "quiet"
+      },
+      {
+        "kana": "にぎやか[な]",
+        "kanji": "賑やか[な]",
+        "romaji": "nigiyaka[na]",
+        "english": "lively"
+      },
+      {
+        "kana": "ゆうめい[な]",
+        "kanji": "有名[な]",
+        "romaji": "yuumei[na]",
+        "english": "famous"
+      },
+      {
+        "kana": "しんせつ[な]",
+        "kanji": "親切[な]",
+        "romaji": "shinsetsu[na]",
+        "english": "kind"
+      },
+      {
+        "kana": "げんき[な]",
+        "kanji": "元気[な]",
+        "romaji": "genki[na]",
+        "english": "healthy, sound, cheerful"
+      },
+      {
+        "kana": "ひま[な]",
+        "kanji": "暇[な]",
+        "romaji": "hima[na]",
+        "english": "free (time)"
+      },
+      {
+        "kana": "べんり[な]",
+        "kanji": "便利[な]",
+        "romaji": "benri[na]",
+        "english": "convenient"
+      },
+      {
+        "kana": "すてき[な]",
+        "kanji": "素敵[な]",
+        "romaji": "suteki[na]",
+        "english": "fine, nice, wonderful"
+      },
+      {
+        "kana": "おおきい",
+        "kanji": "大きい",
+        "romaji": "ookii",
+        "english": "big, large"
+      },
+      {
+        "kana": "ちいさい",
+        "kanji": "小さい",
+        "romaji": "chiisai",
+        "english": "small, little"
+      },
+      {
+        "kana": "あたらしい",
+        "kanji": "新しい",
+        "romaji": "atarashii",
+        "english": "new"
+      },
+      {
+        "kana": "ふるい",
+        "kanji": "古い",
+        "romaji": "furui",
+        "english": "old (not of age)"
+      },
+      {
+        "kana": "いい／よい",
+        "kanji": "",
+        "romaji": "ii／yoi",
+        "english": "good"
+      },
+      {
+        "kana": "わるい",
+        "kanji": "悪い",
+        "romaji": "warui",
+        "english": "bad"
+      },
+      {
+        "kana": "あつい",
+        "kanji": "暑い",
+        "romaji": "atsui",
+        "english": "hot (weather)"
+      },
+      {
+        "kana": "さむい",
+        "kanji": "寒い",
+        "romaji": "samui",
+        "english": "cold (weather)"
+      },
+      {
+        "kana": "つめたい",
+        "kanji": "冷たい",
+        "romaji": "tsumetai",
+        "english": "cold (touch)"
+      },
+      {
+        "kana": "むずかしい",
+        "kanji": "難しい",
+        "romaji": "muzukashii",
+        "english": "difficult"
+      },
+      {
+        "kana": "やさしい",
+        "kanji": "易しい",
+        "romaji": "yasashii",
+        "english": "easy"
+      },
+      {
+        "kana": "たかい",
+        "kanji": "高い",
+        "romaji": "takai",
+        "english": "expensive, tall, high"
+      },
+      {
+        "kana": "やすい",
+        "kanji": "安い",
+        "romaji": "yasui",
+        "english": "inexpensive"
+      },
+      {
+        "kana": "ひくい",
+        "kanji": "低い",
+        "romaji": "hikui",
+        "english": "low"
+      },
+      {
+        "kana": "おもしろい",
+        "kanji": "面白い",
+        "romaji": "omoshiroi",
+        "english": "interesting"
+      },
+      {
+        "kana": "おいしい",
+        "kanji": "美味しい",
+        "romaji": "oishii",
+        "english": "delicious, tasty"
+      },
+      {
+        "kana": "いそがしい",
+        "kanji": "忙しい",
+        "romaji": "isogashii",
+        "english": "busy"
+      },
+      {
+        "kana": "たのしい",
+        "kanji": "楽しい",
+        "romaji": "tanoshii",
+        "english": "enjoyable"
+      },
+      {
+        "kana": "しろい",
+        "kanji": "白い",
+        "romaji": "shiroi",
+        "english": "white"
+      },
+      {
+        "kana": "くろい",
+        "kanji": "黒い",
+        "romaji": "kuroi",
+        "english": "black"
+      },
+      {
+        "kana": "あかい",
+        "kanji": "赤い",
+        "romaji": "akai",
+        "english": "red"
+      },
+      {
+        "kana": "あおい",
+        "kanji": "青い",
+        "romaji": "aoi",
+        "english": "blue"
+      },
+      {
+        "kana": "さくら",
+        "kanji": "桜",
+        "romaji": "sakura",
+        "english": "cherry (blossom)"
+      },
+      {
+        "kana": "やま",
+        "kanji": "山",
+        "romaji": "yama",
+        "english": "mountain"
+      },
+      {
+        "kana": "まち",
+        "kanji": "町",
+        "romaji": "machi",
+        "english": "town, city"
+      },
+      {
+        "kana": "たべもの",
+        "kanji": "食べ物",
+        "romaji": "tabemono",
+        "english": "food"
+      },
+      {
+        "kana": "くるま",
+        "kanji": "車",
+        "romaji": "kuruma",
+        "english": "car, vehicle"
+      },
+      {
+        "kana": "ところ",
+        "kanji": "所",
+        "romaji": "tokoro",
+        "english": "place"
+      },
+      {
+        "kana": "りょう",
+        "kanji": "寮",
+        "romaji": "ryou",
+        "english": "dormitory"
+      },
+      {
+        "kana": "べんきょう",
+        "kanji": "勉強",
+        "romaji": "benkyou",
+        "english": "study"
+      },
+      {
+        "kana": "せいかつ",
+        "kanji": "生活",
+        "romaji": "seikatsu",
+        "english": "life"
+      },
+      {
+        "kana": "しごと",
+        "kanji": "仕事",
+        "romaji": "shigoto",
+        "english": "work, business (仕事します: do one's job)"
+      },
+      {
+        "kana": "どう",
+        "kanji": "",
+        "romaji": "dou",
+        "english": "how"
+      },
+      {
+        "kana": "どんな",
+        "kanji": "",
+        "romaji": "donna",
+        "english": "what kind of ~"
+      },
+      {
+        "kana": "どれ",
+        "kanji": "",
+        "romaji": "dore",
+        "english": "which one (of three or more)"
+      },
+      {
+        "kana": "とても",
+        "kanji": "",
+        "romaji": "totemo",
+        "english": "very"
+      },
+      {
+        "kana": "あまり",
+        "kanji": "",
+        "romaji": "amari",
+        "english": "not so (used with negatives)"
+      },
+      {
+        "kana": "そして",
+        "kanji": "",
+        "romaji": "soshite",
+        "english": "and (used to connect sentences)"
+      },
+      {
+        "kana": "～が、～",
+        "kanji": "",
+        "romaji": "~ga~",
+        "english": "~, but ~"
+      },
+      {
+        "kana": "おげんきですか。",
+        "kanji": "お元気ですか。",
+        "romaji": "Ogenki desu ka.",
+        "english": "How are you?"
+      },
+      {
+        "kana": "ええ、まあ。",
+        "kanji": "",
+        "romaji": "Ee, maa.",
+        "english": "Well let me see. (pausing)"
+      },
+      {
+        "kana": "にほんのせいかつに なれましたか。",
+        "kanji": "日本の生活に 慣れましたか。",
+        "romaji": "Nihon no seikatsu ni naremashita ka.",
+        "english": "Have you got used to the life in Japan?"
+      },
+      {
+        "kana": "[～を] もう いっぱい いかがですか。",
+        "kanji": "[～を] もう 一杯 いかがですか。",
+        "romaji": "[~o] mou ippai ikaga desu ka.",
+        "english": "Won't you have another cup of [~]?"
+      },
+      {
+        "kana": "いいえ、けっこうです。",
+        "kanji": "",
+        "romaji": "Iie, kekkou desu.",
+        "english": "No, thank you."
+      },
+      {
+        "kana": "もう～ですね。",
+        "kanji": "",
+        "romaji": "Mou~desu ne.",
+        "english": "It's already ~[, isn't it?]."
+      },
+      {
+        "kana": "そろそろ しつれいします。",
+        "kanji": "そろそろ 失礼します。",
+        "romaji": "Sorosoro shitsurei shimasu.",
+        "english": "It's almost time to leave now."
+      },
+      {
+        "kana": "また いらっしゃってください。",
+        "kanji": "",
+        "romaji": "Mata irasshatte kudasai.",
+        "english": "Please come again."
+      }
+    ],
+    "grammar": [
+      {
+        "title": "1. い-adjective／な-adjective as predicate",
+        "explanation": "Both types of adjectives can serve as the predicate of a sentence. な-adjectives take です directly; い-adjectives also take です (which doesn't change their meaning, just adds politeness).",
+        "examples": "桜は きれいです。(Cherry blossoms are beautiful.) / 富士山は 高いです。(Mt. Fuji is high.)"
+      },
+      {
+        "title": "2. い-adjective／な-adjective + Noun",
+        "explanation": "Both adjective types can directly modify a following noun; な-adjectives keep な before the noun.",
+        "examples": "桜は きれいな 花です。(Cherry blossoms are beautiful flowers.) / 富士山は 高い 山です。(Mt. Fuji is a high mountain.)"
+      },
+      {
+        "title": "3. あまり～ません",
+        "explanation": "あまり with a negative predicate means 'not very' or 'not so much.'",
+        "examples": "上海は あまり 寒くないです。(Shanghai is not very cold.)"
+      },
+      {
+        "title": "4. Nは どうですか",
+        "explanation": "Asks for an impression or opinion about something the listener has experienced.",
+        "examples": "日本の生活は どうですか。(How is life in Japan?) ― 楽しいです。"
+      },
+      {
+        "title": "5. N1は どんな N2ですか",
+        "explanation": "Asks the listener to describe/characterize N1, where N2 denotes the category N1 belongs to.",
+        "examples": "奈良は どんな 町ですか。(What kind of town is Nara?) ― 古い 町です。"
+      },
+      {
+        "title": "6. ～が、～ (conjunction 'but')",
+        "explanation": "が links two sentences with a contrasting or qualifying meaning.",
+        "examples": "日本の食べ物は おいしいですが、高いです。(Japanese food is good, but expensive.)"
+      },
+      {
+        "title": "7. どれ",
+        "explanation": "Used to ask the listener to choose/identify one item from three or more concrete options.",
+        "examples": "ミラーさんの傘は どれですか。― あの青いのです。(Which is Mr. Miller's umbrella? — That blue one.)"
+      }
+    ]
+  },
+  "9": {
+    "vocab": [
+      {
+        "kana": "わかります",
+        "kanji": "分かります",
+        "romaji": "wakarimasu",
+        "english": "understand"
+      },
+      {
+        "kana": "あります",
+        "kanji": "",
+        "romaji": "arimasu",
+        "english": "have"
+      },
+      {
+        "kana": "すき[な]",
+        "kanji": "好き[な]",
+        "romaji": "suki[na]",
+        "english": "like"
+      },
+      {
+        "kana": "きらい[な]",
+        "kanji": "嫌い[な]",
+        "romaji": "kirai[na]",
+        "english": "dislike"
+      },
+      {
+        "kana": "じょうず[な]",
+        "kanji": "上手[な]",
+        "romaji": "jouzu[na]",
+        "english": "good at"
+      },
+      {
+        "kana": "へた[な]",
+        "kanji": "下手[な]",
+        "romaji": "heta[na]",
+        "english": "poor at"
+      },
+      {
+        "kana": "りょうり",
+        "kanji": "料理",
+        "romaji": "ryouri",
+        "english": "dish (cooked food), cooking"
+      },
+      {
+        "kana": "のみもの",
+        "kanji": "飲み物",
+        "romaji": "nomimono",
+        "english": "drinks"
+      },
+      {
+        "kana": "スポーツ",
+        "kanji": "",
+        "romaji": "supootsu",
+        "english": "sport (スポーツを します: play sports)"
+      },
+      {
+        "kana": "やきゅう",
+        "kanji": "野球",
+        "romaji": "yakyuu",
+        "english": "baseball (野球を します: play baseball)"
+      },
+      {
+        "kana": "ダンス",
+        "kanji": "",
+        "romaji": "dansu",
+        "english": "dance (ダンスを します: dance)"
+      },
+      {
+        "kana": "おんがく",
+        "kanji": "音楽",
+        "romaji": "ongaku",
+        "english": "music"
+      },
+      {
+        "kana": "うた",
+        "kanji": "歌",
+        "romaji": "uta",
+        "english": "song"
+      },
+      {
+        "kana": "クラシック",
+        "kanji": "",
+        "romaji": "kurashikku",
+        "english": "classical music"
+      },
+      {
+        "kana": "ジャズ",
+        "kanji": "",
+        "romaji": "jazu",
+        "english": "jazz"
+      },
+      {
+        "kana": "コンサート",
+        "kanji": "",
+        "romaji": "konsaato",
+        "english": "concert"
+      },
+      {
+        "kana": "カラオケ",
+        "kanji": "",
+        "romaji": "karaoke",
+        "english": "karaoke"
+      },
+      {
+        "kana": "かぶき",
+        "kanji": "歌舞伎",
+        "romaji": "kabuki",
+        "english": "Kabuki (traditional Japanese musical drama)"
+      },
+      {
+        "kana": "え",
+        "kanji": "絵",
+        "romaji": "e",
+        "english": "picture, drawing"
+      },
+      {
+        "kana": "じ",
+        "kanji": "字",
+        "romaji": "ji",
+        "english": "letter, character"
+      },
+      {
+        "kana": "かんじ",
+        "kanji": "漢字",
+        "romaji": "kanji",
+        "english": "Chinese characters"
+      },
+      {
+        "kana": "ひらがな",
+        "kanji": "",
+        "romaji": "hiragana",
+        "english": "Hiragana script"
+      },
+      {
+        "kana": "かたかな",
+        "kanji": "",
+        "romaji": "katakana",
+        "english": "Katakana script"
+      },
+      {
+        "kana": "ローマじ",
+        "kanji": "ローマ字",
+        "romaji": "roomaji",
+        "english": "the Roman alphabet"
+      },
+      {
+        "kana": "おかね",
+        "kanji": "お金",
+        "romaji": "okane",
+        "english": "small change"
+      },
+      {
+        "kana": "きっぷ",
+        "kanji": "切符",
+        "romaji": "kippu",
+        "english": "ticket"
+      },
+      {
+        "kana": "じかん",
+        "kanji": "時間",
+        "romaji": "jikan",
+        "english": "time"
+      },
+      {
+        "kana": "よう",
+        "kanji": "用",
+        "romaji": "you",
+        "english": "something to do, errand"
+      },
+      {
+        "kana": "やくそく",
+        "kanji": "約束",
+        "romaji": "yakusoku",
+        "english": "appointment, promise"
+      },
+      {
+        "kana": "ごしゅじん",
+        "kanji": "ご主人",
+        "romaji": "goshujin",
+        "english": "(someone else's) husband"
+      },
+      {
+        "kana": "しゅじん／おっと",
+        "kanji": "主人／夫",
+        "romaji": "shujin／otto",
+        "english": "(my) husband"
+      },
+      {
+        "kana": "おくさん",
+        "kanji": "奥さん",
+        "romaji": "okusan",
+        "english": "(someone else's) wife"
+      },
+      {
+        "kana": "かない／つま",
+        "kanji": "家内／妻",
+        "romaji": "kanai／tsuma",
+        "english": "(my) wife"
+      },
+      {
+        "kana": "こども",
+        "kanji": "子供",
+        "romaji": "kodomo",
+        "english": "child"
+      },
+      {
+        "kana": "よく",
+        "kanji": "",
+        "romaji": "yoku",
+        "english": "well, much"
+      },
+      {
+        "kana": "だいたい",
+        "kanji": "",
+        "romaji": "daitai",
+        "english": "mostly, roughly"
+      },
+      {
+        "kana": "たくさん",
+        "kanji": "",
+        "romaji": "takusan",
+        "english": "many, much"
+      },
+      {
+        "kana": "すこし",
+        "kanji": "少し",
+        "romaji": "sukoshi",
+        "english": "a little, a few"
+      },
+      {
+        "kana": "ぜんぜん",
+        "kanji": "全然",
+        "romaji": "zenzen",
+        "english": "not at all (used with negatives)"
+      },
+      {
+        "kana": "はやく",
+        "kanji": "早く／速く",
+        "romaji": "hayaku",
+        "english": "early, quickly, fast"
+      },
+      {
+        "kana": "～から",
+        "kanji": "",
+        "romaji": "~kara",
+        "english": "because ~"
+      },
+      {
+        "kana": "どうして",
+        "kanji": "",
+        "romaji": "doushite",
+        "english": "why"
+      },
+      {
+        "kana": "ざんねんです[ね]。",
+        "kanji": "残念です[ね]。",
+        "romaji": "Zannen desu[ne].",
+        "english": "I'm sorry (to hear that)/That's a pity."
+      },
+      {
+        "kana": "すみません。",
+        "kanji": "",
+        "romaji": "Sumimasen.",
+        "english": "I am sorry."
+      },
+      {
+        "kana": "もしもし",
+        "kanji": "",
+        "romaji": "moshi moshi",
+        "english": "hello (used on the phone)"
+      },
+      {
+        "kana": "ああ",
+        "kanji": "",
+        "romaji": "aa",
+        "english": "oh"
+      },
+      {
+        "kana": "[こんど] いっしょに いかがですか。",
+        "kanji": "[今度] 一緒に いかがですか。",
+        "romaji": "[Kondo] issho ni ikaga desu ka.",
+        "english": "Won't you join me (us)?"
+      },
+      {
+        "kana": "[～は] ちょっと。。。",
+        "kanji": "",
+        "romaji": "[~wa] chotto...",
+        "english": "[~] is a bit difficult. (declining an invitation)"
+      },
+      {
+        "kana": "そうですか。ざんねんです。",
+        "kanji": "",
+        "romaji": "Sou desu ka. Zannen desu.",
+        "english": "So you cannot (come)?"
+      },
+      {
+        "kana": "また さそって ください。",
+        "kanji": "また 誘って ください。",
+        "romaji": "Mata sasotte kudasai.",
+        "english": "Please ask me again some other time."
+      }
+    ],
+    "grammar": [
+      {
+        "title": "1. N が わかります",
+        "explanation": "With わかります, the thing understood is marked with が, not を.",
+        "examples": "わたしは 日本語が 少し 分かります。(I understand Japanese a little.)"
+      },
+      {
+        "title": "2. すき／きらい／じょうず／へた + が",
+        "explanation": "With these な-adjectives, the object of liking/disliking/skill is marked with が.",
+        "examples": "わたしは 料理が 好きです。(I like cooking.) / カリナさんは 絵が 上手です。"
+      },
+      {
+        "title": "3. N が あります (possession)",
+        "explanation": "In this usage あります expresses possession of an abstract or inanimate thing (money, time, plans, etc.) — distinct from the 'existence' meaning in Lesson 10.",
+        "examples": "小銭が ありますか。(Do you have any small change?)"
+      },
+      {
+        "title": "4. ～から、～ (reason)",
+        "explanation": "から attaches to the end of a clause giving the reason for the following statement.",
+        "examples": "今日は 子供の 誕生日ですから、早く 帰ります。(Today is my child's birthday, so I will go home early.)"
+      },
+      {
+        "title": "5. どうして — why",
+        "explanation": "Asks the reason for something; typically answered with ～からです.",
+        "examples": "どうして 早く 帰りましたか。― 用が ありましたから。(Why did you go home early? — Because I had something to do.)"
+      }
+    ]
+  },
+  "10": {
+    "vocab": [
+      {
+        "kana": "います",
+        "kanji": "",
+        "romaji": "imasu",
+        "english": "exist, be (referring to animate things)"
+      },
+      {
+        "kana": "あります",
+        "kanji": "",
+        "romaji": "arimasu",
+        "english": "exist, be (referring to inanimate things)"
+      },
+      {
+        "kana": "いろいろ[な]",
+        "kanji": "色々[な]",
+        "romaji": "iroiro[na]",
+        "english": "various"
+      },
+      {
+        "kana": "おとこの ひと",
+        "kanji": "男の人",
+        "romaji": "otoko no hito",
+        "english": "man"
+      },
+      {
+        "kana": "おんなの ひと",
+        "kanji": "女の人",
+        "romaji": "onna no hito",
+        "english": "woman"
+      },
+      {
+        "kana": "おとこの こ",
+        "kanji": "男の子",
+        "romaji": "otoko no ko",
+        "english": "boy"
+      },
+      {
+        "kana": "おんなの こ",
+        "kanji": "女の子",
+        "romaji": "onna no ko",
+        "english": "girl"
+      },
+      {
+        "kana": "いぬ",
+        "kanji": "犬",
+        "romaji": "inu",
+        "english": "dog"
+      },
+      {
+        "kana": "ねこ",
+        "kanji": "猫",
+        "romaji": "neko",
+        "english": "cat"
+      },
+      {
+        "kana": "き",
+        "kanji": "木",
+        "romaji": "ki",
+        "english": "tree, wood"
+      },
+      {
+        "kana": "もの",
+        "kanji": "物",
+        "romaji": "mono",
+        "english": "thing"
+      },
+      {
+        "kana": "フィルム",
+        "kanji": "",
+        "romaji": "firumu",
+        "english": "film"
+      },
+      {
+        "kana": "でんち",
+        "kanji": "電池",
+        "romaji": "denchi",
+        "english": "battery"
+      },
+      {
+        "kana": "はこ",
+        "kanji": "箱",
+        "romaji": "hako",
+        "english": "box"
+      },
+      {
+        "kana": "スイッチ",
+        "kanji": "",
+        "romaji": "suicchi",
+        "english": "switch"
+      },
+      {
+        "kana": "れいぞうこ",
+        "kanji": "冷蔵庫",
+        "romaji": "reizouko",
+        "english": "refrigerator"
+      },
+      {
+        "kana": "テーブル",
+        "kanji": "",
+        "romaji": "teeburu",
+        "english": "table"
+      },
+      {
+        "kana": "ベッド",
+        "kanji": "",
+        "romaji": "beddo",
+        "english": "bed"
+      },
+      {
+        "kana": "たな",
+        "kanji": "棚",
+        "romaji": "tana",
+        "english": "shelf"
+      },
+      {
+        "kana": "ドア",
+        "kanji": "",
+        "romaji": "doa",
+        "english": "door"
+      },
+      {
+        "kana": "まど",
+        "kanji": "窓",
+        "romaji": "mado",
+        "english": "window"
+      },
+      {
+        "kana": "ポスト",
+        "kanji": "",
+        "romaji": "posuto",
+        "english": "mailbox, postbox"
+      },
+      {
+        "kana": "たてもの",
+        "kanji": "建物",
+        "romaji": "tatemono",
+        "english": "building"
+      },
+      {
+        "kana": "こうえん",
+        "kanji": "公園",
+        "romaji": "kouen",
+        "english": "park"
+      },
+      {
+        "kana": "きっさてん",
+        "kanji": "喫茶店",
+        "romaji": "kissaten",
+        "english": "coffee shop"
+      },
+      {
+        "kana": "ほんや",
+        "kanji": "本屋",
+        "romaji": "hon'ya",
+        "english": "bookstore"
+      },
+      {
+        "kana": "～や",
+        "kanji": "～屋",
+        "romaji": "~ya",
+        "english": "~ store"
+      },
+      {
+        "kana": "のりば",
+        "kanji": "乗り場",
+        "romaji": "noriba",
+        "english": "a fixed place to catch taxis, trains, etc."
+      },
+      {
+        "kana": "～けん",
+        "kanji": "～県",
+        "romaji": "~ken",
+        "english": "prefecture"
+      },
+      {
+        "kana": "うえ",
+        "kanji": "上",
+        "romaji": "ue",
+        "english": "on, above, over"
+      },
+      {
+        "kana": "した",
+        "kanji": "下",
+        "romaji": "shita",
+        "english": "under, below, beneath"
+      },
+      {
+        "kana": "まえ",
+        "kanji": "前",
+        "romaji": "mae",
+        "english": "front, before"
+      },
+      {
+        "kana": "うしろ",
+        "kanji": "後ろ",
+        "romaji": "ushiro",
+        "english": "back, behind"
+      },
+      {
+        "kana": "みぎ",
+        "kanji": "右",
+        "romaji": "migi",
+        "english": "right [side]"
+      },
+      {
+        "kana": "ひだり",
+        "kanji": "左",
+        "romaji": "hidari",
+        "english": "left [side]"
+      },
+      {
+        "kana": "なか",
+        "kanji": "中",
+        "romaji": "naka",
+        "english": "in, inside"
+      },
+      {
+        "kana": "そと",
+        "kanji": "外",
+        "romaji": "soto",
+        "english": "outside"
+      },
+      {
+        "kana": "となり",
+        "kanji": "隣",
+        "romaji": "tonari",
+        "english": "next, next door"
+      },
+      {
+        "kana": "ちかく",
+        "kanji": "近く",
+        "romaji": "chikaku",
+        "english": "near, vicinity"
+      },
+      {
+        "kana": "あいだ",
+        "kanji": "間",
+        "romaji": "aida",
+        "english": "between, among"
+      },
+      {
+        "kana": "～や～[など]",
+        "kanji": "",
+        "romaji": "~ya~[nado]",
+        "english": "~, ~, and so on"
+      },
+      {
+        "kana": "いちばん",
+        "kanji": "一番",
+        "romaji": "ichiban",
+        "english": "the most ~"
+      },
+      {
+        "kana": "～だんめ",
+        "kanji": "～段目",
+        "romaji": "~danme",
+        "english": "the -th shelf"
+      },
+      {
+        "kana": "どうも。",
+        "kanji": "",
+        "romaji": "Doumo.",
+        "english": "Thanks."
+      }
+    ],
+    "grammar": [
+      {
+        "title": "1. N が あります／います",
+        "explanation": "Expresses the existence of a thing or person, treated as the subject and marked with が. あります is used for inanimate things (including plants and places); います is used for animate things that move by themselves (people, animals).",
+        "examples": "公園が あります。(There is a park.) / 男の人が います。(There is a man.)"
+      },
+      {
+        "title": "2. N1(place)に N2が あります／います",
+        "explanation": "に marks the place where something/someone is present. どこ asks about a place for things; だれ asks about a person.",
+        "examples": "地下に 何が ありますか。― レストランが あります。(What's in the basement? — There are restaurants.)"
+      },
+      {
+        "title": "3. N1は N2(place)に あります／います",
+        "explanation": "Here N1 is picked up as the topic (something both speaker and listener know) and its location is explained; the particle on N1 is は (topic), not が (subject).",
+        "examples": "東京ディズニーランドは 千葉県に あります。(Tokyo Disneyland is in Chiba Prefecture.) — this can also be rephrased with で as in Lesson 3: N1は N2(place)です."
+      },
+      {
+        "title": "4. Position words + の + N",
+        "explanation": "上/下/前/後ろ/右/左/中/外/隣/近く/間 combine with の to modify a following noun, indicating relative position.",
+        "examples": "机の 上に 写真が あります。(There's a photo on the desk.)"
+      },
+      {
+        "title": "5. N1や N2[など]",
+        "explanation": "Used like と (L.4) to connect nouns, but implies a non-exhaustive example list ('such things as').",
+        "examples": "箱の 中に 古い 手紙や 写真などが あります。(There are old letters, photos, and so on in the box.)"
+      },
+      {
+        "title": "6. いちばん + adjective",
+        "explanation": "いちばん before an adjective means 'the most ~.'",
+        "examples": "いちばん 高い たなに あります。(It's on the top shelf.)"
+      }
+    ]
+  },
+  "11": {
+    "vocab": [
+      {
+        "kana": "ひとつ、ふたつ、みっつ…とお",
+        "kanji": "一つ、二つ、三つ…十",
+        "romaji": "hitotsu, futatsu, mittsu…too",
+        "english": "one, two, three… ten (native counting)"
+      },
+      {
+        "kana": "いくつ",
+        "kanji": "",
+        "romaji": "ikutsu",
+        "english": "how many"
+      },
+      {
+        "kana": "りんご",
+        "kanji": "",
+        "romaji": "ringo",
+        "english": "apple"
+      },
+      {
+        "kana": "みかん",
+        "kanji": "",
+        "romaji": "mikan",
+        "english": "mandarin orange"
+      },
+      {
+        "kana": "サンドイッチ",
+        "kanji": "",
+        "romaji": "sandoicchi",
+        "english": "sandwich"
+      },
+      {
+        "kana": "カレー[ライス]",
+        "kanji": "",
+        "romaji": "karee [raisu]",
+        "english": "curry [and rice]"
+      },
+      {
+        "kana": "アイスクリーム",
+        "kanji": "",
+        "romaji": "aisukuriimu",
+        "english": "ice cream"
+      },
+      {
+        "kana": "きって",
+        "kanji": "切手",
+        "romaji": "kitte",
+        "english": "postage stamp"
+      },
+      {
+        "kana": "はがき",
+        "kanji": "",
+        "romaji": "hagaki",
+        "english": "post card"
+      },
+      {
+        "kana": "ふうとう",
+        "kanji": "封筒",
+        "romaji": "fuutou",
+        "english": "envelope"
+      },
+      {
+        "kana": "そくたつ",
+        "kanji": "速達",
+        "romaji": "sokutatsu",
+        "english": "special delivery"
+      },
+      {
+        "kana": "かきとめ",
+        "kanji": "書留",
+        "romaji": "kakitome",
+        "english": "registered mail"
+      },
+      {
+        "kana": "こうくうびん（エアメール）",
+        "kanji": "航空便（エアメール）",
+        "romaji": "koukuubin (eamēru)",
+        "english": "airmail"
+      },
+      {
+        "kana": "ふなびん",
+        "kanji": "船便",
+        "romaji": "funabin",
+        "english": "sea mail"
+      },
+      {
+        "kana": "りょうしん",
+        "kanji": "両親",
+        "romaji": "ryoushin",
+        "english": "parents"
+      },
+      {
+        "kana": "きょうだい",
+        "kanji": "兄弟",
+        "romaji": "kyoudai",
+        "english": "brothers and sisters"
+      },
+      {
+        "kana": "あに",
+        "kanji": "兄",
+        "romaji": "ani",
+        "english": "(my) elder brother"
+      },
+      {
+        "kana": "おにいさん",
+        "kanji": "お兄さん",
+        "romaji": "oniisan",
+        "english": "(someone else's) elder brother"
+      },
+      {
+        "kana": "あね",
+        "kanji": "姉",
+        "romaji": "ane",
+        "english": "(my) elder sister"
+      },
+      {
+        "kana": "おねえさん",
+        "kanji": "お姉さん",
+        "romaji": "oneesan",
+        "english": "(someone else's) elder sister"
+      },
+      {
+        "kana": "おとうと",
+        "kanji": "弟",
+        "romaji": "otouto",
+        "english": "(my) younger brother"
+      },
+      {
+        "kana": "おとうとさん",
+        "kanji": "弟さん",
+        "romaji": "otoutosan",
+        "english": "(someone else's) younger brother"
+      },
+      {
+        "kana": "いもうと",
+        "kanji": "妹",
+        "romaji": "imouto",
+        "english": "(my) younger sister"
+      },
+      {
+        "kana": "いもうとさん",
+        "kanji": "妹さん",
+        "romaji": "imoutosan",
+        "english": "(someone else's) younger sister"
+      },
+      {
+        "kana": "がいこく",
+        "kanji": "外国",
+        "romaji": "gaikoku",
+        "english": "foreign country"
+      },
+      {
+        "kana": "～じかん",
+        "kanji": "～時間",
+        "romaji": "~jikan",
+        "english": "~ hours"
+      },
+      {
+        "kana": "～しゅうかん",
+        "kanji": "～週間",
+        "romaji": "~shuukan",
+        "english": "~ weeks"
+      },
+      {
+        "kana": "～かげつ",
+        "kanji": "～か月",
+        "romaji": "~kagetsu",
+        "english": "~ months"
+      },
+      {
+        "kana": "～ねん",
+        "kanji": "～年",
+        "romaji": "~nen",
+        "english": "~ years"
+      },
+      {
+        "kana": "～ぐらい",
+        "kanji": "",
+        "romaji": "~gurai",
+        "english": "about ~"
+      },
+      {
+        "kana": "どのくらい",
+        "kanji": "",
+        "romaji": "donokurai",
+        "english": "how long"
+      },
+      {
+        "kana": "ぜんぶで",
+        "kanji": "全部で",
+        "romaji": "zenbu de",
+        "english": "in total"
+      },
+      {
+        "kana": "みんな",
+        "kanji": "",
+        "romaji": "minna",
+        "english": "all, everything"
+      },
+      {
+        "kana": "～だけ",
+        "kanji": "",
+        "romaji": "~dake",
+        "english": "only ~"
+      },
+      {
+        "kana": "いらっしゃいませ。",
+        "kanji": "",
+        "romaji": "Irasshaimase.",
+        "english": "Welcome./May I help you? (greeting a customer)"
+      },
+      {
+        "kana": "いい てんきですね。",
+        "kanji": "いい 天気ですね。",
+        "romaji": "Ii tenki desu ne.",
+        "english": "Nice weather, isn't it?"
+      },
+      {
+        "kana": "おでかけですか。",
+        "kanji": "お出かけですか。",
+        "romaji": "Odekake desu ka.",
+        "english": "Are you going out?"
+      },
+      {
+        "kana": "ちょっと ～まで。",
+        "kanji": "",
+        "romaji": "Chotto ~made.",
+        "english": "I'm just going to ~."
+      },
+      {
+        "kana": "いってらっしゃい。",
+        "kanji": "",
+        "romaji": "Itterasshai.",
+        "english": "So long. (said to the person leaving)"
+      },
+      {
+        "kana": "いってきます。",
+        "kanji": "",
+        "romaji": "Ittekimasu.",
+        "english": "So long. (said by the person leaving)"
+      },
+      {
+        "kana": "それに",
+        "kanji": "",
+        "romaji": "soreni",
+        "english": "and, furthermore"
+      }
+    ],
+    "grammar": [
+      {
+        "title": "1. Native Japanese numbers (ひとつ～とお) and counter suffixes",
+        "explanation": "Objects up to ten can be counted with the native series ひとつ～とお; beyond that, plain numbers are used. Different counter suffixes attach to numbers depending on the type of item: 〜人 (people, with exceptions ひとり/ふたり), 〜台 (machines/vehicles), 〜枚 (flat things), 〜回 (times), 〜分/〜時間 (minutes/hours), 〜日 (days, using date-style readings from 2–10), 〜週間, 〜か月, 〜年.",
+        "examples": "りんごを 四つ 買いました。(I bought four apples.) / 外国人の 学生が 二人 います。(There are two foreign students.)"
+      },
+      {
+        "title": "2. Position of quantifiers",
+        "explanation": "Quantifiers (number + counter) are usually placed right before the verb they modify, though this is not always the case with lengths of time.",
+        "examples": "国で 2か月 日本語を 勉強しました。(I studied Japanese for two months in my country.)"
+      },
+      {
+        "title": "3. いくつ／なんにん／etc. — asking quantity",
+        "explanation": "いくつ asks 'how many' for things counted with ひとつ〜とお; other counter-specific interrogatives (何人, 何枚, 何回...) are used for their respective counters.",
+        "examples": "みかんを いくつ 買いましたか。― 8つ 買いました。(How many mandarin oranges did you buy? — I bought eight.)"
+      },
+      {
+        "title": "4. ～だけ — only",
+        "explanation": "だけ restricts the preceding element to an exact/limited amount.",
+        "examples": "3か月だけ 勉強しました。(I studied for only three months.)"
+      },
+      {
+        "title": "5. ～ぐらい — about, approximately",
+        "explanation": "Attached after a quantity to indicate an approximation.",
+        "examples": "1週間に 2回ぐらい テニスを します。(I play tennis about twice a week.)"
+      },
+      {
+        "title": "6. どのくらい — how long/how much",
+        "explanation": "Asks about the extent, duration, or amount of something.",
+        "examples": "大阪から 東京まで 新幹線で どのくらい かかりますか。― 2時間半ぐらい かかります。(How long does it take from Osaka to Tokyo by Shinkansen? — About two and a half hours.)"
+      }
+    ]
+  },
+  "12": {
+    "vocab": [
+      {
+        "kana": "おもい",
+        "kanji": "重い",
+        "romaji": "omoi",
+        "english": "heavy"
+      },
+      {
+        "kana": "かるい",
+        "kanji": "軽い",
+        "romaji": "karui",
+        "english": "light"
+      },
+      {
+        "kana": "[～のほうが] すきです",
+        "kanji": "[～の方が] 好きです",
+        "romaji": "[~no hou ga] suki desu",
+        "english": "prefer [coffee]"
+      },
+      {
+        "kana": "きせつ",
+        "kanji": "季節",
+        "romaji": "kisetsu",
+        "english": "season"
+      },
+      {
+        "kana": "はる",
+        "kanji": "春",
+        "romaji": "haru",
+        "english": "spring"
+      },
+      {
+        "kana": "なつ",
+        "kanji": "夏",
+        "romaji": "natsu",
+        "english": "summer"
+      },
+      {
+        "kana": "あき",
+        "kanji": "秋",
+        "romaji": "aki",
+        "english": "autumn, fall"
+      },
+      {
+        "kana": "ふゆ",
+        "kanji": "冬",
+        "romaji": "fuyu",
+        "english": "winter"
+      },
+      {
+        "kana": "てんき",
+        "kanji": "天気",
+        "romaji": "tenki",
+        "english": "weather"
+      },
+      {
+        "kana": "あめ",
+        "kanji": "雨",
+        "romaji": "ame",
+        "english": "rain, rainy"
+      },
+      {
+        "kana": "ゆき",
+        "kanji": "雪",
+        "romaji": "yuki",
+        "english": "snow, snowy"
+      },
+      {
+        "kana": "くもり",
+        "kanji": "曇り",
+        "romaji": "kumori",
+        "english": "cloudy"
+      },
+      {
+        "kana": "ホテル",
+        "kanji": "",
+        "romaji": "hoteru",
+        "english": "hotel"
+      },
+      {
+        "kana": "くうこう",
+        "kanji": "空港",
+        "romaji": "kuukou",
+        "english": "airport"
+      },
+      {
+        "kana": "うみ",
+        "kanji": "海",
+        "romaji": "umi",
+        "english": "sea, ocean"
+      },
+      {
+        "kana": "せかい",
+        "kanji": "世界",
+        "romaji": "sekai",
+        "english": "world"
+      },
+      {
+        "kana": "パーティー",
+        "kanji": "",
+        "romaji": "paatii",
+        "english": "party (パーティーを します: give a party)"
+      },
+      {
+        "kana": "[お]まつり",
+        "kanji": "[お]祭り",
+        "romaji": "[o]matsuri",
+        "english": "festival"
+      },
+      {
+        "kana": "しけん",
+        "kanji": "試験",
+        "romaji": "shiken",
+        "english": "examination"
+      },
+      {
+        "kana": "すきやき",
+        "kanji": "すき焼き",
+        "romaji": "sukiyaki",
+        "english": "sukiyaki (beef and vegetable hot pot)"
+      },
+      {
+        "kana": "さしみ",
+        "kanji": "刺身",
+        "romaji": "sashimi",
+        "english": "sashimi (sliced raw fish)"
+      },
+      {
+        "kana": "[お]すし",
+        "kanji": "[お]寿司",
+        "romaji": "[o]sushi",
+        "english": "sushi (vinegared rice topped with raw fish)"
+      },
+      {
+        "kana": "てんぷら",
+        "kanji": "天ぷら",
+        "romaji": "tenpura",
+        "english": "tempura (seafood and vegetables deep fried in batter)"
+      },
+      {
+        "kana": "いけばな",
+        "kanji": "生け花",
+        "romaji": "ikebana",
+        "english": "flower arrangement (生け花を します: practice flower arrangement)"
+      },
+      {
+        "kana": "もみじ",
+        "kanji": "紅葉",
+        "romaji": "momiji",
+        "english": "maple, red leaves of autumn"
+      },
+      {
+        "kana": "どちら",
+        "kanji": "",
+        "romaji": "dochira",
+        "english": "which one (between two things)"
+      },
+      {
+        "kana": "どちらも",
+        "kanji": "",
+        "romaji": "dochira mo",
+        "english": "both"
+      },
+      {
+        "kana": "ずっと",
+        "kanji": "",
+        "romaji": "zutto",
+        "english": "by far"
+      },
+      {
+        "kana": "はじめて",
+        "kanji": "初めて",
+        "romaji": "hajimete",
+        "english": "for the first time"
+      },
+      {
+        "kana": "ただいま。",
+        "kanji": "",
+        "romaji": "Tadaima.",
+        "english": "I'm home."
+      },
+      {
+        "kana": "おかえりなさい。",
+        "kanji": "お帰りなさい。",
+        "romaji": "Okaerinasai.",
+        "english": "Welcome home."
+      },
+      {
+        "kana": "すごいですね。",
+        "kanji": "",
+        "romaji": "Sugoi desu ne.",
+        "english": "That's amazing."
+      },
+      {
+        "kana": "でも",
+        "kanji": "",
+        "romaji": "demo",
+        "english": "but"
+      },
+      {
+        "kana": "つかれました。",
+        "kanji": "疲れました。",
+        "romaji": "Tsukaremashita.",
+        "english": "(I'm) tired."
+      }
+    ],
+    "grammar": [
+      {
+        "title": "1. Past tense of noun／な-adjective sentences",
+        "explanation": "です → でした (affirmative past); じゃありません → じゃありませんでした (negative past).",
+        "examples": "きのうは 雨でした。(It was rainy yesterday.) / きのうの試験は 簡単じゃ ありませんでした。"
+      },
+      {
+        "title": "2. Past tense of い-adjective sentences",
+        "explanation": "～い → ～かったです (affirmative past); ～いです → ～くなかったです (negative past). (いい is irregular: よかったです.)",
+        "examples": "きのうは 暑かったです。(It was hot yesterday.) / パーティーは あまり 楽しく なかったです。"
+      },
+      {
+        "title": "3. N1は N2より adjective です — comparison",
+        "explanation": "Describes N1's quality relative to N2, using より ('than').",
+        "examples": "この車は あの車より 大きいです。(This car is bigger than that car.)"
+      },
+      {
+        "title": "4. N1と N2と どちらが adjective ですか",
+        "explanation": "Asks the listener to choose between two items; どちら is always the interrogative used for a two-item comparison.",
+        "examples": "野球と サッカーと どちらが 面白いですか。― サッカーのほうが 面白いです。(Which is more interesting, baseball or soccer? — Soccer is.)"
+      },
+      {
+        "title": "5. N(group)で 何が いちばん adjective ですか — superlative among 3+",
+        "explanation": "Asks the listener to choose the most '~' from a category/group of three or more; the interrogative depends on the category (何, どこ, だれ, いつ, etc.).",
+        "examples": "日本の料理で 何が いちばん おいしいですか。― てんぷらが いちばん おいしいです。(Of Japanese dishes, what's the most delicious? — Tempura is.)"
+      },
+      {
+        "title": "6. Nが adjective ですか (subject as interrogative)",
+        "explanation": "As in Lesson 10, when the subject is an interrogative, が is used instead of は.",
+        "examples": "家族で 誰が いちばん 背が 高いですか。― 弟が いちばん 高いです。"
+      }
+    ]
+  }
+}

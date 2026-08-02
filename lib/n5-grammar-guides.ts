@@ -1,438 +1,1223 @@
 // ============================================================
 // MINNA NO NIHONGO JLPT N5 — Complete Grammar Guides (Lessons 1–25)
+// Official explanations & patterns from Minna no Nihongo I textbook
 // Full explanations in English & Nepali with pattern rules and examples
 // ============================================================
 
 import type { LessonGrammarGuide } from './grammar-guide';
 
 export const N5_GRAMMAR_GUIDES: LessonGrammarGuide[] = [
-  // ────────────────────────────────────────────────────────────
-  // LESSON 1
-  // ────────────────────────────────────────────────────────────
   {
-    language: 'JAPANESE', level: 'N5', lesson: 1,
-    lessonTitle: 'Introductions & Identity (自己紹介と身分)',
-    grammarPoints: [
+    "language": "JAPANESE",
+    "level": "N5",
+    "lesson": 1,
+    "lessonTitle": "Introductions & Identity (自己紹介と身分)",
+    "grammarPoints": [
       {
-        title: '1. Topic Marker は & Identity です',
-        pattern: '[N1] は [N2] です',
-        explanationEnglish: 'The particle は (pronounced wa) marks N1 as the sentence topic. です (desu) means "is/am/are" and makes the sentence polite.',
-        explanationNepali: 'は (वा) निपातले वाक्यको मुख्य विषय जनाउँछ। です (देसु) ले "हो/हुँ/हुनुहुन्छ" भन्ने नम्र अर्थ दिन्छ।',
-        examples: [
-          { target: '私は学生です。', reading: 'わたしはがくせいです。', english: 'I am a student.', nepali: 'म विद्यार्थी हुँ।' },
-          { target: 'サントスさんは先生です。', reading: 'サントスさんはせんせいです。', english: 'Mr. Santos is a teacher.', nepali: 'सान्तोस-जी शिक्षक हुनुहुन्छ।' }
+        "title": "1. N は N です",
+        "pattern": "1. N は N です",
+        "explanationEnglish": "The particle は marks the topic of the sentence; a noun is selected as the topic and a statement is made about it. です marks a noun predicate, indicating judgment/assertion and conveying politeness. は here is pronounced 'wa'.",
+        "explanationNepali": "N1 ले विषय र N2 ले पहिचान/गुण जनाउँछ। です ले 'हो/हुन्/हुनुहुन्छ' भन्ने अर्थ दिन्छ।",
+        "examples": [
+          {
+            "target": "わたしはマイク・ミラーです。",
+            "reading": "わたしはマイク・ミラーです。",
+            "english": "I am Mike Miller.",
+            "nepali": "उदाहरण: I am Mike Miller."
+          },
+          {
+            "target": "わたしはエンジニアです。",
+            "reading": "わたしはエンジニアです。",
+            "english": "Example sentence.",
+            "nepali": "उदाहरण: Example sentence."
+          }
         ]
       },
       {
-        title: '2. Negative Form じゃありません / ではありません',
-        pattern: '[N1] は [N2] じゃありません',
-        explanationEnglish: 'じゃありません (ja arimasen) is the polite negative form of です. In formal writing, ではありません (dewa arimasen) is used.',
-        explanationNepali: 'じゃありません ले です को नकारात्मक (होइन) रूप जनाउँछ। औपचारिक लेखनमा ではありません प्रयोग गरिन्छ।',
-        examples: [
-          { target: '私は医者じゃありません。', reading: 'わたしはいしゃじゃありません。', english: 'I am not a doctor.', nepali: 'म डाक्टर होइन।' },
-          { target: 'サントスさんは学生じゃありません。', reading: 'サントスさんはがくせいじゃありません。', english: 'Mr. Santos is not a student.', nepali: 'सान्तोस-जी विद्यार्थी हुनुहुन्न।' }
+        "title": "2. N1は N2じゃ(では) ありません",
+        "pattern": "2. N1は N2じゃ(では) ありません",
+        "explanationEnglish": "じゃありません is the negative form of です, used in daily conversation (ではありません is used in formal speech/writing).",
+        "explanationNepali": "じゃありません (वा ではありません) ले です को नकारात्मक (होइन) रूप जनाउँछ।",
+        "examples": [
+          {
+            "target": "サントスさんは 学生じゃ ありません。",
+            "reading": "サントスさんは 学生じゃ ありません。",
+            "english": "Mr. Santos is not a student.",
+            "nepali": "उदाहरण: Mr. Santos is not a student."
+          }
         ]
       },
       {
-        title: '3. Question Particle か',
-        pattern: '[Sentence] か',
-        explanationEnglish: 'The particle か (ka) turns any sentence into a polite question without altering word order.',
-        explanationNepali: 'वाक्यको अन्त्यमा か (का) थपेर प्रश्न बनाइन्छ।',
-        examples: [
-          { target: 'ミラーさんは会社員ですか。', reading: 'ミラーさんはかいしゃいんですか。', english: 'Is Mr. Miller a company employee?', nepali: 'के मिलर-जी कम्पनी कर्मचारी हुनुहुन्छ?' }
+        "title": "3. N は N か — question with か",
+        "pattern": "3. N は N か — question with か",
+        "explanationEnglish": "A sentence becomes a question by simply adding か to the end, with a rising intonation; word order doesn't change. Answers begin はい or いいえ. Interrogatives replace the part being asked about, and か is still added at the end.",
+        "explanationNepali": "वाक्यको अन्त्यमा か थपेर प्रश्न बनाइन्छ। वाक्यको पदक्रम परिवर्तन गर्नु पर्दैन।",
+        "examples": [
+          {
+            "target": "ミラーさんは アメリカ人ですか。― はい、アメリカ人です。",
+            "reading": "ミラーさんは アメリカ人ですか。― はい、アメリカ人です。",
+            "english": "Example sentence.",
+            "nepali": "उदाहरण: Example sentence."
+          },
+          {
+            "target": "あの人は どなたですか。― ミラーさんです。",
+            "reading": "あの人は どなたですか。― ミラーさんです。",
+            "english": "Example sentence.",
+            "nepali": "उदाहरण: Example sentence."
+          }
         ]
       },
       {
-        title: '4. Also Particle も & Possessive の',
-        pattern: '[N1] も / [N1] の [N2]',
-        explanationEnglish: 'も (mo) means "also/too". の (no) connects two nouns, showing possession or category (N1\'s N2).',
-        explanationNepali: 'も ले "पनि" र の ले "को" (स्वामित्व वा सम्बन्ध) जनाउँछ।',
-        examples: [
-          { target: '私も学生です。', reading: 'わたしもがくせいです。', english: 'I am also a student.', nepali: 'म पनि विद्यार्थी हुँ।' },
-          { target: 'これは私の本です。', reading: 'これはわたしのほんです。', english: 'This is my book.', nepali: 'यो मेरो किताब हो।' }
+        "title": "4. N も",
+        "pattern": "4. N も",
+        "explanationEnglish": "も is used after a topic instead of は when the statement about it matches the previous topic.",
+        "explanationNepali": "も निपातले 'पनि' (also/too) भन्ने अर्थ दिन्छ र は को सट्टामा प्रयोग हुन्छ।",
+        "examples": [
+          {
+            "target": "ミラーさんは 会社員です。グプタさんも 会社員です。",
+            "reading": "ミラーさんは 会社員です。グプタさんも 会社員です。",
+            "english": "Mr. Miller is a company employee. Mr. Gupta is also a company employee.",
+            "nepali": "उदाहरण: Mr. Miller is a company employee. Mr. Gupta is also a company employee."
+          }
+        ]
+      },
+      {
+        "title": "5. N1の N2",
+        "pattern": "5. N1の N2",
+        "explanationEnglish": "の connects two nouns; N1 modifies N2. In Lesson 1, N1 is an organization or group N2 belongs to.",
+        "explanationNepali": "の निपातले दुई नामपदलाई जोड्छ र स्वामित्व (को/का/की) वा सम्बन्ध जनाउँछ।",
+        "examples": [
+          {
+            "target": "ミラーさんは IMCの 社員です。",
+            "reading": "ミラーさんは IMCの 社員です。",
+            "english": "Mr. Miller is an employee of IMC.",
+            "nepali": "उदाहरण: Mr. Miller is an employee of IMC."
+          }
+        ]
+      },
+      {
+        "title": "6. ～さん",
+        "pattern": "6. ～さん",
+        "explanationEnglish": "さん is added to the listener's or a third person's name to show respect; it is never used with the speaker's own name.",
+        "explanationNepali": "さん is added to the listener's or a third person's name to show respect; it is never used with the speaker's own name. को आधारमा व्याकरणिक नियम।",
+        "examples": [
+          {
+            "target": "あの方は ミラーさんです。",
+            "reading": "あの方は ミラーさんです。",
+            "english": "That's Mr. Miller.",
+            "nepali": "उदाहरण: That's Mr. Miller."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "language": "JAPANESE",
+    "level": "N5",
+    "lesson": 2,
+    "lessonTitle": "Demonstratives & Belongings (指示詞と所有物)",
+    "grammarPoints": [
+      {
+        "title": "1. これ／それ／あれ",
+        "pattern": "1. これ／それ／あれ",
+        "explanationEnglish": "Demonstrative pronouns functioning as nouns. これ refers to a thing near the speaker; それ, near the listener; あれ, far from both.",
+        "explanationNepali": "これ (यो), それ (त्यो), あれ (त्यो पर) वस्तु जनाउने सर्वनाम हुन्।",
+        "examples": [
+          {
+            "target": "それは 辞書ですか。",
+            "reading": "それは 辞書ですか。",
+            "english": "Is that a dictionary?",
+            "nepali": "उदाहरण: Is that a dictionary?"
+          }
+        ]
+      },
+      {
+        "title": "2. この／その／あの + N",
+        "pattern": "2. この／その／あの + N",
+        "explanationEnglish": "These modify nouns (never stand alone). このN = a thing/person near the speaker; そのN = near the listener; あのN = far from both.",
+        "explanationNepali": "の निपातले दुई नामपदलाई जोड्छ र स्वामित्व (को/का/की) वा सम्बन्ध जनाउँछ।",
+        "examples": [
+          {
+            "target": "この本は わたしのです。",
+            "reading": "この本は わたしのです。",
+            "english": "This book is mine.",
+            "nepali": "उदाहरण: This book is mine."
+          },
+          {
+            "target": "あの人は どなたですか。",
+            "reading": "あの人は どなたですか。",
+            "english": "Example sentence.",
+            "nepali": "उदाहरण: Example sentence."
+          }
+        ]
+      },
+      {
+        "title": "3. そうです／そうじゃありません",
+        "pattern": "3. そうです／そうじゃありません",
+        "explanationEnglish": "In noun sentences, そうです is often used to answer yes/no questions affirmatively; そうじゃ(では)ありません negatively. 違います can also mean 'No, that's not right.'",
+        "explanationNepali": "N1 ले विषय र N2 ले पहिचान/गुण जनाउँछ। です ले 'हो/हुन्/हुनुहुन्छ' भन्ने अर्थ दिन्छ।",
+        "examples": [
+          {
+            "target": "それは テレホンカードですか。― はい、そうです。／いいえ、そうじゃ ありません。",
+            "reading": "それは テレホンカードですか。― はい、そうです。／いいえ、そうじゃ ありません。",
+            "english": "Example sentence.",
+            "nepali": "उदाहरण: Example sentence."
+          }
+        ]
+      },
+      {
+        "title": "4. S1か、S2か",
+        "pattern": "4. S1か、S2か",
+        "explanationEnglish": "Asks the listener to choose between two alternatives; the answer states the chosen option directly (without はい/いいえ).",
+        "explanationNepali": "वाक्यको अन्त्यमा か थपेर प्रश्न बनाइन्छ। वाक्यको पदक्रम परिवर्तन गर्नु पर्दैन।",
+        "examples": [
+          {
+            "target": "これは '9' ですか、'7' ですか。― '9' です。",
+            "reading": "これは '9' ですか、'7' ですか。― '9' です。",
+            "english": "Example sentence.",
+            "nepali": "उदाहरण: Example sentence."
+          }
+        ]
+      },
+      {
+        "title": "5. N1の N2",
+        "pattern": "5. N1の N2",
+        "explanationEnglish": "の connecting two nouns can also mean: (1) N1 explains what N2 is about, or (2) N1 explains who owns N2. N1 can be omitted if obvious, but not when N1 denotes a person.",
+        "explanationNepali": "も निपातले 'पनि' (also/too) भन्ने अर्थ दिन्छ र は को सट्टामा प्रयोग हुन्छ।",
+        "examples": [
+          {
+            "target": "これは コンピューターの 本です。",
+            "reading": "これは コンピューターの 本です。",
+            "english": "This is a book on computers.",
+            "nepali": "उदाहरण: This is a book on computers."
+          },
+          {
+            "target": "これは わたしの 本です。",
+            "reading": "これは わたしの 本です。",
+            "english": "This is my book.",
+            "nepali": "उदाहरण: This is my book."
+          }
+        ]
+      },
+      {
+        "title": "6. そうですか",
+        "pattern": "6. そうですか",
+        "explanationEnglish": "Used when the speaker receives new information and shows understanding of it.",
+        "explanationNepali": "N1 ले विषय र N2 ले पहिचान/गुण जनाउँछ। です ले 'हो/हुन्/हुनुहुन्छ' भन्ने अर्थ दिन्छ।",
+        "examples": [
+          {
+            "target": "このかさは ミラーさんのですか。― いいえ、シュミットさんのです。― そうですか。",
+            "reading": "このかさは ミラーさんのですか。― いいえ、シュミットさんのです。― そうですか。",
+            "english": "Example sentence.",
+            "nepali": "उदाहरण: Example sentence."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "language": "JAPANESE",
+    "level": "N5",
+    "lesson": 3,
+    "lessonTitle": "Places & Directions (場所と方向)",
+    "grammarPoints": [
+      {
+        "title": "1. ここ／そこ／あそこ, こちら／そちら／あちら",
+        "pattern": "1. ここ／そこ／あそこ, こちら／そちら／あちら",
+        "explanationEnglish": "These demonstratives refer to a place, unlike これ／それ／あれ (Lesson 2), which refer to a thing. こちら等 are politer than ここ等 and can also indicate direction.",
+        "explanationNepali": "も निपातले 'पनि' (also/too) भन्ने अर्थ दिन्छ र は को सट्टामा प्रयोग हुन्छ।",
+        "examples": [
+          {
+            "target": "電話は あそこです。",
+            "reading": "電話は あそこです。",
+            "english": "The telephone is over there.",
+            "nepali": "उदाहरण: The telephone is over there."
+          }
+        ]
+      },
+      {
+        "title": "2. N1は N2(place)です",
+        "pattern": "2. N1は N2(place)です",
+        "explanationEnglish": "Explains where a place, thing, or person is.",
+        "explanationNepali": "N1 ले विषय र N2 ले पहिचान/गुण जनाउँछ। です ले 'हो/हुन्/हुनुहुन्छ' भन्ने अर्थ दिन्छ।",
+        "examples": [
+          {
+            "target": "お手洗いは あそこです。",
+            "reading": "お手洗いは あそこです。",
+            "english": "The rest room is over there.",
+            "nepali": "उदाहरण: The rest room is over there."
+          },
+          {
+            "target": "山田さんは 事務所です。",
+            "reading": "山田さんは 事務所です。",
+            "english": "Mr. Yamada is in the office.",
+            "nepali": "उदाहरण: Mr. Yamada is in the office."
+          }
+        ]
+      },
+      {
+        "title": "3. どこ／どちら",
+        "pattern": "3. どこ／どちら",
+        "explanationEnglish": "どこ = where; どちら also means 'where' (politer) or 'which direction,' and is used to ask the name of a country, company, or school (なに cannot be used for this).",
+        "explanationNepali": "も निपातले 'पनि' (also/too) भन्ने अर्थ दिन्छ र は को सट्टामा प्रयोग हुन्छ।",
+        "examples": [
+          {
+            "target": "お国は どちらですか。",
+            "reading": "お国は どちらですか。",
+            "english": "Where are you from?",
+            "nepali": "उदाहरण: Where are you from?"
+          },
+          {
+            "target": "会社は どちらですか。",
+            "reading": "会社は どちらですか。",
+            "english": "What company do you work for?",
+            "nepali": "उदाहरण: What company do you work for?"
+          }
+        ]
+      },
+      {
+        "title": "4. N1の N2 (origin/maker)",
+        "pattern": "4. N1の N2 (origin/maker)",
+        "explanationEnglish": "When N1 is a country or company and N2 is a product, の shows N2 is made in/by N1. どこ asks where/by whom N2 is made.",
+        "explanationNepali": "の निपातले दुई नामपदलाई जोड्छ र स्वामित्व (को/का/की) वा सम्बन्ध जनाउँछ।",
+        "examples": [
+          {
+            "target": "これは どこの コンピューターですか。― 日本の コンピューターです。",
+            "reading": "これは どこの コンピューターですか。― 日本の コンピューターです。",
+            "english": "Where is this computer made? — It's made in Japan.",
+            "nepali": "उदाहरण: Where is this computer made? — It's made in Japan."
+          }
+        ]
+      },
+      {
+        "title": "5. こ／そ／あ／ど demonstrative system",
+        "pattern": "5. こ／そ／あ／ど demonstrative system",
+        "explanationEnglish": "A full paradigm table: things (これ/それ/あれ/どれ), things-modifying (この/その/あの/どの), people (この方 etc., L.16), places (ここ/そこ/あそこ/どこ), directions (こちら/そちら/あちら/どちら).",
+        "explanationNepali": "へ (ए) निपातले गन्तव्य वा प्रस्थानको दिशा जनाउँछ।",
+        "examples": [
+          {
+            "target": "例です。",
+            "reading": "れいです。",
+            "english": "This is an example.",
+            "nepali": "यो एउटा उदाहरण हो।"
+          }
+        ]
+      },
+      {
+        "title": "6. お～",
+        "pattern": "6. お～",
+        "explanationEnglish": "The prefix お is added to a word regarding the listener or a third person to express respect.",
+        "explanationNepali": "The prefix お is added to a word regarding the listener or a third person to express respect. को आधारमा व्याकरणिक नियम।",
+        "examples": [
+          {
+            "target": "お国は どちらですか。",
+            "reading": "お国は どちらですか。",
+            "english": "Where are you from?",
+            "nepali": "उदाहरण: Where are you from?"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "language": "JAPANESE",
+    "level": "N5",
+    "lesson": 4,
+    "lessonTitle": "Time, Daily Routines & Days (時間と日課)",
+    "grammarPoints": [
+      {
+        "title": "1. ～じ～ふん",
+        "pattern": "1. ～じ～ふん",
+        "explanationEnglish": "Time is expressed using the counter suffixes 時 (o'clock) and 分 (minutes), placed after numbers. 何時 asks the time.",
+        "explanationNepali": "Time is expressed using the counter suffixes 時 (o'clock) and 分 (minutes), placed after numbers. 何時 asks the time. को आधारमा व्याकरणिक नियम।",
+        "examples": [
+          {
+            "target": "今、何時ですか。― 7時10分です。",
+            "reading": "今、何時ですか。― 7時10分です。",
+            "english": "What time is it now? — It's 7:10.",
+            "nepali": "उदाहरण: What time is it now? — It's 7:10."
+          }
+        ]
+      },
+      {
+        "title": "2. ～ます",
+        "pattern": "2. ～ます",
+        "explanationEnglish": "Verbs ending in ます work as predicates; ます makes the sentence polite.",
+        "explanationNepali": "Verbs ending in ます work as predicates; ます makes the sentence polite. को आधारमा व्याकरणिक नियम।",
+        "examples": [
+          {
+            "target": "わたしは 毎日 勉強します。",
+            "reading": "わたしは 毎日 勉強します。",
+            "english": "I study every day.",
+            "nepali": "उदाहरण: I study every day."
+          }
+        ]
+      },
+      {
+        "title": "3. Vます／Vません／Vました／Vませんでした",
+        "pattern": "3. Vます／Vません／Vました／Vませんでした",
+        "explanationEnglish": "ます is used for habitual actions, general truths, or future events. Non-past/past and affirmative/negative forms follow a regular table. Questions are formed the same way as noun sentences (add か).",
+        "explanationNepali": "じゃありません (वा ではありません) ले です को नकारात्मक (होइन) रूप जनाउँछ।",
+        "examples": [
+          {
+            "target": "毎朝 6時に 起きます。",
+            "reading": "毎朝 6時に 起きます。",
+            "english": "I get up at 6 every morning.",
+            "nepali": "उदाहरण: I get up at 6 every morning."
+          },
+          {
+            "target": "今朝 6時に 起きました。",
+            "reading": "今朝 6時に 起きました。",
+            "english": "I got up at 6 this morning.",
+            "nepali": "उदाहरण: I got up at 6 this morning."
+          }
+        ]
+      },
+      {
+        "title": "4. ～から～まで",
+        "pattern": "4. ～から～まで",
+        "explanationEnglish": "Marks the starting and ending points of a time range (or place). から and まで need not always be used together; です can be attached directly after either.",
+        "explanationNepali": "वाक्यको अन्त्यमा か थपेर प्रश्न बनाइन्छ। वाक्यको पदक्रम परिवर्तन गर्नु पर्दैन।",
+        "examples": [
+          {
+            "target": "9時から 5時まで 働きます。",
+            "reading": "9時から 5時まで 働きます。",
+            "english": "I work from 9 to 5.",
+            "nepali": "उदाहरण: I work from 9 to 5."
+          },
+          {
+            "target": "銀行は 9時から 3時までです。",
+            "reading": "銀行は 9時から 3時までです。",
+            "english": "Example sentence.",
+            "nepali": "उदाहरण: Example sentence."
+          }
+        ]
+      },
+      {
+        "title": "5. N1と N2",
+        "pattern": "5. N1と N2",
+        "explanationEnglish": "The particle と connects two nouns in a coordinate (equal) relationship.",
+        "explanationNepali": "The particle と connects two nouns in a coordinate (equal) relationship. को आधारमा व्याकरणिक नियम।",
+        "examples": [
+          {
+            "target": "銀行は 土曜日と 日曜日は 休みです。",
+            "reading": "銀行は 土曜日と 日曜日は 休みです。",
+            "english": "The bank is closed on Saturdays and Sundays.",
+            "nepali": "उदाहरण: The bank is closed on Saturdays and Sundays."
+          }
+        ]
+      },
+      {
+        "title": "6. ね (sentence-final particle)",
+        "pattern": "6. ね (sentence",
+        "explanationEnglish": "Added at the end of a sentence to add feeling — expressing sympathy or seeking the listener's agreement/confirmation.",
+        "explanationNepali": "Added at the end of a sentence to add feeling — expressing sympathy or seeking the listener's agreement/confirmation. को आधारमा व्याकरणिक नियम।",
+        "examples": [
+          {
+            "target": "それは たいへんですね。",
+            "reading": "それは たいへんですね。",
+            "english": "That must be hard, isn't it?",
+            "nepali": "उदाहरण: That must be hard, isn't it?"
+          },
+          {
+            "target": "871-6813ですね。",
+            "reading": "871-6813ですね。",
+            "english": "That's 871-6813, right?",
+            "nepali": "उदाहरण: That's 871-6813, right?"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "language": "JAPANESE",
+    "level": "N5",
+    "lesson": 5,
+    "lessonTitle": "Movement, Transportation & Dates (移動と交通)",
+    "grammarPoints": [
+      {
+        "title": "1. N(place)へ 行きます／来ます／帰ります",
+        "pattern": "1. N(place)へ 行きます／来ます／帰ります",
+        "explanationEnglish": "へ marks the direction of movement (goal). へ used this way is read 'e'.",
+        "explanationNepali": "へ (ए) निपातले गन्तव्य वा प्रस्थानको दिशा जनाउँछ।",
+        "examples": [
+          {
+            "target": "京都へ 行きます。",
+            "reading": "京都へ 行きます。",
+            "english": "I will go to Kyoto.",
+            "nepali": "उदाहरण: I will go to Kyoto."
+          }
+        ]
+      },
+      {
+        "title": "2. N(vehicle)で 行きます／来ます／帰ります",
+        "pattern": "2. N(vehicle)で 行きます／来ます／帰ります",
+        "explanationEnglish": "で marks the means of transportation.",
+        "explanationNepali": "で निपातले माध्यम, सवारी साधन वा प्रयोग गरिएको साधन जनाउँछ।",
+        "examples": [
+          {
+            "target": "タクシーで 帰ります。",
+            "reading": "タクシーで 帰ります。",
+            "english": "I will go home by taxi.",
+            "nepali": "उदाहरण: I will go home by taxi."
+          },
+          {
+            "target": "歩いて 帰ります。",
+            "reading": "歩いて 帰ります。",
+            "english": "I go home on foot — no で with 歩いて.",
+            "nepali": "उदाहरण: I go home on foot — no で with 歩いて."
+          }
+        ]
+      },
+      {
+        "title": "3. N(person)と 行きます／来ます／帰ります",
+        "pattern": "3. N(person)と 行きます／来ます／帰ります",
+        "explanationEnglish": "と marks the person one does something with. If alone, ひとりで is used instead (と is not used).",
+        "explanationNepali": "と निपातले 'सँग' (with) भन्ने अर्थ दिन्छ।",
+        "examples": [
+          {
+            "target": "家族と 日本へ 来ました。",
+            "reading": "家族と 日本へ 来ました。",
+            "english": "I came to Japan with my family.",
+            "nepali": "उदाहरण: I came to Japan with my family."
+          },
+          {
+            "target": "一人で 東京へ 行きます。",
+            "reading": "一人で 東京へ 行きます。",
+            "english": "I'll go to Tokyo alone.",
+            "nepali": "उदाहरण: I'll go to Tokyo alone."
+          }
+        ]
+      },
+      {
+        "title": "4. いつ",
+        "pattern": "4. いつ",
+        "explanationEnglish": "いつ (when) is used without a particle, unlike time-counter interrogatives such as 何時 or 何日, which use に.",
+        "explanationNepali": "いつ (when) is used without a particle, unlike time-counter interrogatives such as 何時 or 何日, which use に. को आधारमा व्याकरणिक नियम।",
+        "examples": [
+          {
+            "target": "日本へ いつ 来ましたか。― 3月25日に 来ました。",
+            "reading": "日本へ いつ 来ましたか。― 3月25日に 来ました。",
+            "english": "When did you come to Japan? — I came on March 25th.",
+            "nepali": "उदाहरण: When did you come to Japan? — I came on March 25th."
+          }
+        ]
+      },
+      {
+        "title": "5. よ (sentence-final particle)",
+        "pattern": "5. よ (sentence",
+        "explanationEnglish": "Placed at the end of a sentence to emphasize information the listener doesn't know, or to state one's view assertively.",
+        "explanationNepali": "Placed at the end of a sentence to emphasize information the listener doesn't know, or to state one's view assertively. को आधारमा व्याकरणिक नियम।",
+        "examples": [
+          {
+            "target": "この電車は 甲子園へ 行きますか。― いいえ、行きません。次の各駅停車が 行きますよ。",
+            "reading": "この電車は 甲子園へ 行きますか。― いいえ、行きません。次の各駅停車が 行きますよ。",
+            "english": "Example sentence.",
+            "nepali": "उदाहरण: Example sentence."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "language": "JAPANESE",
+    "level": "N5",
+    "lesson": 6,
+    "lessonTitle": "Direct Objects & Daily Actions (目的語と行動)",
+    "grammarPoints": [
+      {
+        "title": "1. Vます-form を Vます (transitive verbs)",
+        "pattern": "1. Vます",
+        "explanationEnglish": "を marks the direct object of the verb.",
+        "explanationNepali": "を (ओ) निपातले सकर्मक क्रियाको प्रत्यक्ष कर्म (Direct Object) जनाउँछ।",
+        "examples": [
+          {
+            "target": "わたしは ジュースを 飲みます。",
+            "reading": "わたしは ジュースを 飲みます。",
+            "english": "I drink juice.",
+            "nepali": "उदाहरण: I drink juice."
+          }
+        ]
+      },
+      {
+        "title": "2. N(place)で V",
+        "pattern": "2. N(place)で V",
+        "explanationEnglish": "で marks the location where an action takes place (distinct from に used for existence, L.10).",
+        "explanationNepali": "で निपातले कार्य सम्पादन हुने स्थान जनाउँछ।",
+        "examples": [
+          {
+            "target": "駅で 新聞を 買います。",
+            "reading": "駅で 新聞を 買います。",
+            "english": "I buy a newspaper at the station.",
+            "nepali": "उदाहरण: I buy a newspaper at the station."
+          }
+        ]
+      },
+      {
+        "title": "3. S1。それから、S2。",
+        "pattern": "3. S1。それから、S2。",
+        "explanationEnglish": "それから connects two sentences to show sequence — 'and then.'",
+        "explanationNepali": "वाक्यको अन्त्यमा か थपेर प्रश्न बनाइन्छ। वाक्यको पदक्रम परिवर्तन गर्नु पर्दैन।",
+        "examples": [
+          {
+            "target": "日本語を 勉強しました。それから、映画を 見ました。",
+            "reading": "日本語を 勉強しました。それから、映画を 見ました。",
+            "english": "I studied Japanese. Then I saw a movie.",
+            "nepali": "उदाहरण: I studied Japanese. Then I saw a movie."
+          }
+        ]
+      },
+      {
+        "title": "4. 一緒に Vませんか — won't you join me?",
+        "pattern": "4. 一緒に Vませんか — won't you join me?",
+        "explanationEnglish": "Vませんか invites the listener to do something together.",
+        "explanationNepali": "वाक्यको अन्त्यमा か थपेर प्रश्न बनाइन्छ। वाक्यको पदक्रम परिवर्तन गर्नु पर्दैन।",
+        "examples": [
+          {
+            "target": "一緒に 神戸へ 行きませんか。",
+            "reading": "一緒に 神戸へ 行きませんか。",
+            "english": "Won't you come to Kobe with me?",
+            "nepali": "उदाहरण: Won't you come to Kobe with me?"
+          },
+          {
+            "target": "ちょっと 休みましょう。",
+            "reading": "ちょっと 休みましょう。",
+            "english": "Let's take a short rest.",
+            "nepali": "उदाहरण: Let's take a short rest."
+          }
+        ]
+      },
+      {
+        "title": "5. Vませんか vs. Vましょう",
+        "pattern": "5. Vませんか vs. Vましょう",
+        "explanationEnglish": "Vませんか politely invites/asks the listener's will; Vましょう is used when the speaker is confident the listener will agree, or to actively suggest doing something together.",
+        "explanationNepali": "वाक्यको अन्त्यमा か थपेर प्रश्न बनाइन्छ। वाक्यको पदक्रम परिवर्तन गर्नु पर्दैन।",
+        "examples": [
+          {
+            "target": "一緒に 昼ご飯を 食べませんか。― ええ、食べましょう。",
+            "reading": "一緒に 昼ご飯を 食べませんか。― ええ、食べましょう。",
+            "english": "Won't you have lunch with me? — Yes, let's eat.",
+            "nepali": "उदाहरण: Won't you have lunch with me? — Yes, let's eat."
+          }
+        ]
+      },
+      {
+        "title": "6. お～ (review)",
+        "pattern": "6. お～ (review)",
+        "explanationEnglish": "As in Lesson 3, お is attached to words related to the listener, and also to various words when the speaker wants to sound polite (お酒, お花見); some words are habitually used with お without implying respect (お茶, お金).",
+        "explanationNepali": "も निपातले 'पनि' (also/too) भन्ने अर्थ दिन्छ र は को सट्टामा प्रयोग हुन्छ।",
+        "examples": [
+          {
+            "target": "例です。",
+            "reading": "れいです。",
+            "english": "This is an example.",
+            "nepali": "यो एउटा उदाहरण हो।"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "language": "JAPANESE",
+    "level": "N5",
+    "lesson": 7,
+    "lessonTitle": "Tools, Giving & Receiving (道具と授受)",
+    "grammarPoints": [
+      {
+        "title": "1. N1は N2に Nを あげます／貸します／教えます／etc.",
+        "pattern": "1. N1は N2に Nを あげます／貸します／教えます／etc.",
+        "explanationEnglish": "N1 gives/lends/teaches N to N2; the recipient is marked with に.",
+        "explanationNepali": "を (ओ) निपातले सकर्मक क्रियाको प्रत्यक्ष कर्म (Direct Object) जनाउँछ।",
+        "examples": [
+          {
+            "target": "わたしは 木村さんに 花を あげます。",
+            "reading": "わたしは 木村さんに 花を あげます。",
+            "english": "I will give some flowers to Ms. Kimura.",
+            "nepali": "उदाहरण: I will give some flowers to Ms. Kimura."
+          }
+        ]
+      },
+      {
+        "title": "2. N1は N2に Nを もらいます／借ります／習います",
+        "pattern": "2. N1は N2に Nを もらいます／借ります／習います",
+        "explanationEnglish": "N1 receives/borrows/learns from N2; the source/giver is marked with に (or から for things like letters/money).",
+        "explanationNepali": "も निपातले 'पनि' (also/too) भन्ने अर्थ दिन्छ र は को सट्टामा प्रयोग हुन्छ।",
+        "examples": [
+          {
+            "target": "わたしは カリナさんに チョコレートを もらいました。",
+            "reading": "わたしは カリナさんに チョコレートを もらいました。",
+            "english": "I received some chocolates from Ms. Karina.",
+            "nepali": "उदाहरण: I received some chocolates from Ms. Karina."
+          }
+        ]
+      },
+      {
+        "title": "3. N(method/means)で — by means of",
+        "pattern": "3. N(method/means)で — by means of",
+        "explanationEnglish": "で, previously used for transportation (L.5) and location (L.6), is also used to mark the tool, material, or language/method by which an action is carried out.",
+        "explanationNepali": "も निपातले 'पनि' (also/too) भन्ने अर्थ दिन्छ र は को सट्टामा प्रयोग हुन्छ।",
+        "examples": [
+          {
+            "target": "わたしは ワープロで 手紙を 書きます。",
+            "reading": "わたしは ワープロで 手紙を 書きます。",
+            "english": "I write letters with a word processor.",
+            "nepali": "उदाहरण: I write letters with a word processor."
+          },
+          {
+            "target": "レポートは 日本語で 書きます。",
+            "reading": "レポートは 日本語で 書きます。",
+            "english": "Example sentence.",
+            "nepali": "उदाहरण: Example sentence."
+          }
+        ]
+      },
+      {
+        "title": "4. ～は 日本語で 何と 言いますか — how do you say ~ in Japanese?",
+        "pattern": "4. ～は 日本語で 何と 言いますか — how do you say ~ in Japanese?",
+        "explanationEnglish": "Asks how to express something in a given language, using 何と言いますか.",
+        "explanationNepali": "वाक्यको अन्त्यमा か थपेर प्रश्न बनाइन्छ। वाक्यको पदक्रम परिवर्तन गर्नु पर्दैन।",
+        "examples": [
+          {
+            "target": "'Good-bye' は 日本語で 何と言いますか。― 'さようなら' です。",
+            "reading": "'Good-bye' は 日本語で 何と言いますか。― 'さようなら' です。",
+            "english": "Example sentence.",
+            "nepali": "उदाहरण: Example sentence."
+          }
+        ]
+      },
+      {
+        "title": "5. もう／まだ + affirmative／negative",
+        "pattern": "5. もう／まだ + affirmative／negative",
+        "explanationEnglish": "もう + affirmative = already done; まだ + negative = not yet done.",
+        "explanationNepali": "じゃありません (वा ではありません) ले です को नकारात्मक (होइन) रूप जनाउँछ।",
+        "examples": [
+          {
+            "target": "もう 昼ご飯を 食べましたか。― いいえ、まだです。今から 食べます。",
+            "reading": "もう 昼ご飯を 食べましたか。― いいえ、まだです。今から 食べます。",
+            "english": "Have you had lunch? — Not yet. I'm going to eat now.",
+            "nepali": "उदाहरण: Have you had lunch? — Not yet. I'm going to eat now."
+          }
+        ]
+      },
+      {
+        "title": "6. これから",
+        "pattern": "6. これから",
+        "explanationEnglish": "Means 'from now on' or 'soon,' often used in set greetings.",
+        "explanationNepali": "वाक्यको अन्त्यमा か थपेर प्रश्न बनाइन्छ। वाक्यको पदक्रम परिवर्तन गर्नु पर्दैन।",
+        "examples": [
+          {
+            "target": "これから お世話に なります。",
+            "reading": "これから お世話に なります。",
+            "english": "I hope for your kind assistance hereafter, L.2.",
+            "nepali": "उदाहरण: I hope for your kind assistance hereafter, L.2."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "language": "JAPANESE",
+    "level": "N5",
+    "lesson": 8,
+    "lessonTitle": "Adjectives & Qualities (形容詞と性質)",
+    "grammarPoints": [
+      {
+        "title": "1. い-adjective／な-adjective as predicate",
+        "pattern": "1. い",
+        "explanationEnglish": "Both types of adjectives can serve as the predicate of a sentence. な-adjectives take です directly; い-adjectives also take です (which doesn't change their meaning, just adds politeness).",
+        "explanationNepali": "も निपातले 'पनि' (also/too) भन्ने अर्थ दिन्छ र は को सट्टामा प्रयोग हुन्छ।",
+        "examples": [
+          {
+            "target": "桜は きれいです。",
+            "reading": "桜は きれいです。",
+            "english": "Cherry blossoms are beautiful.",
+            "nepali": "उदाहरण: Cherry blossoms are beautiful."
+          },
+          {
+            "target": "富士山は 高いです。",
+            "reading": "富士山は 高いです。",
+            "english": "Mt. Fuji is high.",
+            "nepali": "उदाहरण: Mt. Fuji is high."
+          }
+        ]
+      },
+      {
+        "title": "2. い-adjective／な-adjective + Noun",
+        "pattern": "2. い",
+        "explanationEnglish": "Both adjective types can directly modify a following noun; な-adjectives keep な before the noun.",
+        "explanationNepali": "विशेषण (い-विशेषण र な-विशेषण) ले नामपदको विशेषता जनाउँछ वा वाक्य पूरा गर्छ।",
+        "examples": [
+          {
+            "target": "桜は きれいな 花です。",
+            "reading": "桜は きれいな 花です。",
+            "english": "Cherry blossoms are beautiful flowers.",
+            "nepali": "उदाहरण: Cherry blossoms are beautiful flowers."
+          },
+          {
+            "target": "富士山は 高い 山です。",
+            "reading": "富士山は 高い 山です。",
+            "english": "Mt. Fuji is a high mountain.",
+            "nepali": "उदाहरण: Mt. Fuji is a high mountain."
+          }
+        ]
+      },
+      {
+        "title": "3. あまり～ません",
+        "pattern": "3. あまり～ません",
+        "explanationEnglish": "あまり with a negative predicate means 'not very' or 'not so much.'",
+        "explanationNepali": "じゃありません (वा ではありません) ले です को नकारात्मक (होइन) रूप जनाउँछ।",
+        "examples": [
+          {
+            "target": "上海は あまり 寒くないです。",
+            "reading": "上海は あまり 寒くないです。",
+            "english": "Shanghai is not very cold.",
+            "nepali": "उदाहरण: Shanghai is not very cold."
+          }
+        ]
+      },
+      {
+        "title": "4. Nは どうですか",
+        "pattern": "4. Nは どうですか",
+        "explanationEnglish": "Asks for an impression or opinion about something the listener has experienced.",
+        "explanationNepali": "N1 ले विषय र N2 ले पहिचान/गुण जनाउँछ। です ले 'हो/हुन्/हुनुहुन्छ' भन्ने अर्थ दिन्छ।",
+        "examples": [
+          {
+            "target": "日本の生活は どうですか。(How is life in Japan?) ― 楽しいです。",
+            "reading": "日本の生活は どうですか。(How is life in Japan?) ― 楽しいです。",
+            "english": "Example sentence.",
+            "nepali": "उदाहरण: Example sentence."
+          }
+        ]
+      },
+      {
+        "title": "5. N1は どんな N2ですか",
+        "pattern": "5. N1は どんな N2ですか",
+        "explanationEnglish": "Asks the listener to describe/characterize N1, where N2 denotes the category N1 belongs to.",
+        "explanationNepali": "N1 ले विषय र N2 ले पहिचान/गुण जनाउँछ। です ले 'हो/हुन्/हुनुहुन्छ' भन्ने अर्थ दिन्छ।",
+        "examples": [
+          {
+            "target": "奈良は どんな 町ですか。(What kind of town is Nara?) ― 古い 町です。",
+            "reading": "奈良は どんな 町ですか。(What kind of town is Nara?) ― 古い 町です。",
+            "english": "Example sentence.",
+            "nepali": "उदाहरण: Example sentence."
+          }
+        ]
+      },
+      {
+        "title": "6. ～が、～ (conjunction 'but')",
+        "pattern": "6. ～が、～ (conjunction 'but')",
+        "explanationEnglish": "が links two sentences with a contrasting or qualifying meaning.",
+        "explanationNepali": "たら ले 'भने' (शर्त वा निश्चित भविष्यको समय) जनाउँछ।",
+        "examples": [
+          {
+            "target": "日本の食べ物は おいしいですが、高いです。",
+            "reading": "日本の食べ物は おいしいですが、高いです。",
+            "english": "Japanese food is good, but expensive.",
+            "nepali": "उदाहरण: Japanese food is good, but expensive."
+          }
+        ]
+      },
+      {
+        "title": "7. どれ",
+        "pattern": "7. どれ",
+        "explanationEnglish": "Used to ask the listener to choose/identify one item from three or more concrete options.",
+        "explanationNepali": "たら ले 'भने' (शर्त वा निश्चित भविष्यको समय) जनाउँछ।",
+        "examples": [
+          {
+            "target": "ミラーさんの傘は どれですか。― あの青いのです。",
+            "reading": "ミラーさんの傘は どれですか。― あの青いのです。",
+            "english": "Which is Mr. Miller's umbrella? — That blue one.",
+            "nepali": "उदाहरण: Which is Mr. Miller's umbrella? — That blue one."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "language": "JAPANESE",
+    "level": "N5",
+    "lesson": 9,
+    "lessonTitle": "Preferences, Skills & Reasons (好き嫌いと理由)",
+    "grammarPoints": [
+      {
+        "title": "1. N が わかります",
+        "pattern": "1. N が わかります",
+        "explanationEnglish": "With わかります, the thing understood is marked with が, not を.",
+        "explanationNepali": "वाक्यको अन्त्यमा か थपेर प्रश्न बनाइन्छ। वाक्यको पदक्रम परिवर्तन गर्नु पर्दैन।",
+        "examples": [
+          {
+            "target": "わたしは 日本語が 少し 分かります。",
+            "reading": "わたしは 日本語が 少し 分かります。",
+            "english": "I understand Japanese a little.",
+            "nepali": "उदाहरण: I understand Japanese a little."
+          }
+        ]
+      },
+      {
+        "title": "2. すき／きらい／じょうず／へた + が",
+        "pattern": "2. すき／きらい／じょうず／へた + が",
+        "explanationEnglish": "With these な-adjectives, the object of liking/disliking/skill is marked with が.",
+        "explanationNepali": "へ (ए) निपातले गन्तव्य वा प्रस्थानको दिशा जनाउँछ।",
+        "examples": [
+          {
+            "target": "わたしは 料理が 好きです。",
+            "reading": "わたしは 料理が 好きです。",
+            "english": "I like cooking.",
+            "nepali": "उदाहरण: I like cooking."
+          },
+          {
+            "target": "カリナさんは 絵が 上手です。",
+            "reading": "カリナさんは 絵が 上手です。",
+            "english": "Example sentence.",
+            "nepali": "उदाहरण: Example sentence."
+          }
+        ]
+      },
+      {
+        "title": "3. N が あります (possession)",
+        "pattern": "3. N が あります (possession)",
+        "explanationEnglish": "In this usage あります expresses possession of an abstract or inanimate thing (money, time, plans, etc.) — distinct from the 'existence' meaning in Lesson 10.",
+        "explanationNepali": "In this usage あります expresses possession of an abstract or inanimate thing (money, time, plans, etc.) — distinct from the 'existence' meaning in Lesson 10. को आधारमा व्याकरणिक नियम।",
+        "examples": [
+          {
+            "target": "小銭が ありますか。",
+            "reading": "小銭が ありますか。",
+            "english": "Do you have any small change?",
+            "nepali": "उदाहरण: Do you have any small change?"
+          }
+        ]
+      },
+      {
+        "title": "4. ～から、～ (reason)",
+        "pattern": "4. ～から、～ (reason)",
+        "explanationEnglish": "から attaches to the end of a clause giving the reason for the following statement.",
+        "explanationNepali": "वाक्यको अन्त्यमा か थपेर प्रश्न बनाइन्छ। वाक्यको पदक्रम परिवर्तन गर्नु पर्दैन।",
+        "examples": [
+          {
+            "target": "今日は 子供の 誕生日ですから、早く 帰ります。",
+            "reading": "今日は 子供の 誕生日ですから、早く 帰ります。",
+            "english": "Today is my child's birthday, so I will go home early.",
+            "nepali": "उदाहरण: Today is my child's birthday, so I will go home early."
+          }
+        ]
+      },
+      {
+        "title": "5. どうして — why",
+        "pattern": "5. どうして — why",
+        "explanationEnglish": "Asks the reason for something; typically answered with ～からです.",
+        "explanationNepali": "Asks the reason for something; typically answered with ～からです. को आधारमा व्याकरणिक नियम।",
+        "examples": [
+          {
+            "target": "どうして 早く 帰りましたか。― 用が ありましたから。",
+            "reading": "どうして 早く 帰りましたか。― 用が ありましたから。",
+            "english": "Why did you go home early? — Because I had something to do.",
+            "nepali": "उदाहरण: Why did you go home early? — Because I had something to do."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "language": "JAPANESE",
+    "level": "N5",
+    "lesson": 10,
+    "lessonTitle": "Existence & Location of Things (存在と positional words)",
+    "grammarPoints": [
+      {
+        "title": "1. N が あります／います",
+        "pattern": "1. N が あります／います",
+        "explanationEnglish": "Expresses the existence of a thing or person, treated as the subject and marked with が. あります is used for inanimate things (including plants and places); います is used for animate things that move by themselves (people, animals).",
+        "explanationNepali": "Expresses the existence of a thing or person, treated as the subject and marked with が. あります is used for inanimate things (including plants and places); います is used for animate things that move by themselves (people, animals). को आधारमा व्याकरणिक नियम।",
+        "examples": [
+          {
+            "target": "公園が あります。",
+            "reading": "公園が あります。",
+            "english": "There is a park.",
+            "nepali": "उदाहरण: There is a park."
+          },
+          {
+            "target": "男の人が います。",
+            "reading": "男の人が います。",
+            "english": "There is a man.",
+            "nepali": "उदाहरण: There is a man."
+          }
+        ]
+      },
+      {
+        "title": "2. N1(place)に N2が あります／います",
+        "pattern": "2. N1(place)に N2が あります／います",
+        "explanationEnglish": "に marks the place where something/someone is present. どこ asks about a place for things; だれ asks about a person.",
+        "explanationNepali": "に marks the place where something/someone is present. どこ asks about a place for things; だれ asks about a person. को आधारमा व्याकरणिक नियम।",
+        "examples": [
+          {
+            "target": "地下に 何が ありますか。― レストランが あります。",
+            "reading": "地下に 何が ありますか。― レストランが あります。",
+            "english": "What's in the basement? — There are restaurants.",
+            "nepali": "उदाहरण: What's in the basement? — There are restaurants."
+          }
+        ]
+      },
+      {
+        "title": "3. N1は N2(place)に あります／います",
+        "pattern": "3. N1は N2(place)に あります／います",
+        "explanationEnglish": "Here N1 is picked up as the topic (something both speaker and listener know) and its location is explained; the particle on N1 is は (topic), not が (subject).",
+        "explanationNepali": "Here N1 is picked up as the topic (something both speaker and listener know) and its location is explained; the particle on N1 is は (topic), not が (subject). को आधारमा व्याकरणिक नियम।",
+        "examples": [
+          {
+            "target": "東京ディズニーランドは 千葉県に あります。(Tokyo Disneyland is in Chiba Prefecture.) — this can also be rephrased with で as in Lesson 3: N1は N2(place)です.",
+            "reading": "東京ディズニーランドは 千葉県に あります。(Tokyo Disneyland is in Chiba Prefecture.) — this can also be rephrased with で as in Lesson 3: N1は N2(place)です.",
+            "english": "Example sentence.",
+            "nepali": "उदाहरण: Example sentence."
+          }
+        ]
+      },
+      {
+        "title": "4. Position words + の + N",
+        "pattern": "4. Position words + の + N",
+        "explanationEnglish": "上/下/前/後ろ/右/左/中/外/隣/近く/間 combine with の to modify a following noun, indicating relative position.",
+        "explanationNepali": "の निपातले दुई नामपदलाई जोड्छ र स्वामित्व (को/का/की) वा सम्बन्ध जनाउँछ।",
+        "examples": [
+          {
+            "target": "机の 上に 写真が あります。",
+            "reading": "机の 上に 写真が あります。",
+            "english": "There's a photo on the desk.",
+            "nepali": "उदाहरण: There's a photo on the desk."
+          }
+        ]
+      },
+      {
+        "title": "5. N1や N2[など]",
+        "pattern": "5. N1や N2[など]",
+        "explanationEnglish": "Used like と (L.4) to connect nouns, but implies a non-exhaustive example list ('such things as').",
+        "explanationNepali": "Used like と (L.4) to connect nouns, but implies a non-exhaustive example list ('such things as'). को आधारमा व्याकरणिक नियम।",
+        "examples": [
+          {
+            "target": "箱の 中に 古い 手紙や 写真などが あります。",
+            "reading": "箱の 中に 古い 手紙や 写真などが あります。",
+            "english": "There are old letters, photos, and so on in the box.",
+            "nepali": "उदाहरण: There are old letters, photos, and so on in the box."
+          }
+        ]
+      },
+      {
+        "title": "6. いちばん + adjective",
+        "pattern": "6. いちばん + adjective",
+        "explanationEnglish": "いちばん before an adjective means 'the most ~.'",
+        "explanationNepali": "विशेषण (い-विशेषण र な-विशेषण) ले नामपदको विशेषता जनाउँछ वा वाक्य पूरा गर्छ।",
+        "examples": [
+          {
+            "target": "いちばん 高い たなに あります。",
+            "reading": "いちばん 高い たなに あります。",
+            "english": "It's on the top shelf.",
+            "nepali": "उदाहरण: It's on the top shelf."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "language": "JAPANESE",
+    "level": "N5",
+    "lesson": 11,
+    "lessonTitle": "Counting & Quantifiers (助数詞と数量)",
+    "grammarPoints": [
+      {
+        "title": "1. Native Japanese numbers (ひとつ～とお) and counter suffixes",
+        "pattern": "1. Native Japanese numbers (ひとつ～とお) and counter suffixes",
+        "explanationEnglish": "Objects up to ten can be counted with the native series ひとつ～とお; beyond that, plain numbers are used. Different counter suffixes attach to numbers depending on the type of item: 〜人 (people, with exceptions ひとり/ふたり), 〜台 (machines/vehicles), 〜枚 (flat things), 〜回 (times), 〜分/〜時間 (minutes/hours), 〜日 (days, using date-style readings from 2–10), 〜週間, 〜か月, 〜年.",
+        "explanationNepali": "を (ओ) निपातले सकर्मक क्रियाको प्रत्यक्ष कर्म (Direct Object) जनाउँछ।",
+        "examples": [
+          {
+            "target": "りんごを 四つ 買いました。",
+            "reading": "りんごを 四つ 買いました。",
+            "english": "I bought four apples.",
+            "nepali": "उदाहरण: I bought four apples."
+          },
+          {
+            "target": "外国人の 学生が 二人 います。",
+            "reading": "外国人の 学生が 二人 います。",
+            "english": "There are two foreign students.",
+            "nepali": "उदाहरण: There are two foreign students."
+          }
+        ]
+      },
+      {
+        "title": "2. Position of quantifiers",
+        "pattern": "2. Position of quantifiers",
+        "explanationEnglish": "Quantifiers (number + counter) are usually placed right before the verb they modify, though this is not always the case with lengths of time.",
+        "explanationNepali": "たら ले 'भने' (शर्त वा निश्चित भविष्यको समय) जनाउँछ।",
+        "examples": [
+          {
+            "target": "国で 2か月 日本語を 勉強しました。",
+            "reading": "国で 2か月 日本語を 勉強しました。",
+            "english": "I studied Japanese for two months in my country.",
+            "nepali": "उदाहरण: I studied Japanese for two months in my country."
+          }
+        ]
+      },
+      {
+        "title": "3. いくつ／なんにん／etc. — asking quantity",
+        "pattern": "3. いくつ／なんにん／etc. — asking quantity",
+        "explanationEnglish": "いくつ asks 'how many' for things counted with ひとつ〜とお; other counter-specific interrogatives (何人, 何枚, 何回...) are used for their respective counters.",
+        "explanationNepali": "たら ले 'भने' (शर्त वा निश्चित भविष्यको समय) जनाउँछ।",
+        "examples": [
+          {
+            "target": "みかんを いくつ 買いましたか。― 8つ 買いました。",
+            "reading": "みかんを いくつ 買いましたか。― 8つ 買いました。",
+            "english": "How many mandarin oranges did you buy? — I bought eight.",
+            "nepali": "उदाहरण: How many mandarin oranges did you buy? — I bought eight."
+          }
+        ]
+      },
+      {
+        "title": "4. ～だけ — only",
+        "pattern": "4. ～だけ — only",
+        "explanationEnglish": "だけ restricts the preceding element to an exact/limited amount.",
+        "explanationNepali": "だけ restricts the preceding element to an exact/limited amount. को आधारमा व्याकरणिक नियम।",
+        "examples": [
+          {
+            "target": "3か月だけ 勉強しました。",
+            "reading": "3か月だけ 勉強しました。",
+            "english": "I studied for only three months.",
+            "nepali": "उदाहरण: I studied for only three months."
+          }
+        ]
+      },
+      {
+        "title": "5. ～ぐらい — about, approximately",
+        "pattern": "5. ～ぐらい — about, approximately",
+        "explanationEnglish": "Attached after a quantity to indicate an approximation.",
+        "explanationNepali": "Attached after a quantity to indicate an approximation. को आधारमा व्याकरणिक नियम।",
+        "examples": [
+          {
+            "target": "1週間に 2回ぐらい テニスを します。",
+            "reading": "1週間に 2回ぐらい テニスを します。",
+            "english": "I play tennis about twice a week.",
+            "nepali": "उदाहरण: I play tennis about twice a week."
+          }
+        ]
+      },
+      {
+        "title": "6. どのくらい — how long/how much",
+        "pattern": "6. どのくらい — how long/how much",
+        "explanationEnglish": "Asks about the extent, duration, or amount of something.",
+        "explanationNepali": "の निपातले दुई नामपदलाई जोड्छ र स्वामित्व (को/का/की) वा सम्बन्ध जनाउँछ।",
+        "examples": [
+          {
+            "target": "大阪から 東京まで 新幹線で どのくらい かかりますか。― 2時間半ぐらい かかります。",
+            "reading": "大阪から 東京まで 新幹線で どのくらい かかりますか。― 2時間半ぐらい かかります。",
+            "english": "How long does it take from Osaka to Tokyo by Shinkansen? — About two and a half hours.",
+            "nepali": "उदाहरण: How long does it take from Osaka to Tokyo by Shinkansen? — About two and a half hours."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "language": "JAPANESE",
+    "level": "N5",
+    "lesson": 12,
+    "lessonTitle": "Past Tense Adjectives & Comparisons (過去形と比較)",
+    "grammarPoints": [
+      {
+        "title": "1. Past tense of noun／な-adjective sentences",
+        "pattern": "1. Past tense of noun／な",
+        "explanationEnglish": "です → でした (affirmative past); じゃありません → じゃありませんでした (negative past).",
+        "explanationNepali": "じゃありません (वा ではありません) ले です को नकारात्मक (होइन) रूप जनाउँछ।",
+        "examples": [
+          {
+            "target": "きのうは 雨でした。",
+            "reading": "きのうは 雨でした。",
+            "english": "It was rainy yesterday.",
+            "nepali": "उदाहरण: It was rainy yesterday."
+          },
+          {
+            "target": "きのうの試験は 簡単じゃ ありませんでした。",
+            "reading": "きのうの試験は 簡単じゃ ありませんでした。",
+            "english": "Example sentence.",
+            "nepali": "उदाहरण: Example sentence."
+          }
+        ]
+      },
+      {
+        "title": "2. Past tense of い-adjective sentences",
+        "pattern": "2. Past tense of い",
+        "explanationEnglish": "～い → ～かったです (affirmative past); ～いです → ～くなかったです (negative past). (いい is irregular: よかったです.)",
+        "explanationNepali": "じゃありません (वा ではありません) ले です को नकारात्मक (होइन) रूप जनाउँछ।",
+        "examples": [
+          {
+            "target": "きのうは 暑かったです。",
+            "reading": "きのうは 暑かったです。",
+            "english": "It was hot yesterday.",
+            "nepali": "उदाहरण: It was hot yesterday."
+          },
+          {
+            "target": "パーティーは あまり 楽しく なかったです。",
+            "reading": "パーティーは あまり 楽しく なかったです。",
+            "english": "Example sentence.",
+            "nepali": "उदाहरण: Example sentence."
+          }
+        ]
+      },
+      {
+        "title": "3. N1は N2より adjective です — comparison",
+        "pattern": "3. N1は N2より adjective です — comparison",
+        "explanationEnglish": "Describes N1's quality relative to N2, using より ('than').",
+        "explanationNepali": "N1 ले विषय र N2 ले पहिचान/गुण जनाउँछ। です ले 'हो/हुन्/हुनुहुन्छ' भन्ने अर्थ दिन्छ।",
+        "examples": [
+          {
+            "target": "この車は あの車より 大きいです。",
+            "reading": "この車は あの車より 大きいです。",
+            "english": "This car is bigger than that car.",
+            "nepali": "उदाहरण: This car is bigger than that car."
+          }
+        ]
+      },
+      {
+        "title": "4. N1と N2と どちらが adjective ですか",
+        "pattern": "4. N1と N2と どちらが adjective ですか",
+        "explanationEnglish": "Asks the listener to choose between two items; どちら is always the interrogative used for a two-item comparison.",
+        "explanationNepali": "N1 ले विषय र N2 ले पहिचान/गुण जनाउँछ। です ले 'हो/हुन्/हुनुहुन्छ' भन्ने अर्थ दिन्छ।",
+        "examples": [
+          {
+            "target": "野球と サッカーと どちらが 面白いですか。― サッカーのほうが 面白いです。",
+            "reading": "野球と サッカーと どちらが 面白いですか。― サッカーのほうが 面白いです。",
+            "english": "Which is more interesting, baseball or soccer? — Soccer is.",
+            "nepali": "उदाहरण: Which is more interesting, baseball or soccer? — Soccer is."
+          }
+        ]
+      },
+      {
+        "title": "5. N(group)で 何が いちばん adjective ですか — superlative among 3+",
+        "pattern": "5. N(group)で 何が いちばん adjective ですか — superlative among 3+",
+        "explanationEnglish": "Asks the listener to choose the most '~' from a category/group of three or more; the interrogative depends on the category (何, どこ, だれ, いつ, etc.).",
+        "explanationNepali": "N1 ले विषय र N2 ले पहिचान/गुण जनाउँछ। です ले 'हो/हुन्/हुनुहुन्छ' भन्ने अर्थ दिन्छ।",
+        "examples": [
+          {
+            "target": "日本の料理で 何が いちばん おいしいですか。― てんぷらが いちばん おいしいです。",
+            "reading": "日本の料理で 何が いちばん おいしいですか。― てんぷらが いちばん おいしいです。",
+            "english": "Of Japanese dishes, what's the most delicious? — Tempura is.",
+            "nepali": "उदाहरण: Of Japanese dishes, what's the most delicious? — Tempura is."
+          }
+        ]
+      },
+      {
+        "title": "6. Nが adjective ですか (subject as interrogative)",
+        "pattern": "6. Nが adjective ですか (subject as interrogative)",
+        "explanationEnglish": "As in Lesson 10, when the subject is an interrogative, が is used instead of は.",
+        "explanationNepali": "N1 ले विषय र N2 ले पहिचान/गुण जनाउँछ। です ले 'हो/हुन्/हुनुहुन्छ' भन्ने अर्थ दिन्छ।",
+        "examples": [
+          {
+            "target": "家族で 誰が いちばん 背が 高いですか。― 弟が いちばん 高いです。",
+            "reading": "家族で 誰が いちばん 背が 高いですか。― 弟が いちばん 高いです。",
+            "english": "Example sentence.",
+            "nepali": "उदाहरण: Example sentence."
+          }
         ]
       }
     ]
   },
 
-  // ────────────────────────────────────────────────────────────
-  // LESSON 2
-  // ────────────────────────────────────────────────────────────
-  {
-    language: 'JAPANESE', level: 'N5', lesson: 2,
-    lessonTitle: 'Demonstratives & Objects (これ・それ・あれ)',
-    grammarPoints: [
-      {
-        title: '1. Demonstratives これ, それ, あれ',
-        pattern: 'これ / それ / あれ は [N] です',
-        explanationEnglish: 'これ (this, near speaker), それ (that, near listener), あれ (that over there, far from both).',
-        explanationNepali: 'これ (यो - वक्ता नजिक), それ (त्यो - श्रोता नजिक), あれ (त्यो - दुवैबाट टाढा)।',
-        examples: [
-          { target: 'これは本です。', reading: 'これはほんです。', english: 'This is a book.', nepali: 'यो किताब हो।' },
-          { target: 'それは私のかばんです。', reading: 'それはわたしのかばんです。', english: 'That is my bag.', nepali: 'त्यो मेरो झोला हो।' }
-        ]
-      },
-      {
-        title: '2. Noun Modifiers この, その, あの',
-        pattern: 'この / その / あの [N] は [Predicate]',
-        explanationEnglish: 'この (this N), その (that N), あの (that N over there) directly modify a following noun.',
-        explanationNepali: 'この (यो + नाम), その (त्यो + नाम), あの (त्यो + नाम) नामको अगाडि आउँछन्।',
-        examples: [
-          { target: 'この本は面白いです。', reading: 'このほんはおもしろいです。', english: 'This book is interesting.', nepali: 'यो किताब रोचक छ।' }
-        ]
-      },
-      {
-        title: '3. Affirmation そうです & Negation ちがいます',
-        pattern: 'はい、そうです / いいえ、ちがいます',
-        explanationEnglish: 'そう (so) means "so/right". Use 「はい、そうです」 (Yes, that\'s right) or 「いいえ、ちがいます」 (No, it is wrong).',
-        explanationNepali: '「はい、そうです」(हो, सही हो) र 「いいえ、ちがいます」(होइन, गलत हो)।',
-        examples: [
-          { target: 'それは辞書ですか。－はい、そうです。', reading: 'それはじしょですか。－はい、そうです。', english: 'Is that a dictionary? - Yes, it is.', nepali: 'के त्यो शब्दकोश हो? - हजुर, हो।' }
-        ]
-      }
-    ]
-  },
-
-  // ────────────────────────────────────────────────────────────
-  // LESSON 3
-  // ────────────────────────────────────────────────────────────
-  {
-    language: 'JAPANESE', level: 'N5', lesson: 3,
-    lessonTitle: 'Location Demonstratives & Places (ここ・そこ・あそこ)',
-    grammarPoints: [
-      {
-        title: '1. Place Demonstratives ここ, そこ, あそこ, どこ',
-        pattern: 'ここ / そこ / あそこ / どこ',
-        explanationEnglish: 'ここ (here), そこ (there), あそこ (over there), どこ (where). Polite direction forms: こちら, そちら, あちら, どちら.',
-        explanationNepali: 'ここ (यहाँ), そこ (त्यहाँ), あそこ (त्यहाँ टाढा), どこ (कहाँ)। नम्र रूप: こちら, そちら, あちら, どちら।',
-        examples: [
-          { target: 'お手洗いはどこですか。', reading: 'おてあらいはどこですか。', english: 'Where is the restroom?', nepali: 'शौचालय कहाँ छ?' },
-          { target: '事務所にあちらです。', reading: 'じむしょはあちらです。', english: 'The office is that way (polite).', nepali: 'कार्यालय त्यता हो।' }
-        ]
-      },
-      {
-        title: '2. Location Pattern N1 は N2 (Place) です',
-        pattern: '[N1] は [Place] です',
-        explanationEnglish: 'Expresses where a person, place, or item is located.',
-        explanationNepali: 'व्यक्ति वा वस्तु कुन ठाउँमा छ भनी जनाउँछ।',
-        examples: [
-          { target: '教室は2階です。', reading: 'きょうしつはにかいです。', english: 'The classroom is on the 2nd floor.', nepali: 'कक्षाकोठा दोस्रो तलामा छ।' }
-        ]
-      }
-    ]
-  },
-
-  // ────────────────────────────────────────────────────────────
-  // LESSON 4
-  // ────────────────────────────────────────────────────────────
-  {
-    language: 'JAPANESE', level: 'N5', lesson: 4,
-    lessonTitle: 'Time, Days & Verb Conjugation (時間と動詞)',
-    grammarPoints: [
-      {
-        title: '1. Telling Time 〜時 〜分',
-        pattern: '今 [Hour]時 [Minute]分 です',
-        explanationEnglish: '〜時 (ji) = o\'clock, 〜分 (fun/pun) = minute(s). 今何時ですか (Iman nanjidesu ka = What time is it now?).',
-        explanationNepali: '〜時 (जी = बजे), 〜分 (फुन/पुल = मिनेट)। 今何時ですか (अहिले कति बज्यो?)।',
-        examples: [
-          { target: '今9時30分(半)です。', reading: 'いまくじさんじゅっぷん(はん)です。', english: 'It is 9:30 now.', nepali: 'अहिले साढे ९ बजेको छ।' }
-        ]
-      },
-      {
-        title: '2. Polite Verb Tenses (〜ます / 〜ません / 〜ました / 〜ませんでした)',
-        pattern: 'Present: 〜ます / 〜ません | Past: 〜ました / 〜ませんでした',
-        explanationEnglish: 'Non-past positive: 〜ます (masu), Non-past negative: 〜ません (masen). Past positive: 〜ました (mashita), Past negative: 〜ませんでした (masen deshita).',
-        explanationNepali: 'वर्तमान/भविष्य: 〜ます / 〜ません। भूतकाल: 〜ました / 〜ませんでした।',
-        examples: [
-          { target: '毎朝7時におきます。', reading: 'まいあさしちじにおきます。', english: 'I wake up at 7 every morning.', nepali: 'म हरेक बिहान ७ बजे उठ्छु।' },
-          { target: '昨日勉強しました。', reading: 'きのうべんきょうしました。', english: 'I studied yesterday.', nepali: 'मैले हिजो अध्ययन गरें।' }
-        ]
-      },
-      {
-        title: '3. Specific Time Marker に & Range から 〜 まで',
-        pattern: '[Time] に V / [Start] から [End] まで',
-        explanationEnglish: 'Particle に (ni) marks a specific numerical time. から (kara = from) and まで (made = until) mark time/place boundaries.',
-        explanationNepali: 'निपात に ले निश्चित समय जनाउँछ। から (देखि) र まで (सम्म) ले समय वा स्थानको सीमा जनाउँछ।',
-        examples: [
-          { target: '9時から5時まで働きます。', reading: 'くじからごじまではたらきます。', english: 'I work from 9 to 5.', nepali: 'म ९ बजेदेखि ५ बजेसम्म काम गर्छु।' }
-        ]
-      }
-    ]
-  },
-
-  // ────────────────────────────────────────────────────────────
-  // LESSON 5
-  // ────────────────────────────────────────────────────────────
-  {
-    language: 'JAPANESE', level: 'N5', lesson: 5,
-    lessonTitle: 'Movement Verbs & Means of Transport (移動と交通手段)',
-    grammarPoints: [
-      {
-        title: '1. Direction Marker へ with 行きます / 来ます / 帰ります',
-        pattern: '[Place] へ 行きます / 来ます / 帰ります',
-        explanationEnglish: 'The particle へ (pronounced e) indicates direction toward a destination.',
-        explanationNepali: 'निपात へ (ए) ले गन्तव्य दिशा जनाउँछ। 行きます (जानु), 来ます (आउनु), 帰ります (फर्कनु)।',
-        examples: [
-          { target: '東京へ行きます。', reading: 'とうきょうへいきます。', english: 'I am going to Tokyo.', nepali: 'म टोक्यो जाँदैछु।' }
-        ]
-      },
-      {
-        title: '2. Total Negation どこ[へ]も 行きません',
-        pattern: 'どこ[へ]も + Negative Verb',
-        explanationEnglish: 'Question word + も + negative verb means "nowhere / nothing / nobody".',
-        explanationNepali: 'प्रश्नवाचक शब्द + も + नकारात्मक क्रिया = "कतै पनि जाँदिन/केही पनि गर्दिन"।',
-        examples: [
-          { target: '日曜日はどこへも行きませんでした。', reading: 'にちようびはどこへもいきませんでした。', english: 'I didn\'t go anywhere on Sunday.', nepali: 'म आइतबार कतै पनि गइनँ।' }
-        ]
-      },
-      {
-        title: '3. Means Marker で (Transportation)',
-        pattern: '[Vehicle/Means] で 行きます',
-        explanationEnglish: 'Particle で (de) indicates the means of transportation. Exception: 歩いて (aruite = on foot, no で).',
-        explanationNepali: 'निपात で ले सवारी साधन जनाउँछ। अपवाद: 歩いて (हिँडेर)।',
-        examples: [
-          { target: '電車で会社へ行きます。', reading: 'でんしゃでかいしゃへいきます。', english: 'I go to work by train.', nepali: 'म ट्रेनले काममा जान्छु।' }
-        ]
-      }
-    ]
-  },
-
-  // ────────────────────────────────────────────────────────────
-  // LESSON 6
-  // ────────────────────────────────────────────────────────────
-  {
-    language: 'JAPANESE', level: 'N5', lesson: 6,
-    lessonTitle: 'Direct Objects, Action Places & Invitations (目的語と勧誘)',
-    grammarPoints: [
-      {
-        title: '1. Direct Object Marker を',
-        pattern: '[N] を [Transitive Verb]',
-        explanationEnglish: 'The particle を (pronounced o) marks the direct object of an action.',
-        explanationNepali: 'निपात を ले क्रियाको प्रत्यक्ष कर्म जनाउँछ।',
-        examples: [
-          { target: 'ジュースを飲みます。', reading: 'ジュースをのみます。', english: 'I drink juice.', nepali: 'म जुस पिउँछु।' }
-        ]
-      },
-      {
-        title: '2. Action Location Marker で',
-        pattern: '[Place] で [Action Verb]',
-        explanationEnglish: 'Particle で (de) indicates the location where an action takes place.',
-        explanationNepali: 'निपात で ले काम हुने स्थान जनाउँछ।',
-        examples: [
-          { target: 'レストランで晩ごはんを食べます。', reading: 'レストランでばんごはんをたべます。', english: 'I eat dinner at a restaurant.', nepali: 'म रेस्टुरेन्टमा रातिको खाना खान्छु।' }
-        ]
-      },
-      {
-        title: '3. Invitations 〜ませんか & Suggestions 〜ましょう',
-        pattern: 'V[masu-stem] ませんか / V[masu-stem] ましょう',
-        explanationEnglish: '〜ませんか (masen ka) politely invites someone ("won\'t you...?"). 〜ましょう (mashou) suggests doing something together ("let\'s...").',
-        explanationNepali: '〜ませんか (निमन्त्रणा - के गर्ने हो?) / 〜ましょう (सुझाव - गरौँ)।',
-        examples: [
-          { target: '一緒に買い物をしませんか。', reading: 'いっしょにかいものをしませんか。', english: 'Won\'t you go shopping together with me?', nepali: 'सँगै किनमेल गर्ने हो?' },
-          { target: 'ちょっと休みましょう。', reading: 'ちょっとやすみましょう。', english: 'Let\'s take a short break.', nepali: 'एकछिन आराम गरौँ।' }
-        ]
-      }
-    ]
-  },
-
-  // ────────────────────────────────────────────────────────────
-  // LESSON 7
-  // ────────────────────────────────────────────────────────────
-  {
-    language: 'JAPANESE', level: 'N5', lesson: 7,
-    lessonTitle: 'Tools, Giving & Receiving (道具と授受)',
-    grammarPoints: [
-      {
-        title: '1. Instrument/Means Marker で',
-        pattern: '[Tool/Language] で V',
-        explanationEnglish: 'Particle で marks tools, instruments, or languages used to complete an action.',
-        explanationNepali: 'निपात で ले प्रयोग गरिने औजार, साधन वा भाषा जनाउँछ।',
-        examples: [
-          { target: 'スプーンでカレーを食べます。', reading: 'スプーンでカレーをたべます。', english: 'I eat curry with a spoon.', nepali: 'म चम्चाले करी खान्छु।' },
-          { target: '日本語でレポートを書きます。', reading: 'にほんごでレポートをかきます。', english: 'I write the report in Japanese.', nepali: 'म जापानी भाषामा रिपोर्ट लेख्छु।' }
-        ]
-      },
-      {
-        title: '2. Giving あげます & Receiving もらいます',
-        pattern: 'Giver は Receiver に N を あげます / Receiver は Giver に N を もらいます',
-        explanationEnglish: 'あげます (agemasu = give to someone), もらいます (moraimasu = receive from someone). The target person takes に.',
-        explanationNepali: 'あげます (दिनु) / もらいます (पाउनु)। सम्बन्धित व्यक्तिसँग に लाग्छ।',
-        examples: [
-          { target: '山田さんは母に花をあげました。', reading: 'やまださんははなにはなをあげました。', english: 'Mr. Yamada gave flowers to my mother.', nepali: 'यामाडा-जीले आमालाई फूल दिनुभयो।' },
-          { target: '先生に本をもらいました。', reading: 'せんせいにほんをもらいました。', english: 'I received a book from the teacher.', nepali: 'मैले गुरुबाट किताब पाएँ।' }
-        ]
-      },
-      {
-        title: '3. Already 〜もう Vました',
-        pattern: 'もう Vました',
-        explanationEnglish: 'もう (mou) means "already". Answer positive with 「はい、もう Vました」, negative with 「いいえ、まだです」 (not yet).',
-        explanationNepali: 'もう (भइसक्यो)। सकारात्मक: はい、もう Vました (हो, भइसक्यो), नकारात्मक: いいえ、まだです (अझै छैन)।',
-        examples: [
-          { target: 'もう昼ごはんを食べましたか。－いいえ、まだです。', reading: 'もうひるごはんをたべましたか。－いいえ、まだです。', english: 'Have you eaten lunch already? - No, not yet.', nepali: 'के तपाईंले दिउँसोको खाना खाइसक्नुभयो? - होइन, अझै छैन।' }
-        ]
-      }
-    ]
-  },
-
-  // ────────────────────────────────────────────────────────────
-  // LESSON 8
-  // ────────────────────────────────────────────────────────────
-  {
-    language: 'JAPANESE', level: 'N5', lesson: 8,
-    lessonTitle: 'Adjectives: i-Adjectives & na-Adjectives (形容詞)',
-    grammarPoints: [
-      {
-        title: '1. Adjective Types & Present Conjugations',
-        pattern: 'い-adj: 〜いです / 〜くないです | な-adj: 〜です / 〜じゃありません',
-        explanationEnglish: 'i-adjectives end in い (e.g. 高い -> 高くないです). na-adjectives use じゃありません in negative (e.g. 親切 -> 親切じゃありません).',
-        explanationNepali: 'i-विशेषण (उच्च: 高い -> 高くないです)। na-विशेषण (親切 -> 親切じゃありません)।',
-        examples: [
-          { target: 'この本は高いです。高くなのいです。', reading: 'このほんはたかいです。たかくないです。', english: 'This book is expensive. It is not expensive.', nepali: 'यो किताब महँगो छ। महँगो छैन।' },
-          { target: '富士山は有名です。', reading: 'ふじさんはゆうめいです。', english: 'Mt. Fuji is famous.', nepali: 'फूजी पर्वत प्रख्यात छ।' }
-        ]
-      },
-      {
-        title: '2. Modifying Nouns with Adjectives',
-        pattern: 'い-adj + N / な-adj な + N',
-        explanationEnglish: 'i-adjectives connect directly to nouns. na-adjectives append な before nouns.',
-        explanationNepali: 'i-विशेषण सिधै नामसँग जोडिन्छ। na-विशेषण पछि な थपेर नामसँग जोडिन्छ।',
-        examples: [
-          { target: '高い車を買いました。', reading: 'たかいくるまをかいました。', english: 'I bought an expensive car.', nepali: 'मैले महँगो कार किनें।' },
-          { target: '親切な人にあいました。', reading: 'しんせつな人にあいました。', english: 'I met a kind person.', nepali: 'मैले दयालु मान्छेलाई भेटें।' }
-        ]
-      }
-    ]
-  },
-
-  // ────────────────────────────────────────────────────────────
-  // LESSON 9
-  // ────────────────────────────────────────────────────────────
-  {
-    language: 'JAPANESE', level: 'N5', lesson: 9,
-    lessonTitle: 'Preferences, Skills & Reasons (好き・上手・から)',
-    grammarPoints: [
-      {
-        title: '1. Object Marker が for Likes, Dislikes & Abilities',
-        pattern: 'N が 好きです / 嫌いです / 上手です / 下手です / わかります / あります',
-        explanationEnglish: 'Feelings, skills, and possession/understanding take particle が (ga) instead of を.',
-        explanationNepali: 'मनपर्ने, नपर्ने, सीप र क्षमता जनाउँदा を को ठाउँमा が निपात आउँछ।',
-        examples: [
-          { target: '私はスポーツが好きです。', reading: 'わたしはスポーツがすきです。', english: 'I like sports.', nepali: 'मलाई खेलकुद मनपर्छ।' },
-          { target: '日本語が分かります。', reading: 'にほんごがわかります。', english: 'I understand Japanese.', nepali: 'म जापानी भाषा बुझ्छु।' }
-        ]
-      },
-      {
-        title: '2. Reason Marker から',
-        pattern: '[Reason sentence] から、[Result sentence]',
-        explanationEnglish: 'から (kara) means "because / so" and placed at the end of the cause clause.',
-        explanationNepali: 'から (कारणले/भएकाले) ले कारण र परिणाम जोड्छ।',
-        examples: [
-          { target: '時間がないから、タクシーで行きます。', reading: 'じかんがないから、タクシーでいきます。', english: 'Because I don\'t have time, I will go by taxi.', nepali: 'समय नभएकाले म ट्याक्सीमा जान्छु।' }
-        ]
-      }
-    ]
-  },
-
-  // ────────────────────────────────────────────────────────────
-  // LESSON 10
-  // ────────────────────────────────────────────────────────────
-  {
-    language: 'JAPANESE', level: 'N5', lesson: 10,
-    lessonTitle: 'Existence & Position Expressions (存在と位置表現)',
-    grammarPoints: [
-      {
-        title: '1. Existence Verbs あります & います',
-        pattern: 'Inanimate: N が あります | Animate (person/animal): N が います',
-        explanationEnglish: 'あります (arimasu) is for non-living objects/plants. います (imasu) is for living people and animals.',
-        explanationNepali: 'あります (निर्जीव वस्तुको लागि छ)। います (मान्छे र जनावरको लागि छ)।',
-        examples: [
-          { target: '机の上に本があります。', reading: 'つくえのうえにほんがあります。', english: 'There is a book on the desk.', nepali: 'डेस्कमाथि किताब छ।' },
-          { target: '公園に子供がいます。', reading: 'こうえんにこどもがいます。', english: 'There are children in the park.', nepali: 'पार्कमा बच्चाहरू छन्।' }
-        ]
-      },
-      {
-        title: '2. Positional Nouns (上, 下, 前, 後ろ, 中, 隣, あいだ)',
-        pattern: 'N1 の [Position] に N2 が あります/います',
-        explanationEnglish: 'Use N1 の 上(ue = top), 下(shita = under), 前(mae = front), 後ろ(ushiro = back), 中(naka = inside), 隣(tonari = next to), あいだ(aida = between).',
-        explanationNepali: 'N1 को स्थान: 上 (माथि), 下 (मुनि), 前 (अगाडि), 後ろ (पछाडि), 中 (भित्र), 隣 (छेउमा)।',
-        examples: [
-          { target: '銀行は郵便局の隣にあります。', reading: 'ぎんこうはゆうびんきょくのとなりになります。', english: 'The bank is next to the post office.', nepali: 'बैंक हुलाक घरको छेउमा छ।' }
-        ]
-      }
-    ]
-  },
-
-  // ────────────────────────────────────────────────────────────
-  // LESSON 11
-  // ────────────────────────────────────────────────────────────
-  {
-    language: 'JAPANESE', level: 'N5', lesson: 11,
-    lessonTitle: 'Quantifiers, Counters & Frequency (助数詞と頻度)',
-    grammarPoints: [
-      {
-        title: '1. Counter Word Position',
-        pattern: '[N を] [Quantity Counter] V',
-        explanationEnglish: 'Counters (一つ, 二つ, 3人, 2枚, 1台) usually go directly after the object particle を or subject particle が.',
-        explanationNepali: 'गन्ती शब्दहरू (一つ, 二つ, 3人 आदि) निपात を वा が को पछाडि आउँछन्।',
-        examples: [
-          { target: 'りんごを3つ買いました。', reading: 'りんごをみっつかいました。', english: 'I bought 3 apples.', nepali: 'मैले ३ वटा स्याउ किनें।' },
-          { target: '外国人の先生が2人います。', reading: 'がいこくじんのせんせいがふたりいます。', english: 'There are two foreign teachers.', nepali: 'दुईजना विदेशी शिक्षकहरू हुनुहुन्छ।' }
-        ]
-      },
-      {
-        title: '2. Frequency Pattern 〜に〜回',
-        pattern: '[Time Period] に [Times]回 V',
-        explanationEnglish: 'Expresses frequency: e.g. 1か月に2回 (twice a month).',
-        explanationNepali: 'आवृति जनाउँछ: जस्तै 1か月に2回 (महिनामा दुई पटक)।',
-        examples: [
-          { target: '1週間に2回スポーツをします。', reading: 'いっしゅうかんににかいスポーツをします。', english: 'I play sports twice a week.', nepali: 'म हप्तामा दुई पटक खेलकुद गर्छु।' }
-        ]
-      }
-    ]
-  },
-
-  // ────────────────────────────────────────────────────────────
-  // LESSON 12
-  // ────────────────────────────────────────────────────────────
-  {
-    language: 'JAPANESE', level: 'N5', lesson: 12,
-    lessonTitle: 'Past Adjectives & Comparisons (過去形と比較)',
-    grammarPoints: [
-      {
-        title: '1. Past Adjectives Conjugations',
-        pattern: 'い-adj: 〜かったです / 〜くなかったです | な-adj/N: 〜でした / 〜じゃありませんでした',
-        explanationEnglish: 'i-adj past drops い and adds かったです. na-adj & Nouns take でした (dewa/ja arimasen deshita).',
-        explanationNepali: 'i-विशेषण भूतकाल: 〜かったです। na-विशेषण र नाम: 〜でした।',
-        examples: [
-          { target: '昨日は寒かったです。', reading: 'きのうはさむかったです。', english: 'Yesterday was cold.', nepali: 'हिजो जाडो थियो।' },
-          { target: '旅行は大変でした。', reading: 'りょこうはたいへんでした。', english: 'The trip was tough.', nepali: 'भ्रमण गाह्रो थियो।' }
-        ]
-      },
-      {
-        title: '2. Comparative N1 は N2 より Adj です',
-        pattern: '[N1] は [N2] より [Adj] です',
-        explanationEnglish: 'Means "N1 is more Adj than N2". より (yori) means "than".',
-        explanationNepali: '"N1 भन्दा N2 बढी विशेषण हो"। より ले "भन्दा" अर्थ दिन्छ।',
-        examples: [
-          { target: '新幹線は飛行機より安いです。', reading: 'しんかんせんはひこうきよりやすいです。', english: 'The bullet train is cheaper than the airplane.', nepali: 'बुलेट ट्रेन हवाइजहाज भन्दा सस्तो छ।' }
-        ]
-      },
-      {
-        title: '3. Superlative N1 の中で N2 が 一番 Adj です',
-        pattern: '[Group/Range] の中で [N] が 一番 [Adj] です',
-        explanationEnglish: 'Means "Among N1, N2 is the most Adj". 一番 (ichiban) means "most/number one".',
-        explanationNepali: '"N1 मध्ये N2 सबैभन्दा बढी विशेषण हो"। 一番 (सबैभन्दा बढी)।',
-        examples: [
-          { target: '1年の中で夏がいちばん好きです。', reading: 'いちねんのなかでなつがいちばんすきです。', english: 'I like summer best of all the year.', nepali: 'मलाई वर्षभरिमा गर्मी ऋतु सबैभन्दा मनपर्छ।' }
-        ]
-      }
-    ]
-  },
-
-  // ────────────────────────────────────────────────────────────
-  // ────────────────────────────────────────────────────────────
-  // LESSON 13
-  // ────────────────────────────────────────────────────────────
   {
     language: 'JAPANESE', level: 'N5', lesson: 13,
     lessonTitle: 'Desires & Purpose of Movement (欲しい・〜たい・目的)',
