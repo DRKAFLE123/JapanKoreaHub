@@ -473,11 +473,11 @@ const SharedHeader: React.FC<SharedHeaderProps> = ({
         {/* Right controls */}
         <div className="flex items-center gap-2">
 
-          {/* Platform Switcher — shown on platform pages only */}
+          {/* Platform Switcher — shown on desktop platform pages only (mobile switches via drawer) */}
           {viewMode !== 'LANDING' && onSwitchLanguage && (
             <button
               onClick={onSwitchLanguage}
-              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-extrabold transition-all border shadow-sm cursor-pointer ${
+              className={`hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-extrabold transition-all border shadow-sm cursor-pointer ${
                 isJapanese
                   ? 'bg-emerald-950/60 hover:bg-emerald-900/60 border-emerald-600/40 text-emerald-300 hover:text-white'
                   : 'bg-rose-950/60 hover:bg-rose-900/60 border-rose-600/40 text-rose-300 hover:text-white'
@@ -485,7 +485,7 @@ const SharedHeader: React.FC<SharedHeaderProps> = ({
               title={`Switch to ${isJapanese ? 'Korean' : 'Japanese'} Platform`}
             >
               <span className="text-base leading-none">{isJapanese ? '🇰🇷' : '🇯🇵'}</span>
-              <span className="hidden sm:inline">{isJapanese ? 'Korean' : 'Japanese'}</span>
+              <span>{isJapanese ? 'Korean' : 'Japanese'}</span>
             </button>
           )}
           {user ? (
