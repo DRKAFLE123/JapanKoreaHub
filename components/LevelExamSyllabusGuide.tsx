@@ -260,6 +260,397 @@ export const LevelExamSyllabusGuide: React.FC<LevelExamSyllabusGuideProps> = ({ 
       tricks: [
         'Highest certification level in Japanese language proficiency.'
       ]
+    },
+
+    // ── KOREAN EXAM LEVELS ──
+    EPS: {
+      title: 'EPS-TOPIK 60-Lesson Employment Examination & Syllabus Guide',
+      japaneseTitle: '고용허가제 한국어능력시험 (EPS-TOPIK) 60과 시라버스',
+      levelCode: 'EPS-TOPIK (E-9 Working Visa Benchmark)',
+      passingScore: '110 / 200 Points',
+      passPercentage: '55.0%',
+      vocabCount: '2,500+ Workplace Words',
+      kanjiCount: '60 Workplace Grammar Rules',
+      studyHours: '150 – 200 Hours',
+      examFormat: 'Computer-Based Test (CBT) / UBT 40 Questions (20 Reading + 20 Listening, 50 Mins total)',
+      papers: [
+        {
+          name: 'Paper 1: Reading Comprehension (읽기)',
+          duration: '25 Minutes',
+          questions: '20 Questions (100 Marks)',
+          sections: [
+            'Vocabulary & Fill in the Blanks (어휘 및 빈칸 채우기)',
+            'Workplace Safety & Public Signs (안전 표지판 및 신호등)',
+            'Short Work Instructions & Notices (작업 지시서 및 공지사항)',
+            'Short Essay & Diagram Comprehension (설명문 및 도표 이해)'
+          ]
+        },
+        {
+          name: 'Paper 2: Listening Comprehension (듣기)',
+          duration: '25 Minutes',
+          questions: '20 Questions (100 Marks)',
+          sections: [
+            'Word & Picture Listening (단어 및 그림 듣기)',
+            'Dialogue Action Selection (대화 듣고 행동 선택)',
+            'Workplace Communication & Instructions (작업장 대화 및 지시사항)',
+            'Audio Question & Reply Matching (질문 듣고 알맞은 대답)'
+          ]
+        }
+      ],
+      tricks: [
+        'Workplace Vocabulary Priority: Over 80% of EPS-TOPIK listening and reading questions feature factory, farm, construction, or safety terminology.',
+        'Master Signboard Icons (안전 표지판): Recognize universal warning signs (금지, 경고, 지시) instantly for guaranteed questions.',
+        'Grammar Patterns for EPS: Focus heavily on workplace request/permission forms (-아/어 주세요, -(으)면 안 되다, -(으)ㄹ 수 있다).',
+        'CBT Timer Pacing: Spend no more than 60 seconds per reading question to save 5 minutes to review flagged questions.'
+      ]
+    },
+    TOPIK1_L1: {
+      title: 'TOPIK I Level 1 Beginner Examination & Syllabus Guide',
+      japaneseTitle: '한국어능력시험 (TOPIK I) 1급 시험개요 및 시라버스',
+      levelCode: 'TOPIK I — Level 1 (Beginner)',
+      passingScore: '80 / 200 Points',
+      passPercentage: '40.0%',
+      vocabCount: '800+ Basic Words',
+      kanjiCount: '30 Core Grammar Patterns',
+      studyHours: '80 – 100 Hours',
+      examFormat: 'Paper Test (PBT) / IBT 70 Questions (30 Listening + 40 Reading, 100 Mins total)',
+      papers: [
+        {
+          name: 'Section 1: Listening Comprehension (듣기)',
+          duration: '40 Minutes',
+          questions: '30 Questions (100 Marks)',
+          sections: ['Daily Greetings & Shopping Dialogues', 'Time & Schedule Questions', 'Location & Action Selection']
+        },
+        {
+          name: 'Section 2: Reading Comprehension (읽기)',
+          duration: '60 Minutes',
+          questions: '40 Questions (100 Marks)',
+          sections: ['Public Signs & Short Announcements', 'Topic Matching', 'Short Personal Notes & Emails']
+        }
+      ],
+      tricks: [
+        'Focus on Core Particles: Master 은/는 (topic), 이/가 (subject), 을/를 (object), 에/에서 (location/time).',
+        'Informal Polite Ending (-아/어/해요): Over 90% of TOPIK I dialogues use standard polite style.',
+        'Preview Options: Look at visual choices before each audio clip plays to predict target vocabulary.'
+      ]
+    },
+    TOPIK1: {
+      title: 'TOPIK I Level 1 Beginner Examination & Syllabus Guide',
+      japaneseTitle: '한국어능력시험 (TOPIK I) 1급 시험개요 및 시라버스',
+      levelCode: 'TOPIK I — Level 1 (Beginner)',
+      passingScore: '80 / 200 Points',
+      passPercentage: '40.0%',
+      vocabCount: '800+ Basic Words',
+      kanjiCount: '30 Core Grammar Patterns',
+      studyHours: '80 – 100 Hours',
+      examFormat: 'Paper Test (PBT) / IBT 70 Questions (30 Listening + 40 Reading, 100 Mins total)',
+      papers: [
+        {
+          name: 'Section 1: Listening Comprehension (듣기)',
+          duration: '40 Minutes',
+          questions: '30 Questions (100 Marks)',
+          sections: ['Daily Greetings & Shopping Dialogues', 'Time & Schedule Questions', 'Location & Action Selection']
+        },
+        {
+          name: 'Section 2: Reading Comprehension (읽기)',
+          duration: '60 Minutes',
+          questions: '40 Questions (100 Marks)',
+          sections: ['Public Signs & Short Announcements', 'Topic Matching', 'Short Personal Notes & Emails']
+        }
+      ],
+      tricks: [
+        'Master topic and subject particles (은/는 vs 이/가).',
+        'Learn daily frequency adverbs (자주, 항상, 가끔).'
+      ]
+    },
+    TOPIK2: {
+      title: 'TOPIK I Level 2 Elementary Examination & Syllabus Guide',
+      japaneseTitle: '한국어능력시험 (TOPIK I) 2급 시험개요 및 시라버스',
+      levelCode: 'TOPIK I — Level 2 (Elementary)',
+      passingScore: '140 / 200 Points',
+      passPercentage: '70.0%',
+      vocabCount: '1,500+ Words',
+      kanjiCount: '60 Essential Grammar Rules',
+      studyHours: '150 – 200 Hours',
+      examFormat: 'Paper Test (PBT) / IBT 70 Questions (30 Listening + 40 Reading, 100 Mins total)',
+      papers: [
+        {
+          name: 'Section 1: Listening Comprehension (듣기)',
+          duration: '40 Minutes',
+          questions: '30 Questions (100 Marks)',
+          sections: ['Workplace, Travel & Phone Call Dialogues', 'Main Idea & Details Extraction']
+        },
+        {
+          name: 'Section 2: Reading Comprehension (읽기)',
+          duration: '60 Minutes',
+          questions: '40 Questions (100 Marks)',
+          sections: ['Advertisements, Letters & Articles', 'Paragraph Ordering & Logical Flow']
+        }
+      ],
+      tricks: [
+        'Connective Endings (-고, -(으)며, -(으)니까, -지만): Master clause connections to speed up reading.',
+        'Target score 140+ out of 200 points to secure official TOPIK Level 2 certification.'
+      ]
+    },
+    TOPIK3: {
+      title: 'TOPIK II Level 3 Intermediate Examination & Syllabus Guide',
+      japaneseTitle: '한국어능력시험 (TOPIK II) 3급 중급 시험개요',
+      levelCode: 'TOPIK II — Level 3 (Intermediate)',
+      passingScore: '120 / 300 Points',
+      passPercentage: '40.0%',
+      vocabCount: '3,000+ Words',
+      kanjiCount: '100 Intermediate Grammar Patterns',
+      studyHours: '300 – 400 Hours',
+      examFormat: '3 Sections (50 Listening, 4 Writing Essays, 50 Reading, 180 Mins total)',
+      papers: [
+        {
+          name: 'Section 1: Listening (듣기)',
+          duration: '60 Minutes',
+          questions: '50 Questions (100 Marks)',
+          sections: ['Lectures, News Reports & Panel Discussions']
+        },
+        {
+          name: 'Section 2: Writing (쓰기)',
+          duration: '50 Minutes',
+          questions: '4 Questions (100 Marks)',
+          sections: ['Tasks 51 & 52: Short Sentence Completion', 'Task 53: Graph & Data Report (200-300 words)']
+        },
+        {
+          name: 'Section 3: Reading (읽기)',
+          duration: '70 Minutes',
+          questions: '50 Questions (100 Marks)',
+          sections: ['Editorials, Articles, Literature & Logical Ordering']
+        }
+      ],
+      tricks: [
+        'Task 53 Writing Formula: Memorize standard graph reporting phrases (이/가 증가하였다, N%에 달하였다) for guaranteed 30+ writing marks.',
+        'Required benchmark for Korean university undergraduate entry and F-2 points visa.'
+      ]
+    },
+    TOPIK4: {
+      title: 'TOPIK II Level 4 Upper-Intermediate Examination Guide',
+      japaneseTitle: '한국어능력시험 (TOPIK II) 4급 중상급 시험개요',
+      levelCode: 'TOPIK II — Level 4 (Upper-Intermediate)',
+      passingScore: '150 / 300 Points',
+      passPercentage: '50.0%',
+      vocabCount: '4,500+ Words',
+      kanjiCount: '150 Advanced Grammar Patterns',
+      studyHours: '500 Hours',
+      examFormat: '3 Sections (50 Listening, 4 Writing Essays, 50 Reading, 180 Mins total)',
+      papers: [
+        {
+          name: 'Section 1: Listening & Reading',
+          duration: '130 Minutes',
+          questions: '100 Questions (200 Marks)',
+          sections: ['Radio Debates, Social Essays, Cultural Texts']
+        },
+        {
+          name: 'Section 2: Writing (Task 54 Argumentative Essay)',
+          duration: '50 Minutes',
+          questions: '4 Questions (100 Marks)',
+          sections: ['Task 54: 600-700 Word Essay on Social Issues']
+        }
+      ],
+      tricks: [
+        'Task 54 Essay Structure: Structure into Introduction (서론), Body (본론), and Conclusion (결론).',
+        'Required benchmark for Korean corporate employment & D-2/E-7 Skilled Worker Visas.'
+      ]
+    },
+    TOPIK2_L5: {
+      title: 'TOPIK II Level 5 Advanced Examination Guide',
+      japaneseTitle: '한국어능력시험 (TOPIK II) 5급 고급 시험개요',
+      levelCode: 'TOPIK II — Level 5 (Advanced Academic)',
+      passingScore: '190 / 300 Points',
+      passPercentage: '63.3%',
+      vocabCount: '6,000+ Words',
+      kanjiCount: '200 Academic Grammar Rules',
+      studyHours: '700 Hours',
+      examFormat: '3 Sections (50 Listening, 4 Writing Essays, 50 Reading, 180 Mins total)',
+      papers: [
+        {
+          name: 'Section 1: Listening & Reading',
+          duration: '130 Minutes',
+          questions: '100 Questions (200 Marks)',
+          sections: ['Academic Lectures, Economic Editorials & Philosophy']
+        },
+        {
+          name: 'Section 2: Writing',
+          duration: '50 Minutes',
+          questions: '4 Questions (100 Marks)',
+          sections: ['Academic Graph Analysis & Policy Argument Essay']
+        }
+      ],
+      tricks: [
+        'High-level certification for Korean university scholarships and government positions.'
+      ]
+    },
+    TOPIK2_L6: {
+      title: 'TOPIK II Level 6 Native Fluency Examination Guide',
+      japaneseTitle: '한국어능력시험 (TOPIK II) 6급 최고봉 시험개요',
+      levelCode: 'TOPIK II — Level 6 (Native Fluency)',
+      passingScore: '230 / 300 Points',
+      passPercentage: '76.6%',
+      vocabCount: '10,000+ Words',
+      kanjiCount: '300 High-Level Literary Rules',
+      studyHours: '900+ Hours',
+      examFormat: '3 Sections (50 Listening, 4 Writing Essays, 50 Reading, 180 Mins total)',
+      papers: [
+        {
+          name: 'Section 1: Listening & Reading',
+          duration: '130 Minutes',
+          questions: '100 Questions (200 Marks)',
+          sections: ['Expert Academic Debates, Legal Analysis & Classical Texts']
+        },
+        {
+          name: 'Section 2: Writing',
+          duration: '50 Minutes',
+          questions: '4 Questions (100 Marks)',
+          sections: ['Full Academic Thesis-style Essay']
+        }
+      ],
+      tricks: [
+        'Pinnacle of Korean language proficiency certification worldwide.'
+      ]
+    },
+    EPS_MFG: {
+      title: 'EPS Manufacturing Industry Skill Test & Workplace Guide',
+      japaneseTitle: 'EPS 제조업 실기시험 및 공장 직무 시라버스',
+      levelCode: 'EPS Sector — Manufacturing (제조업)',
+      passingScore: 'Skill Test Threshold',
+      passPercentage: 'HRD Korea Standard',
+      vocabCount: '800+ Factory & Machine Terms',
+      kanjiCount: 'Industrial Tools & Machinery',
+      studyHours: '120 Hours',
+      examFormat: 'CBT Special Test + Physical/Skill Test (Assembly, Measurement, Safety)',
+      papers: [
+        {
+          name: 'Section 1: Factory Machinery & Metalworking Terminology',
+          duration: 'Skill Test',
+          questions: 'Factory Safety & Tools',
+          sections: ['Lathe, Press, Welding, Mold & Machine Operation Terms']
+        },
+        {
+          name: 'Section 2: Assembling & Measuring Tools',
+          duration: 'Skill Test',
+          questions: 'Measurement Accuracy',
+          sections: ['Vernier Calipers, Micrometer, Wrench & Bolt Assembly']
+        }
+      ],
+      tricks: [
+        'Master tool names: Vernier calipers (버니어캘리퍼스), press (프레스), welding (용접), lathe (선반).'
+      ]
+    },
+    EPS_AGR: {
+      title: 'EPS Agriculture & Livestock Skill Test Guide',
+      japaneseTitle: 'EPS 농축산업 실기시험 및 영농 직무 시라버스',
+      levelCode: 'EPS Sector — Agriculture & Livestock (농축산업)',
+      passingScore: 'Skill Test Threshold',
+      passPercentage: 'HRD Korea Standard',
+      vocabCount: '650+ Farming & Animal Terms',
+      kanjiCount: 'Crops, Greenhouse & Tools',
+      studyHours: '100 Hours',
+      examFormat: 'CBT Special Test + Physical/Skill Test (Crop Sorting, Fertilizer Handling)',
+      papers: [
+        {
+          name: 'Section 1: Greenhouse & Crop Cultivation',
+          duration: 'Skill Test',
+          questions: 'Farming Operations',
+          sections: ['Vinyl greenhouse (비닐하우스), Crop Sowing (파종), Harvesting (수확)']
+        },
+        {
+          name: 'Section 2: Agricultural Tools & Livestock Sanitation',
+          duration: 'Skill Test',
+          questions: 'Tools & Livestock',
+          sections: ['Sickle (낫), Hoe (괭이), Shovel (삽), Animal Husbandry (축산업)']
+        }
+      ],
+      tricks: [
+        'Focus on seasonal terms: Sowing (파종), harvesting (수확), fertilizing (비료 주기), weeding (잡초 제거).'
+      ]
+    },
+    EPS_CON: {
+      title: 'EPS Construction Industry Skill Test & Site Safety Guide',
+      japaneseTitle: 'EPS 건설업 실기시험 및 현장 안전 시라버스',
+      levelCode: 'EPS Sector — Construction (건설업)',
+      passingScore: 'Skill Test Threshold',
+      passPercentage: 'HRD Korea Standard',
+      vocabCount: '700+ Building & Site Terms',
+      kanjiCount: 'Scaffolding & Safety Gear',
+      studyHours: '110 Hours',
+      examFormat: 'CBT Special Test + Physical/Skill Test (Scaffolding erection, Rebar binding)',
+      papers: [
+        {
+          name: 'Section 1: Site Safety & Personal Protection',
+          duration: 'Skill Test',
+          questions: 'Safety Standards',
+          sections: ['Safety Helmet (안전모), Safety Belt (안전대), Fall Prevention (추락 방지)']
+        },
+        {
+          name: 'Section 2: Building Materials & Heavy Tools',
+          duration: 'Skill Test',
+          questions: 'Materials & Machinery',
+          sections: ['Cement (시멘트), Rebar (철근), Formwork (거푸집), Scaffolding (비계)']
+        }
+      ],
+      tricks: [
+        'Fall prevention safety (추락 방지) and harness rules (안전대) are top priority.'
+      ]
+    },
+    EPS_FISH: {
+      title: 'EPS Fishery & Marine Industry Skill Test Guide',
+      japaneseTitle: 'EPS 어업 실기시험 및 해양 수산 시라버스',
+      levelCode: 'EPS Sector — Fishery & Aquaculture (어업)',
+      passingScore: 'Skill Test Threshold',
+      passPercentage: 'HRD Korea Standard',
+      vocabCount: '600+ Fishery & Boat Terms',
+      kanjiCount: 'Fishing Nets & Nautical Tools',
+      studyHours: '100 Hours',
+      examFormat: 'CBT Special Test + Physical/Skill Test (Net repair, Knot tying)',
+      papers: [
+        {
+          name: 'Section 1: Fishing Nets & Gear Maintenance',
+          duration: 'Skill Test',
+          questions: 'Nautical Gear',
+          sections: ['Fishing Nets (그물), Gear Maintenance (어구 정비), Knot Tying (매듭 묶기)']
+        },
+        {
+          name: 'Section 2: Boat Operations & Seafood Processing',
+          duration: 'Skill Test',
+          questions: 'Maritime Safety',
+          sections: ['Net Hauler (양망기), Boat Safety, Aquaculture (양식업), Processing (수산물 가공)']
+        }
+      ],
+      tricks: [
+        'Practice knot tying (매듭 묶기) and net repair (그물 손질) for high skill test marks.'
+      ]
+    },
+    EPS_SAFETY: {
+      title: 'EPS Industrial Safety, Health & E-9 Labor Law Guide',
+      japaneseTitle: '산업안전보건 및 E-9 근로기준법 시라버스',
+      levelCode: 'EPS Sector — Industrial Safety & Labor Rights (산업안전·노동법)',
+      passingScore: '100% Mastery Recommended',
+      passPercentage: '100%',
+      vocabCount: '500+ Safety Signs & Legal Terms',
+      kanjiCount: 'Labor Contract & Insurance',
+      studyHours: '60 Hours',
+      examFormat: 'EPS-TOPIK Safety & Emergency Response Modules',
+      papers: [
+        {
+          name: 'Section 1: Industrial Warning & Signboards',
+          duration: 'Safety Module',
+          questions: 'Signboard Identification',
+          sections: ['Prohibition Signs (금지 표지), Warning Signs (경고 표지), Mandatory Signs (지시 표지)']
+        },
+        {
+          name: 'Section 2: E-9 Standard Labor Contract & Insurance',
+          duration: 'Labor Law',
+          questions: 'Worker Rights',
+          sections: ['Standard Contract (근로계약서), Minimum Wage (최저임금), Overtime Pay, Injury Insurance (산재보험)']
+        }
+      ],
+      tricks: [
+        'Know your fundamental rights: Minimum wage (최저임금), overtime pay (연장근로수당), and workplace injury claims (산재보험).'
+      ]
     }
   }[level] || {
     title: `JLPT ${level} Examination & Syllabus Guide`,

@@ -736,6 +736,8 @@ const MobileDrawer: React.FC<MobileDrawerProps> = ({
                   { id: 'EPS' as KoreanLevelType,       label: 'EPS 60' },
                   { id: 'TOPIK1_L1' as KoreanLevelType, label: 'TOPIK L1' },
                   { id: 'TOPIK2' as KoreanLevelType,    label: 'TOPIK L2' },
+                  { id: 'TOPIK3' as KoreanLevelType,    label: 'TOPIK L3' },
+                  { id: 'TOPIK4' as KoreanLevelType,    label: 'TOPIK L4' },
                   { id: 'EPS_MFG' as KoreanLevelType,   label: 'Mfg' },
                   { id: 'EPS_AGR' as KoreanLevelType,   label: 'Agr' },
                   { id: 'EPS_SAFETY' as KoreanLevelType,label: 'Safety' },
