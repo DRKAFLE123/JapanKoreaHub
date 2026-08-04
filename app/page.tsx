@@ -1259,6 +1259,7 @@ export default function HomePage() {
               krTab === 'KOREAN_FLASHCARD' ? 'FLASHCARDS' :
               krTab === 'ALPHABET_GRID' ? 'LISTENING' :
               krTab === 'TIMED_EXAM' ? 'EXAMS' :
+              krTab === 'CERTIFICATE' ? 'EXAM_GUIDE' :
               krTab === 'KOREAN_VOCAB' ? 'VOCABULARY' : undefined
             }
             onTabChange={(t) => {
@@ -1266,6 +1267,7 @@ export default function HomePage() {
               else if (t === 'VOCABULARY') setKrTab('KOREAN_VOCAB');
               else if (t === 'LISTENING') setKrTab('ALPHABET_GRID');
               else if (t === 'EXAMS') setKrTab('TIMED_EXAM');
+              else if (t === 'EXAM_GUIDE') setKrTab('CERTIFICATE');
             }}
           />
         )}
