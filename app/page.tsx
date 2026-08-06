@@ -216,11 +216,11 @@ const SharedHeader: React.FC<SharedHeaderProps> = ({
             <Menu className="w-5 h-5 text-rose-400" />
           </button>
 
-          <button onClick={() => handleNavClick(() => setViewMode('LANDING'))} className="flex items-center gap-2.5 group text-left">
+          <button onClick={() => handleNavClick(() => setViewMode('LANDING'))} className="flex items-center gap-3 group text-left">
             <img
               src="/logo.jpg"
-              alt="JakonHub Logo"
-              className="w-9 h-9 rounded-xl object-cover border border-slate-800 shadow-md group-hover:scale-105 transition-transform"
+              alt="JakonHub.com Logo"
+              className="w-10 h-10 rounded-xl object-contain bg-white border border-slate-700 shadow-md group-hover:scale-105 transition-transform p-0.5"
               onError={(e) => {
                 (e.target as HTMLElement).style.display = 'none';
               }}
@@ -228,19 +228,14 @@ const SharedHeader: React.FC<SharedHeaderProps> = ({
             <div>
               <div className="flex items-center gap-2">
                 <span className="text-base font-black text-white tracking-tight leading-tight">
-                  {viewMode === 'JAPANESE'
-                    ? 'Japanese Academy'
-                    : viewMode === 'KOREAN'
-                    ? 'Korean Academy'
-                    : 'JakonHub'}
+                  JakonHub<span className="text-rose-400">.com</span>
+                </span>
+                <span className="px-2 py-0.5 rounded-full bg-rose-500/20 text-rose-300 border border-rose-500/30 text-[9px] font-black uppercase tracking-wider hidden md:inline">
+                  Learn Japanese &amp; Korean
                 </span>
               </div>
-              <p className="text-[10px] text-slate-400 hidden sm:block">
-                {viewMode === 'JAPANESE'
-                  ? "Nepal's Complete Japanese Language Learning Platform (JLPT N5-N1 & JFT)"
-                  : viewMode === 'KOREAN'
-                  ? "Nepal's Complete Korean Language Learning Platform (EPS-TOPIK 1-60 & TOPIK I-II)"
-                  : "Nepal's Complete Japanese & Korean Language Learning Platform"}
+              <p className="text-[10px] text-slate-400 font-bold hidden sm:block">
+                Your Language Learning Hub • JLPT, JFT &amp; EPS-TOPIK
               </p>
             </div>
           </button>

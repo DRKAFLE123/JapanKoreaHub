@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://japankoreaacademy.com'),
-  title: "JakonHub – Learn Japanese & Korean",
-  description: "Official JakonHub platform (JakonHub.com). Offers JLPT (N5-N1), JFT-Basic, NAT-Test, TOPIK, EPS-TOPIK (Lessons 1-60), Speaking Classes, Visa Interview Preparation, Study in Japan, Work in Japan (SSW 1 & 2), and Work in Korea (EPS E-9).",
+  metadataBase: new URL('https://jakonhub.com'),
+  title: "JakonHub.com – Learn Japanese & Korean | Your Language Learning Hub",
+  description: "Official JakonHub platform (JakonHub.com) — Your Language Learning Hub for Japanese & Korean. Offers JLPT (N5-N1), JFT-Basic, NAT-Test, TOPIK, EPS-TOPIK (Lessons 1-60), Speaking Classes, and Visa Interview Prep.",
   keywords: [
     "JakonHub", "JakonHub.com",
     "JLPT N5", "JLPT N4", "JLPT N3", "JFT-Basic 250 Marks", "NAT-Test Nepal",
