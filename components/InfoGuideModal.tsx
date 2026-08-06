@@ -77,7 +77,7 @@ export const InfoGuideModal: React.FC<InfoGuideModalProps> = ({
             </div>
             <div className="min-w-0">
               <div className="flex items-center gap-2">
-                <span className="text-xs sm:text-sm font-black text-white tracking-tight truncate">LanguageGuru Knowledge Base</span>
+                <span className="text-xs sm:text-sm font-black text-white tracking-tight truncate">JakonHub Knowledge Base</span>
                 <span className="hidden sm:inline-block px-2 py-0.5 rounded-full bg-indigo-500/20 text-indigo-300 text-[10px] font-bold border border-indigo-500/30">
                   Official Guides &amp; Specs
                 </span>
@@ -237,7 +237,7 @@ export const InfoGuideModal: React.FC<InfoGuideModalProps> = ({
             {/* Bottom Action Footer */}
             <div className="pt-6 border-t border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-4">
               <div className="text-xs text-slate-400 font-mono">
-                Verified LanguageGuru Knowledge Item • Updated 2026
+                Verified JakonHub Knowledge Item • Updated 2026
               </div>
 
               {currentGuide.ctaText && (

@@ -10,7 +10,7 @@ import { RadicalBreakdown } from './RadicalBreakdown';
 import { LevelExamSyllabusGuide } from './LevelExamSyllabusGuide';
 import { JFTGrammarExplorer } from './JFTGrammarExplorer';
 
-export type LevelType = 'BASICS' | 'N5' | 'N4' | 'N3' | 'N2' | 'N1' | 'JFT';
+export type LevelType = 'BASICS' | 'N5' | 'N4' | 'N3' | 'N2' | 'N1' | 'JFT' | 'KANJI_1000';
 export type LevelSubTab = 'KANA_MATRIX' | 'BASICS_VOCAB' | 'RADICALS' | 'VOCABULARY' | 'GRAMMAR' | 'FLASHCARDS' | 'LISTENING' | 'EXAMS' | 'EXAM_GUIDE';
 
 interface LevelHubDashboardProps {
@@ -63,7 +63,7 @@ export const LevelHubDashboard: React.FC<LevelHubDashboardProps> = ({
       border: 'border-emerald-500/30',
       bgGlow: 'bg-emerald-950/40',
       textAccent: 'text-emerald-400',
-      stats: { lessons: 12, vocab: '300+', kanji: 'Kana Only', passingScore: '100% Reading' }
+      stats: { lessons: 12, vocab: '200+ Basic', kanji: '1000 Kanji', passingScore: '100% Reading' }
     },
     N5: {
       title: 'JLPT N5 Complete Curriculum',
@@ -130,6 +130,17 @@ export const LevelHubDashboard: React.FC<LevelHubDashboardProps> = ({
       bgGlow: 'bg-cyan-950/40',
       textAccent: 'text-cyan-400',
       stats: { lessons: 20, vocab: '1,200+', kanji: 'Practical', passingScore: '200 / 250 Pts' }
+    },
+    KANJI_1000: {
+      title: '1,000 Japanese Kanji Hub (Nepali & English)',
+      sub: 'Complete 1000 Kanji Handbook split by Tiers',
+      badge: 'Kanji (1000)',
+      emoji: '💮',
+      color: 'from-rose-600 via-pink-600 to-amber-600',
+      border: 'border-rose-500/30',
+      bgGlow: 'bg-rose-950/40',
+      textAccent: 'text-rose-400',
+      stats: { lessons: 1, vocab: '1000 Kanji', kanji: '1000 Items', passingScore: 'Handbook' }
     }
   }[level];
 
@@ -171,7 +182,7 @@ export const LevelHubDashboard: React.FC<LevelHubDashboardProps> = ({
     <div className="space-y-4 sm:space-y-6 animate-fade-in">
 
       {/* Feature Sub Navigation Tabs */}
-      {level !== 'BASICS' && (
+      {level !== 'BASICS' && level !== 'KANJI_1000' && (
         <div className="flex items-center gap-1.5 flex-wrap">
           {getSubTabs().map((tab) => {
             const isActive = activeTab === tab.id;
@@ -197,6 +208,8 @@ export const LevelHubDashboard: React.FC<LevelHubDashboardProps> = ({
       <div className="pt-2">
         {level === 'BASICS' ? (
           <VocabularyExplorer preselectedLevel="BASICS" />
+        ) : level === 'KANJI_1000' ? (
+          <VocabularyExplorer preselectedLevel="KANJI_1000" />
         ) : (
           <>
             {activeTab === 'VOCABULARY' && (
@@ -208,7 +221,7 @@ export const LevelHubDashboard: React.FC<LevelHubDashboardProps> = ({
             )}
 
             {activeTab === 'FLASHCARDS' && (
-              <KanjiCard currentLevel={level === 'JFT' ? 'N4' : (level === 'N1' ? 'N2' : (level as 'N5' | 'N4' | 'N3' | 'N2'))} hideLevelSelector={true} />
+              <KanjiCard currentLevel={level} hideLevelSelector={true} />
             )}
 
             {activeTab === 'LISTENING' && (
@@ -220,7 +233,7 @@ export const LevelHubDashboard: React.FC<LevelHubDashboardProps> = ({
             )}
 
             {activeTab === 'EXAM_GUIDE' && (
-              <LevelExamSyllabusGuide level={level} onSelectTab={(t) => setActiveTab(t)} />
+              <LevelExamSyllabusGuide level={level as any} onSelectTab={(t) => setActiveTab(t)} />
             )}
           </>
         )}
@@ -228,11 +241,11 @@ export const LevelHubDashboard: React.FC<LevelHubDashboardProps> = ({
 
       {/* Modals */}
       {showTricksModal && (
-        <LevelPassTricks level={level} onClose={() => setShowTricksModal(false)} />
+        <LevelPassTricks level={level as any} onClose={() => setShowTricksModal(false)} />
       )}
 
       {showPlanModal && (
-        <LevelStudyPlanModal level={level} onClose={() => setShowPlanModal(false)} />
+        <LevelStudyPlanModal level={level as any} onClose={() => setShowPlanModal(false)} />
       )}
     </div>
   );

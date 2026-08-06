@@ -29,6 +29,48 @@ export default function AdminCMSPage() {
   const [loading, setLoading] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [roleFilter, setRoleFilter] = useState<string>('ALL');
+  // Mock Exam Papers State
+  const [examPapers, setExamPapers] = useState([
+    { id: '1', name: 'JLPT N5 Official Standard Exam Paper Set 1', level: 'N5', difficulty: 'EASY', questions: 36, time: '25 Min', pass: '80 / 180 Pts', track: 'JAPANESE' },
+    { id: '2', name: 'JFT-Basic 250 Pts Prometric Simulation', level: 'JFT', difficulty: 'MEDIUM', questions: 50, time: '60 Min', pass: '200 / 250 Pts', track: 'JAPANESE' },
+    { id: '3', name: 'EPS-TOPIK Standard CBT Paper (Lessons 1–60)', level: 'EPS', difficulty: 'MEDIUM', questions: 25, time: '40 Min', pass: '110 / 200 Pts', track: 'KOREAN' },
+    { id: '4', name: 'TOPIK I (Level 1–2) Reading & Listening', level: 'TOPIK1', difficulty: 'EASY', questions: 70, time: '100 Min', pass: '140 / 200 Pts', track: 'KOREAN' },
+  ]);
+
+  // Create Paper Modal State
+  const [showCreatePaperModal, setShowCreatePaperModal] = useState(false);
+  const [newPaperTrack, setNewPaperTrack] = useState<'JAPANESE' | 'KOREAN'>('JAPANESE');
+  const [newPaperLevel, setNewPaperLevel] = useState('N5');
+  const [newPaperDifficulty, setNewPaperDifficulty] = useState<'EASY' | 'MEDIUM' | 'HARD'>('EASY');
+  const [newPaperTitle, setNewPaperTitle] = useState('');
+  const [newPaperDuration, setNewPaperDuration] = useState('30');
+  const [newPaperPassScore, setNewPaperPassScore] = useState('80 / 180 Pts');
+  const [jsonImportText, setJsonImportText] = useState('');
+
+  const handleCreatePaper = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!newPaperTitle.trim()) {
+      alert('Please enter a paper title!');
+      return;
+    }
+    const created = {
+      id: Date.now().toString(),
+      name: newPaperTitle,
+      level: newPaperLevel,
+      difficulty: newPaperDifficulty,
+      questions: jsonImportText.trim() ? JSON.parse(jsonImportText.trim()).length || 25 : 25,
+      time: `${newPaperDuration} Min`,
+      pass: newPaperPassScore,
+      track: newPaperTrack,
+    };
+    setExamPapers(prev => [created, ...prev]);
+    setStats(prev => ({ ...prev, totalExams: prev.totalExams + 1 }));
+    setShowCreatePaperModal(false);
+    setNewPaperTitle('');
+    setJsonImportText('');
+    alert(`Success! Mock paper "${created.name}" created for ${created.track} (${created.level}).`);
+  };
+
 
   // Stats summary state
   const [stats, setStats] = useState<StatsData>({
@@ -79,7 +121,7 @@ export default function AdminCMSPage() {
             </div>
             <div>
               <div className="flex items-center gap-2">
-                <h1 className="text-base font-black text-white">LanguageGuru Admin CMS</h1>
+                <h1 className="text-base font-black text-white">JakonHub Admin CMS</h1>
                 <span className="px-2 py-0.5 rounded-full bg-rose-500/20 text-rose-300 border border-rose-500/30 text-[10px] font-black uppercase">
                   Protected System
                 </span>
@@ -340,37 +382,209 @@ export default function AdminCMSPage() {
         {activeTab === 'EXAMS' && (
           <div className="space-y-4 animate-fade-in">
             <div className="bg-slate-900 border border-slate-800 rounded-3xl p-6 shadow-2xl space-y-4">
-              <h2 className="text-lg font-black text-white">Exam Paper &amp; Question Bank Manager</h2>
-              <p className="text-xs text-slate-400">Configure time limits, pass percentages, listening audio files, and answer keys.</p>
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-800 pb-4">
+                <div>
+                  <h2 className="text-lg font-black text-white">Exam Paper &amp; Question Bank Manager</h2>
+                  <p className="text-xs text-slate-400">Add level-wise mock test papers for Japanese (JLPT/JFT) &amp; Korean (EPS-TOPIK/TOPIK) without coding.</p>
+                </div>
+                <button
+                  onClick={() => setShowCreatePaperModal(true)}
+                  className="px-4 py-2.5 rounded-xl bg-gradient-to-r from-rose-600 to-indigo-600 hover:from-rose-500 hover:to-indigo-500 text-white text-xs font-black flex items-center gap-2 shadow-glow transition-all cursor-pointer shrink-0"
+                >
+                  <Plus className="w-4 h-4" /> Add Level-Wise Mock Paper
+                </button>
+              </div>
 
               <div className="space-y-3">
-                {[
-                  { name: 'JLPT N5 Full Standard Exam', questions: 36, time: '25 Min', pass: '80 / 180 Pts', track: 'JAPANESE' },
-                  { name: 'JFT-Basic 250 Pts Simulation', questions: 50, time: '60 Min', pass: '200 / 250 Pts', track: 'JAPANESE' },
-                  { name: 'EPS-TOPIK Standard CBT Paper (1–60)', questions: 25, time: '40 Min', pass: '110 / 200 Pts', track: 'KOREAN' },
-                  { name: 'TOPIK I (Level 1–2) Reading & Listening', questions: 70, time: '100 Min', pass: '140 / 200 Pts', track: 'KOREAN' },
-                ].map((paper, i) => (
-                  <div key={i} className="bg-slate-950 border border-slate-800 rounded-2xl p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                {examPapers.map((paper) => (
+                  <div key={paper.id} className="bg-slate-950 border border-slate-800 hover:border-slate-700 rounded-2xl p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3 transition-all">
                     <div>
-                      <div className="flex items-center gap-2">
+                      <div className="flex items-center gap-2 flex-wrap">
                         <span className={`px-2 py-0.5 rounded-lg text-[10px] font-black border ${paper.track === 'JAPANESE' ? 'bg-rose-500/20 text-rose-300 border-rose-500/30' : 'bg-emerald-500/20 text-emerald-300 border-emerald-500/30'}`}>
-                          {paper.track}
+                          {paper.track === 'JAPANESE' ? '🇯🇵 JAPANESE' : '🇰🇷 KOREAN'}
+                        </span>
+                        <span className="px-2 py-0.5 rounded-lg bg-indigo-500/20 text-indigo-300 border border-indigo-500/30 text-[10px] font-black">
+                          Level {paper.level}
+                        </span>
+                        <span className="px-2 py-0.5 rounded-lg bg-amber-500/20 text-amber-300 border border-amber-500/30 text-[10px] font-bold">
+                          {paper.difficulty}
                         </span>
                         <h3 className="text-sm font-black text-white">{paper.name}</h3>
                       </div>
-                      <p className="text-xs text-slate-400 mt-1">{paper.questions} Questions • {paper.time} Limit • {paper.pass}</p>
+                      <p className="text-xs text-slate-400 mt-1">{paper.questions} Questions • {paper.time} Limit • Target Pass: {paper.pass}</p>
                     </div>
 
-                    <button
-                      onClick={() => alert(`Configuring ${paper.name}: Question Editor ready.`)}
-                      className="px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-white text-xs font-black transition-all cursor-pointer shrink-0"
-                    >
-                      Edit Paper →
-                    </button>
+                    <div className="flex items-center gap-2 shrink-0">
+                      <button
+                        onClick={() => alert(`Editing ${paper.name}: Question Inspector Ready.`)}
+                        className="px-3.5 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-white text-xs font-bold transition-all cursor-pointer"
+                      >
+                        Edit Questions →
+                      </button>
+                      <button
+                        onClick={() => {
+                          if (confirm(`Delete mock paper "${paper.name}"?`)) {
+                            setExamPapers(prev => prev.filter(p => p.id !== paper.id));
+                          }
+                        }}
+                        className="p-2 rounded-xl bg-rose-950/60 hover:bg-rose-900 text-rose-400 hover:text-white border border-rose-800/50 transition-all cursor-pointer"
+                        title="Delete paper"
+                      >
+                        <Trash2 className="w-4 h-4" />
+                      </button>
+                    </div>
                   </div>
                 ))}
               </div>
             </div>
+
+            {/* ── CREATE NEW MOCK PAPER MODAL ── */}
+            {showCreatePaperModal && (
+              <div className="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-md flex items-center justify-center p-4">
+                <div className="bg-slate-900 border border-slate-800 rounded-3xl p-6 max-w-2xl w-full max-h-[90vh] overflow-y-auto space-y-5 shadow-2xl animate-fade-in">
+                  <div className="flex items-center justify-between border-b border-slate-800 pb-3">
+                    <div className="flex items-center gap-2">
+                      <Clock className="w-5 h-5 text-rose-400" />
+                      <h3 className="text-base font-black text-white">Add Level-Wise Mock Exam Paper</h3>
+                    </div>
+                    <button
+                      onClick={() => setShowCreatePaperModal(false)}
+                      className="p-1 rounded-xl hover:bg-slate-800 text-slate-400 hover:text-white transition-all cursor-pointer"
+                    >
+                      ✕
+                    </button>
+                  </div>
+
+                  <form onSubmit={handleCreatePaper} className="space-y-4 text-xs">
+                    {/* 1. Track & Level */}
+                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                      <div>
+                        <label className="block text-slate-400 font-bold mb-1">Target Language Track:</label>
+                        <select
+                          value={newPaperTrack}
+                          onChange={(e) => {
+                            const track = e.target.value as any;
+                            setNewPaperTrack(track);
+                            setNewPaperLevel(track === 'JAPANESE' ? 'N5' : 'EPS');
+                          }}
+                          className="w-full p-2.5 bg-slate-950 border border-slate-800 rounded-xl text-white font-bold focus:outline-none focus:border-rose-500 cursor-pointer"
+                        >
+                          <option value="JAPANESE">🇯🇵 Japanese (JLPT &amp; JFT)</option>
+                          <option value="KOREAN">🇰🇷 Korean (EPS &amp; TOPIK)</option>
+                        </select>
+                      </div>
+
+                      <div>
+                        <label className="block text-slate-400 font-bold mb-1">Select Level:</label>
+                        <select
+                          value={newPaperLevel}
+                          onChange={(e) => setNewPaperLevel(e.target.value)}
+                          className="w-full p-2.5 bg-slate-950 border border-slate-800 rounded-xl text-white font-bold focus:outline-none focus:border-indigo-500 cursor-pointer"
+                        >
+                          {newPaperTrack === 'JAPANESE' ? (
+                            <>
+                              <option value="N5">JLPT N5 (Basic Foundation)</option>
+                              <option value="N4">JLPT N4 (Elementary)</option>
+                              <option value="N3">JLPT N3 (Intermediate)</option>
+                              <option value="N2">JLPT N2 (Pre-Advanced)</option>
+                              <option value="JFT">JFT-Basic Prometric CBT</option>
+                            </>
+                          ) : (
+                            <>
+                              <option value="EPS">EPS-TOPIK (60 Lessons)</option>
+                              <option value="TOPIK1">TOPIK I (Level 1–2)</option>
+                              <option value="TOPIK2">TOPIK II (Level 3–4)</option>
+                              <option value="TOPIK3">TOPIK II (Level 5–6)</option>
+                            </>
+                          )}
+                        </select>
+                      </div>
+
+                      <div>
+                        <label className="block text-slate-400 font-bold mb-1">Difficulty Filter:</label>
+                        <select
+                          value={newPaperDifficulty}
+                          onChange={(e) => setNewPaperDifficulty(e.target.value as any)}
+                          className="w-full p-2.5 bg-slate-950 border border-slate-800 rounded-xl text-white font-bold focus:outline-none focus:border-amber-500 cursor-pointer"
+                        >
+                          <option value="EASY">🟢 Easy Level</option>
+                          <option value="MEDIUM">🟡 Medium Level</option>
+                          <option value="HARD">🔴 Hard Level</option>
+                        </select>
+                      </div>
+                    </div>
+
+                    {/* 2. Title & Metadata */}
+                    <div>
+                      <label className="block text-slate-400 font-bold mb-1">Mock Exam Paper Title:</label>
+                      <input
+                        type="text"
+                        placeholder="e.g., JLPT N5 Official Practice Test Set 3"
+                        value={newPaperTitle}
+                        onChange={(e) => setNewPaperTitle(e.target.value)}
+                        className="w-full p-2.5 bg-slate-950 border border-slate-800 rounded-xl text-white font-bold placeholder-slate-500 focus:outline-none focus:border-rose-500"
+                        required
+                      />
+                    </div>
+
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                      <div>
+                        <label className="block text-slate-400 font-bold mb-1">Time Limit (Minutes):</label>
+                        <input
+                          type="number"
+                          value={newPaperDuration}
+                          onChange={(e) => setNewPaperDuration(e.target.value)}
+                          className="w-full p-2.5 bg-slate-950 border border-slate-800 rounded-xl text-white font-bold focus:outline-none focus:border-indigo-500"
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-slate-400 font-bold mb-1">Target Passing Score Label:</label>
+                        <input
+                          type="text"
+                          value={newPaperPassScore}
+                          onChange={(e) => setNewPaperPassScore(e.target.value)}
+                          placeholder="e.g. 80 / 180 Points or 110 / 200 Points"
+                          className="w-full p-2.5 bg-slate-950 border border-slate-800 rounded-xl text-white font-bold focus:outline-none focus:border-emerald-500"
+                        />
+                      </div>
+                    </div>
+
+                    {/* 3. Bulk JSON Questions Importer */}
+                    <div className="space-y-1 pt-2 border-t border-slate-800">
+                      <label className="block text-amber-300 font-bold">
+                        📋 Bulk Paste Question Bank JSON (No Coding Required):
+                      </label>
+                      <p className="text-[11px] text-slate-400">
+                        Paste question JSON objects with options, audio URLs, and correct answers.
+                      </p>
+                      <textarea
+                        rows={4}
+                        placeholder='[{"prompt": "私__ミラーです。", "options": ["は", "が", "を", "に"], "correct": 0, "audio": ""}]'
+                        value={jsonImportText}
+                        onChange={(e) => setJsonImportText(e.target.value)}
+                        className="w-full p-2.5 bg-slate-950 border border-slate-800 rounded-xl text-white font-mono text-[11px] placeholder-slate-600 focus:outline-none focus:border-rose-500"
+                      />
+                    </div>
+
+                    <div className="flex items-center justify-end gap-2 pt-3 border-t border-slate-800">
+                      <button
+                        type="button"
+                        onClick={() => setShowCreatePaperModal(false)}
+                        className="px-4 py-2 rounded-xl bg-slate-800 text-slate-300 text-xs font-bold hover:bg-slate-700 transition-all cursor-pointer"
+                      >
+                        Cancel
+                      </button>
+                      <button
+                        type="submit"
+                        className="px-5 py-2 rounded-xl bg-gradient-to-r from-rose-600 to-indigo-600 hover:from-rose-500 hover:to-indigo-500 text-white text-xs font-black shadow-glow transition-all cursor-pointer"
+                      >
+                        Publish Paper →
+                      </button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            )}
           </div>
         )}
 

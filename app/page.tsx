@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
+import Link from 'next/link';
 import {
   Flame, Wifi, WifiOff, BookOpen, Headphones,
   Clock, Layers, Calendar, ShieldCheck, Globe, Sparkles, Languages,
@@ -28,7 +29,12 @@ type ViewMode    = 'LANDING' | 'JAPANESE' | 'KOREAN';
 type JapaneseTab = 'VOCAB_EXPLORER' | 'KANJI_SRS' | 'ALPHABET_GRID' | 'TIMED_EXAM' | 'RADICALS' | 'HEATMAP' | 'CERTIFICATE';
 type KoreanTab   = 'KOREAN_VOCAB'   | 'KOREAN_FLASHCARD' | 'ALPHABET_GRID' | 'TIMED_EXAM' | 'HEATMAP' | 'CERTIFICATE';
 
-interface UserProfile { name: string; email: string; streak: number; }
+interface UserProfile {
+  name: string;
+  email: string;
+  streak: number;
+  role?: 'STUDENT' | 'ADMIN' | 'INSTRUCTOR' | 'MANAGER' | string;
+}
 
 interface TabDef {
   id: string;
@@ -213,7 +219,7 @@ const SharedHeader: React.FC<SharedHeaderProps> = ({
           <button onClick={() => handleNavClick(() => setViewMode('LANDING'))} className="flex items-center gap-2.5 group text-left">
             <img
               src="/logo.jpg"
-              alt="Japan Korea Academy Logo"
+              alt="JakonHub Logo"
               className="w-9 h-9 rounded-xl object-cover border border-slate-800 shadow-md group-hover:scale-105 transition-transform"
               onError={(e) => {
                 (e.target as HTMLElement).style.display = 'none';
@@ -226,7 +232,7 @@ const SharedHeader: React.FC<SharedHeaderProps> = ({
                     ? 'Japanese Academy'
                     : viewMode === 'KOREAN'
                     ? 'Korean Academy'
-                    : 'Japan Korea Academy'}
+                    : 'JakonHub'}
                 </span>
               </div>
               <p className="text-[10px] text-slate-400 hidden sm:block">
@@ -473,32 +479,74 @@ const SharedHeader: React.FC<SharedHeaderProps> = ({
         {/* Right controls */}
         <div className="flex items-center gap-2">
 
-          {/* Platform Switcher — shown on desktop platform pages only (mobile switches via drawer) */}
-          {viewMode !== 'LANDING' && onSwitchLanguage && (
-            <button
-              onClick={onSwitchLanguage}
-              className={`hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-extrabold transition-all border shadow-sm cursor-pointer ${
-                isJapanese
-                  ? 'bg-emerald-950/60 hover:bg-emerald-900/60 border-emerald-600/40 text-emerald-300 hover:text-white'
-                  : 'bg-rose-950/60 hover:bg-rose-900/60 border-rose-600/40 text-rose-300 hover:text-white'
-              }`}
-              title={`Switch to ${isJapanese ? 'Korean' : 'Japanese'} Platform`}
-            >
-              <span className="text-base leading-none">{isJapanese ? '🇰🇷' : '🇯🇵'}</span>
-              <span>{isJapanese ? 'Korean' : 'Japanese'}</span>
-            </button>
-          )}
+
           {user ? (
-            <div className="flex items-center gap-1.5">
-              <div className="hidden sm:flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl bg-slate-900 border border-slate-800 text-amber-400 text-xs font-extrabold">
-                <Flame className="w-4 h-4 animate-bounce" /><span>{user.streak}D</span>
+            <div className="flex items-center gap-2.5">
+              {/* Study Streak Badge on Left Side */}
+              <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-slate-900 border border-slate-800 text-amber-400 text-xs font-black shadow-sm" title={`${user.streak || 1} Days Active Study Streak`}>
+                <Flame className="w-4 h-4 animate-bounce text-amber-400" />
+                <span>{user.streak || 1}D</span>
               </div>
-              <div className="flex items-center gap-2 bg-slate-900 border border-slate-800 px-2.5 py-1.5 rounded-xl text-xs">
-                <User className="w-3.5 h-3.5 text-indigo-400" />
-                <span className="font-bold text-slate-200 hidden sm:inline max-w-[80px] truncate">{user.name}</span>
-                <button onClick={handleLogout} className="p-0.5 hover:bg-slate-800 rounded text-slate-400 hover:text-rose-400 transition-colors" title="Log Out">
-                  <LogOut className="w-3.5 h-3.5" />
+
+              {/* Pure Circle Profile Avatar Icon & Dropdown Menu */}
+              <div className="relative group">
+                <button
+                  className="w-9 h-9 rounded-full bg-gradient-to-br from-indigo-500 via-purple-500 to-rose-500 hover:scale-105 transition-all cursor-pointer flex items-center justify-center font-black text-sm text-white shadow-md border border-white/20 active:scale-95"
+                  title={user.name}
+                >
+                  {user.name ? user.name.charAt(0).toUpperCase() : 'U'}
                 </button>
+
+                {/* Floating Profile Dropdown Menu */}
+                <div className="absolute top-full right-0 -mt-1 pt-3 w-64 transform origin-top-right transition-all duration-200 ease-out scale-95 opacity-0 invisible group-hover:scale-100 group-hover:opacity-100 group-hover:visible pointer-events-none group-hover:pointer-events-auto z-[100]">
+                  <div className="bg-slate-900/98 backdrop-blur-2xl border border-slate-800 rounded-3xl p-3 shadow-2xl space-y-3">
+                    {/* Header Info */}
+                    <div className="flex items-center gap-3 p-2.5 bg-slate-950/90 rounded-2xl border border-slate-800">
+                      <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-indigo-500 via-purple-500 to-rose-500 flex items-center justify-center font-black text-sm text-white shadow-inner shrink-0 border border-white/20">
+                        {user.name ? user.name.charAt(0).toUpperCase() : 'U'}
+                      </div>
+                      <div className="min-w-0">
+                        <div className="text-xs font-black text-white truncate">{user.name}</div>
+                        <div className="text-[10px] text-slate-400 truncate">{user.email || 'student@languageguru.com'}</div>
+                        <div className="flex items-center gap-1 mt-1 text-[10px] font-bold text-amber-400">
+                          <Flame className="w-3 h-3 text-amber-400" />
+                          <span>{user.streak || 1} Days Study Streak</span>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Menu Actions */}
+                    <div className="space-y-1 pt-1 border-t border-slate-800">
+                      {(user.role === 'ADMIN' || user.role === 'INSTRUCTOR' || user.role === 'MANAGER') && (
+                        <Link
+                          href="/admin"
+                          className="flex items-center gap-2.5 p-2.5 rounded-xl hover:bg-slate-800 text-slate-300 hover:text-white transition-all text-xs font-bold"
+                        >
+                          <ShieldCheck className="w-4 h-4 text-indigo-400" />
+                          <span>Admin CMS Dashboard</span>
+                        </Link>
+                      )}
+                      <button
+                        onClick={() => handleNavClick(() => { setViewMode('JAPANESE'); if (onSelectJpTab) onSelectJpTab('CERTIFICATE'); })}
+                        className="w-full text-left flex items-center gap-2.5 p-2.5 rounded-xl hover:bg-slate-800 text-slate-300 hover:text-white transition-all text-xs font-bold cursor-pointer"
+                      >
+                        <Award className="w-4 h-4 text-emerald-400" />
+                        <span>My Verified Certificates</span>
+                      </button>
+                    </div>
+
+                    {/* Logout Action Button */}
+                    <div className="pt-1 border-t border-slate-800">
+                      <button
+                        onClick={handleLogout}
+                        className="w-full flex items-center justify-center gap-2 p-2.5 rounded-xl bg-rose-950/60 hover:bg-rose-900 text-rose-300 hover:text-white border border-rose-800/50 transition-all text-xs font-black cursor-pointer shadow-sm"
+                      >
+                        <LogOut className="w-4 h-4 text-rose-400" />
+                        <span>Log Out of Account</span>
+                      </button>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           ) : (
@@ -714,6 +762,7 @@ const MobileDrawer: React.FC<MobileDrawerProps> = ({
                   { id: 'N2' as LevelType,     label: 'N2' },
                   { id: 'N1' as LevelType,     label: 'N1' },
                   { id: 'JFT' as LevelType,    label: 'JFT' },
+                  { id: 'KANJI_1000' as LevelType, label: 'Kanji (1000)' },
                 ].map((lvl) => {
                   const isActive = selectedLevel === lvl.id;
                   return (
@@ -913,7 +962,7 @@ export default function HomePage() {
     } else if (viewMode === 'KOREAN') {
       document.title = "Korean Academy — Nepal's Complete EPS-TOPIK Platform";
     } else {
-      document.title = "Japan Korea Academy — Nepal's Complete Japanese & Korean Language Learning Platform";
+      document.title = "JakonHub – Learn Japanese & Korean";
     }
   }, [viewMode]);
 
@@ -1159,6 +1208,7 @@ export default function HomePage() {
                 { id: 'N2' as LevelType,     label: 'JLPT N2' },
                 { id: 'N1' as LevelType,     label: 'JLPT N1' },
                 { id: 'JFT' as LevelType,    label: 'JFT-Basic' },
+                { id: 'KANJI_1000' as LevelType, label: 'Kanji (1000)' },
               ].map((lvl) => {
                 const isActive = selectedLevel === lvl.id;
                 return (
@@ -1280,7 +1330,7 @@ export default function HomePage() {
               ? 'Japanese Academy - Minna no Nihongo (Lessons 1-75) & JLPT N5-N1 Handbook'
               : viewMode === 'KOREAN'
               ? 'Korean Academy - EPS-TOPIK (Lessons 1-60) & TOPIK I-II Handbook'
-              : 'Japan Korea Academy - Japanese JLPT N5-N1 & Korean EPS-TOPIK'}
+              : 'JakonHub – Learn Japanese & Korean'}
           </span>
           <div className="flex items-center gap-2 text-[10px] text-slate-400">
             <span>SM-2 SRS</span><span>•</span><span>Offline IndexedDB</span><span>•</span><span>QR Certificate Verification</span>

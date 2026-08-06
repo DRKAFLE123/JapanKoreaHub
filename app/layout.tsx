@@ -3,18 +3,18 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://japankoreaacademy.com'),
-  title: "Japan Korea Academy — Nepal's Complete Japanese & Korean Language Learning Platform",
-  description: "Official Japan Korea Academy platform (JapanKoreaAcademy.com). Offers JLPT (N5-N1), JFT-Basic, NAT-Test, TOPIK, EPS-TOPIK (Lessons 1-60), Speaking Classes, Visa Interview Preparation, Study in Japan, Work in Japan (SSW 1 & 2), and Work in Korea (EPS E-9).",
+  title: "JakonHub – Learn Japanese & Korean",
+  description: "Official JakonHub platform (JakonHub.com). Offers JLPT (N5-N1), JFT-Basic, NAT-Test, TOPIK, EPS-TOPIK (Lessons 1-60), Speaking Classes, Visa Interview Preparation, Study in Japan, Work in Japan (SSW 1 & 2), and Work in Korea (EPS E-9).",
   keywords: [
-    "Japan Korea Academy", "JapanKoreaAcademy.com",
+    "JakonHub", "JakonHub.com",
     "JLPT N5", "JLPT N4", "JLPT N3", "JFT-Basic 250 Marks", "NAT-Test Nepal",
     "TOPIK Korea", "EPS-TOPIK 1-60", "Speaking Classes Nepal", "Visa Interview Preparation",
     "Study in Japan", "Work in Japan SSW 1", "Work in Korea E-9",
     "Japanese Language School Kathmandu"
   ],
-  authors: [{ name: "Japan Korea Academy" }],
-  creator: "Japan Korea Academy",
-  publisher: "Japan Korea Academy Network",
+  authors: [{ name: "JakonHub" }],
+  creator: "JakonHub",
+  publisher: "JakonHub Network",
   robots: {
     index: true,
     follow: true,
@@ -27,17 +27,17 @@ export const metadata: Metadata = {
     },
   },
   openGraph: {
-    title: "Japan Korea Academy — Nepal's Complete Japanese & Korean Learning Platform",
+    title: "JakonHub — Nepal's Complete Japanese & Korean Learning Platform",
     description: "Prepare for JLPT, JFT-Basic, NAT-Test, TOPIK, EPS-TOPIK, Visa Interview Prep, Study in Japan & Work in Japan / Korea.",
     url: "https://japankoreaacademy.com",
-    siteName: "Japan Korea Academy",
-    images: [{ url: "/logo.png", width: 800, height: 800, alt: "Japan Korea Academy Logo" }],
+    siteName: "JakonHub",
+    images: [{ url: "/logo.png", width: 800, height: 800, alt: "JakonHub Logo" }],
     locale: "en_US",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Japan Korea Academy — Nepal's Complete Japanese & Korean Platform",
+    title: "JakonHub — Nepal's Complete Japanese & Korean Platform",
     description: "JLPT, JFT-Basic, NAT-Test, TOPIK, EPS-TOPIK, Speaking Classes & Visa Interview Prep.",
     images: ["/logo.png"],
   },
@@ -54,7 +54,7 @@ export default function RootLayout({
   const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'EducationalOrganization',
-    name: 'Japan Korea Academy',
+    name: 'JakonHub',
     url: 'https://japankoreaacademy.com',
     logo: 'https://japankoreaacademy.com/logo.png',
     sameAs: ['https://japankoreaacademy.com'],

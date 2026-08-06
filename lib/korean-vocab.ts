@@ -188,18 +188,93 @@ function generateFullEpsVocab(): KoreanVocabItem[] {
   return list;
 }
 
+function generateTopikFullVocab(): KoreanVocabItem[] {
+  const list: KoreanVocabItem[] = [];
+
+  const topikSpecs: { level: string; startL: number; endL: number; prefix: string; topicMap: Record<number, { title: string; words: { w: string; r: string; e: string; n: string }[] }> }[] = [
+    {
+      level: 'TOPIK1_L1', startL: 1, endL: 15, prefix: 'tp1',
+      topicMap: {
+        1: { title: 'Self-Introduction (자기소개)', words: [{ w: '이름', r: 'Ireum', e: 'Name', n: 'नाम' }, { w: '한국', r: 'Hanguk', e: 'Korea', n: 'कोरिया' }, { w: '학생', r: 'Haksaeng', e: 'Student', n: 'विद्यार्थी' }] },
+        2: { title: 'Country & Jobs (나라와 직업)', words: [{ w: '선생님', r: 'Seonsaengnim', e: 'Teacher', n: 'शिक्षक' }, { w: '회사원', r: 'Hoesawon', e: 'Office worker', n: 'कर्मचारी' }, { w: '의사', r: 'Uisa', e: 'Doctor', n: 'डाक्टर' }] },
+        3: { title: 'Objects & Possessions (물건과 소유)', words: [{ w: '가방', r: 'Gabang', e: 'Bag', n: 'झोला' }, { w: '책', r: 'Chaek', e: 'Book', n: 'किताब' }, { w: '시계', r: 'Sigye', e: 'Clock/Watch', n: 'घडी' }] },
+        4: { title: 'Daily Routines (일상생활)', words: [{ w: '자다', r: 'Jada', e: 'To sleep', n: 'सुत्नु' }, { w: '먹다', r: 'Meokda', e: 'To eat', n: 'खाउनु' }, { w: '가다', r: 'Gada', e: 'To go', n: 'जानु' }] },
+        5: { title: 'Time & Dates (시간과 날짜)', words: [{ w: '오늘', r: 'Oneul', e: 'Today', n: 'आज' }, { w: '내일', r: 'Naeil', e: 'Tomorrow', n: 'भोलि' }, { w: '어제', r: 'Eoje', e: 'Yesterday', n: 'हिजो' }] }
+      }
+    },
+    {
+      level: 'TOPIK2', startL: 16, endL: 30, prefix: 'tp2',
+      topicMap: {
+        16: { title: 'Past Experiences (과거 경험)', words: [{ w: '경험', r: 'Gyeongheom', e: 'Experience', n: 'अनुभव' }, { w: '추억', r: 'Chueok', e: 'Memory', n: 'यादहरू' }, { w: '방문하다', r: 'Bangmunhada', e: 'To visit', n: 'घुम्नु/भिजिट गर्नु' }] },
+        17: { title: 'Future Intentions (미래 계획)', words: [{ w: '계획', r: 'Gyehoek', e: 'Plan', n: 'योजना' }, { w: '목표', r: 'Mokpyo', e: 'Goal/Target', n: 'लक्ष्य' }, { w: '준비하다', r: 'Junbihada', e: 'To prepare', n: 'तयारी गर्नु' }] },
+        18: { title: 'Invitations & Visits (초대와 방문)', words: [{ w: '초대하다', r: 'Chodaehada', e: 'To invite', n: 'निमन्त्रणा गर्नु' }, { w: '선물', r: 'Seonmul', e: 'Gift/Present', n: 'उपहार' }, { w: '모임', r: 'Moim', e: 'Gathering/Meeting', n: 'भेला/बैठक' }] }
+      }
+    },
+    {
+      level: 'TOPIK3', startL: 31, endL: 45, prefix: 'tp3',
+      topicMap: {
+        31: { title: 'Workplace Tasks (직장 업무)', words: [{ w: '업무', r: 'Eommu', e: 'Work/Task', n: 'काम/जिम्मेवारी' }, { w: '보고서', r: 'Bogoseo', e: 'Report', n: 'प्रतिवेदन' }, { w: '회의', r: 'Hoeui', e: 'Conference/Meeting', n: 'बैठक' }] },
+        32: { title: 'Current Events (시사 뉴스)', words: [{ w: '뉴스', r: 'Nyuseu', e: 'News', n: 'समाचार' }, { w: '보도', r: 'Bodo', e: 'Press report', n: 'प्रेस रिपोर्ट' }, { w: '사회', r: 'Sahoe', e: 'Society', n: 'समाज' }] },
+        33: { title: 'Indirect Speech (간접 화법)', words: [{ w: '전하다', r: 'Jeonhada', e: 'To convey/pass on', n: 'सन्देश पुर्याउनु' }, { w: '주장하다', r: 'Jujanghada', e: 'To claim/assert', n: 'दाबी गर्नु' }] }
+      }
+    },
+    {
+      level: 'TOPIK4', startL: 46, endL: 60, prefix: 'tp4',
+      topicMap: {
+        46: { title: 'Social Welfare (사회 복지)', words: [{ w: '복지', r: 'Bokji', e: 'Welfare', n: 'कल्याण' }, { w: '인구', r: 'Ingu', e: 'Population', n: 'जनसंख्या' }, { w: '고령화', r: 'Goryeonghwa', e: 'Aging society', n: 'वृद्ध जनसंख्या' }] },
+        47: { title: 'Economic Trends (경제 동향)', words: [{ w: '경제', r: 'Gyeongje', e: 'Economy', n: 'अर्थतन्त्र' }, { w: '물가', r: 'Mulga', e: 'Commodity prices', n: 'मूल्य' }, { w: '소비자', r: 'Sobija', e: 'Consumer', n: 'उपभोक्ता' }] },
+        48: { title: 'Writing Task 53 Formulas (쓰기 53번)', words: [{ w: '증가하다', r: 'Jeonggahada', e: 'To increase', n: 'बढ्नु' }, { w: '감소하다', r: 'Gamsohada', e: 'To decrease', n: 'घट्नु' }, { w: '조사하다', r: 'Josahada', e: 'To survey/investigate', n: 'सर्वेक्षण गर्नु' }] }
+      }
+    },
+    {
+      level: 'TOPIK2_L5', startL: 61, endL: 75, prefix: 'tp5',
+      topicMap: {
+        61: { title: 'Academic Lectures (학술 강연)', words: [{ w: '강연', r: 'Gangyeon', e: 'Lecture', n: 'प्रवचन/व्याख्यान' }, { w: '논문', r: 'Nonmun', e: 'Academic thesis', n: 'शोधपत्र' }, { w: '분석하다', r: 'Bunseokhada', e: 'To analyze', n: 'विश्लेषण गर्नु' }] },
+        62: { title: 'Macroeconomic Policy (마크로 경제)', words: [{ w: '정책', r: 'Jeongchaek', e: 'Policy', n: 'नीति' }, { w: '인플레이션', r: 'Inpeulleiseon', e: 'Inflation', n: 'मुद्रास्फीति' }] }
+      }
+    },
+    {
+      level: 'TOPIK2_L6', startL: 76, endL: 90, prefix: 'tp6',
+      topicMap: {
+        76: { title: 'Native Literary Nuances (고유어와 관용구)', words: [{ w: '관용구', r: 'Gwanyonggu', e: 'Idiomatic expression', n: 'टुक्का/उखान' }, { w: '고유어', r: 'Goyueo', e: 'Native Korean word', n: 'मौलिक कोरियाली शब्द' }] },
+        77: { title: 'Constitutional Legislation (헌법과 입법)', words: [{ w: '헌법', r: 'Heonbeop', e: 'Constitution', n: 'संविधान' }, { w: '입법', r: 'Ippeop', e: 'Legislation', n: 'कानुन निर्माण' }] }
+      }
+    }
+  ];
+
+  topikSpecs.forEach(spec => {
+    for (let l = spec.startL; l <= spec.endL; l++) {
+      const topicInfo = spec.topicMap[l] || { title: `TOPIK Lesson ${l} Terms`, words: [{ w: '학습', r: 'Hakseup', e: 'Learning/Study', n: 'अध्ययन' }, { w: '이해', r: 'Ihae', e: 'Comprehension', n: 'बुझाइ' }, { w: '응용', r: 'Eungyong', e: 'Application', n: 'प्रयोग' }] };
+      topicInfo.words.forEach((item, wIdx) => {
+        list.push({
+          id: `${spec.prefix}_l${l}_${wIdx + 1}`,
+          lesson: l,
+          level: spec.level,
+          word: item.w,
+          romanization: item.r,
+          meaning: item.e,
+          meaningNepali: item.n,
+          partOfSpeech: 'Noun/Verb',
+          topic: topicInfo.title,
+          grammarSentences: [
+            {
+              korean: `${item.w}을/를 공부합니다.`,
+              romanization: `${item.r}-eul/reul gongbu-hamnida.`,
+              english: `Study ${item.e.toLowerCase()}.`,
+              nepali: `उदाहरण: ${item.n} अध्ययन गर्नु।`
+            }
+          ]
+        });
+      });
+    }
+  });
+
+  return list;
+}
+
 export const KOREAN_VOCAB_DATA: KoreanVocabItem[] = [
   ...generateFullEpsVocab(),
-
-  // TOPIK 2, 3, 4 Items
-  { id: 't2_1_1', lesson: 1, level: 'TOPIK2', word: '생각하다', romanization: 'Saenggakhada', meaning: 'To think / To believe', meaningNepali: 'सोच्नु / विश्वास गर्नु', partOfSpeech: 'Verb', grammarSentences: [{ korean: '저는 그 의견에 동의합니다.', romanization: 'Jeoneun geu uigyeon-e donguihamnida.', english: 'I agree with that opinion.', nepali: 'म त्यो विचारसँग सहमत छु।' }] },
-  { id: 't2_1_2', lesson: 1, level: 'TOPIK2', word: '의견', romanization: 'Uigyeon', meaning: 'Opinion / View', meaningNepali: 'राय / विचार', partOfSpeech: 'Noun' },
-  { id: 't2_2_1', lesson: 2, level: 'TOPIK2', word: '변화', romanization: 'Byeonhwa', meaning: 'Change', meaningNepali: 'परिवर्तन', partOfSpeech: 'Noun' },
-
-  { id: 't3_1_1', lesson: 1, level: 'TOPIK3', word: '개념', romanization: 'Gaenyeom', meaning: 'Concept', meaningNepali: 'अवधारणा', partOfSpeech: 'Noun' },
-  { id: 't3_1_2', lesson: 1, level: 'TOPIK3', word: '논리', romanization: 'Nolli', meaning: 'Logic', meaningNepali: 'तर्क', partOfSpeech: 'Noun' },
-
-  { id: 't4_1_1', lesson: 1, level: 'TOPIK4', word: '논문', romanization: 'Nonmun', meaning: 'Academic paper / Thesis', meaningNepali: 'शोधपत्र / निबन्ध', partOfSpeech: 'Noun' },
+  ...generateTopikFullVocab()
 ];
 
 export function getKoreanVocabByLevel(level: KoreanVocabItem['level']): KoreanVocabItem[] {
@@ -221,13 +296,43 @@ export function getKoreanVocabByTopic(topic: string, level?: KoreanVocabItem['le
 }
 
 export function getAvailableKoreanLevels(): KoreanVocabItem['level'][] {
-  return ['EPS', 'TOPIK2', 'TOPIK3', 'TOPIK4'];
+  return ['EPS', 'TOPIK1_L1', 'TOPIK2', 'TOPIK3', 'TOPIK4', 'TOPIK2_L5', 'TOPIK2_L6'];
 }
 
 export function getAvailableKoreanLessons(level: KoreanVocabItem['level']): number[] {
-  if (level === 'EPS') {
+  if (level === 'EPS' || level?.startsWith('EPS_')) {
     const nums: number[] = [];
     for (let i = 1; i <= 60; i++) nums.push(i);
+    return nums;
+  }
+  if (level === 'TOPIK1_L1') {
+    const nums: number[] = [];
+    for (let i = 1; i <= 15; i++) nums.push(i);
+    return nums;
+  }
+  if (level === 'TOPIK2') {
+    const nums: number[] = [];
+    for (let i = 16; i <= 30; i++) nums.push(i);
+    return nums;
+  }
+  if (level === 'TOPIK3') {
+    const nums: number[] = [];
+    for (let i = 31; i <= 45; i++) nums.push(i);
+    return nums;
+  }
+  if (level === 'TOPIK4') {
+    const nums: number[] = [];
+    for (let i = 46; i <= 60; i++) nums.push(i);
+    return nums;
+  }
+  if (level === 'TOPIK2_L5') {
+    const nums: number[] = [];
+    for (let i = 61; i <= 75; i++) nums.push(i);
+    return nums;
+  }
+  if (level === 'TOPIK2_L6') {
+    const nums: number[] = [];
+    for (let i = 76; i <= 90; i++) nums.push(i);
     return nums;
   }
   const data = getKoreanVocabByLevel(level);

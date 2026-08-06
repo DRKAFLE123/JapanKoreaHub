@@ -3,7 +3,7 @@
 import React, { useState, useRef } from 'react';
 import {
   BookOpen, Search, Volume2, ChevronDown, ChevronRight, ChevronLeft, MessageSquare, Sparkles, Flame,
-  Trophy, CheckCircle2, Bookmark, ExternalLink, RefreshCw, X, Layers, FileText, Music, Headphones, Mic2, Square, BookCheck, Printer, Book, Check
+  Trophy, CheckCircle2, Bookmark, ExternalLink, RefreshCw, X, Layers, FileText, Music, Headphones, Mic2, Square, BookCheck, Printer, Book, Check, Eye, EyeOff
 } from 'lucide-react';
 import {
   NIHONGO_VOCAB_DATA, JAPANESE_HIRAGANA, JAPANESE_KATAKANA, JAPANESE_DAKUTON_HANDAKUTON,
@@ -14,6 +14,9 @@ import { getAudioTracksForLesson } from '@/lib/n5-audio-tracks';
 import { getKanjiByLevel, KanjiItem } from '@/lib/kanji-dataset';
 import { getGrammarGuide, LessonGrammarGuide } from '@/lib/grammar-guide';
 import { RadicalBreakdown } from '@/components/RadicalBreakdown';
+import { BASIC_KANJI_100, BASIC_VOCAB_200 } from '@/lib/basics-japanese-data';
+import { KANJI_1000_DATA, Kanji1000Item } from '@/lib/kanji-1000-data';
+import { KanjiPracticeModal } from '@/components/KanjiPracticeModal';
 
 const LEVEL_LABELS: Record<string, string> = {
   BASICS: '🎯 Japanese Basics (Kana, Rules & Kanji Radicals)',
@@ -88,20 +91,44 @@ export const JAPANESE_LESSON_TITLES: Record<number, { title: string; topic: stri
 };
 
 export interface VocabularyExplorerProps {
-  preselectedLevel?: 'BASICS' | 'N5' | 'N4' | 'N3' | 'N2' | 'N1' | 'JFT';
+  preselectedLevel?: 'BASICS' | 'N5' | 'N4' | 'N3' | 'N2' | 'N1' | 'JFT' | 'KANJI_1000';
 }
 
-type BasicsSubTab = 'HIRAGANA' | 'KATAKANA' | 'DAKUTEN' | 'YOON' | 'RULES' | 'RADICALS';
+type BasicsSubTab = 'HIRAGANA' | 'KATAKANA' | 'DAKUTEN' | 'YOON' | 'RULES' | 'RADICALS' | 'KANJI' | 'VOCAB';
 
 export const VocabularyExplorer: React.FC<VocabularyExplorerProps> = ({ preselectedLevel }) => {
-  const [selectedLevel, setSelectedLevel] = useState<'BASICS' | 'N5' | 'N4' | 'N3' | 'N2' | 'N1' | 'JFT'>(preselectedLevel || 'N5');
+  const [selectedLevel, setSelectedLevel] = useState<'BASICS' | 'N5' | 'N4' | 'N3' | 'N2' | 'N1' | 'JFT' | 'KANJI_1000'>(preselectedLevel || 'N5');
   const [selectedLesson, setSelectedLesson] = useState<number>(1);
   const [activeLessonTab, setActiveLessonTab] = useState<'VOCAB' | 'GRAMMAR'>('VOCAB');
+
+  // 1000 Kanji Hub states
+  const [kanjiSearchQuery, setKanjiSearchQuery] = useState<string>('');
+  const [kanjiActiveTier, setKanjiActiveTier] = useState<'all' | 'basic' | 'intermediate' | 'advanced'>('all');
+  const [kanjiCurrentPage, setKanjiCurrentPage] = useState<number>(1);
+  const kanjiItemsPerPage = 20;
+
+  // Practice Modal states
+  const [isPracticeOpen, setIsPracticeOpen] = useState<boolean>(false);
+  const [practiceDeck, setPracticeDeck] = useState<Kanji1000Item[]>([]);
+  const [practiceTitle, setPracticeTitle] = useState<string>('');
+
+  // Lesson Meaning Hide/Revise states
+  const [hideLessonMeanings, setHideLessonMeanings] = useState<boolean>(false);
+  const [revealedVocabIds, setRevealedVocabIds] = useState<Set<string | number>>(new Set());
+
+  const toggleVocabReveal = (id: string | number) => {
+    setRevealedVocabIds(prev => {
+      const next = new Set(prev);
+      if (next.has(id)) next.delete(id);
+      else next.add(id);
+      return next;
+    });
+  };
 
   React.useEffect(() => {
     if (preselectedLevel) {
       setSelectedLevel(preselectedLevel);
-      if (preselectedLevel !== 'BASICS') {
+      if (preselectedLevel !== 'BASICS' && preselectedLevel !== 'KANJI_1000') {
         if (preselectedLevel === 'JFT') {
           setSelectedLesson(1);
         } else {
@@ -256,7 +283,7 @@ export const VocabularyExplorer: React.FC<VocabularyExplorerProps> = ({ preselec
       {selectedLevel === 'BASICS' && (
         <div className="space-y-4 font-sans">
           <div className="flex items-center gap-1.5 overflow-x-auto bg-slate-100 border border-slate-200/90 p-1.5 rounded-2xl">
-            {(['HIRAGANA', 'KATAKANA', 'DAKUTEN', 'YOON', 'RULES', 'RADICALS'] as const).map((sub) => (
+            {(['HIRAGANA', 'KATAKANA', 'DAKUTEN', 'YOON', 'RULES', 'RADICALS', 'KANJI', 'VOCAB'] as const).map((sub) => (
               <button
                 key={sub}
                 onClick={() => setBasicsSubTab(sub)}
@@ -272,6 +299,8 @@ export const VocabularyExplorer: React.FC<VocabularyExplorerProps> = ({ preselec
                 {sub === 'YOON' && 'きゃ Yoon Combination (33)'}
                 {sub === 'RULES' && '📖 Grammar Rules'}
                 {sub === 'RADICALS' && '🧩 Kanji Radicals'}
+                {sub === 'KANJI' && '💮 Basic Kanji (100)'}
+                {sub === 'VOCAB' && '📖 Basic Vocab (200)'}
               </button>
             ))}
           </div>
@@ -344,13 +373,390 @@ export const VocabularyExplorer: React.FC<VocabularyExplorerProps> = ({ preselec
           {basicsSubTab === 'RADICALS' && (
             <RadicalBreakdown />
           )}
+
+          {basicsSubTab === 'KANJI' && (
+            <div className="bg-[#fcf8f2] text-[#2d2219] border border-[#e8decb] rounded-2xl sm:rounded-3xl p-4 sm:p-6 shadow-xl space-y-4 font-sans relative">
+              <div className="flex items-center justify-between pb-3 border-b border-[#e8decb]">
+                <div>
+                  <div className="text-xs font-black uppercase tracking-wider text-rose-800">💮 Beginner Level Kanji Guide (100)</div>
+                  <div className="text-[10px] font-bold text-[#5c4a3c] mt-0.5 font-jp">Scroll through basic characters, meanings, and formations</div>
+                </div>
+                <div className="flex items-center gap-2">
+                  <button
+                    onClick={() => {
+                      const basicDeck = KANJI_1000_DATA.slice(0, 100);
+                      setPracticeDeck(basicDeck);
+                      setPracticeTitle('Basic Kanji (100) Practice');
+                      setIsPracticeOpen(true);
+                    }}
+                    className="px-3 py-1 rounded-xl text-[11px] font-black bg-rose-800 hover:bg-rose-700 text-white border border-rose-700 transition-all cursor-pointer flex items-center gap-1 shadow-xs"
+                  >
+                    💮 Practice (अभ्यास)
+                  </button>
+                  <div className="text-xs font-black text-rose-800 bg-rose-100 border border-rose-200 px-2 py-0.5 rounded-lg font-mono">
+                    100 Kanji Total
+                  </div>
+                </div>
+              </div>
+
+              {/* Scrollable detailed list styled like pages of a study book - Two Column Grid */}
+              <div className="max-h-[600px] overflow-y-auto pr-1 scrollbar-thin scrollbar-thumb-[#e8decb] scrollbar-track-transparent">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  {BASIC_KANJI_100.map((kanji, idx) => (
+                    <div
+                      key={kanji.character}
+                      className="p-4 bg-[#fbf6eb] border border-[#e8decb] rounded-2xl hover:shadow-md hover:border-amber-900/20 transition-all flex flex-col sm:flex-row gap-4 items-start relative group"
+                    >
+                      {/* Left: Large Kanji Box */}
+                      <div className="flex flex-col items-center shrink-0 w-20 p-2.5 bg-white border border-[#e8decb] rounded-xl shadow-xs animate-fade-in">
+                        <div className="text-3xl sm:text-4xl font-black font-jp text-rose-900 mb-0.5">{kanji.character}</div>
+                        <div className="text-[8px] font-extrabold text-[#5c4a3c] uppercase tracking-wider bg-[#f5efe6] px-1.5 py-0.5 rounded border border-[#e8decb]">
+                          {kanji.strokeCount} Strokes
+                        </div>
+                        <button
+                          onClick={() => playPronunciation(kanji.character)}
+                          className="mt-2 p-1 rounded-lg bg-rose-50 hover:bg-rose-700 text-rose-700 hover:text-white border border-rose-200 transition-all cursor-pointer flex items-center justify-center"
+                          title="Hear Pronunciation"
+                        >
+                          <Volume2 className="w-3.5 h-3.5" />
+                        </button>
+                      </div>
+
+                      {/* Right: Readings, Meanings and Formation */}
+                      <div className="flex-1 space-y-2 min-w-0 w-full">
+                        <div className="flex flex-wrap items-baseline gap-x-2 gap-y-0.5">
+                          <div className="text-sm font-extrabold text-[#2d2219]">
+                            {idx + 1}. {kanji.meanings.join(', ')}
+                          </div>
+                          <div className="text-xs font-black text-[#5c4a3c] font-jp tracking-wider">
+                            {kanji.meaningsNepali.join(', ')}
+                          </div>
+                        </div>
+
+                        {/* Readings block */}
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-1 text-[11px] py-1 border-y border-[#e8decb]/60">
+                          <div className="flex items-center gap-1">
+                            <span className="font-extrabold text-[#5c4a3c] bg-[#f5efe6] px-1 py-0.2 rounded text-[9px] uppercase">On</span>
+                            <span className="font-bold text-[#2d2219] font-jp tracking-wider truncate">{kanji.readingsOnyomi.join(', ') || '—'}</span>
+                          </div>
+                          <div className="flex items-center gap-1">
+                            <span className="font-extrabold text-[#5c4a3c] bg-[#f5efe6] px-1 py-0.2 rounded text-[9px] uppercase">Kun</span>
+                            <span className="font-bold text-[#2d2219] font-jp tracking-wider truncate">{kanji.readingsKunyomi.join(', ') || '—'}</span>
+                          </div>
+                        </div>
+
+                        {/* Formation explanation */}
+                        <div className="p-2.5 bg-white/70 border border-[#e8decb]/80 rounded-xl space-y-0.5">
+                          <div className="text-[9px] font-black uppercase tracking-wider text-rose-800 flex items-center gap-1">
+                            <span>💮 Kanji Formation</span>
+                          </div>
+                          <p className="text-[11px] text-[#2d2219] font-medium leading-normal">
+                            {kanji.formation}
+                          </p>
+                          <p className="text-[11px] text-[#5c4a3c] font-extrabold leading-normal">
+                            🇳🇵 {kanji.formationNepali}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          )}
+
+
+          {basicsSubTab === 'VOCAB' && (
+            <div className="bg-[#fcf8f2] text-[#2d2219] border border-[#e8decb] rounded-2xl sm:rounded-3xl p-4 sm:p-6 shadow-xl space-y-4 font-sans relative">
+              <div className="flex items-center justify-between pb-3 border-b border-[#e8decb]">
+                <div>
+                  <div className="text-xs font-black uppercase tracking-wider text-rose-800">📖 Beginner Kana Vocabulary (200)</div>
+                  <div className="text-[10px] font-bold text-[#5c4a3c] mt-0.5">Dual-column scrollable list of high-frequency words (no Kanji)</div>
+                </div>
+                <div className="text-xs font-black text-rose-800 bg-rose-100 border border-rose-200 px-2 py-0.5 rounded-lg font-mono">
+                  200 Words Total
+                </div>
+              </div>
+
+              {/* Dual Column list view - Scroll at once */}
+              <div className="max-h-[600px] overflow-y-auto pr-1 scrollbar-thin scrollbar-thumb-[#e8decb] scrollbar-track-transparent">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                  {/* Left Column (Items 1-100) */}
+                  <div className="space-y-2">
+                    {BASIC_VOCAB_200.slice(0, 100).map((vocab, i) => (
+                      <div
+                        key={i}
+                        className="p-3 bg-[#fbf6eb] border border-[#e8decb]/80 rounded-xl hover:border-amber-900/10 hover:shadow-xs transition-all flex items-center justify-between gap-3"
+                      >
+                        <div className="min-w-0 space-y-0.5">
+                          <div className="flex items-center gap-2">
+                            <span className="text-[10px] font-black text-[#5c4a3c] font-mono">{i + 1}</span>
+                            <span className="text-base font-black text-[#2d2219] font-jp tracking-wider">{vocab.word}</span>
+                          </div>
+                          <div className="text-[11px] font-extrabold text-[#5c4a3c] font-mono pl-5">({vocab.romaji})</div>
+                        </div>
+                        <div className="text-right flex items-center gap-3">
+                          <div className="min-w-0">
+                            <div className="text-xs font-black text-[#2d2219] truncate max-w-[160px]">{vocab.meaning}</div>
+                            <div className="text-[11px] font-bold text-[#5c4a3c] truncate max-w-[160px]">{vocab.meaningNepali}</div>
+                          </div>
+                          <button
+                            onClick={() => playPronunciation(vocab.word)}
+                            className="p-1 rounded-lg bg-rose-50 hover:bg-rose-600 text-rose-700 hover:text-white border border-rose-200 transition-all cursor-pointer flex-shrink-0"
+                            title="Speak"
+                          >
+                            <Volume2 className="w-3.5 h-3.5" />
+                          </button>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+
+                  {/* Right Column (Items 101-200) */}
+                  <div className="space-y-2">
+                    {BASIC_VOCAB_200.slice(100, 200).map((vocab, i) => (
+                      <div
+                        key={i}
+                        className="p-3 bg-[#fbf6eb] border border-[#e8decb]/80 rounded-xl hover:border-amber-900/10 hover:shadow-xs transition-all flex items-center justify-between gap-3"
+                      >
+                        <div className="min-w-0 space-y-0.5">
+                          <div className="flex items-center gap-2">
+                            <span className="text-[10px] font-black text-[#5c4a3c] font-mono">{i + 101}</span>
+                            <span className="text-base font-black text-[#2d2219] font-jp tracking-wider">{vocab.word}</span>
+                          </div>
+                          <div className="text-[11px] font-extrabold text-[#5c4a3c] font-mono pl-5">({vocab.romaji})</div>
+                        </div>
+                        <div className="text-right flex items-center gap-3">
+                          <div className="min-w-0">
+                            <div className="text-xs font-black text-[#2d2219] truncate max-w-[160px]">{vocab.meaning}</div>
+                            <div className="text-[11px] font-bold text-[#5c4a3c] truncate max-w-[160px]">{vocab.meaningNepali}</div>
+                          </div>
+                          <button
+                            onClick={() => playPronunciation(vocab.word)}
+                            className="p-1 rounded-lg bg-rose-50 hover:bg-rose-600 text-rose-700 hover:text-white border border-rose-200 transition-all cursor-pointer flex-shrink-0"
+                            title="Speak"
+                          >
+                            <Volume2 className="w-3.5 h-3.5" />
+                          </button>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
         </div>
       )}
 
       {/* ══════════════════════════════════════════════════════════
+          1000 KANJI HUB FULL-PAGE VIEW
+      ══════════════════════════════════════════════════════════ */}
+      {selectedLevel === 'KANJI_1000' && (() => {
+        const filtered1000Kanjis = KANJI_1000_DATA.filter(item => {
+          if (kanjiActiveTier !== 'all' && item.tier !== kanjiActiveTier) return false;
+          if (kanjiSearchQuery) {
+            const q = kanjiSearchQuery.toLowerCase();
+            const matchChar = item.character.includes(kanjiSearchQuery);
+            const matchRead = item.readings.toLowerCase().includes(q);
+            const matchEn = item.meaningEn.toLowerCase().includes(q);
+            const matchNe = item.meaningNe.toLowerCase().includes(q);
+            return matchChar || matchRead || matchEn || matchNe;
+          }
+          return true;
+        });
+
+        const totalKanjiPages = Math.max(1, Math.ceil(filtered1000Kanjis.length / kanjiItemsPerPage));
+        const clampedPage = Math.min(kanjiCurrentPage, totalKanjiPages);
+        const startIndex = (clampedPage - 1) * kanjiItemsPerPage;
+        const paginatedKanjis = filtered1000Kanjis.slice(startIndex, startIndex + kanjiItemsPerPage);
+
+        return (
+          <div className="bg-[#fcf8f2] text-[#2d2219] border border-[#e8decb] rounded-2xl sm:rounded-3xl p-4 sm:p-6 shadow-xl space-y-4 font-sans relative">
+            {/* Header Ribbon */}
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-3 border-b border-[#e8decb] gap-2">
+              <div>
+                <div className="text-xs font-black uppercase tracking-wider text-rose-800">💮 Japanese Kanji Hub (1000)</div>
+                <div className="text-[10px] font-bold text-[#5c4a3c] mt-0.5">Learn 1000 high-frequency Kanji with Nepali explanation and examples</div>
+              </div>
+              <div className="flex items-center gap-2 self-start sm:self-auto">
+                <button
+                  onClick={() => {
+                    setPracticeDeck(filtered1000Kanjis);
+                    const tierLabel = kanjiActiveTier === 'all' ? 'All 1000' :
+                                      kanjiActiveTier === 'basic' ? 'Basic (350)' :
+                                      kanjiActiveTier === 'intermediate' ? 'Intermediate (350)' : 'Advanced (300)';
+                    setPracticeTitle(`Kanji Hub ${tierLabel} Practice`);
+                    setIsPracticeOpen(true);
+                  }}
+                  className="px-3.5 py-1.5 rounded-xl text-[11px] font-black bg-rose-800 hover:bg-rose-700 text-white border border-rose-700 transition-all cursor-pointer flex items-center gap-1 shadow-xs"
+                >
+                  💮 Practice (अभ्यास)
+                </button>
+                <div className="text-xs font-black text-rose-800 bg-rose-100 border border-rose-200 px-2 py-0.5 rounded-lg font-mono">
+                  {filtered1000Kanjis.length} / 1000 Kanji Found
+                </div>
+              </div>
+            </div>
+
+            {/* Filter and Search Controls */}
+            <div className="flex flex-col md:flex-row gap-3 items-center justify-between">
+              {/* Search Input */}
+              <div className="relative w-full md:w-80">
+                <input
+                  type="text"
+                  value={kanjiSearchQuery}
+                  onChange={(e) => {
+                    setKanjiSearchQuery(e.target.value);
+                    setKanjiCurrentPage(1);
+                  }}
+                  placeholder="Search Kanji, readings or meaning..."
+                  className="w-full pl-9 pr-4 py-2 bg-white text-[#2d2219] border border-[#e8decb] rounded-xl text-xs font-bold shadow-xs placeholder-[#a89e8c] focus:outline-none focus:ring-1 focus:ring-rose-800 focus:border-rose-800"
+                />
+                <div className="absolute left-3 top-2.5 text-xs text-[#a89e8c] font-black font-jp">検</div>
+              </div>
+
+              {/* Tier Switches */}
+              <div className="flex flex-wrap gap-1.5 w-full md:w-auto justify-start md:justify-end">
+                {(['all', 'basic', 'intermediate', 'advanced'] as const).map((tier) => (
+                  <button
+                    key={tier}
+                    onClick={() => {
+                      setKanjiActiveTier(tier);
+                      setKanjiCurrentPage(1);
+                    }}
+                    className={`px-3 py-1.5 rounded-lg text-[11px] font-black tracking-wide border transition-all cursor-pointer ${
+                      kanjiActiveTier === tier
+                        ? 'bg-rose-800 border-rose-800 text-white shadow-xs'
+                        : 'bg-white border-[#e8decb] text-[#5c4a3c] hover:bg-[#fbf6eb]'
+                    }`}
+                  >
+                    {tier === 'all' && 'सबै All'}
+                    {tier === 'basic' && 'आधारभूत Basic (350)'}
+                    {tier === 'intermediate' && 'मध्यम Intermediate (350)'}
+                    {tier === 'advanced' && 'उच्च Advanced (300)'}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* Pagination Controls */}
+            {totalKanjiPages > 1 && (
+              <div className="flex items-center justify-between py-2 border-y border-[#e8decb]/60 text-xs">
+                <button
+                  onClick={() => setKanjiCurrentPage(prev => Math.max(1, prev - 1))}
+                  disabled={clampedPage === 1}
+                  className="px-3 py-1.5 rounded-lg border border-[#e8decb] bg-white font-extrabold text-[#5c4a3c] hover:bg-[#fbf6eb] disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer"
+                >
+                  ◀ Previous
+                </button>
+                <div className="flex items-center gap-2">
+                  <span className="font-extrabold text-[#5c4a3c]">Page</span>
+                  <select
+                    value={clampedPage}
+                    onChange={(e) => setKanjiCurrentPage(Number(e.target.value))}
+                    className="bg-white border border-[#e8decb] rounded-lg px-2.5 py-1 text-xs font-bold text-[#2d2219] focus:outline-none focus:ring-1 focus:ring-rose-800"
+                  >
+                    {Array.from({ length: totalKanjiPages }, (_, i) => i + 1).map(pageNum => (
+                      <option key={pageNum} value={pageNum}>
+                        {pageNum} of {totalKanjiPages}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+                <button
+                  onClick={() => setKanjiCurrentPage(prev => Math.min(totalKanjiPages, prev + 1))}
+                  disabled={clampedPage === totalKanjiPages}
+                  className="px-3 py-1.5 rounded-lg border border-[#e8decb] bg-white font-extrabold text-[#5c4a3c] hover:bg-[#fbf6eb] disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer"
+                >
+                  Next ▶
+                </button>
+              </div>
+            )}
+
+            {/* Two-Column Grid list */}
+            <div className="max-h-[600px] overflow-y-auto pr-1 scrollbar-thin scrollbar-thumb-[#e8decb] scrollbar-track-transparent">
+              {paginatedKanjis.length === 0 ? (
+                <div className="py-12 text-center text-xs font-bold text-[#a89e8c]">
+                  No Kanji found matching your search or filters.
+                </div>
+              ) : (
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  {paginatedKanjis.map((kanji) => (
+                    <div
+                      key={kanji.number}
+                      className="p-4 bg-white border border-[#e8decb] rounded-2xl hover:shadow-md hover:border-amber-900/20 transition-all flex gap-4 items-start relative group"
+                    >
+                      {/* Left: Stamp Number & Large Character */}
+                      <div className="flex flex-col items-center shrink-0 w-20 p-2 bg-[#fbf6eb] border border-[#e8decb] rounded-xl">
+                        <span className="text-[10px] font-black text-rose-700 bg-rose-50 border border-rose-200 px-2 py-0.5 rounded-md font-mono mb-1.5">
+                          {kanji.number}
+                        </span>
+                        <div className="text-3xl sm:text-4xl font-black font-jp text-[#2d2219] mb-1.5">{kanji.character}</div>
+                        <button
+                          onClick={() => playPronunciation(kanji.character)}
+                          className="p-1 rounded-lg bg-rose-50 hover:bg-rose-700 text-rose-700 hover:text-white border border-rose-200 transition-all cursor-pointer flex items-center justify-center"
+                          title="Hear Pronunciation"
+                        >
+                          <Volume2 className="w-3.5 h-3.5" />
+                        </button>
+                      </div>
+
+                      {/* Right: Readings, Meanings, and Examples */}
+                      <div className="flex-1 space-y-1.5 min-w-0 w-full">
+                        {/* Meanings */}
+                        <div>
+                          <div className="text-[10px] font-black text-rose-800 uppercase tracking-wider">MEANING</div>
+                          <div className="text-sm font-black text-[#2d2219] leading-tight">
+                            {kanji.meaningEn}
+                          </div>
+                          <div className="text-xs font-black text-[#5c4a3c] font-jp tracking-wider leading-tight">
+                            {kanji.meaningNe}
+                          </div>
+                        </div>
+
+                        {/* Readings */}
+                        <div>
+                          <div className="text-[10px] font-black text-[#a8813d] uppercase tracking-wider">READINGS</div>
+                          <div className="text-[11px] font-extrabold text-[#2d2219] font-jp tracking-wider break-words leading-tight">
+                            {kanji.readings}
+                          </div>
+                        </div>
+
+                        {/* Examples */}
+                        {kanji.examples && kanji.examples.length > 0 && (
+                          <div className="pt-1.5 border-t border-dashed border-[#e8decb]">
+                            <div className="text-[9px] font-black text-rose-800 uppercase tracking-wider mb-1">EXAMPLES</div>
+                            <ul className="space-y-0.5">
+                              {kanji.examples.map((ex, i) => (
+                                <li key={i} className="text-[11px] text-[#4a463d] font-bold list-disc list-inside truncate font-jp" title={ex}>
+                                  {ex}
+                                </li>
+                              ))}
+                            </ul>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            {/* Bottom Pagination Info */}
+            {totalKanjiPages > 1 && (
+              <div className="text-center text-[10px] font-extrabold text-[#a89e8c] pt-2 border-t border-[#e8decb]/60">
+                Showing Kanji {startIndex + 1} – {Math.min(startIndex + kanjiItemsPerPage, filtered1000Kanjis.length)} of {filtered1000Kanjis.length} (Page {clampedPage} of {totalKanjiPages})
+              </div>
+            )}
+          </div>
+        );
+      })()}
+
+      {/* ══════════════════════════════════════════════════════════
           N5 / N4 / N3 / JFT VOCABULARY & GRAMMAR VIEW
       ══════════════════════════════════════════════════════════ */}
-      {selectedLevel !== 'BASICS' && (
+      {selectedLevel !== 'BASICS' && selectedLevel !== 'KANJI_1000' && (
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-4 sm:gap-6 items-start font-sans">
           {/* ════ LEFT LESSONS SIDEBAR ════ */}
           <aside className="lg:col-span-1 bg-slate-900/95 border border-slate-800 rounded-2xl sm:rounded-3xl p-3.5 sm:p-4 text-white shadow-xl space-y-3">
@@ -485,6 +891,28 @@ export const VocabularyExplorer: React.FC<VocabularyExplorerProps> = ({ preselec
                     >
                       <BookCheck className="w-3 h-3 text-rose-600" />
                       <span>Grammar Note</span>
+                    </button>
+
+                    <button
+                      onClick={() => setHideLessonMeanings(!hideLessonMeanings)}
+                      className={`text-[11px] font-bold flex items-center gap-1 cursor-pointer px-2 py-0.5 rounded-md border transition-all ${
+                        hideLessonMeanings
+                          ? 'bg-rose-100 text-rose-900 border-rose-300 font-extrabold shadow-2xs'
+                          : 'bg-slate-100 text-slate-700 hover:bg-slate-200 border-slate-200'
+                      }`}
+                      title={hideLessonMeanings ? "Click to show all meanings" : "Click to hide meanings for self-test revision"}
+                    >
+                      {hideLessonMeanings ? (
+                        <>
+                          <EyeOff className="w-3 h-3 text-rose-700" />
+                          <span>Meanings Hidden</span>
+                        </>
+                      ) : (
+                        <>
+                          <Eye className="w-3 h-3 text-slate-600" />
+                          <span>Hide Meanings</span>
+                        </>
+                      )}
                     </button>
 
                     {selectedLesson > 25 && (
@@ -634,11 +1062,31 @@ export const VocabularyExplorer: React.FC<VocabularyExplorerProps> = ({ preselec
                               </div>
                             )}
                           </div>
-                          <div className="flex items-center gap-2 text-xs flex-wrap sm:flex-nowrap">
-                            <span className="font-semibold text-slate-800">🇬🇧 {vocab.meaning}</span>
-                            <span className="text-slate-300 hidden sm:inline">•</span>
-                            <span className="font-bold text-amber-900">🇳🇵 {vocab.meaningNepali}</span>
-                          </div>
+                          {hideLessonMeanings && !revealedVocabIds.has(vocab.id) ? (
+                            <button
+                              onClick={() => toggleVocabReveal(vocab.id)}
+                              className="px-2 py-0.5 rounded-md bg-amber-50 hover:bg-amber-100 text-amber-900 border border-amber-200/90 text-[11px] font-extrabold transition-all flex items-center gap-1 cursor-pointer shadow-2xs self-start sm:self-auto"
+                              title="Click to reveal meaning"
+                            >
+                              <Eye className="w-3 h-3 text-amber-700" />
+                              <span>Meaning</span>
+                            </button>
+                          ) : (
+                            <div className="flex items-center gap-2 text-xs flex-wrap sm:flex-nowrap">
+                              <span className="font-semibold text-slate-800">🇬🇧 {vocab.meaning}</span>
+                              <span className="text-slate-300 hidden sm:inline">•</span>
+                              <span className="font-bold text-amber-900">🇳🇵 {vocab.meaningNepali}</span>
+                              {hideLessonMeanings && (
+                                <button
+                                  onClick={() => toggleVocabReveal(vocab.id)}
+                                  className="ml-1 text-[10px] text-slate-400 hover:text-slate-600 hover:underline cursor-pointer"
+                                  title="Hide this item again"
+                                >
+                                  (hide)
+                                </button>
+                              )}
+                            </div>
+                          )}
                         </div>
 
                         {vocab.grammarSentences && vocab.grammarSentences.length > 0 && (
@@ -1097,6 +1545,12 @@ export const VocabularyExplorer: React.FC<VocabularyExplorerProps> = ({ preselec
           </div>
         </div>
       )}
+      <KanjiPracticeModal
+        isOpen={isPracticeOpen}
+        onClose={() => setIsPracticeOpen(false)}
+        initialKanjis={practiceDeck}
+        title={practiceTitle}
+      />
     </div>
   );
 };

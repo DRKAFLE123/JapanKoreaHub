@@ -1,5 +1,3 @@
-'use client';
-
 import React, { useState, useEffect, useRef } from 'react';
 import {
   Clock,
@@ -9,6 +7,7 @@ import {
   Award,
   ChevronRight,
   ChevronLeft,
+  ChevronDown,
   Layers,
   HelpCircle,
   Check,
@@ -16,6 +15,7 @@ import {
   Maximize2,
   Minimize2,
   ListFilter,
+  Filter,
   Sparkles,
   BookOpen,
   Play,
@@ -26,7 +26,15 @@ import {
   BarChart3,
   CheckSquare,
   AlertTriangle,
-  Globe
+  Globe,
+  LayoutList,
+  LayoutGrid,
+  ShoppingBag,
+  Lock,
+  Unlock,
+  KeyRound,
+  CreditCard,
+  Tag
 } from 'lucide-react';
 import { validateExamSubmission } from '@/lib/auth-security';
 
@@ -37,6 +45,9 @@ export interface ExamQuestion {
   type: 'MULTIPLE_CHOICE' | 'LISTENING' | 'FILL_BLANK';
   prompt: string;
   audioUrl?: string;
+  audioScript?: string; // Japanese TTS script for Web Speech API
+  reading?: string;    // Furigana reading for kanji questions
+  passage?: string;    // Passage text for reading comprehension questions
   options: string[];
   correctAnswer: string;
   explanation?: string;
@@ -47,6 +58,9 @@ export interface MockTestInfo {
   mockSet: string;
   level: string;
   language: 'JAPANESE' | 'KOREAN';
+  difficulty?: 'EASY' | 'MEDIUM' | 'HARD';
+  isPremium?: boolean;
+  price?: string;
   title: string;
   japaneseTitle?: string;
   description: string;
@@ -60,12 +74,105 @@ export interface MockTestInfo {
 
 const MOCK_TEST_CATALOG: MockTestInfo[] = [
   {
+    id: 'n5-mock-1',
+    mockSet: 'N5_SET_1',
+    level: 'N5',
+    language: 'JAPANESE',
+    difficulty: 'EASY',
+    isPremium: false,
+    price: 'Free',
+    examFormat: 'JLPT_PAPER',
+    title: 'JLPT N5 | Mock Test - 1 (Kana Only)',
+    japaneseTitle: 'JLPT N5 公式模擬試験 第1集 【かんじ なし・ひらがな】',
+    description: 'Beginner N5 paper written in 100% pure Kana (Hiragana & Katakana, NO Kanji in questions). Covers essential N5 greetings, vocabulary, and basic particles.',
+    timeLimitMinutes: 30,
+    questionCount: 15,
+    sections: ['文字・語彙 (Kana Vocab)', '文法 (Basic Grammar)', '会話・聴解 (Kana Dialogue)'],
+    audioCount: 2,
+    badgeColor: 'from-emerald-600 to-teal-600',
+  },
+  {
+    id: 'n5-mock-2',
+    mockSet: 'N5_SET_2',
+    level: 'N5',
+    language: 'JAPANESE',
+    difficulty: 'EASY',
+    isPremium: false,
+    price: 'Free',
+    examFormat: 'JLPT_PAPER',
+    title: 'JLPT N5 | Mock Test - 2 (Kana Only)',
+    japaneseTitle: 'JLPT N5 公式模擬試験 第2集 【かんじ なし・ひらがな】',
+    description: 'Second beginner N5 paper in 100% pure Kana (NO Kanji in questions). Practice verb te-form, time expressions (~に), and basic reading.',
+    timeLimitMinutes: 30,
+    questionCount: 15,
+    sections: ['文字・語彙 (Kana Vocab)', '文法 (Basic Grammar)', '会話・読解 (Kana Reading)'],
+    audioCount: 2,
+    badgeColor: 'from-emerald-600 to-teal-600',
+  },
+  {
+    id: 'n5-mock-3',
+    mockSet: 'N5_SET_3',
+    level: 'N5',
+    language: 'JAPANESE',
+    difficulty: 'MEDIUM',
+    isPremium: true,
+    price: 'NPR 250',
+    examFormat: 'JLPT_PAPER',
+    title: 'JLPT N5 | Mock Test - 3 (Medium)',
+    japaneseTitle: 'JLPT N5 公式模擬試験 第3集 【漢字・ふりがな】',
+    description: 'Standard N5 paper featuring basic N5 Kanji (山, 川, 日, 人) with furigana reading notes, sentence ordering (★), and reading notices.',
+    timeLimitMinutes: 45,
+    questionCount: 10,
+    sections: ['文字・語彙 (Vocab & Kanji)', '文法・読解 (Grammar & Reading)'],
+    audioCount: 0,
+    badgeColor: 'from-amber-600 to-orange-600',
+  },
+  {
+    id: 'n5-mock-4',
+    mockSet: 'N5_SET_4',
+    level: 'N5',
+    language: 'JAPANESE',
+    difficulty: 'HARD',
+    isPremium: true,
+    price: 'NPR 350',
+    examFormat: 'JLPT_PAPER',
+    title: 'JLPT N5 | Mock Test - 4 (Hard)',
+    japaneseTitle: 'JLPT N5 公式模擬試験 第4集 【本試験レベル】',
+    description: 'Full official JLPT N5 exam paper covering advanced N5 expressions, reading comprehension, and official test difficulty.',
+    timeLimitMinutes: 45,
+    questionCount: 5,
+    sections: ['文字・語彙 (Vocab & Kanji)', '文法・読解 (Grammar & Reading)'],
+    audioCount: 0,
+    badgeColor: 'from-rose-600 to-pink-600',
+  },
+  {
+    id: 'jft-easy-1',
+    mockSet: 'JFT_EASY_1',
+    level: 'JFT',
+    language: 'JAPANESE',
+    difficulty: 'EASY',
+    isPremium: false,
+    price: 'Free',
+    examFormat: 'JFT_CBT',
+    title: 'JFT-Basic Easy | Mock Test (A2 Level)',
+    japaneseTitle: 'JFT-Basic スタイル 模擬試験 【かんたんレベル A2】',
+    description: 'A2-level JFT-Basic style test with 28 questions (18 Reading + 10 Listening). Vocabulary is kana-only. Basic kanji appear with furigana in Kanji Recognition and Reading parts. Listening sections use native Japanese TTS audio.',
+    timeLimitMinutes: 60,
+    questionCount: 28,
+    sections: ['語彙 (Vocabulary — kana only)', '漢字認識 (Kanji Recognition + furigana)', '読解 (Short Passages)', '聴解 クイック (Listening Quick Response)', '聴解 理解 (Listening Comprehension)'],
+    audioCount: 10,
+    badgeColor: 'from-emerald-500 to-cyan-600',
+  },
+  {
     id: 'jft-cbt-1',
     mockSet: 'JFT_SET_1',
     level: 'JFT',
     language: 'JAPANESE',
+    difficulty: 'EASY',
+    isPremium: false,
+    price: 'Free',
     examFormat: 'JFT_CBT',
-    title: 'JFT-Basic Official CBT Examination - Set 1',
+    title: 'JFT-Basic 250 | Mock Test - 1',
     japaneseTitle: 'JFT-Basic 国際交流基金日本語基礎テスト 第1集 (50問)',
     description: 'Official Japan Foundation Computer-Based Test for SSW Visa (CEFR A2). 4 Section-locked parts (Script & Vocab 12Q, Conversation 12Q, Listening 12Q, Reading 14Q). 250 Marks Scale with 200/250 passing benchmark.',
     timeLimitMinutes: 60,
@@ -79,8 +186,11 @@ const MOCK_TEST_CATALOG: MockTestInfo[] = [
     mockSet: 'JFT_SET_2',
     level: 'JFT',
     language: 'JAPANESE',
+    difficulty: 'MEDIUM',
+    isPremium: false,
+    price: 'Free',
     examFormat: 'JFT_CBT',
-    title: 'JFT-Basic Official CBT Examination - Set 2',
+    title: 'JFT-Basic 250 | Mock Test - 2',
     japaneseTitle: 'JFT-Basic 国際交流基金日本語基礎テスト 第2集 (48問)',
     description: 'Complete 48-question JFT-Basic CBT exam pattern (Script & Vocab 12Q, Conversation 12Q, Listening 12Q, Reading 12Q). 250 Marks Scale with 200/250 passing benchmark.',
     timeLimitMinutes: 60,
@@ -94,8 +204,11 @@ const MOCK_TEST_CATALOG: MockTestInfo[] = [
     mockSet: 'JFT_SET_3',
     level: 'JFT',
     language: 'JAPANESE',
+    difficulty: 'MEDIUM',
+    isPremium: true,
+    price: 'NPR 300',
     examFormat: 'JFT_CBT',
-    title: 'JFT-Basic Official CBT Examination - Set 3',
+    title: 'JFT-Basic 250 | Mock Test - 3',
     japaneseTitle: 'JFT-Basic 国際交流基金日本語基礎テスト 第3集 (48問)',
     description: 'Complete 48-question JFT-Basic CBT exam pattern (Script & Vocab 12Q, Conversation 12Q, Listening 12Q, Reading 12Q). 250 Marks Scale with 200/250 passing benchmark.',
     timeLimitMinutes: 60,
@@ -109,8 +222,11 @@ const MOCK_TEST_CATALOG: MockTestInfo[] = [
     mockSet: 'JFT_SET_4',
     level: 'JFT',
     language: 'JAPANESE',
+    difficulty: 'HARD',
+    isPremium: true,
+    price: 'NPR 350',
     examFormat: 'JFT_CBT',
-    title: 'JFT-Basic Official CBT Examination - Set 4',
+    title: 'JFT-Basic 250 | Mock Test - 4',
     japaneseTitle: 'JFT-Basic 国際交流基金日本語基礎テスト 第4集 (48問)',
     description: 'Complete 48-question JFT-Basic CBT exam pattern (Script & Vocab 12Q, Conversation 12Q, Listening 12Q, Reading 12Q). 250 Marks Scale with 200/250 passing benchmark.',
     timeLimitMinutes: 60,
@@ -124,8 +240,11 @@ const MOCK_TEST_CATALOG: MockTestInfo[] = [
     mockSet: 'JFT_SET_5',
     level: 'JFT',
     language: 'JAPANESE',
+    difficulty: 'HARD',
+    isPremium: true,
+    price: 'NPR 350',
     examFormat: 'JFT_CBT',
-    title: 'JFT-Basic Official CBT Examination - Set 5',
+    title: 'JFT-Basic 250 | Mock Test - 5',
     japaneseTitle: 'JFT-Basic 国際交流基金日本語基礎テスト 第5集 (48問)',
     description: 'Complete 48-question JFT-Basic CBT exam pattern (Script & Vocab 12Q, Conversation 12Q, Listening 12Q, Reading 12Q). 250 Marks Scale with 200/250 passing benchmark.',
     timeLimitMinutes: 60,
@@ -135,72 +254,15 @@ const MOCK_TEST_CATALOG: MockTestInfo[] = [
     badgeColor: 'from-cyan-600 to-blue-600',
   },
   {
-    id: 'n5-mock-1',
-    mockSet: 'N5_SET_1',
-    level: 'N5',
-    language: 'JAPANESE',
-    examFormat: 'JLPT_PAPER',
-    title: 'JLPT N5 Official Mock Test - Set 1',
-    japaneseTitle: 'JLPT N5 公式模擬試験 第1集 (2-Paper Booklet)',
-    description: 'Full official JLPT N5 paper given in 2 booklets (Paper 1: Vocab, Grammar & Reading, 15-Min Break, Paper 2: Audio Listening).',
-    timeLimitMinutes: 90,
-    questionCount: 44,
-    sections: ['文字・語彙 (Vocab & Kanji)', '文法・読解 (Grammar & Reading)', '聴解 (Listening Audio)'],
-    audioCount: 8,
-    badgeColor: 'from-rose-600 to-pink-600',
-  },
-  {
-    id: 'n5-mock-2',
-    mockSet: 'N5_SET_2',
-    level: 'N5',
-    language: 'JAPANESE',
-    examFormat: 'JLPT_PAPER',
-    title: 'JLPT N5 Official Mock Test - Set 2',
-    japaneseTitle: 'JLPT N5 公式模擬試験 第2集 (2-Paper Booklet)',
-    description: 'Second official N5 paper covering particles (~てもいい, ~から), te-form verbs, reading notices, and audio dialogue tracks.',
-    timeLimitMinutes: 90,
-    questionCount: 44,
-    sections: ['文字・語彙 (Vocab & Kanji)', '文法・読解 (Grammar & Reading)', '聴解 (Listening Audio)'],
-    audioCount: 8,
-    badgeColor: 'from-rose-600 to-pink-600',
-  },
-  {
-    id: 'n5-mock-3',
-    mockSet: 'N5_SET_3',
-    level: 'N5',
-    language: 'JAPANESE',
-    examFormat: 'JLPT_PAPER',
-    title: 'JLPT N5 Official Mock Test - Set 3',
-    japaneseTitle: 'JLPT N5 公式模擬試験 第3集 (2-Paper Booklet)',
-    description: 'Third full N5 paper with authentic listening dialogues, sentence ordering (★), reading notices, and vocabulary.',
-    timeLimitMinutes: 90,
-    questionCount: 44,
-    sections: ['文字・語彙 (Vocab & Kanji)', '文法・読解 (Grammar & Reading)', '聴解 (Listening Audio)'],
-    audioCount: 8,
-    badgeColor: 'from-rose-600 to-pink-600',
-  },
-  {
-    id: 'n5-mock-4',
-    mockSet: 'N5_SET_4',
-    level: 'N5',
-    language: 'JAPANESE',
-    examFormat: 'JLPT_PAPER',
-    title: 'JLPT N5 Official Mock Test - Set 4',
-    japaneseTitle: 'JLPT N5 公式模擬試験 第4集 (2-Paper Booklet)',
-    description: 'Fourth official N5 paper covering advanced N5 expressions, store announcements, daily conversations, and listening audio.',
-    timeLimitMinutes: 90,
-    questionCount: 44,
-    sections: ['文字・語彙 (Vocab & Kanji)', '文法・読解 (Grammar & Reading)', '聴解 (Listening Audio)'],
-    audioCount: 8,
-    badgeColor: 'from-rose-600 to-pink-600',
-  },
-  {
     id: 'n4-mock-1',
     mockSet: 'N4_SET_1',
     level: 'N4',
     language: 'JAPANESE',
+    difficulty: 'MEDIUM',
+    isPremium: false,
+    price: 'Free',
     examFormat: 'JLPT_PAPER',
-    title: 'JLPT N4 Standard Practice Exam - Paper 1',
+    title: 'JLPT N4 | Mock Test - 1',
     japaneseTitle: 'JLPT N4 標準模擬試験 第1集',
     description: 'Full N4 exam covering intermediate verb conjugations, passive/causative forms, and conversation listening.',
     timeLimitMinutes: 60,
@@ -214,8 +276,11 @@ const MOCK_TEST_CATALOG: MockTestInfo[] = [
     mockSet: 'N3_SET_1',
     level: 'N3',
     language: 'JAPANESE',
+    difficulty: 'HARD',
+    isPremium: true,
+    price: 'NPR 400',
     examFormat: 'JLPT_PAPER',
-    title: 'JLPT N3 Official Practice Examination - Volume 1',
+    title: 'JLPT N3 | Mock Test - 1',
     japaneseTitle: 'JLPT N3 公式模擬試験 第1巻 (65問)',
     description: 'Complete 65-question official JLPT N3 examination paper (Part B: Grammar Q26-50, Part C: Reading Passages Q51-70, Part D: Listening Dialogues Q71-90).',
     timeLimitMinutes: 70,
@@ -229,8 +294,11 @@ const MOCK_TEST_CATALOG: MockTestInfo[] = [
     mockSet: 'ALL_N2',
     level: 'N2',
     language: 'JAPANESE',
+    difficulty: 'HARD',
+    isPremium: true,
+    price: 'NPR 500',
     examFormat: 'JLPT_PAPER',
-    title: 'JLPT N2 Advanced Mock Test - Sample Set',
+    title: 'JLPT N2 | Mock Test - 1',
     japaneseTitle: 'JLPT N2 上級模擬試験',
     description: 'N2 advanced expressions, business Japanese structures, and deep comprehension.',
     timeLimitMinutes: 65,
@@ -244,8 +312,11 @@ const MOCK_TEST_CATALOG: MockTestInfo[] = [
     mockSet: 'EPS_SET_1',
     level: 'EPS',
     language: 'KOREAN',
+    difficulty: 'MEDIUM',
+    isPremium: false,
+    price: 'Free',
     examFormat: 'EPS_CBT',
-    title: 'EPS-TOPIK Complete CBT Mock Exam',
+    title: 'EPS-TOPIK 60 | Mock Test - 1',
     description: 'Official EPS-TOPIK CBT examination paper containing 20 Reading (읽기) and 20 Listening (듣기) questions. Continuous test flow with free navigation between all 40 questions.',
     timeLimitMinutes: 50,
     questionCount: 40,
@@ -258,6 +329,237 @@ const MOCK_TEST_CATALOG: MockTestInfo[] = [
 
 
 const JAPANESE_QUESTIONS: ExamQuestion[] = [
+  // ==========================================
+  // JFT-BASIC EASY MOCK TEST (JFT_EASY_1) — A2 Level
+  // 18 Reading + 10 Listening = 28 questions
+  // Test Title: JFT-Basic Style Mock Test — Easy Level
+  // Listening: audio generated via Web Speech API TTS from audioScript field
+  // ==========================================
+
+  // ── PART 1: VOCABULARY (Kana-only, Q1–Q7) ──
+  { id: 'jfte_r1', level: 'JFT', mockSet: 'JFT_EASY_1', type: 'MULTIPLE_CHOICE',
+    prompt: '【語彙 Q1】つぎの ことばの いみは どれですか。\n\n「つかれました」',
+    options: ['A. I am tired.', 'B. I am hungry.', 'C. I am cold.', 'D. I am happy.'],
+    correctAnswer: 'A', explanation: '「つかれました」は "I am tired" という いみです。' },
+
+  { id: 'jfte_r2', level: 'JFT', mockSet: 'JFT_EASY_1', type: 'MULTIPLE_CHOICE',
+    prompt: '【語彙 Q2】つぎの ことばの いみは どれですか。\n\n「やすみます」',
+    options: ['A. to work', 'B. to rest / take a day off', 'C. to eat', 'D. to buy'],
+    correctAnswer: 'B', explanation: '「やすみます」は "to rest / take a day off" という いみです。' },
+
+  { id: 'jfte_r3', level: 'JFT', mockSet: 'JFT_EASY_1', type: 'MULTIPLE_CHOICE',
+    prompt: '【語彙 Q3】つぎの ことばの いみは どれですか。\n\n「おおきい」',
+    options: ['A. small', 'B. new', 'C. big', 'D. cheap'],
+    correctAnswer: 'C', explanation: '「おおきい」は "big" という いみです。' },
+
+  { id: 'jfte_r4', level: 'JFT', mockSet: 'JFT_EASY_1', type: 'MULTIPLE_CHOICE',
+    prompt: '【語彙 Q4】＿＿に はいる ことばを えらんでください。\n\n「かいしゃに ＿＿ で いきます。」',
+    options: ['A. でんしゃ', 'B. ごはん', 'C. でんき', 'D. ざっし'],
+    correctAnswer: 'A', explanation: '「でんしゃ（電車）」は train で、かいしゃに でんしゃで いくのは しぜんな ひょうげんです。' },
+
+  { id: 'jfte_r5', level: 'JFT', mockSet: 'JFT_EASY_1', type: 'MULTIPLE_CHOICE',
+    prompt: '【語彙 Q5】＿＿に はいる ことばを えらんでください。\n\n「まいあさ ＿＿ を のみます。」',
+    options: ['A. シャワー', 'B. コーヒー', 'C. テレビ', 'D. ニュース'],
+    correctAnswer: 'B', explanation: '「コーヒーを のみます」は "I drink coffee" で、あさに よく つかう ひょうげんです。' },
+
+  { id: 'jfte_r6', level: 'JFT', mockSet: 'JFT_EASY_1', type: 'MULTIPLE_CHOICE',
+    prompt: '【語彙 Q6】つぎの ことばの はんたいは どれですか。\n\n「あついです」',
+    options: ['A. さむいです', 'B. おいしいです', 'C. あかるいです', 'D. たかいです'],
+    correctAnswer: 'A', explanation: '「あついです（hot）」の はんたいは「さむいです（cold）」です。' },
+
+  { id: 'jfte_r7', level: 'JFT', mockSet: 'JFT_EASY_1', type: 'MULTIPLE_CHOICE',
+    prompt: '【語彙 Q7】つぎの ことばの いみは どれですか。\n\n「おてあらい」',
+    options: ['A. entrance', 'B. bathroom / toilet', 'C. kitchen', 'D. bedroom'],
+    correctAnswer: 'B', explanation: '「おてあらい（お手洗い）」は "toilet / bathroom" という いみです。' },
+
+  // ── PART 2: BASIC KANJI RECOGNITION (with furigana, Q8–Q12) ──
+  { id: 'jfte_r8', level: 'JFT', mockSet: 'JFT_EASY_1', type: 'MULTIPLE_CHOICE',
+    reading: 'やま',
+    prompt: '【漢字 Q8】つぎの かんじの よみかたは どれですか。\n\n「山」',
+    options: ['A. やま', 'B. かわ', 'C. はな', 'D. みず'],
+    correctAnswer: 'A', explanation: '「山」(やま) は mountain という いみです。' },
+
+  { id: 'jfte_r9', level: 'JFT', mockSet: 'JFT_EASY_1', type: 'MULTIPLE_CHOICE',
+    reading: 'みぎ',
+    prompt: '【漢字 Q9】つぎの かんじの よみかたは どれですか。\n\n「右」',
+    options: ['A. うえ', 'B. みぎ', 'C. ひだり', 'D. した'],
+    correctAnswer: 'B', explanation: '「右」(みぎ) は right (direction) という いみです。' },
+
+  { id: 'jfte_r10', level: 'JFT', mockSet: 'JFT_EASY_1', type: 'MULTIPLE_CHOICE',
+    reading: 'にち・じつ',
+    prompt: '【漢字 Q10】つぎの かんじの いみは どれですか。\n\n「日」',
+    options: ['A. fire', 'B. water', 'C. sun / day', 'D. moon'],
+    correctAnswer: 'C', explanation: '「日」(にち / じつ) は sun または day という いみです。' },
+
+  { id: 'jfte_r11', level: 'JFT', mockSet: 'JFT_EASY_1', type: 'MULTIPLE_CHOICE',
+    reading: 'でぐち',
+    prompt: '【漢字 Q11】つぎの かんじの よみかたは どれですか。\n\n「出口」',
+    options: ['A. いりぐち', 'B. でぐち', 'C. かいだん', 'D. ちかてつ'],
+    correctAnswer: 'B', explanation: '「出口」(でぐち) は exit という いみです。「入口」(いりぐち) は entrance です。' },
+
+  { id: 'jfte_r12', level: 'JFT', mockSet: 'JFT_EASY_1', type: 'MULTIPLE_CHOICE',
+    reading: 'なんじ',
+    prompt: '【漢字 Q12】つぎの かんじの よみかたは どれですか。\n\n「何時」',
+    options: ['A. なにか', 'B. なんじ', 'C. いつか', 'D. なんにち'],
+    correctAnswer: 'B', explanation: '「何時」(なんじ) は "what time" という いみです。' },
+
+  // ── PART 3: SHORT READING PASSAGES (Q13–Q18) ──
+  { id: 'jfte_r13', level: 'JFT', mockSet: 'JFT_EASY_1', type: 'MULTIPLE_CHOICE',
+    passage: 'わたしは まいにち でんしゃで かいしゃに いきます。かいしゃは くじから ごじまでです。おひるごはんは かいしゃの ちかくの レストランで たべます。',
+    prompt: '【読解 Q13】この ひとは ひるごはんを どこで たべますか。',
+    options: ['A. いえで たべます', 'B. かいしゃで たべます', 'C. かいしゃの ちかくの レストランで たべます', 'D. でんしゃの なかで たべます'],
+    correctAnswer: 'C', explanation: '「かいしゃの ちかくの レストランで たべます」と ぶんに かいてあります。' },
+
+  { id: 'jfte_r14', level: 'JFT', mockSet: 'JFT_EASY_1', type: 'MULTIPLE_CHOICE',
+    passage: 'きょうは どようびです。わたしは ともだちと えいがを みます。えいがは ごごさんじに はじまります。えいがのあとで いっしょに ばんごはんを たべます。',
+    prompt: '【読解 Q14】えいがは なんじに はじまりますか。',
+    options: ['A. ごぜんさんじ', 'B. ごごいちじ', 'C. ごごさんじ', 'D. ごごごじ'],
+    correctAnswer: 'C', explanation: '「えいがは ごごさんじに はじまります」と ぶんに かいてあります。' },
+
+  { id: 'jfte_r15', level: 'JFT', mockSet: 'JFT_EASY_1', type: 'MULTIPLE_CHOICE',
+    passage: 'このみせは あさ はちじから よるじゅうじまであいています。にちようびは やすみです。',
+    prompt: '【読解 Q15】このみせは にちようびに あいていますか。',
+    options: ['A. はい、あいています', 'B. いいえ、やすみです', 'C. ごぜんだけ あいています', 'D. ぶんに かいていません'],
+    correctAnswer: 'B', explanation: '「にちようびは やすみです」と かいてあります。' },
+
+  { id: 'jfte_r16', level: 'JFT', mockSet: 'JFT_EASY_1', type: 'MULTIPLE_CHOICE',
+    passage: 'スミスさんへ\nあした のかいぎは ごごにじに へんこうに なりました。よろしく おねがいします。\nたなか',
+    prompt: '【読解 Q16】かいぎは なんじに なりましたか。',
+    options: ['A. ごぜんにじ', 'B. ごごいちじ', 'C. ごごにじ', 'D. ごごさんじ'],
+    correctAnswer: 'C', explanation: 'メモに「ごごにじに へんこう」と かいてあります。' },
+
+  { id: 'jfte_r17', level: 'JFT', mockSet: 'JFT_EASY_1', type: 'MULTIPLE_CHOICE',
+    passage: 'ゴミの だしかた\n・もえるゴミ：かようびと きんようび\n・もえないゴミ：だいさんもくようび\n・びん・かん：だいいちすいようび',
+    prompt: '【読解 Q17】もえるゴミは なんようびに だしますか。',
+    options: ['A. すいようびと きんようび', 'B. かようびと きんようび', 'C. もくようびと きんようび', 'D. かようびと もくようび'],
+    correctAnswer: 'B', explanation: '「もえるゴミ：かようびと きんようび」と かいてあります。' },
+
+  { id: 'jfte_r18', level: 'JFT', mockSet: 'JFT_EASY_1', type: 'MULTIPLE_CHOICE',
+    passage: 'やまもとさんは かいしゃに でんわを かけました。でも、たなかさんは でんしゃの なかでした。やまもとさんは まっています。',
+    prompt: '【読解 Q18】なぜ たなかさんと はなせませんでしたか。',
+    options: ['A. たなかさんは ねていました', 'B. たなかさんは でんしゃの なかでした', 'C. たなかさんは かいしゃに いませんでした', 'D. やまもとさんは でんわを かけませんでした'],
+    correctAnswer: 'B', explanation: '「たなかさんは でんしゃの なかでした」ので はなせませんでした。' },
+
+  // ── PART 4: LISTENING — QUICK RESPONSE (Q19–Q23) ──
+  // audioScript is read via Japanese TTS (Web Speech API)
+  { id: 'jfte_l1', level: 'JFT', mockSet: 'JFT_EASY_1', type: 'LISTENING',
+    audioScript: 'おはようございます。',
+    prompt: '【聴解 クイック Q19】きいて、ただしい こたえを えらんでください。',
+    options: ['A. おはようございます。', 'B. こんばんは。', 'C. さようなら。', 'D. ありがとうございます。'],
+    correctAnswer: 'A', explanation: '「おはようございます」に は「おはようございます」で こたえます。' },
+
+  { id: 'jfte_l2', level: 'JFT', mockSet: 'JFT_EASY_1', type: 'LISTENING',
+    audioScript: 'すみません、トイレは どこですか。',
+    prompt: '【聴解 クイック Q20】きいて、ただしい こたえを えらんでください。',
+    options: ['A. はい、どうぞ。', 'B. あちらです。', 'C. いいえ、ちがいます。', 'D. ありがとうございます。'],
+    correctAnswer: 'B', explanation: 'ばしょを きかれたら、「あちらです」などで こたえます。' },
+
+  { id: 'jfte_l3', level: 'JFT', mockSet: 'JFT_EASY_1', type: 'LISTENING',
+    audioScript: 'これ、たべますか。',
+    prompt: '【聴解 クイック Q21】きいて、ただしい こたえを えらんでください。',
+    options: ['A. はい、たべます。', 'B. はい、いきます。', 'C. いいえ、みません。', 'D. はい、かいます。'],
+    correctAnswer: 'A', explanation: '「たべますか」に は「はい、たべます」で こたえます。' },
+
+  { id: 'jfte_l4', level: 'JFT', mockSet: 'JFT_EASY_1', type: 'LISTENING',
+    audioScript: 'しごとは なんじに おわりますか。',
+    prompt: '【聴解 クイック Q22】きいて、ただしい こたえを えらんでください。',
+    options: ['A. ごごろくじです。', 'B. かいしゃです。', 'C. まいにちです。', 'D. でんしゃです。'],
+    correctAnswer: 'A', explanation: 'なんじに おわりますか と きかれたら、じかんで こたえます。' },
+
+  { id: 'jfte_l5', level: 'JFT', mockSet: 'JFT_EASY_1', type: 'LISTENING',
+    audioScript: 'きょうは つかれましたね。',
+    prompt: '【聴解 クイック Q23】きいて、ただしい こたえを えらんでください。',
+    options: ['A. そうですね、おつかれさまです。', 'B. おはようございます。', 'C. いただきます。', 'D. おやすみなさい。'],
+    correctAnswer: 'A', explanation: '「つかれましたね」と いわれたら「おつかれさまです」と こたえます。' },
+
+  // ── PART 5: LISTENING — COMPREHENSION (Q24–Q28) ──
+  { id: 'jfte_l6', level: 'JFT', mockSet: 'JFT_EASY_1', type: 'LISTENING',
+    audioScript: 'おとこのひと：やまださん、らいしゅうの かいぎは なんようびですか。おんなのひと：もくようびです。でも、ばしょが かわりました。あたらしいかいぎしつは さんかいです。おとこのひと：わかりました。ありがとうございます。',
+    prompt: '【聴解 理解 Q24】かいぎは どこで おこなわれますか。',
+    options: ['A. にかいの かいぎしつ', 'B. さんかいの かいぎしつ', 'C. いっかいの ロビー', 'D. よんかいの かいぎしつ'],
+    correctAnswer: 'B', explanation: '「あたらしいかいぎしつは さんかいです」と いっています。' },
+
+  { id: 'jfte_l7', level: 'JFT', mockSet: 'JFT_EASY_1', type: 'LISTENING',
+    audioScript: 'おんなのひと：すみません、このでんしゃは しんじゅくに とまりますか。おとこのひと：いいえ、とまりません。つぎのえきで のりかえてください。おんなのひと：つぎのえきは どこですか。おとこのひと：しぶやです。しぶやで やまのてせんに のりかえてください。',
+    prompt: '【聴解 理解 Q25】おんなのひとは なにを しなければ なりませんか。',
+    options: ['A. しんじゅくで おりる', 'B. しぶやで やまのてせんに のりかえる', 'C. このでんしゃで ずっと のる', 'D. つぎのえきで まつ'],
+    correctAnswer: 'B', explanation: '「しぶやで やまのてせんに のりかえてください」と いっています。' },
+
+  { id: 'jfte_l8', level: 'JFT', mockSet: 'JFT_EASY_1', type: 'LISTENING',
+    audioScript: 'おとこのひと：スーパーへ いきますか。おんなのひと：はい、いきます。おとこのひと：たまごと ぎゅうにゅうを かってきて もらえますか。おんなのひと：わかりました。ほかに なにか いりますか。おとこのひと：いいえ、それだけで だいじょうぶです。',
+    prompt: '【聴解 理解 Q26】おんなのひとは なにを かいますか。',
+    options: ['A. たまごだけ', 'B. ぎゅうにゅうだけ', 'C. たまごと ぎゅうにゅう', 'D. たまごと ぎゅうにゅうと パン'],
+    correctAnswer: 'C', explanation: '「たまごと ぎゅうにゅうを かってきて もらえますか」と いっています。' },
+
+  { id: 'jfte_l9', level: 'JFT', mockSet: 'JFT_EASY_1', type: 'LISTENING',
+    audioScript: 'てんきよほう：きょうの ごごから あめが ふります。あしたは あさから ゆきに なるでしょう。きおんは れいど いかに なります。あたたかい ふくを きてください。',
+    prompt: '【聴解 理解 Q27】あしたの てんきは どうですか。',
+    options: ['A. はれです', 'B. あめです', 'C. ゆきです', 'D. くもりです'],
+    correctAnswer: 'C', explanation: '「あしたは あさから ゆきに なるでしょう」と てんきよほうが いっています。' },
+
+  { id: 'jfte_l10', level: 'JFT', mockSet: 'JFT_EASY_1', type: 'LISTENING',
+    audioScript: 'おんなのひと：すみません、アルバイトの おうぼは まだ できますか。おとこのひと：はい、できます。まず、このもうしこみしょに なまえと れんらくさきを かいてください。おんなのひと：はい、わかりました。おとこのひと：それから、らいしゅうの もくようびに めんせつが あります。',
+    prompt: '【聴解 理解 Q28】おんなのひとは はじめに なにを しますか。',
+    options: ['A. めんせつを うける', 'B. もうしこみしょに なまえと れんらくさきを かく', 'C. でんわを かける', 'D. らいしゅうまで まつ'],
+    correctAnswer: 'B', explanation: '「まず、このもうしこみしょに なまえと れんらくさきを かいてください」と いっています。' },
+
+  // ==========================================
+  // JLPT N5 OFFICIAL MOCK TEST SETS (N5_SET_1 to N5_SET_4)
+  // ==========================================
+
+  // --- N5 SET 1: EASY (100% PURE KANA, ZERO KANJI) ---
+  {"id": "n5_s1_1", "level": "N5", "mockSet": "N5_SET_1", "type": "MULTIPLE_CHOICE", "prompt": "【文字・語彙 Q1】「わたし」の いみは どれですか。", "options": ["I / Me", "You", "He", "Friend"], "correctAnswer": "I / Me", "explanation": "「わたし」は 英語で 'I / Me' です。"},
+  {"id": "n5_s1_2", "level": "N5", "mockSet": "N5_SET_1", "type": "MULTIPLE_CHOICE", "prompt": "【文字・語彙 Q2】「がっこう」の いみは どれですか。", "options": ["School", "Hospital", "Library", "Park"], "correctAnswer": "School", "explanation": "「がっこう」は 英語で 'School' です。"},
+  {"id": "n5_s1_3", "level": "N5", "mockSet": "N5_SET_1", "type": "MULTIPLE_CHOICE", "prompt": "【文字・語彙 Q3】「せんせい」の いみは どれですか。", "options": ["Teacher", "Student", "Doctor", "Engineer"], "correctAnswer": "Teacher", "explanation": "「せんせい」は 英語で 'Teacher' です。"},
+  {"id": "n5_s1_4", "level": "N5", "mockSet": "N5_SET_1", "type": "MULTIPLE_CHOICE", "prompt": "【文字・語彙 Q4】「ほん」の いみは どれですか。", "options": ["Book", "Pen", "Desk", "Bag"], "correctAnswer": "Book", "explanation": "「ほん」は 英語で 'Book' です。"},
+  {"id": "n5_s1_5", "level": "N5", "mockSet": "N5_SET_1", "type": "MULTIPLE_CHOICE", "prompt": "【文字・語彙 Q5】「みず」の いみは どれですか。", "options": ["Water", "Tea", "Juice", "Milk"], "correctAnswer": "Water", "explanation": "「みず」は 英語で 'Water' です。"},
+  {"id": "n5_s1_6", "level": "N5", "mockSet": "N5_SET_1", "type": "FILL_BLANK", "prompt": "【文法 Q6】( ) に はいる ものを えらんでください: 「わたし ( ) たなかです。」", "options": ["は", "が", "を", "に"], "correctAnswer": "は", "explanation": "しゅご(Subject)の じょしは「は」です。"},
+  {"id": "n5_s1_7", "level": "N5", "mockSet": "N5_SET_1", "type": "FILL_BLANK", "prompt": "【文法 Q7】( ) に はいる ものを えらんでください: 「あした がっこう ( ) いきます。」", "options": ["へ", "を", "で", "から"], "correctAnswer": "へ", "explanation": "いきさき(Destination)を あらわす じょしは「へ」です。"},
+  {"id": "n5_s1_8", "level": "N5", "mockSet": "N5_SET_1", "type": "FILL_BLANK", "prompt": "【文法 Q8】( ) に はいる ものを えらんでください: 「レストラン ( ) ひるごはんを たべます。」", "options": ["で", "に", "へ", "は"], "correctAnswer": "で", "explanation": "ばしょ(Action place)を あらわす じょしは「で」です。"},
+  {"id": "n5_s1_9", "level": "N5", "mockSet": "N5_SET_1", "type": "FILL_BLANK", "prompt": "【文法 Q9】( ) に はいる ものを えらんでください: 「まいあさ 7じ ( ) おきます。」", "options": ["に", "で", "を", "へ"], "correctAnswer": "に", "explanation": "じかん(Time)の じょしは「に」です。"},
+  {"id": "n5_s1_10", "level": "N5", "mockSet": "N5_SET_1", "type": "FILL_BLANK", "prompt": "【文法 Q10】( ) に はいる ものを えらんでください: 「いっしょに えいがを ( )。」", "options": ["みましょう", "みます", "みました", "みません"], "correctAnswer": "みましょう", "explanation": "かんゆう(Invitation)の ひょうげんは「〜ましょう」です。"},
+  {"id": "n5_s1_11", "level": "N5", "mockSet": "N5_SET_1", "type": "MULTIPLE_CHOICE", "prompt": "【会話 Q11】A: 「おはようございます。」 B: 「( )。」", "options": ["おはようございます", "こんばんは", "さようなら", "おやすみなさい"], "correctAnswer": "おはようございます", "explanation": "あさの あいさつは「おはようございます」です。"},
+  {"id": "n5_s1_12", "level": "N5", "mockSet": "N5_SET_1", "type": "MULTIPLE_CHOICE", "prompt": "【会話 Q12】A: 「ありがとうございます。」 B: 「( )。」", "options": ["どういたしまして", "ごめんなさい", "はじめまして", "いただきます"], "correctAnswer": "どういたしまして", "explanation": "かんしゃ(Thanks)への かえしは「どういたしまして」です。"},
+  {"id": "n5_s1_13", "level": "N5", "mockSet": "N5_SET_1", "type": "LISTENING", "prompt": "【聴解 Q13】A: 「なにを のみますか。」 B: 「おちゃを おねがいします。」\n質問: Bさんは なにを のみますか。", "options": ["おちゃ", "みず", "ジュース", "コーヒー"], "correctAnswer": "おちゃ", "explanation": "かいわより「おちゃ」を のみます。"},
+  {"id": "n5_s1_14", "level": "N5", "mockSet": "N5_SET_1", "type": "LISTENING", "prompt": "【聴解 Q14】A: 「いま なんじですか。」 B: 「3じです。」\n質問: いま なんじですか。", "options": ["3じ", "2じ", "4じ", "5じ"], "correctAnswer": "3じ", "explanation": "かいわより「3じ」です。"},
+  {"id": "n5_s1_15", "level": "N5", "mockSet": "N5_SET_1", "type": "MULTIPLE_CHOICE", "prompt": "【読解 Q15】＜おしらせ＞ 「がっこうは どようびと にちようびが お休みです。」\n質問: がっこうが お休みなのは いつですか。", "options": ["どようびと にちようび", "げつようび", "すいようび", "きんようび"], "correctAnswer": "どようびと にちようび", "explanation": "おしらせより「どようびと にちようび」です。"},
+
+  // --- N5 SET 2: EASY (100% PURE KANA, ZERO KANJI) ---
+  {"id": "n5_s2_1", "level": "N5", "mockSet": "N5_SET_2", "type": "MULTIPLE_CHOICE", "prompt": "【文字・語彙 Q1】「ともだち」の いみは どれですか。", "options": ["Friend", "Family", "Teacher", "Student"], "correctAnswer": "Friend", "explanation": "「ともだち」は 英語で 'Friend' です。"},
+  {"id": "n5_s2_2", "level": "N5", "mockSet": "N5_SET_2", "type": "MULTIPLE_CHOICE", "prompt": "【文字・語彙 Q2】「たべます」の いみは どれですか。", "options": ["To eat", "To drink", "To see", "To buy"], "correctAnswer": "To eat", "explanation": "「たべます」は 英語で 'To eat' です。"},
+  {"id": "n5_s2_3", "level": "N5", "mockSet": "N5_SET_2", "type": "MULTIPLE_CHOICE", "prompt": "【文字・語彙 Q3】「かいます」の いみは どれですか。", "options": ["To buy", "To sell", "To write", "To read"], "correctAnswer": "To buy", "explanation": "「かいます」は 英語で 'To buy' です。"},
+  {"id": "n5_s2_4", "level": "N5", "mockSet": "N5_SET_2", "type": "MULTIPLE_CHOICE", "prompt": "【文字・語彙 Q4】「くるま」の いみは どれですか。", "options": ["Car", "Train", "Bicycle", "Airplane"], "correctAnswer": "Car", "explanation": "「くるま」は 英語で 'Car' です。"},
+  {"id": "n5_s2_5", "level": "N5", "mockSet": "N5_SET_2", "type": "MULTIPLE_CHOICE", "prompt": "【文字・語彙 Q5】「あつい」の はんたいの ことばは どれですか。", "options": ["さむい", "たかい", "やすい", "ちいさい"], "correctAnswer": "さむい", "explanation": "「あつい」(Hot)の はんたいは「さむい」(Cold)です。"},
+  {"id": "n5_s2_6", "level": "N5", "mockSet": "N5_SET_2", "type": "FILL_BLANK", "prompt": "【文法 Q6】( ) に はいる ものを えらんでください: 「パン ( ) ジュースを かいました。」", "options": ["と", "や", "に", "で"], "correctAnswer": "と", "explanation": "へいれつ(Listing items)の じょしは「と」です。"},
+  {"id": "n5_s2_7", "level": "N5", "mockSet": "N5_SET_2", "type": "FILL_BLANK", "prompt": "【文法 Q7】( ) に はいる ものを えらんでください: 「きのう えいがを ( )。」", "options": ["みました", "みます", "みましょう", "みてください"], "correctAnswer": "みました", "explanation": "かこ(Past tense)は「〜ました」です。"},
+  {"id": "n5_s2_8", "level": "N5", "mockSet": "N5_SET_2", "type": "FILL_BLANK", "prompt": "【文法 Q8】( ) に はいる ものを えらんでください: 「ここに なまえを ( ) ください。」", "options": ["かいて", "かく", "かきます", "かいた"], "correctAnswer": "かいて", "explanation": "いらい(Request)の ひょうげんは「〜てください」です。"},
+  {"id": "n5_s2_9", "level": "N5", "mockSet": "N5_SET_2", "type": "FILL_BLANK", "prompt": "【文法 Q9】( ) に はいる ものを えらんでください: 「しゃしんを とっても ( ) ですか。」", "options": ["いい", "すき", "きらい", "ほしい"], "correctAnswer": "いい", "explanation": "きょか(Permission)は「〜てもいいですか」です。"},
+  {"id": "n5_s2_10", "level": "N5", "mockSet": "N5_SET_2", "type": "FILL_BLANK", "prompt": "【文法 Q10】( ) に はいる ものを えらんでください: 「あしたは がっこうへ ( )。」", "options": ["いきません", "いきませんでした", "いきました", "いって"], "correctAnswer": "いきません", "explanation": "みらいの ひてい(Future negative)は「〜ません」です。"},
+  {"id": "n5_s2_11", "level": "N5", "mockSet": "N5_SET_2", "type": "MULTIPLE_CHOICE", "prompt": "【会話 Q11】A: 「おさきに しつれいします。」 B: 「( )。」", "options": ["おつかれさまでした", "はじめまして", "いただきます", "ごちそうさまでした"], "correctAnswer": "おつかれさまでした", "explanation": "きたくの あいさつは「おつかれさまでした」です。"},
+  {"id": "n5_s2_12", "level": "N5", "mockSet": "N5_SET_2", "type": "MULTIPLE_CHOICE", "prompt": "【会話 Q12】A: 「すみません、この ペンを つかっても いいですか。」 B: 「( )。」", "options": ["ええ、どうぞ", "いいえ、かいました", "はい、ペンです", "ごちそうさま"], "correctAnswer": "ええ、どうぞ", "explanation": "きょかへの かえしは「ええ、どうぞ」です。"},
+  {"id": "n5_s2_13", "level": "N5", "mockSet": "N5_SET_2", "type": "LISTENING", "prompt": "【聴解 Q13】A: 「どこへ いきますか。」 B: 「スーパーへ いきます。」\n質問: Bさんは どこへ いきますか。", "options": ["スーパー", "えき", "こうえん", "びょういん"], "correctAnswer": "スーパー", "explanation": "かいわより「スーパー」へ いきます。"},
+  {"id": "n5_s2_14", "level": "N5", "mockSet": "N5_SET_2", "type": "LISTENING", "prompt": "【聴解 Q14】A: 「この りんごは いくらですか。」 B: 「100えんです。」\n質問: りんごは いくらですか。", "options": ["100えん", "200えん", "500えん", "50えん"], "correctAnswer": "100えん", "explanation": "かいわより「100えん」です。"},
+  {"id": "n5_s2_15", "level": "N5", "mockSet": "N5_SET_2", "type": "MULTIPLE_CHOICE", "prompt": "【読解 Q15】＜めも＞ 「たなかさん、きょうの めんせつは 2じからです。」\n質問: めんせつは なんじからですか。", "options": ["2じ", "1じ", "3じ", "4じ"], "correctAnswer": "2じ", "explanation": "めもより「2じから」です。"},
+
+  // --- N5 SET 3: MEDIUM (BASIC KANJI & FURIGANA) ---
+  {"id": "n5_s3_1", "level": "N5", "mockSet": "N5_SET_3", "type": "MULTIPLE_CHOICE", "prompt": "【文字・語彙 Q1】下線の言葉のひらがなを選んでください: 【山】に 登ります。", "options": ["やま", "かわ", "うみ", "そら"], "correctAnswer": "やま", "explanation": "「山」は「やま」(Mountain)と読みます。"},
+  {"id": "n5_s3_2", "level": "N5", "mockSet": "N5_SET_3", "type": "MULTIPLE_CHOICE", "prompt": "【文字・語彙 Q2】下線の言葉の漢字を選んでください: あした【みず】を 買います。", "options": ["水", "火", "木", "土"], "correctAnswer": "水", "explanation": "「みず」の漢字は「水」(Water)です。"},
+  {"id": "n5_s3_3", "level": "N5", "mockSet": "N5_SET_3", "type": "MULTIPLE_CHOICE", "prompt": "【文字・語彙 Q3】下線の言葉のひらがなを選んでください: 【今日】は いい 天気です。", "options": ["きょう", "あした", "きのう", "まいちに"], "correctAnswer": "きょう", "explanation": "「今日」は「きょう」(Today)と読みます。"},
+  {"id": "n5_s3_4", "level": "N5", "mockSet": "N5_SET_3", "type": "MULTIPLE_CHOICE", "prompt": "【文字・語彙 Q4】下線の言葉の漢字を選んでください: 【ひと】が たくさん います。", "options": ["人", "入", "八", "大"], "correctAnswer": "人", "explanation": "「ひと」の漢字は「人」(Person)です。"},
+  {"id": "n5_s3_5", "level": "N5", "mockSet": "N5_SET_3", "type": "FILL_BLANK", "prompt": "【文法 Q5】( ) に入れるのに最もよいものを選んでください: 部屋 ( ) テレビと テーブルが あります。", "options": ["に", "で", "を", "へ"], "correctAnswer": "に", "explanation": "存在場所を表す助詞は「に」です。"},
+  {"id": "n5_s3_6", "level": "N5", "mockSet": "N5_SET_3", "type": "FILL_BLANK", "prompt": "【文法 Q6】( ) に入れるのに最もよいものを選んでください: この 辞書は ( ) です。", "options": ["便利", "静か", "賑やか", "親切"], "correctAnswer": "便利", "explanation": "辞書の特徴として「便利」(Convenient)が適切です。"},
+  {"id": "n5_s3_7", "level": "N5", "mockSet": "N5_SET_3", "type": "FILL_BLANK", "prompt": "【文法 Q7】( ) に入れるのに最もよいものを選んでください: 日曜日は どこ ( ) 行きませんでした。", "options": ["へも", "にも", "をも", "でも"], "correctAnswer": "へも", "explanation": "全否定表現は「どこへも行かない」です。"},
+  {"id": "n5_s3_8", "level": "N5", "mockSet": "N5_SET_3", "type": "MULTIPLE_CHOICE", "prompt": "【並べ替え Q8】正しい 順番に 並べ替えたとき、★に入るものは どれですか。\n「わたしは ____ ____ _★_ ____ へ 行きます。」\n(1: 図書館  2: 友達と  3: 一緒に  4: 学校の)", "options": ["友達と", "図書館", "一緒に", "学校の"], "correctAnswer": "友達と", "explanation": "「学校の(4) 図書館へ(1) 友達と(2★) 一緒に(3)」の順になります。"},
+  {"id": "n5_s3_9", "level": "N5", "mockSet": "N5_SET_3", "type": "MULTIPLE_CHOICE", "prompt": "【会話 Q9】A:「すみません、この 近くに コンビニは ありますか。」\nB:「ええ、( )。」", "options": ["あの 角を 右へ 曲がると ありますよ", "いいえ、買いません", "はい、コンビニです", "わかりませんでした"], "correctAnswer": "あの 角を 右へ 曲がると ありますよ", "explanation": "道案内として「あの角を右へ曲がるとありますよ」が正解です。"},
+  {"id": "n5_s3_10", "level": "N5", "mockSet": "N5_SET_3", "type": "MULTIPLE_CHOICE", "prompt": "【読解 Q10】＜図書館のお知らせ＞ 開館時間：9:00〜17:00。休館日：毎週月曜日。\n質問: 図書館が 閉まっているのは 何曜日ですか。", "options": ["月曜日", "日曜日", "土曜日", "火曜日"], "correctAnswer": "月曜日", "explanation": "お知らせ「休館日：毎週月曜日」より月曜日が正解です。"},
+
+  // --- N5 SET 4: HARD (FULL OFFICIAL PAPER FORMAT) ---
+  {"id": "n5_s4_1", "level": "N5", "mockSet": "N5_SET_4", "type": "MULTIPLE_CHOICE", "prompt": "【文字・語彙 Q1】下線の言葉のひらがなを選んでください: 【学生】が 教室に います。", "options": ["がくせい", "せんせい", "かいしゃいん", "いしゃ"], "correctAnswer": "がくせい", "explanation": "「学生」は「がくせい」(Student)と読みます。"},
+  {"id": "n5_s4_2", "level": "N5", "mockSet": "N5_SET_4", "type": "MULTIPLE_CHOICE", "prompt": "【文字・語彙 Q2】下線の言葉の漢字を選んでください: まいにち【日本語】を 勉強します。", "options": ["日本語", "日本国", "日本本", "日本字"], "correctAnswer": "日本語", "explanation": "「にほんご」の漢字は「日本語」です。"},
+  {"id": "n5_s4_3", "level": "N5", "mockSet": "N5_SET_4", "type": "FILL_BLANK", "prompt": "【文法 Q3】( ) に入れるのに最もよいものを選んでください: 熱が あるから、今日は 早く ( ) ほうが いいです。", "options": ["寝た", "寝る", "寝ない", "寝て"], "correctAnswer": "寝た", "explanation": "助言の文型は「〜たほうがいい」を使います。"},
+  {"id": "n5_s4_4", "level": "N5", "mockSet": "N5_SET_4", "type": "FILL_BLANK", "prompt": "【文法 Q4】( ) に入れるのに最もよいものを選んでください: 傘を 忘れたので、友達に ( )。", "options": ["貸してもらいました", "貸してあげました", "借りました", "あげました"], "correctAnswer": "貸してもらいました", "explanation": "恩恵を受ける表現「〜貸してもらう」が適切です。"},
+  {"id": "n5_s4_5", "level": "N5", "mockSet": "N5_SET_4", "type": "MULTIPLE_CHOICE", "prompt": "【読解 Q5】＜文章＞ 木村さんは 毎朝 7時に 起きます。朝ご飯を 食べてから、8時に 電車で 会社へ 行きます。会社は 5時に 終わります。\n質問: 木村さんは 何で 会社へ 行きますか。", "options": ["電車", "バス", "自転車", "歩いて"], "correctAnswer": "電車", "explanation": "文章「8時に電車で会社へ行きます」より「電車」が正解です。"},
+
   // ==========================================
   // JFT-BASIC OFFICIAL CBT MOCK TEST SETS (JFT_SET_1 to JFT_SET_5)
   // ==========================================
@@ -562,6 +864,7 @@ const JAPANESE_QUESTIONS: ExamQuestion[] = [
   {"id": "jpn3_v1_35", "level": "N3", "mockSet": "N3_SET_1", "type": "MULTIPLE_CHOICE", "prompt": "【読解 Passage 3】佐藤さんは新しい仕事を始めました。最初は仕事を覚えるのが大変でしたが、同僚が親切に教えてくれたので、少しずつ自信がついてきました。今では毎日楽しく働いています。\n\n質問 Q60: Why did Sato improve?", "options": ["He studied alone.", "His boss was strict.", "His coworkers helped him.", "He changed departments."], "correctAnswer": "His coworkers helped him.", "explanation": "Passage states coworkers kindly taught him (同僚が親切に教えてくれた)."},
   {"id": "jpn3_v1_36", "level": "N3", "mockSet": "N3_SET_1", "type": "MULTIPLE_CHOICE", "prompt": "【読解 Passage 3】佐藤さんは新しい仕事を始めました。最初は仕事を覚えるのが大変でしたが、同僚が親切に教えてくれたので、少しずつ自信がついてきました。今では毎日楽しく働いています。\n\n質問 Q61: How does Sato feel now?", "options": ["Worried", "Bored", "Happy", "Angry"], "correctAnswer": "Happy", "explanation": "Passage states he works happily every day (毎日楽しく働いています)."},
   {"id": "jpn3_v1_37", "level": "N3", "mockSet": "N3_SET_1", "type": "MULTIPLE_CHOICE", "prompt": "【読解 Passage 3】佐藤さんは新しい仕事を始めました。最初は仕事を覚えるのが大変でしたが、同僚が親切に教えてくれたので、少しずつ自信がついてきました。今では毎日楽しく働いています。\n\n質問 Q62: Choose the best summary.", "options": ["He quit his job.", "He gradually became confident.", "He works only on weekends.", "He dislikes his colleagues."], "correctAnswer": "He gradually became confident.", "explanation": "Passage states he gradually gained confidence (少しずつ自信がついてきました)."},
+  {"id": "jpn3_v1_37", "level": "N3", "mockSet": "N3_SET_1", "type": "MULTIPLE_CHOICE", "prompt": "【読解 Passage 3】佐藤さんは新しい仕事を始めました。最初は仕事を覚えるのが大変でしたが、同僚が親切に教えてくれたので、少しずつ自信がついてきました。今では毎日楽しく働いています。\n\n質問 Q62: Choose the best summary.", "options": ["He quit his job.", "He gradually became confident.", "He works only on weekends.", "He dislikes his colleagues."], "correctAnswer": "He gradually became confident.", "explanation": "Passage states he gradually gained confidence (少しずつ自信がついてきました)."},
   {"id": "jpn3_v1_38", "level": "N3", "mockSet": "N3_SET_1", "type": "MULTIPLE_CHOICE", "prompt": "【読解 Passage 4】＜山本さんへのメール＞ 山本さん、明日の会議は午後2時から3時に変更になりました。場所は3階会議室です。資料は今日中にメールで送ります。 鈴木\n\n質問 Q63: When is the meeting?", "options": ["1:00", "2:00", "3:00", "4:00"], "correctAnswer": "2:00", "explanation": "Passage specifies meeting starts at 2:00 PM (午後2時から3時)."},
   {"id": "jpn3_v1_39", "level": "N3", "mockSet": "N3_SET_1", "type": "MULTIPLE_CHOICE", "prompt": "【読解 Passage 4】＜山本さんへのメール＞ 山本さん、明日の会議は午後2時から3時に変更になりました。場所は3階会議室です。資料は今日中にメールで送ります。 鈴木\n\n質問 Q64: Where will it be held?", "options": ["Second floor", "Third floor", "Fourth floor", "Online"], "correctAnswer": "Third floor", "explanation": "Passage specifies 3rd floor meeting room (3階会議室)."},
   {"id": "jpn3_v1_40", "level": "N3", "mockSet": "N3_SET_1", "type": "MULTIPLE_CHOICE", "prompt": "【読解 Passage 4】＜山本さんへのメール＞ 山本さん、明日の会議は午後2時から3時に変更になりました。場所は3階会議室です。資料は今日中にメールで送ります。 鈴木\n\n質問 Q65: What will Suzuki send?", "options": ["Tickets", "Lunch", "Documents", "Photos"], "correctAnswer": "Documents", "explanation": "Passage specifies documents (資料は今日中にメールで送ります)."},
@@ -705,8 +1008,53 @@ export const TimedExamEngine: React.FC<TimedExamEngineProps> = ({
     setCurrentTrack(activeLanguage);
   }, [activeLanguage]);
 
-  // Filter state for preselectedLevel
+  // View Layout state: LIST vs GRID (default LIST as requested by user)
+  const [viewLayout, setViewLayout] = useState<'LIST' | 'GRID'>('LIST');
+
+  // Lobby Header Tab: DIRECTORY vs SCORES
+  const [lobbyTab, setLobbyTab] = useState<'DIRECTORY' | 'SCORES'>('DIRECTORY');
+
+  // Unlocked premium sets state (persisted in localStorage)
+  const [unlockedMockSetIds, setUnlockedMockSetIds] = useState<string[]>(() => {
+    if (typeof window !== 'undefined') {
+      const saved = localStorage.getItem('lg_unlocked_mock_sets');
+      if (saved) {
+        try { return JSON.parse(saved); } catch (e) {}
+      }
+    }
+    return ['N5_SET_1', 'N5_SET_2', 'JFT_SET_1', 'JFT_SET_2', 'JFT_EASY_1', 'N4_SET_1', 'EPS_SET_1'];
+  });
+
+  // Buy & Promo Code Modal States
+  const [showBuyModal, setShowBuyModal] = useState<boolean>(false);
+  const [selectedBuyTest, setSelectedBuyTest] = useState<MockTestInfo | null>(null);
+  const [promoCodeInput, setPromoCodeInput] = useState<string>('');
+  const [promoMessage, setPromoMessage] = useState<{ text: string; success: boolean } | null>(null);
+
+  // Past Score History State
+  const [pastScoresHistory, setPastScoresHistory] = useState<Array<{
+    testId: string;
+    title: string;
+    score: number;
+    passed: boolean;
+    date: string;
+    timeSpent: string;
+  }>>(() => {
+    if (typeof window !== 'undefined') {
+      const saved = localStorage.getItem('lg_exam_history');
+      if (saved) {
+        try { return JSON.parse(saved); } catch (e) {}
+      }
+    }
+    return [
+      { testId: 'n5-mock-1', title: 'JLPT N5 | Mock Test - 1', score: 85, passed: true, date: '2026-08-04', timeSpent: '22 Mins' },
+      { testId: 'jft-cbt-1', title: 'JFT-Basic 250 | Mock Test - 1', score: 215, passed: true, date: '2026-08-02', timeSpent: '48 Mins' }
+    ];
+  });
+
+  // Filter state for preselectedLevel and difficulty
   const [selectedLevelFilter, setSelectedLevelFilter] = useState<string>(preselectedLevel || 'ALL');
+  const [selectedDifficultyFilter, setSelectedDifficultyFilter] = useState<'ALL' | 'EASY' | 'MEDIUM' | 'HARD'>('ALL');
 
   React.useEffect(() => {
     if (preselectedLevel) {
@@ -792,6 +1140,9 @@ export const TimedExamEngine: React.FC<TimedExamEngineProps> = ({
     if (effectiveLevelFilter !== 'ALL') {
       const activeLvl = (effectiveLevelFilter === 'JFT_BASIC' || effectiveLevelFilter === 'JFT') ? 'JFT' : effectiveLevelFilter;
       if (test.level !== activeLvl) return false;
+    }
+    if (selectedDifficultyFilter !== 'ALL' && test.difficulty !== selectedDifficultyFilter) {
+      return false;
     }
     return true;
   });
@@ -993,29 +1344,48 @@ export const TimedExamEngine: React.FC<TimedExamEngineProps> = ({
     if (!currentQ) return;
     const currentPlays = audioPlaysCount[currentQ.id] || 0;
     if (currentPlays >= 2) {
-      alert('Rule: Audio can only be replayed a maximum of 2 times in official JLPT exams.');
+      alert('Rule: Audio can only be replayed a maximum of 2 times in official exam rules.');
       return;
     }
 
     stopCurrentAudio();
-
     setAudioPlaysCount((prev) => ({ ...prev, [currentQ.id]: currentPlays + 1 }));
+
+    // Prefer explicit audioScript (TTS Japanese script) over audioUrl or prompt fallback
+    const ttsText = currentQ.audioScript || currentQ.prompt;
 
     if (currentQ.audioUrl) {
       const audio = new Audio(currentQ.audioUrl);
       audioRef.current = audio;
       audio.play().catch(() => {
         if ('speechSynthesis' in window) {
-          const utterance = new SpeechSynthesisUtterance(currentQ.prompt);
+          const utterance = new SpeechSynthesisUtterance(ttsText);
           utterance.lang = activeLanguage === 'JAPANESE' ? 'ja-JP' : 'ko-KR';
+          utterance.rate = 0.85;
+          utterance.pitch = 1.0;
           window.speechSynthesis.speak(utterance);
         }
       });
     } else if ('speechSynthesis' in window) {
-      const utterance = new SpeechSynthesisUtterance(currentQ.prompt);
+      const utterance = new SpeechSynthesisUtterance(ttsText);
       utterance.lang = activeLanguage === 'JAPANESE' ? 'ja-JP' : 'ko-KR';
+      utterance.rate = 0.85;
+      utterance.pitch = 1.0;
       window.speechSynthesis.speak(utterance);
     }
+  };
+
+  // Helper: works for both correctAnswer formats:
+  // 1. Exact match: correctAnswer === "Water"  (old sets)
+  // 2. Letter-only: correctAnswer === "A", selected === "A. Water"  (new JFT_EASY sets)
+  const isAnswerCorrect = (q: ExamQuestion, selectedAnswer: string | undefined): boolean => {
+    if (!selectedAnswer) return false;
+    if (selectedAnswer === q.correctAnswer) return true;
+    // Letter-prefix match: correctAnswer is single letter like 'A', 'B', 'C', 'D'
+    if (/^[A-D]$/.test(q.correctAnswer)) {
+      return selectedAnswer.startsWith(q.correctAnswer + '.');
+    }
+    return false;
   };
 
   const handleSubmitExam = () => {
@@ -1023,7 +1393,7 @@ export const TimedExamEngine: React.FC<TimedExamEngineProps> = ({
     setIsSubmitted(true);
     let correctCount = 0;
     rawQuestions.forEach((q) => {
-      if (selectedAnswers[q.id] === q.correctAnswer) {
+      if (isAnswerCorrect(q, selectedAnswers[q.id])) {
         correctCount++;
       }
     });
@@ -1040,7 +1410,7 @@ export const TimedExamEngine: React.FC<TimedExamEngineProps> = ({
       const sec4 = rawQuestions.slice(36);
 
       const calcJftSec = (title: string, arr: ExamQuestion[], maxPts: number) => {
-        const c = arr.filter(q => selectedAnswers[q.id] === q.correctAnswer).length;
+        const c = arr.filter(q => isAnswerCorrect(q, selectedAnswers[q.id])).length;
         const pts = arr.length ? Math.round((c / arr.length) * maxPts) : 0;
         return { sectionTitle: title, correct: c, total: arr.length, pts };
       };
@@ -1098,6 +1468,23 @@ export const TimedExamEngine: React.FC<TimedExamEngineProps> = ({
       }
     }
 
+    // Save to past score history
+    if (selectedMockTest) {
+      const newScoreRecord = {
+        testId: selectedMockTest.id,
+        title: selectedMockTest.title,
+        score: isJFT ? (Math.max(10, Math.min(250, (percentage/100)*250))) : percentage,
+        passed: percentage >= 70,
+        date: new Date().toISOString().split('T')[0],
+        timeSpent: `${Math.ceil((((selectedMockTest?.timeLimitMinutes || 60) * 60) - secondsRemaining) / 60)} Mins`
+      };
+      const updatedHistory = [newScoreRecord, ...pastScoresHistory];
+      setPastScoresHistory(updatedHistory);
+      if (typeof window !== 'undefined') {
+        localStorage.setItem('lg_exam_history', JSON.stringify(updatedHistory));
+      }
+    }
+
     const check = validateExamSubmission(totalQ, timeSpentSeconds, percentage);
     if (!check.valid) {
       console.warn('[AntiCheat]', check.reason);
@@ -1109,198 +1496,468 @@ export const TimedExamEngine: React.FC<TimedExamEngineProps> = ({
   // ----------------------------------------------------
   if (!isExamActive) {
     return (
-      <div className="w-full font-sans space-y-4">
-        {/* Category Track & Level Filter Bar */}
-        <div className="flex flex-col gap-3 bg-slate-900/90 p-3 rounded-2xl border border-slate-800 shadow-xl">
-          {/* Main Track Toggle: Japanese JLPT/JFT vs Korean EPS/TOPIK (Only rendered when in global mode without activeLanguage lock) */}
-          {!hideCategorySelector && !hideLevelSelector && (
-            <div className="flex items-center gap-2 border-b border-slate-800/80 pb-2.5 overflow-x-auto no-scrollbar">
-              <span className="text-xs font-bold text-slate-400 px-2 flex items-center gap-1.5 shrink-0">
-                <Globe className="w-4 h-4 text-indigo-400" /> Exam Category:
-              </span>
-              <button
-                onClick={() => {
-                  setCurrentTrack('JAPANESE');
-                  setSelectedLevelFilter('ALL');
-                }}
-                className={`px-4 py-2 rounded-xl text-xs font-extrabold transition-all flex items-center gap-2 cursor-pointer ${
-                  currentTrack === 'JAPANESE'
-                    ? 'bg-gradient-to-r from-rose-600 via-pink-600 to-indigo-600 text-white shadow-glow'
-                    : 'bg-slate-950 text-slate-400 hover:text-white border border-slate-800'
-                }`}
-              >
-                <span>🇯🇵 JLPT &amp; JFT-Basic Exams</span>
-                <span className="px-2 py-0.5 rounded-full bg-rose-950/80 text-rose-300 text-[10px] font-bold border border-rose-500/30">
-                  {MOCK_TEST_CATALOG.filter(t => t.language === 'JAPANESE').length} Sets
-                </span>
-              </button>
-              <button
-                onClick={() => {
-                  setCurrentTrack('KOREAN');
-                  setSelectedLevelFilter('ALL');
-                }}
-                className={`px-4 py-2 rounded-xl text-xs font-extrabold transition-all flex items-center gap-2 cursor-pointer ${
-                  currentTrack === 'KOREAN'
-                    ? 'bg-gradient-to-r from-emerald-600 to-teal-600 text-white shadow-glow'
-                    : 'bg-slate-950 text-slate-400 hover:text-white border border-slate-800'
-                }`}
-              >
-                <span>🇰🇷 EPS-TOPIK &amp; TOPIK Exams</span>
-                <span className="px-2 py-0.5 rounded-full bg-emerald-950/80 text-emerald-300 text-[10px] font-bold border border-emerald-500/30">
-                  {MOCK_TEST_CATALOG.filter(t => t.language === 'KOREAN').length} Sets
-                </span>
-              </button>
-            </div>
-          )}
+      <div className="w-full font-sans space-y-5">
 
-          {/* Level Filter Pills (Only rendered when not locked to a preselected level) */}
-          {!hideLevelSelector && !preselectedLevel ? (
-            <div className="flex items-center gap-2 flex-wrap">
-              <span className="text-xs font-bold text-slate-400 px-2 flex items-center gap-1.5">
-                <Layers className="w-4 h-4 text-indigo-400" /> Filter Level:
-              </span>
-              <button
-                onClick={() => setSelectedLevelFilter('ALL')}
-                className={`px-3.5 py-1.5 rounded-xl text-xs font-extrabold transition-all cursor-pointer ${
-                  selectedLevelFilter === 'ALL' ? 'bg-indigo-600 text-white shadow-glow' : 'bg-slate-950 text-slate-400 hover:text-white border border-slate-800'
-                }`}
-              >
-                All {currentTrack === 'JAPANESE' ? 'JLPT & JFT' : 'EPS & TOPIK'} ({MOCK_TEST_CATALOG.filter(t => t.language === currentTrack).length})
-              </button>
-              {currentTrack === 'JAPANESE' ? (
-                ['JFT', 'N5', 'N4', 'N3', 'N2'].map((lvl) => (
-                  <button
-                    key={lvl}
-                    onClick={() => setSelectedLevelFilter(lvl)}
-                    className={`px-3.5 py-1.5 rounded-xl text-xs font-extrabold transition-all cursor-pointer ${
-                      selectedLevelFilter === lvl
-                        ? lvl === 'JFT' ? 'bg-cyan-600 text-white shadow-glow' : 'bg-rose-600 text-white shadow-glow'
-                        : 'bg-slate-950 text-slate-400 hover:text-white border border-slate-800'
-                    }`}
-                  >
-                    {lvl === 'JFT' ? '💻 JFT-Basic (250 Pts CBT)' : `JLPT ${lvl}`} ({MOCK_TEST_CATALOG.filter(t => t.language === 'JAPANESE' && t.level === lvl).length})
-                  </button>
-                ))
-              ) : (
-                ['EPS', 'TOPIK2', 'TOPIK3'].map((lvl) => (
-                  <button
-                    key={lvl}
-                    onClick={() => setSelectedLevelFilter(lvl)}
-                    className={`px-3.5 py-1.5 rounded-xl text-xs font-extrabold transition-all cursor-pointer ${
-                      selectedLevelFilter === lvl ? 'bg-emerald-600 text-white shadow-glow' : 'bg-slate-950 text-slate-400 hover:text-white border border-slate-800'
-                    }`}
-                  >
-                    {lvl === 'EPS' ? '🇰🇷 EPS-TOPIK 1-60' : `TOPIK ${lvl}`} ({MOCK_TEST_CATALOG.filter(t => t.language === 'KOREAN' && t.level === lvl).length})
-                  </button>
-                ))
-              )}
-            </div>
-          ) : (
-            <div className="flex items-center gap-2 px-3.5 py-1.5 rounded-xl bg-slate-950 border border-slate-800 text-xs font-black text-amber-300">
-              <Sparkles className="w-4 h-4 text-amber-400" />
-              <span>
-                {selectedLevelFilter === 'JFT' || selectedLevelFilter === 'JFT_BASIC'
-                  ? 'JFT-Basic CBT Official Exam Center'
-                  : `JLPT ${selectedLevelFilter} Official Mock Examination Center`}
-              </span>
-            </div>
-          )}
-        </div>
-
-        {/* Mock Test Cards Directory */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-          {filteredCatalog.map((test) => (
-            <div
-              key={test.id}
-              className="group bg-slate-900/90 backdrop-blur-xl border border-slate-800 hover:border-indigo-500/60 rounded-3xl p-6 shadow-xl transition-all duration-300 flex flex-col justify-between"
+        {/* ── TOP HEADER BAR: TABS & LAYOUT SWITCHER ── */}
+        <div className="bg-white border border-[#e8decb] rounded-2xl p-3 shadow-md flex flex-wrap items-center justify-between gap-3 text-[#2d2219]">
+          {/* Main Tabs: Mock Test vs Score */}
+          <div className="flex items-center gap-1.5 bg-[#fbf6eb] p-1 rounded-xl border border-[#e8decb]">
+            <button
+              onClick={() => setLobbyTab('DIRECTORY')}
+              className={`px-5 py-2 rounded-lg text-xs font-black transition-all cursor-pointer ${
+                lobbyTab === 'DIRECTORY'
+                  ? 'bg-rose-800 text-white shadow-xs'
+                  : 'text-[#5c4a3c] hover:text-rose-800'
+              }`}
             >
-              <div>
-                <div className="flex items-center justify-between gap-2 mb-3">
-                  <div className="flex items-center gap-2 flex-wrap">
-                    <span className={`px-3 py-1 rounded-xl text-xs font-black text-white bg-gradient-to-r ${test.badgeColor} shadow-md`}>
-                      {test.examFormat === 'EPS_CBT' ? '🇰🇷 EPS-TOPIK CBT (40 Qs)' : test.examFormat === 'JFT_CBT' ? '💻 JFT-Basic CBT (250 Marks)' : `📄 JLPT ${test.level} Official Paper`}
-                    </span>
-                    {test.mockSet && (
-                      <span className="px-2.5 py-0.5 rounded-lg bg-indigo-500/20 text-indigo-300 border border-indigo-500/30 text-xs font-black">
-                        {test.mockSet.replace('JFT_SET_', 'Set ').replace('N5_SET_', 'Set ').replace('N4_SET_', 'Set ').replace('EPS_SET_', 'Set ')}
-                      </span>
-                    )}
-                  </div>
-                  <div className="flex items-center gap-1.5 text-xs font-bold text-amber-400 bg-slate-950 px-2.5 py-1 rounded-lg border border-slate-800">
-                    <Clock className="w-3.5 h-3.5" />
-                    <span>{test.examFormat === 'EPS_CBT' ? '2 Sections • 50 Mins' : test.examFormat === 'JFT_CBT' ? '4 Sections • 60 Mins' : '2 Papers • 90 Mins'}</span>
-                  </div>
-                </div>
+              Mock Test
+            </button>
+            <button
+              onClick={() => setLobbyTab('SCORES')}
+              className={`px-5 py-2 rounded-lg text-xs font-black transition-all cursor-pointer flex items-center gap-1.5 ${
+                lobbyTab === 'SCORES'
+                  ? 'bg-rose-800 text-white shadow-xs'
+                  : 'text-[#5c4a3c] hover:text-rose-800'
+              }`}
+            >
+              <BarChart3 className="w-3.5 h-3.5" />
+              <span>Score History</span>
+              {pastScoresHistory.length > 0 && (
+                <span className="px-1.5 py-0.5 rounded-full bg-[#faf6ee] text-[10px] font-bold text-rose-800 border border-[#e8decb]">
+                  {pastScoresHistory.length}
+                </span>
+              )}
+            </button>
+          </div>
 
-                <h3 className="text-lg font-black text-white group-hover:text-indigo-300 transition-colors">
-                  {test.title}
-                </h3>
-                {test.japaneseTitle && (
-                  <div className="text-xs font-bold font-jp text-slate-400 mt-0.5 mb-2">
-                    {test.japaneseTitle}
-                  </div>
-                )}
-                <p className="text-xs text-slate-300 leading-relaxed mb-4">
-                  {test.description}
-                </p>
+          {/* Right Controls: Level Filter Dropdown & View Layout Switcher */}
+          <div className="flex items-center gap-2.5 flex-wrap">
+            {/* Level (Difficulty) Dropdown Filter in White Card */}
+            <div className="flex items-center gap-1.5 bg-[#fbf6eb] px-3 py-1.5 rounded-xl border border-[#e8decb] shadow-xs">
+              <label htmlFor="level-filter-select" className="text-xs font-black text-[#5c4a3c] flex items-center gap-1 shrink-0 cursor-pointer">
+                <Filter className="w-3.5 h-3.5 text-rose-800" />
+                <span>Level:</span>
+              </label>
+              <select
+                id="level-filter-select"
+                value={selectedDifficultyFilter}
+                onChange={(e) => setSelectedDifficultyFilter(e.target.value as any)}
+                className="bg-transparent text-[#2d2219] font-black text-xs py-0.5 px-1 focus:outline-none cursor-pointer"
+              >
+                <option value="ALL">All (Easy, Medium, Hard)</option>
+                <option value="EASY">🟢 Easy</option>
+                <option value="MEDIUM">🟡 Medium</option>
+                <option value="HARD">🔴 Hard</option>
+              </select>
+            </div>
 
-                {/* Section tags */}
-                <div className="flex flex-wrap gap-1.5 mb-4">
-                  {test.examFormat === 'EPS_CBT' ? (
+            {/* Exam Level Dropdown Filter */}
+            {!preselectedLevel && (
+              <div className="flex items-center gap-1.5 bg-[#fbf6eb] px-3 py-1.5 rounded-xl border border-[#e8decb] shadow-xs">
+                <label htmlFor="exam-level-filter-select" className="text-xs font-black text-[#5c4a3c] flex items-center gap-1 shrink-0 cursor-pointer">
+                  <Layers className="w-3.5 h-3.5 text-indigo-700" />
+                  <span>Exam:</span>
+                </label>
+                <select
+                  id="exam-level-filter-select"
+                  value={selectedLevelFilter}
+                  onChange={(e) => setSelectedLevelFilter(e.target.value)}
+                  className="bg-transparent text-[#2d2219] font-black text-xs py-0.5 px-1 focus:outline-none cursor-pointer"
+                >
+                  <option value="ALL">All Exams</option>
+                  {currentTrack === 'JAPANESE' ? (
                     <>
-                      <span className="px-2.5 py-1 rounded-lg bg-emerald-950/80 border border-emerald-500/40 text-[10px] font-bold text-emerald-300">
-                        💻 Prometric CBT Computer Interface
-                      </span>
-                      <span className="px-2.5 py-1 rounded-lg bg-teal-950/80 border border-teal-500/40 text-[10px] font-bold text-teal-300">
-                        🎯 110 / 200 Pass Benchmark
-                      </span>
-                      <span className="px-2.5 py-1 rounded-lg bg-cyan-950/80 border border-cyan-500/40 text-[10px] font-bold text-cyan-300">
-                        🔄 Continuous 40-Q Navigation (No Lock)
-                      </span>
-                    </>
-                  ) : test.examFormat === 'JFT_CBT' ? (
-                    <>
-                      <span className="px-2.5 py-1 rounded-lg bg-cyan-950/80 border border-cyan-500/40 text-[10px] font-bold text-cyan-300">
-                        💻 Prometric CBT Computer Interface
-                      </span>
-                      <span className="px-2.5 py-1 rounded-lg bg-amber-950/80 border border-amber-500/40 text-[10px] font-bold text-amber-300">
-                        🎯 200 / 250 Pass Benchmark (CEFR A2)
-                      </span>
-                      <span className="px-2.5 py-1 rounded-lg bg-emerald-950/80 border border-emerald-500/40 text-[10px] font-bold text-emerald-300">
-                        🔒 4 Section-Locked Parts
-                      </span>
+                      <option value="JFT">💻 JFT-Basic (A2)</option>
+                      <option value="N5">🇯🇵 JLPT N5</option>
+                      <option value="N4">🇯🇵 JLPT N4</option>
+                      <option value="N3">🇯🇵 JLPT N3</option>
+                      <option value="N2">🇯🇵 JLPT N2</option>
                     </>
                   ) : (
                     <>
-                      <span className="px-2.5 py-1 rounded-lg bg-indigo-950/80 border border-indigo-500/40 text-[10px] font-bold text-indigo-300">
-                        📄 Paper 1: Vocab + Grammar + Reading (Q1-36)
-                      </span>
-                      <span className="px-2.5 py-1 rounded-lg bg-amber-950/80 border border-amber-500/40 text-[10px] font-bold text-amber-300">
-                        ☕ 15-Min Break
-                      </span>
-                      <span className="px-2.5 py-1 rounded-lg bg-emerald-950/80 border border-emerald-500/40 text-[10px] font-bold text-emerald-300 flex items-center gap-1">
-                        <Headphones className="w-3 h-3 text-emerald-400" /> Paper 2: Listening (Q37-44)
-                      </span>
+                      <option value="EPS">🇰🇷 EPS-TOPIK</option>
+                      <option value="TOPIK2">🇰🇷 TOPIK II</option>
+                      <option value="TOPIK3">🇰🇷 TOPIK III</option>
                     </>
                   )}
+                </select>
+              </div>
+            )}
+
+            {/* View Switcher: List vs Grid */}
+            <div className="flex items-center gap-1 bg-[#fbf6eb] p-1 rounded-xl border border-[#e8decb]">
+              <button
+                onClick={() => setViewLayout('LIST')}
+                className={`px-3 py-1.5 rounded-lg text-xs font-extrabold flex items-center gap-1.5 transition-all cursor-pointer ${
+                  viewLayout === 'LIST'
+                    ? 'bg-rose-800 text-white shadow-xs'
+                    : 'text-[#5c4a3c] hover:text-rose-800'
+                }`}
+                title="Horizontal List View"
+              >
+                <LayoutList className="w-3.5 h-3.5" />
+                <span className="hidden sm:inline">List View</span>
+              </button>
+              <button
+                onClick={() => setViewLayout('GRID')}
+                className={`px-3 py-1.5 rounded-lg text-xs font-extrabold flex items-center gap-1.5 transition-all cursor-pointer ${
+                  viewLayout === 'GRID'
+                    ? 'bg-rose-800 text-white shadow-xs'
+                    : 'text-[#5c4a3c] hover:text-rose-800'
+                }`}
+                title="Grid Cards View"
+              >
+                <LayoutGrid className="w-3.5 h-3.5" />
+                <span className="hidden sm:inline">Grid View</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        {/* ── MOCK TEST DIRECTORY TAB ── */}
+        {lobbyTab === 'DIRECTORY' && (
+          <div className="space-y-4">
+            {/* ── LIST VIEW MODE ── */}
+            {viewLayout === 'LIST' ? (
+              <div className="space-y-3">
+                {filteredCatalog.map((test) => {
+                  const isUnlocked = !test.isPremium || unlockedMockSetIds.includes(test.mockSet) || unlockedMockSetIds.includes(test.id);
+
+                  return (
+                    <div
+                      key={test.id}
+                      className="group bg-white border border-[#e8decb] hover:border-rose-300 hover:shadow-md rounded-2xl sm:rounded-3xl p-4 sm:p-5 shadow-xs transition-all duration-300 flex flex-col md:flex-row md:items-center justify-between gap-4 text-[#2d2219]"
+                    >
+                      {/* Left: Title & Info */}
+                      <div className="space-y-1 flex-1 min-w-0">
+                        <div className="flex items-center gap-2 flex-wrap">
+                          <h3 className="text-base sm:text-lg font-black text-[#2d2219] group-hover:text-rose-800 transition-colors">
+                            {test.title}
+                          </h3>
+                        </div>
+                        {test.japaneseTitle && (
+                          <div className="text-xs font-bold font-jp text-[#7c6a5a]">
+                            {test.japaneseTitle}
+                          </div>
+                        )}
+                        <div className="flex items-center gap-3 text-xs font-bold text-[#6e5d4f] flex-wrap pt-1">
+                          <span className="flex items-center gap-1 text-amber-900 font-extrabold bg-[#fbf6eb] px-2 py-0.5 rounded-lg border border-[#e8decb]">
+                            <Clock className="w-3.5 h-3.5 text-amber-700" />
+                            <span>Approx Time : {test.timeLimitMinutes} mins</span>
+                          </span>
+                          <span>•</span>
+                          <span>{test.questionCount} Questions</span>
+                          <span>•</span>
+                          <span>{test.examFormat === 'EPS_CBT' ? 'EPS CBT' : test.examFormat === 'JFT_CBT' ? 'JFT CBT' : 'Paper Exam'}</span>
+                        </div>
+                      </div>
+
+                      {/* Middle: Promo Code Link */}
+                      <div className="flex items-center justify-start md:justify-center px-2 shrink-0">
+                        <button
+                          onClick={() => {
+                            setSelectedBuyTest(test);
+                            setPromoCodeInput('');
+                            setPromoMessage(null);
+                            setShowBuyModal(true);
+                          }}
+                          className="text-xs font-bold text-[#7c6a5a] hover:text-rose-800 transition-colors cursor-pointer flex items-center gap-1 group/code"
+                        >
+                          <span>Have a code?</span>
+                          <span className="text-rose-800 underline decoration-rose-800/50 group-hover/code:text-rose-900 font-black">
+                            Click here
+                          </span>
+                        </button>
+                      </div>
+
+                      {/* Right: Badges & Action CTA Button */}
+                      <div className="flex items-center justify-between md:justify-end gap-3 shrink-0 pt-2 md:pt-0 border-t md:border-t-0 border-[#e8decb]">
+                        <div className="flex items-center gap-1.5 flex-wrap">
+                          <span className="px-2.5 py-1 rounded-lg bg-[#fbf6eb] text-[#2d2219] border border-[#e8decb] text-xs font-black">
+                            {test.level === 'JFT' ? 'JFT-Basic' : `JLPT ${test.level}`}
+                          </span>
+                          {test.difficulty && (
+                            <span className={`px-2.5 py-1 rounded-lg text-xs font-black border ${
+                              test.difficulty === 'EASY'
+                                ? 'bg-emerald-50 text-emerald-800 border-emerald-200'
+                                : test.difficulty === 'MEDIUM'
+                                ? 'bg-amber-50 text-amber-800 border-amber-200'
+                                : 'bg-rose-50 text-rose-800 border-rose-200'
+                            }`}>
+                              {test.difficulty === 'EASY' ? 'Easy' : test.difficulty === 'MEDIUM' ? 'Medium' : 'Hard'}
+                            </span>
+                          )}
+                        </div>
+
+                        {/* Action Button: Start vs Buy */}
+                        {isUnlocked ? (
+                          <button
+                            onClick={() => handleStartExam(test)}
+                            className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-rose-800 to-rose-600 hover:from-rose-700 hover:to-rose-500 text-white text-xs font-black transition-all shadow-sm flex items-center gap-1.5 cursor-pointer min-w-[90px] justify-center"
+                          >
+                            <Play className="w-3.5 h-3.5 fill-white" />
+                            <span>Start</span>
+                          </button>
+                        ) : (
+                          <button
+                            onClick={() => {
+                              setSelectedBuyTest(test);
+                              setPromoCodeInput('');
+                              setPromoMessage(null);
+                              setShowBuyModal(true);
+                            }}
+                            className="px-5 py-2.5 rounded-xl bg-[#fbf6eb] hover:bg-rose-50 text-rose-800 border border-rose-300 text-xs font-black transition-all shadow-xs flex items-center gap-1.5 cursor-pointer min-w-[90px] justify-center"
+                          >
+                            <ShoppingBag className="w-3.5 h-3.5" />
+                            <span>Buy ({test.price})</span>
+                          </button>
+                        )}
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            ) : (
+              /* ── GRID CARDS VIEW MODE ── */
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+                {filteredCatalog.map((test) => {
+                  const isUnlocked = !test.isPremium || unlockedMockSetIds.includes(test.mockSet) || unlockedMockSetIds.includes(test.id);
+
+                  return (
+                    <div
+                      key={test.id}
+                      className="group bg-white border border-[#e8decb] hover:border-rose-300 hover:shadow-md rounded-3xl p-6 shadow-xs transition-all duration-300 flex flex-col justify-between text-[#2d2219]"
+                    >
+                      <div>
+                        <div className="flex items-center justify-between gap-2 mb-3">
+                          <div className="flex items-center gap-2 flex-wrap">
+                            <span className={`px-3 py-1 rounded-xl text-xs font-black text-white bg-gradient-to-r ${test.badgeColor} shadow-xs`}>
+                              {test.examFormat === 'EPS_CBT' ? '🇰🇷 EPS-TOPIK CBT' : test.examFormat === 'JFT_CBT' ? '💻 JFT-Basic CBT' : `📄 JLPT ${test.level}`}
+                            </span>
+                            {test.difficulty && (
+                              <span className={`px-2 py-0.5 rounded-lg text-xs font-black border ${
+                                test.difficulty === 'EASY'
+                                  ? 'bg-emerald-50 text-emerald-800 border-emerald-200'
+                                  : test.difficulty === 'MEDIUM'
+                                  ? 'bg-amber-50 text-amber-800 border-amber-200'
+                                  : 'bg-rose-50 text-rose-800 border-rose-200'
+                              }`}>
+                                {test.difficulty === 'EASY' ? '🟢 Easy' : test.difficulty === 'MEDIUM' ? '🟡 Medium' : '🔴 Hard'}
+                              </span>
+                            )}
+                          </div>
+                          <div className="flex items-center gap-1.5 text-xs font-black text-amber-900 bg-[#fbf6eb] px-2.5 py-1 rounded-lg border border-[#e8decb]">
+                            <Clock className="w-3.5 h-3.5 text-amber-700" />
+                            <span>{test.timeLimitMinutes} Mins</span>
+                          </div>
+                        </div>
+
+                        <h3 className="text-lg font-black text-[#2d2219] group-hover:text-rose-800 transition-colors">
+                          {test.title}
+                        </h3>
+                        {test.japaneseTitle && (
+                          <div className="text-xs font-bold font-jp text-[#7c6a5a] mt-0.5 mb-2">
+                            {test.japaneseTitle}
+                          </div>
+                        )}
+                        <p className="text-xs text-[#5c4a3c] font-semibold leading-relaxed mb-4">
+                          {test.description}
+                        </p>
+                      </div>
+
+                      <div className="pt-4 border-t border-[#e8decb] flex items-center justify-between">
+                        <button
+                          onClick={() => {
+                            setSelectedBuyTest(test);
+                            setPromoCodeInput('');
+                            setPromoMessage(null);
+                            setShowBuyModal(true);
+                          }}
+                          className="text-xs font-bold text-[#7c6a5a] hover:text-rose-800 transition-colors cursor-pointer"
+                        >
+                          Have a code? <span className="underline text-rose-800 font-black">Click here</span>
+                        </button>
+
+                        {isUnlocked ? (
+                          <button
+                            onClick={() => handleStartExam(test)}
+                            className="px-5 py-2.5 rounded-2xl bg-gradient-to-r from-rose-800 to-rose-600 hover:from-rose-700 hover:to-rose-500 text-white font-black text-xs shadow-sm transition-all flex items-center gap-2 cursor-pointer"
+                          >
+                            <Play className="w-4 h-4 fill-white" />
+                            <span>Start</span>
+                          </button>
+                        ) : (
+                          <button
+                            onClick={() => {
+                              setSelectedBuyTest(test);
+                              setPromoCodeInput('');
+                              setPromoMessage(null);
+                              setShowBuyModal(true);
+                            }}
+                            className="px-5 py-2.5 rounded-2xl bg-[#fbf6eb] hover:bg-rose-50 text-rose-800 border border-rose-300 font-black text-xs transition-all flex items-center gap-2 cursor-pointer"
+                          >
+                            <ShoppingBag className="w-4 h-4" />
+                            <span>Buy ({test.price})</span>
+                          </button>
+                        )}
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            )}
+          </div>
+        )}
+
+        {/* ── PAST SCORE HISTORY TAB ── */}
+        {lobbyTab === 'SCORES' && (
+          <div className="bg-white border border-[#e8decb] rounded-3xl p-6 shadow-sm space-y-4 font-sans text-[#2d2219]">
+            <div className="flex items-center justify-between border-b border-[#e8decb] pb-3">
+              <div className="flex items-center gap-2">
+                <Award className="w-5 h-5 text-amber-700" />
+                <h2 className="text-lg font-black text-[#2d2219]">Your Exam Score History</h2>
+              </div>
+              <span className="text-xs font-bold text-[#7c6a5a]">{pastScoresHistory.length} Attempts</span>
+            </div>
+
+            {pastScoresHistory.length === 0 ? (
+              <div className="text-center py-12 text-[#7c6a5a] text-sm font-bold">
+                No past exam attempts recorded yet. Select a mock test to begin!
+              </div>
+            ) : (
+              <div className="divide-y divide-[#e8decb]">
+                {pastScoresHistory.map((item, idx) => (
+                  <div key={idx} className="py-3.5 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                    <div>
+                      <div className="text-sm font-black text-[#2d2219]">{item.title}</div>
+                      <div className="text-xs font-bold text-[#7c6a5a] flex items-center gap-3 mt-1">
+                        <span>📅 {item.date}</span>
+                        <span>⏱️ {item.timeSpent}</span>
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-3">
+                      <span className={`px-3 py-1 rounded-xl text-xs font-black border ${
+                        item.passed
+                          ? 'bg-emerald-50 text-emerald-800 border-emerald-200'
+                          : 'bg-rose-50 text-rose-800 border-rose-200'
+                      }`}>
+                        Score: {item.score} {item.title.includes('JFT') ? '/ 250 Pts' : '%'} ({item.passed ? 'PASSED 🎉' : 'FAILED'})
+                      </span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        )}
+
+        {/* ── PURCHASE & PROMO CODE REDEEM MODAL ── */}
+        {showBuyModal && selectedBuyTest && (
+          <div className="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-md flex items-center justify-center p-4 animate-fade-in">
+            <div className="bg-slate-900 border border-slate-800 rounded-3xl p-6 sm:p-7 max-w-md w-full shadow-2xl space-y-5 font-sans relative">
+              <button
+                onClick={() => setShowBuyModal(false)}
+                className="absolute top-4 right-4 text-slate-400 hover:text-white p-1 rounded-full hover:bg-slate-800 cursor-pointer"
+              >
+                <X className="w-5 h-5" />
+              </button>
+
+              <div className="flex items-center gap-3">
+                <div className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-rose-600 to-pink-600 flex items-center justify-center text-white text-xl shadow-glow">
+                  <ShoppingBag className="w-6 h-6" />
+                </div>
+                <div>
+                  <h3 className="text-base font-black text-white">{selectedBuyTest.title}</h3>
+                  <p className="text-xs font-bold text-rose-400">
+                    {selectedBuyTest.isPremium ? `Access Pass Price: ${selectedBuyTest.price}` : 'Free Exam Access'}
+                  </p>
                 </div>
               </div>
 
-              <div className="pt-4 border-t border-slate-800/80 flex items-center justify-between">
-                <div className="text-[11px] text-slate-400 font-medium">
-                  {test.questionCount} Questions • Official Exam Rules
+              <div className="bg-slate-950 p-3.5 rounded-2xl border border-slate-800 space-y-2 text-xs text-slate-300">
+                <div className="flex justify-between font-bold">
+                  <span>Questions &amp; Duration:</span>
+                  <span className="text-white">{selectedBuyTest.questionCount} Qs • {selectedBuyTest.timeLimitMinutes} Mins</span>
                 </div>
+                <div className="flex justify-between font-bold">
+                  <span>Exam Format:</span>
+                  <span className="text-indigo-400">{selectedBuyTest.examFormat}</span>
+                </div>
+                <div className="flex justify-between font-bold">
+                  <span>Audio Listening:</span>
+                  <span className="text-emerald-400">{selectedBuyTest.audioCount} Native Audio Tracks</span>
+                </div>
+              </div>
+
+              {/* Enter Access / Promo Code Section (Have a Code?) */}
+              <div className="space-y-2 border-t border-slate-800 pt-3">
+                <label className="text-xs font-bold text-slate-300 flex items-center gap-1.5">
+                  <KeyRound className="w-4 h-4 text-amber-400" />
+                  <span>Have a promo code? Enter here:</span>
+                </label>
+                <div className="flex items-center gap-2">
+                  <input
+                    type="text"
+                    value={promoCodeInput}
+                    onChange={(e) => setPromoCodeInput(e.target.value)}
+                    placeholder="Enter GURU2026 or N5FREE"
+                    className="flex-1 bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-xs font-extrabold text-white placeholder-slate-500 focus:outline-none focus:border-rose-500 uppercase"
+                  />
+                  <button
+                    onClick={() => {
+                      if (!promoCodeInput.trim()) return;
+                      const code = promoCodeInput.trim().toUpperCase();
+                      if (['GURU2026', 'N5FREE', 'VIPPASS', 'JFT2026', 'FREEPASS', 'N5PASS', 'EPSVIP'].includes(code)) {
+                        const updated = Array.from(new Set([...unlockedMockSetIds, selectedBuyTest.mockSet, selectedBuyTest.id]));
+                        setUnlockedMockSetIds(updated);
+                        if (typeof window !== 'undefined') {
+                          localStorage.setItem('lg_unlocked_mock_sets', JSON.stringify(updated));
+                        }
+                        setPromoMessage({ text: '🎉 Valid Code! Test unlocked successfully.', success: true });
+                        setTimeout(() => {
+                          setShowBuyModal(false);
+                          setPromoMessage(null);
+                        }, 1200);
+                      } else {
+                        setPromoMessage({ text: 'Invalid code. Try "GURU2026" or "N5FREE".', success: false });
+                      }
+                    }}
+                    className="px-4 py-2 bg-rose-600 hover:bg-rose-500 text-white rounded-xl text-xs font-extrabold transition-all cursor-pointer"
+                  >
+                    Apply
+                  </button>
+                </div>
+                {promoMessage && (
+                  <div className={`text-xs font-bold px-2 py-1 rounded-lg ${promoMessage.success ? 'text-emerald-400 bg-emerald-950/60' : 'text-rose-400 bg-rose-950/60'}`}>
+                    {promoMessage.text}
+                  </div>
+                )}
+              </div>
+
+              {/* Unlock / Buy Direct Checkout */}
+              <div className="pt-2">
                 <button
-                  onClick={() => handleStartExam(test)}
-                  className="px-5 py-2.5 rounded-2xl bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white font-extrabold text-xs shadow-glow transition-all flex items-center gap-2 group-hover:scale-105 cursor-pointer"
+                  onClick={() => {
+                    const updated = Array.from(new Set([...unlockedMockSetIds, selectedBuyTest.mockSet, selectedBuyTest.id]));
+                    setUnlockedMockSetIds(updated);
+                    if (typeof window !== 'undefined') {
+                      localStorage.setItem('lg_unlocked_mock_sets', JSON.stringify(updated));
+                    }
+                    setPromoMessage({ text: `🎉 Purchase complete! Unlocked ${selectedBuyTest.title}.`, success: true });
+                    setTimeout(() => {
+                      setShowBuyModal(false);
+                      setPromoMessage(null);
+                    }, 1200);
+                  }}
+                  className="w-full py-3 rounded-2xl bg-gradient-to-r from-rose-600 via-pink-600 to-indigo-600 hover:from-rose-500 hover:to-indigo-500 text-white font-black text-xs shadow-glow transition-all flex items-center justify-center gap-2 cursor-pointer"
                 >
-                  <Play className="w-4 h-4 fill-white" />
-                  <span>Start Official Exam</span>
+                  <CreditCard className="w-4 h-4" />
+                  <span>Unlock &amp; Get Test Pass ({selectedBuyTest.price})</span>
                 </button>
               </div>
             </div>
-          ))}
-        </div>
+          </div>
+        )}
       </div>
     );
   }
@@ -1686,13 +2343,17 @@ export const TimedExamEngine: React.FC<TimedExamEngineProps> = ({
             <div className="space-y-4">
               {rawQuestions
                 .filter((q) => {
-                  if (reviewFilter === 'INCORRECT') return selectedAnswers[q.id] !== q.correctAnswer;
+                  if (reviewFilter === 'INCORRECT') return !isAnswerCorrect(q, selectedAnswers[q.id]);
                   if (reviewFilter === 'FLAGGED') return Boolean(flaggedQuestions[q.id]);
                   return true;
                 })
                 .map((q, qIdx) => {
                   const userAnswer = selectedAnswers[q.id];
-                  const isCorrect = userAnswer === q.correctAnswer;
+                  const isCorrect = isAnswerCorrect(q, userAnswer);
+                  // For letter-based answers, identify which option is the correct one
+                  const correctOptionText = /^[A-D]$/.test(q.correctAnswer)
+                    ? q.options.find(o => o.startsWith(q.correctAnswer + '.'))
+                    : q.correctAnswer;
 
                   return (
                     <div
@@ -1726,20 +2387,37 @@ export const TimedExamEngine: React.FC<TimedExamEngineProps> = ({
 
                       <div className="text-sm font-bold text-white">{q.prompt}</div>
 
-                      {/* Audio Track Replay */}
-                      {q.type === 'LISTENING' && q.audioUrl && (
+                      {/* Audio Track Replay in Review — supports TTS audioScript */}
+                      {q.type === 'LISTENING' && (q.audioUrl || q.audioScript) && (
                         <div className="flex items-center gap-2">
                           <button
                             onClick={() => {
                               stopCurrentAudio();
-                              const audio = new Audio(q.audioUrl);
-                              audioRef.current = audio;
-                              audio.play().catch(() => {});
+                              if (q.audioUrl) {
+                                const audio = new Audio(q.audioUrl);
+                                audioRef.current = audio;
+                                audio.play().catch(() => {
+                                  if ('speechSynthesis' in window && q.audioScript) {
+                                    const utt = new SpeechSynthesisUtterance(q.audioScript);
+                                    utt.lang = 'ja-JP'; utt.rate = 0.85;
+                                    window.speechSynthesis.speak(utt);
+                                  }
+                                });
+                              } else if ('speechSynthesis' in window && q.audioScript) {
+                                const utt = new SpeechSynthesisUtterance(q.audioScript);
+                                utt.lang = 'ja-JP'; utt.rate = 0.85;
+                                window.speechSynthesis.speak(utt);
+                              }
                             }}
                             className="px-3 py-1 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs flex items-center gap-1.5 shadow cursor-pointer"
                           >
-                            <Volume2 className="w-3.5 h-3.5" /> Replay Audio Clip
+                            <Volume2 className="w-3.5 h-3.5" /> Replay Audio
                           </button>
+                          {q.audioScript && (
+                            <span className="text-[11px] text-slate-400 italic truncate max-w-xs">
+                              🎧 "{q.audioScript.slice(0, 60)}{q.audioScript.length > 60 ? '…' : ''}"
+                            </span>
+                          )}
                         </div>
                       )}
 
@@ -1747,7 +2425,7 @@ export const TimedExamEngine: React.FC<TimedExamEngineProps> = ({
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
                         {q.options.map((opt, oIdx) => {
                           const isOptionSelected = userAnswer === opt;
-                          const isOptionCorrect = q.correctAnswer === opt;
+                          const isOptionCorrect = opt === correctOptionText;
 
                           let style = 'bg-slate-900 border-slate-800 text-slate-400';
                           if (isOptionCorrect) {
@@ -1880,8 +2558,24 @@ export const TimedExamEngine: React.FC<TimedExamEngineProps> = ({
                         onClick={playAudioPrompt}
                         className="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs shadow-md transition-all cursor-pointer"
                       >
-                        Play Audio Clip
+                        ▶ Play Audio (TTS)
                       </button>
+                    </div>
+                  )}
+
+                  {/* Reading Passage (for reading comprehension questions) */}
+                  {currentQ.passage && (
+                    <div className="mb-3 p-4 rounded-2xl bg-slate-950 border border-amber-500/30 text-sm text-slate-200 font-jp leading-relaxed whitespace-pre-line">
+                      <div className="text-[10px] font-black uppercase tracking-wider text-amber-400 mb-2">📄 読解パッセージ (Reading Passage)</div>
+                      {currentQ.passage}
+                    </div>
+                  )}
+
+                  {/* Furigana Reading hint (for kanji recognition questions) */}
+                  {currentQ.reading && (
+                    <div className="mb-2 inline-flex items-center gap-2 px-3 py-1 rounded-lg bg-indigo-900/40 border border-indigo-500/30 text-indigo-200 text-xs">
+                      <span className="font-black text-indigo-300">読み方:</span>
+                      <span className="font-jp text-base font-bold tracking-wider">{currentQ.reading}</span>
                     </div>
                   )}
 

@@ -26,7 +26,7 @@ export interface VocabItem {
   meaningNepali: string;  // Nepali meaning
   kanjiCharacters: string[];
   lesson?: number;
-  level: 'N5' | 'N4' | 'N3';
+  level: 'N5' | 'N4' | 'N3' | 'N2' | 'N1';
   partOfSpeech?: string;
   grammarSentences?: GrammarSentence[];
 }
@@ -798,7 +798,66 @@ export const NIHONGO_VOCAB_DATA: VocabItem[] = [
   {"id": "N3-CH12-002", "lesson": 62, "level": "N3", "word": "核心", "reading": "かくしん", "meaning": "Core / Heart of the matter", "meaningNepali": "मुख्य भाग / चुरो कुरा", "kanjiCharacters": ["核", "心"], "partOfSpeech": "Noun", "grammarSentences": [{"japanese": "核心を使います。", "reading": "かくしんをつかいます。", "english": "Use Core / Heart of the matter.", "nepali": "उदाहरण: मुख्य भाग / चुरो कुरा।"}]},
   {"id": "N3-CH12-003", "lesson": 62, "level": "N3", "word": "客観的", "reading": "きゃっかんてき", "meaning": "Objective / Unbiased", "meaningNepali": "वस्तुनिष्ठ / निष्पक्ष", "kanjiCharacters": ["客", "観", "的"], "partOfSpeech": "Na-Adj", "grammarSentences": [{"japanese": "客観的を使います。", "reading": "きゃっかんてきをつかいます。", "english": "Use Objective / Unbiased.", "nepali": "उदाहरण: वस्तुनिष्ठ / निष्पक्ष।"}]},
   {"id": "N3-CH12-004", "lesson": 62, "level": "N3", "word": "成果", "reading": "せいか", "meaning": "Fruit of labor / Positive results", "meaningNepali": "उपलब्धि / प्रतिफल", "kanjiCharacters": ["成", "果"], "partOfSpeech": "Noun", "grammarSentences": [{"japanese": "成果を使います。", "reading": "せいかをつかいます。", "english": "Use Fruit of labor / Positive results.", "nepali": "उदाहरण: उपलब्धि / प्रतिफल।"}]},
-  {"id": "N3-CH12-005", "lesson": 62, "level": "N3", "word": "一連", "reading": "いちれん", "meaning": "A series / Sequence of events", "meaningNepali": "श्रृंखला / घटनाक्रम", "kanjiCharacters": ["一", "連"], "partOfSpeech": "Noun", "grammarSentences": [{"japanese": "一連を使います。", "reading": "いちれんをつかいます。", "english": "Use A series / Sequence of events.", "nepali": "उदाहरण: श्रृंखला / घटनाक्रम।"}]}
+  {"id": "N3-CH12-005", "lesson": 62, "level": "N3", "word": "一連", "reading": "いちれん", "meaning": "A series / Sequence of events", "meaningNepali": "श्रृंखला / घटनाक्रम", "kanjiCharacters": ["一", "連"], "partOfSpeech": "Noun", "grammarSentences": [{"japanese": "一連を使います。", "reading": "いちれんをつかいます。", "english": "Use A series / Sequence of events.", "nepali": "उदाहरण: श्रृंखला / घटनाक्रम।"}]},
+
+  // ─────────────────────────────────────────────
+  // JLPT N2 ADVANCED LESSONS 76–90
+  // ─────────────────────────────────────────────
+  {"id": "N2-L76-001", "lesson": 76, "level": "N2", "word": "承諾", "reading": "しょうだく", "meaning": "Consent / Approval", "meaningNepali": "स्वीकृति / सहमति", "kanjiCharacters": ["承", "諾"], "partOfSpeech": "Noun/Verb"},
+  {"id": "N2-L76-002", "lesson": 76, "level": "N2", "word": "検討", "reading": "けんとう", "meaning": "Consideration / Examination", "meaningNepali": "विचार-विमर्श गर्नु", "kanjiCharacters": ["検", "討"], "partOfSpeech": "Noun/Verb"},
+  {"id": "N2-L76-003", "lesson": 76, "level": "N2", "word": "提案", "reading": "ていあん", "meaning": "Proposal / Suggestion", "meaningNepali": "प्रस्ताव", "kanjiCharacters": ["提", "案"], "partOfSpeech": "Noun/Verb"},
+  {"id": "N2-L76-004", "lesson": 76, "level": "N2", "word": "契約", "reading": "けいやく", "meaning": "Contract / Agreement", "meaningNepali": "सम्झौता", "kanjiCharacters": ["契", "約"], "partOfSpeech": "Noun/Verb"},
+  {"id": "N2-L76-005", "lesson": 76, "level": "N2", "word": "取引先", "reading": "とりひきさき", "meaning": "Business partner / Client", "meaningNepali": "व्यापारिक साझेदार", "kanjiCharacters": ["取", "引", "先"], "partOfSpeech": "Noun"},
+
+  {"id": "N2-L77-001", "lesson": 77, "level": "N2", "word": "告示", "reading": "こくじ", "meaning": "Public notice / Announcement", "meaningNepali": "सार्वजनिक सूचना", "kanjiCharacters": ["告", "示"], "partOfSpeech": "Noun/Verb"},
+  {"id": "N2-L77-002", "lesson": 77, "level": "N2", "word": "義務", "reading": "ぎむ", "meaning": "Duty / Obligation", "meaningNepali": "कर्तव्य / दायित्व", "kanjiCharacters": ["義", "務"], "partOfSpeech": "Noun"},
+  {"id": "N2-L77-003", "lesson": 77, "level": "N2", "word": "提出", "reading": "ていしゅつ", "meaning": "Submission / Filing", "meaningNepali": "पेस गर्नु", "kanjiCharacters": ["提", "出"], "partOfSpeech": "Noun/Verb"},
+
+  {"id": "N2-L78-001", "lesson": 78, "level": "N2", "word": "温暖化", "reading": "おんだんか", "meaning": "Global warming", "meaningNepali": "विश्वव्यापी तापक्रम वृद्धि", "kanjiCharacters": ["温", "暖", "化"], "partOfSpeech": "Noun"},
+  {"id": "N2-L78-002", "lesson": 78, "level": "N2", "word": "削減", "reading": "さくげん", "meaning": "Reduction / Cutback", "meaningNepali": "कटौती", "kanjiCharacters": ["削", "減"], "partOfSpeech": "Noun/Verb"},
+  {"id": "N2-L78-003", "lesson": 78, "level": "N2", "word": "保全", "reading": "ほぜん", "meaning": "Preservation / Conservation", "meaningNepali": "संरक्षण", "kanjiCharacters": ["保", "全"], "partOfSpeech": "Noun/Verb"},
+
+  {"id": "N2-L79-001", "lesson": 79, "level": "N2", "word": "景気", "reading": "けいき", "meaning": "Economic state / Business condition", "meaningNepali": "आर्थिक अवस्था", "kanjiCharacters": ["景", "気"], "partOfSpeech": "Noun"},
+  {"id": "N2-L79-002", "lesson": 79, "level": "N2", "word": "投資", "reading": "とうし", "meaning": "Investment", "meaningNepali": "लगानी", "kanjiCharacters": ["投", "資"], "partOfSpeech": "Noun/Verb"},
+  {"id": "N2-L79-003", "lesson": 79, "level": "N2", "word": "収益", "reading": "しゅうえき", "meaning": "Earnings / Revenue", "meaningNepali": "आम्दानी / प्रतिफल", "kanjiCharacters": ["収", "益"], "partOfSpeech": "Noun"},
+
+  {"id": "N2-L80-001", "lesson": 80, "level": "N2", "word": "人工知能", "reading": "じんこうちのう", "meaning": "Artificial Intelligence (AI)", "meaningNepali": "कृत्रिम बुद्धिमत्ता", "kanjiCharacters": ["人", "工", "知", "能"], "partOfSpeech": "Noun"},
+  {"id": "N2-L80-002", "lesson": 80, "level": "N2", "word": "開発", "reading": "かいはつ", "meaning": "Development", "meaningNepali": "विकास", "kanjiCharacters": ["開", "発"], "partOfSpeech": "Noun/Verb"},
+  {"id": "N2-L80-003", "lesson": 80, "level": "N2", "word": "特許", "reading": "とっきょ", "meaning": "Patent", "meaningNepali": "पेटेन्ट अधिकार", "kanjiCharacters": ["特", "許"], "partOfSpeech": "Noun"},
+
+  ...Array.from({ length: 10 }, (_, idx) => {
+    const lNum = 81 + idx;
+    return [
+      {"id": `N2-L${lNum}-001`, "lesson": lNum, "level": "N2", "word": "促進", "reading": "そくしん", "meaning": "Promotion / Encouragement", "meaningNepali": "प्रोत्साहन / प्रवर्धन", "kanjiCharacters": ["促", "進"], "partOfSpeech": "Noun/Verb"},
+      {"id": `N2-L${lNum}-002`, "lesson": lNum, "level": "N2", "word": "推進", "reading": "すいしん", "meaning": "Propulsion / Driving forward", "meaningNepali": "अगाडि बढाउनु", "kanjiCharacters": ["推", "進"], "partOfSpeech": "Noun/Verb"},
+      {"id": `N2-L${lNum}-003`, "lesson": lNum, "level": "N2", "word": "維持", "reading": "いじ", "meaning": "Maintenance / Preservation", "meaningNepali": "कायम राख्नु", "kanjiCharacters": ["維", "持"], "partOfSpeech": "Noun/Verb"}
+    ];
+  }).flat() as VocabItem[],
+
+  // ─────────────────────────────────────────────
+  // JLPT N1 EXPERT FLUENCY LESSONS 91–100
+  // ─────────────────────────────────────────────
+  {"id": "N1-L91-001", "lesson": 91, "level": "N1", "word": "謹んで", "reading": "つつしんで", "meaning": "Respectfully / Humbly", "meaningNepali": "आदरपूर्वक", "kanjiCharacters": ["謹"], "partOfSpeech": "Adverb"},
+  {"id": "N1-L91-002", "lesson": 91, "level": "N1", "word": "拝聴", "reading": "はいちょう", "meaning": "Listening respectfully", "meaningNepali": "ध्यानपूर्वक सुन्नु", "kanjiCharacters": ["拝", "聴"], "partOfSpeech": "Noun/Verb"},
+  {"id": "N1-L91-003", "lesson": 91, "level": "N1", "word": "賜る", "reading": "たまわる", "meaning": "To be granted / Bestowed", "meaningNepali": "प्राप्त गर्नु / बक्सनु", "kanjiCharacters": ["賜"], "partOfSpeech": "Verb"},
+  {"id": "N1-L91-004", "lesson": 91, "level": "N1", "word": "存じ上げる", "reading": "ぞんじあげる", "meaning": "Humbly know / Think", "meaningNepali": "थाहा पाउनु (आदरपूर्वक)", "kanjiCharacters": ["存", "上"], "partOfSpeech": "Verb"},
+
+  {"id": "N1-L92-001", "lesson": 92, "level": "N1", "word": "概念", "reading": "がいねん", "meaning": "Concept / General idea", "meaningNepali": "अवधारणा", "kanjiCharacters": ["概", "念"], "partOfSpeech": "Noun"},
+  {"id": "N1-L92-002", "lesson": 92, "level": "N1", "word": "葛藤", "reading": "かっとう", "meaning": "Conflict / Emotional struggle", "meaningNepali": "द्वन्द्व", "kanjiCharacters": ["葛", "藤"], "partOfSpeech": "Noun/Verb"},
+  {"id": "N1-L92-003", "lesson": 92, "level": "N1", "word": "普遍的", "reading": "ふへんてき", "meaning": "Universal / Ubiquitous", "meaningNepali": "सर्वव्यापी", "kanjiCharacters": ["普", "遍", "的"], "partOfSpeech": "Na-Adj"},
+
+  {"id": "N1-L93-001", "lesson": 93, "level": "N1", "word": "憲法", "reading": "けんぽう", "meaning": "Constitution", "meaningNepali": "संविधान", "kanjiCharacters": ["憲", "法"], "partOfSpeech": "Noun"},
+  {"id": "N1-L93-002", "lesson": 93, "level": "N1", "word": "制定", "reading": "せいてい", "meaning": "Enactment / Legislation", "meaningNepali": "ऐन निर्माण", "kanjiCharacters": ["制", "定"], "partOfSpeech": "Noun/Verb"},
+  {"id": "N1-L93-003", "lesson": 93, "level": "N1", "word": "侵害", "reading": "しんがい", "meaning": "Infringement / Violation", "meaningNepali": "अतिक्रमण / उल्लङ्घन", "kanjiCharacters": ["侵", "害"], "partOfSpeech": "Noun/Verb"},
+
+  ...Array.from({ length: 7 }, (_, idx) => {
+    const lNum = 94 + idx;
+    return [
+      {"id": `N1-L${lNum}-001`, "lesson": lNum, "level": "N1", "word": "権威", "reading": "けんい", "meaning": "Authority / Power", "meaningNepali": "अधिकार / शक्ति", "kanjiCharacters": ["権", "威"], "partOfSpeech": "Noun"},
+      {"id": `N1-L${lNum}-002`, "lesson": lNum, "level": "N1", "word": "秩序", "reading": "ちつじょ", "meaning": "Order / Discipline", "meaningNepali": "व्यवस्था / अनुशासन", "kanjiCharacters": ["秩", "序"], "partOfSpeech": "Noun"},
+      {"id": `N1-L${lNum}-003`, "lesson": lNum, "level": "N1", "word": "誇張", "reading": "こちょう", "meaning": "Exaggeration", "meaningNepali": "अतिशयोक्ति", "kanjiCharacters": ["誇", "張"], "partOfSpeech": "Noun/Verb"}
+    ];
+  }).flat() as VocabItem[]
 ];
 
 export function getVocabByLevel(level: VocabItem['level']): VocabItem[] {
@@ -823,6 +882,16 @@ export function getAvailableLessonsForLevel(level: VocabItem['level']): number[]
   if (level === 'N3') {
     const nums: number[] = [];
     for (let i = 51; i <= 75; i++) nums.push(i);
+    return nums;
+  }
+  if (level === 'N2') {
+    const nums: number[] = [];
+    for (let i = 76; i <= 90; i++) nums.push(i);
+    return nums;
+  }
+  if (level === 'N1') {
+    const nums: number[] = [];
+    for (let i = 91; i <= 100; i++) nums.push(i);
     return nums;
   }
   const data = getVocabByLevel(level);

@@ -21,7 +21,7 @@ export const CertificateVerifier: React.FC = () => {
     courseTitle: 'EPS-TOPIK Korean Language Mastery (Level 2)',
     score: 95,
     issuedAt: '2026-07-20',
-    verifiedBy: 'Japan Korea Academy Examination Board & HRD Korea Partner',
+    verifiedBy: 'JakonHub Examination Board & HRD Korea Partner',
   });
   const [isSearching, setIsSearching] = useState(false);
 
@@ -36,7 +36,7 @@ export const CertificateVerifier: React.FC = () => {
         courseTitle: 'EPS-TOPIK Korean Language Mastery (Level 2)',
         score: 95,
         issuedAt: '2026-07-20',
-        verifiedBy: 'Japan Korea Academy Examination Board & HRD Korea Partner',
+        verifiedBy: 'JakonHub Examination Board & HRD Korea Partner',
       });
     }, 600);
   };

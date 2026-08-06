@@ -1,8 +1,8 @@
-# 🌐 LanguageGuru — Japanese & Korean Language Learning Platform
+# 🌐 JakonHub — Japanese & Korean Language Learning Platform
 
 > A premium, full-stack language learning platform for mastering **JLPT Japanese (N5 → N3)** and **Korean (EPS-TOPIK / TOPIK)** — built with Next.js 16, TypeScript, MySQL, and modern SRS-powered flashcard technology.
 
-[![Deploy on Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/DRKAFLE123/LanguageGuru)
+[![Deploy on Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/DRKAFLE123/JakonHub)
 [![Next.js](https://img.shields.io/badge/Next.js-16.2-black?style=flat-square&logo=next.js)](https://nextjs.org/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.4-blue?style=flat-square&logo=typescript)](https://www.typescriptlang.org/)
 [![MySQL](https://img.shields.io/badge/MySQL-8.0-orange?style=flat-square&logo=mysql)](https://www.mysql.com/)
@@ -67,8 +67,8 @@
 
 ```bash
 # 1. Clone the repository
-git clone https://github.com/DRKAFLE123/LanguageGuru.git
-cd LanguageGuru
+git clone https://github.com/DRKAFLE123/JakonHub.git
+cd JakonHub
 
 # 2. Install dependencies
 npm install
@@ -117,11 +117,11 @@ NEXTAUTH_URL=http://localhost:3000
 
 ### One-Click Deploy
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/DRKAFLE123/LanguageGuru)
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/DRKAFLE123/JakonHub)
 
 ### Manual Deployment
 
-1. Push this repository to GitHub: `https://github.com/DRKAFLE123/LanguageGuru.git`
+1. Push this repository to GitHub: `https://github.com/DRKAFLE123/JakonHub.git`
 2. Go to [vercel.com](https://vercel.com) → **New Project** → Import your repository
 3. Set Environment Variables in the Vercel Dashboard (same as `.env`):
    - `DATABASE_URL`
@@ -136,7 +136,7 @@ NEXTAUTH_URL=http://localhost:3000
 ## 📁 Project Structure
 
 ```
-LanguageGuru/
+JakonHub/
 ├── app/
 │   ├── page.tsx               # Main app page with language tab selector
 │   ├── layout.tsx             # Root layout

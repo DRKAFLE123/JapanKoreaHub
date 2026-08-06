@@ -1533,6 +1533,206 @@ export const JAPANESE_GRAMMAR_GUIDES: LessonGrammarGuide[] = [
         ]
       }
     ]
+  },
+
+  // ════════════════════════════════════
+  // N2 COMPLETE — LESSONS 76 TO 90
+  // ════════════════════════════════════
+  {
+    language: 'JAPANESE', level: 'N2', lesson: 76,
+    lessonTitle: 'Business Directives & Discussion — 〜をめぐって / 〜に際して',
+    grammarPoints: [
+      {
+        title: '1. Concerning / Regarding — 〜をめぐって',
+        pattern: 'N + をめぐって / をめぐる N',
+        explanationEnglish: 'Used when describing arguments, discussions, or rumors surrounding a specific issue or conflict.',
+        explanationNepali: 'कुनै विषय, विवाद वा छलफलको सम्बन्धमा बहस हुनु जनाउँदा (को सम्बन्धमा)।',
+        examples: [
+          { target: '新商品の開発をめぐって意見が対立した。', reading: 'しんしょうひんのかいはつをめぐっていけんがたいりつした。', english: 'Opinions conflicted regarding the development of the new product.', nepali: 'नयाँ उत्पादनको विकासको सम्बन्धमा मतभेद भयो।' }
+        ]
+      },
+      {
+        title: '2. On the Occasion of / Upon — 〜に際して',
+        pattern: 'N / V-dictionary + に際して',
+        explanationEnglish: 'Formal expression used when starting an important action, ceremony, or event.',
+        explanationNepali: 'कुनै महत्वपूर्ण काम, समारोह वा घटनाको सुरुवातको अवसरमा।',
+        examples: [
+          { target: '契約の締結に際して書類を再確認した。', reading: 'けいやくのていけつにさいしてしょるいをさいかくにんした。', english: 'Re-confirmed documents upon signing the contract.', nepali: 'सम्झौतामा हस्ताक्षर गर्ने अवसरमा कागजातहरू पुनः पुष्टि गरियो।' }
+        ]
+      }
+    ]
+  },
+  {
+    language: 'JAPANESE', level: 'N2', lesson: 77,
+    lessonTitle: 'Formal Certainty & Negative Intent — 〜に相違ない / 〜まい',
+    grammarPoints: [
+      {
+        title: '1. No Doubt / Must Be — 〜に相違ない',
+        pattern: 'Plain form / N + に相違ない',
+        explanationEnglish: 'Expresses strong conviction based on evidence: "There is no doubt that...".',
+        explanationNepali: 'प्रमाणको आधारमा दृढ विश्वास व्यक्त गर्दा (पक्कै पनि निश्चित हुनु)।',
+        examples: [
+          { target: '彼が真犯人に相違ない。', reading: 'かれがしんはんにんにそういない。', english: 'He must no doubt be the real culprit.', nepali: 'ऊ पक्कै पनि वास्तविक अपराधी हो।' }
+        ]
+      },
+      {
+        title: '2. Will Not / Intend Not To — 〜まい',
+        pattern: 'V-dictionary (Group 1) / V-stem (Group 2/3) + まい',
+        explanationEnglish: 'Expresses strong negative intention ("I will never...") or negative conjecture.',
+        explanationNepali: 'कुनै काम कहिल्यै नगर्ने दृढ सङ्कल्प वा नकारात्मक अनुमान।',
+        examples: [
+          { target: 'あのような失敗は二度と繰り返すまい。', reading: 'あのようなしっぱいはにどとくりかえすまい。', english: 'I shall never repeat such a failure again.', nepali: 'म त्यस्तो असफलता कहिल्यै दोहोर्याउने छैन।' }
+        ]
+      }
+    ]
+  },
+  {
+    language: 'JAPANESE', level: 'N2', lesson: 78,
+    lessonTitle: 'Trigger Events & Continuous Trends — 〜を契機に / 〜一方だ',
+    grammarPoints: [
+      {
+        title: '1. Triggered By / Taking Opportunity — 〜を契機に',
+        pattern: 'N + を契機に / を契機として',
+        explanationEnglish: 'Indicates a pivotal event or occasion that triggers a big change.',
+        explanationNepali: 'ठूलो परिवर्तन ल्याउने मुख्य अवसर वा घटनालाई आधार बनाउँदा।',
+        examples: [
+          { target: '結婚を契機に新しい家を購入した。', reading: 'けっこんをけいきにあたらしいいえをこうにゅうした。', english: 'Triggered by marriage, we bought a new home.', nepali: 'विवाहको अवसरलाई आधार बनाएर नयाँ घर किनेका हौँ।' }
+        ]
+      },
+      {
+        title: '2. Keep On / Tend To Continue — 〜一方だ',
+        pattern: 'V-dictionary + 一方だ',
+        explanationEnglish: 'Indicates that a situation continues in one direction (usually worsening or increasing).',
+        explanationNepali: 'परिस्थिति लगातार एउटै दिशामा बढ्दै वा घट्दै जाँदा (निरन्तर एकोहोरो रूपमा)।',
+        examples: [
+          { target: '物価は上がる一方だ。', reading: 'ぶっかはあがるいっぽうだ。', english: 'Prices keep on rising continuously.', nepali: 'महङ्गी निरन्तर बढिरहेको छ।' }
+        ]
+      }
+    ]
+  },
+  {
+    language: 'JAPANESE', level: 'N2', lesson: 79,
+    lessonTitle: 'Co-occurrence & Risk Warnings — 〜にともなって / 〜おそれがある',
+    grammarPoints: [
+      {
+        title: '1. Along With / As Situation Changes — 〜にともなって',
+        pattern: 'N / V-dictionary + にともなって',
+        explanationEnglish: 'Expresses that as one change happens, another change occurs simultaneously.',
+        explanationNepali: 'एउटा परिवर्तनसँगै अर्को परिवर्तन पनि एकैसाथ हुँदै जाँदा (सँगसँगै)।',
+        examples: [
+          { target: '技術の進歩にともなって生活が便利になった。', reading: 'ぎじゅつのしんぽにともなってせいかつがべんりになった。', english: 'Along with technological progress, life became convenient.', nepali: 'प्रविधिको विकाससँगै जीवन सहज बनेको छ।' }
+        ]
+      },
+      {
+        title: '2. Risk / Fear That — 〜おそれがある',
+        pattern: 'V-dictionary / Nの + おそれがある',
+        explanationEnglish: 'Warns about a serious potential risk or bad consequence in the future.',
+        explanationNepali: 'भविष्यमा आउन सक्ने गम्भीर जोखिम वा खतराको सम्भावना।',
+        examples: [
+          { target: '大雨により土砂崩れが起こるおそれがある。', reading: 'おおあめによりどしゃくずれがおこるお<ctrl94>れがある。', english: 'There is a risk of landslides due to heavy rain.', nepali: 'भारी वर्षाको कारण पहिरो जाने जोखिम छ।' }
+        ]
+      }
+    ]
+  },
+  {
+    language: 'JAPANESE', level: 'N2', lesson: 80,
+    lessonTitle: 'Mediums & Dependency — 〜を通じて / 〜次第だ',
+    grammarPoints: [
+      {
+        title: '1. Through / Via Medium — 〜を通じて',
+        pattern: 'N + をを通じて / をとおして',
+        explanationEnglish: 'Indicates the medium, intermediary, or period through which an action occurs.',
+        explanationNepali: 'कुनै माध्यम वा सम्पूर्ण अवधिभरि काम हुँदा (को माध्यमबाट)।',
+        examples: [
+          { target: '友人を通じて彼と知り合った。', reading: 'ゆうじんをつうじてかれとしりあった。', english: 'I got to know him through a friend.', nepali: 'साथीको माध्यमबाट उहाँलाई चिनेको हूँ।' }
+        ]
+      },
+      {
+        title: '2. Depending On / Subject To — 〜次第だ',
+        pattern: 'N + 次第だ / 次第で',
+        explanationEnglish: 'States that the result or outcome depends entirely on a condition.',
+        explanationNepali: 'परिणाम वा नतिजा पूर्ण रूपमा कुनै सर्तमा निर्भर हुनु (मा निर्भर)।',
+        examples: [
+          { target: '本人のやる気次第で成果が変わる。', reading: 'ほんにんのやるきしだいでせいかがかわる。', english: 'The result changes depending on motivation.', nepali: 'आफ्नो जाँगरमा निर्भर भएर नतिजा परिवर्तन हुन्छ।' }
+        ]
+      }
+    ]
+  },
+
+  // ════════════════════════════════════
+  // N1 COMPLETE — LESSONS 91 TO 100
+  // ════════════════════════════════════
+  {
+    language: 'JAPANESE', level: 'N1', lesson: 91,
+    lessonTitle: 'High Keigo & Deep Emotion — 〜てやまない / 〜極まりない',
+    grammarPoints: [
+      {
+        title: '1. Never Cease To / Sincerely — 〜てやまない',
+        pattern: 'V-te + やまない',
+        explanationEnglish: 'Expresses deep, unending emotion or sincere wishes (never cease to...).',
+        explanationNepali: 'आफ्नो हृदयदेखिको गहिरो भावना वा निरन्तर कामना (सधैं कामना गरिरहनु)।',
+        examples: [
+          { target: '卒業生の今後の活躍を期待してやまない。', reading: 'そつぎょうせいのこんごのかつやくをきたいしてやまない。', english: 'I never cease to hope for the future success of the graduates.', nepali: 'स्नातक विद्यार्थीहरूको भविष्यको सफलताको म सधैं कामना गर्दछु।' }
+        ]
+      },
+      {
+        title: '2. Extremely / Boundless — 〜極まりない',
+        pattern: 'i-Adj / Na-Adj + 極まりない (または 極まる)',
+        explanationEnglish: 'Expresses an extreme degree of emotion or state (extremely / boundlessly).',
+        explanationNepali: 'अत्यन्तै चरम सीमासम्मको भावना वा अवस्था।',
+        examples: [
+          { target: '危険極まりない行為だ。', reading: 'きけんきわまりないこういだ。', english: 'It is an extremely dangerous act.', nepali: 'यो अत्यन्तै जोखिमपूर्ण कार्य हो।' }
+        ]
+      }
+    ]
+  },
+  {
+    language: 'JAPANESE', level: 'N1', lesson: 92,
+    lessonTitle: 'Forced Conditions & Strong Rationale — 〜を余儀なくされる / 〜ばこそ',
+    grammarPoints: [
+      {
+        title: '1. Forced To Do — 〜を余儀なくされる',
+        pattern: 'N + を余儀なくされる',
+        explanationEnglish: 'Indicates that someone is forced into an undesirable action due to circumstances.',
+        explanationNepali: 'परिस्थितिको बाध्यताले गर्दा अनिच्छुक काम गर्न बाध्य पारिनु।',
+        examples: [
+          { target: '経営難により会社は解散を余儀なくされた。', reading: 'けいえい난によりかいしゃはかいさんをよぎなくされた。', english: 'Due to financial difficulty, the company was forced to dissolve.', nepali: 'आर्थिक मन्दीको कारण कम्पनी विघटन गर्न बाध्य भइयो।' }
+        ]
+      },
+      {
+        title: '2. Precisely Because — 〜ばこそ',
+        pattern: 'V-conditional / N + ばこそ',
+        explanationEnglish: 'Emphasizes that a specific reason is the precise cause of an outcome.',
+        explanationNepali: 'ठूलो वा खास कारण नै परिणामको मुख्य आधार हो भनी जोड दिँदा।',
+        examples: [
+          { target: '親心があればこそ厳しく指導するのだ。', reading: 'おやごころがあればこそきびしくしどうするのだ。', english: 'Precisely because I have a parent’s heart, I guide strictly.', nepali: 'अभिभावकको माया भएकोले नै कडा मार्गदर्शन दिएको हो।' }
+        ]
+      }
+    ]
+  },
+  {
+    language: 'JAPANESE', level: 'N1', lesson: 93,
+    lessonTitle: 'Initiation & High Status — 〜を皮切りに / 〜たる者',
+    grammarPoints: [
+      {
+        title: '1. Starting With / Beginning From — 〜を皮切りに',
+        pattern: 'N + を皮切りに / を皮切りにして',
+        explanationEnglish: 'Indicates that one event triggers a series of similar actions or events in succession.',
+        explanationNepali: 'एउटा घटनाको सुरुवातसँगै लगातार उस्तै कार्यहरूको श्रृंखला चल्दा।',
+        examples: [
+          { target: '新作映画は東京を皮切りに全国で公開される。', reading: 'しんさくえいがはとうきょうをかわきりにぜんこくでこうかいされる。', english: 'The new movie is released nationwide starting with Tokyo.', nepali: 'नयाँ चलचित्र टोकियोबाट सुरु गर्दै देशव्यापी रूपमा प्रदर्शन हुन्छ।' }
+        ]
+      },
+      {
+        title: '2. As a Person Who Is / In Capacity Of — 〜たる者',
+        pattern: 'N + たる者',
+        explanationEnglish: 'Expresses high duty or noble standard required of someone in a high position.',
+        explanationNepali: 'उच्च ओहोदा वा जिम्मेवार हैसियतमा रहेको व्यक्तिले पूरा गर्नुपर्ने दायित्व।',
+        examples: [
+          { target: '医者たる者、患者の命を最優先に考えるべきだ。', reading: 'いしゃたるもの、かんじゃのいのちをさいゆうせんにかんがえるべきだ。', english: 'A doctor must place patient life as top priority.', nepali: 'डाक्टरको हैसियतले बिरामीको जीवनलाई सर्वोपरी मान्नुपर्छ।' }
+        ]
+      }
+    ]
   }
 ];
 
@@ -1820,6 +2020,56 @@ export function getGrammarGuide(language: 'JAPANESE' | 'KOREAN', level: string, 
         grammarPoints: points
       };
     }
+  }
+
+  if (language === 'KOREAN' && level?.startsWith('TOPIK')) {
+    const topikGrammarMap: Record<number, { title: string; pattern: string; en: string; np: string; exKo: string; exRo: string; exEn: string; exNp: string }> = {
+      1: { title: '1. Formal Polite Ending: -입니다 / -입니까?', pattern: 'N + 입니다 / 입니까?', en: 'Formal polite sentence ending used to state identity or ask questions.', np: 'औपचारिक रूपमा नाम वा जात जनाउने शिष्ट अन्त्य (हुँ/हो/हुन्)।', exKo: '저는 학생입니다.', exRo: 'Jeoneun haksaeng-imnida.', exEn: 'I am a student.', exNp: 'म विद्यार्थी हूँ।' },
+      2: { title: '2. Subject Particle: -이 / -가', pattern: 'N (Consonant) + 이 / N (Vowel) + 가', en: 'Subject marker emphasizing WHO or WHAT performs the action.', np: 'वाक्यको मुख्य कर्ता जनाउने प्रत्यय।', exKo: '선생님이 오십니다.', exRo: 'Seonsaengnim-i osi-mnida.', exEn: 'The teacher is coming.', exNp: 'शिक्षक आउँदै हुनुहुन्छ।' },
+      3: { title: '3. Topic Marker: -은 / -는', pattern: 'N (Consonant) + 은 / N (Vowel) + 는', en: 'Topic marker used to introduce main topic or contrast.', np: 'वाक्यको विषय जनाउने प्रत्यय (चाहिँ)।', exKo: '저는 네팔 사람입니다.', exRo: 'Jeoneun Nepal saram-imnida.', exEn: 'As for me, I am Nepali.', exNp: 'म चाहिँ नेपाली नागरिक हूँ।' },
+      4: { title: '4. Informal Polite Tense: -아/어요', pattern: 'V/A stem + -아요 / -어요 / 해요', en: 'Standard polite present tense ending for daily conversation.', np: 'दैनिक कुराकानीमा प्रयोग हुने सामान्य शिष्ट अन्त्य।', exKo: '밥을 먹어요.', exRo: 'Babeul meogeoyo.', exEn: 'I eat rice.', exNp: 'म भात खान्छु।' },
+      5: { title: '5. Time & Destination Marker: -e', pattern: 'Time N / Location N + 에', en: 'Attaches to time (at) or destination of movement (to).', np: 'समयमा (बजे) वा जाने स्थानमा (तिर) जोडिन्छ।', exKo: '7시에 학교에 가요.', exRo: 'Ilgop-sie hakgyo-e gayo.', exEn: 'I go to school at 7 o’clock.', exNp: 'म ७ बजे विद्यालय जान्छु।' },
+      16: { title: '1. Past Tense Ending: -았/었어요', pattern: 'V/A stem + -았었어요 / -었어요 / 했어요', en: 'Expresses completed past action or state.', np: 'भइसकेको भूतकाल जनाउँछ (गरेँ/भएँ)।', exKo: '어제 영화를 봤어요.', exRo: 'Eoje yeonghwa-reul bwasseoyo.', exEn: 'I watched a movie yesterday.', exNp: 'म हिजो चलचित्र हेरेँ।' },
+      17: { title: '2. Future Intention: -(으)ㄹ 거예요', pattern: 'V stem + -(으)ㄹ 거예요', en: 'Expresses future plans or intentions.', np: 'भविष्यको योजना जनाउँछ (गर्नेछु)।', exKo: '내일 여행을 갈 거예요.', exRo: 'Naeil yeohaeng-eul gal geoyeyo.', exEn: 'I will go on a trip tomorrow.', exNp: 'म भोलि भ्रमण जानेछु।' },
+      31: { title: '1. Indirect Speech Statement: -다고 하다', pattern: 'Plain verb/adj + -다고 하다', en: 'Used to quote a statement made by someone else.', np: 'कसैले भनेको कुरा अप्रत्यक्ष रूपमा उद्धृत गर्दा (भन्ने कुरा गर्नु)।', exKo: '사장님이 내일 회의가 있다고 해요.', exRo: 'Sajangnim-i naeil hoeui-ga itdago haeyo.', exEn: 'The president says there is a meeting tomorrow.', exNp: 'साहुजीले भोलि बैठक छ भन्नुभयो।' },
+      46: { title: '1. Not Only But Also: -(으)ㄹ 뿐만 아니라', pattern: 'V/A stem + -(으)ㄹ 뿐만 아니라', en: 'Expresses addition: "not only A, but also B".', np: 'एउटा मात्र नभई अर्को पनि (मात्र नभई)।', exKo: '그분은 친절할 뿐만 아니라 유능해요.', exRo: 'Geubun-eun chinjeolhal ppunman anira yuneunghaeyo.', exEn: 'He is not only kind, but also competent.', exNp: 'उहाँ दयालु मात्र नभई सक्षम पनि हुनुहुन्छ।' },
+      61: { title: '1. Extreme Degree: -기 짝이 없다', pattern: 'A stem + -기 짝이 없다', en: 'Expresses an incomparable, extreme state (unmatched/extremely).', np: 'अत्यन्तै चरम अवस्था वा तुलना गर्न नसकिने भाव।', exKo: '소식이 안타깝기 짝이 없습니다.', exRo: 'Sosig-i antakkapgi jjag-i eobseumnida.', exEn: 'The news is extremely regrettable.', exNp: 'यो समाचार अत्यन्तै दुःखद् छ।' },
+      76: { title: '1. Deep Emotion / Boundless: -에 다름 아니다', pattern: 'N + 에 다름 아니다 / 다름없다', en: 'Literary expression meaning "is nothing other than" or "none other than".', np: 'अन्य केही नभई ठ्याक्कै त्यही हुनु।', exKo: '그것은 기적에 다름 아닙니다.', exRo: 'Geugeos-eun gijeoge dareum animnida.', exEn: 'That is nothing other than a miracle.', exNp: 'त्यो चमत्कार बाहेक अरू केही होइन।' }
+    };
+
+    const gData = topikGrammarMap[lesson] || {
+      title: `1. TOPIK ${level} Lesson ${lesson} Structure`,
+      pattern: `[TOPIK ${level} Pattern #${lesson}]`,
+      en: `Official TOPIK ${level} grammar rule for Lesson ${lesson}.`,
+      np: `पाठ ${lesson} को आधिकारिक TOPIK ${level} व्याकरण नियम।`,
+      exKo: `TOPIK ${lesson}과 문법을 연습합니다.`,
+      exRo: `TOPIK ${lesson}-gwa munbeob-eul yeonseuphamnida.`,
+      exEn: `Practice TOPIK Lesson ${lesson} grammar.`,
+      exNp: `उदाहरण: पाठ ${lesson} को व्याकरण अभ्यास गर्नु।`
+    };
+
+    return {
+      language: 'KOREAN',
+      level,
+      lesson,
+      lessonTitle: `TOPIK ${level} • Lesson ${lesson} Syllabus Guide`,
+      grammarPoints: [
+        {
+          title: gData.title,
+          pattern: gData.pattern,
+          explanationEnglish: gData.en,
+          explanationNepali: gData.np,
+          examples: [
+            {
+              target: gData.exKo,
+              reading: gData.exRo,
+              english: gData.exEn,
+              nepali: gData.exNp
+            }
+          ]
+        }
+      ]
+    };
   }
 
   const dataset = language === 'JAPANESE' ? JAPANESE_GRAMMAR_GUIDES : KOREAN_GRAMMAR_GUIDES;
