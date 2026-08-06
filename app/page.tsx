@@ -219,7 +219,7 @@ const SharedHeader: React.FC<SharedHeaderProps> = ({
           <button onClick={() => handleNavClick(() => setViewMode('LANDING'))} className="flex items-center gap-3 group text-left">
             <img
               src="/logo.jpg"
-              alt="JakonHub.com Logo"
+              alt="JakonHub Logo"
               className="w-10 h-10 rounded-xl object-contain bg-white border border-slate-700 shadow-md group-hover:scale-105 transition-transform p-0.5"
               onError={(e) => {
                 (e.target as HTMLElement).style.display = 'none';
@@ -228,7 +228,7 @@ const SharedHeader: React.FC<SharedHeaderProps> = ({
             <div>
               <div className="flex items-center gap-2">
                 <span className="text-base font-black text-white tracking-tight leading-tight">
-                  JakonHub<span className="text-rose-400">.com</span>
+                  JakonHub
                 </span>
                 <span className="px-2 py-0.5 rounded-full bg-rose-500/20 text-rose-300 border border-rose-500/30 text-[9px] font-black uppercase tracking-wider hidden md:inline">
                   Learn Japanese &amp; Korean

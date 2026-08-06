@@ -117,31 +117,19 @@ export const KanjiPracticeModal: React.FC<KanjiPracticeModalProps> = ({
           </div>
         </div>
 
-        {/* Card Body */}
-        <div className="flex-1 overflow-y-auto p-6 flex flex-col items-center justify-center space-y-6 min-h-[300px]">
-          {/* Main Flashcard Container (Click or Double-Click to toggle, Touch & Hold on mobile) */}
+        {/* Card Body with Fixed Height Container (Never resizes) */}
+        <div className="flex-1 overflow-hidden p-4 sm:p-6 flex flex-col items-center justify-center">
+          {/* Main Flashcard Container with Fixed Height h-[360px] */}
           <div
             onClick={(e) => {
               const target = e.target as HTMLElement;
               if (target.closest('button') || target.closest('a')) return;
               setShowAnswer(prev => !prev);
             }}
-            onTouchStart={(e) => {
-              const target = e.target as HTMLElement;
-              if (target.closest('button') || target.closest('a')) return;
-              // Gentle touch peek on mobile
-              setShowAnswer(true);
-            }}
-            onTouchEnd={(e) => {
-              const target = e.target as HTMLElement;
-              if (target.closest('button') || target.closest('a')) return;
-              // On touch release, keep revealed if toggled or auto-reset if quick touch
-            }}
-            className="w-full max-w-md bg-white border border-[#e8decb] rounded-2xl p-6 sm:p-8 shadow-md flex flex-col items-center relative group min-h-[260px] justify-center transition-all duration-300 select-none cursor-pointer"
+            className="w-full max-w-md bg-white border border-[#e8decb] rounded-3xl p-5 sm:p-6 shadow-md flex flex-col items-center relative group h-[360px] justify-between transition-all duration-200 select-none cursor-pointer overflow-hidden"
           >
-            
             {/* Red Stamp Number */}
-            <span className="absolute top-4 left-4 text-[10px] font-black text-rose-700 bg-rose-50 border border-rose-200 px-2.5 py-0.5 rounded-md font-mono">
+            <span className="absolute top-4 left-4 text-[10px] font-black text-rose-700 bg-rose-50 border border-rose-200 px-2.5 py-0.5 rounded-md font-mono z-10">
               #{currentCard.number}
             </span>
 
@@ -180,56 +168,54 @@ export const KanjiPracticeModal: React.FC<KanjiPracticeModalProps> = ({
               </button>
             </div>
 
-            {/* Kanji Character glyph (Always visible at top of card) */}
-            <div className="text-7xl sm:text-8xl font-black font-jp text-[#2d2219] mt-8 mb-4 select-none leading-none">
+            {/* Kanji Character glyph */}
+            <div className={`font-black font-jp text-[#2d2219] transition-all duration-200 select-none flex items-center justify-center ${
+              showAnswer ? 'text-4xl sm:text-5xl mt-6 mb-1 shrink-0' : 'text-7xl sm:text-8xl my-auto'
+            }`}>
               {currentCard.character}
             </div>
 
-            {/* Answer Details Display */}
+            {/* Answer Details Display with Scrollable Area & Small Typography */}
             {showAnswer ? (
-              <div className="w-full text-center space-y-3.5 pt-4 border-t border-[#e8decb] animate-fade-in">
-                {/* Meanings */}
-                <div>
-                  <div className="text-[10px] font-black text-rose-800 uppercase tracking-widest">MEANING</div>
-                  <div className="text-lg font-black text-[#2d2219]">{currentCard.meaningEn}</div>
-                  <div className="text-sm font-extrabold text-[#5c4a3c] font-jp">{currentCard.meaningNe}</div>
+              <div className="w-full text-center border-t border-[#e8decb] pt-2.5 flex-1 flex flex-col justify-between overflow-hidden animate-fade-in">
+                <div className="overflow-y-auto max-h-[175px] pr-1 space-y-2 text-xs scrollbar-thin">
+                  {/* Meanings */}
+                  <div>
+                    <div className="text-[9px] font-black text-rose-800 uppercase tracking-widest">MEANING</div>
+                    <div className="text-sm font-black text-[#2d2219] leading-snug">{currentCard.meaningEn}</div>
+                    <div className="text-xs font-extrabold text-[#5c4a3c] font-jp">{currentCard.meaningNe}</div>
+                  </div>
+
+                  {/* Readings */}
+                  <div>
+                    <div className="text-[9px] font-black text-[#a8813d] uppercase tracking-widest">READINGS</div>
+                    <div className="text-[11px] font-bold text-[#2d2219] font-jp tracking-wider px-2 break-words leading-tight">
+                      {currentCard.readings}
+                    </div>
+                  </div>
+
+                  {/* Examples */}
+                  {currentCard.examples && currentCard.examples.length > 0 && (
+                    <div className="pt-1.5 border-t border-dashed border-[#e8decb]/80 w-full text-left">
+                      <div className="text-[8px] font-black text-rose-800 uppercase tracking-widest mb-1 text-center">EXAMPLES</div>
+                      <ul className="space-y-0.5 max-w-xs mx-auto">
+                        {currentCard.examples.map((ex, idx) => (
+                          <li key={idx} className="text-[10px] text-[#4a463d] font-bold list-disc list-inside font-jp leading-tight" title={ex}>
+                            {ex}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
                 </div>
 
-                {/* Readings */}
-                <div>
-                  <div className="text-[10px] font-black text-[#a8813d] uppercase tracking-widest">READINGS</div>
-                  <div className="text-xs font-black text-[#2d2219] font-jp tracking-wider px-4 break-words">
-                    {currentCard.readings}
-                  </div>
+                <div className="text-[9px] font-black text-rose-800/80 pt-1 shrink-0">
+                  Click card body or "Next" to hide answer
                 </div>
-
-                {/* Examples */}
-                {currentCard.examples && currentCard.examples.length > 0 && (
-                  <div className="pt-2.5 border-t border-dashed border-[#e8decb]/80 w-full text-left">
-                    <div className="text-[9px] font-black text-rose-800 uppercase tracking-widest mb-1.5 text-center">EXAMPLES</div>
-                    <ul className="space-y-1 max-w-xs mx-auto">
-                      {currentCard.examples.slice(0, 3).map((ex, idx) => (
-                        <li key={idx} className="text-[11px] text-[#4a463d] font-bold list-disc list-inside truncate font-jp" title={ex}>
-                          {ex}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                )}
-
-                <button
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    setShowAnswer(false);
-                  }}
-                  className="mt-2 text-[10px] font-black text-rose-800 hover:underline cursor-pointer"
-                >
-                  Click card or "Next" to hide
-                </button>
               </div>
             ) : (
-              <div className="text-[11px] font-bold text-[#8c7b6c] italic mt-2 text-center select-none">
-                Click card body or top <span className="font-extrabold text-rose-800">"Show"</span> button to toggle answer
+              <div className="text-[11px] font-bold text-[#8c7b6c] italic mb-4 text-center select-none">
+                Click card body or top <span className="font-extrabold text-rose-800">"Show"</span> button to reveal answer
               </div>
             )}
           </div>
