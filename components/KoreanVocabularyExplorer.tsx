@@ -111,13 +111,13 @@ export const KoreanVocabularyExplorer: React.FC<KoreanVocabularyExplorerProps> =
       {/* Main 2-Column Layout: Left Lessons Sidebar + Right White Book Page Content */}
       <div className="grid grid-cols-1 lg:grid-cols-4 gap-4 sm:gap-6 items-start">
           {/* Left Column: Lessons Sidebar (Japanese Style) */}
-          <div className="lg:col-span-1 bg-slate-900/95 border border-slate-800 rounded-2xl sm:rounded-3xl p-3.5 sm:p-4 text-white shadow-xl space-y-3">
-            <div className="flex items-center justify-between pb-2 border-b border-slate-800">
-              <div className="flex items-center gap-2 font-black text-xs sm:text-sm text-emerald-400 uppercase tracking-wider">
-                <BookOpen className="w-4 h-4 text-emerald-400" />
+          <div className="lg:col-span-1 bg-white border border-slate-200 rounded-2xl sm:rounded-3xl p-3.5 sm:p-4 text-slate-900 shadow-xs space-y-3">
+            <div className="flex items-center justify-between pb-2 border-b border-slate-100">
+              <div className="flex items-center gap-2 font-black text-xs sm:text-sm text-emerald-600 uppercase tracking-wider">
+                <BookOpen className="w-4 h-4 text-emerald-600" />
                 <span>LESSONS</span>
               </div>
-              <span className="text-[10px] font-black px-2 py-0.5 rounded-full bg-slate-800 text-slate-300 border border-slate-700">
+              <span className="text-[10px] font-black px-2 py-0.5 rounded-full bg-slate-100 text-slate-700 border border-slate-200">
                 {availableLessons.length} Total
               </span>
             </div>
@@ -127,18 +127,18 @@ export const KoreanVocabularyExplorer: React.FC<KoreanVocabularyExplorerProps> =
               <button
                 type="button"
                 onClick={() => setMobileLessonMenuOpen(!mobileLessonMenuOpen)}
-                className="w-full bg-slate-950 border border-slate-700 rounded-xl px-3.5 py-2.5 text-xs font-black text-emerald-400 flex items-center justify-between shadow-inner cursor-pointer"
+                className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2.5 text-xs font-black text-slate-900 flex items-center justify-between shadow-xs cursor-pointer"
               >
                 <span className="truncate">
                   Lesson {selectedLesson}: {getLessonTitle(selectedLevel, selectedLesson)}
                 </span>
-                <ChevronDown className={`w-4 h-4 text-emerald-400 shrink-0 transition-transform duration-200 ${mobileLessonMenuOpen ? 'rotate-180' : ''}`} />
+                <ChevronDown className={`w-4 h-4 text-slate-500 shrink-0 transition-transform duration-200 ${mobileLessonMenuOpen ? 'rotate-180' : ''}`} />
               </button>
 
               {mobileLessonMenuOpen && (
                 <>
-                  <div className="fixed inset-0 z-40 bg-slate-950/40" onClick={() => setMobileLessonMenuOpen(false)} />
-                  <div className="absolute top-full left-0 right-0 mt-1 w-full max-w-full bg-slate-900 border border-slate-800 rounded-2xl p-1.5 shadow-2xl z-50 max-h-64 overflow-y-auto space-y-1 scrollbar-thin scrollbar-thumb-slate-700">
+                  <div className="fixed inset-0 z-40 bg-slate-950/20" onClick={() => setMobileLessonMenuOpen(false)} />
+                  <div className="absolute top-full left-0 right-0 mt-1 w-full max-w-full bg-white border border-slate-200 rounded-2xl p-1.5 shadow-2xl z-50 max-h-64 overflow-y-auto space-y-1 text-slate-900">
                     {availableLessons.map((n) => {
                       const isSel = selectedLesson === n;
                       const title = getLessonTitle(selectedLevel, n);
@@ -153,7 +153,7 @@ export const KoreanVocabularyExplorer: React.FC<KoreanVocabularyExplorerProps> =
                             setMobileLessonMenuOpen(false);
                           }}
                           className={`w-full text-left p-2.5 rounded-xl text-xs font-extrabold flex items-center justify-between gap-2 cursor-pointer ${
-                            isSel ? 'bg-gradient-to-r from-emerald-600 to-teal-600 text-white font-black shadow-sm' : 'text-slate-300 hover:bg-slate-800 hover:text-white'
+                            isSel ? 'bg-emerald-600 text-white font-black shadow-xs' : 'text-slate-700 hover:bg-slate-100 hover:text-slate-900'
                           }`}
                         >
                           <span className="truncate">Lesson {n}: {title}</span>
@@ -167,7 +167,7 @@ export const KoreanVocabularyExplorer: React.FC<KoreanVocabularyExplorerProps> =
             </div>
 
             {/* Scrollable Lesson Items List */}
-            <div className="hidden lg:block max-h-[580px] sm:max-h-[640px] overflow-y-auto space-y-1.5 pr-1 scrollbar-thin scrollbar-thumb-slate-800 scrollbar-track-transparent">
+            <div className="hidden lg:block max-h-[580px] sm:max-h-[640px] overflow-y-auto space-y-1.5 pr-1 scrollbar-thin scrollbar-thumb-slate-200 scrollbar-track-transparent">
             {availableLessons.map((n) => {
               const isSelected = selectedLesson === n;
               const title = getLessonTitle(selectedLevel, n);
@@ -181,13 +181,13 @@ export const KoreanVocabularyExplorer: React.FC<KoreanVocabularyExplorerProps> =
                   }}
                   className={`w-full text-left p-2.5 rounded-xl text-xs transition-all flex items-center justify-between gap-2 cursor-pointer ${
                     isSelected
-                      ? 'bg-gradient-to-r from-emerald-600 to-teal-600 text-white font-black shadow-md border-l-4 border-emerald-300'
-                      : 'bg-slate-950/80 text-slate-300 hover:text-white hover:bg-slate-800/90 border border-slate-800/80'
+                      ? 'bg-emerald-600 text-white font-black shadow-xs border-l-4 border-emerald-400'
+                      : 'bg-slate-50 text-slate-700 hover:text-slate-900 hover:bg-slate-100 border border-slate-200/80'
                   }`}
                 >
                   <div className="flex items-center gap-2 min-w-0">
                     <span className={`w-6 h-6 rounded-full font-black text-[11px] flex items-center justify-center shrink-0 ${
-                      isSelected ? 'bg-white text-emerald-950 shadow-xs' : 'bg-slate-800 text-slate-300'
+                      isSelected ? 'bg-white text-emerald-800 shadow-xs' : 'bg-slate-200 text-slate-700'
                     }`}>
                       {n}
                     </span>
@@ -195,7 +195,7 @@ export const KoreanVocabularyExplorer: React.FC<KoreanVocabularyExplorerProps> =
                       {title}
                     </span>
                   </div>
-                  <ChevronRight className={`w-3.5 h-3.5 shrink-0 transition-transform ${isSelected ? 'text-white translate-x-0.5' : 'text-slate-500'}`} />
+                  <ChevronRight className={`w-3.5 h-3.5 shrink-0 transition-transform ${isSelected ? 'text-white translate-x-0.5' : 'text-slate-400'}`} />
                 </button>
               );
             })}

@@ -129,20 +129,20 @@ export const LevelHubDashboard: React.FC<LevelHubDashboardProps> = ({
     <div className="space-y-2 animate-fade-in font-sans">
       
       {/* 🌐 ROW 1: CURRICULUM LEVEL BAR (Mobile Responsive Horizontal Scroll) */}
-      <div className="flex items-center justify-between gap-2 overflow-x-auto no-scrollbar py-1 bg-slate-950/80 p-2 rounded-2xl border border-slate-900">
+      <div className="flex items-center justify-between gap-2 overflow-x-auto no-scrollbar py-1 bg-white p-2 rounded-2xl border border-slate-200 shadow-xs">
         <div className="flex items-center gap-2">
           {/* Desktop Sidebar Minimize / Expand Toggle Button */}
           <button
             onClick={toggleCollapse}
             title={isCollapsed ? 'Expand Sidebar' : 'Minimize Sidebar'}
-            className="hidden lg:flex items-center gap-1.5 px-2.5 py-1 rounded-xl bg-slate-900 text-slate-300 hover:text-white hover:bg-slate-800 border border-slate-800 text-xs font-bold transition-all cursor-pointer"
+            className="hidden lg:flex items-center gap-1.5 px-2.5 py-1 rounded-xl bg-slate-100 text-slate-700 hover:text-slate-900 hover:bg-slate-200 border border-slate-200 text-xs font-bold transition-all cursor-pointer"
           >
-            {isCollapsed ? <PanelLeftOpen className="w-3.5 h-3.5 text-red-500" /> : <PanelLeftClose className="w-3.5 h-3.5 text-red-500" />}
+            {isCollapsed ? <PanelLeftOpen className="w-3.5 h-3.5 text-red-600" /> : <PanelLeftClose className="w-3.5 h-3.5 text-red-600" />}
             <span>{isCollapsed ? 'Expand Sidebar' : 'Minimize Sidebar'}</span>
           </button>
 
-          <div className="flex items-center gap-1.5 text-xs font-black uppercase tracking-wider text-slate-400 whitespace-nowrap pl-1 pr-2">
-            <Globe className="w-3.5 h-3.5 text-red-500" />
+          <div className="flex items-center gap-1.5 text-xs font-black uppercase tracking-wider text-slate-500 whitespace-nowrap pl-1 pr-2">
+            <Globe className="w-3.5 h-3.5 text-red-600" />
             <span>Curriculum Level:</span>
           </div>
         </div>
@@ -156,8 +156,8 @@ export const LevelHubDashboard: React.FC<LevelHubDashboardProps> = ({
                 onClick={() => handleLevelSwitch(lvl.id)}
                 className={`px-3 py-1 rounded-xl text-xs font-extrabold transition-all cursor-pointer whitespace-nowrap border ${
                   isSelected
-                    ? 'bg-red-600 text-white shadow-sm border-red-500'
-                    : 'bg-slate-900/90 text-slate-400 hover:text-white hover:bg-slate-800 border-slate-800'
+                    ? 'bg-red-600 text-white shadow-xs border-red-500'
+                    : 'bg-slate-100 text-slate-700 hover:text-slate-900 hover:bg-slate-200 border-slate-200'
                 }`}
               >
                 {lvl.label}
@@ -169,7 +169,7 @@ export const LevelHubDashboard: React.FC<LevelHubDashboardProps> = ({
 
       {/* 📖 ROW 2: OPTIONS SUB-MENU BAR (Tailored to selected level) */}
       {currentLevel !== 'BASICS' && (
-        <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar py-1 bg-slate-900/60 p-1.5 rounded-2xl border border-slate-800/80">
+        <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar py-1 bg-white p-1.5 rounded-2xl border border-slate-200 shadow-xs">
           {getSubTabs().map((tab) => {
             const isActive = activeTab === tab.id;
             return (
@@ -178,8 +178,8 @@ export const LevelHubDashboard: React.FC<LevelHubDashboardProps> = ({
                 onClick={() => handleTabClick(tab.id as LevelSubTab)}
                 className={`px-3 py-1.5 rounded-xl text-xs font-extrabold transition-all flex items-center gap-1.5 cursor-pointer whitespace-nowrap ${
                   isActive
-                    ? 'bg-red-600 text-white shadow-sm border border-red-500/50'
-                    : 'text-slate-300 hover:text-white hover:bg-slate-800/70'
+                    ? 'bg-red-600 text-white shadow-xs border border-red-500'
+                    : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100 border border-transparent'
                 }`}
               >
                 <span>{tab.emoji}</span>

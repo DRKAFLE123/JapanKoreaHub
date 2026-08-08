@@ -743,20 +743,20 @@ export const KoreanHubDashboard: React.FC<KoreanHubDashboardProps> = ({
     <div className="space-y-2 font-sans w-full max-w-full overflow-x-hidden">
 
       {/* 🌐 ROW 1: KOREAN CURRICULUM LEVEL BAR (Mobile Responsive Horizontal Scroll) */}
-      <div className="flex items-center justify-between gap-2 overflow-x-auto no-scrollbar py-1 bg-slate-950/80 p-2 rounded-2xl border border-slate-900">
+      <div className="flex items-center justify-between gap-2 overflow-x-auto no-scrollbar py-1 bg-white p-2 rounded-2xl border border-slate-200 shadow-xs">
         <div className="flex items-center gap-2">
           {/* Desktop Sidebar Minimize / Expand Toggle Button */}
           <button
             onClick={toggleCollapse}
             title={isCollapsed ? 'Expand Sidebar' : 'Minimize Sidebar'}
-            className="hidden lg:flex items-center gap-1.5 px-2.5 py-1 rounded-xl bg-slate-900 text-slate-300 hover:text-white hover:bg-slate-800 border border-slate-800 text-xs font-bold transition-all cursor-pointer"
+            className="hidden lg:flex items-center gap-1.5 px-2.5 py-1 rounded-xl bg-slate-100 text-slate-700 hover:text-slate-900 hover:bg-slate-200 border border-slate-200 text-xs font-bold transition-all cursor-pointer"
           >
-            {isCollapsed ? <PanelLeftOpen className="w-3.5 h-3.5 text-blue-500" /> : <PanelLeftClose className="w-3.5 h-3.5 text-blue-500" />}
+            {isCollapsed ? <PanelLeftOpen className="w-3.5 h-3.5 text-blue-600" /> : <PanelLeftClose className="w-3.5 h-3.5 text-blue-600" />}
             <span>{isCollapsed ? 'Expand Sidebar' : 'Minimize Sidebar'}</span>
           </button>
 
-          <div className="flex items-center gap-1.5 text-xs font-black uppercase tracking-wider text-slate-400 whitespace-nowrap pl-1 pr-2">
-            <Globe className="w-3.5 h-3.5 text-blue-500" />
+          <div className="flex items-center gap-1.5 text-xs font-black uppercase tracking-wider text-slate-500 whitespace-nowrap pl-1 pr-2">
+            <Globe className="w-3.5 h-3.5 text-blue-600" />
             <span>Curriculum Level:</span>
           </div>
         </div>
@@ -772,8 +772,8 @@ export const KoreanHubDashboard: React.FC<KoreanHubDashboardProps> = ({
                 }}
                 className={`px-3 py-1 rounded-xl text-xs font-extrabold transition-all cursor-pointer whitespace-nowrap border ${
                   isSelected
-                    ? 'bg-blue-600 text-white shadow-sm border-blue-500'
-                    : 'bg-slate-900/90 text-slate-400 hover:text-white hover:bg-slate-800 border-slate-800'
+                    ? 'bg-blue-600 text-white shadow-xs border-blue-500'
+                    : 'bg-slate-100 text-slate-700 hover:text-slate-900 hover:bg-slate-200 border-slate-200'
                 }`}
               >
                 {lvl.label}
@@ -784,7 +784,7 @@ export const KoreanHubDashboard: React.FC<KoreanHubDashboardProps> = ({
       </div>
 
       {/* 📖 ROW 2: OPTIONS SUB-MENU BAR (Tailored to selected Korean level) */}
-      <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar py-1 bg-slate-900/60 p-1.5 rounded-2xl border border-slate-800/80">
+      <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar py-1 bg-white p-1.5 rounded-2xl border border-slate-200 shadow-xs">
 
         {subTabs.map(tab => {
           const isActive = activeTab === tab.id;
@@ -800,20 +800,20 @@ export const KoreanHubDashboard: React.FC<KoreanHubDashboardProps> = ({
                   className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-extrabold transition-all cursor-pointer ${
                     isActive
                       ? `bg-gradient-to-r ${meta.color} text-white shadow-glow`
-                      : 'text-slate-400 hover:text-white hover:bg-slate-800/60'
+                      : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
                   }`}
                 >
                   <span>{tab.emoji}</span>
                   <span>{tab.label}</span>
-                  <ChevronDown className={`w-3.5 h-3.5 text-slate-300 transition-transform duration-200 ${showModuleDropdown ? 'rotate-180' : ''}`} />
+                  <ChevronDown className={`w-3.5 h-3.5 text-slate-400 transition-transform duration-200 ${showModuleDropdown ? 'rotate-180' : ''}`} />
                 </button>
 
                 {/* Click Dropdown Card for 12 Modules Quick Jump */}
                 {showModuleDropdown && (
                   <>
                     <div className="fixed inset-0 z-[90]" onClick={() => setShowModuleDropdown(false)} />
-                    <div className="absolute top-full left-0 mt-2 w-80 bg-slate-900/98 backdrop-blur-2xl border border-slate-800 rounded-2xl p-2.5 shadow-2xl z-[100] space-y-1 max-h-[75vh] overflow-y-auto scrollbar-thin scrollbar-thumb-slate-700">
-                      <div className="px-2 py-1 text-[10px] font-black uppercase tracking-wider text-emerald-400 border-b border-slate-800 mb-1 flex items-center justify-between">
+                    <div className="absolute top-full left-0 mt-2 w-80 bg-white border border-slate-200 rounded-2xl p-2.5 shadow-2xl z-[100] space-y-1 max-h-[75vh] overflow-y-auto scrollbar-thin text-slate-900">
+                      <div className="px-2 py-1 text-[10px] font-black uppercase tracking-wider text-emerald-600 border-b border-slate-100 mb-1 flex items-center justify-between">
                         <span>Korean Basics Modules (12)</span>
                         <span>Quick Jump</span>
                       </div>
@@ -826,18 +826,18 @@ export const KoreanHubDashboard: React.FC<KoreanHubDashboardProps> = ({
                             setActiveTab('BASICS_MODULES');
                             setShowModuleDropdown(false);
                           }}
-                          className="w-full text-left p-2 rounded-xl hover:bg-emerald-500/10 hover:border-emerald-500/30 border border-transparent transition-all flex items-center justify-between group/item cursor-pointer"
+                          className="w-full text-left p-2 rounded-xl hover:bg-emerald-50 border border-transparent transition-all flex items-center justify-between group/item cursor-pointer"
                         >
                           <div className="flex items-center gap-2 min-w-0">
                             <span className="text-base">{m.emoji}</span>
                             <div className="truncate">
-                              <div className="text-xs font-bold text-white group-hover/item:text-emerald-300 truncate">
+                              <div className="text-xs font-bold text-slate-900 group-hover/item:text-emerald-700 truncate">
                                 Mod {m.moduleNumber}: {m.title}
                               </div>
-                              <div className="text-[10px] text-slate-400 truncate">{m.lessons.length} Lessons • {m.badgeName}</div>
+                              <div className="text-[10px] text-slate-500 truncate">{m.lessons.length} Lessons • {m.badgeName}</div>
                             </div>
                           </div>
-                          <ChevronRight className="w-3.5 h-3.5 text-slate-500 group-hover/item:text-emerald-400 shrink-0" />
+                          <ChevronRight className="w-3.5 h-3.5 text-slate-400 group-hover/item:text-emerald-600 shrink-0" />
                         </button>
                       ))}
                     </div>
@@ -853,8 +853,8 @@ export const KoreanHubDashboard: React.FC<KoreanHubDashboardProps> = ({
               onClick={() => handleTabClick(tab.id)}
               className={`flex items-center gap-1.5 px-3 py-1 rounded-xl text-xs font-extrabold whitespace-nowrap transition-all shrink-0 cursor-pointer ${
                 isActive
-                  ? 'bg-blue-600 text-white shadow-sm border border-blue-500/50'
-                  : 'text-slate-300 hover:text-white hover:bg-slate-800/70'
+                  ? 'bg-blue-600 text-white shadow-xs border border-blue-500'
+                  : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100 border border-transparent'
               }`}
             >
               <span>{tab.emoji}</span>
