@@ -1,10 +1,11 @@
 'use client';
-import React from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import {
   Home, BookOpen, ClipboardList, GraduationCap, Briefcase, Shield, Globe, Bell, FileText, Handshake, BarChart2, User as UserIcon
 } from 'lucide-react';
+import AuthSheet from '@/components/auth/AuthSheet';
 
 const MAIN_LINKS = [
   { href: '/',             label: 'Home',         Icon: Home },
@@ -31,6 +32,7 @@ interface SidebarProps {
 
 export default function Sidebar({ isOpen, onClose }: SidebarProps) {
   const pathname = usePathname();
+  const [authSheetOpen, setAuthSheetOpen] = useState(false);
 
   const isActive = (href: string) => {
     if (href === '/') return pathname === '/';
@@ -99,14 +101,26 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
         
         <div className="px-3 py-4 mt-auto">
           <div className="p-4 bg-gradient-to-br from-indigo-50 to-purple-50 rounded-2xl border border-indigo-100/50">
-            <p className="font-semibold text-sm text-indigo-900 mb-1">Go Pro</p>
-            <p className="text-xs text-indigo-700/80 mb-3">Unlock all mock tests, listening audios, and advanced vocab.</p>
-            <button className="w-full py-2 bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-semibold rounded-lg shadow-sm transition-colors">
-              Upgrade Now
+            <p className="font-bold text-sm text-indigo-950 mb-1">100% Free Account</p>
+            <p className="text-xs text-indigo-800/80 mb-3 leading-relaxed">
+              Create a free account to track your study streak, save cards, and unlock full mock tests.
+            </p>
+            <button
+              onClick={() => setAuthSheetOpen(true)}
+              className="w-full py-2 bg-gray-900 hover:bg-gray-800 text-white text-xs font-semibold rounded-xl shadow-sm transition-colors cursor-pointer"
+            >
+              Create Free Account
             </button>
           </div>
         </div>
       </aside>
+
+      {authSheetOpen && (
+        <AuthSheet
+          initialMode="register"
+          onClose={() => setAuthSheetOpen(false)}
+        />
+      )}
     </>
   );
 }
