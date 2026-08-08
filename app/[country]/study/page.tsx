@@ -1,16 +1,35 @@
-import React from 'react';
-import MobileNavbar from '@/components/layout/MobileNavbar';
-import BottomTabBar from '@/components/layout/BottomTabBar';
+import { notFound } from 'next/navigation';
+import type { Metadata } from 'next';
+import StudyHubClient from './StudyHubClient';
 
-export default function PlaceholderPage() {
-  return (
-    <div className="min-h-screen bg-white">
-      <MobileNavbar user={null} lang="en" onLangToggle={() => {}} onSearchOpen={() => {}} />
-      <main className="pt-14 p-4 text-center text-gray-500 flex flex-col items-center justify-center min-h-[60vh]">
-        <p className="text-lg font-semibold">Coming Soon</p>
-        <p className="text-sm">This page is currently under development.</p>
-      </main>
-      <BottomTabBar />
-    </div>
-  );
+const STUDY_META: Record<string, { title: string; desc: string }> = {
+  japan: {
+    title: 'Study in Japan (Universities, Scholarships & Language Schools) — JapanKoreaHub',
+    desc: 'MEXT scholarship guide, Japanese language school admissions, tuition costs, and student visa application steps for Nepali students.',
+  },
+  korea: {
+    title: 'Study in Korea (GKS Scholarship & Universities) — JapanKoreaHub',
+    desc: 'Global Korea Scholarship (GKS) guide, Korean D-2 university programs, D-4 language courses, tuition fees, and admission checklists.',
+  },
+};
+
+export function generateStaticParams() {
+  return [{ country: 'japan' }, { country: 'korea' }];
+}
+
+export async function generateMetadata({ params }: { params: Promise<{ country: string }> }): Promise<Metadata> {
+  const { country } = await params;
+  const m = STUDY_META[country];
+  if (!m) return {};
+  return {
+    title: m.title,
+    description: m.desc,
+    alternates: { canonical: `https://japankoreahub.com/${country}/study` },
+  };
+}
+
+export default async function StudyPage({ params }: { params: Promise<{ country: string }> }) {
+  const { country } = await params;
+  if (!STUDY_META[country]) notFound();
+  return <StudyHubClient country={country as 'japan' | 'korea'} />;
 }

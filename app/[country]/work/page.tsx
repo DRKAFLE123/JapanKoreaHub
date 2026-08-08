@@ -1,16 +1,35 @@
-import React from 'react';
-import MobileNavbar from '@/components/layout/MobileNavbar';
-import BottomTabBar from '@/components/layout/BottomTabBar';
+import { notFound } from 'next/navigation';
+import type { Metadata } from 'next';
+import WorkHubClient from './WorkHubClient';
 
-export default function PlaceholderPage() {
-  return (
-    <div className="min-h-screen bg-white">
-      <MobileNavbar user={null} lang="en" onLangToggle={() => {}} onSearchOpen={() => {}} />
-      <main className="pt-14 p-4 text-center text-gray-500 flex flex-col items-center justify-center min-h-[60vh]">
-        <p className="text-lg font-semibold">Coming Soon</p>
-        <p className="text-sm">This page is currently under development.</p>
-      </main>
-      <BottomTabBar />
-    </div>
-  );
+const WORK_META: Record<string, { title: string; desc: string }> = {
+  japan: {
+    title: 'Work in Japan (SSW & Working Visas) — JapanKoreaHub',
+    desc: 'Specified Skilled Worker (SSW-1) sector vocabulary, skill evaluation test preparation, and job listings in Japan for Nepali workers.',
+  },
+  korea: {
+    title: 'Work in Korea (EPS E-9 Visa) — JapanKoreaHub',
+    desc: 'EPS-TOPIK E-9 worker sector vocabulary (Manufacturing, Agriculture, Construction, Fishing), job rosters, and employment process.',
+  },
+};
+
+export function generateStaticParams() {
+  return [{ country: 'japan' }, { country: 'korea' }];
+}
+
+export async function generateMetadata({ params }: { params: Promise<{ country: string }> }): Promise<Metadata> {
+  const { country } = await params;
+  const m = WORK_META[country];
+  if (!m) return {};
+  return {
+    title: m.title,
+    description: m.desc,
+    alternates: { canonical: `https://japankoreahub.com/${country}/work` },
+  };
+}
+
+export default async function WorkPage({ params }: { params: Promise<{ country: string }> }) {
+  const { country } = await params;
+  if (!WORK_META[country]) notFound();
+  return <WorkHubClient country={country as 'japan' | 'korea'} />;
 }

@@ -1,16 +1,35 @@
-import React from 'react';
-import MobileNavbar from '@/components/layout/MobileNavbar';
-import BottomTabBar from '@/components/layout/BottomTabBar';
+import { notFound } from 'next/navigation';
+import type { Metadata } from 'next';
+import LifeHubClient from './LifeHubClient';
 
-export default function PlaceholderPage() {
-  return (
-    <div className="min-h-screen bg-white">
-      <MobileNavbar user={null} lang="en" onLangToggle={() => {}} onSearchOpen={() => {}} />
-      <main className="pt-14 p-4 text-center text-gray-500 flex flex-col items-center justify-center min-h-[60vh]">
-        <p className="text-lg font-semibold">Coming Soon</p>
-        <p className="text-sm">This page is currently under development.</p>
-      </main>
-      <BottomTabBar />
-    </div>
-  );
+const LIFE_META: Record<string, { title: string; desc: string }> = {
+  japan: {
+    title: 'Life in Japan (Cost of Living, Housing & Rights) — JapanKoreaHub',
+    desc: 'Cost of living breakdown in Japan, apartment renting (Reikin/Shikikin), health insurance (NHI), part-time work limits (28 hrs/wk), and emergency contacts.',
+  },
+  korea: {
+    title: 'Life in Korea (Cost of Living, Housing & Rights) — JapanKoreaHub',
+    desc: 'Cost of living breakdown in Seoul & regional cities, housing deposit (Jeonse/Wolse), national health insurance (NHIS), and workplace rights.',
+  },
+};
+
+export function generateStaticParams() {
+  return [{ country: 'japan' }, { country: 'korea' }];
+}
+
+export async function generateMetadata({ params }: { params: Promise<{ country: string }> }): Promise<Metadata> {
+  const { country } = await params;
+  const m = LIFE_META[country];
+  if (!m) return {};
+  return {
+    title: m.title,
+    description: m.desc,
+    alternates: { canonical: `https://japankoreahub.com/${country}/life` },
+  };
+}
+
+export default async function LifePage({ params }: { params: Promise<{ country: string }> }) {
+  const { country } = await params;
+  if (!LIFE_META[country]) notFound();
+  return <LifeHubClient country={country as 'japan' | 'korea'} />;
 }
