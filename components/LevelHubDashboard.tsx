@@ -168,25 +168,27 @@ export const LevelHubDashboard: React.FC<LevelHubDashboardProps> = ({
       </div>
 
       {/* 📖 ROW 2: OPTIONS SUB-MENU BAR (Tailored to selected level) */}
-      <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar py-1 bg-slate-900/60 p-1.5 rounded-2xl border border-slate-800/80">
-        {getSubTabs().map((tab) => {
-          const isActive = activeTab === tab.id;
-          return (
-            <button
-              key={tab.id}
-              onClick={() => handleTabClick(tab.id as LevelSubTab)}
-              className={`px-3 py-1.5 rounded-xl text-xs font-extrabold transition-all flex items-center gap-1.5 cursor-pointer whitespace-nowrap ${
-                isActive
-                  ? 'bg-red-600 text-white shadow-sm border border-red-500/50'
-                  : 'text-slate-300 hover:text-white hover:bg-slate-800/70'
-              }`}
-            >
-              <span>{tab.emoji}</span>
-              <span>{tab.label}</span>
-            </button>
-          );
-        })}
-      </div>
+      {currentLevel !== 'BASICS' && (
+        <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar py-1 bg-slate-900/60 p-1.5 rounded-2xl border border-slate-800/80">
+          {getSubTabs().map((tab) => {
+            const isActive = activeTab === tab.id;
+            return (
+              <button
+                key={tab.id}
+                onClick={() => handleTabClick(tab.id as LevelSubTab)}
+                className={`px-3 py-1.5 rounded-xl text-xs font-extrabold transition-all flex items-center gap-1.5 cursor-pointer whitespace-nowrap ${
+                  isActive
+                    ? 'bg-red-600 text-white shadow-sm border border-red-500/50'
+                    : 'text-slate-300 hover:text-white hover:bg-slate-800/70'
+                }`}
+              >
+                <span>{tab.emoji}</span>
+                <span>{tab.label}</span>
+              </button>
+            );
+          })}
+        </div>
+      )}
 
       {/* Active Level Content Body */}
       <div className="pt-1">
