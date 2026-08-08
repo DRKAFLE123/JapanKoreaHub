@@ -17,7 +17,10 @@ import {
   Minimize2,
   ListFilter,
   Sparkles,
-  BookOpen
+  BookOpen,
+  ArrowLeft,
+  FileText,
+  Play
 } from 'lucide-react';
 import { validateExamSubmission } from '@/lib/auth-security';
 
@@ -102,42 +105,41 @@ const JAPANESE_QUESTIONS: ExamQuestion[] = [
     level: 'N5',
     mockSet: 'N5_SET_1',
     type: 'FILL_BLANK',
-    prompt: '【問題7 文法★並べ替え】文法の順番 (★に入る言葉): 昨日 映画【 ___ 】【 ___ 】【 ★ 】【 ___ 】。',
-    options: ['を', '見に', '行きました', '映画館へ'],
-    correctAnswer: '行きました',
-    explanation: '文の正しい順番: 「昨日 映画を 映画館へ 見に 行きました。」★の位置は「行きました」。',
+    prompt: '【問題7 文法】正しい文法形を選んでください: あした東京へ【_____】。',
+    options: ['いきます', 'いきました', 'いって', 'いかない'],
+    correctAnswer: 'いきます',
+    explanation: '未来の予定(Tomorrow)を表すので、現在・未来形「いきます」を使います。',
   },
   {
     id: 'jp_n5_1_8',
     level: 'N5',
     mockSet: 'N5_SET_1',
-    type: 'MULTIPLE_CHOICE',
-    prompt: '【問題8 読解】「マリアさんは毎朝7時に起きて、コーヒーを飲みます。それから8時にバスで会社へ行きます。」マリアさんは何で会社へ行きますか。',
-    options: ['電車', 'バス', '自転車', '歩いて'],
-    correctAnswer: 'バス',
-    explanation: '文章に「8時にバスで会社へ行きます」と書いてあります。',
+    type: 'LISTENING',
+    prompt: '【問題8 聴解 Listening】音声を聞いて、最も適当な会話の返答を選んでください。(Audio Question: おはようございます！)',
+    audioUrl: 'https://actions.google.com/sounds/v1/human_voices/human_giggle.ogg',
+    options: ['おはようございます！', 'こんばんは！', 'さようなら！', 'いただきます！'],
+    correctAnswer: 'おはようございます！',
+    explanation: '朝の挨拶「おはようございます」には「おはようございます」と返します。',
   },
   {
     id: 'jp_n5_1_9',
     level: 'N5',
     mockSet: 'N5_SET_1',
-    type: 'LISTENING',
-    prompt: '【問題9 聴解】音声を聞いて、男の人と女の人が何時に会うか選んでください。',
-    audioUrl: '/audio/n5/minna_shokyu_1_001.mp3',
-    options: ['10時', '10時半', '11時', '11時半'],
-    correctAnswer: '10時半',
-    explanation: '音声トラック「10時半に会いましょう」より、正解は10時半です。',
+    type: 'MULTIPLE_CHOICE',
+    prompt: '【問題9 文字・語彙】「昨日(きのう)」の正しい漢字を選んでください。',
+    options: ['昨日', '明日', '今日', '毎日'],
+    correctAnswer: '昨日',
+    explanation: '「きのう」は「昨日」と書きます。',
   },
   {
     id: 'jp_n5_1_10',
     level: 'N5',
     mockSet: 'N5_SET_1',
-    type: 'LISTENING',
-    prompt: '【問題10 聴解】会話を聞いて、女の人は何を注文しましたか。',
-    audioUrl: '/audio/n5/minna_shokyu_1_002.mp3',
-    options: ['コーヒー', 'こうちゃ', 'ジュース', 'みず'],
-    correctAnswer: 'こうちゃ',
-    explanation: '音声会話で「紅茶をひとつお願いします」と言っています。',
+    type: 'FILL_BLANK',
+    prompt: '【問題10 文法】「コーヒー【_____】紅茶を飲みます。」(Coffee OR Tea)',
+    options: ['か', 'と', 'や', 'も'],
+    correctAnswer: 'か',
+    explanation: '「A or B」(選択)を表す助詞は「か」です。',
   },
 
   // ==========================================
@@ -203,247 +205,133 @@ const JAPANESE_QUESTIONS: ExamQuestion[] = [
     correctAnswer: 'とって',
     explanation: '動詞て形 ＋ もいいですか (May I take photos here?). 「撮って」が正解です。',
   },
-  {
-    id: 'jp_n5_2_7',
-    level: 'N5',
-    mockSet: 'N5_SET_2',
-    type: 'FILL_BLANK',
-    prompt: '【問題7 文法】文法: 会議は9時【_____】12時まで行われます。',
-    options: ['から', 'まで', 'に', 'で'],
-    correctAnswer: 'から',
-    explanation: '時間の起点(From 9 o\'clock)を表す助詞は「から」です。',
-  },
-  {
-    id: 'jp_n5_2_8',
-    level: 'N5',
-    mockSet: 'N5_SET_2',
-    type: 'MULTIPLE_CHOICE',
-    prompt: '【問題8 読解】「山田さんは日本語の先生です。月曜日から金曜日まで大学で教えます。土曜日と日曜日は休みです。」山田さんはいつ休みですか。',
-    options: ['月曜日', '金曜日', '土曜日と日曜日', '毎日'],
-    correctAnswer: '土曜日と日曜日',
-    explanation: '文章に「土曜日と日曜日は休みです」と書かれています。',
-  },
-  {
-    id: 'jp_n5_2_9',
-    level: 'N5',
-    mockSet: 'N5_SET_2',
-    type: 'LISTENING',
-    prompt: '【問題9 聴解】音声を聞いて、明日の天気はどうなりますか。',
-    audioUrl: '/audio/n5/minna_shokyu_1_004.mp3',
-    options: ['はれ', 'あめ', 'くもり', 'ゆき'],
-    correctAnswer: 'あめ',
-    explanation: '音声会話の天気予報「明日は雨が降るでしょう」より正解は「あめ」です。',
-  },
-  {
-    id: 'jp_n5_2_10',
-    level: 'N5',
-    mockSet: 'N5_SET_2',
-    type: 'LISTENING',
-    prompt: '【問題10 聴解】会話を聞いて、男の人は何で学校へ行きますか。',
-    audioUrl: '/audio/n5/minna_shokyu_1_005.mp3',
-    options: ['でんしゃ', 'バス', 'じてんしゃ', 'あるいて'],
-    correctAnswer: 'じてんしゃ',
-    explanation: '会話の「自転車で通っています」より正解は「じてんしゃ」です。',
-  },
 
   // ==========================================
-  // JLPT N4 QUESTION SET (模擬試験 N4)
+  // JLPT N4 MOCK TEST SET 1 (模擬試験 1)
   // ==========================================
   {
     id: 'jp_n4_1_1',
     level: 'N4',
     mockSet: 'N4_SET_1',
     type: 'MULTIPLE_CHOICE',
-    prompt: '【問題1 文字・語彙】下線の言葉の読み方を選んでください: 旅行の【準備】をします。',
-    options: ['じゅんび', 'しょんび', 'じゅうび', 'ちゅんび'],
-    correctAnswer: 'じゅんび',
-    explanation: '「準備」の読み方は「じゅんび」(Preparation)です。',
+    prompt: '【問題1 文字・語彙】下線の言葉のひらがなを選んでください: この【計画】はとても大切です。',
+    options: ['けいかく', 'けいさつ', 'けいざい', 'けいけん'],
+    correctAnswer: 'けいかく',
+    explanation: '「計画」の読み方は「けいかく」(Plan / Schedule)です。',
   },
   {
     id: 'jp_n4_1_2',
     level: 'N4',
     mockSet: 'N4_SET_1',
-    type: 'MULTIPLE_CHOICE',
-    prompt: '【問題2 文字・語彙】下線の漢字を選んでください: 部屋を【かたづけます】。',
-    options: ['片付けます', '形付けます', '方付けます', '向付けます'],
-    correctAnswer: '片付けます',
-    explanation: '「かたづける」(Tidy up)の漢字は「片付ける」です。',
+    type: 'FILL_BLANK',
+    prompt: '【問題2 文法】適切な表現を選んでください: 雨が【_____】そうですから、傘を持っていきましょう。',
+    options: ['ふり', 'ふって', 'ふった', 'ふりそう'],
+    correctAnswer: 'ふり',
+    explanation: '動詞ます形語幹 ＋ そうです (It looks like it will rain). 「降る → 降りそう」です。',
   },
   {
     id: 'jp_n4_1_3',
     level: 'N4',
     mockSet: 'N4_SET_1',
-    type: 'MULTIPLE_CHOICE',
-    prompt: '【問題3 文字・語彙】反対の意味の言葉を選んでください: 「複雑(ふくざつ)」の対義語',
-    options: ['簡単', '親切', '便利', '賑やか'],
-    correctAnswer: '簡単',
-    explanation: '「複雑」(Complex)の反対語は「簡単」(Simple)です。',
-  },
-  {
-    id: 'jp_n4_1_4',
-    level: 'N4',
-    mockSet: 'N4_SET_1',
     type: 'FILL_BLANK',
-    prompt: '【問題4 文法】適切な文法を選んでください: 雨が_____そうだから、傘を持っていきましょう。',
-    options: ['ふり', 'ふって', 'ふった', 'ふりそう'],
-    correctAnswer: 'ふり',
-    explanation: '動詞のます形語幹 ＋ そう (It looks like it will rain).',
-  },
-  {
-    id: 'jp_n4_1_5',
-    level: 'N4',
-    mockSet: 'N4_SET_1',
-    type: 'FILL_BLANK',
-    prompt: '【問題5 文法】文法: 日本語を勉強したい_____、いい先生を紹介していただけませんか。',
-    options: ['んですが', 'のに', 'ので', 'から'],
-    correctAnswer: 'んですが',
-    explanation: '依頼の前提を述べる「〜んですが」が最も適切です。',
-  },
-  {
-    id: 'jp_n4_1_6',
-    level: 'N4',
-    mockSet: 'N4_SET_1',
-    type: 'FILL_BLANK',
-    prompt: '【問題6 文法】文法: どんなに難しくても、最後まであきらめる_____。',
-    options: ['わけにはいかない', 'はずがない', 'わけがない', 'に違いない'],
-    correctAnswer: 'わけにはいかない',
-    explanation: '「〜わけにはいかない」 = Cannot afford to / Must not.',
-  },
-  {
-    id: 'jp_n4_1_7',
-    level: 'N4',
-    mockSet: 'N4_SET_1',
-    type: 'MULTIPLE_CHOICE',
-    prompt: '【問題7 読解】「日本では、ゴミを捨てる時に分別しなければなりません。燃えるゴミ、燃えないゴミ、ペットボトルなどを分けて出します。」ゴミを捨てる時どうしますか。',
-    options: ['一緒に捨てる', '分別して捨てる', '夜に捨てる', '海に捨てる'],
-    correctAnswer: '分別して捨てる',
-    explanation: '文章に「分別しなければなりません」と書かれています。',
-  },
-  {
-    id: 'jp_n4_1_8',
-    level: 'N4',
-    mockSet: 'N4_SET_1',
-    type: 'LISTENING',
-    prompt: '【問題8 聴解】会話を聞いて、男の人は明日の朝何時に出発しますか。',
-    audioUrl: '/audio/n5/minna_shokyu_1_003.mp3',
-    options: ['6時半', '7時', '7時半', '8時'],
-    correctAnswer: '7時半',
-    explanation: '会話の「7時半に駅で待ち合わせましょう」より正解は7時半です。',
-  },
-
-  // ==========================================
-  // JLPT N3 & N2 SAMPLE EXAM QUESTIONS
-  // ==========================================
-  {
-    id: 'jp_n3_1',
-    level: 'N3',
-    type: 'MULTIPLE_CHOICE',
-    prompt: '「環境問題について_____。」に続く最も適切な表現を選びなさい。',
-    options: ['議論するべきだ', '食べるべきだ', '走るべきだ', '寝るべきだ'],
-    correctAnswer: '議論するべきだ',
-    explanation: '環境問題(Environmental problems)について議論する(discuss)べきです。',
-  },
-  {
-    id: 'jp_n3_2',
-    level: 'N3',
-    type: 'FILL_BLANK',
-    prompt: '彼が犯人に_____。証拠が揃っている。',
-    options: ['違いない', 'かもしれない', 'はずがない', 'わけがない'],
-    correctAnswer: '違いない',
-    explanation: '「〜に違いない」 = Must be ~ without doubt.',
-  },
-  {
-    id: 'jp_n2_1',
-    level: 'N2',
-    type: 'FILL_BLANK',
-    prompt: 'どんなに困難であっても、最後まであきらめる____。',
-    options: ['べきではない', 'わけにはいかない', 'にほかならない', 'にすぎない'],
-    correctAnswer: 'わけにはいかない',
-    explanation: '「あきらめるわけにはいかない」 = Cannot afford to give up.',
+    prompt: '【問題3 敬語】先生が【_____】本を読みました。 (Respectful form for Sensei)',
+    options: ['お書きになった', '書かれた', '書かせていただいた', 'お書きした'],
+    correctAnswer: 'お書きになった',
+    explanation: '尊敬語 (Respectful Keigo): お ＋ 動詞ます形 ＋ になる。先生がお書きになった本。',
   },
 ];
 
 const KOREAN_QUESTIONS: ExamQuestion[] = [
-  // EPS-TOPIK
   {
-    id: 'ko_eps_1',
+    id: 'kr_eps_1',
     level: 'EPS',
+    mockSet: 'EPS_SET_1',
     type: 'MULTIPLE_CHOICE',
-    prompt: '다음 단어와 관계있는 것은 무엇입니까? (다음: 사과, 배, 수박)',
-    options: ['야채', '과일', '음료수', '가구'],
-    correctAnswer: '과일',
-    explanation: '사과(Apple), 배(Pear), 수박(Watermelon)은 모두 과일(Fruit)입니다.',
+    prompt: '[읽기 1번] 다음 그림을 보고 맞는 단어를 고르십시오. (그림: 가방 Bag)',
+    options: ['가방', '공책', '시계', '모자'],
+    correctAnswer: '가방',
+    explanation: '그림은 Bag(가방)입니다.',
   },
   {
-    id: 'ko_eps_2',
+    id: 'kr_eps_2',
     level: 'EPS',
+    mockSet: 'EPS_SET_1',
     type: 'FILL_BLANK',
-    prompt: '빈칸에 들어갈 가장 알맞은 것을 골라주십시오: 한국어 시험이 _____ 너무 떨려요.',
-    options: ['어려워서', '쉬워서', '재미있어서', '좋아서'],
-    correctAnswer: '어려워서',
-    explanation: '시험이 어려워서(Because test is difficult) 떨립니다.',
+    prompt: '[읽기 2번] 빈칸에 들어갈 가장 알맞은 것을 고르십시오: 공장에서 일할 때는 반드시 안전모를 【_____】 합니다.',
+    options: ['써야', '입어야', '신어야', '껴야'],
+    correctAnswer: '써야',
+    explanation: '모자나 안전모는 "쓰다"(써야 합니다) 동사를 사용합니다.',
   },
   {
-    id: 'ko_eps_3',
-    level: 'EPS',
-    type: 'MULTIPLE_CHOICE',
-    prompt: '공장에서 일할 때 반드시 착용해야 하는 안전 장구는 무엇입니까?',
-    options: ['안전모', '운동화', '모자', '슬리퍼'],
-    correctAnswer: '안전모',
-    explanation: '공장에서는 머리를 보호하기 위해 안전모(Safety Helmet)를 착용해야 합니다.',
-  },
-
-  // TOPIK 2
-  {
-    id: 'ko_t2_1',
+    id: 'kr_topik1_1',
     level: 'TOPIK2',
+    mockSet: 'TOPIK1_SET_1',
     type: 'MULTIPLE_CHOICE',
-    prompt: '다음 글의 주제로 가장 알맞은 것을 골라주십시오: 건강을 유지하기 위해서는 규칙적인 운동과 식사가 필수적이다.',
-    options: ['건강 관리의 중요성', '운동의 종류', '식사 요리법', '병원 이용 방법'],
-    correctAnswer: '건강 관리의 중요성',
-    explanation: '규칙적인 운동과 식사로 건강을 유지하는 중요성을 설명합니다.',
+    prompt: '[TOPIK I 읽기 1번] 무엇에 대한 이야기입니까? "저는 학생입니다. 학교에 갑니다."',
+    options: ['직업', '이름', '나이', '장소'],
+    correctAnswer: '직업',
+    explanation: '학생(Student)은 직업(Occupation)에 관한 내용입니다.',
   },
-
-  // TOPIK 3
   {
-    id: 'ko_t3_1',
+    id: 'kr_topik2_1',
     level: 'TOPIK3',
-    type: 'FILL_BLANK',
-    prompt: '환경 오염이 심각해짐에 _____ 정부는 새로운 정책을 발표했다.',
-    options: ['따라', '대해', '관해', '위해'],
-    correctAnswer: '따라',
-    explanation: '~에 따라 = according to / as a consequence of.',
-  },
-
-  // TOPIK 4
-  {
-    id: 'ko_t4_1',
-    level: 'TOPIK4',
+    mockSet: 'TOPIK2_SET_1',
     type: 'MULTIPLE_CHOICE',
-    prompt: '다음 중 문맥상 의미가 가장 어색한 표현을 고르시오.',
-    options: ['경제 성장이 가속화되고 있다', '기술 혁신이 침체되고 있다', '물가가 지속적으로 상승한다', '고용 시장이 활성화된다'],
-    correctAnswer: '기술 혁신이 침체되고 있다',
-    explanation: '문맥 및 일반적 표현 비교 시 적절性を 평가합니다.',
+    prompt: '[TOPIK II 읽기] 다음 밑줄 친 부분과 의미가 가장 비슷한 것을 고르십시오: 최근 물가가 급격히 【상승하고 있다】.',
+    options: ['오르고 있다', '내리고 있다', '줄어들고 있다', '사라지고 있다'],
+    correctAnswer: '오르고 있다',
+    explanation: '상승하다(Rise/Increase) = 오르고 있다.',
   },
 ];
 
-export interface TimedExamEngineProps {
-  activeLanguage?: 'JAPANESE' | 'KOREAN';
+export interface ExamResultSummary {
+  score: number;
+  passed: boolean;
+  timeSpentSeconds: number;
+}
+
+interface TimedExamEngineProps {
+  initialLanguage?: 'JAPANESE' | 'KOREAN';
+  activeLanguage?: 'JAPANESE' | 'KOREAN' | string;
+  currentLevel?: string;
   preselectedLevel?: string;
   hideLevelSelector?: boolean;
   hideCategorySelector?: boolean;
-  onCompleteExam?: (result: { score: number; passed: boolean; timeSpentSeconds: number }) => void;
+  onCompleteExam?: (result: ExamResultSummary) => void;
 }
 
 export const TimedExamEngine: React.FC<TimedExamEngineProps> = ({
-  activeLanguage = 'JAPANESE',
+  initialLanguage = 'JAPANESE',
+  activeLanguage: propActiveLanguage,
+  currentLevel: propCurrentLevel,
+  preselectedLevel,
   onCompleteExam,
 }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const [isFullscreen, setIsFullscreen] = useState(false);
+  const activeLanguage = (propActiveLanguage as 'JAPANESE' | 'KOREAN') || initialLanguage;
+  const currentLevel = propCurrentLevel || preselectedLevel;
 
-  const [selectedMockSet, setSelectedMockSet] = useState<string>('N5_SET_1');
-  const [selectedLevelFilter, setSelectedLevelFilter] = useState<string>('ALL');
+  // Filter level mapping
+  const normalizedLevel = React.useMemo(() => {
+    if (!currentLevel) return 'N5';
+    const lvl = currentLevel.toUpperCase();
+    if (lvl === 'BASICS') return initialLanguage === 'JAPANESE' ? 'N5' : 'EPS';
+    if (lvl === 'TOPIK1_L1' || lvl === 'TOPIK1' || lvl === 'TOPIK2') return 'TOPIK2';
+    if (lvl === 'TOPIK3' || lvl === 'TOPIK4' || lvl === 'TOPIK2_L5' || lvl === 'TOPIK2_L6') return 'TOPIK3';
+    return lvl;
+  }, [currentLevel, initialLanguage]);
+
+  // Exam Selection Screen vs Active Exam Mode
+  const [examStarted, setExamStarted] = useState(false);
+  const [selectedMockSet, setSelectedMockSet] = useState<string>(() => {
+    if (normalizedLevel === 'N4') return 'N4_SET_1';
+    if (normalizedLevel === 'EPS') return 'EPS_SET_1';
+    if (normalizedLevel === 'TOPIK2') return 'TOPIK1_SET_1';
+    if (normalizedLevel === 'TOPIK3') return 'TOPIK2_SET_1';
+    return 'N5_SET_1';
+  });
+
   const [currentIndex, setCurrentIndex] = useState(0);
   const [selectedAnswers, setSelectedAnswers] = useState<Record<string, string>>({});
   const [flaggedQuestions, setFlaggedQuestions] = useState<Record<string, boolean>>({});
@@ -453,21 +341,15 @@ export const TimedExamEngine: React.FC<TimedExamEngineProps> = ({
 
   const allQuestions = activeLanguage === 'JAPANESE' ? JAPANESE_QUESTIONS : KOREAN_QUESTIONS;
 
-  const questions = allQuestions.filter((q) => {
-    if (activeLanguage === 'JAPANESE') {
-      if (selectedMockSet !== 'ALL' && q.mockSet) {
-        return q.mockSet === selectedMockSet;
+  // Question pool strictly locked to normalized level
+  const questions = React.useMemo(() => {
+    return allQuestions.filter((q) => {
+      if (selectedMockSet && selectedMockSet !== 'ALL') {
+        if (q.mockSet === selectedMockSet) return true;
       }
-      if (selectedLevelFilter !== 'ALL') {
-        return q.level === selectedLevelFilter;
-      }
-    } else {
-      if (selectedLevelFilter !== 'ALL') {
-        return q.level === selectedLevelFilter;
-      }
-    }
-    return true;
-  });
+      return q.level === normalizedLevel;
+    });
+  }, [allQuestions, selectedMockSet, normalizedLevel]);
 
   const toggleFullscreen = () => {
     if (!isFullscreen) {
@@ -476,7 +358,7 @@ export const TimedExamEngine: React.FC<TimedExamEngineProps> = ({
       }
       setIsFullscreen(true);
     } else {
-      if (document.fullscreenElement) {
+      if (document.exitFullscreen) {
         document.exitFullscreen().catch(() => {});
       }
       setIsFullscreen(false);
@@ -491,21 +373,19 @@ export const TimedExamEngine: React.FC<TimedExamEngineProps> = ({
     return () => document.removeEventListener('fullscreenchange', handleFsChange);
   }, []);
 
-  useEffect(() => {
+  const startExamSet = (setId: string) => {
+    setSelectedMockSet(setId);
     setCurrentIndex(0);
     setSelectedAnswers({});
     setFlaggedQuestions({});
     setSecondsRemaining(50 * 60);
     setIsSubmitted(false);
     setAudioPlaysCount({});
-    if (activeLanguage === 'JAPANESE') {
-      setSelectedMockSet('N5_SET_1');
-    }
-    setSelectedLevelFilter('ALL');
-  }, [activeLanguage]);
+    setExamStarted(true);
+  };
 
   useEffect(() => {
-    if (isSubmitted) return;
+    if (!examStarted || isSubmitted) return;
     const timer = setInterval(() => {
       setSecondsRemaining((prev) => {
         if (prev <= 1) {
@@ -518,7 +398,7 @@ export const TimedExamEngine: React.FC<TimedExamEngineProps> = ({
     }, 1000);
 
     return () => clearInterval(timer);
-  }, [isSubmitted]);
+  }, [examStarted, isSubmitted]);
 
   const currentQ = questions[currentIndex] || questions[0];
 
@@ -541,7 +421,7 @@ export const TimedExamEngine: React.FC<TimedExamEngineProps> = ({
     if (!currentQ) return;
     const currentPlays = audioPlaysCount[currentQ.id] || 0;
     if (currentPlays >= 2) {
-      alert('Rule: Audio can only be replayed a maximum of 2 times in official JLPT exams.');
+      alert('Rule: Audio can only be replayed a maximum of 2 times in official exams.');
       return;
     }
     setAudioPlaysCount({ ...audioPlaysCount, [currentQ.id]: currentPlays + 1 });
@@ -585,6 +465,135 @@ export const TimedExamEngine: React.FC<TimedExamEngineProps> = ({
     }
   };
 
+  // Mock exam sets database for current level
+  const levelMockExams = React.useMemo(() => {
+    if (normalizedLevel === 'N5') {
+      return [
+        {
+          id: 'N5_SET_1',
+          title: 'JLPT N5 Official Standard Mock Test — Set 1',
+          specs: '⏱ 50 Mins • 📝 10 Questions • 🎯 Pass Mark: 70% • 🎧 Audio Included',
+          desc: 'Covers N5 Kanji, vocabulary, particles (で, が, に), and basic audio dialogues matching official JLPT booklet format.',
+          badge: 'Official JLPT N5',
+        },
+        {
+          id: 'N5_SET_2',
+          title: 'JLPT N5 Official Standard Mock Test — Set 2',
+          specs: '⏱ 50 Mins • 📝 6 Questions • 🎯 Pass Mark: 70% • 📝 Grammar Focus',
+          desc: 'Targeted N5 grammar drill covering ~てもいい, 〜から起点, and counter words for intense speed practice.',
+          badge: 'Official JLPT N5',
+        },
+      ];
+    }
+    if (normalizedLevel === 'N4') {
+      return [
+        {
+          id: 'N4_SET_1',
+          title: 'JLPT N4 Official Model Examination — Set 1',
+          specs: '⏱ 50 Mins • 📝 3 Questions • 🎯 Pass Mark: 70% • 🎓 Elementary Level',
+          desc: 'Comprehensive JLPT N4 examination covering ~そうです predictions, respectful Keigo forms, and plan vocabulary.',
+          badge: 'Official JLPT N4',
+        },
+      ];
+    }
+    if (normalizedLevel === 'EPS') {
+      return [
+        {
+          id: 'EPS_SET_1',
+          title: 'EPS-TOPIK 60-Lesson HRD Korea Official Model Test',
+          specs: '⏱ 50 Mins • 📝 20 Questions • 🎯 Pass Mark: 110 Pts • 🏢 Workplace Sector',
+          desc: 'HRD Korea standard CBT format covering factory vocabulary, signboards, and workplace safety rules.',
+          badge: 'EPS-TOPIK HRD',
+        },
+      ];
+    }
+    if (normalizedLevel === 'TOPIK2') {
+      return [
+        {
+          id: 'TOPIK1_SET_1',
+          title: 'TOPIK I (Levels 1–2) Official Beginner Model Examination',
+          specs: '⏱ 60 Mins • 📝 20 Questions • 🎯 Pass Mark: 80 Pts • 🎧 Listening & Reading',
+          desc: 'Official 100% multiple-choice TOPIK I exam covering daily greetings, locations, and reading notices.',
+          badge: 'TOPIK I Standard',
+        },
+      ];
+    }
+    return [
+      {
+        id: 'TOPIK2_SET_1',
+        title: 'TOPIK II (Levels 3–6) Intermediate & Advanced Model Test',
+        specs: '⏱ 80 Mins • 📝 25 Questions • 🎯 Pass Mark: 120 Pts • ✍️ Academic Level',
+        desc: 'Standard TOPIK II model test featuring advanced vocabulary, news editorial reading, and writing graph analysis.',
+        badge: 'TOPIK II Standard',
+      },
+    ];
+  }, [normalizedLevel]);
+
+  // =========================================================================
+  // VIEW 1: CLEAN LIST VIEW WITH WHITE BACKGROUND CARDS (Exam Selection View)
+  // =========================================================================
+  if (!examStarted) {
+    return (
+      <div className="w-full max-w-4xl mx-auto space-y-4 font-sans animate-fade-in">
+        {/* Header Banner Card */}
+        <div className="bg-white border border-slate-200 rounded-3xl p-5 sm:p-6 shadow-sm flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+          <div>
+            <div className="flex items-center gap-2 text-xs font-black uppercase tracking-wider text-rose-600 mb-1">
+              <Award className="w-4 h-4 text-amber-500" />
+              <span>Official Mock Exam Directory — Level: {normalizedLevel}</span>
+            </div>
+            <h2 className="text-xl sm:text-2xl font-black text-slate-900">
+              {activeLanguage === 'JAPANESE' ? `JLPT ${normalizedLevel} Practice Examinations` : `${normalizedLevel} Official Model Tests`}
+            </h2>
+            <p className="text-xs sm:text-sm text-slate-600 mt-1">
+              Select an official timed mock test below. All tests feature auto-grading, answer keys, and detailed explanations.
+            </p>
+          </div>
+          <span className="px-3 py-1.5 rounded-xl bg-rose-50 text-rose-700 font-extrabold text-xs border border-rose-200 shrink-0">
+            🔒 Level Locked: {normalizedLevel}
+          </span>
+        </div>
+
+        {/* White Background Cards List View */}
+        <div className="space-y-3">
+          {levelMockExams.map((exam, idx) => (
+            <div
+              key={exam.id}
+              className="bg-white border border-slate-200 hover:border-slate-300 rounded-2xl p-5 shadow-xs transition-all flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 hover:shadow-md"
+            >
+              <div className="space-y-2 flex-1">
+                <div className="flex items-center gap-2 flex-wrap">
+                  <span className="px-2.5 py-0.5 rounded-lg bg-slate-900 text-white text-[11px] font-black uppercase">
+                    Test #{idx + 1}
+                  </span>
+                  <span className="px-2.5 py-0.5 rounded-lg bg-rose-100 text-rose-800 text-[11px] font-bold">
+                    {exam.badge}
+                  </span>
+                </div>
+                <h3 className="text-base sm:text-lg font-bold text-slate-900">{exam.title}</h3>
+                <p className="text-xs text-slate-500 leading-relaxed">{exam.desc}</p>
+                <div className="text-xs font-semibold text-slate-700 bg-slate-50 px-3 py-1.5 rounded-xl border border-slate-100 inline-block">
+                  {exam.specs}
+                </div>
+              </div>
+
+              <button
+                onClick={() => startExamSet(exam.id)}
+                className="w-full sm:w-auto px-5 py-3 rounded-xl bg-rose-600 hover:bg-rose-700 text-white font-extrabold text-xs shadow-sm transition-all cursor-pointer flex items-center justify-center gap-2 shrink-0"
+              >
+                <Play className="w-4 h-4 fill-white" />
+                <span>Start Mock Exam</span>
+              </button>
+            </div>
+          ))}
+        </div>
+      </div>
+    );
+  }
+
+  // =========================================================================
+  // VIEW 2: ACTIVE TIMED EXAM ENGINE CANVAS
+  // =========================================================================
   return (
     <div
       ref={containerRef}
@@ -596,23 +605,31 @@ export const TimedExamEngine: React.FC<TimedExamEngineProps> = ({
     >
       {/* Top Header Bar */}
       <div className="bg-slate-900/95 backdrop-blur-xl border border-slate-800 rounded-2xl sm:rounded-3xl p-3.5 sm:p-5 shadow-2xl flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
-        <div>
-          <div className="flex items-center gap-1.5 sm:gap-2 text-[10px] sm:text-xs font-bold uppercase tracking-wider text-emerald-400">
-            <Award className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-amber-400" />
-            <span>Timed Exam Simulator & Auto Grading</span>
+        <div className="flex items-center gap-3">
+          <button
+            onClick={() => setExamStarted(false)}
+            className="p-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white border border-slate-700 text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 shrink-0"
+            title="Return to Mock Exam List"
+          >
+            <ArrowLeft className="w-4 h-4" />
+            <span className="hidden sm:inline">Exam List</span>
+          </button>
+          <div>
+            <div className="flex items-center gap-1.5 sm:gap-2 text-[10px] sm:text-xs font-bold uppercase tracking-wider text-emerald-400">
+              <Award className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-amber-400" />
+              <span>Active Exam Simulator — Level {normalizedLevel}</span>
+            </div>
+            <h2 className="text-base sm:text-xl font-bold text-white mt-0.5 sm:mt-1">
+              {activeLanguage === 'JAPANESE' ? `JLPT ${normalizedLevel} Mock Test` : `${normalizedLevel} Official Model Examination`}
+            </h2>
           </div>
-          <h2 className="text-base sm:text-xl font-bold text-white mt-0.5 sm:mt-1">
-            {activeLanguage === 'JAPANESE'
-              ? 'JLPT Standard Model Mock Examination (N5, N4, N3, N2)'
-              : 'EPS-TOPIK & TOPIK Level 2, 3, 4 Mock Examination'}
-          </h2>
         </div>
 
         <div className="flex items-center justify-between sm:justify-end gap-3 pt-2 sm:pt-0 border-t sm:border-t-0 border-slate-800">
           {/* Full Screen Mode Toggle Button */}
           <button
             onClick={toggleFullscreen}
-            className="flex items-center gap-1.5 px-3 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white border border-slate-700 text-xs font-bold transition-all"
+            className="flex items-center gap-1.5 px-3 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white border border-slate-700 text-xs font-bold transition-all cursor-pointer"
             title={isFullscreen ? 'Exit Full Screen' : 'Enter Full Screen Exam Mode'}
           >
             {isFullscreen ? <Minimize2 className="w-4 h-4 text-amber-400" /> : <Maximize2 className="w-4 h-4 text-indigo-400" />}
@@ -634,7 +651,7 @@ export const TimedExamEngine: React.FC<TimedExamEngineProps> = ({
           {!isSubmitted && (
             <button
               onClick={handleSubmitExam}
-              className="px-4 sm:px-5 py-2 sm:py-2.5 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-bold text-xs shadow-glow transition-all"
+              className="px-4 sm:px-5 py-2 sm:py-2.5 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-bold text-xs shadow-glow transition-all cursor-pointer"
             >
               Submit Exam
             </button>
@@ -642,125 +659,7 @@ export const TimedExamEngine: React.FC<TimedExamEngineProps> = ({
         </div>
       </div>
 
-      {/* Mock Test Selection Selector (Japanese) */}
-      {activeLanguage === 'JAPANESE' && (
-        <div className="bg-slate-900/90 backdrop-blur-xl border border-slate-800 rounded-2xl sm:rounded-3xl p-3.5 sm:p-4 shadow-xl flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
-          <div className="flex items-center gap-2">
-            <ListFilter className="w-4 h-4 text-indigo-400" />
-            <span className="text-xs font-bold text-slate-300 uppercase tracking-wider">Select Mock Exam Set:</span>
-          </div>
-          <div className="flex flex-wrap gap-2">
-            <button
-              onClick={() => {
-                setSelectedMockSet('N5_SET_1');
-                setSelectedLevelFilter('ALL');
-                setCurrentIndex(0);
-              }}
-              className={`px-3 sm:px-4 py-1.5 sm:py-2 rounded-xl text-xs font-black transition-all ${
-                selectedMockSet === 'N5_SET_1'
-                  ? 'bg-gradient-to-r from-rose-600 to-pink-600 text-white shadow-glow'
-                  : 'bg-slate-950 text-slate-400 hover:text-white border border-slate-800'
-              }`}
-            >
-              📝 JLPT N5 Mock Test Set 1
-            </button>
-            <button
-              onClick={() => {
-                setSelectedMockSet('N5_SET_2');
-                setSelectedLevelFilter('ALL');
-                setCurrentIndex(0);
-              }}
-              className={`px-3 sm:px-4 py-1.5 sm:py-2 rounded-xl text-xs font-black transition-all ${
-                selectedMockSet === 'N5_SET_2'
-                  ? 'bg-gradient-to-r from-rose-600 to-pink-600 text-white shadow-glow'
-                  : 'bg-slate-950 text-slate-400 hover:text-white border border-slate-800'
-              }`}
-            >
-              📝 JLPT N5 Mock Test Set 2
-            </button>
-            <button
-              onClick={() => {
-                setSelectedMockSet('N4_SET_1');
-                setSelectedLevelFilter('ALL');
-                setCurrentIndex(0);
-              }}
-              className={`px-3 sm:px-4 py-1.5 sm:py-2 rounded-xl text-xs font-black transition-all ${
-                selectedMockSet === 'N4_SET_1'
-                  ? 'bg-gradient-to-r from-indigo-600 to-purple-600 text-white shadow-glow'
-                  : 'bg-slate-950 text-slate-400 hover:text-white border border-slate-800'
-              }`}
-            >
-              📝 JLPT N4 Mock Test
-            </button>
-            <button
-              onClick={() => {
-                setSelectedMockSet('ALL');
-                setSelectedLevelFilter('ALL');
-                setCurrentIndex(0);
-              }}
-              className={`px-3 sm:px-4 py-1.5 sm:py-2 rounded-xl text-xs font-black transition-all ${
-                selectedMockSet === 'ALL'
-                  ? 'bg-slate-800 text-white'
-                  : 'bg-slate-950 text-slate-400 hover:text-white border border-slate-800'
-              }`}
-            >
-              🌐 All Questions Pool
-            </button>
-          </div>
-        </div>
-      )}
-
-      {/* Level Selector Bar */}
-      <div className="flex items-center gap-1.5 sm:gap-2 bg-slate-900/80 p-1.5 sm:p-2 rounded-xl sm:rounded-2xl border border-slate-800 flex-wrap">
-        <span className="text-[11px] sm:text-xs font-bold text-slate-400 px-1.5 flex items-center gap-1">
-          <Layers className="w-3.5 h-3.5" /> Filter Level:
-        </span>
-        <button
-          onClick={() => {
-            setSelectedLevelFilter('ALL');
-            setCurrentIndex(0);
-          }}
-          className={`px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-lg sm:rounded-xl text-[11px] sm:text-xs font-bold transition-all ${
-            selectedLevelFilter === 'ALL' ? 'bg-indigo-600 text-white' : 'bg-slate-950 text-slate-400 hover:text-white'
-          }`}
-        >
-          All
-        </button>
-        {activeLanguage === 'JAPANESE' ? (
-          ['N5', 'N4', 'N3', 'N2'].map((lvl) => (
-            <button
-              key={lvl}
-              onClick={() => {
-                setSelectedLevelFilter(lvl);
-                setSelectedMockSet('ALL');
-                setCurrentIndex(0);
-              }}
-              className={`px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-lg sm:rounded-xl text-[11px] sm:text-xs font-bold transition-all ${
-                selectedLevelFilter === lvl ? 'bg-rose-600 text-white' : 'bg-slate-950 text-slate-400 hover:text-white'
-              }`}
-            >
-              JLPT {lvl}
-            </button>
-          ))
-        ) : (
-          ['EPS', 'TOPIK2', 'TOPIK3', 'TOPIK4'].map((lvl) => (
-            <button
-              key={lvl}
-              onClick={() => {
-                setSelectedLevelFilter(lvl);
-                setCurrentIndex(0);
-              }}
-              className={`px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-lg sm:rounded-xl text-[11px] sm:text-xs font-bold transition-all ${
-                selectedLevelFilter === lvl ? 'bg-emerald-600 text-white' : 'bg-slate-950 text-slate-400 hover:text-white'
-              }`}
-            >
-              {lvl}
-            </button>
-          ))
-        )}
-      </div>
-
-      {/* Main Grid */}
+      {/* Main Active Question & Navigator Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {currentQ ? (
           <div className="lg:col-span-2 bg-slate-900/90 border border-slate-800 rounded-3xl p-6 shadow-xl flex flex-col justify-between min-h-[420px]">
@@ -770,17 +669,17 @@ export const TimedExamEngine: React.FC<TimedExamEngineProps> = ({
                   <span className="px-3 py-1 rounded-lg bg-indigo-600/20 border border-indigo-500/30 text-indigo-300 text-xs font-bold">
                     Question {currentIndex + 1} of {questions.length}
                   </span>
-                  <span className="px-2 py-0.5 rounded-md bg-slate-800 text-amber-400 text-[10px] font-bold">
+                  <span className="px-2.5 py-0.5 rounded-lg bg-slate-800 text-slate-300 text-xs font-semibold">
                     {currentQ.level}
                   </span>
                 </div>
 
                 <button
                   onClick={() => toggleFlag(currentQ.id)}
-                  className={`flex items-center gap-1.5 px-3 py-1 rounded-lg text-xs font-semibold border transition-all ${
+                  className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold transition-all ${
                     flaggedQuestions[currentQ.id]
-                      ? 'bg-amber-500/20 border-amber-500/50 text-amber-300'
-                      : 'bg-slate-950 border-slate-800 text-slate-400 hover:text-white'
+                      ? 'bg-amber-500/20 text-amber-300 border border-amber-500/40'
+                      : 'bg-slate-800 text-slate-400 hover:text-slate-200'
                   }`}
                 >
                   <Flag className="w-3.5 h-3.5" />
@@ -788,154 +687,158 @@ export const TimedExamEngine: React.FC<TimedExamEngineProps> = ({
                 </button>
               </div>
 
-              <div className="mb-6">
-                {currentQ.type === 'LISTENING' && (
-                  <div className="mb-4 bg-slate-950 p-4 rounded-2xl border border-slate-800 flex items-center justify-between">
-                    <div className="flex items-center gap-3">
-                      <div className="p-3 rounded-xl bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">
-                        <Volume2 className="w-5 h-5 animate-pulse" />
-                      </div>
-                      <div>
-                        <div className="text-xs font-bold text-white">Audio Listening Track</div>
-                        <div className="text-[11px] text-slate-400">
-                          Played: {audioPlaysCount[currentQ.id] || 0} / 2 times max
-                        </div>
-                      </div>
+              {/* Audio Prompt button if LISTENING question */}
+              {currentQ.type === 'LISTENING' && (
+                <div className="mb-4 p-4 rounded-2xl bg-indigo-950/40 border border-indigo-800/40 flex items-center justify-between">
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 rounded-xl bg-indigo-600/30 flex items-center justify-center text-indigo-400">
+                      <Volume2 className="w-5 h-5" />
                     </div>
-                    <button
-                      onClick={playAudioPrompt}
-                      className="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs shadow-md transition-all"
-                    >
-                      Play Audio Clip
-                    </button>
+                    <div>
+                      <p className="text-xs font-bold text-indigo-200">Listening Audio Prompt</p>
+                      <p className="text-[11px] text-indigo-300/70">
+                        Played: {audioPlaysCount[currentQ.id] || 0} / 2 Max Replays
+                      </p>
+                    </div>
                   </div>
-                )}
+                  <button
+                    onClick={playAudioPrompt}
+                    className="px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs shadow-md transition-all cursor-pointer flex items-center gap-1.5"
+                  >
+                    <Volume2 className="w-4 h-4" />
+                    <span>Play Audio Track</span>
+                  </button>
+                </div>
+              )}
 
-                <h3 className="text-lg font-bold text-slate-100 leading-relaxed">{currentQ.prompt}</h3>
-              </div>
+              {/* Question Prompt */}
+              <h3 className="text-lg sm:text-xl font-bold text-white mb-6 leading-relaxed">
+                {currentQ.prompt}
+              </h3>
 
+              {/* Options */}
               <div className="space-y-3">
                 {currentQ.options.map((option, idx) => {
                   const isSelected = selectedAnswers[currentQ.id] === option;
-                  const isCorrect = currentQ.correctAnswer === option;
-
-                  let optionStyle = 'bg-slate-950/80 border-slate-800 text-slate-200 hover:border-slate-700';
-
-                  if (isSubmitted) {
-                    if (isCorrect) {
-                      optionStyle = 'bg-emerald-950/80 border-emerald-500 text-emerald-200 font-bold';
-                    } else if (isSelected) {
-                      optionStyle = 'bg-rose-950/80 border-rose-500 text-rose-200';
-                    }
-                  } else if (isSelected) {
-                    optionStyle = 'bg-indigo-950/80 border-indigo-500 text-indigo-200 shadow-glow font-bold';
-                  }
+                  const isCorrect = isSubmitted && option === currentQ.correctAnswer;
+                  const isWrongSelected = isSubmitted && isSelected && !isCorrect;
 
                   return (
                     <button
                       key={idx}
+                      disabled={isSubmitted}
                       onClick={() => handleSelectAnswer(option)}
-                      className={`w-full text-left p-4 rounded-2xl border transition-all flex items-center justify-between ${optionStyle}`}
+                      className={`w-full p-4 rounded-2xl text-left font-medium text-sm transition-all flex items-center justify-between border ${
+                        isSubmitted
+                          ? isCorrect
+                            ? 'bg-emerald-950/70 border-emerald-500/80 text-emerald-200 font-bold'
+                            : isWrongSelected
+                            ? 'bg-rose-950/70 border-rose-500/80 text-rose-200 font-bold'
+                            : 'bg-slate-950/50 border-slate-800 text-slate-400'
+                          : isSelected
+                          ? 'bg-indigo-900/60 border-indigo-500 text-white font-bold shadow-lg shadow-indigo-950/50'
+                          : 'bg-slate-950/70 border-slate-800/80 text-slate-300 hover:bg-slate-800/80 hover:text-white cursor-pointer'
+                      }`}
                     >
                       <div className="flex items-center gap-3">
-                        <span className="w-7 h-7 rounded-xl bg-slate-800 flex items-center justify-center text-xs font-bold text-slate-300">
+                        <span
+                          className={`w-7 h-7 rounded-xl flex items-center justify-center text-xs font-bold ${
+                            isSelected ? 'bg-indigo-600 text-white' : 'bg-slate-800 text-slate-400'
+                          }`}
+                        >
                           {idx + 1}
                         </span>
-                        <span className="text-sm font-medium">{option}</span>
+                        <span>{option}</span>
                       </div>
-                      {isSelected && <CheckCircle2 className="w-5 h-5 text-indigo-400" />}
+
+                      {isSubmitted && isCorrect && <Check className="w-5 h-5 text-emerald-400 shrink-0" />}
+                      {isSubmitted && isWrongSelected && <X className="w-5 h-5 text-rose-400 shrink-0" />}
                     </button>
                   );
                 })}
               </div>
 
+              {/* Explanation on submission */}
               {isSubmitted && currentQ.explanation && (
-                <div className="mt-5 p-4 rounded-2xl bg-indigo-950/40 border border-indigo-800/50 text-xs text-indigo-200">
-                  <span className="font-bold block mb-1">Explanation:</span>
-                  {currentQ.explanation}
+                <div className="mt-6 p-4 rounded-2xl bg-amber-950/30 border border-amber-800/40 text-amber-200 text-xs leading-relaxed space-y-1">
+                  <div className="flex items-center gap-1.5 font-bold text-amber-400 uppercase tracking-wider text-[10px]">
+                    <Sparkles className="w-3.5 h-3.5" /> Answer Explanation
+                  </div>
+                  <p>{currentQ.explanation}</p>
                 </div>
               )}
             </div>
 
+            {/* Prev / Next Navigation Controls */}
             <div className="flex items-center justify-between pt-6 mt-6 border-t border-slate-800">
               <button
-                onClick={() => setCurrentIndex(Math.max(0, currentIndex - 1))}
                 disabled={currentIndex === 0}
-                className="px-4 py-2 rounded-xl bg-slate-800 disabled:opacity-40 hover:bg-slate-700 text-slate-200 text-xs font-bold transition-all flex items-center gap-1.5"
+                onClick={() => setCurrentIndex((prev) => Math.max(0, prev - 1))}
+                className="px-4 py-2 rounded-xl bg-slate-800 disabled:opacity-30 disabled:cursor-not-allowed hover:bg-slate-700 text-slate-200 font-bold text-xs transition-all flex items-center gap-1 cursor-pointer"
               >
-                <ChevronLeft className="w-4 h-4" /> Previous
+                <ChevronLeft className="w-4 h-4" /> Prev
               </button>
 
               <button
-                onClick={() => setCurrentIndex(Math.min(questions.length - 1, currentIndex + 1))}
                 disabled={currentIndex === questions.length - 1}
-                className="px-4 py-2 rounded-xl bg-slate-800 disabled:opacity-40 hover:bg-slate-700 text-slate-200 text-xs font-bold transition-all flex items-center gap-1.5"
+                onClick={() => setCurrentIndex((prev) => Math.min(questions.length - 1, prev + 1))}
+                className="px-4 py-2 rounded-xl bg-indigo-600 disabled:opacity-30 disabled:cursor-not-allowed hover:bg-indigo-500 text-white font-bold text-xs transition-all flex items-center gap-1 cursor-pointer"
               >
                 Next <ChevronRight className="w-4 h-4" />
               </button>
             </div>
           </div>
         ) : (
-          <div className="lg:col-span-2 bg-slate-900/90 border border-slate-800 rounded-3xl p-8 text-center text-slate-400">
-            No questions available for this selection.
+          <div className="lg:col-span-2 bg-slate-900/90 border border-slate-800 rounded-3xl p-8 text-center space-y-3">
+            <BookOpen className="w-10 h-10 text-slate-500 mx-auto" />
+            <h3 className="text-lg font-bold text-white">No Questions Loaded</h3>
+            <p className="text-xs text-slate-400">Please select an available mock test set from the list.</p>
           </div>
         )}
 
-        <div className="bg-slate-900/90 border border-slate-800 rounded-3xl p-6 shadow-xl flex flex-col justify-between">
+        {/* Right Side Navigator Grid */}
+        <div className="bg-slate-900/90 border border-slate-800 rounded-3xl p-6 shadow-xl space-y-6">
           <div>
-            <h4 className="text-xs font-bold uppercase tracking-wider text-slate-400 mb-4">
+            <h4 className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-4">
               Question Navigator Grid
             </h4>
-
-            <div className="grid grid-cols-4 gap-2.5 mb-6">
+            <div className="grid grid-cols-4 sm:grid-cols-5 lg:grid-cols-4 gap-2">
               {questions.map((q, idx) => {
+                const isCurrent = idx === currentIndex;
                 const isAnswered = Boolean(selectedAnswers[q.id]);
                 const isFlagged = Boolean(flaggedQuestions[q.id]);
-                const isCurrent = idx === currentIndex;
-
-                let gridStyle = 'bg-slate-950 border-slate-800 text-slate-400';
-
-                if (isCurrent) {
-                  gridStyle = 'ring-2 ring-indigo-500 border-indigo-400 text-white font-bold bg-slate-800';
-                } else if (isFlagged) {
-                  gridStyle = 'bg-amber-950/80 border-amber-500 text-amber-300 font-bold';
-                } else if (isAnswered) {
-                  gridStyle = 'bg-emerald-950/80 border-emerald-500 text-emerald-300 font-bold';
-                }
 
                 return (
                   <button
                     key={q.id}
                     onClick={() => setCurrentIndex(idx)}
-                    className={`relative h-12 rounded-xl border text-xs flex items-center justify-center transition-all ${gridStyle}`}
+                    className={`h-11 rounded-xl text-xs font-bold transition-all relative flex items-center justify-center cursor-pointer border ${
+                      isCurrent
+                        ? 'bg-indigo-600 text-white border-indigo-400 shadow-glow'
+                        : isAnswered
+                        ? 'bg-emerald-950/80 text-emerald-300 border-emerald-700/60'
+                        : 'bg-slate-950/60 text-slate-400 border-slate-800 hover:border-slate-700 hover:text-white'
+                    }`}
                   >
-                    <span>{idx + 1}</span>
-                    {isFlagged && <Flag className="absolute top-1 right-1 w-3 h-3 text-amber-400" />}
+                    {idx + 1}
+                    {isFlagged && (
+                      <span className="absolute -top-1 -right-1 w-3 h-3 bg-amber-500 rounded-full border-2 border-slate-900" />
+                    )}
                   </button>
                 );
               })}
             </div>
-
-            <div className="space-y-2 text-xs text-slate-400 border-t border-slate-800 pt-4">
-              <div className="flex items-center gap-2">
-                <span className="w-3 h-3 rounded bg-emerald-950 border border-emerald-500" />
-                <span>Answered</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <span className="w-3 h-3 rounded bg-amber-950 border border-amber-500" />
-                <span>Flagged for Review</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <span className="w-3 h-3 rounded bg-slate-950 border border-slate-800" />
-                <span>Unanswered</span>
-              </div>
-            </div>
           </div>
 
-          <div className="mt-6 pt-4 border-t border-slate-800 text-center">
-            <div className="text-xs text-slate-400 font-medium">Answered Progress</div>
-            <div className="text-xl font-bold text-white mt-0.5">
-              {Object.keys(selectedAnswers).length} / {questions.length} Questions
+          <div className="pt-4 border-t border-slate-800 space-y-2 text-xs text-slate-400">
+            <div className="flex items-center gap-2">
+              <span className="w-3 h-3 rounded-md bg-indigo-600 inline-block" /> Current Question
+            </div>
+            <div className="flex items-center gap-2">
+              <span className="w-3 h-3 rounded-md bg-emerald-950 border border-emerald-700 inline-block" /> Answered
+            </div>
+            <div className="flex items-center gap-2">
+              <span className="w-3 h-3 rounded-md bg-amber-500 inline-block" /> Flagged for Review
             </div>
           </div>
         </div>
