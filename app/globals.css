@@ -1,4 +1,4 @@
-﻿@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,300..900;1,14..32,300..900&family=Noto+Sans+Devanagari:wght@400;500;600;700;900&family=Noto+Sans+JP:wght@400;500;700;900&family=Noto+Sans+KR:wght@400;500;700;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,300..900;1,14..32,300..900&family=Noto+Sans+Devanagari:wght@400;500;600;700;900&family=Noto+Sans+JP:wght@400;500;700;900&family=Noto+Sans+KR:wght@400;500;700;900&display=swap');
 @import "tailwindcss";
 
 /* -- Design Tokens ------------------------------------------ */
@@ -58,8 +58,11 @@ html, body {
 /* -- Bottom sheet ------------------------------------------ */
 .bottom-sheet { position: fixed; bottom: 0; left: 0; right: 0; z-index: 60; background: var(--surface); border-radius: 20px 20px 0 0; box-shadow: 0 -4px 40px rgba(0,0,0,0.12); padding-bottom: env(safe-area-inset-bottom); }
 
-/* -- Bottom tab bar ---------------------------------------- */
+/* -- Bottom tab bar (strictly mobile-only) ----------------- */
 .bottom-tab-bar { position: fixed; bottom: 0; left: 0; right: 0; z-index: 50; background: var(--surface); border-top: 1px solid var(--border); display: flex; padding-bottom: env(safe-area-inset-bottom); }
+@media (min-width: 768px) {
+  .bottom-tab-bar { display: none !important; }
+}
 
 /* -- Animations -------------------------------------------- */
 @keyframes fade-in { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }

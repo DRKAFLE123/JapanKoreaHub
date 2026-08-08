@@ -3,7 +3,7 @@ import React from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import {
-  Home, BookOpen, ClipboardList, GraduationCap, Briefcase, Shield, Globe, Bell, FileText, Handshake
+  Home, BookOpen, ClipboardList, GraduationCap, Briefcase, Shield, Globe, Bell, FileText, Handshake, BarChart2, User as UserIcon
 } from 'lucide-react';
 
 const MAIN_LINKS = [
@@ -14,6 +14,8 @@ const MAIN_LINKS = [
   { href: '/work',         label: 'Work',         Icon: Briefcase },
   { href: '/visa',         label: 'Visa',         Icon: Shield },
   { href: '/life',         label: 'Life',         Icon: Globe },
+  { href: '/dashboard',    label: 'Progress',     Icon: BarChart2 },
+  { href: '/profile',      label: 'Profile',      Icon: UserIcon },
 ];
 
 const SECONDARY_LINKS = [
