@@ -25,7 +25,7 @@ interface StatsData {
 }
 
 export default function AdminCMSPage() {
-  const [activeTab, setActiveTab] = useState<'OVERVIEW' | 'USERS' | 'VOCAB' | 'EXAMS' | 'SYSTEM'>('OVERVIEW');
+  const [activeTab, setActiveTab] = useState<'OVERVIEW' | 'USERS' | 'VOCAB' | 'EXAMS' | 'NOTICES' | 'BOOKINGS' | 'SYSTEM'>('OVERVIEW');
   const [loading, setLoading] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [roleFilter, setRoleFilter] = useState<string>('ALL');
@@ -151,6 +151,8 @@ export default function AdminCMSPage() {
             { id: 'USERS', label: 'User & Role Manager', icon: Users, emoji: '👥' },
             { id: 'VOCAB', label: 'Vocabulary & Content CMS', icon: BookOpen, emoji: '📖' },
             { id: 'EXAMS', label: 'Exam & Question Bank', icon: Clock, emoji: '⏱' },
+            { id: 'NOTICES', label: 'Notices & Policy Updates', icon: Globe, emoji: '📢' },
+            { id: 'BOOKINGS', label: 'Consultancy Inquiries', icon: ShieldCheck, emoji: '🤝' },
             { id: 'SYSTEM', label: 'Database & System Health', icon: Database, emoji: '⚙️' },
           ].map(tab => (
             <button
@@ -588,7 +590,165 @@ export default function AdminCMSPage() {
           </div>
         )}
 
-        {/* ── 5. SYSTEM HEALTH ── */}
+        {/* ── 5. NOTICES MANAGEMENT ── */}
+        {activeTab === 'NOTICES' && (
+          <div className="space-y-6 animate-fade-in">
+            <div className="bg-slate-900 border border-slate-800 rounded-3xl p-6 shadow-2xl space-y-4">
+              <div className="flex items-center justify-between">
+                <div>
+                  <h2 className="text-lg font-black text-white">📢 Publish Official Notice</h2>
+                  <p className="text-xs text-slate-400">Post verified policy updates, exam registrations, or vacancies for Japan and Korea.</p>
+                </div>
+              </div>
+
+              <form
+                onSubmit={async (e) => {
+                  e.preventDefault();
+                  const form = e.target as HTMLFormElement;
+                  const data = new FormData(form);
+                  const payload = {
+                    title: data.get('title'),
+                    titleNe: data.get('titleNe'),
+                    body: data.get('body'),
+                    bodyNe: data.get('bodyNe'),
+                    category: data.get('category'),
+                    country: data.get('country'),
+                    sourceType: data.get('sourceType'),
+                    sourceUrl: data.get('sourceUrl'),
+                    isPinned: data.get('isPinned') === 'on',
+                  };
+
+                  try {
+                    const res = await fetch('/api/notices', {
+                      method: 'POST',
+                      headers: { 'Content-Type': 'application/json' },
+                      body: JSON.stringify(payload),
+                    });
+                    if (res.ok) {
+                      alert('Notice published successfully!');
+                      form.reset();
+                    } else {
+                      alert('Failed to publish notice');
+                    }
+                  } catch (err) {
+                    alert('Error publishing notice');
+                  }
+                }}
+                className="space-y-4 bg-slate-950 p-4 rounded-2xl border border-slate-800"
+              >
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-xs font-bold text-slate-300 mb-1">Title (English)</label>
+                    <input
+                      name="title"
+                      required
+                      placeholder="e.g. Japan SSW Agriculture Skill Exam Registration Open"
+                      className="w-full px-3 py-2 bg-slate-900 border border-slate-800 rounded-xl text-xs text-white"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-xs font-bold text-slate-300 mb-1">Title (Nepali)</label>
+                    <input
+                      name="titleNe"
+                      placeholder="e.g. जापान SSW कृषि सीप परीक्षा दर्ता खुल्यो"
+                      className="w-full px-3 py-2 bg-slate-900 border border-slate-800 rounded-xl text-xs text-white font-ne"
+                    />
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                  <div>
+                    <label className="block text-xs font-bold text-slate-300 mb-1">Category</label>
+                    <select name="category" className="w-full px-3 py-2 bg-slate-900 border border-slate-800 rounded-xl text-xs text-white">
+                      <option value="VISA_UPDATE">VISA_UPDATE</option>
+                      <option value="EXAM_SCHEDULE">EXAM_SCHEDULE</option>
+                      <option value="VACANCY">VACANCY</option>
+                      <option value="PLATFORM">PLATFORM</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label className="block text-xs font-bold text-slate-300 mb-1">Country Scope</label>
+                    <select name="country" className="w-full px-3 py-2 bg-slate-900 border border-slate-800 rounded-xl text-xs text-white">
+                      <option value="JAPAN">🇯🇵 JAPAN</option>
+                      <option value="KOREA">🇰🇷 KOREA</option>
+                      <option value="BOTH">🌏 BOTH</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label className="block text-xs font-bold text-slate-300 mb-1">Source Type</label>
+                    <select name="sourceType" className="w-full px-3 py-2 bg-slate-900 border border-slate-800 rounded-xl text-xs text-white">
+                      <option value="OFFICIAL_GOVERNMENT">🏛️ OFFICIAL_GOVERNMENT</option>
+                      <option value="EXAM_BODY">📝 EXAM_BODY</option>
+                      <option value="EMBASSY">🏢 EMBASSY</option>
+                      <option value="PARTNER">🤝 PARTNER</option>
+                      <option value="JAPANKOREAHUB">🌐 JAPANKOREAHUB</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div>
+                  <label className="block text-xs font-bold text-slate-300 mb-1">Source Link (Official Verification URL)</label>
+                  <input
+                    name="sourceUrl"
+                    type="url"
+                    placeholder="https://www.mofa.go.jp/..."
+                    className="w-full px-3 py-2 bg-slate-900 border border-slate-800 rounded-xl text-xs text-white"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-xs font-bold text-slate-300 mb-1">Notice Body (English)</label>
+                  <textarea
+                    name="body"
+                    required
+                    rows={3}
+                    placeholder="Full announcement text..."
+                    className="w-full px-3 py-2 bg-slate-900 border border-slate-800 rounded-xl text-xs text-white"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-xs font-bold text-slate-300 mb-1">Notice Body (Nepali - Optional)</label>
+                  <textarea
+                    name="bodyNe"
+                    rows={3}
+                    placeholder="नेपाली विवरण..."
+                    className="w-full px-3 py-2 bg-slate-900 border border-slate-800 rounded-xl text-xs text-white font-ne"
+                  />
+                </div>
+
+                <div className="flex items-center justify-between pt-2">
+                  <label className="flex items-center gap-2 text-xs font-bold text-amber-400 cursor-pointer">
+                    <input type="checkbox" name="isPinned" className="rounded" />
+                    📌 Pin this notice to the top of homepage
+                  </label>
+                  <button
+                    type="submit"
+                    className="px-5 py-2.5 bg-indigo-600 hover:bg-indigo-500 text-white font-black text-xs rounded-xl shadow-glow"
+                  >
+                    Publish Notice →
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        )}
+
+        {/* ── 6. CONSULTANCY BOOKINGS ── */}
+        {activeTab === 'BOOKINGS' && (
+          <div className="space-y-6 animate-fade-in">
+            <div className="bg-slate-900 border border-slate-800 rounded-3xl p-6 shadow-2xl space-y-4">
+              <h2 className="text-lg font-black text-white">🤝 Student Counseling Inquiries</h2>
+              <p className="text-xs text-slate-400">Review 1-on-1 visa interview and document counseling requests.</p>
+              
+              <div className="p-4 bg-slate-950 rounded-2xl border border-slate-800 text-xs text-slate-400 text-center py-8">
+                Consultancy bookings submitted via <code className="text-indigo-300">/consultancy</code> are saved to <code className="text-indigo-300">ConsultancyBooking</code> database table.
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* ── 7. SYSTEM HEALTH ── */}
         {activeTab === 'SYSTEM' && (
           <div className="space-y-4 animate-fade-in">
             <div className="bg-slate-900 border border-slate-800 rounded-3xl p-6 shadow-2xl space-y-4">
