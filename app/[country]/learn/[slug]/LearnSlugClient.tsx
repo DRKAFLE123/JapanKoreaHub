@@ -55,14 +55,14 @@ export default function LearnSlugClient({ country, slug }: Props) {
 
     return (
       <div className="min-h-screen bg-slate-950 dark-compat pb-24">
-        <div className="px-4 py-3 bg-slate-950 border-b border-slate-900 sticky top-0 z-40 flex items-center justify-between">
+        <div className="px-4 py-2 bg-slate-950 border-b border-slate-900 sticky top-0 z-40 flex items-center justify-between">
           <Link href={`/${country}/learn`} className="inline-flex items-center gap-1.5 text-xs font-semibold text-slate-400 hover:text-white transition-colors">
             <ArrowLeft className="w-4 h-4" />
             Back to {flag} {cName} Learning Hub
           </Link>
         </div>
 
-        <main className="max-w-5xl mx-auto space-y-4 pt-4">
+        <main className="max-w-5xl mx-auto space-y-2 pt-2">
           <section className="px-4">
             <LevelHeroBanner
               title={meta.title}
@@ -79,7 +79,7 @@ export default function LearnSlugClient({ country, slug }: Props) {
             country={country}
           />
 
-          <section className="px-4 relative">
+          <section className="px-4 relative pt-1">
             {country === 'japan' ? (
               <LevelHubDashboard
                 level={JAPAN_LEVEL_MAPPING[slug].type}
