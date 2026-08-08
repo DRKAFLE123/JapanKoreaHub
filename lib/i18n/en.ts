@@ -27,6 +27,18 @@ export const en = {
   viewAll: 'View all',
   continueLearning: 'continue learning',
 
+  // Country Hub Keys
+  japanGatewayTitle: 'Your gateway to Japan',
+  koreaGatewayTitle: 'Your gateway to Korea',
+  japanSub: 'Japanese learning, JLPT & JFT preparation, visa information, study opportunities, SSW jobs and life guides — all in one place.',
+  koreaSub: 'Korean learning, EPS-TOPIK & TOPIK preparation, visa information, study opportunities, E-9 jobs and life guides — all in one place.',
+  startJapaneseTrack: 'Start Japanese Track',
+  startKoreanTrack: 'Start Korean Track',
+  getExpertGuidance: 'Get Expert Guidance',
+  latestUpdates: 'Latest Updates & Announcements',
+  popularCurriculum: 'Popular Learning Curriculum',
+  whatBringsYouToCountry: 'What Brings You Here?',
+
   // Country Labels
   japan: 'Japan',
   korea: 'Korea',

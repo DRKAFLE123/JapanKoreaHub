@@ -8,6 +8,7 @@ import {
 } from 'lucide-react';
 import MobileNavbar from '@/components/layout/MobileNavbar';
 import BottomTabBar from '@/components/layout/BottomTabBar';
+import { useTranslation } from '@/lib/i18n/LanguageContext';
 
 type Country = 'japan' | 'korea';
 
@@ -101,30 +102,44 @@ const COUNTRY_CONFIG = {
 
 export default function CountryHubClient({ country }: { country: Country }) {
   const cfg = COUNTRY_CONFIG[country];
+  const { lang, t, toggleLang } = useTranslation();
+  const isNe = lang === 'ne';
+
+  const heroTitle = isNe 
+    ? (country === 'japan' ? t('japanGatewayTitle') : t('koreaGatewayTitle'))
+    : cfg.hero.title;
+
+  const heroSub = isNe 
+    ? (country === 'japan' ? t('japanSub') : t('koreaSub'))
+    : cfg.hero.sub;
+
+  const startTrackLabel = isNe
+    ? (country === 'japan' ? t('startJapaneseTrack') : t('startKoreanTrack'))
+    : `Start ${cfg.name} Track`;
 
   return (
     <div className="min-h-screen bg-slate-50 text-slate-900 font-sans pb-24">
-      <MobileNavbar user={null} lang="en" onLangToggle={() => {}} onSearchOpen={() => {}} />
+      <MobileNavbar user={null} lang={lang} onLangToggle={toggleLang} onSearchOpen={() => {}} />
 
       <main className="max-w-6xl mx-auto px-4 pt-4 md:pt-8 space-y-8">
 
         {/* 🚀 LIGHT HERO SECTION */}
         <section className={`relative overflow-hidden rounded-3xl bg-gradient-to-br ${cfg.theme.heroGrad} border p-6 sm:p-10 shadow-sm space-y-4`}>
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-black uppercase tracking-wider bg-white/90 border border-slate-200 text-slate-700 shadow-xs">
-            <span>{cfg.hero.badge}</span>
+            <span>{isNe ? (country === 'japan' ? '🇯🇵 जापानी पोर्टल' : '🇰🇷 कोरियन पोर्टल') : cfg.hero.badge}</span>
           </div>
 
           <div className="space-y-1">
             <h1 className="text-3xl sm:text-5xl font-black text-slate-900 tracking-tight">
-              {cfg.hero.title}
+              {heroTitle}
             </h1>
             <p className={`text-base sm:text-xl font-bold ${cfg.theme.accentText}`}>
-              {cfg.hero.tagline}
+              {isNe ? t('heroTitle') : cfg.hero.tagline}
             </p>
           </div>
 
           <p className="text-sm sm:text-base text-slate-600 max-w-2xl leading-relaxed font-medium">
-            {cfg.hero.sub}
+            {heroSub}
           </p>
 
           <div className="pt-2 flex flex-wrap items-center gap-3">
@@ -132,7 +147,7 @@ export default function CountryHubClient({ country }: { country: Country }) {
               href={`/${country}/learn`}
               className={`px-5 py-2.5 rounded-xl text-sm font-extrabold transition-all flex items-center gap-2 cursor-pointer ${cfg.theme.primaryBtn}`}
             >
-              <span>Start {cfg.name} Track</span>
+              <span>{startTrackLabel}</span>
               <ArrowRight className="w-4 h-4" />
             </Link>
 
@@ -140,7 +155,7 @@ export default function CountryHubClient({ country }: { country: Country }) {
               href="/consultancy"
               className="px-5 py-2.5 rounded-xl text-sm font-bold bg-white text-slate-700 hover:text-slate-900 hover:bg-slate-100 border border-slate-200 shadow-xs transition-all flex items-center gap-2 cursor-pointer"
             >
-              <span>🤝 Get Expert Guidance</span>
+              <span>🤝 {t('getExpertGuidance')}</span>
             </Link>
           </div>
         </section>
@@ -151,11 +166,11 @@ export default function CountryHubClient({ country }: { country: Country }) {
             <div className="flex items-center gap-2">
               <Bell className={`w-4 h-4 ${cfg.theme.accentText}`} />
               <h2 className="text-xs font-black uppercase tracking-wider text-slate-500">
-                Latest {cfg.name} Updates & Announcements
+                {isNe ? `ताजा ${isNe && country === 'japan' ? 'जापानी' : 'कोरियन'} अपडेट तथा सूचनाहरू` : `Latest ${cfg.name} Updates & Announcements`}
               </h2>
             </div>
             <Link href="/notices" className={`text-xs font-bold ${cfg.theme.accentText} hover:underline flex items-center gap-1`}>
-              View all notices <ChevronRight className="w-3.5 h-3.5" />
+              {t('viewAll')} <ChevronRight className="w-3.5 h-3.5" />
             </Link>
           </div>
 

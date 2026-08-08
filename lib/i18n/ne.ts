@@ -29,6 +29,18 @@ export const ne: Record<TranslationKeys, string> = {
   viewAll: 'सबै हेर्नुहोस्',
   continueLearning: 'सिक्न जारी राख्नुहोस्',
 
+  // Country Hub Keys
+  japanGatewayTitle: 'जापानको लागि तपाईंको प्रवेशद्वार',
+  koreaGatewayTitle: 'कोरियाको लागि तपाईंको प्रवेशद्वार',
+  japanSub: 'जापानी भाषा, JLPT र JFT तयारी, भिसा जानकारी, अध्ययनका अवसर, SSW रोजगारी र जीवनशैली मार्गदर्शन — सबै एकै ठाउँमा।',
+  koreaSub: 'कोरियन भाषा, EPS-TOPIK र TOPIK तयारी, भिसा जानकारी, अध्ययनका अवसर, E-9 रोजगारी र जीवनशैली मार्गदर्शन — सबै एकै ठाउँमा।',
+  startJapaneseTrack: 'जापानी कोर्स सुरु गर्नुहोस्',
+  startKoreanTrack: 'कोरियन कोर्स सुरु गर्नुहोस्',
+  getExpertGuidance: 'विशेषज्ञ परामर्श लिनुहोस्',
+  latestUpdates: 'ताजा अपडेट तथा सूचनाहरू',
+  popularCurriculum: 'लोकप्रिय शिक्षण पाठ्यक्रम',
+  whatBringsYouToCountry: 'तपाईंलाई के आवश्यक छ?',
+
   // Country Labels
   japan: 'जापान',
   korea: 'कोरिया',
