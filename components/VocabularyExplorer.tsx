@@ -281,16 +281,16 @@ export const VocabularyExplorer: React.FC<VocabularyExplorerProps> = ({ preselec
           JAPANESE BASICS VIEW (HIRAGANA, KATAKANA, DAKUTEN, YOON, RULES - White Book Paper Mode)
       ══════════════════════════════════════════════════════════ */}
       {selectedLevel === 'BASICS' && (
-        <div className="space-y-4 font-sans">
-          <div className="flex items-center gap-1.5 overflow-x-auto bg-slate-100 border border-slate-200/90 p-1.5 rounded-2xl">
+        <div className="space-y-2 font-sans pt-0">
+          <div className="flex items-center gap-1.5 overflow-x-auto bg-slate-900/90 border border-slate-800 p-1.5 rounded-2xl">
             {(['HIRAGANA', 'KATAKANA', 'DAKUTEN', 'YOON', 'RULES', 'RADICALS', 'KANJI', 'VOCAB'] as const).map((sub) => (
               <button
                 key={sub}
                 onClick={() => setBasicsSubTab(sub)}
-                className={`px-3.5 py-2 rounded-xl text-xs font-black transition-all cursor-pointer whitespace-nowrap ${
+                className={`px-3 py-1.5 rounded-xl text-xs font-extrabold transition-all cursor-pointer whitespace-nowrap ${
                   basicsSubTab === sub
-                    ? 'bg-rose-600 text-white shadow-xs'
-                    : 'text-slate-700 hover:text-slate-900 hover:bg-slate-200/70 font-bold'
+                    ? 'bg-red-600 text-white shadow-sm'
+                    : 'text-slate-400 hover:text-white hover:bg-slate-800'
                 }`}
               >
                 {sub === 'HIRAGANA' && 'あ Hiragana (46)'}
@@ -307,18 +307,18 @@ export const VocabularyExplorer: React.FC<VocabularyExplorerProps> = ({ preselec
 
           {basicsSubTab === 'HIRAGANA' && (
             <div className="bg-white text-slate-900 border border-slate-200/90 rounded-2xl sm:rounded-3xl p-4 sm:p-6 shadow-2xl space-y-3 font-sans">
-              <div className="text-xs font-black uppercase tracking-wider text-rose-600">Basic 46 Hiragana Phonetic Characters (ひらがな)</div>
+              <div className="text-xs font-black uppercase tracking-wider text-red-600">Basic 46 Hiragana Phonetic Characters (ひらがな)</div>
               <div className="grid grid-cols-5 sm:grid-cols-10 gap-2">
-                {JAPANESE_HIRAGANA.map(item => renderKanaCard(item, 'text-rose-600'))}
+                {JAPANESE_HIRAGANA.map(item => renderKanaCard(item, 'text-red-600'))}
               </div>
             </div>
           )}
 
           {basicsSubTab === 'KATAKANA' && (
             <div className="bg-white text-slate-900 border border-slate-200/90 rounded-2xl sm:rounded-3xl p-4 sm:p-6 shadow-2xl space-y-3 font-sans">
-              <div className="text-xs font-black uppercase tracking-wider text-pink-600">Basic 46 Katakana Characters for Foreign Words (カタカナ)</div>
+              <div className="text-xs font-black uppercase tracking-wider text-red-600">Basic 46 Katakana Characters for Foreign Words (カタカナ)</div>
               <div className="grid grid-cols-5 sm:grid-cols-10 gap-2">
-                {JAPANESE_KATAKANA.map(item => renderKanaCard(item, 'text-pink-400'))}
+                {JAPANESE_KATAKANA.map(item => renderKanaCard(item, 'text-red-600'))}
               </div>
             </div>
           )}
