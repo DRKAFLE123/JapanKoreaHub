@@ -239,9 +239,87 @@ const JAPANESE_QUESTIONS: ExamQuestion[] = [
     correctAnswer: 'お書きになった',
     explanation: '尊敬語 (Respectful Keigo): お ＋ 動詞ます形 ＋ になる。先生がお書きになった本。',
   },
+  // ==========================================
+  // JLPT N3 MOCK TEST SET 1 (模擬試験)
+  // ==========================================
+  {
+    id: 'jp_n3_1_1',
+    level: 'N3',
+    mockSet: 'N3_SET_1',
+    type: 'MULTIPLE_CHOICE',
+    prompt: '【問題1 文字・語彙】下線の言葉のひらがなを選んでください: 環境問題について【関心】を持っています。',
+    options: ['かんしん', 'かんけい', 'かんそう', 'かんじ'],
+    correctAnswer: 'かんしん',
+    explanation: '「関心」の読み方は「かんしん」(Interest / Concern)です。',
+  },
+  {
+    id: 'jp_n3_1_2',
+    level: 'N3',
+    mockSet: 'N3_SET_1',
+    type: 'FILL_BLANK',
+    prompt: '【問題2 文法】適切な表現を選んでください: この件【_____】、後ほどメールでお知らせします。',
+    options: ['につきまして', 'にとって', 'にくらべて', 'に反して'],
+    correctAnswer: 'につきまして',
+    explanation: '「〜につきまして」(Regarding...)はビジネスやフォーマルで使われるN3文法です。',
+  },
+
+  // ==========================================
+  // JLPT N2 MOCK TEST SET 1 (模擬試験)
+  // ==========================================
+  {
+    id: 'jp_n2_1_1',
+    level: 'N2',
+    mockSet: 'N2_SET_1',
+    type: 'MULTIPLE_CHOICE',
+    prompt: '【問題1 文字・語彙】下線の言葉のひらがなを選んでください: 新しい事業を【展開】する予定です。',
+    options: ['てんかい', 'てんかん', 'てんけん', 'てんこう'],
+    correctAnswer: 'てんかい',
+    explanation: '「展開」の読み方は「てんかい」(Expansion / Deployment)です。',
+  },
+
+  // ==========================================
+  // JLPT N1 MOCK TEST SET 1 (模擬試験)
+  // ==========================================
+  {
+    id: 'jp_n1_1_1',
+    level: 'N1',
+    mockSet: 'N1_SET_1',
+    type: 'MULTIPLE_CHOICE',
+    prompt: '【問題1 文字・語彙】下線の言葉のひらがなを選んでください: 事態の【収拾】に努める。',
+    options: ['しゅうしゅう', 'しゅうしき', 'しゅうそく', 'しゅうりゅう'],
+    correctAnswer: 'しゅうしゅう',
+    explanation: '「収拾」の読み方は「しゅうしゅう」(Settlement / Controlling a situation)です。',
+  },
+
+  // ==========================================
+  // JFT-BASIC CBT MOCK TEST SET 1
+  // ==========================================
+  {
+    id: 'jft_1_1',
+    level: 'JFT',
+    mockSet: 'JFT_SET_1',
+    type: 'MULTIPLE_CHOICE',
+    prompt: '【JFT文字・語彙 Q1】下線の言葉のひらがなを選んでください: 工場で【安全】の研修があります。',
+    options: ['あんぜん', 'かんぜん', 'あぜん', 'あんぜ'],
+    correctAnswer: 'あんぜん',
+    explanation: '「安全」は「あんぜん」(Safety)と読みます。',
+  },
+  {
+    id: 'jft_1_2',
+    level: 'JFT',
+    mockSet: 'JFT_SET_1',
+    type: 'FILL_BLANK',
+    prompt: '【JFT会話・表現 Q2】A:「すみません、この機械の使い方を教えていただけませんか。」\nB:「( )。」',
+    options: ['ええ、いいですよ。こちらへどうぞ', 'いいえ、使いません', 'はい、使い終わりました', 'いいえ、けっこうです'],
+    correctAnswer: 'ええ、いいですよ。こちらへどうぞ',
+    explanation: '依頼に対する快諾の表現「ええ、いいですよ」が自然です。',
+  },
 ];
 
 const KOREAN_QUESTIONS: ExamQuestion[] = [
+  // ==========================================
+  // EPS-TOPIK MOCK TEST SET 1 & SET 2
+  // ==========================================
   {
     id: 'kr_eps_1',
     level: 'EPS',
@@ -263,6 +341,20 @@ const KOREAN_QUESTIONS: ExamQuestion[] = [
     explanation: '모자나 안전모는 "쓰다"(써야 합니다) 동사를 사용합니다.',
   },
   {
+    id: 'kr_eps_3',
+    level: 'EPS',
+    mockSet: 'EPS_SET_2',
+    type: 'MULTIPLE_CHOICE',
+    prompt: '[읽기 3번] 안전 표지판의 의미로 알맞은 것을 고르십시오: (표지: 출입 금지)',
+    options: ['들어오지 마십시오', '담배를 피우지 마십시오', '손대지 마십시오', '미끄러움 주의'],
+    correctAnswer: '들어오지 마십시오',
+    explanation: '출입 금지(No Entry) 표지는 "들어오지 마십시오"를 의미합니다.',
+  },
+
+  // ==========================================
+  // TOPIK I (LEVELS 1-2) MOCK TEST SET 1 & SET 2
+  // ==========================================
+  {
     id: 'kr_topik1_1',
     level: 'TOPIK2',
     mockSet: 'TOPIK1_SET_1',
@@ -273,6 +365,20 @@ const KOREAN_QUESTIONS: ExamQuestion[] = [
     explanation: '학생(Student)은 직업(Occupation)에 관한 내용입니다.',
   },
   {
+    id: 'kr_topik1_2',
+    level: 'TOPIK2',
+    mockSet: 'TOPIK1_SET_2',
+    type: 'FILL_BLANK',
+    prompt: '[TOPIK I 문법 2번] 빈칸에 들어갈 알맞은 조사를 고르십시오: "저는 도서관【_____】 공부를 합니다."',
+    options: ['에서', '에게', '으로', '하고'],
+    correctAnswer: '에서',
+    explanation: '행동이 일어나는 장소를 나타내는 조사는 "에서"입니다.',
+  },
+
+  // ==========================================
+  // TOPIK II (LEVELS 3-6) MOCK TEST SET 1 & SET 2
+  // ==========================================
+  {
     id: 'kr_topik2_1',
     level: 'TOPIK3',
     mockSet: 'TOPIK2_SET_1',
@@ -281,6 +387,16 @@ const KOREAN_QUESTIONS: ExamQuestion[] = [
     options: ['오르고 있다', '내리고 있다', '줄어들고 있다', '사라지고 있다'],
     correctAnswer: '오르고 있다',
     explanation: '상승하다(Rise/Increase) = 오르고 있다.',
+  },
+  {
+    id: 'kr_topik2_2',
+    level: 'TOPIK3',
+    mockSet: 'TOPIK2_SET_2',
+    type: 'FILL_BLANK',
+    prompt: '[TOPIK II 쓰기 53번] 그래프 분석 시 적절한 표현을 고르십시오: "조사 결과에 따르면 20대 소비율이 15%【_____】."',
+    options: ['증가하였다', '감소시켰다', '없어졌다', '출발하였다'],
+    correctAnswer: '증가하였다',
+    explanation: '그래프 상승 추세를 설명할 때는 "증가하였다"(Increased)를 사용합니다.',
   },
 ];
 
@@ -496,13 +612,64 @@ export const TimedExamEngine: React.FC<TimedExamEngineProps> = ({
         },
       ];
     }
+    if (normalizedLevel === 'N3') {
+      return [
+        {
+          id: 'N3_SET_1',
+          title: 'JLPT N3 Intermediate Master Mock Exam — Set 1',
+          specs: '⏱ 60 Mins • 📝 2 Questions • 🎯 Pass Mark: 70% • 📘 Intermediate Level',
+          desc: 'N3 level model test covering ~につきまして, ~に関して, and workplace reading comprehension.',
+          badge: 'Official JLPT N3',
+        },
+      ];
+    }
+    if (normalizedLevel === 'N2') {
+      return [
+        {
+          id: 'N2_SET_1',
+          title: 'JLPT N2 Business & Academic Model Test — Set 1',
+          specs: '⏱ 105 Mins • 📝 1 Question • 🎯 Pass Mark: 50% • 🏢 Business Keigo',
+          desc: 'N2 level mock exam focusing on business Japanese, editorial news comprehension, and formal compound verbs.',
+          badge: 'Official JLPT N2',
+        },
+      ];
+    }
+    if (normalizedLevel === 'N1') {
+      return [
+        {
+          id: 'N1_SET_1',
+          title: 'JLPT N1 Native Fluency Examination — Set 1',
+          specs: '⏱ 110 Mins • 📝 1 Question • 🎯 Pass Mark: 55.5% • 🏛️ Academic Native',
+          desc: 'N1 level advanced mock test covering all 2,136 Jōyō kanji, editorial commentary, and technical audio.',
+          badge: 'Official JLPT N1',
+        },
+      ];
+    }
+    if (normalizedLevel === 'JFT') {
+      return [
+        {
+          id: 'JFT_SET_1',
+          title: 'JFT-Basic 250-Mark Official CBT Simulator — Set 1',
+          specs: '⏱ 60 Mins • 📝 2 Questions • 🎯 Pass Mark: 200/250 Pts • 💻 Prometric CBT',
+          desc: 'Official 250-point Prometric CBT simulator for SSW 1 Specified Skilled Worker visas.',
+          badge: 'Official JFT-Basic',
+        },
+      ];
+    }
     if (normalizedLevel === 'EPS') {
       return [
         {
           id: 'EPS_SET_1',
-          title: 'EPS-TOPIK 60-Lesson HRD Korea Official Model Test',
-          specs: '⏱ 50 Mins • 📝 20 Questions • 🎯 Pass Mark: 110 Pts • 🏢 Workplace Sector',
+          title: 'EPS-TOPIK 60-Lesson HRD Korea Official Model Test — Set 1',
+          specs: '⏱ 50 Mins • 📝 2 Questions • 🎯 Pass Mark: 110 Pts • 🏢 Factory & Safety',
           desc: 'HRD Korea standard CBT format covering factory vocabulary, signboards, and workplace safety rules.',
+          badge: 'EPS-TOPIK HRD',
+        },
+        {
+          id: 'EPS_SET_2',
+          title: 'EPS-TOPIK Manufacturing & Safety Model Test — Set 2',
+          specs: '⏱ 50 Mins • 📝 1 Question • 🎯 Pass Mark: 110 Pts • ⚠️ Safety Warnings',
+          desc: 'Targeted EPS CBT exam focusing on warning signs (출입 금지, 경고) and industrial equipment.',
           badge: 'EPS-TOPIK HRD',
         },
       ];
@@ -511,9 +678,16 @@ export const TimedExamEngine: React.FC<TimedExamEngineProps> = ({
       return [
         {
           id: 'TOPIK1_SET_1',
-          title: 'TOPIK I (Levels 1–2) Official Beginner Model Examination',
-          specs: '⏱ 60 Mins • 📝 20 Questions • 🎯 Pass Mark: 80 Pts • 🎧 Listening & Reading',
+          title: 'TOPIK I (Levels 1–2) Official Beginner Model Exam — Set 1',
+          specs: '⏱ 60 Mins • 📝 1 Question • 🎯 Pass Mark: 80 Pts • 🎧 Listening & Reading',
           desc: 'Official 100% multiple-choice TOPIK I exam covering daily greetings, locations, and reading notices.',
+          badge: 'TOPIK I Standard',
+        },
+        {
+          id: 'TOPIK1_SET_2',
+          title: 'TOPIK I (Levels 1–2) Grammar & Particle Drill — Set 2',
+          specs: '⏱ 60 Mins • 📝 1 Question • 🎯 Pass Mark: 80 Pts • 📝 Particle Focus',
+          desc: 'Targeted practice on location particles (에서, 에게), honorific endings, and reading short notes.',
           badge: 'TOPIK I Standard',
         },
       ];
@@ -521,9 +695,16 @@ export const TimedExamEngine: React.FC<TimedExamEngineProps> = ({
     return [
       {
         id: 'TOPIK2_SET_1',
-        title: 'TOPIK II (Levels 3–6) Intermediate & Advanced Model Test',
-        specs: '⏱ 80 Mins • 📝 25 Questions • 🎯 Pass Mark: 120 Pts • ✍️ Academic Level',
+        title: 'TOPIK II (Levels 3–6) Intermediate & Advanced Model Test — Set 1',
+        specs: '⏱ 80 Mins • 📝 1 Question • 🎯 Pass Mark: 120 Pts • ✍️ Academic Level',
         desc: 'Standard TOPIK II model test featuring advanced vocabulary, news editorial reading, and writing graph analysis.',
+        badge: 'TOPIK II Standard',
+      },
+      {
+        id: 'TOPIK2_SET_2',
+        title: 'TOPIK II Task 53 & Essay Writing Special Drill — Set 2',
+        specs: '⏱ 50 Mins • 📝 1 Question • 🎯 Pass Mark: 120 Pts • 📊 Graph & Chart Essay',
+        desc: 'Dedicated practice for Task 53 graph description essays and Task 54 argumentative essay writing.',
         badge: 'TOPIK II Standard',
       },
     ];
