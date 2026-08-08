@@ -236,30 +236,27 @@ export default function ExamsHubClient({ country }: { country: Country }) {
   const rawMockTests = country === 'japan' ? JAPAN_MOCK_TESTS : KOREA_MOCK_TESTS;
 
   const japanCurriculumLevels = [
-    { id: 'ALL',        label: '🌐 All Levels' },
-    { id: 'BASICS',     label: 'Basics' },
-    { id: 'N5',         label: 'JLPT N5' },
-    { id: 'N4',         label: 'JLPT N4' },
-    { id: 'N3',         label: 'JLPT N3' },
-    { id: 'N2',         label: 'JLPT N2' },
-    { id: 'N1',         label: 'JLPT N1' },
-    { id: 'JFT',        label: 'JFT-Basic' },
-    { id: 'KANJI_1000', label: 'Kanji (1000)' },
+    { id: 'ALL', label: '🌐 All Levels' },
+    { id: 'N5',  label: 'JLPT N5' },
+    { id: 'N4',  label: 'JLPT N4' },
+    { id: 'N3',  label: 'JLPT N3' },
+    { id: 'N2',  label: 'JLPT N2' },
+    { id: 'N1',  label: 'JLPT N1' },
+    { id: 'JFT', label: 'JFT-Basic' },
   ];
 
   const koreaCurriculumLevels = [
     { id: 'ALL',        label: '🌐 All Levels' },
-    { id: 'BASICS',     label: 'Basics' },
+    { id: 'EPS',        label: 'EPS-TOPIK' },
     { id: 'TOPIK1_L1',  label: 'TOPIK I (Levels 1–2)' },
     { id: 'TOPIK3',     label: 'TOPIK II (Levels 3–6)' },
-    { id: 'EPS',        label: 'EPS-TOPIK (1-60)' },
   ];
 
   const curriculumLevels = country === 'japan' ? japanCurriculumLevels : koreaCurriculumLevels;
 
   const filteredTests = useMemo(() => {
     return rawMockTests.filter((test) => {
-      if (selectedCurriculumLevel !== 'ALL' && selectedCurriculumLevel !== 'BASICS' && selectedCurriculumLevel !== 'KANJI_1000') {
+      if (selectedCurriculumLevel !== 'ALL') {
         if (test.level !== selectedCurriculumLevel) return false;
       }
       if (selectedDifficulty !== 'ALL') {
