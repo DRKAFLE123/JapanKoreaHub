@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Sparkles, BookOpen, Layers, Headphones, Clock, Target, Award, Calendar, Flame, CheckCircle2, ChevronRight, Zap, ArrowLeft, FileText, ChevronDown } from 'lucide-react';
+import { Sparkles, BookOpen, Layers, Headphones, Clock, Target, Award, Calendar, Flame, CheckCircle2, ChevronRight, Zap, ArrowLeft, FileText, Globe } from 'lucide-react';
 import { LevelPassTricks } from './LevelPassTricks';
 import { LevelStudyPlanModal } from './LevelStudyPlanModal';
 import { VocabularyExplorer } from './VocabularyExplorer';
@@ -21,138 +21,65 @@ interface LevelHubDashboardProps {
   onTabChange?: (tab: LevelSubTab) => void;
 }
 
+const JAPAN_LEVEL_LIST: { id: LevelType; label: string }[] = [
+  { id: 'BASICS',     label: 'Basics' },
+  { id: 'N5',         label: 'JLPT N5' },
+  { id: 'N4',         label: 'JLPT N4' },
+  { id: 'N3',         label: 'JLPT N3' },
+  { id: 'N2',         label: 'JLPT N2' },
+  { id: 'N1',         label: 'JLPT N1' },
+  { id: 'JFT',        label: 'JFT-Basic' },
+  { id: 'KANJI_1000', label: 'Kanji (1000)' },
+];
+
 export const LevelHubDashboard: React.FC<LevelHubDashboardProps> = ({
-  level,
+  level: propLevel,
   onSelectLevel,
   onBackToPortal,
   activeTab: externalActiveTab,
   onTabChange,
 }) => {
+  const [currentLevel, setCurrentLevel] = useState<LevelType>(propLevel);
   const [activeTab, setActiveTab] = useState<LevelSubTab>('VOCABULARY');
-  const [showTricksModal, setShowTricksModal] = useState<boolean>(false);
-  const [showPlanModal, setShowPlanModal] = useState<boolean>(false);
+
+  useEffect(() => {
+    setCurrentLevel(propLevel);
+  }, [propLevel]);
 
   // Sync sub tab when level changes or external tab prop changes
   useEffect(() => {
     if (externalActiveTab) {
       setActiveTab(externalActiveTab);
     } else {
-      if (level === 'BASICS') {
+      if (currentLevel === 'BASICS') {
         setActiveTab('BASICS_VOCAB');
-      } else if (level === 'JFT') {
+      } else if (currentLevel === 'JFT') {
         setActiveTab('EXAMS');
       } else {
         setActiveTab('VOCABULARY');
       }
     }
-  }, [level, externalActiveTab]);
+  }, [currentLevel, externalActiveTab]);
+
+  const handleLevelSwitch = (lvl: LevelType) => {
+    setCurrentLevel(lvl);
+    if (onSelectLevel) onSelectLevel(lvl);
+  };
 
   const handleTabClick = (t: LevelSubTab) => {
     setActiveTab(t);
     if (onTabChange) onTabChange(t);
   };
 
-  // Level Metadata
-  const levelMeta = {
-    BASICS: {
-      title: 'Japanese Basics (Kana Fonts, Vowels & Pronunciation)',
-      sub: 'Lessons 1–12 • Hiragana & Katakana Vowels & Stroke Guides',
-      badge: 'Level 00',
-      emoji: '🌱',
-      color: 'from-emerald-600 via-teal-600 to-cyan-600',
-      border: 'border-emerald-500/30',
-      bgGlow: 'bg-emerald-950/40',
-      textAccent: 'text-emerald-400',
-      stats: { lessons: 12, vocab: '200+ Basic', kanji: '1000 Kanji', passingScore: '100% Reading' }
-    },
-    N5: {
-      title: 'JLPT N5 Complete Curriculum',
-      sub: 'Lessons 1–25 • Minna no Nihongo Shokyu I',
-      badge: 'JLPT N5',
-      emoji: '🎗',
-      color: 'from-blue-600 via-indigo-600 to-cyan-600',
-      border: 'border-blue-500/30',
-      bgGlow: 'bg-blue-950/40',
-      textAccent: 'text-blue-400',
-      stats: { lessons: 25, vocab: '800+', kanji: '100 Kanji', passingScore: '80 / 180 Pts' }
-    },
-    N4: {
-      title: 'JLPT N4 Complete Curriculum',
-      sub: 'Lessons 26–50 • Minna no Nihongo Shokyu II',
-      badge: 'JLPT N4',
-      emoji: '🎖',
-      color: 'from-purple-600 via-pink-600 to-indigo-600',
-      border: 'border-purple-500/30',
-      bgGlow: 'bg-purple-950/40',
-      textAccent: 'text-purple-400',
-      stats: { lessons: 25, vocab: '1,500+', kanji: '300 Kanji', passingScore: '90 / 180 Pts' }
-    },
-    N3: {
-      title: 'JLPT N3 Master Syllabus',
-      sub: 'Lessons 51–62 • Intermediate Master Syllabus',
-      badge: 'JLPT N3',
-      emoji: '🏆',
-      color: 'from-amber-600 via-orange-600 to-red-600',
-      border: 'border-amber-500/30',
-      bgGlow: 'bg-amber-950/40',
-      textAccent: 'text-amber-400',
-      stats: { lessons: 12, vocab: '3,000+', kanji: '650 Kanji', passingScore: '95 / 180 Pts' }
-    },
-    N2: {
-      title: 'JLPT N2 Advanced Master Curriculum',
-      sub: 'Lessons 63–80 • Business & Academic Proficiency',
-      badge: 'JLPT N2',
-      emoji: '🥉',
-      color: 'from-cyan-600 via-teal-600 to-indigo-600',
-      border: 'border-cyan-500/30',
-      bgGlow: 'bg-cyan-950/40',
-      textAccent: 'text-cyan-400',
-      stats: { lessons: 18, vocab: '6,000+', kanji: '1,000 Kanji', passingScore: '90 / 180 Pts' }
-    },
-    N1: {
-      title: 'JLPT N1 Expert Master Curriculum',
-      sub: 'Lessons 81–100 • High Fluency & Native Nuance',
-      badge: 'JLPT N1',
-      emoji: '🥇',
-      color: 'from-rose-600 via-amber-600 to-purple-600',
-      border: 'border-rose-500/30',
-      bgGlow: 'bg-rose-950/40',
-      textAccent: 'text-rose-400',
-      stats: { lessons: 20, vocab: '10,000+', kanji: '2,000 Kanji', passingScore: '100 / 180 Pts' }
-    },
-    JFT: {
-      title: 'JFT-Basic Specified Skilled Worker (SSW)',
-      sub: 'Sections 1–4 • CBT Examination Engine',
-      badge: 'JFT-Basic',
-      emoji: '🎯',
-      color: 'from-cyan-600 via-blue-600 to-indigo-600',
-      border: 'border-cyan-500/30',
-      bgGlow: 'bg-cyan-950/40',
-      textAccent: 'text-cyan-400',
-      stats: { lessons: 20, vocab: '1,200+', kanji: 'Practical', passingScore: '200 / 250 Pts' }
-    },
-    KANJI_1000: {
-      title: '1,000 Japanese Kanji Hub (Nepali & English)',
-      sub: 'Complete 1000 Kanji Handbook split by Tiers',
-      badge: 'Kanji (1000)',
-      emoji: '💮',
-      color: 'from-rose-600 via-pink-600 to-amber-600',
-      border: 'border-rose-500/30',
-      bgGlow: 'bg-rose-950/40',
-      textAccent: 'text-rose-400',
-      stats: { lessons: 1, vocab: '1000 Kanji', kanji: '1000 Items', passingScore: 'Handbook' }
-    }
-  }[level];
-
-  // Dynamic Sub Tabs tailored to current level
+  // Dynamic Sub Tabs tailored strictly to current selected level
   const getSubTabs = () => {
-    if (level === 'BASICS') {
+    if (currentLevel === 'BASICS') {
       return [
-        { id: 'BASICS_VOCAB', label: 'Kana Fonts & Vowels', icon: BookOpen, emoji: '🌱' },
+        { id: 'BASICS_VOCAB', label: 'Kana Fonts & Vowels', icon: BookOpen, emoji: 'あ' },
         { id: 'RADICALS', label: 'Kanji Radicals', icon: Layers, emoji: '🧩' },
       ];
     }
-    if (level === 'N5') {
+    if (currentLevel === 'N5') {
       return [
         { id: 'VOCABULARY', label: 'Vocabulary Explorer', icon: BookOpen, emoji: '📚' },
         { id: 'FLASHCARDS', label: 'Kanji Flashcards', icon: Layers, emoji: '🃏' },
@@ -161,13 +88,29 @@ export const LevelHubDashboard: React.FC<LevelHubDashboardProps> = ({
         { id: 'EXAM_GUIDE', label: 'Exam & Syllabus Guide', icon: FileText, emoji: '🎓' },
       ];
     }
-    if (level === 'JFT') {
+    if (currentLevel === 'N4' || currentLevel === 'N3' || currentLevel === 'N2' || currentLevel === 'N1') {
+      return [
+        { id: 'VOCABULARY', label: `Vocabulary Explorer (${currentLevel})`, icon: BookOpen, emoji: '📚' },
+        { id: 'FLASHCARDS', label: 'Kanji Flashcards', icon: Layers, emoji: '🃏' },
+        { id: 'LISTENING', label: 'Listening Practice', icon: Headphones, emoji: '🎧' },
+        { id: 'EXAMS', label: 'Mock Tests', icon: Clock, emoji: '⏱' },
+        { id: 'EXAM_GUIDE', label: 'Exam & Syllabus Guide', icon: FileText, emoji: '🎓' },
+      ];
+    }
+    if (currentLevel === 'JFT') {
       return [
         { id: 'EXAMS', label: 'CBT Exam Engine', icon: Clock, emoji: '⏱' },
         { id: 'EXAM_GUIDE', label: 'Exam & Syllabus Guide', icon: FileText, emoji: '🎓' },
         { id: 'VOCABULARY', label: 'JFT Meanings (Lessons 1-50)', icon: BookOpen, emoji: '📖' },
         { id: 'GRAMMAR', label: 'JFT Grammar (Lessons 1-50)', icon: FileText, emoji: '📝' },
         { id: 'FLASHCARDS', label: 'Kanji Flashcards', icon: Layers, emoji: '🃏' },
+      ];
+    }
+    if (currentLevel === 'KANJI_1000') {
+      return [
+        { id: 'FLASHCARDS', label: '1,000 Kanji Cards', icon: Layers, emoji: '💮' },
+        { id: 'RADICALS', label: '214 Kanji Radicals', icon: Layers, emoji: '🧩' },
+        { id: 'VOCABULARY', label: 'Kanji Vocabulary Explorer', icon: BookOpen, emoji: '📚' },
       ];
     }
     return [
@@ -179,41 +122,66 @@ export const LevelHubDashboard: React.FC<LevelHubDashboardProps> = ({
   };
 
   return (
-    <div className="space-y-2 animate-fade-in">
+    <div className="space-y-2 animate-fade-in font-sans">
+      
+      {/* 🌐 ROW 1: CURRICULUM LEVEL BAR (Mobile Responsive Horizontal Scroll) */}
+      <div className="flex items-center gap-2 overflow-x-auto no-scrollbar py-1 bg-slate-950/80 p-2 rounded-2xl border border-slate-900">
+        <div className="flex items-center gap-1.5 text-xs font-black uppercase tracking-wider text-slate-400 whitespace-nowrap pl-1 pr-2">
+          <Globe className="w-3.5 h-3.5 text-red-500" />
+          <span>Curriculum Level:</span>
+        </div>
 
-      {/* Feature Sub Navigation Tabs */}
-      {level !== 'BASICS' && level !== 'KANJI_1000' && (
-        <div className="flex items-center gap-1.5 flex-wrap pt-0 pb-1">
-          {getSubTabs().map((tab) => {
-            const isActive = activeTab === tab.id;
+        <div className="flex items-center gap-1.5 flex-nowrap">
+          {JAPAN_LEVEL_LIST.map((lvl) => {
+            const isSelected = currentLevel === lvl.id;
             return (
               <button
-                key={tab.id}
-                onClick={() => handleTabClick(tab.id as LevelSubTab)}
-                className={`px-3 py-1 rounded-xl text-xs font-extrabold transition-all flex items-center gap-1.5 cursor-pointer whitespace-nowrap ${
-                  isActive
-                    ? 'bg-red-600 text-white shadow-sm border border-red-500/50'
-                    : 'bg-slate-900/70 text-slate-400 hover:text-white hover:bg-slate-800 border border-slate-800/80'
+                key={lvl.id}
+                onClick={() => handleLevelSwitch(lvl.id)}
+                className={`px-3 py-1 rounded-xl text-xs font-extrabold transition-all cursor-pointer whitespace-nowrap border ${
+                  isSelected
+                    ? 'bg-red-600 text-white shadow-sm border-red-500'
+                    : 'bg-slate-900/90 text-slate-400 hover:text-white hover:bg-slate-800 border-slate-800'
                 }`}
               >
-                <span>{tab.emoji}</span>
-                <span>{tab.label}</span>
+                {lvl.label}
               </button>
             );
           })}
         </div>
-      )}
+      </div>
+
+      {/* 📖 ROW 2: OPTIONS SUB-MENU BAR (Tailored to selected level) */}
+      <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar py-1 bg-slate-900/60 p-1.5 rounded-2xl border border-slate-800/80">
+        {getSubTabs().map((tab) => {
+          const isActive = activeTab === tab.id;
+          return (
+            <button
+              key={tab.id}
+              onClick={() => handleTabClick(tab.id as LevelSubTab)}
+              className={`px-3 py-1.5 rounded-xl text-xs font-extrabold transition-all flex items-center gap-1.5 cursor-pointer whitespace-nowrap ${
+                isActive
+                  ? 'bg-red-600 text-white shadow-sm border border-red-500/50'
+                  : 'text-slate-300 hover:text-white hover:bg-slate-800/70'
+              }`}
+            >
+              <span>{tab.emoji}</span>
+              <span>{tab.label}</span>
+            </button>
+          );
+        })}
+      </div>
 
       {/* Active Level Content Body */}
       <div className="pt-1">
-        {level === 'BASICS' ? (
+        {currentLevel === 'BASICS' ? (
           <VocabularyExplorer preselectedLevel="BASICS" />
-        ) : level === 'KANJI_1000' ? (
+        ) : currentLevel === 'KANJI_1000' ? (
           <VocabularyExplorer preselectedLevel="KANJI_1000" />
         ) : (
           <>
             {activeTab === 'VOCABULARY' && (
-              <VocabularyExplorer preselectedLevel={level} />
+              <VocabularyExplorer preselectedLevel={currentLevel} />
             )}
 
             {activeTab === 'GRAMMAR' && (
@@ -221,7 +189,7 @@ export const LevelHubDashboard: React.FC<LevelHubDashboardProps> = ({
             )}
 
             {activeTab === 'FLASHCARDS' && (
-              <KanjiCard currentLevel={level} hideLevelSelector={true} />
+              <KanjiCard />
             )}
 
             {activeTab === 'LISTENING' && (
@@ -229,24 +197,19 @@ export const LevelHubDashboard: React.FC<LevelHubDashboardProps> = ({
             )}
 
             {activeTab === 'EXAMS' && (
-              <TimedExamEngine activeLanguage="JAPANESE" preselectedLevel={level === 'JFT' ? 'JFT' : (level as 'N5' | 'N4' | 'N3')} hideLevelSelector={true} hideCategorySelector={true} />
+              <TimedExamEngine />
             )}
 
             {activeTab === 'EXAM_GUIDE' && (
-              <LevelExamSyllabusGuide level={level as any} onSelectTab={(t) => setActiveTab(t)} />
+              <LevelExamSyllabusGuide level={currentLevel} />
+            )}
+
+            {activeTab === 'RADICALS' && (
+              <RadicalBreakdown />
             )}
           </>
         )}
       </div>
-
-      {/* Modals */}
-      {showTricksModal && (
-        <LevelPassTricks level={level as any} onClose={() => setShowTricksModal(false)} />
-      )}
-
-      {showPlanModal && (
-        <LevelStudyPlanModal level={level as any} onClose={() => setShowPlanModal(false)} />
-      )}
     </div>
   );
 };

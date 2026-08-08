@@ -727,10 +727,48 @@ export const KoreanHubDashboard: React.FC<KoreanHubDashboardProps> = ({
 
   const subTabs = getSubTabs();
 
+  const KOREA_LEVEL_LIST: { id: KoreanLevelType; label: string }[] = [
+    { id: 'BASICS',    label: 'Hangul Basics' },
+    { id: 'EPS',       label: 'EPS-TOPIK' },
+    { id: 'TOPIK1_L1', label: 'TOPIK I' },
+    { id: 'TOPIK3',    label: 'TOPIK II' },
+    { id: 'EPS_MFG',   label: 'EPS Sectors' },
+  ];
+
   return (
     <div className="space-y-2 font-sans w-full max-w-full overflow-x-hidden">
-      {/* Minimalist Sub-Nav Bar with Mobile Horizontal Scroll */}
-      <div className="flex items-center gap-1.5 sm:gap-2 overflow-x-auto scrollbar-none pb-1 max-w-full relative z-[40] whitespace-nowrap">
+
+      {/* 🌐 ROW 1: KOREAN CURRICULUM LEVEL BAR (Mobile Responsive Horizontal Scroll) */}
+      <div className="flex items-center gap-2 overflow-x-auto no-scrollbar py-1 bg-slate-950/80 p-2 rounded-2xl border border-slate-900">
+        <div className="flex items-center gap-1.5 text-xs font-black uppercase tracking-wider text-slate-400 whitespace-nowrap pl-1 pr-2">
+          <Globe className="w-3.5 h-3.5 text-blue-500" />
+          <span>Curriculum Level:</span>
+        </div>
+
+        <div className="flex items-center gap-1.5 flex-nowrap">
+          {KOREA_LEVEL_LIST.map((lvl) => {
+            const isSelected = level === lvl.id;
+            return (
+              <button
+                key={lvl.id}
+                onClick={() => {
+                  if (onSelectLevel) onSelectLevel(lvl.id);
+                }}
+                className={`px-3 py-1 rounded-xl text-xs font-extrabold transition-all cursor-pointer whitespace-nowrap border ${
+                  isSelected
+                    ? 'bg-blue-600 text-white shadow-sm border-blue-500'
+                    : 'bg-slate-900/90 text-slate-400 hover:text-white hover:bg-slate-800 border-slate-800'
+                }`}
+              >
+                {lvl.label}
+              </button>
+            );
+          })}
+        </div>
+      </div>
+
+      {/* 📖 ROW 2: OPTIONS SUB-MENU BAR (Tailored to selected Korean level) */}
+      <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar py-1 bg-slate-900/60 p-1.5 rounded-2xl border border-slate-800/80">
 
         {subTabs.map(tab => {
           const isActive = activeTab === tab.id;
@@ -797,10 +835,10 @@ export const KoreanHubDashboard: React.FC<KoreanHubDashboardProps> = ({
             <button
               key={tab.id}
               onClick={() => handleTabClick(tab.id)}
-              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-extrabold whitespace-nowrap transition-all shrink-0 cursor-pointer ${
+              className={`flex items-center gap-1.5 px-3 py-1 rounded-xl text-xs font-extrabold whitespace-nowrap transition-all shrink-0 cursor-pointer ${
                 isActive
-                  ? `bg-gradient-to-r ${meta.color} text-white shadow-glow`
-                  : 'text-slate-400 hover:text-white hover:bg-slate-800/60'
+                  ? 'bg-blue-600 text-white shadow-sm border border-blue-500/50'
+                  : 'text-slate-300 hover:text-white hover:bg-slate-800/70'
               }`}
             >
               <span>{tab.emoji}</span>
