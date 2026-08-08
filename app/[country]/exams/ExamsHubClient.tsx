@@ -2,7 +2,7 @@
 
 import React, { useState, useMemo } from 'react';
 import Link from 'next/link';
-import { ArrowLeft, Clock, Award, Search, Filter, Play, CheckCircle2, Sparkles, BookOpen, Layers, X } from 'lucide-react';
+import { ArrowLeft, Clock, Award, Search, Filter, Play, CheckCircle2, Sparkles, BookOpen, Layers, X, ChevronDown } from 'lucide-react';
 import MobileNavbar from '@/components/layout/MobileNavbar';
 import BottomTabBar from '@/components/layout/BottomTabBar';
 import { TimedExamEngine } from '@/components/TimedExamEngine';
@@ -281,15 +281,15 @@ export default function ExamsHubClient({ country }: { country: Country }) {
           </p>
         </div>
 
-        {/* 🎛️ SMALL RIBBON FILTER BAR */}
+        {/* 🎛️ DROPDOWN FILTER RIBBON BAR */}
         <div className="bg-white border border-slate-200 rounded-2xl p-3 sm:p-4 shadow-xs space-y-3">
-          <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
             {/* Search Input Box */}
             <div className="relative flex-1">
               <Search className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
               <input
                 type="text"
-                placeholder="Search mock tests by keyword, level or badge..."
+                placeholder="Search mock tests by keyword..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 className="w-full pl-9 pr-8 py-2 rounded-xl bg-slate-50 border border-slate-200 text-xs font-medium focus:outline-none focus:border-slate-400 transition-colors"
@@ -304,58 +304,37 @@ export default function ExamsHubClient({ country }: { country: Country }) {
               )}
             </div>
 
-            {/* Quick Count Badge */}
-            <div className="text-xs font-bold text-slate-500 bg-slate-100 px-3 py-2 rounded-xl border border-slate-200 shrink-0 text-center">
-              Showing <span className="text-slate-900 font-extrabold">{filteredTests.length}</span> Mock Tests
+            {/* Exam Level Dropdown Select */}
+            <div className="relative">
+              <select
+                value={selectedLevel}
+                onChange={(e) => setSelectedLevel(e.target.value)}
+                className="w-full appearance-none px-3.5 py-2 rounded-xl bg-slate-50 border border-slate-200 text-xs font-bold text-slate-800 focus:outline-none focus:border-slate-400 transition-colors cursor-pointer pr-8"
+              >
+                {levelOptions.map((opt) => (
+                  <option key={opt.id} value={opt.id}>
+                    {opt.label}
+                  </option>
+                ))}
+              </select>
+              <ChevronDown className="w-4 h-4 text-slate-400 absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none" />
             </div>
-          </div>
 
-          {/* Level Ribbon Filter Pills */}
-          <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar py-1">
-            <span className="text-[11px] font-black uppercase text-slate-400 shrink-0 pr-1 flex items-center gap-1">
-              <Layers className="w-3.5 h-3.5" /> Exam Level:
-            </span>
-            {levelOptions.map((opt) => {
-              const isActive = selectedLevel === opt.id;
-              return (
-                <button
-                  key={opt.id}
-                  onClick={() => setSelectedLevel(opt.id)}
-                  className={`px-3 py-1.5 rounded-xl text-xs font-extrabold transition-all cursor-pointer whitespace-nowrap border ${
-                    isActive
-                      ? country === 'japan'
-                        ? 'bg-red-600 text-white shadow-xs border-red-500'
-                        : 'bg-blue-600 text-white shadow-xs border-blue-500'
-                      : 'bg-slate-50 text-slate-600 hover:text-slate-900 border-slate-200 hover:bg-slate-100'
-                  }`}
-                >
-                  {opt.label}
-                </button>
-              );
-            })}
-          </div>
-
-          {/* Difficulty Ribbon Filter Pills */}
-          <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar py-1 pt-1 border-t border-slate-100">
-            <span className="text-[11px] font-black uppercase text-slate-400 shrink-0 pr-1 flex items-center gap-1">
-              <Filter className="w-3.5 h-3.5" /> Difficulty:
-            </span>
-            {difficultyOptions.map((opt) => {
-              const isActive = selectedDifficulty === opt.id;
-              return (
-                <button
-                  key={opt.id}
-                  onClick={() => setSelectedDifficulty(opt.id)}
-                  className={`px-3 py-1 rounded-xl text-xs font-bold transition-all cursor-pointer whitespace-nowrap border ${
-                    isActive
-                      ? 'bg-slate-900 text-white border-slate-800 shadow-xs'
-                      : 'bg-slate-50 text-slate-600 hover:text-slate-900 border-slate-200 hover:bg-slate-100'
-                  }`}
-                >
-                  {opt.label}
-                </button>
-              );
-            })}
+            {/* Difficulty Level Dropdown Select */}
+            <div className="relative">
+              <select
+                value={selectedDifficulty}
+                onChange={(e) => setSelectedDifficulty(e.target.value)}
+                className="w-full appearance-none px-3.5 py-2 rounded-xl bg-slate-50 border border-slate-200 text-xs font-bold text-slate-800 focus:outline-none focus:border-slate-400 transition-colors cursor-pointer pr-8"
+              >
+                {difficultyOptions.map((opt) => (
+                  <option key={opt.id} value={opt.id}>
+                    {opt.label}
+                  </option>
+                ))}
+              </select>
+              <ChevronDown className="w-4 h-4 text-slate-400 absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none" />
+            </div>
           </div>
         </div>
 
