@@ -504,7 +504,7 @@ export const GUIDE_CATALOG: GuideContent[] = [
         heading: 'Get in Touch with Our Team',
         text: 'Have questions about JLPT preparation, EPS-TOPIK curriculum, Prometric exam registration, or technical issues? Our dedicated support team is here to help!',
         bullets: [
-          '📧 Official Email Support: support@japankoreaacademy.com (Response time: < 24 Hours)',
+          '📧 Official Email Support: support@japankoreahub.com (Response time: < 24 Hours)',
           '🌐 Discord Community: Join 15,000+ active Japanese & Korean learners for daily practice rooms and Q&A.',
           '🇳🇵 Kathmandu Office Helpdesk: Monday–Friday 9:00 AM – 6:00 PM (NPT)'
         ]

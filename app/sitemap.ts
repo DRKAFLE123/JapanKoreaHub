@@ -3,7 +3,7 @@ import { GUIDE_CATALOG } from '@/lib/guides-data';
 import { INITIAL_POSTS } from '@/lib/blog-data';
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = 'https://japankoreaacademy.com';
+  const baseUrl = 'https://japankoreahub.com';
 
   // Base pages
   const routes: MetadataRoute.Sitemap = [

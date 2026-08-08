@@ -219,7 +219,7 @@ const SharedHeader: React.FC<SharedHeaderProps> = ({
           <button onClick={() => handleNavClick(() => setViewMode('LANDING'))} className="flex items-center gap-3 group text-left">
             <img
               src="/logo.jpg"
-              alt="JakonHub Logo"
+              alt="JapanKoreaHub Logo"
               className="w-10 h-10 rounded-xl object-contain bg-white border border-slate-700 shadow-md group-hover:scale-105 transition-transform p-0.5"
               onError={(e) => {
                 (e.target as HTMLElement).style.display = 'none';
@@ -228,7 +228,7 @@ const SharedHeader: React.FC<SharedHeaderProps> = ({
             <div>
               <div className="flex items-center gap-2">
                 <span className="text-base font-black text-white tracking-tight leading-tight">
-                  JakonHub
+                  JapanKoreaHub
                 </span>
                 <span className="px-2 py-0.5 rounded-full bg-rose-500/20 text-rose-300 border border-rose-500/30 text-[9px] font-black uppercase tracking-wider hidden md:inline">
                   Learn Japanese &amp; Korean
@@ -957,7 +957,7 @@ export default function HomePage() {
     } else if (viewMode === 'KOREAN') {
       document.title = "Korean Academy — Nepal's Complete EPS-TOPIK Platform";
     } else {
-      document.title = "JakonHub – Learn Japanese & Korean";
+      document.title = "JapanKoreaHub – Learn Japanese & Korean";
     }
   }, [viewMode]);
 
@@ -1325,7 +1325,7 @@ export default function HomePage() {
               ? 'Japanese Academy - Minna no Nihongo (Lessons 1-75) & JLPT N5-N1 Handbook'
               : viewMode === 'KOREAN'
               ? 'Korean Academy - EPS-TOPIK (Lessons 1-60) & TOPIK I-II Handbook'
-              : 'JakonHub – Learn Japanese & Korean'}
+              : 'JapanKoreaHub – Learn Japanese & Korean'}
           </span>
           <div className="flex items-center gap-2 text-[10px] text-slate-400">
             <span>SM-2 SRS</span><span>•</span><span>Offline IndexedDB</span><span>•</span><span>QR Certificate Verification</span>

@@ -121,7 +121,7 @@ export default function AdminCMSPage() {
             </div>
             <div>
               <div className="flex items-center gap-2">
-                <h1 className="text-base font-black text-white">JakonHub Admin CMS</h1>
+                <h1 className="text-base font-black text-white">JapanKoreaHub Admin CMS</h1>
                 <span className="px-2 py-0.5 rounded-full bg-rose-500/20 text-rose-300 border border-rose-500/30 text-[10px] font-black uppercase">
                   Protected System
                 </span>
