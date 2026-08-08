@@ -46,6 +46,8 @@ export const metadata: Metadata = {
   },
 };
 
+import MainLayoutWrapper from '@/components/layout/MainLayoutWrapper';
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -62,15 +64,17 @@ export default function RootLayout({
   };
 
   return (
-    <html lang="en" className="dark">
+    <html lang="en">
       <head>
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
       </head>
-      <body className="bg-slate-950 text-slate-100 min-h-screen antialiased selection:bg-indigo-500 selection:text-white">
-        {children}
+      <body className="bg-slate-50 text-slate-900 min-h-screen antialiased selection:bg-indigo-500 selection:text-white">
+        <MainLayoutWrapper>
+          {children}
+        </MainLayoutWrapper>
       </body>
     </html>
   );

@@ -1,0 +1,945 @@
+'use client';
+
+import React, { useState, useEffect, useRef } from 'react';
+import {
+  Clock,
+  Flag,
+  CheckCircle2,
+  Volume2,
+  Award,
+  ChevronRight,
+  ChevronLeft,
+  Layers,
+  HelpCircle,
+  Check,
+  X,
+  Maximize2,
+  Minimize2,
+  ListFilter,
+  Sparkles,
+  BookOpen
+} from 'lucide-react';
+import { validateExamSubmission } from '@/lib/auth-security';
+
+export interface ExamQuestion {
+  id: string;
+  level: string; // N5, N4, N3, N2 | EPS, TOPIK2, TOPIK3, TOPIK4
+  mockSet?: string; // 'N5_SET_1' | 'N5_SET_2' | 'N4_SET_1' | 'GENERAL'
+  type: 'MULTIPLE_CHOICE' | 'LISTENING' | 'FILL_BLANK';
+  prompt: string;
+  audioUrl?: string;
+  options: string[];
+  correctAnswer: string;
+  explanation?: string;
+}
+
+const JAPANESE_QUESTIONS: ExamQuestion[] = [
+  // ==========================================
+  // JLPT N5 MOCK TEST SET 1 (模擬試験 1)
+  // ==========================================
+  {
+    id: 'jp_n5_1_1',
+    level: 'N5',
+    mockSet: 'N5_SET_1',
+    type: 'MULTIPLE_CHOICE',
+    prompt: '【問題1 文字・語彙】下線の言葉のひらがなを選んでください: 私は毎日日本のご飯を【食べます】。',
+    options: ['のみます', 'たべます', 'いきます', 'きます'],
+    correctAnswer: 'たべます',
+    explanation: '「食」は「た(べます)」と読みます。ご飯を食べる = Eat rice/meal.',
+  },
+  {
+    id: 'jp_n5_1_2',
+    level: 'N5',
+    mockSet: 'N5_SET_1',
+    type: 'MULTIPLE_CHOICE',
+    prompt: '【問題2 文字・語彙】下線の漢字を選んでください: つくえのうえに【ほん】があります。',
+    options: ['本', '木', '休', '体'],
+    correctAnswer: '本',
+    explanation: '「ほん」(Book)の漢字は「本」です。',
+  },
+  {
+    id: 'jp_n5_1_3',
+    level: 'N5',
+    mockSet: 'N5_SET_1',
+    type: 'MULTIPLE_CHOICE',
+    prompt: '【問題3 文字・語彙】正しい意味の言葉を選んでください: きょうはとても【あつい】ですね。',
+    options: ['Hot', 'Cold', 'Warm', 'Cool'],
+    correctAnswer: 'Hot',
+    explanation: '「あつい」(暑い/熱い)の意味は「Hot」です。',
+  },
+  {
+    id: 'jp_n5_1_4',
+    level: 'N5',
+    mockSet: 'N5_SET_1',
+    type: 'MULTIPLE_CHOICE',
+    prompt: '【問題4 文字・語彙】適切な言葉を選んでください: 毎朝6時に【_____】。',
+    options: ['おきます', 'ねます', 'のみます', 'かいます'],
+    correctAnswer: 'おきます',
+    explanation: '朝6時に起きる(Wake up at 6 a.m.)が文脈に合います。',
+  },
+  {
+    id: 'jp_n5_1_5',
+    level: 'N5',
+    mockSet: 'N5_SET_1',
+    type: 'FILL_BLANK',
+    prompt: '【問題5 文法】正しい助詞を入れてください: 私はバス【_____】学校へ行きます。',
+    options: ['に', 'で', 'を', 'が'],
+    correctAnswer: 'で',
+    explanation: '交通手段(by means of transport)を表す助詞は「で」を使います。',
+  },
+  {
+    id: 'jp_n5_1_6',
+    level: 'N5',
+    mockSet: 'N5_SET_1',
+    type: 'FILL_BLANK',
+    prompt: '【問題6 文法】適切な助詞を入れてください: 部屋に田中さん【_____】います。',
+    options: ['が', 'を', 'へ', 'で'],
+    correctAnswer: 'が',
+    explanation: '人や動物の存在を表す文(There is someone)の主語には「が」を使います。',
+  },
+  {
+    id: 'jp_n5_1_7',
+    level: 'N5',
+    mockSet: 'N5_SET_1',
+    type: 'FILL_BLANK',
+    prompt: '【問題7 文法★並べ替え】文法の順番 (★に入る言葉): 昨日 映画【 ___ 】【 ___ 】【 ★ 】【 ___ 】。',
+    options: ['を', '見に', '行きました', '映画館へ'],
+    correctAnswer: '行きました',
+    explanation: '文の正しい順番: 「昨日 映画を 映画館へ 見に 行きました。」★の位置は「行きました」。',
+  },
+  {
+    id: 'jp_n5_1_8',
+    level: 'N5',
+    mockSet: 'N5_SET_1',
+    type: 'MULTIPLE_CHOICE',
+    prompt: '【問題8 読解】「マリアさんは毎朝7時に起きて、コーヒーを飲みます。それから8時にバスで会社へ行きます。」マリアさんは何で会社へ行きますか。',
+    options: ['電車', 'バス', '自転車', '歩いて'],
+    correctAnswer: 'バス',
+    explanation: '文章に「8時にバスで会社へ行きます」と書いてあります。',
+  },
+  {
+    id: 'jp_n5_1_9',
+    level: 'N5',
+    mockSet: 'N5_SET_1',
+    type: 'LISTENING',
+    prompt: '【問題9 聴解】音声を聞いて、男の人と女の人が何時に会うか選んでください。',
+    audioUrl: '/audio/n5/minna_shokyu_1_001.mp3',
+    options: ['10時', '10時半', '11時', '11時半'],
+    correctAnswer: '10時半',
+    explanation: '音声トラック「10時半に会いましょう」より、正解は10時半です。',
+  },
+  {
+    id: 'jp_n5_1_10',
+    level: 'N5',
+    mockSet: 'N5_SET_1',
+    type: 'LISTENING',
+    prompt: '【問題10 聴解】会話を聞いて、女の人は何を注文しましたか。',
+    audioUrl: '/audio/n5/minna_shokyu_1_002.mp3',
+    options: ['コーヒー', 'こうちゃ', 'ジュース', 'みず'],
+    correctAnswer: 'こうちゃ',
+    explanation: '音声会話で「紅茶をひとつお願いします」と言っています。',
+  },
+
+  // ==========================================
+  // JLPT N5 MOCK TEST SET 2 (模擬試験 2)
+  // ==========================================
+  {
+    id: 'jp_n5_2_1',
+    level: 'N5',
+    mockSet: 'N5_SET_2',
+    type: 'MULTIPLE_CHOICE',
+    prompt: '【問題1 文字・語彙】下線の言葉のひらがなを選んでください: 田中さんは【来週】日本へ来ます。',
+    options: ['らいしゅう', 'こんしゅう', 'せんしゅう', 'まいしゅう'],
+    correctAnswer: 'らいしゅう',
+    explanation: '「来週」の読み方は「らいしゅう」(Next week)です。',
+  },
+  {
+    id: 'jp_n5_2_2',
+    level: 'N5',
+    mockSet: 'N5_SET_2',
+    type: 'MULTIPLE_CHOICE',
+    prompt: '【問題2 文字・語彙】下線の漢字を選んでください: 昨日は【あめ】がふりました。',
+    options: ['雨', '天', '雪', '水'],
+    correctAnswer: '雨',
+    explanation: '「あめ」(Rain)の漢字は「雨」です。',
+  },
+  {
+    id: 'jp_n5_2_3',
+    level: 'N5',
+    mockSet: 'N5_SET_2',
+    type: 'MULTIPLE_CHOICE',
+    prompt: '【問題3 文字・語彙】反対の言葉を選んでください: 「たかい (高い)」の対義語は何ですか。',
+    options: ['ひくい', 'みじかい', 'ちいさい', 'おそい'],
+    correctAnswer: 'ひくい',
+    explanation: '「高い」(High/Expensive)の対義語は「低い」(Low)です。',
+  },
+  {
+    id: 'jp_n5_2_4',
+    level: 'N5',
+    mockSet: 'N5_SET_2',
+    type: 'MULTIPLE_CHOICE',
+    prompt: '【問題4 文字・語彙】適切な言葉を選んでください: デパートで新しい服を【_____】。',
+    options: ['かいました', 'ききました', 'あいました', 'いいました'],
+    correctAnswer: 'かいました',
+    explanation: '服を買う (Bought new clothes at the department store).',
+  },
+  {
+    id: 'jp_n5_2_5',
+    level: 'N5',
+    mockSet: 'N5_SET_2',
+    type: 'FILL_BLANK',
+    prompt: '【問題5 文法】正しい助詞を入れてください: 日曜日に友達【_____】映画を見に行きます。',
+    options: ['と', 'に', 'へ', 'を'],
+    correctAnswer: 'と',
+    explanation: '「〜と一緒に」(Together with)を表す助詞は「と」です。',
+  },
+  {
+    id: 'jp_n5_2_6',
+    level: 'N5',
+    mockSet: 'N5_SET_2',
+    type: 'FILL_BLANK',
+    prompt: '【問題6 文法】文法: ここで写真を【_____】もいいですか。 (Permission ~てもいい)',
+    options: ['とっ', 'とる', 'とり', 'とって'],
+    correctAnswer: 'とって',
+    explanation: '動詞て形 ＋ もいいですか (May I take photos here?). 「撮って」が正解です。',
+  },
+  {
+    id: 'jp_n5_2_7',
+    level: 'N5',
+    mockSet: 'N5_SET_2',
+    type: 'FILL_BLANK',
+    prompt: '【問題7 文法】文法: 会議は9時【_____】12時まで行われます。',
+    options: ['から', 'まで', 'に', 'で'],
+    correctAnswer: 'から',
+    explanation: '時間の起点(From 9 o\'clock)を表す助詞は「から」です。',
+  },
+  {
+    id: 'jp_n5_2_8',
+    level: 'N5',
+    mockSet: 'N5_SET_2',
+    type: 'MULTIPLE_CHOICE',
+    prompt: '【問題8 読解】「山田さんは日本語の先生です。月曜日から金曜日まで大学で教えます。土曜日と日曜日は休みです。」山田さんはいつ休みですか。',
+    options: ['月曜日', '金曜日', '土曜日と日曜日', '毎日'],
+    correctAnswer: '土曜日と日曜日',
+    explanation: '文章に「土曜日と日曜日は休みです」と書かれています。',
+  },
+  {
+    id: 'jp_n5_2_9',
+    level: 'N5',
+    mockSet: 'N5_SET_2',
+    type: 'LISTENING',
+    prompt: '【問題9 聴解】音声を聞いて、明日の天気はどうなりますか。',
+    audioUrl: '/audio/n5/minna_shokyu_1_004.mp3',
+    options: ['はれ', 'あめ', 'くもり', 'ゆき'],
+    correctAnswer: 'あめ',
+    explanation: '音声会話の天気予報「明日は雨が降るでしょう」より正解は「あめ」です。',
+  },
+  {
+    id: 'jp_n5_2_10',
+    level: 'N5',
+    mockSet: 'N5_SET_2',
+    type: 'LISTENING',
+    prompt: '【問題10 聴解】会話を聞いて、男の人は何で学校へ行きますか。',
+    audioUrl: '/audio/n5/minna_shokyu_1_005.mp3',
+    options: ['でんしゃ', 'バス', 'じてんしゃ', 'あるいて'],
+    correctAnswer: 'じてんしゃ',
+    explanation: '会話の「自転車で通っています」より正解は「じてんしゃ」です。',
+  },
+
+  // ==========================================
+  // JLPT N4 QUESTION SET (模擬試験 N4)
+  // ==========================================
+  {
+    id: 'jp_n4_1_1',
+    level: 'N4',
+    mockSet: 'N4_SET_1',
+    type: 'MULTIPLE_CHOICE',
+    prompt: '【問題1 文字・語彙】下線の言葉の読み方を選んでください: 旅行の【準備】をします。',
+    options: ['じゅんび', 'しょんび', 'じゅうび', 'ちゅんび'],
+    correctAnswer: 'じゅんび',
+    explanation: '「準備」の読み方は「じゅんび」(Preparation)です。',
+  },
+  {
+    id: 'jp_n4_1_2',
+    level: 'N4',
+    mockSet: 'N4_SET_1',
+    type: 'MULTIPLE_CHOICE',
+    prompt: '【問題2 文字・語彙】下線の漢字を選んでください: 部屋を【かたづけます】。',
+    options: ['片付けます', '形付けます', '方付けます', '向付けます'],
+    correctAnswer: '片付けます',
+    explanation: '「かたづける」(Tidy up)の漢字は「片付ける」です。',
+  },
+  {
+    id: 'jp_n4_1_3',
+    level: 'N4',
+    mockSet: 'N4_SET_1',
+    type: 'MULTIPLE_CHOICE',
+    prompt: '【問題3 文字・語彙】反対の意味の言葉を選んでください: 「複雑(ふくざつ)」の対義語',
+    options: ['簡単', '親切', '便利', '賑やか'],
+    correctAnswer: '簡単',
+    explanation: '「複雑」(Complex)の反対語は「簡単」(Simple)です。',
+  },
+  {
+    id: 'jp_n4_1_4',
+    level: 'N4',
+    mockSet: 'N4_SET_1',
+    type: 'FILL_BLANK',
+    prompt: '【問題4 文法】適切な文法を選んでください: 雨が_____そうだから、傘を持っていきましょう。',
+    options: ['ふり', 'ふって', 'ふった', 'ふりそう'],
+    correctAnswer: 'ふり',
+    explanation: '動詞のます形語幹 ＋ そう (It looks like it will rain).',
+  },
+  {
+    id: 'jp_n4_1_5',
+    level: 'N4',
+    mockSet: 'N4_SET_1',
+    type: 'FILL_BLANK',
+    prompt: '【問題5 文法】文法: 日本語を勉強したい_____、いい先生を紹介していただけませんか。',
+    options: ['んですが', 'のに', 'ので', 'から'],
+    correctAnswer: 'んですが',
+    explanation: '依頼の前提を述べる「〜んですが」が最も適切です。',
+  },
+  {
+    id: 'jp_n4_1_6',
+    level: 'N4',
+    mockSet: 'N4_SET_1',
+    type: 'FILL_BLANK',
+    prompt: '【問題6 文法】文法: どんなに難しくても、最後まであきらめる_____。',
+    options: ['わけにはいかない', 'はずがない', 'わけがない', 'に違いない'],
+    correctAnswer: 'わけにはいかない',
+    explanation: '「〜わけにはいかない」 = Cannot afford to / Must not.',
+  },
+  {
+    id: 'jp_n4_1_7',
+    level: 'N4',
+    mockSet: 'N4_SET_1',
+    type: 'MULTIPLE_CHOICE',
+    prompt: '【問題7 読解】「日本では、ゴミを捨てる時に分別しなければなりません。燃えるゴミ、燃えないゴミ、ペットボトルなどを分けて出します。」ゴミを捨てる時どうしますか。',
+    options: ['一緒に捨てる', '分別して捨てる', '夜に捨てる', '海に捨てる'],
+    correctAnswer: '分別して捨てる',
+    explanation: '文章に「分別しなければなりません」と書かれています。',
+  },
+  {
+    id: 'jp_n4_1_8',
+    level: 'N4',
+    mockSet: 'N4_SET_1',
+    type: 'LISTENING',
+    prompt: '【問題8 聴解】会話を聞いて、男の人は明日の朝何時に出発しますか。',
+    audioUrl: '/audio/n5/minna_shokyu_1_003.mp3',
+    options: ['6時半', '7時', '7時半', '8時'],
+    correctAnswer: '7時半',
+    explanation: '会話の「7時半に駅で待ち合わせましょう」より正解は7時半です。',
+  },
+
+  // ==========================================
+  // JLPT N3 & N2 SAMPLE EXAM QUESTIONS
+  // ==========================================
+  {
+    id: 'jp_n3_1',
+    level: 'N3',
+    type: 'MULTIPLE_CHOICE',
+    prompt: '「環境問題について_____。」に続く最も適切な表現を選びなさい。',
+    options: ['議論するべきだ', '食べるべきだ', '走るべきだ', '寝るべきだ'],
+    correctAnswer: '議論するべきだ',
+    explanation: '環境問題(Environmental problems)について議論する(discuss)べきです。',
+  },
+  {
+    id: 'jp_n3_2',
+    level: 'N3',
+    type: 'FILL_BLANK',
+    prompt: '彼が犯人に_____。証拠が揃っている。',
+    options: ['違いない', 'かもしれない', 'はずがない', 'わけがない'],
+    correctAnswer: '違いない',
+    explanation: '「〜に違いない」 = Must be ~ without doubt.',
+  },
+  {
+    id: 'jp_n2_1',
+    level: 'N2',
+    type: 'FILL_BLANK',
+    prompt: 'どんなに困難であっても、最後まであきらめる____。',
+    options: ['べきではない', 'わけにはいかない', 'にほかならない', 'にすぎない'],
+    correctAnswer: 'わけにはいかない',
+    explanation: '「あきらめるわけにはいかない」 = Cannot afford to give up.',
+  },
+];
+
+const KOREAN_QUESTIONS: ExamQuestion[] = [
+  // EPS-TOPIK
+  {
+    id: 'ko_eps_1',
+    level: 'EPS',
+    type: 'MULTIPLE_CHOICE',
+    prompt: '다음 단어와 관계있는 것은 무엇입니까? (다음: 사과, 배, 수박)',
+    options: ['야채', '과일', '음료수', '가구'],
+    correctAnswer: '과일',
+    explanation: '사과(Apple), 배(Pear), 수박(Watermelon)은 모두 과일(Fruit)입니다.',
+  },
+  {
+    id: 'ko_eps_2',
+    level: 'EPS',
+    type: 'FILL_BLANK',
+    prompt: '빈칸에 들어갈 가장 알맞은 것을 골라주십시오: 한국어 시험이 _____ 너무 떨려요.',
+    options: ['어려워서', '쉬워서', '재미있어서', '좋아서'],
+    correctAnswer: '어려워서',
+    explanation: '시험이 어려워서(Because test is difficult) 떨립니다.',
+  },
+  {
+    id: 'ko_eps_3',
+    level: 'EPS',
+    type: 'MULTIPLE_CHOICE',
+    prompt: '공장에서 일할 때 반드시 착용해야 하는 안전 장구는 무엇입니까?',
+    options: ['안전모', '운동화', '모자', '슬리퍼'],
+    correctAnswer: '안전모',
+    explanation: '공장에서는 머리를 보호하기 위해 안전모(Safety Helmet)를 착용해야 합니다.',
+  },
+
+  // TOPIK 2
+  {
+    id: 'ko_t2_1',
+    level: 'TOPIK2',
+    type: 'MULTIPLE_CHOICE',
+    prompt: '다음 글의 주제로 가장 알맞은 것을 골라주십시오: 건강을 유지하기 위해서는 규칙적인 운동과 식사가 필수적이다.',
+    options: ['건강 관리의 중요성', '운동의 종류', '식사 요리법', '병원 이용 방법'],
+    correctAnswer: '건강 관리의 중요성',
+    explanation: '규칙적인 운동과 식사로 건강을 유지하는 중요성을 설명합니다.',
+  },
+
+  // TOPIK 3
+  {
+    id: 'ko_t3_1',
+    level: 'TOPIK3',
+    type: 'FILL_BLANK',
+    prompt: '환경 오염이 심각해짐에 _____ 정부는 새로운 정책을 발표했다.',
+    options: ['따라', '대해', '관해', '위해'],
+    correctAnswer: '따라',
+    explanation: '~에 따라 = according to / as a consequence of.',
+  },
+
+  // TOPIK 4
+  {
+    id: 'ko_t4_1',
+    level: 'TOPIK4',
+    type: 'MULTIPLE_CHOICE',
+    prompt: '다음 중 문맥상 의미가 가장 어색한 표현을 고르시오.',
+    options: ['경제 성장이 가속화되고 있다', '기술 혁신이 침체되고 있다', '물가가 지속적으로 상승한다', '고용 시장이 활성화된다'],
+    correctAnswer: '기술 혁신이 침체되고 있다',
+    explanation: '문맥 및 일반적 표현 비교 시 적절性を 평가합니다.',
+  },
+];
+
+export interface TimedExamEngineProps {
+  activeLanguage?: 'JAPANESE' | 'KOREAN';
+  preselectedLevel?: string;
+  hideLevelSelector?: boolean;
+  hideCategorySelector?: boolean;
+  onCompleteExam?: (result: { score: number; passed: boolean; timeSpentSeconds: number }) => void;
+}
+
+export const TimedExamEngine: React.FC<TimedExamEngineProps> = ({
+  activeLanguage = 'JAPANESE',
+  onCompleteExam,
+}) => {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [isFullscreen, setIsFullscreen] = useState(false);
+
+  const [selectedMockSet, setSelectedMockSet] = useState<string>('N5_SET_1');
+  const [selectedLevelFilter, setSelectedLevelFilter] = useState<string>('ALL');
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [selectedAnswers, setSelectedAnswers] = useState<Record<string, string>>({});
+  const [flaggedQuestions, setFlaggedQuestions] = useState<Record<string, boolean>>({});
+  const [secondsRemaining, setSecondsRemaining] = useState(50 * 60);
+  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [audioPlaysCount, setAudioPlaysCount] = useState<Record<string, number>>({});
+
+  const allQuestions = activeLanguage === 'JAPANESE' ? JAPANESE_QUESTIONS : KOREAN_QUESTIONS;
+
+  const questions = allQuestions.filter((q) => {
+    if (activeLanguage === 'JAPANESE') {
+      if (selectedMockSet !== 'ALL' && q.mockSet) {
+        return q.mockSet === selectedMockSet;
+      }
+      if (selectedLevelFilter !== 'ALL') {
+        return q.level === selectedLevelFilter;
+      }
+    } else {
+      if (selectedLevelFilter !== 'ALL') {
+        return q.level === selectedLevelFilter;
+      }
+    }
+    return true;
+  });
+
+  const toggleFullscreen = () => {
+    if (!isFullscreen) {
+      if (containerRef.current?.requestFullscreen) {
+        containerRef.current.requestFullscreen().catch(() => {});
+      }
+      setIsFullscreen(true);
+    } else {
+      if (document.fullscreenElement) {
+        document.exitFullscreen().catch(() => {});
+      }
+      setIsFullscreen(false);
+    }
+  };
+
+  useEffect(() => {
+    const handleFsChange = () => {
+      setIsFullscreen(Boolean(document.fullscreenElement));
+    };
+    document.addEventListener('fullscreenchange', handleFsChange);
+    return () => document.removeEventListener('fullscreenchange', handleFsChange);
+  }, []);
+
+  useEffect(() => {
+    setCurrentIndex(0);
+    setSelectedAnswers({});
+    setFlaggedQuestions({});
+    setSecondsRemaining(50 * 60);
+    setIsSubmitted(false);
+    setAudioPlaysCount({});
+    if (activeLanguage === 'JAPANESE') {
+      setSelectedMockSet('N5_SET_1');
+    }
+    setSelectedLevelFilter('ALL');
+  }, [activeLanguage]);
+
+  useEffect(() => {
+    if (isSubmitted) return;
+    const timer = setInterval(() => {
+      setSecondsRemaining((prev) => {
+        if (prev <= 1) {
+          clearInterval(timer);
+          handleSubmitExam();
+          return 0;
+        }
+        return prev - 1;
+      });
+    }, 1000);
+
+    return () => clearInterval(timer);
+  }, [isSubmitted]);
+
+  const currentQ = questions[currentIndex] || questions[0];
+
+  const formatTime = (secs: number) => {
+    const m = Math.floor(secs / 60);
+    const s = secs % 60;
+    return `${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
+  };
+
+  const handleSelectAnswer = (option: string) => {
+    if (isSubmitted || !currentQ) return;
+    setSelectedAnswers({ ...selectedAnswers, [currentQ.id]: option });
+  };
+
+  const toggleFlag = (qId: string) => {
+    setFlaggedQuestions({ ...flaggedQuestions, [qId]: !flaggedQuestions[qId] });
+  };
+
+  const playAudioPrompt = () => {
+    if (!currentQ) return;
+    const currentPlays = audioPlaysCount[currentQ.id] || 0;
+    if (currentPlays >= 2) {
+      alert('Rule: Audio can only be replayed a maximum of 2 times in official JLPT exams.');
+      return;
+    }
+    setAudioPlaysCount({ ...audioPlaysCount, [currentQ.id]: currentPlays + 1 });
+
+    if (currentQ.audioUrl) {
+      const audio = new Audio(currentQ.audioUrl);
+      audio.play().catch(() => {
+        if ('speechSynthesis' in window) {
+          const utterance = new SpeechSynthesisUtterance(currentQ.prompt);
+          utterance.lang = activeLanguage === 'JAPANESE' ? 'ja-JP' : 'ko-KR';
+          window.speechSynthesis.speak(utterance);
+        }
+      });
+    } else if ('speechSynthesis' in window) {
+      const utterance = new SpeechSynthesisUtterance(currentQ.prompt);
+      utterance.lang = activeLanguage === 'JAPANESE' ? 'ja-JP' : 'ko-KR';
+      window.speechSynthesis.speak(utterance);
+    }
+  };
+
+  const handleSubmitExam = () => {
+    setIsSubmitted(true);
+    let correctCount = 0;
+    questions.forEach((q) => {
+      if (selectedAnswers[q.id] === q.correctAnswer) {
+        correctCount++;
+      }
+    });
+
+    const score = Math.round((correctCount / questions.length) * 100);
+    const passed = score >= 70;
+    const timeSpentSeconds = 50 * 60 - secondsRemaining;
+
+    const check = validateExamSubmission(questions.length, timeSpentSeconds, score);
+    if (!check.valid) {
+      console.warn('[AntiCheat]', check.reason);
+    }
+
+    if (onCompleteExam) {
+      onCompleteExam({ score, passed, timeSpentSeconds });
+    }
+  };
+
+  return (
+    <div
+      ref={containerRef}
+      className={`w-full font-sans transition-all duration-300 ${
+        isFullscreen
+          ? 'fixed inset-0 z-50 overflow-y-auto bg-slate-950 p-4 sm:p-8 space-y-4'
+          : 'max-w-5xl mx-auto space-y-4 sm:space-y-6'
+      }`}
+    >
+      {/* Top Header Bar */}
+      <div className="bg-slate-900/95 backdrop-blur-xl border border-slate-800 rounded-2xl sm:rounded-3xl p-3.5 sm:p-5 shadow-2xl flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
+        <div>
+          <div className="flex items-center gap-1.5 sm:gap-2 text-[10px] sm:text-xs font-bold uppercase tracking-wider text-emerald-400">
+            <Award className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-amber-400" />
+            <span>Timed Exam Simulator & Auto Grading</span>
+          </div>
+          <h2 className="text-base sm:text-xl font-bold text-white mt-0.5 sm:mt-1">
+            {activeLanguage === 'JAPANESE'
+              ? 'JLPT Standard Model Mock Examination (N5, N4, N3, N2)'
+              : 'EPS-TOPIK & TOPIK Level 2, 3, 4 Mock Examination'}
+          </h2>
+        </div>
+
+        <div className="flex items-center justify-between sm:justify-end gap-3 pt-2 sm:pt-0 border-t sm:border-t-0 border-slate-800">
+          {/* Full Screen Mode Toggle Button */}
+          <button
+            onClick={toggleFullscreen}
+            className="flex items-center gap-1.5 px-3 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white border border-slate-700 text-xs font-bold transition-all"
+            title={isFullscreen ? 'Exit Full Screen' : 'Enter Full Screen Exam Mode'}
+          >
+            {isFullscreen ? <Minimize2 className="w-4 h-4 text-amber-400" /> : <Maximize2 className="w-4 h-4 text-indigo-400" />}
+            <span className="hidden sm:inline">{isFullscreen ? 'Exit Full Screen' : 'Full Screen'}</span>
+          </button>
+
+          {/* Timer Display */}
+          <div
+            className={`flex items-center gap-2 px-3 sm:px-4 py-1.5 sm:py-2 rounded-xl sm:rounded-2xl border transition-all ${
+              secondsRemaining < 300
+                ? 'bg-rose-950/80 border-rose-500 text-rose-300 animate-pulse'
+                : 'bg-slate-950 border-slate-800 text-amber-400'
+            }`}
+          >
+            <Clock className="w-4 h-4 sm:w-5 sm:h-5 text-amber-400" />
+            <span className="text-lg sm:text-xl font-black font-mono tracking-wider">{formatTime(secondsRemaining)}</span>
+          </div>
+
+          {!isSubmitted && (
+            <button
+              onClick={handleSubmitExam}
+              className="px-4 sm:px-5 py-2 sm:py-2.5 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-bold text-xs shadow-glow transition-all"
+            >
+              Submit Exam
+            </button>
+          )}
+        </div>
+      </div>
+
+      {/* Mock Test Selection Selector (Japanese) */}
+      {activeLanguage === 'JAPANESE' && (
+        <div className="bg-slate-900/90 backdrop-blur-xl border border-slate-800 rounded-2xl sm:rounded-3xl p-3.5 sm:p-4 shadow-xl flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
+          <div className="flex items-center gap-2">
+            <ListFilter className="w-4 h-4 text-indigo-400" />
+            <span className="text-xs font-bold text-slate-300 uppercase tracking-wider">Select Mock Exam Set:</span>
+          </div>
+          <div className="flex flex-wrap gap-2">
+            <button
+              onClick={() => {
+                setSelectedMockSet('N5_SET_1');
+                setSelectedLevelFilter('ALL');
+                setCurrentIndex(0);
+              }}
+              className={`px-3 sm:px-4 py-1.5 sm:py-2 rounded-xl text-xs font-black transition-all ${
+                selectedMockSet === 'N5_SET_1'
+                  ? 'bg-gradient-to-r from-rose-600 to-pink-600 text-white shadow-glow'
+                  : 'bg-slate-950 text-slate-400 hover:text-white border border-slate-800'
+              }`}
+            >
+              📝 JLPT N5 Mock Test Set 1
+            </button>
+            <button
+              onClick={() => {
+                setSelectedMockSet('N5_SET_2');
+                setSelectedLevelFilter('ALL');
+                setCurrentIndex(0);
+              }}
+              className={`px-3 sm:px-4 py-1.5 sm:py-2 rounded-xl text-xs font-black transition-all ${
+                selectedMockSet === 'N5_SET_2'
+                  ? 'bg-gradient-to-r from-rose-600 to-pink-600 text-white shadow-glow'
+                  : 'bg-slate-950 text-slate-400 hover:text-white border border-slate-800'
+              }`}
+            >
+              📝 JLPT N5 Mock Test Set 2
+            </button>
+            <button
+              onClick={() => {
+                setSelectedMockSet('N4_SET_1');
+                setSelectedLevelFilter('ALL');
+                setCurrentIndex(0);
+              }}
+              className={`px-3 sm:px-4 py-1.5 sm:py-2 rounded-xl text-xs font-black transition-all ${
+                selectedMockSet === 'N4_SET_1'
+                  ? 'bg-gradient-to-r from-indigo-600 to-purple-600 text-white shadow-glow'
+                  : 'bg-slate-950 text-slate-400 hover:text-white border border-slate-800'
+              }`}
+            >
+              📝 JLPT N4 Mock Test
+            </button>
+            <button
+              onClick={() => {
+                setSelectedMockSet('ALL');
+                setSelectedLevelFilter('ALL');
+                setCurrentIndex(0);
+              }}
+              className={`px-3 sm:px-4 py-1.5 sm:py-2 rounded-xl text-xs font-black transition-all ${
+                selectedMockSet === 'ALL'
+                  ? 'bg-slate-800 text-white'
+                  : 'bg-slate-950 text-slate-400 hover:text-white border border-slate-800'
+              }`}
+            >
+              🌐 All Questions Pool
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* Level Selector Bar */}
+      <div className="flex items-center gap-1.5 sm:gap-2 bg-slate-900/80 p-1.5 sm:p-2 rounded-xl sm:rounded-2xl border border-slate-800 flex-wrap">
+        <span className="text-[11px] sm:text-xs font-bold text-slate-400 px-1.5 flex items-center gap-1">
+          <Layers className="w-3.5 h-3.5" /> Filter Level:
+        </span>
+        <button
+          onClick={() => {
+            setSelectedLevelFilter('ALL');
+            setCurrentIndex(0);
+          }}
+          className={`px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-lg sm:rounded-xl text-[11px] sm:text-xs font-bold transition-all ${
+            selectedLevelFilter === 'ALL' ? 'bg-indigo-600 text-white' : 'bg-slate-950 text-slate-400 hover:text-white'
+          }`}
+        >
+          All
+        </button>
+        {activeLanguage === 'JAPANESE' ? (
+          ['N5', 'N4', 'N3', 'N2'].map((lvl) => (
+            <button
+              key={lvl}
+              onClick={() => {
+                setSelectedLevelFilter(lvl);
+                setSelectedMockSet('ALL');
+                setCurrentIndex(0);
+              }}
+              className={`px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-lg sm:rounded-xl text-[11px] sm:text-xs font-bold transition-all ${
+                selectedLevelFilter === lvl ? 'bg-rose-600 text-white' : 'bg-slate-950 text-slate-400 hover:text-white'
+              }`}
+            >
+              JLPT {lvl}
+            </button>
+          ))
+        ) : (
+          ['EPS', 'TOPIK2', 'TOPIK3', 'TOPIK4'].map((lvl) => (
+            <button
+              key={lvl}
+              onClick={() => {
+                setSelectedLevelFilter(lvl);
+                setCurrentIndex(0);
+              }}
+              className={`px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-lg sm:rounded-xl text-[11px] sm:text-xs font-bold transition-all ${
+                selectedLevelFilter === lvl ? 'bg-emerald-600 text-white' : 'bg-slate-950 text-slate-400 hover:text-white'
+              }`}
+            >
+              {lvl}
+            </button>
+          ))
+        )}
+      </div>
+
+      {/* Main Grid */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        {currentQ ? (
+          <div className="lg:col-span-2 bg-slate-900/90 border border-slate-800 rounded-3xl p-6 shadow-xl flex flex-col justify-between min-h-[420px]">
+            <div>
+              <div className="flex items-center justify-between pb-4 mb-4 border-b border-slate-800">
+                <div className="flex items-center gap-2">
+                  <span className="px-3 py-1 rounded-lg bg-indigo-600/20 border border-indigo-500/30 text-indigo-300 text-xs font-bold">
+                    Question {currentIndex + 1} of {questions.length}
+                  </span>
+                  <span className="px-2 py-0.5 rounded-md bg-slate-800 text-amber-400 text-[10px] font-bold">
+                    {currentQ.level}
+                  </span>
+                </div>
+
+                <button
+                  onClick={() => toggleFlag(currentQ.id)}
+                  className={`flex items-center gap-1.5 px-3 py-1 rounded-lg text-xs font-semibold border transition-all ${
+                    flaggedQuestions[currentQ.id]
+                      ? 'bg-amber-500/20 border-amber-500/50 text-amber-300'
+                      : 'bg-slate-950 border-slate-800 text-slate-400 hover:text-white'
+                  }`}
+                >
+                  <Flag className="w-3.5 h-3.5" />
+                  <span>{flaggedQuestions[currentQ.id] ? 'Flagged' : 'Flag for Review'}</span>
+                </button>
+              </div>
+
+              <div className="mb-6">
+                {currentQ.type === 'LISTENING' && (
+                  <div className="mb-4 bg-slate-950 p-4 rounded-2xl border border-slate-800 flex items-center justify-between">
+                    <div className="flex items-center gap-3">
+                      <div className="p-3 rounded-xl bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">
+                        <Volume2 className="w-5 h-5 animate-pulse" />
+                      </div>
+                      <div>
+                        <div className="text-xs font-bold text-white">Audio Listening Track</div>
+                        <div className="text-[11px] text-slate-400">
+                          Played: {audioPlaysCount[currentQ.id] || 0} / 2 times max
+                        </div>
+                      </div>
+                    </div>
+                    <button
+                      onClick={playAudioPrompt}
+                      className="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs shadow-md transition-all"
+                    >
+                      Play Audio Clip
+                    </button>
+                  </div>
+                )}
+
+                <h3 className="text-lg font-bold text-slate-100 leading-relaxed">{currentQ.prompt}</h3>
+              </div>
+
+              <div className="space-y-3">
+                {currentQ.options.map((option, idx) => {
+                  const isSelected = selectedAnswers[currentQ.id] === option;
+                  const isCorrect = currentQ.correctAnswer === option;
+
+                  let optionStyle = 'bg-slate-950/80 border-slate-800 text-slate-200 hover:border-slate-700';
+
+                  if (isSubmitted) {
+                    if (isCorrect) {
+                      optionStyle = 'bg-emerald-950/80 border-emerald-500 text-emerald-200 font-bold';
+                    } else if (isSelected) {
+                      optionStyle = 'bg-rose-950/80 border-rose-500 text-rose-200';
+                    }
+                  } else if (isSelected) {
+                    optionStyle = 'bg-indigo-950/80 border-indigo-500 text-indigo-200 shadow-glow font-bold';
+                  }
+
+                  return (
+                    <button
+                      key={idx}
+                      onClick={() => handleSelectAnswer(option)}
+                      className={`w-full text-left p-4 rounded-2xl border transition-all flex items-center justify-between ${optionStyle}`}
+                    >
+                      <div className="flex items-center gap-3">
+                        <span className="w-7 h-7 rounded-xl bg-slate-800 flex items-center justify-center text-xs font-bold text-slate-300">
+                          {idx + 1}
+                        </span>
+                        <span className="text-sm font-medium">{option}</span>
+                      </div>
+                      {isSelected && <CheckCircle2 className="w-5 h-5 text-indigo-400" />}
+                    </button>
+                  );
+                })}
+              </div>
+
+              {isSubmitted && currentQ.explanation && (
+                <div className="mt-5 p-4 rounded-2xl bg-indigo-950/40 border border-indigo-800/50 text-xs text-indigo-200">
+                  <span className="font-bold block mb-1">Explanation:</span>
+                  {currentQ.explanation}
+                </div>
+              )}
+            </div>
+
+            <div className="flex items-center justify-between pt-6 mt-6 border-t border-slate-800">
+              <button
+                onClick={() => setCurrentIndex(Math.max(0, currentIndex - 1))}
+                disabled={currentIndex === 0}
+                className="px-4 py-2 rounded-xl bg-slate-800 disabled:opacity-40 hover:bg-slate-700 text-slate-200 text-xs font-bold transition-all flex items-center gap-1.5"
+              >
+                <ChevronLeft className="w-4 h-4" /> Previous
+              </button>
+
+              <button
+                onClick={() => setCurrentIndex(Math.min(questions.length - 1, currentIndex + 1))}
+                disabled={currentIndex === questions.length - 1}
+                className="px-4 py-2 rounded-xl bg-slate-800 disabled:opacity-40 hover:bg-slate-700 text-slate-200 text-xs font-bold transition-all flex items-center gap-1.5"
+              >
+                Next <ChevronRight className="w-4 h-4" />
+              </button>
+            </div>
+          </div>
+        ) : (
+          <div className="lg:col-span-2 bg-slate-900/90 border border-slate-800 rounded-3xl p-8 text-center text-slate-400">
+            No questions available for this selection.
+          </div>
+        )}
+
+        <div className="bg-slate-900/90 border border-slate-800 rounded-3xl p-6 shadow-xl flex flex-col justify-between">
+          <div>
+            <h4 className="text-xs font-bold uppercase tracking-wider text-slate-400 mb-4">
+              Question Navigator Grid
+            </h4>
+
+            <div className="grid grid-cols-4 gap-2.5 mb-6">
+              {questions.map((q, idx) => {
+                const isAnswered = Boolean(selectedAnswers[q.id]);
+                const isFlagged = Boolean(flaggedQuestions[q.id]);
+                const isCurrent = idx === currentIndex;
+
+                let gridStyle = 'bg-slate-950 border-slate-800 text-slate-400';
+
+                if (isCurrent) {
+                  gridStyle = 'ring-2 ring-indigo-500 border-indigo-400 text-white font-bold bg-slate-800';
+                } else if (isFlagged) {
+                  gridStyle = 'bg-amber-950/80 border-amber-500 text-amber-300 font-bold';
+                } else if (isAnswered) {
+                  gridStyle = 'bg-emerald-950/80 border-emerald-500 text-emerald-300 font-bold';
+                }
+
+                return (
+                  <button
+                    key={q.id}
+                    onClick={() => setCurrentIndex(idx)}
+                    className={`relative h-12 rounded-xl border text-xs flex items-center justify-center transition-all ${gridStyle}`}
+                  >
+                    <span>{idx + 1}</span>
+                    {isFlagged && <Flag className="absolute top-1 right-1 w-3 h-3 text-amber-400" />}
+                  </button>
+                );
+              })}
+            </div>
+
+            <div className="space-y-2 text-xs text-slate-400 border-t border-slate-800 pt-4">
+              <div className="flex items-center gap-2">
+                <span className="w-3 h-3 rounded bg-emerald-950 border border-emerald-500" />
+                <span>Answered</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <span className="w-3 h-3 rounded bg-amber-950 border border-amber-500" />
+                <span>Flagged for Review</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <span className="w-3 h-3 rounded bg-slate-950 border border-slate-800" />
+                <span>Unanswered</span>
+              </div>
+            </div>
+          </div>
+
+          <div className="mt-6 pt-4 border-t border-slate-800 text-center">
+            <div className="text-xs text-slate-400 font-medium">Answered Progress</div>
+            <div className="text-xl font-bold text-white mt-0.5">
+              {Object.keys(selectedAnswers).length} / {questions.length} Questions
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
