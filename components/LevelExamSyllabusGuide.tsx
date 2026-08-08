@@ -313,6 +313,90 @@ export const LevelExamSyllabusGuide: React.FC<LevelExamSyllabusGuideProps> = ({ 
     },
 
     // KOREAN EXAM LEVELS
+    TOPIK1_L1: {
+      title: 'TOPIK I (Levels 1–2) Official Examination & Syllabus Guide',
+      japaneseTitle: '한국어능력시험 I (1급・2급) Official Guide',
+      levelCode: 'TOPIK I (Beginner Foundation • Levels 1 & 2)',
+      passingScore: 'Level 1: 80 / 200 Pts | Level 2: 140 / 200 Pts',
+      passPercentage: 'Level 1: 40% | Level 2: 70%',
+      vocabCount: '1,500+ Essential Words',
+      kanjiCount: '14 Consonants + 10 Vowels + 11 Diphthongs',
+      studyHours: '80 – 120 Hours (3–6 Months Pace)',
+      examFormat: '1 Session Booklet (100 Mins) — 100% Multiple Choice (70 Questions)',
+      papers: [
+        {
+          name: 'Section 1: Listening Comprehension (듣기)',
+          duration: '40 Minutes',
+          questions: '30 Questions (100 Points)',
+          sections: [
+            'Basic Greetings & Daily Dialogue (인사말과 일상 대화): Match simple spoken statements with correct response',
+            'Location & Activity Selection (장소 및 행동): Identify where dialogue occurs or main action being taken',
+            'Picture & Illustration Selection (그림 선택): Choose picture that matches audio scene',
+            'Main Topic Identification (주제 파악): Comprehend central idea of short conversations'
+          ]
+        },
+        {
+          name: 'Section 2: Reading Comprehension (읽기)',
+          duration: '60 Minutes',
+          questions: '40 Questions (100 Points)',
+          sections: [
+            'Short Topic Matching (주제 찾기): Identify topic of 1-2 sentence notes or signs',
+            'Fill in the Blank Grammar & Particle (빈칸 채우기): Select correct particle (이/가, 은/는, 을/를) or verb ending',
+            'Notice & Public Sign Reading (안내문 및 표지판): Comprehend store hours, posters, menu signs',
+            'Short Story & Passage Comprehension (단문 읽기): Answer detailed questions about short personal stories or emails'
+          ]
+        }
+      ],
+      tricks: [
+        'No Writing Section: TOPIK I consists 100% of multiple-choice questions! There are NO essay or short-answer writing questions.',
+        'Target Pacing: Finish Section 2 (Reading 40 Qs) in 50 minutes to leave 10 minutes to review blank answers.',
+        'Passing Scores: Score at least 80/200 Pts for Level 1 certification, or 140/200 Pts for Level 2 certification.',
+        'Listening Prep: Listen to basic conversation audio tracks twice daily to easily catch key particles (에서, 에게, 부터).'
+      ]
+    },
+
+    TOPIK3: {
+      title: 'TOPIK II (Levels 3–6) Official Examination & Syllabus Guide',
+      japaneseTitle: '한국어능력시험 II (3급・4급・5급・6급) Official Guide',
+      levelCode: 'TOPIK II (Intermediate to Advanced • Levels 3, 4, 5, 6)',
+      passingScore: 'Level 3: 120 Pts | Level 4: 150 Pts | Level 5: 190 Pts | Level 6: 230 / 300 Pts',
+      passPercentage: 'L3: 40% | L4: 50% | L5: 63.3% | L6: 76.6%',
+      vocabCount: '3,000 – 10,000+ Words (News, Academic, Formal & Abstract)',
+      kanjiCount: 'Advanced Sino-Korean Characters (한자어)',
+      studyHours: '300 – 600+ Hours (6–18 Months Pace)',
+      examFormat: '2 Session Booklets (180 Mins Total) — Multiple Choice (100 Qs) + 4 Writing Essays',
+      papers: [
+        {
+          name: 'Session 1: Listening (듣기) & Writing (쓰기)',
+          duration: '110 Minutes (Listening 60 Mins + Writing 50 Mins)',
+          questions: '50 Listening Qs (100 Pts) + 4 Writing Essays (100 Pts)',
+          sections: [
+            'Listening (듣기 - 50 Qs): Workplace dialogues, news reports, radio lectures, formal debates & panel discussions',
+            'Writing Q51-52 (실용문 채우기): Fill in missing phrases in practical emails or announcements (10 Pts each)',
+            'Writing Q53 (자료 설명 에세이): Write 200–300 character descriptive essay analyzing a graph, chart, or survey (30 Pts)',
+            'Writing Q54 (논술형 에세이): Write 600–700 character academic argumentative essay on social or philosophical topic (50 Pts)'
+          ]
+        },
+        {
+          name: 'Session 2: Reading Comprehension (읽기)',
+          duration: '70 Minutes',
+          questions: '50 Questions (100 Points)',
+          sections: [
+            'Grammar Synonym & Sentence Structure (문법 및 유의어): Identify closest grammatical replacement',
+            'Newspaper Headlines & Advertisements (신문 기사 및 광고): Interpret condensed formal news headlines',
+            'Paragraph Reordering (글의 순서): Arrange 4 complex paragraphs into coherent logical order',
+            'Academic & Scientific Passages (학술 및 칼럼): Comprehend editorial opinions, literature, and technology research'
+          ]
+        }
+      ],
+      tricks: [
+        'Huge Gap from TOPIK I: TOPIK II evaluates intermediate AND advanced learners on the exact same exam paper!',
+        'Writing Q53 Graph Master: Learn standardized transition phrases for Q53 (예를 들어, 조사 결과에 따르면, 증가하는 추세를 보인다) to lock in 25/30 marks easily.',
+        'Academic Scholarship Benchmark: TOPIK II Level 3 or 4 is the mandatory requirement for Global Korea Scholarship (GKS) and Korean university degree programs.',
+        'Strict Time Pacing: Spend max 1 minute per question on Reading Q1-Q30 so you have enough time to tackle dense Q31-Q50 academic articles.'
+      ]
+    },
+
     EPS: {
       title: 'EPS-TOPIK 60-Lesson Official HRD Korea Examination & Master Syllabus',
       japaneseTitle: '고용허가제 한국어능력시험 (EPS-TOPIK) 60과 공식 시라버스',
@@ -352,36 +436,6 @@ export const LevelExamSyllabusGuide: React.FC<LevelExamSyllabusGuideProps> = ({ 
         'Master Signboard Icons (안전 표지판): Recognize universal warning signs (금지, 경고, 지시) instantly for guaranteed questions.',
         'Grammar Patterns for EPS: Focus heavily on workplace request/permission forms (-아/어 주세요, -(으)면 안 되다, -(으)ㄹ 수 있다).',
         'CBT Timer Pacing: Spend no more than 60 seconds per reading question to save 5 minutes to review flagged questions.'
-      ]
-    },
-    TOPIK1_L1: {
-      title: 'TOPIK I Level 1 Beginner Examination & Syllabus Guide',
-      japaneseTitle: '한국어능력시험 (TOPIK I) 1급 시험개요 및 시라버스',
-      levelCode: 'TOPIK I — Level 1 (Beginner)',
-      passingScore: '80 / 200 Points',
-      passPercentage: '40.0%',
-      vocabCount: '800+ Basic Words',
-      kanjiCount: '30 Core Grammar Patterns',
-      studyHours: '80 – 100 Hours',
-      examFormat: 'Paper Test (PBT) / IBT 70 Questions (30 Listening + 40 Reading, 100 Mins total)',
-      papers: [
-        {
-          name: 'Section 1: Listening Comprehension (듣기)',
-          duration: '40 Minutes',
-          questions: '30 Questions (100 Marks)',
-          sections: ['Daily Greetings & Shopping Dialogues', 'Time & Schedule Questions', 'Location & Action Selection']
-        },
-        {
-          name: 'Section 2: Reading Comprehension (읽기)',
-          duration: '60 Minutes',
-          questions: '40 Questions (100 Marks)',
-          sections: ['Public Signs & Short Announcements', 'Topic Matching', 'Short Personal Notes & Emails']
-        }
-      ],
-      tricks: [
-        'Focus on Core Particles: Master 은/는 (topic), 이/가 (subject), 을/를 (object), 에/에서 (location/time).',
-        'Informal Polite Ending (-아/어/해요): Over 90% of TOPIK I dialogues use standard polite style.',
-        'Preview Options: Look at visual choices before each audio clip plays to predict target vocabulary.'
       ]
     },
     TOPIK1: {
@@ -440,41 +494,6 @@ export const LevelExamSyllabusGuide: React.FC<LevelExamSyllabusGuideProps> = ({ 
       tricks: [
         'Connective Endings (-고, -(으)며, -(으)니까, -지만): Master clause connections to speed up reading.',
         'Target score 140+ out of 200 points to secure official TOPIK Level 2 certification.'
-      ]
-    },
-    TOPIK3: {
-      title: 'TOPIK II Level 3 Intermediate Examination & Syllabus Guide',
-      japaneseTitle: '한국어능력시험 (TOPIK II) 3급 중급 시험개요',
-      levelCode: 'TOPIK II — Level 3 (Intermediate)',
-      passingScore: '120 / 300 Points',
-      passPercentage: '40.0%',
-      vocabCount: '3,000+ Words',
-      kanjiCount: '100 Intermediate Grammar Patterns',
-      studyHours: '300 – 400 Hours',
-      examFormat: '3 Sections (50 Listening, 4 Writing Essays, 50 Reading, 180 Mins total)',
-      papers: [
-        {
-          name: 'Section 1: Listening (듣기)',
-          duration: '60 Minutes',
-          questions: '50 Questions (100 Marks)',
-          sections: ['Lectures, News Reports & Panel Discussions']
-        },
-        {
-          name: 'Section 2: Writing (쓰기)',
-          duration: '50 Minutes',
-          questions: '4 Questions (100 Marks)',
-          sections: ['Tasks 51 & 52: Short Sentence Completion', 'Task 53: Graph & Data Report (200-300 words)']
-        },
-        {
-          name: 'Section 3: Reading (읽기)',
-          duration: '70 Minutes',
-          questions: '50 Questions (100 Marks)',
-          sections: ['Editorials, Articles, Literature & Logical Ordering']
-        }
-      ],
-      tricks: [
-        'Task 53 Writing Formula: Memorize standard graph reporting phrases (이/가 증가하였다, N%에 달하였다) for guaranteed 30+ writing marks.',
-        'Required benchmark for Korean university undergraduate entry and F-2 points visa.'
       ]
     },
     TOPIK4: {
