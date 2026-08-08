@@ -6,6 +6,8 @@ import { Menu, Search, LogIn, X, ChevronDown, User } from 'lucide-react';
 import AuthSheet from '@/components/auth/AuthSheet';
 import MobileDrawer from '@/components/layout/MobileDrawer';
 
+import { useCountry } from '@/lib/context/CountryContext';
+
 interface MobileNavbarProps {
   user?: { name: string; email: string } | null;
   lang: 'en' | 'ne';
@@ -19,6 +21,7 @@ export default function MobileNavbar({ user, lang, onLangToggle, onSearchOpen }:
   const [authMode, setAuthMode] = useState<'signin' | 'register'>('signin');
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const { activeCountry, setCountryFocus } = useCountry();
 
   useEffect(() => {
     const handler = (e: MouseEvent) => {
@@ -41,22 +44,49 @@ export default function MobileNavbar({ user, lang, onLangToggle, onSearchOpen }:
       {/* Navbar */}
       <header className="fixed top-0 left-0 right-0 z-40 bg-white border-b border-gray-100 md:hidden"
         style={{ height: 56 }}>
-        <div className="flex items-center justify-between h-full px-4 gap-2">
+        <div className="flex items-center justify-between h-full px-3 gap-1.5">
 
           {/* Hamburger */}
           <button
             onClick={() => setDrawerOpen(true)}
-            className="w-10 h-10 flex items-center justify-center rounded-xl text-gray-700 hover:bg-gray-100 transition-colors flex-shrink-0"
+            className="w-8 h-8 flex items-center justify-center rounded-xl text-gray-700 hover:bg-gray-100 transition-colors flex-shrink-0"
             aria-label="Open menu"
           >
             <Menu className="w-5 h-5" />
           </button>
 
           {/* Logo + Brand */}
-          <Link href="/" className="flex items-center gap-2 flex-1 min-w-0">
-            <img src="/logo.png" alt="JapanKoreaHub Logo" className="w-7 h-7 rounded-lg object-contain flex-shrink-0" />
-            <span className="font-semibold text-sm text-gray-900 truncate">Japan Korea Hub</span>
+          <Link href="/" className="flex items-center gap-1.5 min-w-0 flex-shrink-0">
+            <img src="/logo.png" alt="JapanKoreaHub Logo" className="w-6 h-6 rounded-lg object-contain flex-shrink-0" />
           </Link>
+
+          {/* Country Hub Switcher Pills */}
+          <div className="flex items-center gap-1 bg-gray-100 p-0.5 rounded-xl border border-gray-200 text-[10px] font-bold">
+            <button
+              onClick={() => setCountryFocus('japan')}
+              className={`px-2 py-0.5 rounded-lg transition-all cursor-pointer ${
+                activeCountry === 'japan' ? 'bg-red-600 text-white shadow-xs' : 'text-gray-600'
+              }`}
+            >
+              🇯🇵 JP
+            </button>
+            <button
+              onClick={() => setCountryFocus('korea')}
+              className={`px-2 py-0.5 rounded-lg transition-all cursor-pointer ${
+                activeCountry === 'korea' ? 'bg-blue-600 text-white shadow-xs' : 'text-gray-600'
+              }`}
+            >
+              🇰🇷 KR
+            </button>
+            <button
+              onClick={() => setCountryFocus('all')}
+              className={`px-1.5 py-0.5 rounded-lg transition-all cursor-pointer ${
+                activeCountry === 'all' ? 'bg-gray-900 text-white shadow-xs' : 'text-gray-600'
+              }`}
+            >
+              🌏 Both
+            </button>
+          </div>
 
           {/* Right controls */}
           <div className="flex items-center gap-2 flex-shrink-0">

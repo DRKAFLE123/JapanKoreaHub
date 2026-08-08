@@ -3,21 +3,10 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import {
-  Home, BookOpen, ClipboardList, GraduationCap, Briefcase, Shield, Globe, Bell, FileText, Handshake, BarChart2, User as UserIcon
+  Home, BookOpen, ClipboardList, GraduationCap, Briefcase, Shield, Globe, Bell, FileText, Handshake, BarChart2, User as UserIcon, Check
 } from 'lucide-react';
 import AuthSheet from '@/components/auth/AuthSheet';
-
-const MAIN_LINKS = [
-  { href: '/',             label: 'Home',         Icon: Home },
-  { href: '/learn',        label: 'Learn',        Icon: BookOpen },
-  { href: '/exams',        label: 'Exams',        Icon: ClipboardList },
-  { href: '/study',        label: 'Study',        Icon: GraduationCap },
-  { href: '/work',         label: 'Work',         Icon: Briefcase },
-  { href: '/visa',         label: 'Visa',         Icon: Shield },
-  { href: '/life',         label: 'Life',         Icon: Globe },
-  { href: '/dashboard',    label: 'Progress',     Icon: BarChart2 },
-  { href: '/profile',      label: 'Profile',      Icon: UserIcon },
-];
+import { useCountry, CountryFocus } from '@/lib/context/CountryContext';
 
 const SECONDARY_LINKS = [
   { href: '/notices',      label: 'Notices',      Icon: Bell },
@@ -33,11 +22,31 @@ interface SidebarProps {
 export default function Sidebar({ isOpen, onClose }: SidebarProps) {
   const pathname = usePathname();
   const [authSheetOpen, setAuthSheetOpen] = useState(false);
+  const { activeCountry, setCountryFocus } = useCountry();
 
   const isActive = (href: string) => {
     if (href === '/') return pathname === '/';
-    return pathname.startsWith(href);
+    return pathname === href || pathname.startsWith(href + '/');
   };
+
+  const getScopedHref = (key: string) => {
+    if (key === 'home') return activeCountry === 'japan' ? '/japan' : activeCountry === 'korea' ? '/korea' : '/';
+    if (activeCountry === 'japan') return `/japan/${key}`;
+    if (activeCountry === 'korea') return `/korea/${key}`;
+    return `/${key}`;
+  };
+
+  const mainLinks = [
+    { key: 'home',         label: 'Home',         href: getScopedHref('home'),     Icon: Home },
+    { key: 'learn',        label: 'Learn',        href: getScopedHref('learn'),    Icon: BookOpen },
+    { key: 'exams',        label: 'Exams',        href: getScopedHref('exams'),    Icon: ClipboardList },
+    { key: 'study',        label: 'Study',        href: getScopedHref('study'),    Icon: GraduationCap },
+    { key: 'work',         label: 'Work',         href: getScopedHref('work'),     Icon: Briefcase },
+    { key: 'visa',         label: 'Visa',         href: getScopedHref('visa'),     Icon: Shield },
+    { key: 'life',         label: 'Life',         href: getScopedHref('life'),     Icon: Globe },
+    { key: 'dashboard',    label: 'Progress',     href: '/dashboard',             Icon: BarChart2 },
+    { key: 'profile',      label: 'Profile',      href: '/profile',               Icon: UserIcon },
+  ];
 
   return (
     <>
@@ -51,24 +60,61 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
         overflow-y-auto pb-20 transition-transform duration-200 ease-in-out
         ${isOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}
       `}>
+        {/* Country Focus Switcher Bar */}
+        <div className="p-3 border-b border-gray-100 bg-slate-50/50">
+          <p className="text-[10px] font-black text-gray-400 uppercase tracking-wider mb-2 px-1">Active Platform Hub</p>
+          <div className="grid grid-cols-3 gap-1 bg-gray-200/70 p-1 rounded-xl">
+            <button
+              onClick={() => setCountryFocus('japan')}
+              className={`py-1.5 px-1 rounded-lg text-xs font-bold transition-all cursor-pointer flex items-center justify-center gap-1 ${
+                activeCountry === 'japan' ? 'bg-red-600 text-white shadow-xs' : 'text-gray-600 hover:text-gray-900'
+              }`}
+            >
+              🇯🇵 Japan
+            </button>
+            <button
+              onClick={() => setCountryFocus('korea')}
+              className={`py-1.5 px-1 rounded-lg text-xs font-bold transition-all cursor-pointer flex items-center justify-center gap-1 ${
+                activeCountry === 'korea' ? 'bg-blue-600 text-white shadow-xs' : 'text-gray-600 hover:text-gray-900'
+              }`}
+            >
+              🇰🇷 Korea
+            </button>
+            <button
+              onClick={() => setCountryFocus('all')}
+              className={`py-1.5 px-1 rounded-lg text-xs font-bold transition-all cursor-pointer flex items-center justify-center gap-1 ${
+                activeCountry === 'all' ? 'bg-slate-900 text-white shadow-xs' : 'text-gray-600 hover:text-gray-900'
+              }`}
+            >
+              🌏 Both
+            </button>
+          </div>
+        </div>
+
         <div className="px-3 py-4 space-y-1">
-          <p className="px-3 text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">Platform</p>
-          {MAIN_LINKS.map((link) => {
+          <p className="px-3 text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">
+            {activeCountry === 'japan' ? '🇯🇵 Japan Platform' : activeCountry === 'korea' ? '🇰🇷 Korea Platform' : 'Global Platform'}
+          </p>
+          {mainLinks.map((link) => {
             const active = isActive(link.href);
             return (
               <Link
-                key={link.href}
+                key={link.key}
                 href={link.href}
                 onClick={() => { if(window.innerWidth < 1024) onClose?.(); }}
                 className={`
                   flex items-center gap-3 px-3 py-2 rounded-xl text-sm font-medium transition-colors
                   ${active 
-                    ? 'bg-gray-100 text-gray-900' 
+                    ? activeCountry === 'japan' ? 'bg-red-50 text-red-700 font-bold' : activeCountry === 'korea' ? 'bg-blue-50 text-blue-700 font-bold' : 'bg-gray-100 text-gray-900'
                     : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50'
                   }
                 `}
               >
-                <link.Icon className={`w-4 h-4 ${active ? 'text-gray-900' : 'text-gray-400'}`} />
+                <link.Icon className={`w-4 h-4 ${
+                  active 
+                    ? activeCountry === 'japan' ? 'text-red-600' : activeCountry === 'korea' ? 'text-blue-600' : 'text-gray-900'
+                    : 'text-gray-400'
+                }`} />
                 {link.label}
               </Link>
             );

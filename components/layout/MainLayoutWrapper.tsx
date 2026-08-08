@@ -6,6 +6,7 @@ import DesktopHeader from './DesktopHeader';
 import Sidebar from './Sidebar';
 import GlobalSearch from '../search/GlobalSearch';
 import { LanguageProvider } from '@/lib/i18n/LanguageContext';
+import { CountryProvider } from '@/lib/context/CountryContext';
 
 export default function MainLayoutWrapper({ children }: { children: React.ReactNode }) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -33,39 +34,41 @@ export default function MainLayoutWrapper({ children }: { children: React.ReactN
 
   return (
     <LanguageProvider>
-      <div className="min-h-screen bg-slate-50 flex flex-col">
-        {/* Mobile Top Navbar (Visible on mobile screens) */}
-        <MobileNavbar
-          user={user}
-          lang={lang}
-          onLangToggle={toggleLang}
-          onSearchOpen={() => setSearchOpen(true)}
-        />
+      <CountryProvider>
+        <div className="min-h-screen bg-slate-50 flex flex-col">
+          {/* Mobile Top Navbar (Visible on mobile screens) */}
+          <MobileNavbar
+            user={user}
+            lang={lang}
+            onLangToggle={toggleLang}
+            onSearchOpen={() => setSearchOpen(true)}
+          />
 
-        {/* Desktop Top Header (Visible on md+ screens) */}
-        <DesktopHeader 
-          user={user} 
-          onSearchOpen={() => setSearchOpen(true)} 
-          lang={lang} 
-          onLangToggle={toggleLang}
-          onMenuToggle={() => setSidebarOpen(!sidebarOpen)}
-        />
-        
-        <div className="flex flex-1 pt-0 md:pt-16">
-          <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
+          {/* Desktop Top Header (Visible on md+ screens) */}
+          <DesktopHeader 
+            user={user} 
+            onSearchOpen={() => setSearchOpen(true)} 
+            lang={lang} 
+            onLangToggle={toggleLang}
+            onMenuToggle={() => setSidebarOpen(!sidebarOpen)}
+          />
           
-          {/* Main Content Area */}
-          <div className="flex-1 lg:ml-64 w-full">
-            {children}
+          <div className="flex flex-1 pt-0 md:pt-16">
+            <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
+            
+            {/* Main Content Area */}
+            <div className="flex-1 lg:ml-64 w-full">
+              {children}
+            </div>
           </div>
-        </div>
 
-        {/* Mobile Sticky Bottom Navigation (Visible on mobile screens) */}
-        <BottomTabBar />
-        
-        {/* Global Search Modal */}
-        <GlobalSearch isOpen={searchOpen} onClose={() => setSearchOpen(false)} />
-      </div>
+          {/* Mobile Sticky Bottom Navigation (Visible on mobile screens) */}
+          <BottomTabBar />
+          
+          {/* Global Search Modal */}
+          <GlobalSearch isOpen={searchOpen} onClose={() => setSearchOpen(false)} />
+        </div>
+      </CountryProvider>
     </LanguageProvider>
   );
 }

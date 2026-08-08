@@ -4,6 +4,8 @@ import Link from 'next/link';
 import { Search, Globe, ChevronDown, User, LogIn, Menu, BookOpen, Clock, GraduationCap, Briefcase, Shield } from 'lucide-react';
 import AuthSheet from '@/components/auth/AuthSheet';
 
+import { useCountry } from '@/lib/context/CountryContext';
+
 interface DesktopHeaderProps {
   user?: { name: string; email: string } | null;
   onSearchOpen: () => void;
@@ -35,6 +37,7 @@ const KOREA_DROPDOWN = [
 export default function DesktopHeader({ user, onSearchOpen, lang, onLangToggle, onMenuToggle }: DesktopHeaderProps) {
   const [authSheetOpen, setAuthSheetOpen] = useState(false);
   const [authMode, setAuthMode] = useState<'signin' | 'register'>('signin');
+  const { activeCountry, setCountryFocus } = useCountry();
 
   const [openDropdown, setOpenDropdown] = useState<'japan' | 'korea' | null>(null);
   const dropdownRef = useRef<HTMLDivElement>(null);
@@ -82,6 +85,34 @@ export default function DesktopHeader({ user, onSearchOpen, lang, onLangToggle, 
         </div>
 
         <div className="flex items-center gap-4" ref={dropdownRef}>
+          {/* Single Hub Switcher Pill */}
+          <div className="hidden xl:flex items-center gap-1 bg-gray-100 p-1 rounded-xl border border-gray-200 text-xs font-bold">
+            <button
+              onClick={() => setCountryFocus('japan')}
+              className={`px-2.5 py-1 rounded-lg transition-all cursor-pointer ${
+                activeCountry === 'japan' ? 'bg-red-600 text-white shadow-xs' : 'text-gray-600 hover:text-gray-900'
+              }`}
+            >
+              🇯🇵 Japan Hub
+            </button>
+            <button
+              onClick={() => setCountryFocus('korea')}
+              className={`px-2.5 py-1 rounded-lg transition-all cursor-pointer ${
+                activeCountry === 'korea' ? 'bg-blue-600 text-white shadow-xs' : 'text-gray-600 hover:text-gray-900'
+              }`}
+            >
+              🇰🇷 Korea Hub
+            </button>
+            <button
+              onClick={() => setCountryFocus('all')}
+              className={`px-2.5 py-1 rounded-lg transition-all cursor-pointer ${
+                activeCountry === 'all' ? 'bg-gray-900 text-white shadow-xs' : 'text-gray-600 hover:text-gray-900'
+              }`}
+            >
+              🌏 Both
+            </button>
+          </div>
+
           {/* Dropdown Navigation */}
           <nav className="hidden lg:flex items-center gap-1 text-sm font-medium text-gray-600">
             {/* Japan Dropdown */}
