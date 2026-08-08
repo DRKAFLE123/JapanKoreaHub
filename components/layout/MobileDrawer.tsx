@@ -25,7 +25,7 @@ export default function MobileDrawer({ onClose, user, onAuthOpen }: MobileDrawer
   const navItems = [
     { key: 'home',         label: 'Home',         href: getScopedHref('home'),     Icon: Home },
     { key: 'learn',        label: 'Learn',        href: getScopedHref('learn'),    Icon: BookOpen },
-    { key: 'exams',        label: 'Exams',        href: getScopedHref('exams'),    Icon: ClipboardList },
+    { key: 'exams',        label: 'Mock Tests',   href: getScopedHref('exams'),    Icon: ClipboardList },
     { key: 'study',        label: 'Study',        href: getScopedHref('study'),    Icon: GraduationCap },
     { key: 'work',         label: 'Work',         href: getScopedHref('work'),     Icon: Briefcase },
     { key: 'visa',         label: 'Visa',         href: getScopedHref('visa'),     Icon: Shield },

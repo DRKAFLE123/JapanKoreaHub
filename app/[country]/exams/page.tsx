@@ -36,5 +36,5 @@ export async function generateMetadata({ params }: { params: Promise<{ country: 
 export default async function ExamsPage({ params }: { params: Promise<{ country: string }> }) {
   const { country } = await params;
   if (!EXAMS[country]) notFound();
-  return <ExamsHubClient country={country as 'japan' | 'korea'} exams={EXAMS[country]} />;
+  return <ExamsHubClient country={country as 'japan' | 'korea'} />;
 }
