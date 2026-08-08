@@ -56,37 +56,10 @@ export default function MobileNavbar({ user, lang, onLangToggle, onSearchOpen }:
           </button>
 
           {/* Logo + Brand */}
-          <Link href="/" className="flex items-center gap-1.5 min-w-0 flex-shrink-0">
-            <img src="/logo.png" alt="JapanKoreaHub Logo" className="w-6 h-6 rounded-lg object-contain flex-shrink-0" />
+          <Link href="/" className="flex items-center gap-2 flex-1 min-w-0">
+            <img src="/logo.png" alt="JapanKoreaHub Logo" className="w-7 h-7 rounded-lg object-contain flex-shrink-0" />
+            <span className="font-semibold text-sm text-gray-900 truncate">Japan Korea Hub</span>
           </Link>
-
-          {/* Country Hub Switcher Pills */}
-          <div className="flex items-center gap-1 bg-gray-100 p-0.5 rounded-xl border border-gray-200 text-[10px] font-bold">
-            <button
-              onClick={() => setCountryFocus('japan')}
-              className={`px-2 py-0.5 rounded-lg transition-all cursor-pointer ${
-                activeCountry === 'japan' ? 'bg-red-600 text-white shadow-xs' : 'text-gray-600'
-              }`}
-            >
-              🇯🇵 JP
-            </button>
-            <button
-              onClick={() => setCountryFocus('korea')}
-              className={`px-2 py-0.5 rounded-lg transition-all cursor-pointer ${
-                activeCountry === 'korea' ? 'bg-blue-600 text-white shadow-xs' : 'text-gray-600'
-              }`}
-            >
-              🇰🇷 KR
-            </button>
-            <button
-              onClick={() => setCountryFocus('all')}
-              className={`px-1.5 py-0.5 rounded-lg transition-all cursor-pointer ${
-                activeCountry === 'all' ? 'bg-gray-900 text-white shadow-xs' : 'text-gray-600'
-              }`}
-            >
-              🌏 Both
-            </button>
-          </div>
 
           {/* Right controls */}
           <div className="flex items-center gap-2 flex-shrink-0">
