@@ -728,11 +728,14 @@ export const KoreanHubDashboard: React.FC<KoreanHubDashboardProps> = ({
   const subTabs = getSubTabs();
 
   const KOREA_LEVEL_LIST: { id: KoreanLevelType; label: string }[] = [
-    { id: 'BASICS',    label: 'Hangul Basics' },
-    { id: 'EPS',       label: 'EPS-TOPIK' },
-    { id: 'TOPIK1_L1', label: 'TOPIK I' },
-    { id: 'TOPIK3',    label: 'TOPIK II' },
-    { id: 'EPS_MFG',   label: 'EPS Sectors' },
+    { id: 'BASICS',    label: 'Basics' },
+    { id: 'TOPIK1_L1', label: 'TOPIK I (Level 1)' },
+    { id: 'TOPIK2',    label: 'TOPIK I (Level 2)' },
+    { id: 'TOPIK3',    label: 'TOPIK II (Level 3)' },
+    { id: 'TOPIK4',    label: 'TOPIK II (Level 4)' },
+    { id: 'TOPIK2_L5', label: 'TOPIK II (Level 5)' },
+    { id: 'TOPIK2_L6', label: 'TOPIK II (Level 6)' },
+    { id: 'EPS',       label: 'EPS-TOPIK (1-60)' },
   ];
 
   return (
