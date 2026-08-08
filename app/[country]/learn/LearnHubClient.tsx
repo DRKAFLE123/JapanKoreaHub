@@ -1,8 +1,7 @@
 'use client';
 import React, { useState } from 'react';
 import Link from 'next/link';
-import { ArrowLeft, BookOpen, Type, Layers, AlignLeft, Headphones, ChevronRight, Award, Sparkles, Filter } from 'lucide-react';
-import MobileNavbar from '@/components/layout/MobileNavbar';
+import { ArrowLeft, BookOpen, Type, Layers, AlignLeft, Headphones, ChevronRight, Award, Sparkles, Filter, CheckCircle2, Clock, Flame, ArrowRight } from 'lucide-react';
 
 type Country = 'japan' | 'korea';
 
@@ -33,12 +32,27 @@ const KOREA_LEVEL_COURSES: LevelOption[] = [
   { id: 'eps-sectors', name: 'EPS Sectors', badge: 'E-9 Work', desc: 'Manufacturing, Agriculture, Construction & Fishing Vocab', href: '/korea/learn/eps-sectors' },
 ];
 
+const JAPAN_FEATURED_MODULES = [
+  { label: 'Vocabulary Explorer', sublabel: 'Minna no Nihongo L1–75', Icon: BookOpen, href: '/japan/learn/n5?tab=VOCABULARY', tag: '800+ Words' },
+  { label: '1,000 Kanji Cards', sublabel: 'SRS Deck + 214 Radicals', Icon: Layers, href: '/japan/learn/kanji-1000', tag: 'Onyomi & Kunyomi' },
+  { label: 'Grammar Guide', sublabel: 'Nepali & English explanations', Icon: AlignLeft, href: '/japan/learn/n5?tab=GRAMMAR', tag: '80 Rules' },
+  { label: 'JFT-Basic CBT Simulator', sublabel: '250-Mark Prometric Test', Icon: Clock, href: '/japan/learn/jft-basic?tab=EXAMS', tag: 'Timed CBT' },
+];
+
+const KOREA_FEATURED_MODULES = [
+  { label: 'EPS-TOPIK Vocabulary', sublabel: 'Textbook Lessons 1–60', Icon: BookOpen, href: '/korea/learn/eps-topik?tab=VOCABULARY', tag: 'Official Syllabus' },
+  { label: '100 Core Grammar', sublabel: 'Sentence structures & audio', Icon: AlignLeft, href: '/korea/learn/eps-topik?tab=GRAMMAR', tag: '100 Patterns' },
+  { label: '300 Common Words', sublabel: 'High frequency Korean words', Icon: Layers, href: '/korea/learn/topik-1', tag: 'TOPIK I Prep' },
+  { label: 'EPS Sector Vocab', sublabel: 'Manufacturing, Agri, Fishing', Icon: Award, href: '/korea/learn/eps-sectors', tag: 'E-9 Work' },
+];
+
 export default function LearnHubClient({ country }: { country: Country }) {
   const [activeFilter, setActiveFilter] = useState<string>('ALL');
 
   const cName = country === 'japan' ? 'Japan' : 'Korea';
   const flag = country === 'japan' ? '🇯🇵' : '🇰🇷';
   const courses = country === 'japan' ? JAPAN_LEVEL_COURSES : KOREA_LEVEL_COURSES;
+  const featuredModules = country === 'japan' ? JAPAN_FEATURED_MODULES : KOREA_FEATURED_MODULES;
 
   const filteredCourses = activeFilter === 'ALL'
     ? courses
@@ -157,6 +171,125 @@ export default function LearnHubClient({ country }: { country: Country }) {
             ))}
           </div>
         </section>
+
+        {/* ── Below the Fold Section 1: Popular Learning Engines ── */}
+        <section className="px-4 pb-8 space-y-3">
+          <div className="flex items-center justify-between">
+            <p className="text-xs font-bold text-gray-900 uppercase tracking-wider flex items-center gap-1.5">
+              📚 Popular Learning Tools
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            {featuredModules.map((item, idx) => (
+              <Link
+                key={idx}
+                href={item.href}
+                className="p-4 bg-white border border-gray-100 rounded-2xl shadow-sm hover:shadow-md hover:border-gray-200 transition-all flex items-center justify-between group"
+              >
+                <div className="flex items-center gap-3">
+                  <div className={`w-10 h-10 rounded-xl flex items-center justify-center ${
+                    country === 'japan' ? 'bg-pink-50 text-pink-600' : 'bg-blue-50 text-blue-600'
+                  }`}>
+                    <item.Icon className="w-5 h-5" />
+                  </div>
+                  <div>
+                    <h4 className="font-bold text-xs text-gray-900 group-hover:text-blue-600">{item.label}</h4>
+                    <p className="text-[11px] text-gray-500 font-medium">{item.sublabel}</p>
+                  </div>
+                </div>
+                <span className={`text-[10px] font-extrabold px-2 py-0.5 rounded-full border ${
+                  country === 'japan' ? 'bg-pink-50 text-pink-700 border-pink-200' : 'bg-blue-50 text-blue-700 border-blue-200'
+                }`}>
+                  {item.tag}
+                </span>
+              </Link>
+            ))}
+          </div>
+        </section>
+
+        {/* ── Below the Fold Section 2: Continue Learning Widget ── */}
+        <section className="px-4 pb-8">
+          <div className="p-5 bg-gradient-to-br from-slate-900 via-slate-800 to-indigo-950 rounded-3xl text-white space-y-3 shadow-lg">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <Flame className="w-5 h-5 text-amber-400 fill-amber-400" />
+                <span className="text-xs font-black uppercase tracking-wider text-amber-300">Active Study Session</span>
+              </div>
+              <span className="text-xs font-bold text-slate-400">🔥 7 Day Streak</span>
+            </div>
+
+            <div>
+              <h3 className="text-lg font-extrabold">Continue where you left off</h3>
+              <p className="text-xs text-slate-300 mt-0.5">
+                {country === 'japan' ? 'JLPT N5 Lesson 12 — Te-form Verb Conjugation' : 'EPS-TOPIK Lesson 15 — Daily Routine & Time Expressions'}
+              </p>
+            </div>
+
+            <div className="pt-2 flex items-center justify-between">
+              <div className="w-1/2 bg-slate-800 h-2 rounded-full overflow-hidden border border-slate-700">
+                <div className={`h-full rounded-full ${country === 'japan' ? 'bg-pink-500' : 'bg-blue-500'}`} style={{ width: '42%' }} />
+              </div>
+              <Link
+                href={country === 'japan' ? '/japan/learn/n5' : '/korea/learn/eps-topik'}
+                className="px-4 py-2 bg-white text-slate-900 font-bold text-xs rounded-xl hover:bg-slate-100 transition-colors flex items-center gap-1"
+              >
+                Resume Course
+                <ArrowRight className="w-3.5 h-3.5" />
+              </Link>
+            </div>
+          </div>
+        </section>
+
+        {/* ── Below the Fold Section 3: 4-Step Exam Strategy Checklist ── */}
+        <section className="px-4 pb-8 space-y-3">
+          <p className="text-xs font-bold text-gray-900 uppercase tracking-wider">
+            🎯 Proven 4-Step Exam Preparation System
+          </p>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+            <div className="p-4 bg-slate-50 border border-slate-200 rounded-2xl space-y-1">
+              <div className="flex items-center gap-2 font-bold text-slate-900">
+                <CheckCircle2 className="w-4 h-4 text-emerald-600" />
+                <span>1. Alphabet Mastery</span>
+              </div>
+              <p className="text-gray-600 text-[11px] leading-relaxed">
+                Master Hiragana/Katakana or Hangul consonants, vowels &amp; stroke order animations first.
+              </p>
+            </div>
+
+            <div className="p-4 bg-slate-50 border border-slate-200 rounded-2xl space-y-1">
+              <div className="flex items-center gap-2 font-bold text-slate-900">
+                <CheckCircle2 className="w-4 h-4 text-emerald-600" />
+                <span>2. Vocabulary &amp; Kanji SRS</span>
+              </div>
+              <p className="text-gray-600 text-[11px] leading-relaxed">
+                Memorize 800–1,500 core words using our Spaced Repetition card engine.
+              </p>
+            </div>
+
+            <div className="p-4 bg-slate-50 border border-slate-200 rounded-2xl space-y-1">
+              <div className="flex items-center gap-2 font-bold text-slate-900">
+                <CheckCircle2 className="w-4 h-4 text-emerald-600" />
+                <span>3. Native Audio Listening</span>
+              </div>
+              <p className="text-gray-600 text-[11px] leading-relaxed">
+                Listen to daily dialogues at 0.8x / 1.0x speeds with audio script toggles.
+              </p>
+            </div>
+
+            <div className="p-4 bg-slate-50 border border-slate-200 rounded-2xl space-y-1">
+              <div className="flex items-center gap-2 font-bold text-slate-900">
+                <CheckCircle2 className="w-4 h-4 text-emerald-600" />
+                <span>4. Timed CBT Simulator</span>
+              </div>
+              <p className="text-gray-600 text-[11px] leading-relaxed">
+                Complete official timed JLPT &amp; EPS-TOPIK CBT exam papers with real-time scoring.
+              </p>
+            </div>
+          </div>
+        </section>
+
       </main>
     </div>
   );
