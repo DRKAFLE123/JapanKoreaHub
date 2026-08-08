@@ -48,11 +48,11 @@ export default function CombinedLearnPage() {
       {/* Country Learning Track Cards */}
       <section className="px-4 grid grid-cols-1 md:grid-cols-2 gap-4">
         {/* Japan Track */}
-        <div className="card p-5 border-pink-200 bg-pink-50/30 flex flex-col justify-between space-y-4">
+        <div className="card p-5 border-red-200 bg-red-50/40 flex flex-col justify-between space-y-4">
           <div>
             <div className="flex items-center justify-between mb-2">
               <span className="text-2xl">🇯🇵</span>
-              <span className="text-xs font-bold px-2.5 py-0.5 rounded bg-pink-100 text-pink-700">Japanese Track</span>
+              <span className="text-xs font-bold px-2.5 py-0.5 rounded bg-red-100 text-red-800 border border-red-200">Japanese Track</span>
             </div>
             <h2 className="text-lg font-bold text-gray-900">Learn Japanese (JLPT & JFT)</h2>
             <p className="text-xs text-gray-600 mt-1 leading-relaxed">
@@ -61,15 +61,15 @@ export default function CombinedLearnPage() {
 
             <div className="space-y-1.5 mt-4 text-xs text-gray-700">
               <div className="flex items-center gap-2">
-                <CheckCircle2 className="w-3.5 h-3.5 text-pink-600 flex-shrink-0" />
+                <CheckCircle2 className="w-3.5 h-3.5 text-red-600 flex-shrink-0" />
                 <span>Kana Basics & Stroke Order</span>
               </div>
               <div className="flex items-center gap-2">
-                <CheckCircle2 className="w-3.5 h-3.5 text-pink-600 flex-shrink-0" />
+                <CheckCircle2 className="w-3.5 h-3.5 text-red-600 flex-shrink-0" />
                 <span>Minna no Nihongo 1–75 Vocab Explorer</span>
               </div>
               <div className="flex items-center gap-2">
-                <CheckCircle2 className="w-3.5 h-3.5 text-pink-600 flex-shrink-0" />
+                <CheckCircle2 className="w-3.5 h-3.5 text-red-600 flex-shrink-0" />
                 <span>1,000 Kanji Cards with Onyomi & Kunyomi</span>
               </div>
             </div>
@@ -77,7 +77,7 @@ export default function CombinedLearnPage() {
 
           <Link
             href="/japan/learn"
-            className="w-full py-3 bg-pink-600 hover:bg-pink-700 text-white font-semibold text-xs rounded-xl flex items-center justify-center gap-1.5 transition-colors"
+            className="w-full py-3 bg-red-600 hover:bg-red-700 text-white font-bold text-xs rounded-xl flex items-center justify-center gap-1.5 transition-colors shadow-sm"
           >
             Start Japanese Track
             <ArrowRight className="w-4 h-4" />
@@ -85,11 +85,11 @@ export default function CombinedLearnPage() {
         </div>
 
         {/* Korea Track */}
-        <div className="card p-5 border-blue-200 bg-blue-50/30 flex flex-col justify-between space-y-4">
+        <div className="card p-5 border-blue-200 bg-blue-50/40 flex flex-col justify-between space-y-4">
           <div>
             <div className="flex items-center justify-between mb-2">
               <span className="text-2xl">🇰🇷</span>
-              <span className="text-xs font-bold px-2.5 py-0.5 rounded bg-blue-100 text-blue-700">Korean Track</span>
+              <span className="text-xs font-bold px-2.5 py-0.5 rounded bg-blue-100 text-blue-800 border border-blue-200">Korean Track</span>
             </div>
             <h2 className="text-lg font-bold text-gray-900">Learn Korean (EPS & TOPIK)</h2>
             <p className="text-xs text-gray-600 mt-1 leading-relaxed">
@@ -114,7 +114,7 @@ export default function CombinedLearnPage() {
 
           <Link
             href="/korea/learn"
-            className="w-full py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold text-xs rounded-xl flex items-center justify-center gap-1.5 transition-colors"
+            className="w-full py-3 bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs rounded-xl flex items-center justify-center gap-1.5 transition-colors shadow-sm"
           >
             Start Korean Track
             <ArrowRight className="w-4 h-4" />
@@ -128,7 +128,7 @@ export default function CombinedLearnPage() {
           <p className="text-xs font-bold text-gray-900 uppercase tracking-wider flex items-center gap-1.5">
             🇯🇵 Japanese Curriculum Breakdown (N5 → N1 &amp; JFT)
           </p>
-          <Link href="/japan/learn" className="text-xs text-pink-600 font-bold hover:underline">
+          <Link href="/japan/learn" className="text-xs text-red-600 font-bold hover:underline">
             View All
           </Link>
         </div>
@@ -138,16 +138,16 @@ export default function CombinedLearnPage() {
             <Link
               key={idx}
               href={ch.href}
-              className="p-4 bg-white border border-gray-100 rounded-2xl shadow-sm hover:shadow-md hover:border-pink-200 transition-all flex items-center justify-between group"
+              className="p-4 bg-white border border-gray-100 rounded-2xl shadow-sm hover:shadow-md hover:border-red-200 transition-all flex items-center justify-between group"
             >
               <div className="space-y-1">
                 <div className="flex items-center gap-2">
-                  <span className="font-extrabold text-sm text-gray-900 group-hover:text-pink-600">{ch.name}</span>
-                  <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-pink-100 text-pink-700">{ch.badge}</span>
+                  <span className="font-extrabold text-sm text-gray-900 group-hover:text-red-600">{ch.name}</span>
+                  <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-red-100 text-red-800 border border-red-200">{ch.badge}</span>
                 </div>
                 <p className="text-xs text-gray-500 font-medium">{ch.desc}</p>
               </div>
-              <ChevronRight className="w-4 h-4 text-gray-400 group-hover:text-pink-600 flex-shrink-0" />
+              <ChevronRight className="w-4 h-4 text-gray-400 group-hover:text-red-600 flex-shrink-0" />
             </Link>
           ))}
         </div>
@@ -174,7 +174,7 @@ export default function CombinedLearnPage() {
               <div className="space-y-1">
                 <div className="flex items-center gap-2">
                   <span className="font-extrabold text-sm text-gray-900 group-hover:text-blue-600">{ch.name}</span>
-                  <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-blue-100 text-blue-700">{ch.badge}</span>
+                  <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-blue-100 text-blue-800 border border-blue-200">{ch.badge}</span>
                 </div>
                 <p className="text-xs text-gray-500 font-medium">{ch.desc}</p>
               </div>

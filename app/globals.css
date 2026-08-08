@@ -11,12 +11,21 @@
   --text-primary:     #0f172a;
   --text-secondary:   #475569;
   --text-muted:       #94a3b8;
+
+  /* Japan Hinomaru Coral Red Tokens */
   --accent-jp:        #C62828;
-  --accent-jp-light:  #fff1f2;
-  --accent-jp-mid:    #fecdd3;
+  --accent-jp-hover:  #B71C1C;
+  --accent-jp-light:  #fef2f2;
+  --accent-jp-mid:    #fecaca;
+  --accent-jp-dark:   #991b1b;
+
+  /* Korea Taegeuk Royal Blue Tokens */
   --accent-kr:        #1565C0;
+  --accent-kr-hover:  #0D47A1;
   --accent-kr-light:  #eff6ff;
   --accent-kr-mid:    #bfdbfe;
+  --accent-kr-dark:   #1e40af;
+
   --brand:            #1a1a2e;
   --brand-accent:     #4f46e5;
   --success:          #16a34a;

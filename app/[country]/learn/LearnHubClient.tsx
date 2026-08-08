@@ -104,7 +104,7 @@ export default function LearnHubClient({ country }: { country: Country }) {
                 href={c.href}
                 className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all ${
                   country === 'japan'
-                    ? 'bg-pink-50 text-pink-700 border border-pink-200 hover:bg-pink-600 hover:text-white'
+                    ? 'bg-red-50 text-red-700 border border-red-200 hover:bg-red-600 hover:text-white'
                     : 'bg-blue-50 text-blue-700 border border-blue-200 hover:bg-blue-600 hover:text-white'
                 }`}
               >
@@ -145,16 +145,16 @@ export default function LearnHubClient({ country }: { country: Country }) {
               >
                 <div className="flex items-start gap-3.5 min-w-0">
                   <div className={`w-8 h-8 rounded-xl flex items-center justify-center font-black text-xs flex-shrink-0 mt-0.5 ${
-                    country === 'japan' ? 'bg-pink-100 text-pink-700' : 'bg-blue-100 text-blue-700'
+                    country === 'japan' ? 'bg-red-100 text-red-800' : 'bg-blue-100 text-blue-800'
                   }`}>
                     0{index + 1}
                   </div>
 
                   <div className="space-y-1 min-w-0">
                     <div className="flex items-center gap-2 flex-wrap">
-                      <h3 className="font-extrabold text-sm text-gray-900 group-hover:text-blue-600">{c.name}</h3>
+                      <h3 className="font-extrabold text-sm text-gray-900 group-hover:text-red-600">{c.name}</h3>
                       <span className={`text-[10px] font-extrabold px-2 py-0.5 rounded-full border ${
-                        country === 'japan' ? 'bg-pink-50 text-pink-700 border-pink-200' : 'bg-blue-50 text-blue-700 border-blue-200'
+                        country === 'japan' ? 'bg-red-50 text-red-800 border-red-200' : 'bg-blue-50 text-blue-800 border-blue-200'
                       }`}>
                         {c.badge}
                       </span>
@@ -163,7 +163,7 @@ export default function LearnHubClient({ country }: { country: Country }) {
                   </div>
                 </div>
 
-                <div className="flex items-center gap-1 text-xs font-bold text-gray-400 group-hover:text-blue-600 transition-colors flex-shrink-0 pl-2">
+                <div className="flex items-center gap-1 text-xs font-bold text-gray-400 group-hover:text-red-600 transition-colors flex-shrink-0 pl-2">
                   <span>Start</span>
                   <ChevronRight className="w-4 h-4" />
                 </div>
@@ -189,17 +189,17 @@ export default function LearnHubClient({ country }: { country: Country }) {
               >
                 <div className="flex items-center gap-3">
                   <div className={`w-10 h-10 rounded-xl flex items-center justify-center ${
-                    country === 'japan' ? 'bg-pink-50 text-pink-600' : 'bg-blue-50 text-blue-600'
+                    country === 'japan' ? 'bg-red-50 text-red-600' : 'bg-blue-50 text-blue-600'
                   }`}>
                     <item.Icon className="w-5 h-5" />
                   </div>
                   <div>
-                    <h4 className="font-bold text-xs text-gray-900 group-hover:text-blue-600">{item.label}</h4>
+                    <h4 className="font-bold text-xs text-gray-900 group-hover:text-red-600">{item.label}</h4>
                     <p className="text-[11px] text-gray-500 font-medium">{item.sublabel}</p>
                   </div>
                 </div>
                 <span className={`text-[10px] font-extrabold px-2 py-0.5 rounded-full border ${
-                  country === 'japan' ? 'bg-pink-50 text-pink-700 border-pink-200' : 'bg-blue-50 text-blue-700 border-blue-200'
+                  country === 'japan' ? 'bg-red-50 text-red-800 border-red-200' : 'bg-blue-50 text-blue-800 border-blue-200'
                 }`}>
                   {item.tag}
                 </span>
@@ -228,7 +228,7 @@ export default function LearnHubClient({ country }: { country: Country }) {
 
             <div className="pt-2 flex items-center justify-between">
               <div className="w-1/2 bg-slate-800 h-2 rounded-full overflow-hidden border border-slate-700">
-                <div className={`h-full rounded-full ${country === 'japan' ? 'bg-pink-500' : 'bg-blue-500'}`} style={{ width: '42%' }} />
+                <div className={`h-full rounded-full ${country === 'japan' ? 'bg-red-500' : 'bg-blue-500'}`} style={{ width: '42%' }} />
               </div>
               <Link
                 href={country === 'japan' ? '/japan/learn/n5' : '/korea/learn/eps-topik'}

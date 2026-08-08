@@ -90,11 +90,11 @@ export default function DesktopHeader({ user, onSearchOpen, lang, onLangToggle, 
                 onClick={() => setOpenDropdown(openDropdown === 'japan' ? null : 'japan')}
                 onMouseEnter={() => setOpenDropdown('japan')}
                 className={`flex items-center gap-1 px-3 py-2 rounded-xl transition-colors ${
-                  openDropdown === 'japan' ? 'bg-pink-50 text-pink-700 font-bold' : 'hover:text-gray-900 hover:bg-gray-50'
+                  openDropdown === 'japan' ? 'bg-red-50 text-red-700 font-bold' : 'hover:text-gray-900 hover:bg-gray-50'
                 }`}
               >
                 <span>🇯🇵 Japan</span>
-                <ChevronDown className={`w-4 h-4 transition-transform ${openDropdown === 'japan' ? 'rotate-180 text-pink-600' : 'text-gray-400'}`} />
+                <ChevronDown className={`w-4 h-4 transition-transform ${openDropdown === 'japan' ? 'rotate-180 text-red-600' : 'text-gray-400'}`} />
               </button>
 
               {openDropdown === 'japan' && (
@@ -103,18 +103,18 @@ export default function DesktopHeader({ user, onSearchOpen, lang, onLangToggle, 
                   className="absolute top-full left-0 mt-1 w-64 bg-white border border-gray-200 rounded-2xl shadow-xl p-2 z-50 animate-fade-in"
                 >
                   <div className="px-3 py-2 border-b border-gray-100 mb-1">
-                    <p className="text-[10px] font-black text-pink-600 uppercase tracking-wider">Japan Ecosystem</p>
+                    <p className="text-[10px] font-black text-red-600 uppercase tracking-wider">Japan Ecosystem</p>
                   </div>
                   {JAPAN_DROPDOWN.map((item) => (
                     <Link
                       key={item.href}
                       href={item.href}
                       onClick={() => setOpenDropdown(null)}
-                      className="flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-pink-50/60 transition-colors group"
+                      className="flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-red-50/60 transition-colors group"
                     >
-                      <item.icon className="w-4 h-4 text-gray-400 group-hover:text-pink-600 flex-shrink-0" />
+                      <item.icon className="w-4 h-4 text-gray-400 group-hover:text-red-600 flex-shrink-0" />
                       <div>
-                        <p className="text-xs font-bold text-gray-900 group-hover:text-pink-700">{item.label}</p>
+                        <p className="text-xs font-bold text-gray-900 group-hover:text-red-700">{item.label}</p>
                         <p className="text-[10px] text-gray-400">{item.desc}</p>
                       </div>
                     </Link>

@@ -32,12 +32,12 @@ export default function LevelHeroBanner({
   return (
     <div className={`relative overflow-hidden rounded-3xl p-6 border shadow-sm transition-all ${
       isJapan 
-        ? 'bg-gradient-to-br from-red-50/80 via-white to-pink-50/50 border-pink-200/80' 
-        : 'bg-gradient-to-br from-blue-50/80 via-white to-indigo-50/50 border-blue-200/80'
+        ? 'bg-gradient-to-br from-red-50/90 via-white to-red-100/30 border-red-200' 
+        : 'bg-gradient-to-br from-blue-50/90 via-white to-blue-100/30 border-blue-200'
     }`}>
       {/* Background Accent Blob */}
-      <div className={`absolute -right-10 -bottom-10 w-48 h-48 rounded-full blur-3xl opacity-30 ${
-        isJapan ? 'bg-pink-400' : 'bg-blue-400'
+      <div className={`absolute -right-10 -bottom-10 w-48 h-48 rounded-full blur-3xl opacity-20 ${
+        isJapan ? 'bg-red-400' : 'bg-blue-400'
       }`} />
 
       <div className="relative z-10 space-y-4">
@@ -46,7 +46,7 @@ export default function LevelHeroBanner({
           <div className="flex items-center gap-2">
             <span className="text-2xl">{emoji}</span>
             <span className={`text-xs font-black tracking-wider px-3 py-1 rounded-full uppercase border ${
-              isJapan ? 'bg-pink-100 text-pink-700 border-pink-200' : 'bg-blue-100 text-blue-700 border-blue-200'
+              isJapan ? 'bg-red-100 text-red-800 border-red-200' : 'bg-blue-100 text-blue-800 border-blue-200'
             }`}>
               {badge}
             </span>
@@ -72,12 +72,12 @@ export default function LevelHeroBanner({
         <div className="space-y-1.5">
           <div className="flex justify-between items-center text-xs font-semibold">
             <span className="text-gray-700">Level Progress</span>
-            <span className={isJapan ? 'text-pink-600' : 'text-blue-600'}>{progress}% Completed</span>
+            <span className={isJapan ? 'text-red-600' : 'text-blue-600'}>{progress}% Completed</span>
           </div>
           <div className="h-2 rounded-full bg-gray-100 overflow-hidden">
             <div
               className={`h-full rounded-full transition-all duration-500 ${
-                isJapan ? 'bg-pink-600' : 'bg-blue-600'
+                isJapan ? 'bg-red-600' : 'bg-blue-600'
               }`}
               style={{ width: `${progress}%` }}
             />

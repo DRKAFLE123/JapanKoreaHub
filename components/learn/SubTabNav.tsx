@@ -31,10 +31,10 @@ export default function SubTabNav({ activeTab, onTabChange, country }: SubTabNav
             <button
               key={id}
               onClick={() => onTabChange(id)}
-              className={`flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-bold whitespace-nowrap transition-all cursor-pointer ${
+              className={`flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-bold whitespace-nowrap transition-all cursor-pointer ${
                 active
                   ? isJapan
-                    ? 'bg-pink-600 text-white shadow-sm'
+                    ? 'bg-red-600 text-white shadow-sm'
                     : 'bg-blue-600 text-white shadow-sm'
                   : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100'
               }`}
