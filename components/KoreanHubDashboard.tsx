@@ -53,6 +53,9 @@ export type KoreanSubTab =
   | 'EXAMS'
   | 'EXAM_GUIDE';
 
+import { useSidebarCollapse } from './layout/MainLayoutWrapper';
+import { PanelLeftClose, PanelLeftOpen } from 'lucide-react';
+
 export interface KoreanHubDashboardProps {
   level?: KoreanLevelType;
   onSelectLevel?: (lvl: KoreanLevelType) => void;
@@ -734,14 +737,28 @@ export const KoreanHubDashboard: React.FC<KoreanHubDashboardProps> = ({
     { id: 'EPS',       label: 'EPS-TOPIK (1-60)' },
   ];
 
+  const { isCollapsed, toggleCollapse } = useSidebarCollapse();
+
   return (
     <div className="space-y-2 font-sans w-full max-w-full overflow-x-hidden">
 
       {/* 🌐 ROW 1: KOREAN CURRICULUM LEVEL BAR (Mobile Responsive Horizontal Scroll) */}
-      <div className="flex items-center gap-2 overflow-x-auto no-scrollbar py-1 bg-slate-950/80 p-2 rounded-2xl border border-slate-900">
-        <div className="flex items-center gap-1.5 text-xs font-black uppercase tracking-wider text-slate-400 whitespace-nowrap pl-1 pr-2">
-          <Globe className="w-3.5 h-3.5 text-blue-500" />
-          <span>Curriculum Level:</span>
+      <div className="flex items-center justify-between gap-2 overflow-x-auto no-scrollbar py-1 bg-slate-950/80 p-2 rounded-2xl border border-slate-900">
+        <div className="flex items-center gap-2">
+          {/* Desktop Sidebar Minimize / Expand Toggle Button */}
+          <button
+            onClick={toggleCollapse}
+            title={isCollapsed ? 'Expand Sidebar' : 'Minimize Sidebar'}
+            className="hidden lg:flex items-center gap-1.5 px-2.5 py-1 rounded-xl bg-slate-900 text-slate-300 hover:text-white hover:bg-slate-800 border border-slate-800 text-xs font-bold transition-all cursor-pointer"
+          >
+            {isCollapsed ? <PanelLeftOpen className="w-3.5 h-3.5 text-blue-500" /> : <PanelLeftClose className="w-3.5 h-3.5 text-blue-500" />}
+            <span>{isCollapsed ? 'Expand Sidebar' : 'Minimize Sidebar'}</span>
+          </button>
+
+          <div className="flex items-center gap-1.5 text-xs font-black uppercase tracking-wider text-slate-400 whitespace-nowrap pl-1 pr-2">
+            <Globe className="w-3.5 h-3.5 text-blue-500" />
+            <span>Curriculum Level:</span>
+          </div>
         </div>
 
         <div className="flex items-center gap-1.5 flex-nowrap">

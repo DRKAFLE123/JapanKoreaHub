@@ -10,6 +10,9 @@ import { RadicalBreakdown } from './RadicalBreakdown';
 import { LevelExamSyllabusGuide } from './LevelExamSyllabusGuide';
 import { JFTGrammarExplorer } from './JFTGrammarExplorer';
 
+import { useSidebarCollapse } from './layout/MainLayoutWrapper';
+import { PanelLeftClose, PanelLeftOpen } from 'lucide-react';
+
 export type LevelType = 'BASICS' | 'N5' | 'N4' | 'N3' | 'N2' | 'N1' | 'JFT' | 'KANJI_1000';
 export type LevelSubTab = 'KANA_MATRIX' | 'BASICS_VOCAB' | 'RADICALS' | 'VOCABULARY' | 'GRAMMAR' | 'FLASHCARDS' | 'LISTENING' | 'EXAMS' | 'EXAM_GUIDE';
 
@@ -41,6 +44,7 @@ export const LevelHubDashboard: React.FC<LevelHubDashboardProps> = ({
 }) => {
   const [currentLevel, setCurrentLevel] = useState<LevelType>(propLevel);
   const [activeTab, setActiveTab] = useState<LevelSubTab>('VOCABULARY');
+  const { isCollapsed, toggleCollapse } = useSidebarCollapse();
 
   useEffect(() => {
     setCurrentLevel(propLevel);
@@ -125,10 +129,22 @@ export const LevelHubDashboard: React.FC<LevelHubDashboardProps> = ({
     <div className="space-y-2 animate-fade-in font-sans">
       
       {/* 🌐 ROW 1: CURRICULUM LEVEL BAR (Mobile Responsive Horizontal Scroll) */}
-      <div className="flex items-center gap-2 overflow-x-auto no-scrollbar py-1 bg-slate-950/80 p-2 rounded-2xl border border-slate-900">
-        <div className="flex items-center gap-1.5 text-xs font-black uppercase tracking-wider text-slate-400 whitespace-nowrap pl-1 pr-2">
-          <Globe className="w-3.5 h-3.5 text-red-500" />
-          <span>Curriculum Level:</span>
+      <div className="flex items-center justify-between gap-2 overflow-x-auto no-scrollbar py-1 bg-slate-950/80 p-2 rounded-2xl border border-slate-900">
+        <div className="flex items-center gap-2">
+          {/* Desktop Sidebar Minimize / Expand Toggle Button */}
+          <button
+            onClick={toggleCollapse}
+            title={isCollapsed ? 'Expand Sidebar' : 'Minimize Sidebar'}
+            className="hidden lg:flex items-center gap-1.5 px-2.5 py-1 rounded-xl bg-slate-900 text-slate-300 hover:text-white hover:bg-slate-800 border border-slate-800 text-xs font-bold transition-all cursor-pointer"
+          >
+            {isCollapsed ? <PanelLeftOpen className="w-3.5 h-3.5 text-red-500" /> : <PanelLeftClose className="w-3.5 h-3.5 text-red-500" />}
+            <span>{isCollapsed ? 'Expand Sidebar' : 'Minimize Sidebar'}</span>
+          </button>
+
+          <div className="flex items-center gap-1.5 text-xs font-black uppercase tracking-wider text-slate-400 whitespace-nowrap pl-1 pr-2">
+            <Globe className="w-3.5 h-3.5 text-red-500" />
+            <span>Curriculum Level:</span>
+          </div>
         </div>
 
         <div className="flex items-center gap-1.5 flex-nowrap">
