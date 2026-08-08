@@ -153,22 +153,6 @@ export default function HomePage() {
           <p className="text-xs sm:text-sm text-gray-600 leading-relaxed max-w-xl mx-auto">
             Japanese & Korean learning, exam preparation, visa information, study opportunities, jobs and life guides — all in one place.
           </p>
-
-          {/* Country navigation chips */}
-          <div className="flex justify-center gap-3 pt-2">
-            <Link
-              href="/japan"
-              className="flex items-center gap-2 px-5 py-2 rounded-full bg-pink-100 text-pink-800 border border-pink-200 text-sm font-bold hover:bg-pink-200 shadow-sm transition-all"
-            >
-              🇯🇵 Explore Japan
-            </Link>
-            <Link
-              href="/korea"
-              className="flex items-center gap-2 px-5 py-2 rounded-full bg-blue-100 text-blue-800 border border-blue-200 text-sm font-bold hover:bg-blue-200 shadow-sm transition-all"
-            >
-              🇰🇷 Explore Korea
-            </Link>
-          </div>
         </section>
 
         {/* ── Intent Grid ── */}
