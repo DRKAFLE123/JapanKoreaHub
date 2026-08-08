@@ -55,10 +55,9 @@ export default function MobileNavbar({ user, lang, onLangToggle, onSearchOpen }:
             <Menu className="w-5 h-5" />
           </button>
 
-          {/* Logo + Brand */}
-          <Link href="/" className="flex items-center gap-2 flex-1 min-w-0">
-            <img src="/logo.png" alt="JapanKoreaHub Logo" className="w-7 h-7 rounded-lg object-contain flex-shrink-0" />
-            <span className="font-semibold text-sm text-gray-900 truncate">Japan Korea Hub</span>
+          {/* Logo Only */}
+          <Link href="/" className="flex items-center shrink-0">
+            <img src="/logo.png" alt="JapanKoreaHub Logo" className="w-8 h-8 rounded-lg object-contain" />
           </Link>
 
           {/* Right controls */}
