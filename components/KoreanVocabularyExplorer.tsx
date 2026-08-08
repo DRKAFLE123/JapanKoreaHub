@@ -67,17 +67,11 @@ export const KoreanVocabularyExplorer: React.FC<KoreanVocabularyExplorerProps> =
     }
   }, [preselectedLevel]);
 
-  // Auto instant scroll to top of new lesson (Item #1) when selectedLesson changes
+  // Auto instant scroll to top of new lesson (Item #1) inside container when selectedLesson changes
   useEffect(() => {
     if (vocabListRef.current) vocabListRef.current.scrollTop = 0;
     if (grammarListRef.current) grammarListRef.current.scrollTop = 0;
     if (mainRef.current) mainRef.current.scrollTop = 0;
-
-    window.scrollTo({ top: 0, behavior: 'auto' });
-    const el = document.getElementById('korean-vocab-content-area');
-    if (el) {
-      el.scrollIntoView({ behavior: 'auto', block: 'start' });
-    }
   }, [selectedLesson]);
 
   const availableLessons = getAvailableKoreanLessons(selectedLevel);

@@ -148,17 +148,11 @@ export const VocabularyExplorer: React.FC<VocabularyExplorerProps> = ({ preselec
   const vocabListRef = useRef<HTMLDivElement | null>(null);
   const grammarListRef = useRef<HTMLDivElement | null>(null);
 
-  // Auto instant scroll to top of new lesson (Item #1) when selectedLesson changes
+  // Auto instant scroll to top of new lesson (Item #1) inside container when selectedLesson changes
   React.useEffect(() => {
     if (vocabListRef.current) vocabListRef.current.scrollTop = 0;
     if (grammarListRef.current) grammarListRef.current.scrollTop = 0;
     if (mainRef.current) mainRef.current.scrollTop = 0;
-
-    window.scrollTo({ top: 0, behavior: 'auto' });
-    const el = document.getElementById('vocab-content-area');
-    if (el) {
-      el.scrollIntoView({ behavior: 'auto', block: 'start' });
-    }
   }, [selectedLesson]);
   const [showGrammarModal, setShowGrammarModal] = useState<boolean>(false);
   const [showScannedSheetModal, setShowScannedSheetModal] = useState<boolean>(false);
