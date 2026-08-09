@@ -1,13 +1,12 @@
 'use client';
 
 import React, { useState } from 'react';
-import { Search, Volume2, Sparkles, BookOpen, ChevronRight, FileText, Globe, Moon, Book } from 'lucide-react';
+import { Search, Volume2, Book } from 'lucide-react';
 import { JAPANESE_GRAMMAR_GUIDES, getGrammarGuide, LessonGrammarGuide } from '@/lib/grammar-guide';
 
 export const JFTGrammarExplorer: React.FC = () => {
   const [selectedLesson, setSelectedLesson] = useState<number>(1);
   const [searchQuery, setSearchQuery] = useState<string>('');
-  const [readerTheme, setReaderTheme] = useState<'paper' | 'dark'>('paper'); // Default to Book / Paper Mode (White BG)
 
   const playPronunciation = (text: string) => {
     if ('speechSynthesis' in window) {
@@ -35,16 +34,10 @@ export const JFTGrammarExplorer: React.FC = () => {
       )
     : [grammarGuide];
 
-  const isPaper = readerTheme === 'paper';
-
   return (
     <div className="space-y-4 sm:space-y-6 font-sans">
       {/* Header Banner */}
-      <div className={`rounded-3xl p-4 sm:p-6 shadow-xl space-y-4 border transition-colors ${
-        isPaper
-          ? 'bg-white border-slate-200 text-slate-900 shadow-md'
-          : 'bg-gradient-to-r from-slate-900 via-indigo-950 to-slate-900 border-slate-800 text-white shadow-2xl'
-      }`}>
+      <div className="rounded-3xl p-4 sm:p-6 shadow-xs bg-white border border-slate-200 text-slate-900 space-y-4">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div>
             <div className="flex items-center gap-2 flex-wrap">
@@ -55,49 +48,24 @@ export const JFTGrammarExplorer: React.FC = () => {
                 {currentLevelLabel}
               </span>
               <span className="px-2.5 py-1 rounded-lg bg-emerald-50 text-emerald-800 border border-emerald-200 text-xs font-bold flex items-center gap-1">
-                <Book className="w-3 h-3 text-emerald-400" />
+                <Book className="w-3.5 h-3.5 text-emerald-600" />
                 <span>Book Reading Mode</span>
               </span>
             </div>
-            <h2 className={`text-xl sm:text-2xl font-black mt-1.5 flex items-center gap-2 ${isPaper ? 'text-slate-950' : 'text-white'}`}>
+            <h2 className="text-xl sm:text-2xl font-black mt-1.5 flex items-center gap-2 text-slate-950">
               <span>📝 JFT Grammar Handbook (Lessons 1–50)</span>
             </h2>
-            <p className={`text-xs sm:text-sm mt-1 ${isPaper ? 'text-slate-700 font-medium' : 'text-slate-300'}`}>
+            <p className="text-xs sm:text-sm mt-1 text-slate-600 font-medium">
               Master essential sentence patterns, particles, verb conjugations &amp; usage rules with English &amp; Nepali explanations.
             </p>
           </div>
 
-          {/* Controls: Lesson Dropdown & Theme Toggle */}
-          <div className="flex items-center gap-2.5 flex-wrap sm:flex-nowrap">
-            {/* Theme Toggle */}
-            <div className="flex items-center bg-slate-950 p-1 rounded-2xl border border-slate-800 shrink-0">
-              <button
-                onClick={() => setReaderTheme('paper')}
-                className={`px-3 py-1.5 rounded-xl text-xs font-black transition-all flex items-center gap-1.5 cursor-pointer ${
-                  isPaper ? 'bg-amber-100 text-amber-950 shadow-sm font-black' : 'text-slate-400 hover:text-white'
-                }`}
-                title="White / Paper Book Background"
-              >
-                <Book className="w-3.5 h-3.5 text-amber-800" />
-                <span>Book Theme</span>
-              </button>
-              <button
-                onClick={() => setReaderTheme('dark')}
-                className={`px-3 py-1.5 rounded-xl text-xs font-black transition-all flex items-center gap-1.5 cursor-pointer ${
-                  !isPaper ? 'bg-indigo-600 text-white shadow-sm font-black' : 'text-slate-400 hover:text-white'
-                }`}
-                title="Dark Night Background"
-              >
-                <Moon className="w-3.5 h-3.5" />
-                <span>Dark</span>
-              </button>
-            </div>
-
-            {/* Lesson Selector Dropdown */}
+          {/* Lesson Selector Dropdown */}
+          <div className="flex items-center gap-2.5">
             <select
               value={selectedLesson}
               onChange={(e) => { setSelectedLesson(Number(e.target.value)); setSearchQuery(''); }}
-              className="bg-slate-50 border border-slate-300 text-slate-900 text-xs sm:text-sm font-extrabold rounded-2xl px-4 py-2.5 focus:outline-none focus:border-indigo-500 cursor-pointer shadow-inner"
+              className="bg-slate-100 border border-slate-200 text-slate-900 text-xs sm:text-sm font-extrabold rounded-2xl px-4 py-2.5 focus:outline-none focus:border-red-500 cursor-pointer shadow-xs"
             >
               {Array.from({ length: 50 }, (_, i) => i + 1).map((n) => (
                 <option key={n} value={n}>
@@ -109,7 +77,7 @@ export const JFTGrammarExplorer: React.FC = () => {
         </div>
 
         {/* Search Bar & Lesson Quick Buttons */}
-        <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 pt-3 border-t border-slate-800/80">
+        <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 pt-3 border-t border-slate-200">
           <div className="relative flex-1">
             <Search className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
             <input
@@ -117,7 +85,7 @@ export const JFTGrammarExplorer: React.FC = () => {
               placeholder="Search grammar patterns (e.g., 〜んです, から, ことができます)..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-10 pr-4 py-2 bg-slate-50 border border-slate-300 rounded-xl text-xs font-bold text-slate-900 placeholder-slate-400 focus:outline-none focus:border-indigo-500"
+              className="w-full pl-10 pr-4 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs font-bold text-slate-900 placeholder-slate-400 focus:outline-none focus:border-red-500"
             />
           </div>
 
@@ -126,7 +94,7 @@ export const JFTGrammarExplorer: React.FC = () => {
               <button
                 onClick={() => setSelectedLesson(Math.max(1, selectedLesson - 1))}
                 disabled={selectedLesson === 1}
-                className="px-3 py-1.5 rounded-xl bg-slate-100 disabled:opacity-30 hover:bg-slate-200 text-slate-700 border border-slate-300 text-xs font-bold transition-all border border-slate-700 cursor-pointer"
+                className="px-3 py-1.5 rounded-xl bg-slate-100 disabled:opacity-30 hover:bg-slate-200 text-slate-700 border border-slate-200 text-xs font-bold transition-all cursor-pointer"
               >
                 ← Prev Lesson
               </button>
@@ -136,7 +104,7 @@ export const JFTGrammarExplorer: React.FC = () => {
               <button
                 onClick={() => setSelectedLesson(Math.min(50, selectedLesson + 1))}
                 disabled={selectedLesson === 50}
-                className="px-3 py-1.5 rounded-xl bg-rose-800 disabled:opacity-30 hover:bg-rose-700 text-white text-xs font-bold transition-all border border-indigo-500/50 cursor-pointer shadow-glow"
+                className="px-3 py-1.5 rounded-xl bg-red-600 disabled:opacity-30 hover:bg-red-500 text-white text-xs font-bold transition-all border border-red-500 cursor-pointer shadow-xs"
               >
                 Next Lesson →
               </button>
@@ -145,113 +113,73 @@ export const JFTGrammarExplorer: React.FC = () => {
         </div>
       </div>
 
-      {/* Grammar Rules Cards List - PAPER / BOOK THEME OR DARK THEME */}
+      {/* Grammar Rules Cards List - PURE LIGHT MODE */}
       <div className="space-y-6">
         {matchingGuides.map((guide, gIdx) => (
           <div
             key={gIdx}
-            className={`rounded-3xl p-5 sm:p-8 shadow-2xl space-y-6 border transition-all ${
-              isPaper
-                ? 'bg-white border-slate-200 text-slate-900 shadow-xl'
-                : 'bg-slate-900/90 border-slate-800 text-white'
-            }`}
+            className="rounded-3xl p-5 sm:p-8 space-y-6 border transition-all bg-white border-slate-200 text-slate-900 shadow-xs"
           >
             {/* Lesson Title Ribbon */}
-            <div className={`flex items-center justify-between border-b pb-4 ${
-              isPaper ? 'border-slate-200' : 'border-slate-800'
-            }`}>
+            <div className="flex items-center justify-between border-b border-slate-200 pb-4">
               <div>
-                <span className={`text-[11px] font-black uppercase tracking-wider px-3 py-1 rounded-lg border ${
-                  isPaper
-                    ? 'bg-rose-50 text-rose-900 border-rose-200'
-                    : 'bg-indigo-500/10 text-indigo-400 border-indigo-500/20'
-                }`}>
+                <span className="text-[11px] font-black uppercase tracking-wider px-3 py-1 rounded-lg border bg-rose-50 text-rose-900 border-rose-200">
                   Lesson {guide.lesson} • {guide.level} Grammar Syllabus
                 </span>
-                <h3 className={`text-xl sm:text-2xl font-black mt-2 font-jp ${
-                  isPaper ? 'text-slate-950' : 'text-white'
-                }`}>
+                <h3 className="text-xl sm:text-2xl font-black mt-2 font-jp text-slate-950">
                   {guide.lessonTitle}
                 </h3>
               </div>
             </div>
 
-            {/* Grammar Points Cards — 2 Column Grid Layout on Desktop (1, 2 | 3, 4) */}
+            {/* Grammar Points Cards — 2 Column Grid Layout on Desktop */}
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 font-sans items-start">
               {guide.grammarPoints.map((pt, pIdx) => (
                 <div
                   key={pIdx}
-                  className={`p-5 sm:p-6 rounded-2xl border space-y-4 shadow-sm transition-all h-full flex flex-col justify-between ${
-                    isPaper
-                      ? 'bg-white border-slate-200 text-slate-900 hover:border-amber-400'
-                      : 'bg-slate-950/80 border-slate-800 text-white'
-                  }`}
+                  className="p-5 sm:p-6 rounded-2xl border space-y-4 shadow-xs transition-all h-full flex flex-col justify-between bg-white border-slate-200 text-slate-900 hover:border-slate-300"
                 >
                   <div className="space-y-4">
                     {/* Rule Header & Pattern Badge */}
                     <div className="space-y-2">
-                      <h4 className={`text-base sm:text-lg font-black flex items-center gap-2.5 ${
-                        isPaper ? 'text-slate-900' : 'text-white'
-                      }`}>
+                      <h4 className="text-base sm:text-lg font-black flex items-center gap-2.5 text-slate-900">
                         <span className="w-2.5 h-2.5 rounded-full bg-rose-600 shrink-0"></span>
                         <span>{pt.title}</span>
                       </h4>
-                      <div className={`inline-block px-3.5 py-1.5 rounded-xl text-xs sm:text-sm font-mono font-black border shadow-xs ${
-                        isPaper
-                          ? 'bg-rose-50 text-rose-900 border-rose-200 font-jp'
-                          : 'bg-indigo-950/80 text-indigo-300 border-indigo-800/80'
-                      }`}>
+                      <div className="inline-block px-3.5 py-1.5 rounded-xl text-xs sm:text-sm font-mono font-black border shadow-2xs bg-rose-50 text-rose-900 border-rose-200 font-jp">
                         Pattern: {pt.pattern}
                       </div>
                     </div>
 
                     {/* Dual Explanations: English & Nepali */}
                     <div className="grid grid-cols-1 xl:grid-cols-2 gap-3 text-xs sm:text-sm">
-                      <div className={`p-4 rounded-xl border space-y-1 ${
-                        isPaper
-                          ? 'bg-slate-50 border-slate-200/90 text-slate-900'
-                          : 'bg-slate-900/90 border-slate-800/80 text-slate-200'
-                      }`}>
+                      <div className="p-4 rounded-xl border border-slate-200 bg-slate-50 text-slate-900 space-y-1">
                         <span className="text-[10px] font-black uppercase text-blue-700 block tracking-wider">🇬🇧 English Explanation</span>
-                        <p className="font-medium leading-relaxed">{pt.explanationEnglish}</p>
+                        <p className="font-medium leading-relaxed text-slate-800">{pt.explanationEnglish}</p>
                       </div>
 
-                      <div className={`p-4 rounded-xl border space-y-1 ${
-                        isPaper
-                          ? 'bg-rose-50/60 border-rose-200 text-rose-950'
-                          : 'bg-slate-900/90 border-slate-800/80 text-amber-200'
-                      }`}>
-                        <span className="text-[10px] font-black uppercase text-amber-900 block tracking-wider">🇳🇵 नेपाली व्याख्या</span>
-                        <p className="font-extrabold leading-relaxed">{pt.explanationNepali}</p>
+                      <div className="p-4 rounded-xl border border-slate-200 bg-slate-50 text-slate-900 space-y-1">
+                        <span className="text-[10px] font-black uppercase text-rose-800 block tracking-wider">🇳🇵 नेपाली व्याख्या</span>
+                        <p className="font-extrabold leading-relaxed text-slate-900">{pt.explanationNepali}</p>
                       </div>
                     </div>
                   </div>
 
                   {/* Example Sentences */}
                   {pt.examples && pt.examples.length > 0 && (
-                    <div className={`space-y-3 pt-3 border-t ${
-                      isPaper ? 'border-slate-200' : 'border-slate-800/60'
-                    }`}>
-                      <span className={`text-[11px] font-black uppercase tracking-wider block ${
-                        isPaper ? 'text-slate-600' : 'text-slate-400'
-                      }`}>
+                    <div className="space-y-3 pt-3 border-t border-slate-200">
+                      <span className="text-[11px] font-black uppercase tracking-wider block text-slate-600">
                         Example Sentences (उदाहरण वाक्यहरू):
                       </span>
                       <div className="space-y-3">
                         {pt.examples.map((ex, eIdx) => (
                           <div
                             key={eIdx}
-                            className={`p-4 rounded-xl border space-y-2 transition-all ${
-                              isPaper
-                                ? 'bg-slate-50 border-slate-200 text-slate-900 shadow-xs'
-                                : 'bg-slate-900 border-slate-800/80 text-white'
-                            }`}
+                            className="p-4 rounded-xl border border-slate-200/90 text-slate-900 shadow-2xs bg-slate-50 space-y-2 transition-all"
                           >
                             <div className="flex items-start justify-between gap-3">
                               <div className="space-y-0.5">
-                                <div className={`text-base sm:text-lg font-jp font-black leading-snug ${
-                                  isPaper ? 'text-slate-950' : 'text-white'
-                                }`}>
+                                <div className="text-base sm:text-lg font-jp font-black leading-snug text-slate-950">
                                   {ex.target}
                                 </div>
                                 {ex.reading && (
@@ -260,29 +188,19 @@ export const JFTGrammarExplorer: React.FC = () => {
                                   </div>
                                 )}
                               </div>
-
                               <button
                                 onClick={() => playPronunciation(ex.target)}
-                                className={`p-2 rounded-xl border transition-all cursor-pointer shrink-0 ${
-                                  isPaper
-                                    ? 'bg-white hover:bg-rose-600 text-rose-700 hover:text-white border-rose-200 shadow-xs'
-                                    : 'bg-slate-800 hover:bg-rose-600 text-slate-300 hover:text-white border-slate-700'
-                                }`}
-                                title="Listen Japanese audio"
+                                className="p-2 rounded-xl bg-white hover:bg-red-600 text-slate-600 hover:text-white border border-slate-200 transition-all shrink-0 cursor-pointer shadow-xs"
+                                title="Hear Audio"
                               >
                                 <Volume2 className="w-4 h-4" />
                               </button>
                             </div>
-
-                            <div className={`grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs pt-2 border-t ${
-                              isPaper ? 'border-slate-200' : 'border-slate-800/50'
-                            }`}>
-                              <span className={isPaper ? 'text-slate-800 font-medium' : 'text-slate-300 font-medium'}>
-                                🇬🇧 {ex.english}
-                              </span>
-                              <span className={isPaper ? 'text-rose-950 font-bold' : 'text-amber-300 font-medium'}>
-                                🇳🇵 {ex.nepali}
-                              </span>
+                            <div className="text-xs text-slate-700 font-medium border-t border-slate-200 pt-1.5">
+                              🇬🇧 {ex.english}
+                            </div>
+                            <div className="text-xs text-slate-900 font-extrabold">
+                              🇳🇵 {ex.nepali}
                             </div>
                           </div>
                         ))}

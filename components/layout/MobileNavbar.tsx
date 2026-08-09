@@ -2,7 +2,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Menu, Search, LogIn, X, ChevronDown, User } from 'lucide-react';
+import { Menu, Search, LogIn, X, ChevronDown, User, Bell } from 'lucide-react';
 import AuthSheet from '@/components/auth/AuthSheet';
 import MobileDrawer from '@/components/layout/MobileDrawer';
 
@@ -42,30 +42,43 @@ export default function MobileNavbar({ user, lang, onLangToggle, onSearchOpen }:
   return (
     <>
       {/* Navbar */}
-      <header className="fixed top-0 left-0 right-0 z-40 bg-white border-b border-gray-100 md:hidden"
+      <header className="fixed top-0 left-0 right-0 z-40 bg-white/95 backdrop-blur-md border-b border-slate-200 md:hidden text-slate-900 shadow-xs"
         style={{ height: 56 }}>
-        <div className="flex items-center justify-between h-full px-3 gap-1.5">
+        <div className="flex items-center justify-between h-full px-3 gap-2">
 
-          {/* Hamburger */}
-          <button
-            onClick={() => setDrawerOpen(true)}
-            className="w-8 h-8 flex items-center justify-center rounded-xl text-gray-700 hover:bg-gray-100 transition-colors flex-shrink-0"
-            aria-label="Open menu"
-          >
-            <Menu className="w-5 h-5" />
-          </button>
-
-          {/* Logo Only */}
-          <Link href="/" className="flex items-center shrink-0">
-            <img src="/logo.png" alt="JapanKoreaHub Logo" className="w-8 h-8 rounded-lg object-contain" />
-          </Link>
+          {/* Left — Hamburger + Logo */}
+          <div className="flex items-center gap-2 shrink-0">
+            <button
+              onClick={() => setDrawerOpen(true)}
+              className="w-8 h-8 flex items-center justify-center rounded-xl text-slate-600 hover:bg-slate-100 transition-colors cursor-pointer"
+              aria-label="Open menu"
+            >
+              <Menu className="w-5 h-5" />
+            </button>
+            <Link href="/" className="flex items-center">
+              <img src="/logo.png" alt="JapanKoreaHub Logo" className="w-8 h-8 rounded-lg object-contain" />
+            </Link>
+          </div>
 
           {/* Right controls */}
-          <div className="flex items-center gap-2 flex-shrink-0">
+          <div className="flex items-center gap-1.5 shrink-0">
+            {/* Notification bell — only when logged in */}
+            {user && (
+              <Link
+                href="/notices"
+                className="relative w-8 h-8 flex items-center justify-center rounded-xl text-slate-500 hover:bg-slate-100 transition-colors"
+                aria-label="Notifications"
+              >
+                <Bell className="w-4 h-4" />
+                {/* Badge */}
+                <span className="absolute top-1 right-1 w-2 h-2 bg-rose-600 rounded-full ring-2 ring-white" />
+              </Link>
+            )}
+
             {/* Search icon */}
             <button
               onClick={onSearchOpen}
-              className="w-9 h-9 flex items-center justify-center rounded-xl text-gray-600 hover:bg-gray-100 transition-colors"
+              className="w-8 h-8 flex items-center justify-center rounded-xl text-slate-500 hover:bg-slate-100 transition-colors cursor-pointer"
               aria-label="Search"
             >
               <Search className="w-4 h-4" />
@@ -74,13 +87,13 @@ export default function MobileNavbar({ user, lang, onLangToggle, onSearchOpen }:
             {/* EN / ने toggle */}
             <button
               onClick={onLangToggle}
-              className="flex items-center rounded-full overflow-hidden border border-gray-200 text-xs font-semibold"
+              className="flex items-center rounded-full overflow-hidden border border-slate-300 text-xs font-semibold cursor-pointer"
               style={{ height: 30 }}
             >
-              <span className={`px-2.5 py-1 transition-colors ${lang === 'en' ? 'bg-gray-900 text-white' : 'bg-transparent text-gray-500'}`}>
+              <span className={`px-2.5 py-1 transition-colors ${lang === 'en' ? 'bg-red-600 text-white' : 'bg-transparent text-slate-500'}`}>
                 EN
               </span>
-              <span className={`px-2.5 py-1 transition-colors ${lang === 'ne' ? 'bg-gray-900 text-white' : 'bg-transparent text-gray-500'}`}>
+              <span className={`px-2.5 py-1 transition-colors ${lang === 'ne' ? 'bg-red-600 text-white' : 'bg-transparent text-slate-500'}`}>
                 ने
               </span>
             </button>
@@ -88,14 +101,14 @@ export default function MobileNavbar({ user, lang, onLangToggle, onSearchOpen }:
             {/* Sign In / User button */}
             {user ? (
               <Link href="/profile"
-                className="w-9 h-9 flex items-center justify-center rounded-full bg-indigo-100 text-indigo-700 font-bold text-sm">
+                className="w-8 h-8 flex items-center justify-center rounded-full bg-rose-600 text-white font-bold text-sm">
                 {user.name.charAt(0).toUpperCase()}
               </Link>
             ) : (
               <div className="relative" ref={dropdownRef}>
                 <button
                   onClick={() => setDropdownOpen(v => !v)}
-                  className="flex items-center gap-1 px-3 py-1.5 rounded-full border border-gray-300 text-sm font-medium text-gray-800 hover:bg-gray-50 transition-colors"
+                  className="flex items-center gap-1 px-3 py-1.5 rounded-full border border-slate-300 text-xs font-semibold text-slate-700 hover:bg-slate-100 hover:border-slate-400 transition-colors cursor-pointer"
                 >
                   Sign in
                   <ChevronDown className={`w-3 h-3 transition-transform ${dropdownOpen ? 'rotate-180' : ''}`} />

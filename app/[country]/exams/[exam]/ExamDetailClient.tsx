@@ -20,7 +20,7 @@ export default function ExamDetailClient({ country, exam }: Props) {
 
   if (examStarted) {
     return (
-      <div className="min-h-screen bg-slate-950 dark-compat">
+      <div className="min-h-screen bg-slate-50 text-slate-900">
         <TimedExamEngine
           activeLanguage={language}
           onCompleteExam={(res) => {
@@ -36,7 +36,7 @@ export default function ExamDetailClient({ country, exam }: Props) {
     <div className="min-h-screen bg-white pb-24">
       <MobileNavbar user={null} lang="en" onLangToggle={() => {}} onSearchOpen={() => {}} />
 
-      <main className="pt-14">
+      <main className="pt-14 md:pt-4 max-w-4xl mx-auto pb-24">
         {/* Breadcrumb */}
         <div className="px-4 pt-4 pb-2">
           <Link href={`/${country}/exams`} className="inline-flex items-center gap-1 text-sm text-gray-500 hover:text-gray-700 transition-colors">

@@ -82,24 +82,24 @@ export const LevelStudyPlanModal: React.FC<LevelStudyPlanModalProps> = ({ level,
   };
 
   return (
-    <div className="fixed inset-0 z-[80] flex items-center justify-center p-3 md:p-6 bg-slate-950/85 backdrop-blur-md animate-fade-in">
-      <div className="w-full max-w-2xl bg-slate-900 border border-slate-800 rounded-3xl shadow-2xl overflow-hidden flex flex-col">
+    <div className="fixed inset-0 z-[80] overflow-y-auto flex items-center justify-center p-2 md:p-6 bg-slate-950/85 backdrop-blur-md animate-fade-in min-h-screen min-h-[100dvh]">
+      <div className="w-full max-w-2xl bg-slate-900 border border-slate-800 rounded-2xl md:rounded-3xl shadow-2xl overflow-hidden flex flex-col my-auto mx-auto max-h-[92vh] max-h-[92dvh] shrink-0">
         {/* Header */}
-        <div className="p-5 md:p-6 bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 relative flex items-center justify-between">
+        <div className="p-5 md:p-6 bg-slate-950 border-b border-slate-800 relative flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <span className="p-2.5 rounded-2xl bg-slate-950/30 text-2xl border border-white/10 shadow-md">
+            <span className="p-2.5 rounded-2xl bg-red-600/10 text-2xl border border-red-500/20 shadow-md">
               🎯
             </span>
             <div>
-              <div className="text-xs font-black uppercase tracking-wider text-white/80 flex items-center gap-1.5">
-                <Sparkles className="w-3.5 h-3.5" /> AI Study Plan Generator
+              <div className="text-xs font-black uppercase tracking-wider text-red-400 flex items-center gap-1.5">
+                <Sparkles className="w-3.5 h-3.5 text-red-500" /> AI Study Plan Generator
               </div>
               <h2 className="text-xl md:text-2xl font-black text-white">Make Your {level} Study Plan</h2>
             </div>
           </div>
           <button
             onClick={onClose}
-            className="p-2 rounded-xl bg-slate-950/40 hover:bg-slate-950 text-white/80 hover:text-white border border-white/10 transition-all"
+            className="p-2 rounded-xl bg-slate-800 hover:bg-red-600 text-slate-400 hover:text-white border border-slate-700 transition-all cursor-pointer"
           >
             <X className="w-5 h-5" />
           </button>

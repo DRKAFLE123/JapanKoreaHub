@@ -7,6 +7,7 @@ import Sidebar from './Sidebar';
 import GlobalSearch from '../search/GlobalSearch';
 import { LanguageProvider } from '@/lib/i18n/LanguageContext';
 import { CountryProvider } from '@/lib/context/CountryContext';
+import { ThemeProvider } from '@/lib/context/ThemeContext';
 
 interface SidebarCollapseContextType {
   isCollapsed: boolean;
@@ -39,9 +40,21 @@ export default function MainLayoutWrapper({ children }: { children: React.ReactN
     if (savedCollapse === 'true') setIsCollapsed(true);
 
     // Load user session
+    const savedUser = localStorage.getItem('jkh_user');
+    if (savedUser) {
+      try {
+        setUser(JSON.parse(savedUser));
+      } catch {}
+    }
+
     fetch('/api/auth/me')
       .then(r => r.ok ? r.json() : null)
-      .then(d => d?.user && setUser(d.user))
+      .then(d => {
+        if (d?.user) {
+          setUser(d.user);
+          localStorage.setItem('jkh_user', JSON.stringify({ name: d.user.name, email: d.user.email }));
+        }
+      })
       .catch(() => {});
   }, []);
 
@@ -65,10 +78,11 @@ export default function MainLayoutWrapper({ children }: { children: React.ReactN
   };
 
   return (
-    <LanguageProvider>
-      <CountryProvider>
-        <SidebarCollapseContext.Provider value={{ isCollapsed, toggleCollapse, setCollapsed }}>
-          <div className="min-h-screen bg-slate-50 flex flex-col">
+    <ThemeProvider>
+      <LanguageProvider>
+        <CountryProvider>
+          <SidebarCollapseContext.Provider value={{ isCollapsed, toggleCollapse, setCollapsed }}>
+            <div className="min-h-screen bg-slate-50 text-slate-900 flex flex-col transition-colors">
             {/* Mobile Top Navbar (Visible on mobile screens) */}
             <MobileNavbar
               user={user}
@@ -109,5 +123,6 @@ export default function MainLayoutWrapper({ children }: { children: React.ReactN
         </SidebarCollapseContext.Provider>
       </CountryProvider>
     </LanguageProvider>
+  </ThemeProvider>
   );
 }

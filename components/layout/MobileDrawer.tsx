@@ -25,7 +25,7 @@ export default function MobileDrawer({ onClose, user, onAuthOpen }: MobileDrawer
   const navItems = [
     { key: 'home',         label: 'Home',         href: getScopedHref('home'),     Icon: Home },
     { key: 'learn',        label: 'Learn',        href: getScopedHref('learn'),    Icon: BookOpen },
-    { key: 'exams',        label: 'Mock Tests',   href: getScopedHref('exams'),    Icon: ClipboardList },
+    { key: 'exams',        label: 'Mock Test',    href: getScopedHref('exams'),    Icon: ClipboardList },
     { key: 'study',        label: 'Study',        href: getScopedHref('study'),    Icon: GraduationCap },
     { key: 'work',         label: 'Work',         href: getScopedHref('work'),     Icon: Briefcase },
     { key: 'visa',         label: 'Visa',         href: getScopedHref('visa'),     Icon: Shield },
@@ -54,7 +54,7 @@ export default function MobileDrawer({ onClose, user, onAuthOpen }: MobileDrawer
         style={{ paddingBottom: 'env(safe-area-inset-bottom)' }}>
 
         {/* Header */}
-        <div className="flex items-center justify-between px-5 py-4 border-b border-gray-100">
+        <div className="flex items-center justify-between px-5 py-3 border-b border-gray-100">
           <div className="flex items-center gap-2">
             <img src="/logo.png" alt="JapanKoreaHub" className="w-7 h-7 rounded-lg object-contain" />
             <span className="font-bold text-sm text-gray-900">Japan Korea Hub</span>
@@ -66,7 +66,7 @@ export default function MobileDrawer({ onClose, user, onAuthOpen }: MobileDrawer
 
         {/* Country Focus Switcher Card inside Mobile Drawer */}
         <div className="p-3 border-b border-gray-100 bg-slate-50">
-          <p className="text-[10px] font-black text-gray-400 uppercase tracking-wider mb-2 px-1">Active Platform Hub</p>
+          <p className="text-[10px] font-black text-gray-400 uppercase tracking-wider mb-1.5 px-1">Active Platform Hub</p>
           <div className="grid grid-cols-3 gap-1 bg-gray-200/70 p-1 rounded-xl">
             <button
               onClick={() => setCountryFocus('japan')}
@@ -96,7 +96,7 @@ export default function MobileDrawer({ onClose, user, onAuthOpen }: MobileDrawer
         </div>
 
         {/* Nav items */}
-        <nav className="flex-1 overflow-y-auto py-2">
+        <nav className="flex-1 overflow-y-auto py-1">
           {navItems.map(({ key, href, label, Icon }) => {
             const active = isActive(href);
             return (
@@ -104,7 +104,7 @@ export default function MobileDrawer({ onClose, user, onAuthOpen }: MobileDrawer
                 key={key}
                 href={href}
                 onClick={onClose}
-                className={`flex items-center gap-3 px-5 py-3 text-sm font-medium transition-colors ${
+                className={`flex items-center gap-3 px-5 py-2 text-sm font-medium transition-colors ${
                   active
                     ? activeCountry === 'japan' ? 'bg-red-50 text-red-700 font-bold' : activeCountry === 'korea' ? 'bg-blue-50 text-blue-700 font-bold' : 'bg-gray-100 text-gray-900 font-bold'
                     : 'text-gray-700 hover:bg-gray-50'
@@ -122,7 +122,7 @@ export default function MobileDrawer({ onClose, user, onAuthOpen }: MobileDrawer
         </nav>
 
         {/* Footer */}
-        <div className="border-t border-gray-100 px-5 py-4 space-y-3">
+        <div className="border-t border-gray-100 px-5 py-3 space-y-2">
           {user ? (
             <div className="flex items-center gap-3">
               <div className="w-9 h-9 rounded-full bg-indigo-100 text-indigo-700 font-bold text-sm flex items-center justify-center">

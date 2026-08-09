@@ -218,17 +218,17 @@ export const KoreanVocabularyExplorer: React.FC<KoreanVocabularyExplorerProps> =
               <div className="flex items-center gap-2 mt-1.5 flex-wrap">
                 <button
                   onClick={() => setShowShortNoteModal(true)}
-                  className="text-[11px] font-bold text-teal-700 hover:text-teal-900 hover:underline flex items-center gap-1 cursor-pointer bg-teal-50 hover:bg-teal-100 px-2 py-0.5 rounded-md border border-teal-200/80 transition-colors"
+                  className="text-xs font-extrabold text-white bg-blue-600 hover:bg-blue-700 px-3 py-1 rounded-xl shadow-xs transition-all flex items-center gap-1.5 cursor-pointer active:scale-95 border border-blue-500"
                 >
-                  <FileText className="w-3 h-3 text-teal-600" />
+                  <FileText className="w-3.5 h-3.5 text-white" />
                   <span>Meaning Note</span>
                 </button>
 
                 <button
                   onClick={() => setShowGrammarModal(true)}
-                  className="text-[11px] font-bold text-emerald-700 hover:text-emerald-900 hover:underline flex items-center gap-1 cursor-pointer bg-emerald-50 hover:bg-emerald-100 px-2 py-0.5 rounded-md border border-emerald-200/80 transition-colors"
+                  className="text-xs font-extrabold text-white bg-emerald-600 hover:bg-emerald-700 px-3 py-1 rounded-xl shadow-xs transition-all flex items-center gap-1.5 cursor-pointer active:scale-95 border border-emerald-500"
                 >
-                  <BookCheck className="w-3 h-3 text-emerald-600" />
+                  <BookCheck className="w-3.5 h-3.5 text-white" />
                   <span>Grammar Note</span>
                 </button>
               </div>

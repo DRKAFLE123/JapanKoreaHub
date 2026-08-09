@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 import {
   BookOpen, Layers, Headphones, Clock, FileText, Globe,
   Sparkles, Award, Factory, Leaf, HardHat, Waves, ShieldCheck,
-  PenLine, Target, ChevronRight, ChevronDown, GraduationCap, Compass, CheckCircle2
+  PenLine, Target, ChevronRight, ChevronDown, GraduationCap, Compass, CheckCircle2, Maximize2, Minimize2
 } from 'lucide-react';
 import { KoreanVocabularyExplorer } from './KoreanVocabularyExplorer';
 import { KoreanGrammarExplorer } from './KoreanGrammarExplorer';
@@ -474,33 +474,33 @@ const ListeningPractice: React.FC<{ level: KoreanLevelType }> = ({ level }) => {
   }
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-4 text-slate-900">
       {/* Script card */}
-      <div className="bg-gradient-to-r from-slate-900 via-cyan-950/40 to-slate-900 border border-cyan-500/30 rounded-3xl p-5 shadow-xl">
+      <div className="bg-white border border-slate-200 rounded-3xl p-5 shadow-xs">
         <div className="flex items-center gap-2 mb-3">
-          <Headphones className="w-4 h-4 text-cyan-400" />
-          <span className="px-2.5 py-0.5 rounded-lg bg-cyan-500/20 text-cyan-300 border border-cyan-500/30 text-xs font-black uppercase">Listening Exercise</span>
+          <Headphones className="w-4 h-4 text-blue-600" />
+          <span className="px-2.5 py-0.5 rounded-lg bg-blue-50 text-blue-700 border border-blue-200 text-xs font-black uppercase">Listening Exercise</span>
         </div>
-        <h3 className="text-base font-black text-white mb-3">{current.title}</h3>
+        <h3 className="text-base font-black text-slate-900 mb-3">{current.title}</h3>
 
         {/* Play button */}
         <button
           onClick={playScript}
-          className="w-full py-3 rounded-2xl bg-gradient-to-r from-cyan-600 to-teal-600 hover:from-cyan-500 hover:to-teal-500 text-white font-black text-sm flex items-center justify-center gap-2 transition-all cursor-pointer mb-3 shadow-lg"
+          className="w-full py-3 rounded-2xl bg-blue-600 hover:bg-blue-500 text-white font-black text-sm flex items-center justify-center gap-2 transition-all cursor-pointer mb-3 shadow-xs"
         >
           🔊 Play Audio (Browser TTS)
         </button>
 
         {/* Script (hidden until revealed) */}
         {revealed ? (
-          <div className="bg-slate-950/80 border border-cyan-500/20 rounded-2xl p-4 space-y-2">
-            <p className="text-sm font-bold text-white leading-relaxed">{current.script}</p>
-            <p className="text-xs text-cyan-300 font-medium">{current.translation}</p>
+          <div className="bg-slate-50 border border-slate-200 rounded-2xl p-4 space-y-2">
+            <p className="text-sm font-bold text-slate-900 leading-relaxed">{current.script}</p>
+            <p className="text-xs text-blue-700 font-medium">{current.translation}</p>
           </div>
         ) : (
           <button
             onClick={() => setRevealed(true)}
-            className="w-full py-2 rounded-xl border border-slate-700 text-slate-400 hover:text-white text-xs font-black transition-all cursor-pointer"
+            className="w-full py-2 rounded-xl border border-slate-200 bg-slate-50 text-slate-600 hover:text-slate-900 hover:bg-slate-100 text-xs font-black transition-all cursor-pointer"
           >
             Reveal Script & Translation
           </button>
@@ -509,8 +509,8 @@ const ListeningPractice: React.FC<{ level: KoreanLevelType }> = ({ level }) => {
 
       {/* Questions */}
       {current.questions.map((q, qi) => (
-        <div key={qi} className="bg-slate-900 border border-slate-800 rounded-2xl p-5 space-y-3">
-          <p className="text-sm font-black text-white">Q{qi + 1}. {q.q}</p>
+        <div key={qi} className="bg-white border border-slate-200 rounded-2xl p-5 space-y-3 shadow-xs">
+          <p className="text-sm font-black text-slate-900">Q{qi + 1}. {q.q}</p>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
             {q.options.map((opt, oi) => {
               const isSelected = selected === oi;
@@ -524,11 +524,11 @@ const ListeningPractice: React.FC<{ level: KoreanLevelType }> = ({ level }) => {
                   className={`p-3 rounded-xl text-xs font-bold text-left transition-all cursor-pointer border ${
                     showResult
                       ? isCorrect
-                        ? 'bg-emerald-900/40 border-emerald-500/60 text-emerald-300'
+                        ? 'bg-emerald-50 border-emerald-500 text-emerald-800 font-extrabold'
                         : isSelected
-                          ? 'bg-rose-900/40 border-rose-500/60 text-rose-300'
-                          : 'border-slate-800 text-slate-500'
-                      : 'border-slate-700 text-slate-200 hover:border-cyan-500/40 hover:bg-slate-800'
+                          ? 'bg-rose-50 border-rose-500 text-rose-800 font-extrabold'
+                          : 'border-slate-200 text-slate-400 bg-slate-50'
+                      : 'border-slate-200 text-slate-700 hover:border-blue-500 hover:bg-slate-50'
                   }`}
                 >
                   {String.fromCharCode(65 + oi)}. {opt}
@@ -537,7 +537,7 @@ const ListeningPractice: React.FC<{ level: KoreanLevelType }> = ({ level }) => {
             })}
           </div>
           {selected !== null && (
-            <p className={`text-xs font-black ${selected === q.correct ? 'text-emerald-400' : 'text-rose-400'}`}>
+            <p className={`text-xs font-black ${selected === q.correct ? 'text-emerald-600' : 'text-rose-600'}`}>
               {selected === q.correct ? '✅ Correct!' : `❌ Incorrect. Correct answer: ${q.options[q.correct]}`}
             </p>
           )}
@@ -546,7 +546,7 @@ const ListeningPractice: React.FC<{ level: KoreanLevelType }> = ({ level }) => {
 
       <button
         onClick={() => { setScriptIdx(i => i + 1); setRevealed(false); setSelected(null); }}
-        className="w-full py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-white text-xs font-black transition-all cursor-pointer"
+        className="w-full py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-white text-xs font-black transition-all cursor-pointer shadow-xs"
       >
         Next Exercise →
       </button>
@@ -732,33 +732,22 @@ export const KoreanHubDashboard: React.FC<KoreanHubDashboardProps> = ({
 
   const KOREA_LEVEL_LIST: { id: KoreanLevelType; label: string }[] = [
     { id: 'BASICS',    label: 'Basics' },
-    { id: 'TOPIK1_L1', label: 'TOPIK I (Levels 1–2)' },
-    { id: 'TOPIK3',    label: 'TOPIK II (Levels 3–6)' },
-    { id: 'EPS',       label: 'EPS-TOPIK (1-60)' },
+    { id: 'TOPIK1_L1', label: 'TOPIK I' },
+    { id: 'TOPIK3',    label: 'TOPIK II' },
+    { id: 'EPS',       label: 'EPS-TOPIK' },
   ];
 
+  const [isFocusMode, setIsFocusMode] = useState<boolean>(false);
   const { isCollapsed, toggleCollapse } = useSidebarCollapse();
 
   return (
-    <div className="space-y-2 font-sans w-full max-w-full overflow-x-hidden">
+    <div className={`space-y-2 font-sans w-full max-w-full overflow-x-hidden ${isFocusMode ? 'fixed inset-0 z-[100] bg-slate-50 dark:bg-slate-950 p-2 sm:p-5 overflow-y-auto' : ''}`}>
 
-      {/* 🌐 ROW 1: KOREAN CURRICULUM LEVEL BAR (Mobile Responsive Horizontal Scroll) */}
-      <div className="flex items-center justify-between gap-2 overflow-x-auto no-scrollbar py-1 bg-white p-2 rounded-2xl border border-slate-200 shadow-xs">
-        <div className="flex items-center gap-2">
-          {/* Desktop Sidebar Minimize / Expand Toggle Button */}
-          <button
-            onClick={toggleCollapse}
-            title={isCollapsed ? 'Expand Sidebar' : 'Minimize Sidebar'}
-            className="hidden lg:flex items-center gap-1.5 px-2.5 py-1 rounded-xl bg-slate-100 text-slate-700 hover:text-slate-900 hover:bg-slate-200 border border-slate-200 text-xs font-bold transition-all cursor-pointer"
-          >
-            {isCollapsed ? <PanelLeftOpen className="w-3.5 h-3.5 text-blue-600" /> : <PanelLeftClose className="w-3.5 h-3.5 text-blue-600" />}
-            <span>{isCollapsed ? 'Expand Sidebar' : 'Minimize Sidebar'}</span>
-          </button>
-
-          <div className="flex items-center gap-1.5 text-xs font-black uppercase tracking-wider text-slate-500 whitespace-nowrap pl-1 pr-2">
-            <Globe className="w-3.5 h-3.5 text-blue-600" />
-            <span>Curriculum Level:</span>
-          </div>
+      {/* 🌐 ROW 1: KOREAN CURRICULUM LEVEL BAR + FOCUS MODE TOGGLE */}
+      <div className="flex items-center justify-between gap-2 overflow-x-auto no-scrollbar py-1 bg-white dark:bg-slate-900 p-2 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-xs">
+        <div className="flex items-center gap-1.5 text-xs font-black uppercase tracking-wider text-slate-500 whitespace-nowrap pl-1 pr-1">
+          <Globe className="w-3.5 h-3.5 text-blue-600" />
+          <span>Course:</span>
         </div>
 
         <div className="flex items-center gap-1.5 flex-nowrap">
@@ -770,16 +759,30 @@ export const KoreanHubDashboard: React.FC<KoreanHubDashboardProps> = ({
                 onClick={() => {
                   if (onSelectLevel) onSelectLevel(lvl.id);
                 }}
-                className={`px-3 py-1 rounded-xl text-xs font-extrabold transition-all cursor-pointer whitespace-nowrap border ${
+                className={`px-2.5 py-1 rounded-xl text-xs font-extrabold transition-all cursor-pointer whitespace-nowrap border ${
                   isSelected
-                    ? 'bg-blue-600 text-white shadow-xs border-blue-500'
-                    : 'bg-slate-100 text-slate-700 hover:text-slate-900 hover:bg-slate-200 border-slate-200'
+                    ? 'bg-blue-600 text-white shadow-xs border-blue-500 font-black'
+                    : 'bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:text-slate-900 hover:bg-slate-200 border-slate-200 dark:border-slate-700 font-bold'
                 }`}
               >
                 {lvl.label}
               </button>
             );
           })}
+
+          {/* ⛶ FOCUS MODE TOGGLE BUTTON */}
+          <button
+            onClick={() => setIsFocusMode(!isFocusMode)}
+            className={`ml-1 px-3 py-1 rounded-xl text-xs font-extrabold transition-all flex items-center gap-1.5 cursor-pointer whitespace-nowrap border ${
+              isFocusMode
+                ? 'bg-blue-600 text-white border-blue-500 shadow-md font-black animate-pulse'
+                : 'bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200 border-slate-200 dark:border-slate-700 font-bold'
+            }`}
+            title={isFocusMode ? "Exit Fullscreen Focus Mode" : "Enter Distraction-Free Fullscreen Focus Mode"}
+          >
+            {isFocusMode ? <Minimize2 className="w-3.5 h-3.5" /> : <Maximize2 className="w-3.5 h-3.5" />}
+            <span>{isFocusMode ? 'Exit Focus' : 'Focus'}</span>
+          </button>
         </div>
       </div>
 
@@ -799,8 +802,8 @@ export const KoreanHubDashboard: React.FC<KoreanHubDashboardProps> = ({
                   }}
                   className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-extrabold transition-all cursor-pointer ${
                     isActive
-                      ? `bg-gradient-to-r ${meta.color} text-white shadow-glow`
-                      : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
+                      ? `bg-gradient-to-r ${meta.color} text-white shadow-glow font-black`
+                      : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100 font-bold'
                   }`}
                 >
                   <span>{tab.emoji}</span>
@@ -853,8 +856,8 @@ export const KoreanHubDashboard: React.FC<KoreanHubDashboardProps> = ({
               onClick={() => handleTabClick(tab.id)}
               className={`flex items-center gap-1.5 px-3 py-1 rounded-xl text-xs font-extrabold whitespace-nowrap transition-all shrink-0 cursor-pointer ${
                 isActive
-                  ? 'bg-blue-600 text-white shadow-xs border border-blue-500'
-                  : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100 border border-transparent'
+                  ? 'bg-blue-600 text-white shadow-xs border border-blue-500 font-black'
+                  : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100 border border-transparent font-bold'
               }`}
             >
               <span>{tab.emoji}</span>

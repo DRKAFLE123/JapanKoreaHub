@@ -125,20 +125,20 @@ export const AlphabetGrid: React.FC<AlphabetGridProps> = ({ activeLanguage }) =>
       />
 
       {/* Banner */}
-      <div className="bg-slate-900/90 border border-slate-800 rounded-3xl p-5 sm:p-6 shadow-2xl">
+      <div className="bg-white border border-slate-200 rounded-3xl p-5 sm:p-6 shadow-xs text-slate-900">
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
           <div className="flex items-center gap-3">
-            <div className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-sky-600 via-indigo-600 to-purple-600 flex items-center justify-center text-white shadow-glow flex-shrink-0">
+            <div className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-red-600 via-rose-600 to-indigo-600 flex items-center justify-center text-white shadow-xs flex-shrink-0">
               <Headphones className="w-6 h-6" />
             </div>
             <div>
-              <div className="text-xs font-extrabold uppercase tracking-wider text-sky-400">🎵 Japanese Listening Hub — Minna no Nihongo</div>
-              <h2 className="text-lg sm:text-xl font-black text-white mt-0.5">Serial Chapter Audio Tracks (Lessons 1–25)</h2>
-              <p className="text-[11px] text-slate-400 mt-0.5">87 official CD tracks • Vocab, Dialogue, Drills & Summary Reviews • Continuous autoplay</p>
+              <div className="text-xs font-black uppercase tracking-wider text-red-600">🎵 Japanese Listening Hub — Minna no Nihongo</div>
+              <h2 className="text-lg sm:text-xl font-black text-slate-900 mt-0.5">Serial Chapter Audio Tracks (Lessons 1–25)</h2>
+              <p className="text-[11px] text-slate-500 mt-0.5">87 official CD tracks • Vocab, Dialogue, Drills & Summary Reviews • Continuous autoplay</p>
             </div>
           </div>
-          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-sky-500/10 border border-sky-500/30 text-sky-300 text-xs font-extrabold flex-shrink-0">
-            <Sparkles className="w-4 h-4 text-amber-400" />
+          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-red-50 border border-red-200 text-red-700 text-xs font-extrabold flex-shrink-0">
+            <Sparkles className="w-4 h-4 text-amber-500" />
             <span>Continuous Playback</span>
           </div>
         </div>
@@ -146,25 +146,25 @@ export const AlphabetGrid: React.FC<AlphabetGridProps> = ({ activeLanguage }) =>
 
       {/* Now-Playing Dock */}
       {activeTrack && (
-        <div className="bg-gradient-to-r from-slate-900 via-slate-950 to-slate-900 border border-slate-800 rounded-3xl p-4 sm:p-5 shadow-2xl space-y-3">
+        <div className="bg-white border border-slate-200 rounded-3xl p-4 sm:p-5 shadow-xs space-y-3 text-slate-900">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
             <div className="flex items-center gap-3">
-              <div className="w-12 h-12 rounded-2xl bg-indigo-600/20 border border-indigo-500/30 flex items-center justify-center flex-shrink-0">
+              <div className="w-12 h-12 rounded-2xl bg-rose-50 border border-rose-200 flex items-center justify-center flex-shrink-0">
                 {isPlaying ? (
                   <span className="flex gap-0.5 items-end h-5">
-                    <span className="w-1 h-5 bg-indigo-400 rounded-full animate-bounce" style={{ animationDelay: '0ms' }} />
-                    <span className="w-1 h-3 bg-rose-400 rounded-full animate-bounce" style={{ animationDelay: '150ms' }} />
-                    <span className="w-1 h-5 bg-emerald-400 rounded-full animate-bounce" style={{ animationDelay: '300ms' }} />
+                    <span className="w-1 h-5 bg-rose-600 rounded-full animate-bounce" style={{ animationDelay: '0ms' }} />
+                    <span className="w-1 h-3 bg-red-500 rounded-full animate-bounce" style={{ animationDelay: '150ms' }} />
+                    <span className="w-1 h-5 bg-emerald-500 rounded-full animate-bounce" style={{ animationDelay: '300ms' }} />
                   </span>
-                ) : <Music className="w-6 h-6 text-indigo-300" />}
+                ) : <Music className="w-6 h-6 text-rose-600" />}
               </div>
               <div className="min-w-0">
-                <div className="text-[10px] font-extrabold uppercase tracking-wider text-amber-400">
+                <div className="text-[10px] font-black uppercase tracking-wider text-amber-600">
                   Now Playing • Track {currentIdx + 1} / {displayedTracks.length}
                 </div>
-                <h3 className="text-base font-black text-white truncate">{activeTrack.label}</h3>
+                <h3 className="text-base font-black text-slate-900 truncate">{activeTrack.label}</h3>
                 {activeTrack.lessonNumber !== 99 && (
-                  <p className="text-xs text-slate-400 truncate">Lesson {activeTrack.lessonNumber}: {activeTrack.lessonTitle}</p>
+                  <p className="text-xs text-slate-500 truncate">Lesson {activeTrack.lessonNumber}: {activeTrack.lessonTitle}</p>
                 )}
               </div>
             </div>
@@ -172,21 +172,21 @@ export const AlphabetGrid: React.FC<AlphabetGridProps> = ({ activeLanguage }) =>
             {/* Controls */}
             <div className="flex items-center gap-2 self-center">
               <button onClick={() => playAtIndex(Math.max(0, currentIdx - 1))} disabled={currentIdx === 0}
-                className="p-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 disabled:opacity-40 text-white transition-all border border-slate-700">
+                className="p-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 disabled:opacity-40 text-slate-700 transition-all border border-slate-200 cursor-pointer">
                 <SkipBack className="w-4 h-4" />
               </button>
               <button onClick={togglePlay}
-                className="px-6 py-2.5 rounded-2xl bg-gradient-to-r from-rose-600 to-indigo-600 hover:from-rose-500 hover:to-indigo-500 text-white font-black text-xs shadow-glow flex items-center gap-2 transition-all transform hover:scale-105">
+                className="px-6 py-2.5 rounded-2xl bg-red-600 hover:bg-red-700 text-white font-black text-xs shadow-xs flex items-center gap-2 transition-all transform hover:scale-105 cursor-pointer">
                 {isPlaying ? <Pause className="w-4 h-4 fill-white" /> : <Play className="w-4 h-4 fill-white ml-0.5" />}
                 <span>{isPlaying ? 'PAUSE' : 'PLAY'}</span>
               </button>
               <button onClick={() => playAtIndex((currentIdx + 1) % displayedTracks.length)}
-                className="p-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-white transition-all border border-slate-700">
+                className="p-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 transition-all border border-slate-200 cursor-pointer">
                 <SkipForward className="w-4 h-4" />
               </button>
               <button onClick={() => setAutoAdvance(!autoAdvance)}
-                className={`p-2.5 rounded-xl border text-xs font-bold transition-all flex items-center gap-1 ${
-                  autoAdvance ? 'bg-emerald-600/20 border-emerald-500/40 text-emerald-400' : 'bg-slate-800 border-slate-700 text-slate-500'
+                className={`p-2.5 rounded-xl border text-xs font-bold transition-all flex items-center gap-1 cursor-pointer ${
+                  autoAdvance ? 'bg-emerald-50 border-emerald-300 text-emerald-700' : 'bg-slate-100 border-slate-200 text-slate-600'
                 }`} title="Auto-advance to next track">
                 <Repeat className={`w-4 h-4 ${autoAdvance ? 'animate-spin' : ''}`} style={{ animationDuration: '6s' }} />
                 <span className="hidden sm:inline">Auto</span>
@@ -199,9 +199,9 @@ export const AlphabetGrid: React.FC<AlphabetGridProps> = ({ activeLanguage }) =>
             <input
               type="range" min={0} max={duration || 100} value={currentTime}
               onChange={(e) => { const v = Number(e.target.value); setCurrentTime(v); if (audioRef.current) audioRef.current.currentTime = v; }}
-              className="w-full h-1.5 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-rose-500"
+              className="w-full h-1.5 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-red-600"
             />
-            <div className="flex justify-between text-[10px] text-slate-400 font-medium">
+            <div className="flex justify-between text-[10px] text-slate-500 font-bold">
               <span>{formatTime(currentTime)}</span><span>{formatTime(duration)}</span>
             </div>
           </div>
@@ -209,9 +209,9 @@ export const AlphabetGrid: React.FC<AlphabetGridProps> = ({ activeLanguage }) =>
       )}
 
       {/* Filter Bar */}
-      <div className="flex flex-col md:flex-row items-stretch md:items-center justify-between gap-3 bg-slate-900/80 border border-slate-800 p-3 rounded-2xl">
+      <div className="flex flex-col md:flex-row items-stretch md:items-center justify-between gap-3 bg-white border border-slate-200 p-3 rounded-2xl shadow-xs text-slate-900">
         <div className="flex items-center gap-1.5 overflow-x-auto scrollbar-none">
-          <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400 pr-1 flex-shrink-0">Filter:</span>
+          <span className="text-[10px] font-black uppercase tracking-wider text-slate-500 pr-1 flex-shrink-0">Filter:</span>
           {[
             { id: 'ALL',      label: `All (${ALL_SERIAL_TRACKS.length})` },
             { id: 'VOCAB',    label: '📚 Vocab (単語)' },
@@ -220,8 +220,8 @@ export const AlphabetGrid: React.FC<AlphabetGridProps> = ({ activeLanguage }) =>
             { id: 'REVIEW',   label: '🏆 Review (まとめ)' },
           ].map((f) => (
             <button key={f.id} onClick={() => { setTrackFilter(f.id as any); setCurrentIdx(0); }}
-              className={`px-3 py-1 rounded-xl text-xs font-bold whitespace-nowrap transition-all border flex-shrink-0 ${
-                trackFilter === f.id ? 'bg-rose-600 border-rose-400 text-white shadow-sm' : 'bg-slate-950 border-slate-800 text-slate-400 hover:text-white'
+              className={`px-3 py-1 rounded-xl text-xs font-extrabold whitespace-nowrap transition-all border flex-shrink-0 cursor-pointer ${
+                trackFilter === f.id ? 'bg-red-600 border-red-500 text-white shadow-xs' : 'bg-slate-100 border-slate-200 text-slate-700 hover:bg-slate-200'
               }`}>{f.label}</button>
           ))}
         </div>
@@ -230,31 +230,31 @@ export const AlphabetGrid: React.FC<AlphabetGridProps> = ({ activeLanguage }) =>
           <select
             value={lessonFilter}
             onChange={(e) => { setLessonFilter(e.target.value === 'ALL' ? 'ALL' : Number(e.target.value)); setCurrentIdx(0); }}
-            className="bg-slate-950 border border-slate-800 text-slate-200 text-xs font-bold rounded-xl px-3 py-1.5 focus:outline-none focus:border-rose-500"
+            className="bg-slate-50 border border-slate-200 text-slate-800 text-xs font-bold rounded-xl px-3 py-1.5 focus:outline-none focus:border-slate-400 cursor-pointer"
           >
             <option value="ALL">All Lessons (1–25)</option>
             {Array.from({ length: 25 }, (_, i) => i + 1).map((n) => <option key={n} value={n}>Lesson {n}</option>)}
           </select>
           <div className="relative flex-1 sm:w-48">
-            <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-slate-500" />
+            <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-slate-400" />
             <input type="text" placeholder="Search tracks..." value={searchQuery}
               onChange={(e) => { setSearchQuery(e.target.value); setCurrentIdx(0); }}
-              className="w-full bg-slate-950 border border-slate-800 rounded-xl pl-8 pr-3 py-1.5 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-rose-500"
+              className="w-full bg-slate-50 border border-slate-200 rounded-xl pl-8 pr-3 py-1.5 text-xs text-slate-900 placeholder-slate-400 focus:outline-none focus:border-slate-400"
             />
           </div>
         </div>
       </div>
 
       {/* Serial Track List */}
-      <div className="bg-slate-900/90 border border-slate-800 rounded-3xl p-3 sm:p-4 shadow-2xl space-y-2">
-        <div className="flex items-center justify-between px-2 pb-2 border-b border-slate-800 text-xs text-slate-400 font-bold">
+      <div className="bg-white border border-slate-200 rounded-3xl p-3 sm:p-4 shadow-xs space-y-2 text-slate-900">
+        <div className="flex items-center justify-between px-2 pb-2 border-b border-slate-100 text-xs text-slate-500 font-bold">
           <span>{displayedTracks.length} tracks available</span>
           <span>Click any track to play continuously</span>
         </div>
 
-        <div className="space-y-1.5 max-h-[500px] overflow-y-auto pr-1 scrollbar-thin scrollbar-thumb-slate-700">
+        <div className="space-y-1.5 max-h-[500px] overflow-y-auto pr-1 scrollbar-thin scrollbar-thumb-slate-200">
           {displayedTracks.length === 0 ? (
-            <div className="text-center py-10 text-slate-500 text-xs">No tracks match your filter.</div>
+            <div className="text-center py-10 text-slate-400 text-xs font-medium">No tracks match your filter.</div>
           ) : displayedTracks.map((tr, idx) => {
             const isActive    = activeTrack?.id === tr.id;
             const isPlayingNow = isActive && isPlaying;
@@ -262,30 +262,30 @@ export const AlphabetGrid: React.FC<AlphabetGridProps> = ({ activeLanguage }) =>
             return (
               <div key={tr.id} onClick={() => playAtIndex(idx)}
                 className={`flex items-center justify-between p-3 rounded-2xl border transition-all cursor-pointer group ${
-                  isActive ? 'bg-rose-600/15 border-rose-500/50 text-white shadow-md' : 'bg-slate-950/60 border-slate-800/80 hover:border-slate-700 hover:bg-slate-800/60 text-slate-300'
+                  isActive ? 'bg-red-50 border-red-300 text-slate-900 shadow-xs' : 'bg-slate-50 border-slate-200/80 hover:border-slate-300 hover:bg-slate-100 text-slate-700'
                 }`}>
                 <div className="flex items-center gap-3 min-w-0">
                   <button className={`w-9 h-9 rounded-xl flex items-center justify-center font-black text-xs transition-all flex-shrink-0 ${
-                    isPlayingNow ? 'bg-rose-600 text-white shadow-glow' : isActive ? 'bg-rose-500/20 text-rose-300 border border-rose-500/40' : 'bg-slate-800 text-slate-400 group-hover:bg-rose-600 group-hover:text-white'
+                    isPlayingNow ? 'bg-red-600 text-white shadow-xs' : isActive ? 'bg-red-100 text-red-700 border border-red-200' : 'bg-slate-200 text-slate-700 group-hover:bg-red-600 group-hover:text-white'
                   }`}>
                     {isPlayingNow ? <Pause className="w-4 h-4 fill-white" /> : <Play className="w-4 h-4 ml-0.5 fill-current" />}
                   </button>
                   <div className="min-w-0">
                     <div className="flex items-center gap-2 flex-wrap">
-                      <span className={`text-xs font-black truncate ${isActive ? 'text-white' : 'text-slate-200 group-hover:text-white'}`}>{tr.label}</span>
+                      <span className={`text-xs font-black truncate ${isActive ? 'text-slate-900' : 'text-slate-800 group-hover:text-slate-900'}`}>{tr.label}</span>
                       <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full border ${
-                        tr.trackType === 'vocab'    ? 'bg-violet-500/15 border-violet-500/30 text-violet-300'  :
-                        tr.trackType === 'dialogue' ? 'bg-emerald-500/15 border-emerald-500/30 text-emerald-300' :
-                        tr.trackType === 'drill'    ? 'bg-sky-500/15 border-sky-500/30 text-sky-300'           :
-                        'bg-amber-500/15 border-amber-500/30 text-amber-300'
+                        tr.trackType === 'vocab'    ? 'bg-purple-50 border-purple-200 text-purple-700'  :
+                        tr.trackType === 'dialogue' ? 'bg-emerald-50 border-emerald-200 text-emerald-700' :
+                        tr.trackType === 'drill'    ? 'bg-sky-50 border-sky-200 text-sky-700'           :
+                        'bg-amber-50 border-amber-200 text-amber-700'
                       }`}>{tr.typeLabel}</span>
                     </div>
-                    {tr.lessonNumber !== 99 && <p className="text-[11px] text-slate-400 mt-0.5 truncate">Lesson {tr.lessonNumber}: {tr.lessonTitle}</p>}
+                    {tr.lessonNumber !== 99 && <p className="text-[11px] text-slate-500 mt-0.5 truncate">Lesson {tr.lessonNumber}: {tr.lessonTitle}</p>}
                   </div>
                 </div>
                 {isPlayingNow && (
-                  <div className="flex items-center gap-1.5 text-xs font-bold text-rose-400 pr-2 flex-shrink-0">
-                    <span className="w-2 h-2 rounded-full bg-rose-500 animate-ping" /><span>Playing</span>
+                  <div className="flex items-center gap-1.5 text-xs font-bold text-red-600 pr-2 flex-shrink-0">
+                    <span className="w-2 h-2 rounded-full bg-red-600 animate-ping" /><span>Playing</span>
                   </div>
                 )}
               </div>

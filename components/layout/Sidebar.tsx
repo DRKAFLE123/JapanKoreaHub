@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import {
-  Home, BookOpen, ClipboardList, GraduationCap, Briefcase, Shield, Globe, Bell, FileText, Handshake, BarChart2, User as UserIcon, PanelLeftClose, PanelLeftOpen
+  Home, BookOpen, ClipboardList, GraduationCap, Briefcase, Shield, Globe, Bell, FileText, Handshake, BarChart2, User as UserIcon, PanelLeftClose, PanelLeftOpen, ArrowRight
 } from 'lucide-react';
 import AuthSheet from '@/components/auth/AuthSheet';
 import { useCountry } from '@/lib/context/CountryContext';
@@ -11,7 +11,6 @@ import { useCountry } from '@/lib/context/CountryContext';
 const SECONDARY_LINKS = [
   { href: '/notices',      label: 'Notices',      Icon: Bell },
   { href: '/blog',         label: 'Blog',         Icon: FileText },
-  { href: '/consultancy',  label: 'Consultancy',  Icon: Handshake },
 ];
 
 interface SidebarProps {
@@ -41,7 +40,7 @@ export default function Sidebar({ isOpen, isCollapsed = false, onToggleCollapse,
   const mainLinks = [
     { key: 'home',         label: 'Home',         href: getScopedHref('home'),     Icon: Home },
     { key: 'learn',        label: 'Learn',        href: getScopedHref('learn'),    Icon: BookOpen },
-    { key: 'exams',        label: 'Mock Tests',   href: getScopedHref('exams'),    Icon: ClipboardList },
+    { key: 'exams',        label: 'Mock Test',    href: getScopedHref('exams'),    Icon: ClipboardList },
     { key: 'study',        label: 'Study',        href: getScopedHref('study'),    Icon: GraduationCap },
     { key: 'work',         label: 'Work',         href: getScopedHref('work'),     Icon: Briefcase },
     { key: 'visa',         label: 'Visa',         href: getScopedHref('visa'),     Icon: Shield },
@@ -58,40 +57,33 @@ export default function Sidebar({ isOpen, isCollapsed = false, onToggleCollapse,
       )}
       
       <aside className={`
-        fixed top-16 left-0 bottom-0 bg-white border-r border-gray-200 z-30
-        overflow-y-auto pb-20 transition-all duration-200 ease-in-out flex flex-col justify-between
+        fixed top-16 left-0 bottom-0 bg-white border-r border-slate-200 z-30
+        overflow-y-auto pb-20 transition-all duration-200 ease-in-out flex flex-col justify-between text-slate-800
         ${isCollapsed ? 'lg:w-16 w-64' : 'w-64'}
         ${isOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}
       `}>
 
         <div>
-          {/* Collapse Toggle Button (Desktop Only) */}
-          {onToggleCollapse && (
-            <div className={`hidden lg:flex items-center ${isCollapsed ? 'justify-center py-3' : 'justify-between px-4 py-2.5'} border-b border-gray-100 bg-gray-50/50`}>
-              {!isCollapsed && (
-                <span className="text-[10px] font-black text-gray-400 uppercase tracking-wider">
-                  Sidebar Panel
-                </span>
-              )}
-              <button
-                onClick={onToggleCollapse}
-                title={isCollapsed ? 'Expand Sidebar' : 'Collapse Sidebar'}
-                className="p-1.5 rounded-lg text-gray-500 hover:text-gray-900 hover:bg-gray-200/70 transition-colors cursor-pointer"
-              >
-                {isCollapsed ? <PanelLeftOpen className="w-4 h-4" /> : <PanelLeftClose className="w-4 h-4" />}
-              </button>
-            </div>
-          )}
-
-          {/* Country Focus Switcher Bar */}
+          {/* Country Focus Switcher Bar (with inline collapse toggle) */}
           {!isCollapsed ? (
-            <div className="p-3 border-b border-gray-100 bg-slate-50/50">
-              <p className="text-[10px] font-black text-gray-400 uppercase tracking-wider mb-2 px-1">Active Platform Hub</p>
-              <div className="grid grid-cols-3 gap-1 bg-gray-200/70 p-1 rounded-xl">
+            <div className="px-3 pt-2 pb-3 border-b border-slate-100 bg-slate-50/50">
+              <div className="flex items-center justify-between mb-2 px-1">
+                <p className="text-[10px] font-black text-slate-400 uppercase tracking-wider">Active Platform Hub</p>
+                {onToggleCollapse && (
+                  <button
+                    onClick={onToggleCollapse}
+                    title="Collapse Sidebar"
+                    className="hidden lg:flex p-1 rounded-md text-slate-400 hover:text-slate-700 hover:bg-slate-200/70 transition-colors cursor-pointer"
+                  >
+                    <PanelLeftClose className="w-3.5 h-3.5" />
+                  </button>
+                )}
+              </div>
+              <div className="grid grid-cols-3 gap-1 bg-slate-200/70 p-1 rounded-xl">
                 <button
                   onClick={() => setCountryFocus('japan')}
                   className={`py-1.5 px-1 rounded-lg text-xs font-bold transition-all cursor-pointer flex items-center justify-center gap-1 ${
-                    activeCountry === 'japan' ? 'bg-red-600 text-white shadow-xs' : 'text-gray-600 hover:text-gray-900'
+                    activeCountry === 'japan' ? 'bg-red-600 text-white shadow-xs' : 'text-slate-600 hover:text-slate-900'
                   }`}
                 >
                   🇯🇵 Japan
@@ -99,7 +91,7 @@ export default function Sidebar({ isOpen, isCollapsed = false, onToggleCollapse,
                 <button
                   onClick={() => setCountryFocus('korea')}
                   className={`py-1.5 px-1 rounded-lg text-xs font-bold transition-all cursor-pointer flex items-center justify-center gap-1 ${
-                    activeCountry === 'korea' ? 'bg-blue-600 text-white shadow-xs' : 'text-gray-600 hover:text-gray-900'
+                    activeCountry === 'korea' ? 'bg-blue-600 text-white shadow-xs' : 'text-slate-600 hover:text-slate-900'
                   }`}
                 >
                   🇰🇷 Korea
@@ -107,7 +99,7 @@ export default function Sidebar({ isOpen, isCollapsed = false, onToggleCollapse,
                 <button
                   onClick={() => setCountryFocus('all')}
                   className={`py-1.5 px-1 rounded-lg text-xs font-bold transition-all cursor-pointer flex items-center justify-center gap-1 ${
-                    activeCountry === 'all' ? 'bg-slate-900 text-white shadow-xs' : 'text-gray-600 hover:text-gray-900'
+                    activeCountry === 'all' ? 'bg-slate-900 text-white shadow-xs' : 'text-slate-600 hover:text-slate-900'
                   }`}
                 >
                   🌏 Both
@@ -115,11 +107,20 @@ export default function Sidebar({ isOpen, isCollapsed = false, onToggleCollapse,
               </div>
             </div>
           ) : (
-            <div className="py-3 flex justify-center border-b border-gray-100">
+            <div className="py-2 flex flex-col items-center gap-1 border-b border-slate-100">
+              {onToggleCollapse && (
+                <button
+                  onClick={onToggleCollapse}
+                  title="Expand Sidebar"
+                  className="hidden lg:flex p-1 rounded-md text-slate-400 hover:text-slate-700 hover:bg-slate-200/70 transition-colors cursor-pointer"
+                >
+                  <PanelLeftOpen className="w-3.5 h-3.5" />
+                </button>
+              )}
               <button
                 onClick={() => setCountryFocus(activeCountry === 'japan' ? 'korea' : activeCountry === 'korea' ? 'all' : 'japan')}
                 title={`Active Hub: ${activeCountry.toUpperCase()} (Click to cycle)`}
-                className="text-base p-1 rounded-lg hover:bg-gray-100 cursor-pointer"
+                className="text-base p-1 rounded-lg hover:bg-slate-100 cursor-pointer"
               >
                 {activeCountry === 'japan' ? '🇯🇵' : activeCountry === 'korea' ? '🇰🇷' : '🌏'}
               </button>
@@ -129,7 +130,7 @@ export default function Sidebar({ isOpen, isCollapsed = false, onToggleCollapse,
           {/* Main Links */}
           <div className={`${isCollapsed ? 'px-2 py-3 space-y-2' : 'px-3 py-4 space-y-1'}`}>
             {!isCollapsed && (
-              <p className="px-3 text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">
+              <p className="px-3 text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">
                 {activeCountry === 'japan' ? '🇯🇵 Japan Platform' : activeCountry === 'korea' ? '🇰🇷 Korea Platform' : 'Global Platform'}
               </p>
             )}
@@ -146,15 +147,15 @@ export default function Sidebar({ isOpen, isCollapsed = false, onToggleCollapse,
                     flex items-center gap-3 rounded-xl text-sm font-medium transition-colors
                     ${isCollapsed ? 'justify-center p-2.5' : 'px-3 py-2'}
                     ${active 
-                      ? activeCountry === 'japan' ? 'bg-red-50 text-red-700 font-bold' : activeCountry === 'korea' ? 'bg-blue-50 text-blue-700 font-bold' : 'bg-gray-100 text-gray-900'
-                      : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50'
+                      ? activeCountry === 'japan' ? 'bg-red-50 text-red-700 font-bold' : activeCountry === 'korea' ? 'bg-blue-50 text-blue-700 font-bold' : 'bg-slate-100 text-slate-900'
+                      : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50'
                     }
                   `}
                 >
                   <link.Icon className={`w-4 h-4 shrink-0 ${
                     active 
-                      ? activeCountry === 'japan' ? 'text-red-600' : activeCountry === 'korea' ? 'text-blue-600' : 'text-gray-900'
-                      : 'text-gray-400'
+                      ? activeCountry === 'japan' ? 'text-red-600' : activeCountry === 'korea' ? 'text-blue-600' : 'text-slate-900'
+                      : 'text-slate-400'
                   }`} />
                   {!isCollapsed && <span>{link.label}</span>}
                 </Link>
@@ -164,8 +165,8 @@ export default function Sidebar({ isOpen, isCollapsed = false, onToggleCollapse,
           
           {/* Secondary Links */}
           {!isCollapsed && (
-            <div className="px-3 py-4 space-y-1 mt-2 border-t border-gray-100">
-              <p className="px-3 text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">Resources</p>
+            <div className="px-3 py-4 space-y-1 mt-2 border-t border-slate-100">
+              <p className="px-3 text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">Resources</p>
               {SECONDARY_LINKS.map((link) => {
                 const active = isActive(link.href);
                 return (
@@ -176,12 +177,12 @@ export default function Sidebar({ isOpen, isCollapsed = false, onToggleCollapse,
                     className={`
                       flex items-center gap-3 px-3 py-2 rounded-xl text-sm font-medium transition-colors
                       ${active 
-                        ? 'bg-gray-100 text-gray-900' 
-                        : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50'
+                        ? 'bg-slate-100 text-slate-900' 
+                        : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50'
                       }
                     `}
                   >
-                    <link.Icon className={`w-4 h-4 ${active ? 'text-gray-900' : 'text-gray-400'}`} />
+                    <link.Icon className={`w-4 h-4 ${active ? 'text-slate-900' : 'text-slate-400'}`} />
                     {link.label}
                   </Link>
                 );
@@ -189,6 +190,48 @@ export default function Sidebar({ isOpen, isCollapsed = false, onToggleCollapse,
             </div>
           )}
         </div>
+
+        {/* Consult Now CTA (Hidden when collapsed) */}
+          {!isCollapsed && (
+            <div className="px-3 pb-2">
+              <div className="relative group/consult">
+                <Link
+                  href="/consultancy"
+                  onClick={() => { if(window.innerWidth < 1024) onClose?.(); }}
+                  className="flex items-center justify-between gap-2 w-full px-4 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold transition-all shadow-sm"
+                >
+                  <div className="flex items-center gap-2">
+                    <Handshake className="w-4 h-4 shrink-0" />
+                    <span>Consult Now</span>
+                  </div>
+                  <ArrowRight className="w-3.5 h-3.5 group-hover/consult:translate-x-0.5 transition-transform" />
+                </Link>
+
+                {/* Hover card */}
+                <div className="absolute bottom-full left-0 right-0 mb-2 pointer-events-none
+                  opacity-0 translate-y-1 group-hover/consult:opacity-100 group-hover/consult:translate-y-0
+                  transition-all duration-200 ease-out z-50">
+                  <div className="bg-white border border-indigo-100 rounded-2xl shadow-xl p-3">
+                    <div className="flex items-center gap-1.5 mb-1.5">
+                      <span className="px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-700 text-[10px] font-black uppercase tracking-wider">Free</span>
+                      <span className="px-2 py-0.5 rounded-full bg-indigo-100 text-indigo-700 text-[10px] font-black uppercase tracking-wider">15 min</span>
+                    </div>
+                    <p className="text-xs font-black text-slate-900 mb-1 leading-snug">
+                      Free 15-minutes consultation from expert
+                    </p>
+                    <div className="flex items-center gap-1.5 text-[11px] text-slate-500 font-medium">
+                      <span className="w-1.5 h-1.5 rounded-full bg-indigo-500 shrink-0"/>
+                      Japan &amp; Korea visa experts
+                    </div>
+                    <div className="flex items-center gap-1.5 text-[11px] text-slate-500 font-medium mt-0.5">
+                      <span className="w-1.5 h-1.5 rounded-full bg-indigo-500 shrink-0"/>
+                      No credit card needed
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
 
         {/* Free Account Card (Hidden when collapsed) */}
         {!isCollapsed && (
@@ -200,7 +243,7 @@ export default function Sidebar({ isOpen, isCollapsed = false, onToggleCollapse,
               </p>
               <button
                 onClick={() => setAuthSheetOpen(true)}
-                className="w-full py-2 bg-gray-900 hover:bg-gray-800 text-white text-xs font-semibold rounded-xl shadow-sm transition-colors cursor-pointer"
+                className="w-full py-2 bg-red-600 hover:bg-red-500 text-white text-xs font-bold rounded-xl shadow-sm transition-colors cursor-pointer"
               >
                 Create Free Account
               </button>

@@ -232,6 +232,7 @@ export default function ExamsHubClient({ country }: { country: Country }) {
   const [selectedCurriculumLevel, setSelectedCurriculumLevel] = useState<string>('ALL');
   const [selectedDifficulty, setSelectedDifficulty] = useState<string>('ALL');
   const [activeExamLevel, setActiveExamLevel] = useState<string | null>(null);
+  const [confirmTest, setConfirmTest] = useState<MockTestCatalogItem | null>(null);
 
   const rawMockTests = country === 'japan' ? JAPAN_MOCK_TESTS : KOREA_MOCK_TESTS;
 
@@ -268,11 +269,11 @@ export default function ExamsHubClient({ country }: { country: Country }) {
 
   if (activeExamLevel) {
     return (
-      <div className="min-h-screen bg-slate-950 text-slate-100 p-4 font-sans">
+      <div className="min-h-screen bg-slate-50 text-slate-900 p-4 font-sans">
         <div className="max-w-5xl mx-auto mb-4">
           <button
             onClick={() => setActiveExamLevel(null)}
-            className="px-4 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 text-slate-300 font-bold text-xs border border-slate-800 transition-all cursor-pointer flex items-center gap-1.5"
+            className="px-4 py-2 rounded-xl bg-white hover:bg-slate-100 text-slate-700 font-bold text-xs border border-slate-200 shadow-xs transition-all cursor-pointer flex items-center gap-1.5"
           >
             <ArrowLeft className="w-4 h-4 text-rose-500" /> Return to Mock Tests Directory
           </button>
@@ -280,22 +281,24 @@ export default function ExamsHubClient({ country }: { country: Country }) {
         <TimedExamEngine
           initialLanguage={country === 'japan' ? 'JAPANESE' : 'KOREAN'}
           currentLevel={activeExamLevel}
+          autoStart={true}
+          onExitExam={() => setActiveExamLevel(null)}
         />
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-100 font-sans pb-24">
+    <div className="min-h-screen bg-slate-50 text-slate-900 font-sans pb-24">
       <MobileNavbar user={null} lang="en" onLangToggle={() => {}} onSearchOpen={() => {}} />
 
       <main className="max-w-6xl mx-auto px-2 sm:px-4 pt-16 md:pt-4 space-y-3">
 
         {/* 🌐 ROW 1: CURRICULUM LEVEL SELECTION BAR */}
-        <div className="flex items-center gap-2 overflow-x-auto no-scrollbar py-1 bg-slate-900/90 p-2 rounded-2xl border border-slate-800">
-          <div className="flex items-center gap-1.5 text-xs font-black uppercase tracking-wider text-slate-400 whitespace-nowrap pl-1 pr-2">
+        <div className="flex items-center justify-between gap-2 overflow-x-auto no-scrollbar py-1 bg-white p-2 rounded-2xl border border-slate-200 shadow-xs">
+          <div className="flex items-center gap-1.5 text-xs font-black uppercase tracking-wider text-slate-500 whitespace-nowrap pl-1 pr-2">
             <Globe className={`w-3.5 h-3.5 ${country === 'japan' ? 'text-red-500' : 'text-blue-500'}`} />
-            <span>Curriculum Level:</span>
+            <span>Course:</span>
           </div>
 
           <div className="flex items-center gap-1.5 flex-nowrap">
@@ -308,9 +311,9 @@ export default function ExamsHubClient({ country }: { country: Country }) {
                   className={`px-3 py-1 rounded-xl text-xs font-extrabold transition-all cursor-pointer whitespace-nowrap border ${
                     isSelected
                       ? country === 'japan'
-                        ? 'bg-red-600 text-white shadow-sm border-red-500'
-                        : 'bg-blue-600 text-white shadow-sm border-blue-500'
-                      : 'bg-slate-950 text-slate-400 hover:text-white hover:bg-slate-800 border-slate-800'
+                        ? 'bg-red-600 text-white shadow-xs border-red-500 font-black'
+                        : 'bg-blue-600 text-white shadow-xs border-blue-500 font-black'
+                      : 'bg-slate-100 text-slate-700 hover:text-slate-900 hover:bg-slate-200 border-slate-200 font-bold'
                   }`}
                 >
                   {lvl.label}
@@ -326,10 +329,10 @@ export default function ExamsHubClient({ country }: { country: Country }) {
           <div className="flex items-center gap-2">
             <button
               onClick={() => setActiveTab('MOCK_TEST')}
-              className={`px-4 py-1.5 rounded-full text-xs font-black transition-all cursor-pointer ${
+              className={`px-4 py-1.5 rounded-full text-xs font-black transition-all cursor-pointer border ${
                 activeTab === 'MOCK_TEST'
-                  ? country === 'japan' ? 'bg-red-700 text-white shadow-xs' : 'bg-blue-700 text-white shadow-xs'
-                  : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+                  ? country === 'japan' ? 'bg-red-600 text-white border-red-500 shadow-xs' : 'bg-blue-600 text-white border-blue-500 shadow-xs'
+                  : 'bg-slate-100 text-slate-700 hover:bg-slate-200 border-slate-200 font-bold'
               }`}
             >
               Mock Test
@@ -339,13 +342,17 @@ export default function ExamsHubClient({ country }: { country: Country }) {
               onClick={() => setActiveTab('SCORE_HISTORY')}
               className={`px-4 py-1.5 rounded-full text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 border ${
                 activeTab === 'SCORE_HISTORY'
-                  ? country === 'japan' ? 'bg-red-50 text-red-700 border-red-200 font-extrabold' : 'bg-blue-50 text-blue-700 border-blue-200 font-extrabold'
-                  : 'bg-slate-50 text-slate-700 border-slate-200 hover:bg-slate-100'
+                  ? country === 'japan' ? 'bg-red-600 text-white border-red-500 font-black shadow-xs' : 'bg-blue-600 text-white border-blue-500 font-black shadow-xs'
+                  : 'bg-slate-100 text-slate-700 hover:bg-slate-200 border-slate-200'
               }`}
             >
               <BarChart2 className="w-3.5 h-3.5" />
               <span>Score History</span>
-              <span className="w-4 h-4 rounded-full bg-rose-500 text-white text-[10px] font-black flex items-center justify-center">
+              <span className={`w-4 h-4 rounded-full text-[10px] font-black flex items-center justify-center ${
+                activeTab === 'SCORE_HISTORY'
+                  ? country === 'japan' ? 'bg-white text-red-600' : 'bg-white text-blue-600'
+                  : 'bg-red-600 text-white'
+              }`}>
                 2
               </span>
             </button>
@@ -375,7 +382,7 @@ export default function ExamsHubClient({ country }: { country: Country }) {
                 onClick={() => setViewMode('LIST')}
                 className={`px-3 py-1 rounded-lg text-xs font-bold flex items-center gap-1 transition-all cursor-pointer ${
                   viewMode === 'LIST'
-                    ? country === 'japan' ? 'bg-red-700 text-white shadow-xs' : 'bg-blue-700 text-white shadow-xs'
+                    ? country === 'japan' ? 'bg-red-600 text-white border-red-500 font-black shadow-xs' : 'bg-blue-600 text-white border-blue-500 font-black shadow-xs'
                     : 'text-slate-600 hover:text-slate-900'
                 }`}
               >
@@ -387,7 +394,7 @@ export default function ExamsHubClient({ country }: { country: Country }) {
                 onClick={() => setViewMode('GRID')}
                 className={`px-3 py-1 rounded-lg text-xs font-bold flex items-center gap-1 transition-all cursor-pointer ${
                   viewMode === 'GRID'
-                    ? country === 'japan' ? 'bg-red-700 text-white shadow-xs' : 'bg-blue-700 text-white shadow-xs'
+                    ? country === 'japan' ? 'bg-red-600 text-white border-red-500 font-black shadow-xs' : 'bg-blue-600 text-white border-blue-500 font-black shadow-xs'
                     : 'text-slate-600 hover:text-slate-900'
                 }`}
               >
@@ -451,11 +458,11 @@ export default function ExamsHubClient({ country }: { country: Country }) {
                   </div>
 
                   <button
-                    onClick={() => setActiveExamLevel(test.level)}
+                    onClick={() => setConfirmTest(test)}
                     className={`w-full sm:w-auto px-5 py-2 rounded-xl font-black text-xs shadow-xs transition-all cursor-pointer flex items-center justify-center gap-1.5 ${
                       country === 'japan'
-                        ? 'bg-red-700 hover:bg-red-800 text-white'
-                        : 'bg-blue-700 hover:bg-blue-800 text-white'
+                        ? 'bg-red-600 hover:bg-red-500 text-white border border-red-500'
+                        : 'bg-blue-600 hover:bg-blue-500 text-white border border-blue-500'
                     }`}
                   >
                     <Play className="w-3.5 h-3.5 fill-white" />
@@ -497,6 +504,97 @@ export default function ExamsHubClient({ country }: { country: Country }) {
           </div>
         )}
       </main>
+
+      {/* ── EXAM CONFIRMATION MODAL ── */}
+      {confirmTest && (
+        <div className="fixed inset-0 z-[100] overflow-y-auto flex items-center justify-center p-3 sm:p-4 bg-slate-950/85 backdrop-blur-md animate-fade-in min-h-screen min-h-[100dvh]">
+          <div className="w-full max-w-lg bg-white text-slate-900 border border-slate-200 rounded-3xl p-6 sm:p-7 shadow-2xl space-y-5 my-auto mx-auto shrink-0 font-sans">
+            
+            {/* Modal Header */}
+            <div className="flex items-start justify-between pb-3 border-b border-slate-200">
+              <div className="flex items-center gap-3">
+                <div className="p-3 rounded-2xl bg-red-50 text-red-600 border border-red-200 text-2xl">
+                  ⏱️
+                </div>
+                <div>
+                  <div className="text-xs font-black uppercase tracking-wider text-red-600 flex items-center gap-1.5">
+                    <span>{confirmTest.badge}</span>
+                    <span>•</span>
+                    <span className="text-slate-500">{confirmTest.difficulty} Level</span>
+                  </div>
+                  <h3 className="text-lg sm:text-xl font-black text-slate-900 leading-snug">{confirmTest.title}</h3>
+                </div>
+              </div>
+              <button
+                onClick={() => setConfirmTest(null)}
+                className="p-2 rounded-xl bg-slate-100 hover:bg-rose-600 text-slate-500 hover:text-white transition-all cursor-pointer"
+              >
+                <X className="w-4 h-4" />
+              </button>
+            </div>
+
+            {/* Test Specs Grid */}
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 text-center text-xs">
+              <div className="p-3 rounded-2xl bg-slate-50 border border-slate-200 space-y-0.5">
+                <span className="text-[10px] font-black uppercase text-slate-400 block">Duration</span>
+                <span className="font-black text-slate-900 text-sm">{confirmTest.durationMinutes} Mins</span>
+              </div>
+              <div className="p-3 rounded-2xl bg-slate-50 border border-slate-200 space-y-0.5">
+                <span className="text-[10px] font-black uppercase text-slate-400 block">Questions</span>
+                <span className="font-black text-slate-900 text-sm">{confirmTest.questionsCount} Qs</span>
+              </div>
+              <div className="p-3 rounded-2xl bg-slate-50 border border-slate-200 space-y-0.5">
+                <span className="text-[10px] font-black uppercase text-slate-400 block">Pass Target</span>
+                <span className="font-black text-emerald-700 text-xs">{confirmTest.passScore}</span>
+              </div>
+              <div className="p-3 rounded-2xl bg-slate-50 border border-slate-200 space-y-0.5">
+                <span className="text-[10px] font-black uppercase text-slate-400 block">Format</span>
+                <span className="font-black text-slate-900 text-xs">{confirmTest.formatType}</span>
+              </div>
+            </div>
+
+            {/* Exam Rules & Instructions */}
+            <div className="p-4 rounded-2xl bg-amber-50/80 border border-amber-200/90 text-xs text-amber-950 space-y-2">
+              <div className="font-black uppercase tracking-wider text-amber-900 flex items-center gap-1.5">
+                <span>⚠️ Important Examination Rules</span>
+              </div>
+              <ul className="space-y-1.5 text-slate-800 font-medium pl-1 list-disc list-inside">
+                <li>The countdown timer starts immediately upon clicking <strong>Begin Exam Now</strong>.</li>
+                <li>Do not refresh or close the browser tab during the test.</li>
+                <li>Auto-grading scorecards and detailed feedback are generated upon submission.</li>
+              </ul>
+            </div>
+
+            {/* Modal Actions */}
+            <div className="flex items-center gap-3 pt-2">
+              <button
+                type="button"
+                onClick={() => setConfirmTest(null)}
+                className="flex-1 py-3 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-extrabold text-xs transition-colors cursor-pointer border border-slate-200"
+              >
+                Cancel
+              </button>
+
+              <button
+                type="button"
+                onClick={() => {
+                  setActiveExamLevel(confirmTest.level);
+                  setConfirmTest(null);
+                }}
+                className={`flex-1 py-3 rounded-xl font-black text-xs text-white shadow-xs transition-colors cursor-pointer flex items-center justify-center gap-2 ${
+                  country === 'japan'
+                    ? 'bg-red-600 hover:bg-red-500 border border-red-500'
+                    : 'bg-blue-600 hover:bg-blue-500 border border-blue-500'
+                }`}
+              >
+                <Play className="w-3.5 h-3.5 fill-white" />
+                <span>Begin Exam Now</span>
+              </button>
+            </div>
+
+          </div>
+        </div>
+      )}
 
       <BottomTabBar />
     </div>

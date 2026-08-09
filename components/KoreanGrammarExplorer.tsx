@@ -125,16 +125,16 @@ export const KoreanGrammarExplorer: React.FC<KoreanGrammarExplorerProps> = ({ le
   return (
     <div className="space-y-4 sm:space-y-6 font-sans">
       {/* Thin Left-Aligned Header Bar */}
-      <div className="bg-slate-900/90 border border-slate-800 rounded-2xl p-3.5 sm:p-4 text-white space-y-2.5 shadow-md">
+      <div className="bg-white border border-slate-200 rounded-2xl p-3.5 sm:p-4 text-slate-900 space-y-2.5 shadow-xs">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
           <div className="flex flex-wrap items-center gap-2">
-            <span className="px-2.5 py-0.5 rounded-md bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 text-[10px] font-black uppercase tracking-wider">
+            <span className="px-2.5 py-0.5 rounded-md bg-emerald-50 text-emerald-700 border border-emerald-200 text-[10px] font-black uppercase tracking-wider">
               {headerInfo.badge}
             </span>
-            <span className="px-2.5 py-0.5 rounded-md bg-teal-500/20 text-teal-300 border border-teal-500/30 text-[10px] font-black">
+            <span className="px-2.5 py-0.5 rounded-md bg-teal-50 text-teal-700 border border-teal-200 text-[10px] font-black">
               {isEPS ? `${filteredEPSLessons.length} Lessons` : `${currentDataset.length} Rules`}
             </span>
-            <h2 className="text-base sm:text-lg font-black text-white w-full sm:w-auto">
+            <h2 className="text-base sm:text-lg font-black text-slate-900 w-full sm:w-auto">
               {headerInfo.title}
             </h2>
           </div>
@@ -147,7 +147,7 @@ export const KoreanGrammarExplorer: React.FC<KoreanGrammarExplorerProps> = ({ le
               placeholder={`Search grammar & lessons...`}
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-8 pr-3 py-1.5 bg-slate-950 border border-slate-800 rounded-xl text-xs font-bold text-white placeholder-slate-500 focus:outline-none focus:border-emerald-500"
+              className="w-full pl-8 pr-3 py-1.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-bold text-slate-900 placeholder-slate-400 focus:outline-none focus:border-emerald-500"
             />
           </div>
         </div>
@@ -159,40 +159,40 @@ export const KoreanGrammarExplorer: React.FC<KoreanGrammarExplorerProps> = ({ le
             <>
               <button
                 onClick={() => { setActivePart('EPS_ALL'); setSearchQuery(''); }}
-                className={`px-2.5 py-1 rounded-lg text-[11px] font-black transition-all cursor-pointer shrink-0 ${
-                  activePart === 'EPS_ALL' ? 'bg-emerald-600 text-white shadow-sm' : 'text-slate-400 hover:text-white bg-slate-800/80'
+                className={`px-2.5 py-1 rounded-lg text-[11px] font-black transition-all cursor-pointer shrink-0 border ${
+                  activePart === 'EPS_ALL' ? 'bg-emerald-600 text-white border-emerald-500 shadow-xs' : 'text-slate-700 hover:text-slate-900 bg-slate-100 border-slate-200'
                 }`}
               >
                 <span>🎯 All 60 EPS Lessons</span>
               </button>
               <button
                 onClick={() => { setActivePart('EPS_L1_15'); setSearchQuery(''); }}
-                className={`px-2.5 py-1 rounded-lg text-[11px] font-black transition-all cursor-pointer shrink-0 ${
-                  activePart === 'EPS_L1_15' ? 'bg-emerald-600 text-white shadow-sm' : 'text-slate-400 hover:text-white bg-slate-800/80'
+                className={`px-2.5 py-1 rounded-lg text-[11px] font-black transition-all cursor-pointer shrink-0 border ${
+                  activePart === 'EPS_L1_15' ? 'bg-emerald-600 text-white border-emerald-500 shadow-xs' : 'text-slate-700 hover:text-slate-900 bg-slate-100 border-slate-200'
                 }`}
               >
                 <span>Lessons 1–15 (Greetings & Basics)</span>
               </button>
               <button
                 onClick={() => { setActivePart('EPS_L16_30'); setSearchQuery(''); }}
-                className={`px-2.5 py-1 rounded-lg text-[11px] font-black transition-all cursor-pointer shrink-0 ${
-                  activePart === 'EPS_L16_30' ? 'bg-emerald-600 text-white shadow-sm' : 'text-slate-400 hover:text-white bg-slate-800/80'
+                className={`px-2.5 py-1 rounded-lg text-[11px] font-black transition-all cursor-pointer shrink-0 border ${
+                  activePart === 'EPS_L16_30' ? 'bg-emerald-600 text-white border-emerald-500 shadow-xs' : 'text-slate-700 hover:text-slate-900 bg-slate-100 border-slate-200'
                 }`}
               >
                 <span>Lessons 16–30 (Daily & Workplace)</span>
               </button>
               <button
                 onClick={() => { setActivePart('EPS_L31_45'); setSearchQuery(''); }}
-                className={`px-2.5 py-1 rounded-lg text-[11px] font-black transition-all cursor-pointer shrink-0 ${
-                  activePart === 'EPS_L31_45' ? 'bg-emerald-600 text-white shadow-sm' : 'text-slate-400 hover:text-white bg-slate-800/80'
+                className={`px-2.5 py-1 rounded-lg text-[11px] font-black transition-all cursor-pointer shrink-0 border ${
+                  activePart === 'EPS_L31_45' ? 'bg-emerald-600 text-white border-emerald-500 shadow-xs' : 'text-slate-700 hover:text-slate-900 bg-slate-100 border-slate-200'
                 }`}
               >
                 <span>Lessons 31–45 (Tools & Safety)</span>
               </button>
               <button
                 onClick={() => { setActivePart('EPS_L46_60'); setSearchQuery(''); }}
-                className={`px-2.5 py-1 rounded-lg text-[11px] font-black transition-all cursor-pointer shrink-0 ${
-                  activePart === 'EPS_L46_60' ? 'bg-emerald-600 text-white shadow-sm' : 'text-slate-400 hover:text-white bg-slate-800/80'
+                className={`px-2.5 py-1 rounded-lg text-[11px] font-black transition-all cursor-pointer shrink-0 border ${
+                  activePart === 'EPS_L46_60' ? 'bg-emerald-600 text-white border-emerald-500 shadow-xs' : 'text-slate-700 hover:text-slate-900 bg-slate-100 border-slate-200'
                 }`}
               >
                 <span>Lessons 46–60 (Work Life & Industry)</span>

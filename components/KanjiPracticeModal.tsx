@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { X, Volume2, Shuffle, ArrowLeft, ArrowRight, Eye, EyeOff, Play } from 'lucide-react';
 import { Kanji1000Item } from '@/lib/kanji-1000-data';
 
@@ -31,6 +31,20 @@ export const KanjiPracticeModal: React.FC<KanjiPracticeModalProps> = ({
   const [deck, setDeck] = useState<Kanji1000Item[]>([]);
   const [currentIndex, setCurrentIndex] = useState<number>(0);
   const [showAnswer, setShowAnswer] = useState<boolean>(false);
+  const overlayRef = useRef<HTMLDivElement>(null);
+
+  // Scroll page to top and lock body scroll when modal opens
+  useEffect(() => {
+    if (isOpen) {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [isOpen]);
 
   // Initialize and refresh deck when base list or shuffling changes
   useEffect(() => {
@@ -77,38 +91,63 @@ export const KanjiPracticeModal: React.FC<KanjiPracticeModalProps> = ({
     }
   };
 
+  // ── Dynamic color tokens based on flashcard state ──
+  // FRONT (question) → warm cream palette  |  BACK (answer) → warm amber/gold — stays within Japanese rose theme
+  const cardBg       = showAnswer ? 'bg-[#fffbf2]'      : 'bg-white';
+  const cardBorder   = showAnswer ? 'border-amber-300'   : 'border-[#e8decb]';
+  const stampBg      = showAnswer ? 'bg-amber-50 border-amber-300 text-amber-800' : 'bg-rose-50 border-rose-200 text-rose-700';
+  const eyeBtnBase   = showAnswer ? 'bg-amber-50 border-amber-200 text-amber-900 hover:bg-amber-100' : 'bg-white border-[#e8decb] text-[#5c4a3c] hover:bg-[#fbf6eb]';
+  const eyeIconColor = showAnswer ? 'text-amber-700'    : 'text-rose-800';
+  const audioBtnBase = showAnswer ? 'bg-amber-50 border-amber-200 text-amber-700 hover:bg-rose-800 hover:text-white' : 'bg-[#fbf6eb] border-[#e8decb] text-rose-700 hover:bg-rose-700 hover:text-white';
+  const glyphColor   = showAnswer ? 'text-rose-900'     : 'text-[#2d2219]';
+  const dividerColor = showAnswer ? 'border-amber-200'   : 'border-[#e8decb]';
+  const modalBg      = showAnswer ? 'bg-[#fffcf5]'      : 'bg-[#faf6ee]';
+  const modalBorder  = showAnswer ? 'border-amber-200'   : 'border-[#e8decb]';
+  const headerBg     = showAnswer ? 'bg-[#fff8ec]'      : 'bg-[#fcf8f2]';
+  const ribbonBg     = showAnswer ? 'bg-[#fff4e0]'      : 'bg-[#fbf6eb]';
+  const footerBg     = showAnswer ? 'bg-[#fff8ec]'      : 'bg-[#fcf8f2]';
+  const nextBtnClass = showAnswer ? 'bg-rose-800 border-rose-800 hover:bg-rose-700'  : 'bg-rose-800 border-rose-800 hover:bg-rose-700';
+  const accentLabel  = showAnswer ? 'text-amber-800'    : 'text-rose-800';
+  const readingLabel = showAnswer ? 'text-amber-700'    : 'text-[#a8813d]';
+
   return (
-    <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-950/85 backdrop-blur-md animate-fade-in font-sans">
-      <div className="w-full max-w-2xl bg-[#faf6ee] text-[#2d2219] border border-[#e8decb] rounded-3xl shadow-2xl overflow-hidden flex flex-col max-h-[90vh]">
+    <div
+      ref={overlayRef}
+      className="fixed inset-0 z-[100] flex items-start justify-center p-3 sm:p-6 bg-slate-900/65 backdrop-blur-sm animate-fade-in font-sans"
+    >
+      <div className={`w-full max-w-xl ${modalBg} text-[#2d2219] border ${modalBorder} rounded-2xl sm:rounded-3xl shadow-2xl overflow-hidden flex flex-col mx-auto transition-colors duration-300`} style={{ maxHeight: 'calc(100dvh - 1.5rem)', minHeight: 'min(520px, 90dvh)' }}>
         
         {/* Header bar */}
-        <div className="flex items-center justify-between px-6 py-4 border-b border-[#e8decb] bg-[#fcf8f2]">
+        <div className={`flex items-center justify-between px-4 sm:px-5 py-2.5 sm:py-3 border-b ${dividerColor} ${headerBg} shrink-0 transition-colors duration-300`}>
           <div>
-            <div className="text-[10px] font-black uppercase tracking-wider text-rose-800">💮 Kanji practice active recall</div>
-            <div className="text-sm font-black text-[#2d2219]">{title}</div>
+            <div className={`text-[10px] font-black uppercase tracking-wider ${accentLabel}`}>
+              {showAnswer ? '✅' : '💮'} Kanji practice active recall
+            </div>
+            <div className="text-xs sm:text-sm font-black text-[#2d2219]">{title}</div>
           </div>
           <button
             onClick={onClose}
-            className="p-1.5 rounded-xl bg-white border border-[#e8decb] hover:bg-rose-50 hover:text-rose-800 hover:border-rose-200 transition-all cursor-pointer text-slate-500"
+            className={`p-1 rounded-xl border transition-all cursor-pointer text-slate-500 ${showAnswer ? 'bg-white border-amber-200 hover:bg-amber-50 hover:text-amber-800' : 'bg-white border-[#e8decb] hover:bg-rose-50 hover:text-rose-800 hover:border-rose-200'}`}
           >
-            <X className="w-4.5 h-4.5" />
+            <X className="w-4 h-4" />
           </button>
         </div>
 
         {/* Info Ribbon & Mode Switch */}
-        <div className="px-6 py-3 border-b border-[#e8decb]/80 bg-[#fbf6eb] flex items-center justify-between text-xs font-bold text-[#5c4a3c]">
+        <div className={`px-4 sm:px-5 py-1.5 sm:py-2 border-b ${dividerColor}/80 ${ribbonBg} flex items-center justify-between text-xs font-bold text-[#5c4a3c] shrink-0 transition-colors duration-300`}>
           <div>
             Card <span className="text-[#2d2219] font-black">{currentIndex + 1}</span> of <span className="text-[#2d2219] font-black">{deck.length}</span>
+            {showAnswer && <span className="ml-2 text-[10px] font-black text-amber-700 uppercase tracking-wider">• Answer Revealed</span>}
           </div>
 
           <div className="flex items-center gap-2">
-            <span className="text-[10px] uppercase tracking-wider">Practice Mode:</span>
+            <span className="text-[10px] uppercase tracking-wider hidden sm:inline">Practice Mode:</span>
             <button
               onClick={() => setIsRandom(!isRandom)}
-              className={`flex items-center gap-1 px-3 py-1 rounded-lg border text-[11px] font-black tracking-wide transition-all cursor-pointer ${
+              className={`flex items-center gap-1 px-2.5 py-0.5 rounded-lg border text-[11px] font-black tracking-wide transition-all cursor-pointer ${
                 isRandom
-                  ? 'bg-rose-800 border-rose-800 text-white shadow-xs'
-                  : 'bg-white border-[#e8decb] text-[#5c4a3c] hover:bg-[#f5efe6]'
+                  ? showAnswer ? 'bg-rose-800 border-rose-800 text-white shadow-xs' : 'bg-rose-800 border-rose-800 text-white shadow-xs'
+                  : showAnswer ? 'bg-white border-amber-200 text-amber-800 hover:bg-amber-50' : 'bg-white border-[#e8decb] text-[#5c4a3c] hover:bg-[#f5efe6]'
               }`}
             >
               <Shuffle className="w-3 h-3" />
@@ -117,40 +156,40 @@ export const KanjiPracticeModal: React.FC<KanjiPracticeModalProps> = ({
           </div>
         </div>
 
-        {/* Card Body with Fixed Height Container (Never resizes) */}
-        <div className="flex-1 overflow-hidden p-4 sm:p-6 flex flex-col items-center justify-center">
-          {/* Main Flashcard Container with Fixed Height h-[360px] */}
+        {/* Card Body */}
+        <div className="flex-1 overflow-y-auto p-2.5 sm:p-4 flex flex-col items-center justify-start min-h-0">
+          {/* Main Flashcard */}
           <div
             onClick={(e) => {
               const target = e.target as HTMLElement;
               if (target.closest('button') || target.closest('a')) return;
               setShowAnswer(prev => !prev);
             }}
-            className="w-full max-w-md bg-white border border-[#e8decb] rounded-3xl p-5 sm:p-6 shadow-md flex flex-col items-center relative group h-[360px] justify-between transition-all duration-200 select-none cursor-pointer overflow-hidden"
+            className={`w-full max-w-md ${cardBg} border-2 ${cardBorder} rounded-2xl sm:rounded-3xl p-3 sm:p-4 shadow-md flex flex-col items-center relative group h-[270px] sm:h-[300px] ${showAnswer ? 'justify-start' : 'justify-center'} transition-all duration-300 select-none cursor-pointer overflow-hidden shrink-0`}
           >
-            {/* Red Stamp Number */}
-            <span className="absolute top-4 left-4 text-[10px] font-black text-rose-700 bg-rose-50 border border-rose-200 px-2.5 py-0.5 rounded-md font-mono z-10">
+            {/* Card number stamp — color changes with state */}
+            <span className={`absolute top-3 left-3 text-[10px] font-black px-2 py-0.5 rounded-md font-mono z-10 border transition-colors duration-300 ${stampBg}`}>
               #{currentCard.number}
             </span>
 
-            {/* Top Action Buttons: Eye Toggle & Audio Button */}
-            <div className="absolute top-3.5 right-4 flex items-center gap-1.5 z-10">
+            {/* Top Action Buttons */}
+            <div className="absolute top-2.5 right-3 flex items-center gap-1.5 z-10">
               <button
                 onClick={(e) => {
                   e.stopPropagation();
                   setShowAnswer(prev => !prev);
                 }}
-                className="px-2.5 py-1 rounded-xl bg-white text-[#5c4a3c] hover:bg-[#fbf6eb] border border-[#e8decb] text-xs font-black transition-all flex items-center gap-1 cursor-pointer select-none active:scale-95 shadow-2xs"
-                title={showAnswer ? "Click to hide answer" : "Click to show answer"}
+                className={`px-2 py-0.5 rounded-xl text-xs font-black transition-all flex items-center gap-1 cursor-pointer select-none active:scale-95 shadow-2xs border ${eyeBtnBase}`}
+                title={showAnswer ? 'Click to hide answer' : 'Click to show answer'}
               >
                 {showAnswer ? (
                   <>
-                    <Eye className="w-3.5 h-3.5 text-rose-800" />
+                    <Eye className={`w-3.5 h-3.5 ${eyeIconColor}`} />
                     <span>Hide</span>
                   </>
                 ) : (
                   <>
-                    <EyeOff className="w-3.5 h-3.5 text-rose-800" />
+                    <EyeOff className={`w-3.5 h-3.5 ${eyeIconColor}`} />
                     <span>Show</span>
                   </>
                 )}
@@ -161,46 +200,44 @@ export const KanjiPracticeModal: React.FC<KanjiPracticeModalProps> = ({
                   e.stopPropagation();
                   playPronunciation(currentCard.character);
                 }}
-                className="p-1.5 rounded-xl bg-[#fbf6eb] hover:bg-rose-700 hover:text-white text-rose-700 border border-[#e8decb] transition-all cursor-pointer shadow-2xs"
+                className={`p-1 rounded-xl border transition-all cursor-pointer shadow-2xs ${audioBtnBase}`}
                 title="Hear Pronunciation"
               >
-                <Volume2 className="w-4 h-4" />
+                <Volume2 className="w-3.5 h-3.5" />
               </button>
             </div>
 
-            {/* Kanji Character glyph */}
-            <div className={`font-black font-jp text-[#2d2219] transition-all duration-200 select-none flex items-center justify-center ${
-              showAnswer ? 'text-4xl sm:text-5xl mt-6 mb-1 shrink-0' : 'text-7xl sm:text-8xl my-auto'
-            }`}>
+            {/* Kanji Character Glyph */}
+            <div className={`text-5xl sm:text-6xl font-black font-jp ${glyphColor} shrink-0 flex items-center justify-center ${showAnswer ? 'pt-10 pb-3' : 'pt-0 pb-2'} transition-colors duration-300`}>
               {currentCard.character}
             </div>
 
-            {/* Answer Details Display with Scrollable Area & Small Typography */}
+            {/* Answer Details */}
             {showAnswer ? (
-              <div className="w-full text-center border-t border-[#e8decb] pt-2.5 flex-1 flex flex-col justify-between overflow-hidden animate-fade-in">
-                <div className="overflow-y-auto max-h-[175px] pr-1 space-y-2 text-xs scrollbar-thin">
+              <div className={`w-full text-center border-t ${dividerColor} pt-2 flex-1 flex flex-col justify-between overflow-hidden animate-fade-in`}>
+                <div className="overflow-y-auto max-h-[150px] pr-1 space-y-1.5 text-xs scrollbar-thin">
                   {/* Meanings */}
                   <div>
-                    <div className="text-[9px] font-black text-rose-800 uppercase tracking-widest">MEANING</div>
-                    <div className="text-sm font-black text-[#2d2219] leading-snug">{currentCard.meaningEn}</div>
-                    <div className="text-xs font-extrabold text-[#5c4a3c] font-jp">{currentCard.meaningNe}</div>
+                    <div className={`text-[9px] font-black uppercase tracking-widest ${accentLabel}`}>MEANING</div>
+                    <div className="text-xs sm:text-sm font-black text-[#2d2219] leading-snug">{currentCard.meaningEn}</div>
+                    <div className="text-[11px] font-extrabold text-[#5c4a3c] font-jp">{currentCard.meaningNe}</div>
                   </div>
 
                   {/* Readings */}
                   <div>
-                    <div className="text-[9px] font-black text-[#a8813d] uppercase tracking-widest">READINGS</div>
-                    <div className="text-[11px] font-bold text-[#2d2219] font-jp tracking-wider px-2 break-words leading-tight">
+                    <div className={`text-[9px] font-black uppercase tracking-widest ${readingLabel}`}>READINGS</div>
+                    <div className="text-[10px] font-bold text-[#2d2219] font-jp tracking-wider px-2 break-words leading-tight">
                       {currentCard.readings}
                     </div>
                   </div>
 
                   {/* Examples */}
                   {currentCard.examples && currentCard.examples.length > 0 && (
-                    <div className="pt-1.5 border-t border-dashed border-[#e8decb]/80 w-full text-left">
-                      <div className="text-[8px] font-black text-rose-800 uppercase tracking-widest mb-1 text-center">EXAMPLES</div>
+                    <div className={`pt-1 border-t border-dashed ${dividerColor}/80 w-full text-left`}>
+                      <div className={`text-[8px] font-black uppercase tracking-widest mb-0.5 text-center ${accentLabel}`}>EXAMPLES</div>
                       <ul className="space-y-0.5 max-w-xs mx-auto">
                         {currentCard.examples.map((ex, idx) => (
-                          <li key={idx} className="text-[10px] text-[#4a463d] font-bold list-disc list-inside font-jp leading-tight" title={ex}>
+                          <li key={idx} className="text-[9px] text-[#4a463d] font-bold list-disc list-inside font-jp leading-tight" title={ex}>
                             {ex}
                           </li>
                         ))}
@@ -209,34 +246,34 @@ export const KanjiPracticeModal: React.FC<KanjiPracticeModalProps> = ({
                   )}
                 </div>
 
-                <div className="text-[9px] font-black text-rose-800/80 pt-1 shrink-0">
-                  Click card body or "Next" to hide answer
+                <div className="text-[9px] font-black text-amber-700/80 pt-0.5 shrink-0">
+                  Click card body or &quot;Next&quot; to hide answer
                 </div>
               </div>
             ) : (
-              <div className="text-[11px] font-bold text-[#8c7b6c] italic mb-4 text-center select-none">
-                Click card body or top <span className="font-extrabold text-rose-800">"Show"</span> button to reveal answer
+              <div className="text-[11px] font-bold text-[#8c7b6c] italic mb-2 text-center select-none py-2">
+                Click card body or top <span className="font-extrabold text-rose-800">&quot;Show&quot;</span> button to reveal answer
               </div>
             )}
           </div>
         </div>
 
         {/* Footer controls */}
-        <div className="px-6 py-4 border-t border-[#e8decb] bg-[#fcf8f2] flex items-center justify-between">
+        <div className={`px-4 sm:px-5 py-2.5 sm:py-3 border-t ${dividerColor} ${footerBg} flex items-center justify-between shrink-0 transition-colors duration-300`}>
           <button
             onClick={handlePrev}
-            className="flex items-center gap-1.5 px-4 py-2 bg-white border border-[#e8decb] rounded-xl text-xs font-black text-[#5c4a3c] hover:bg-[#fbf6eb] cursor-pointer"
+            className={`flex items-center gap-1 px-3 py-1.5 rounded-xl text-xs font-black cursor-pointer transition-all border ${showAnswer ? 'bg-white border-amber-200 text-amber-800 hover:bg-amber-50' : 'bg-white border-[#e8decb] text-[#5c4a3c] hover:bg-[#fbf6eb]'}`}
           >
-            <ArrowLeft className="w-4 h-4" />
+            <ArrowLeft className="w-3.5 h-3.5" />
             Previous (अघिल्लो)
           </button>
 
           <button
             onClick={handleNext}
-            className="flex items-center gap-1.5 px-4 py-2 bg-rose-800 border border-rose-800 rounded-xl text-xs font-black text-white hover:bg-rose-700 cursor-pointer shadow-xs"
+            className={`flex items-center gap-1 px-3.5 py-1.5 rounded-xl text-xs font-black text-white cursor-pointer shadow-xs transition-all border ${nextBtnClass}`}
           >
             Next (अर्को)
-            <ArrowRight className="w-4 h-4" />
+            <ArrowRight className="w-3.5 h-3.5" />
           </button>
         </div>
       </div>

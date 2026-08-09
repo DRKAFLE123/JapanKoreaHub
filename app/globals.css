@@ -33,6 +33,19 @@
   --danger:           #dc2626;
 }
 
+html.dark, body.dark {
+  --surface:          #0f172a;
+  --surface-2:        #020617;
+  --surface-3:        #1e293b;
+  --border:           #1e293b;
+  --border-strong:    #334155;
+  --text-primary:     #f8fafc;
+  --text-secondary:   #cbd5e1;
+  --text-muted:       #64748b;
+  color: #f8fafc;
+  background: #020617;
+}
+
 /* -- Base --------------------------------------------------- */
 html, body {
   color: var(--text-primary);

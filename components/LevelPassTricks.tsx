@@ -65,9 +65,9 @@ export const LevelPassTricks: React.FC<LevelPassTricksProps> = ({ level, onClose
       passScore: '90 / 180 Points (Overall) & 38/120 Language Knowledge, 19/60 Listening',
       timeLimit: '115 Minutes Total',
       emoji: '🎖',
-      color: 'from-purple-600 to-pink-600',
-      textColor: 'text-purple-400',
-      bgBorder: 'border-purple-500/30 bg-purple-950/40',
+      color: 'from-indigo-600 to-blue-600',
+      textColor: 'text-indigo-400',
+      bgBorder: 'border-indigo-500/30 bg-slate-900',
       summary: 'Master 300 Kanji, 1,500 vocabulary words, te-form combinations, conditional forms (ば, たら, と, なら), and basic Keigo.',
       strategies: [
         { title: 'Conditional Form Rule', desc: 'Distinguish たら (after/if), と (natural result), ば (hypothetical), なら (topic advice).' },
@@ -184,8 +184,8 @@ export const LevelPassTricks: React.FC<LevelPassTricksProps> = ({ level, onClose
   }[level];
 
   return (
-    <div className="fixed inset-0 z-[80] flex items-center justify-center p-3 md:p-6 bg-slate-950/85 backdrop-blur-md animate-fade-in">
-      <div className="w-full max-w-4xl max-h-[90vh] bg-slate-900 border border-slate-800 rounded-3xl shadow-2xl overflow-hidden flex flex-col">
+    <div className="fixed inset-0 z-[80] overflow-y-auto flex items-center justify-center p-2 md:p-6 bg-slate-950/85 backdrop-blur-md animate-fade-in min-h-screen min-h-[100dvh]">
+      <div className="w-full max-w-4xl max-h-[92vh] max-h-[92dvh] bg-slate-900 border border-slate-800 rounded-2xl md:rounded-3xl shadow-2xl overflow-hidden flex flex-col my-auto mx-auto shrink-0">
         {/* Header */}
         <div className={`p-5 md:p-6 bg-gradient-to-r ${levelInfo.color} relative flex flex-col md:flex-row items-start md:items-center justify-between gap-4`}>
           <div className="flex items-center gap-3">

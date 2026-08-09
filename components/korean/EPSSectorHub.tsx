@@ -207,19 +207,19 @@ export const EPSSectorHub: React.FC<EPSSectorHubProps> = ({ initialSector }) => 
 
   if (!activeSector) {
     return (
-      <div className="space-y-6">
+      <div className="space-y-6 text-slate-900">
         {/* Header */}
-        <div className="bg-gradient-to-r from-slate-900 via-teal-950/60 to-slate-900 border border-slate-800 rounded-3xl p-6 shadow-2xl">
+        <div className="bg-white border border-slate-200 rounded-3xl p-6 shadow-xs">
           <div className="flex items-center gap-3 mb-2">
-            <span className="px-3 py-1 rounded-lg bg-teal-500/20 text-teal-300 border border-teal-500/30 text-xs font-black uppercase tracking-wider">
+            <span className="px-3 py-1 rounded-lg bg-teal-50 text-teal-700 border border-teal-200 text-xs font-black uppercase tracking-wider">
               EPS-TOPIK Industry Sectors
             </span>
-            <span className="px-2.5 py-1 rounded-lg bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 text-xs font-bold">
+            <span className="px-2.5 py-1 rounded-lg bg-emerald-50 text-emerald-700 border border-emerald-200 text-xs font-bold">
               5 Sectors
             </span>
           </div>
-          <h2 className="text-2xl font-black text-white">🏢 EPS-TOPIK Industry-Specific Modules</h2>
-          <p className="text-sm text-slate-400 mt-1">
+          <h2 className="text-2xl font-black text-slate-900">🏢 EPS-TOPIK Industry-Specific Modules</h2>
+          <p className="text-sm text-slate-600 mt-1">
             Choose your industry to access specialized vocabulary, key phrases, and exam strategies tailored to your work sector in Korea.
           </p>
         </div>
@@ -230,56 +230,53 @@ export const EPSSectorHub: React.FC<EPSSectorHubProps> = ({ initialSector }) => 
             <button
               key={sector.id}
               onClick={() => { setActiveSector(sector.id); setActiveLesson(null); }}
-              className={`group relative text-left bg-slate-900/80 border ${sector.borderColor} hover:border-opacity-80 rounded-3xl p-5 shadow-xl transition-all duration-300 hover:scale-[1.02] hover:shadow-2xl cursor-pointer`}
+              className="group relative text-left bg-white border border-slate-200 hover:border-blue-400 rounded-3xl p-5 shadow-xs transition-all duration-300 hover:scale-[1.02] hover:shadow-md cursor-pointer"
             >
-              {/* Glow */}
-              <div className={`absolute inset-0 rounded-3xl ${sector.bgGlow} opacity-0 group-hover:opacity-100 transition-opacity`} />
-
               {/* Top row */}
               <div className="relative flex items-start justify-between gap-3 mb-4">
-                <div className={`w-12 h-12 rounded-2xl bg-gradient-to-br ${sector.color} flex items-center justify-center text-white text-xl shadow-lg flex-shrink-0`}>
+                <div className={`w-12 h-12 rounded-2xl bg-gradient-to-br ${sector.color} flex items-center justify-center text-white text-xl shadow-md flex-shrink-0`}>
                   {sector.emoji}
                 </div>
-                <span className={`px-2.5 py-1 rounded-lg border text-[10px] font-black uppercase tracking-wider ${sector.badgeBg}`}>
+                <span className="px-2.5 py-1 rounded-lg border border-blue-200 bg-blue-50 text-blue-800 text-[10px] font-black uppercase tracking-wider">
                   {sector.examLessons}
                 </span>
               </div>
 
               {/* Title */}
               <div className="relative mb-2">
-                <h3 className="text-base font-black text-white flex items-center gap-1">
+                <h3 className="text-base font-black text-slate-900 flex items-center gap-1">
                   {sector.label}
-                  <ChevronRight className={`w-4 h-4 ${sector.textAccent} transition-transform group-hover:translate-x-1`} />
+                  <ChevronRight className="w-4 h-4 text-blue-600 transition-transform group-hover:translate-x-1" />
                 </h3>
-                <p className={`text-xs font-bold ${sector.textAccent}`}>{sector.koreanLabel}</p>
+                <p className="text-xs font-bold text-blue-700">{sector.koreanLabel}</p>
               </div>
 
               {/* Description */}
-              <p className="relative text-[11px] text-slate-400 leading-relaxed mb-4 line-clamp-2">
+              <p className="relative text-[11px] text-slate-600 leading-relaxed mb-4 line-clamp-2">
                 {sector.description}
               </p>
 
               {/* Stats row */}
               <div className="relative grid grid-cols-2 gap-2">
-                <div className="bg-slate-950/60 rounded-xl p-2 border border-slate-800/80">
+                <div className="bg-slate-50 rounded-xl p-2 border border-slate-200">
                   <div className="text-[10px] text-slate-500 font-bold uppercase">Vocab</div>
-                  <div className={`text-xs font-black ${sector.textAccent}`}>{sector.totalVocab}</div>
+                  <div className="text-xs font-black text-blue-700">{sector.totalVocab}</div>
                 </div>
-                <div className="bg-slate-950/60 rounded-xl p-2 border border-slate-800/80">
+                <div className="bg-slate-50 rounded-xl p-2 border border-slate-200">
                   <div className="text-[10px] text-slate-500 font-bold uppercase">Pass</div>
-                  <div className="text-xs font-black text-amber-300">{sector.passScore}</div>
+                  <div className="text-xs font-black text-amber-700">{sector.passScore}</div>
                 </div>
               </div>
 
               {/* Topics */}
               <div className="relative mt-3 flex flex-wrap gap-1">
                 {sector.topics.slice(0, 3).map(t => (
-                  <span key={t.title} className="px-2 py-0.5 rounded-full bg-slate-800 border border-slate-700 text-[10px] text-slate-300 font-semibold">
+                  <span key={t.title} className="px-2 py-0.5 rounded-full bg-slate-100 border border-slate-200 text-[10px] text-slate-700 font-semibold">
                     {t.korean}
                   </span>
                 ))}
                 {sector.topics.length > 3 && (
-                  <span className="px-2 py-0.5 rounded-full bg-slate-800 border border-slate-700 text-[10px] text-slate-500 font-semibold">
+                  <span className="px-2 py-0.5 rounded-full bg-slate-100 border border-slate-200 text-[10px] text-slate-500 font-semibold">
                     +{sector.topics.length - 3} more
                   </span>
                 )}
@@ -289,15 +286,15 @@ export const EPSSectorHub: React.FC<EPSSectorHubProps> = ({ initialSector }) => 
         </div>
 
         {/* General EPS also accessible */}
-        <div className="bg-slate-900/60 border border-slate-800 rounded-2xl p-4 flex items-center gap-4">
-          <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-slate-600 to-slate-700 flex items-center justify-center text-xl flex-shrink-0">📚</div>
+        <div className="bg-white border border-slate-200 rounded-2xl p-4 flex items-center gap-4 shadow-xs">
+          <div className="w-10 h-10 rounded-xl bg-slate-100 border border-slate-200 flex items-center justify-center text-xl flex-shrink-0">📚</div>
           <div className="flex-1">
-            <p className="text-sm font-black text-white">EPS-TOPIK General (All 60 Lessons)</p>
-            <p className="text-xs text-slate-400">Complete EPS curriculum including all industry topics + daily life + workplace Korean.</p>
+            <p className="text-sm font-black text-slate-900">EPS-TOPIK General (All 60 Lessons)</p>
+            <p className="text-xs text-slate-600">Complete EPS curriculum including all industry topics + daily life + workplace Korean.</p>
           </div>
           <button
             onClick={() => setActiveSector('EPS')}
-            className="px-4 py-2 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 text-white text-xs font-black hover:from-emerald-500 hover:to-teal-500 transition-all cursor-pointer whitespace-nowrap"
+            className="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-black transition-all cursor-pointer whitespace-nowrap shadow-xs"
           >
             View All →
           </button>
@@ -307,41 +304,41 @@ export const EPSSectorHub: React.FC<EPSSectorHubProps> = ({ initialSector }) => 
   }
 
   return (
-    <div className="space-y-5">
+    <div className="space-y-5 text-slate-900">
       {/* Back + Sector Header */}
-      <div className={`bg-gradient-to-r from-slate-900 via-slate-900/80 to-slate-900 border ${selectedSector?.borderColor ?? 'border-slate-800'} rounded-3xl p-5 shadow-2xl`}>
+      <div className="bg-white border border-slate-200 rounded-3xl p-5 shadow-xs">
         <button
           onClick={() => { setActiveSector(null); setSearchQuery(''); setActiveLesson(null); }}
-          className="text-slate-400 hover:text-white text-xs font-black flex items-center gap-1 mb-3 transition-colors cursor-pointer"
+          className="text-slate-500 hover:text-slate-900 text-xs font-black flex items-center gap-1 mb-3 transition-colors cursor-pointer"
         >
           ← Back to Sectors
         </button>
 
         <div className="flex flex-col sm:flex-row sm:items-center gap-4">
-          <div className={`w-14 h-14 rounded-2xl bg-gradient-to-br ${selectedSector?.color} flex items-center justify-center text-3xl shadow-lg flex-shrink-0`}>
+          <div className={`w-14 h-14 rounded-2xl bg-gradient-to-br ${selectedSector?.color} flex items-center justify-center text-3xl shadow-md flex-shrink-0`}>
             {selectedSector?.emoji}
           </div>
           <div className="flex-1">
             <div className="flex flex-wrap items-center gap-2 mb-1">
-              <span className={`px-2.5 py-0.5 rounded-lg border text-[10px] font-black uppercase tracking-wider ${selectedSector?.badgeBg}`}>
+              <span className="px-2.5 py-0.5 rounded-lg border border-blue-200 bg-blue-50 text-blue-800 text-[10px] font-black uppercase tracking-wider">
                 {selectedSector?.examLessons}
               </span>
-              <span className="px-2.5 py-0.5 rounded-lg bg-slate-800 border border-slate-700 text-[10px] font-bold text-slate-300">
+              <span className="px-2.5 py-0.5 rounded-lg bg-slate-100 border border-slate-200 text-[10px] font-bold text-slate-700">
                 EPS-TOPIK Industry
               </span>
             </div>
-            <h2 className="text-xl font-black text-white">
-              {selectedSector?.emoji} {selectedSector?.label} <span className={`text-base ${selectedSector?.textAccent}`}>({selectedSector?.koreanLabel})</span>
+            <h2 className="text-xl font-black text-slate-900">
+              {selectedSector?.emoji} {selectedSector?.label} <span className="text-base text-blue-700">({selectedSector?.koreanLabel})</span>
             </h2>
-            <p className="text-xs text-slate-400 mt-0.5">{selectedSector?.nepaliDescription}</p>
+            <p className="text-xs text-slate-600 mt-0.5">{selectedSector?.nepaliDescription}</p>
           </div>
         </div>
 
         {/* Key facts */}
         <div className="mt-4 grid grid-cols-2 sm:grid-cols-4 gap-2">
           {selectedSector?.keyFacts.map((fact, i) => (
-            <div key={i} className="bg-slate-950/60 border border-slate-800 rounded-xl p-2.5 text-[11px] text-slate-300 font-semibold flex items-start gap-1.5">
-              <Zap className={`w-3 h-3 ${selectedSector.textAccent} mt-0.5 shrink-0`} />
+            <div key={i} className="bg-slate-50 border border-slate-200 rounded-xl p-2.5 text-[11px] text-slate-700 font-semibold flex items-start gap-1.5">
+              <Zap className="w-3 h-3 text-blue-600 mt-0.5 shrink-0" />
               {fact}
             </div>
           ))}
@@ -349,15 +346,15 @@ export const EPSSectorHub: React.FC<EPSSectorHubProps> = ({ initialSector }) => 
       </div>
 
       {/* Topics overview */}
-      <div className="bg-slate-900/60 border border-slate-800 rounded-2xl p-4">
-        <h3 className="text-xs font-black uppercase tracking-wider text-slate-400 mb-3 flex items-center gap-2">
-          <BookOpen className="w-4 h-4" /> Exam Topics ({selectedSector?.koreanLabel})
+      <div className="bg-white border border-slate-200 rounded-2xl p-4 shadow-xs">
+        <h3 className="text-xs font-black uppercase tracking-wider text-slate-500 mb-3 flex items-center gap-2">
+          <BookOpen className="w-4 h-4 text-blue-600" /> Exam Topics ({selectedSector?.koreanLabel})
         </h3>
         <div className="flex flex-wrap gap-2">
           {selectedSector?.topics.map(t => (
-            <div key={t.title} className={`px-3 py-1.5 rounded-xl border ${selectedSector.borderColor} ${selectedSector.bgGlow} text-xs font-bold`}>
-              <span className={selectedSector.textAccent}>{t.korean}</span>
-              <span className="text-slate-400 ml-1">({t.title})</span>
+            <div key={t.title} className="px-3 py-1.5 rounded-xl border border-blue-200 bg-blue-50 text-xs font-bold">
+              <span className="text-blue-700 font-black">{t.korean}</span>
+              <span className="text-slate-600 ml-1">({t.title})</span>
             </div>
           ))}
         </div>
@@ -372,13 +369,13 @@ export const EPSSectorHub: React.FC<EPSSectorHubProps> = ({ initialSector }) => 
             placeholder="Search vocabulary..."
             value={searchQuery}
             onChange={e => { setSearchQuery(e.target.value); setActiveLesson(null); }}
-            className="w-full pl-10 pr-4 py-2.5 bg-slate-950 border border-slate-800 rounded-xl text-xs font-bold text-white placeholder-slate-500 focus:outline-none focus:border-emerald-500"
+            className="w-full pl-10 pr-4 py-2.5 bg-white border border-slate-200 rounded-xl text-xs font-bold text-slate-900 placeholder-slate-400 focus:outline-none focus:border-blue-500 shadow-xs"
           />
         </div>
         <div className="flex items-center gap-2 flex-wrap">
           <button
             onClick={() => setActiveLesson(null)}
-            className={`px-3 py-2 rounded-xl text-xs font-black transition-all cursor-pointer ${activeLesson === null && !searchQuery ? `bg-gradient-to-r ${selectedSector?.color} text-white` : 'text-slate-400 hover:text-white bg-slate-800'}`}
+            className={`px-3 py-2 rounded-xl text-xs font-black transition-all cursor-pointer ${activeLesson === null && !searchQuery ? `bg-blue-600 text-white shadow-xs` : 'text-slate-700 hover:text-slate-900 bg-white border border-slate-200'}`}
           >
             All
           </button>
@@ -386,7 +383,7 @@ export const EPSSectorHub: React.FC<EPSSectorHubProps> = ({ initialSector }) => 
             <button
               key={l}
               onClick={() => { setActiveLesson(l); setSearchQuery(''); }}
-              className={`px-3 py-2 rounded-xl text-xs font-black transition-all cursor-pointer ${activeLesson === l ? `bg-gradient-to-r ${selectedSector?.color} text-white` : 'text-slate-400 hover:text-white bg-slate-800'}`}
+              className={`px-3 py-2 rounded-xl text-xs font-black transition-all cursor-pointer ${activeLesson === l ? `bg-blue-600 text-white shadow-xs` : 'text-slate-700 hover:text-slate-900 bg-white border border-slate-200'}`}
             >
               Lesson {l}
             </button>
@@ -396,20 +393,20 @@ export const EPSSectorHub: React.FC<EPSSectorHubProps> = ({ initialSector }) => 
 
       {/* Vocab count */}
       <div className="flex items-center justify-between px-1">
-        <span className="text-xs text-slate-400 font-bold">
+        <span className="text-xs text-slate-500 font-bold">
           Showing {sectorVocab.length} vocabulary items
         </span>
-        <span className={`text-xs font-black px-3 py-1 rounded-full ${selectedSector?.badgeBg} border`}>
+        <span className="text-xs font-black px-3 py-1 rounded-full bg-blue-50 text-blue-700 border border-blue-200">
           {selectedSector?.label}
         </span>
       </div>
 
       {/* Vocabulary Cards */}
       {sectorVocab.length === 0 ? (
-        <div className="text-center py-16 text-slate-500">
-          <Globe className="w-12 h-12 mx-auto mb-3 opacity-30" />
+        <div className="text-center py-16 text-slate-500 bg-white border border-slate-200 rounded-2xl shadow-xs">
+          <Globe className="w-12 h-12 mx-auto mb-3 opacity-30 text-slate-400" />
           <p className="font-bold">No vocabulary found for this filter.</p>
-          <button onClick={() => { setSearchQuery(''); setActiveLesson(null); }} className="text-xs text-emerald-400 mt-2 underline cursor-pointer">
+          <button onClick={() => { setSearchQuery(''); setActiveLesson(null); }} className="text-xs text-blue-600 mt-2 underline cursor-pointer">
             Clear filter
           </button>
         </div>
@@ -418,33 +415,33 @@ export const EPSSectorHub: React.FC<EPSSectorHubProps> = ({ initialSector }) => 
           {sectorVocab.map((item) => (
             <div
               key={item.id}
-              className={`bg-slate-900/80 border border-slate-800 hover:${selectedSector?.borderColor} rounded-2xl p-4 shadow-lg transition-all`}
+              className="bg-white border border-slate-200 hover:border-slate-300 rounded-2xl p-4 shadow-xs transition-all"
             >
               <div className="flex items-start justify-between gap-3">
                 <div className="flex-1">
                   <div className="flex items-center gap-2 mb-1">
-                    <span className="text-xl font-black text-white">{item.word}</span>
+                    <span className="text-xl font-black text-slate-900">{item.word}</span>
                     <button
                       onClick={() => playKorean(item.word)}
-                      className={`p-1.5 rounded-lg bg-slate-800 hover:bg-emerald-600/20 border border-slate-700 transition-all cursor-pointer`}
+                      className="p-1.5 rounded-lg bg-slate-100 hover:bg-blue-50 border border-slate-200 transition-all cursor-pointer"
                     >
-                      <Volume2 className="w-3.5 h-3.5 text-slate-400" />
+                      <Volume2 className="w-3.5 h-3.5 text-slate-600" />
                     </button>
                   </div>
-                  <div className={`text-xs font-bold ${selectedSector?.textAccent} mb-1`}>{item.romanization}</div>
+                  <div className="text-xs font-bold text-blue-700 mb-1">{item.romanization}</div>
                   <div className="flex flex-wrap gap-2 text-xs">
-                    <span className="text-slate-200 font-semibold">🇬🇧 {item.meaning}</span>
-                    <span className="text-amber-300 font-semibold">🇳🇵 {item.meaningNepali}</span>
+                    <span className="text-slate-800 font-semibold">🇬🇧 {item.meaning}</span>
+                    <span className="text-emerald-700 font-semibold">🇳🇵 {item.meaningNepali}</span>
                   </div>
                 </div>
                 <div className="flex flex-col items-end gap-1 shrink-0">
                   {item.partOfSpeech && (
-                    <span className="px-2 py-0.5 rounded-full bg-slate-800 border border-slate-700 text-[10px] text-slate-400 font-bold">
+                    <span className="px-2 py-0.5 rounded-full bg-slate-100 border border-slate-200 text-[10px] text-slate-600 font-bold">
                       {item.partOfSpeech}
                     </span>
                   )}
                   {item.topic && (
-                    <span className={`px-2 py-0.5 rounded-full border text-[10px] font-bold ${selectedSector?.badgeBg}`}>
+                    <span className="px-2 py-0.5 rounded-full border border-blue-200 bg-blue-50 text-blue-700 text-[10px] font-bold">
                       {item.topic}
                     </span>
                   )}
@@ -453,20 +450,20 @@ export const EPSSectorHub: React.FC<EPSSectorHubProps> = ({ initialSector }) => 
 
               {/* Example Sentence */}
               {item.grammarSentences && item.grammarSentences.length > 0 && (
-                <div className="mt-3 pt-3 border-t border-slate-800/60 space-y-1">
+                <div className="mt-3 pt-3 border-t border-slate-100 space-y-1">
                   <div className="flex items-start justify-between gap-2">
-                    <div className="text-sm font-bold text-slate-200">{item.grammarSentences[0].korean}</div>
+                    <div className="text-sm font-bold text-slate-800">{item.grammarSentences[0].korean}</div>
                     <button
                       onClick={() => playKorean(item.grammarSentences![0].korean)}
-                      className="p-1.5 rounded-lg bg-slate-800 hover:bg-emerald-600/20 border border-slate-700 transition-all cursor-pointer shrink-0"
+                      className="p-1.5 rounded-lg bg-slate-100 hover:bg-blue-50 border border-slate-200 transition-all cursor-pointer shrink-0"
                     >
-                      <Volume2 className="w-3 h-3 text-slate-400" />
+                      <Volume2 className="w-3 h-3 text-slate-600" />
                     </button>
                   </div>
-                  <div className="text-[11px] text-emerald-400 font-medium">{item.grammarSentences[0].romanization}</div>
+                  <div className="text-[11px] text-blue-600 font-medium">{item.grammarSentences[0].romanization}</div>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-1 text-[11px]">
-                    <span className="text-slate-300">🇬🇧 {item.grammarSentences[0].english}</span>
-                    <span className="text-amber-300">🇳🇵 {item.grammarSentences[0].nepali}</span>
+                    <span className="text-slate-700">🇬🇧 {item.grammarSentences[0].english}</span>
+                    <span className="text-emerald-700">🇳🇵 {item.grammarSentences[0].nepali}</span>
                   </div>
                 </div>
               )}

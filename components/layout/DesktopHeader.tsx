@@ -1,10 +1,11 @@
 'use client';
 import React, { useState, useRef, useEffect } from 'react';
 import Link from 'next/link';
-import { Search, Globe, ChevronDown, User, LogIn, Menu, BookOpen, Clock, GraduationCap, Briefcase, Shield } from 'lucide-react';
+import { Search, Globe, ChevronDown, User, LogIn, Menu, BookOpen, Clock, GraduationCap, Briefcase, Shield, Moon, Sun, Bell, ArrowRight } from 'lucide-react';
 import AuthSheet from '@/components/auth/AuthSheet';
 
 import { useCountry } from '@/lib/context/CountryContext';
+import { useTheme } from '@/lib/context/ThemeContext';
 
 interface DesktopHeaderProps {
   user?: { name: string; email: string } | null;
@@ -38,14 +39,21 @@ export default function DesktopHeader({ user, onSearchOpen, lang, onLangToggle, 
   const [authSheetOpen, setAuthSheetOpen] = useState(false);
   const [authMode, setAuthMode] = useState<'signin' | 'register'>('signin');
   const { activeCountry, setCountryFocus } = useCountry();
+  const { isDark, toggleTheme } = useTheme();
 
   const [openDropdown, setOpenDropdown] = useState<'japan' | 'korea' | null>(null);
   const dropdownRef = useRef<HTMLDivElement>(null);
+
+  const [profileDropdownOpen, setProfileDropdownOpen] = useState(false);
+  const profileDropdownRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
       if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
         setOpenDropdown(null);
+      }
+      if (profileDropdownRef.current && !profileDropdownRef.current.contains(e.target as Node)) {
+        setProfileDropdownOpen(false);
       }
     };
     document.addEventListener('mousedown', handleClickOutside);
@@ -59,10 +67,10 @@ export default function DesktopHeader({ user, onSearchOpen, lang, onLangToggle, 
 
   return (
     <>
-      <header className="hidden md:flex fixed top-0 left-0 right-0 h-16 bg-white border-b border-gray-200 z-40 items-center justify-between px-6 lg:px-8">
+      <header className="hidden md:flex fixed top-0 left-0 right-0 h-16 bg-white/95 backdrop-blur-md border-b border-slate-200 z-40 items-center justify-between px-6 lg:px-8 text-slate-900 shadow-xs">
         <div className="flex items-center gap-6 flex-1">
           {onMenuToggle && (
-            <button onClick={onMenuToggle} className="lg:hidden p-2 -ml-2 text-gray-500 hover:text-gray-900 rounded-lg hover:bg-gray-100">
+            <button onClick={onMenuToggle} className="lg:hidden p-2 -ml-2 text-slate-500 hover:text-slate-900 rounded-lg hover:bg-slate-100">
               <Menu className="w-5 h-5" />
             </button>
           )}
@@ -70,42 +78,43 @@ export default function DesktopHeader({ user, onSearchOpen, lang, onLangToggle, 
           {/* Brand */}
           <Link href="/" className="flex items-center gap-2">
             <img src="/logo.png" alt="JapanKoreaHub" className="w-8 h-8 rounded-lg object-contain" />
-            <span className="font-bold text-lg text-gray-900 tracking-tight">JapanKoreaHub</span>
+            <span className="font-bold text-lg text-slate-900 tracking-tight">JapanKoreaHub</span>
           </Link>
           
           {/* Global Search Bar */}
           <button
             onClick={onSearchOpen}
-            className="flex items-center gap-3 px-4 py-2 w-full max-w-sm bg-gray-100 hover:bg-gray-200 text-gray-500 text-sm rounded-full transition-colors border border-transparent focus:border-gray-300 focus:bg-white focus:outline-none"
+            className="flex items-center gap-3 px-4 py-2 w-full max-w-sm bg-slate-100 hover:bg-slate-200/80 text-slate-500 text-sm rounded-full transition-colors border border-slate-200 focus:border-slate-400 focus:outline-none cursor-pointer"
           >
-            <Search className="w-4 h-4" />
+            <Search className="w-4 h-4 text-slate-400" />
             <span className="flex-1 text-left">Search lessons, visas, jobs...</span>
-            <span className="hidden lg:inline-block px-2 py-0.5 text-xs font-semibold bg-white border border-gray-200 rounded text-gray-400">⌘K</span>
+            <span className="hidden lg:inline-block px-2 py-0.5 text-xs font-semibold bg-white border border-slate-200 rounded text-slate-400">⌘K</span>
           </button>
         </div>
 
         <div className="flex items-center gap-4" ref={dropdownRef}>
-          {/* Mega-Menu Navigation */}
-          <nav className="hidden lg:flex items-center gap-1 text-sm font-medium text-gray-600">
-            {/* Japan Dropdown */}
+          <nav 
+            className="hidden lg:flex items-center gap-1 text-sm font-medium text-slate-600"
+            onMouseLeave={() => setOpenDropdown(null)}
+          >
             <div className="relative">
               <button
                 onClick={() => setOpenDropdown(openDropdown === 'japan' ? null : 'japan')}
                 onMouseEnter={() => setOpenDropdown('japan')}
-                className={`flex items-center gap-1 px-3 py-2 rounded-xl transition-colors ${
-                  openDropdown === 'japan' ? 'bg-red-50 text-red-700 font-bold' : 'hover:text-gray-900 hover:bg-gray-50'
+                className={`flex items-center gap-1 px-3 py-2 rounded-xl transition-colors cursor-pointer ${
+                  openDropdown === 'japan' ? 'bg-red-50 text-red-700 font-bold' : 'hover:text-slate-900 hover:bg-slate-100'
                 }`}
               >
                 <span>🇯🇵 Japan</span>
-                <ChevronDown className={`w-4 h-4 transition-transform ${openDropdown === 'japan' ? 'rotate-180 text-red-600' : 'text-gray-400'}`} />
+                <ChevronDown className={`w-4 h-4 transition-transform ${openDropdown === 'japan' ? 'rotate-180 text-red-600' : 'text-slate-400'}`} />
               </button>
 
               {openDropdown === 'japan' && (
                 <div
                   onMouseLeave={() => setOpenDropdown(null)}
-                  className="absolute top-full left-0 mt-1 w-64 bg-white border border-gray-200 rounded-2xl shadow-xl p-2 z-50 animate-fade-in"
+                  className="absolute top-full left-0 mt-1 w-64 bg-white border border-slate-200 rounded-2xl shadow-xl p-2 z-50 animate-fade-in"
                 >
-                  <div className="px-3 py-2 border-b border-gray-100 mb-1">
+                  <div className="px-3 py-2 border-b border-slate-100 mb-1">
                     <p className="text-[10px] font-black text-red-600 uppercase tracking-wider">Japan Ecosystem</p>
                   </div>
                   {JAPAN_DROPDOWN.map((item) => (
@@ -115,10 +124,10 @@ export default function DesktopHeader({ user, onSearchOpen, lang, onLangToggle, 
                       onClick={() => setOpenDropdown(null)}
                       className="flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-red-50/60 transition-colors group"
                     >
-                      <item.icon className="w-4 h-4 text-gray-400 group-hover:text-red-600 flex-shrink-0" />
+                      <item.icon className="w-4 h-4 text-slate-400 group-hover:text-red-600 flex-shrink-0" />
                       <div>
-                        <p className="text-xs font-bold text-gray-900 group-hover:text-red-700">{item.label}</p>
-                        <p className="text-[10px] text-gray-400">{item.desc}</p>
+                        <p className="text-xs font-bold text-slate-900 group-hover:text-red-700">{item.label}</p>
+                        <p className="text-[10px] text-slate-400">{item.desc}</p>
                       </div>
                     </Link>
                   ))}
@@ -126,25 +135,24 @@ export default function DesktopHeader({ user, onSearchOpen, lang, onLangToggle, 
               )}
             </div>
 
-            {/* Korea Dropdown */}
             <div className="relative">
               <button
                 onClick={() => setOpenDropdown(openDropdown === 'korea' ? null : 'korea')}
                 onMouseEnter={() => setOpenDropdown('korea')}
-                className={`flex items-center gap-1 px-3 py-2 rounded-xl transition-colors ${
-                  openDropdown === 'korea' ? 'bg-blue-50 text-blue-700 font-bold' : 'hover:text-gray-900 hover:bg-gray-50'
+                className={`flex items-center gap-1 px-3 py-2 rounded-xl transition-colors cursor-pointer ${
+                  openDropdown === 'korea' ? 'bg-blue-50 text-blue-700 font-bold' : 'hover:text-slate-900 hover:bg-slate-100'
                 }`}
               >
                 <span>🇰🇷 Korea</span>
-                <ChevronDown className={`w-4 h-4 transition-transform ${openDropdown === 'korea' ? 'rotate-180 text-blue-600' : 'text-gray-400'}`} />
+                <ChevronDown className={`w-4 h-4 transition-transform ${openDropdown === 'korea' ? 'rotate-180 text-blue-600' : 'text-slate-400'}`} />
               </button>
 
               {openDropdown === 'korea' && (
                 <div
                   onMouseLeave={() => setOpenDropdown(null)}
-                  className="absolute top-full left-0 mt-1 w-64 bg-white border border-gray-200 rounded-2xl shadow-xl p-2 z-50 animate-fade-in"
+                  className="absolute top-full left-0 mt-1 w-64 bg-white border border-slate-200 rounded-2xl shadow-xl p-2 z-50 animate-fade-in"
                 >
-                  <div className="px-3 py-2 border-b border-gray-100 mb-1">
+                  <div className="px-3 py-2 border-b border-slate-100 mb-1">
                     <p className="text-[10px] font-black text-blue-600 uppercase tracking-wider">Korea Ecosystem</p>
                   </div>
                   {KOREA_DROPDOWN.map((item) => (
@@ -154,10 +162,10 @@ export default function DesktopHeader({ user, onSearchOpen, lang, onLangToggle, 
                       onClick={() => setOpenDropdown(null)}
                       className="flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-blue-50/60 transition-colors group"
                     >
-                      <item.icon className="w-4 h-4 text-gray-400 group-hover:text-blue-600 flex-shrink-0" />
+                      <item.icon className="w-4 h-4 text-slate-400 group-hover:text-blue-600 flex-shrink-0" />
                       <div>
-                        <p className="text-xs font-bold text-gray-900 group-hover:text-blue-700">{item.label}</p>
-                        <p className="text-[10px] text-gray-400">{item.desc}</p>
+                        <p className="text-xs font-bold text-slate-900 group-hover:text-blue-700">{item.label}</p>
+                        <p className="text-[10px] text-slate-400">{item.desc}</p>
                       </div>
                     </Link>
                   ))}
@@ -165,39 +173,146 @@ export default function DesktopHeader({ user, onSearchOpen, lang, onLangToggle, 
               )}
             </div>
 
-            <Link href="/consultancy" className="px-3 py-2 rounded-xl hover:text-gray-900 hover:bg-gray-50 transition-colors">
-              Consultancy
-            </Link>
+            {/* Consult Now CTA with Hover Tooltip */}
+            <div 
+              className="relative group/consult"
+              onMouseEnter={() => setOpenDropdown(null)}
+            >
+              <Link
+                href="/consultancy"
+                className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-sm font-bold transition-all shadow-sm"
+              >
+                Consult Now
+                <ArrowRight className="w-3.5 h-3.5 group-hover/consult:translate-x-0.5 transition-transform" />
+              </Link>
+
+              {/* Hover card */}
+              <div className="absolute top-full right-0 mt-2 w-56 pointer-events-none
+                opacity-0 translate-y-1 group-hover/consult:opacity-100 group-hover/consult:translate-y-0
+                transition-all duration-200 ease-out z-50">
+                <div className="bg-white border border-indigo-100 rounded-2xl shadow-xl p-3.5">
+                  <div className="flex items-center gap-1.5 mb-2">
+                    <span className="px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-700 text-[10px] font-black uppercase tracking-wider">Free</span>
+                    <span className="px-2 py-0.5 rounded-full bg-indigo-100 text-indigo-700 text-[10px] font-black uppercase tracking-wider">15 min</span>
+                  </div>
+                  <p className="text-xs font-black text-slate-900 mb-1 leading-snug">
+                    Free 15-minutes consultation from expert
+                  </p>
+                  <div className="flex items-center gap-1.5 text-[11px] text-slate-500 font-medium">
+                    <span className="w-1.5 h-1.5 rounded-full bg-indigo-500 shrink-0"/>
+                    Japan &amp; Korea visa experts
+                  </div>
+                  <div className="flex items-center gap-1.5 text-[11px] text-slate-500 font-medium mt-0.5">
+                    <span className="w-1.5 h-1.5 rounded-full bg-indigo-500 shrink-0"/>
+                    No credit card needed
+                  </div>
+                  <div className="mt-2.5 pt-2 border-t border-slate-100 text-[10px] text-indigo-600 font-bold flex items-center gap-1">
+                    Book a free slot <ArrowRight className="w-3 h-3" />
+                  </div>
+                </div>
+              </div>
+            </div>
           </nav>
 
-          {/* Lang Toggle */}
-          <button onClick={onLangToggle} className="flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-gray-200 text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors">
-            <Globe className="w-4 h-4 text-gray-400" />
+          <button onClick={onLangToggle} className="flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-slate-200 text-sm font-medium text-slate-700 hover:bg-slate-100 transition-colors cursor-pointer">
+            <Globe className="w-4 h-4 text-slate-400" />
             {lang === 'en' ? 'EN' : 'ने'}
-            <ChevronDown className="w-3 h-3 text-gray-400" />
+            <ChevronDown className="w-3 h-3 text-slate-400" />
           </button>
 
-          <div className="w-px h-6 bg-gray-200 mx-1"></div>
+          <div className="w-px h-6 bg-slate-200 mx-1"></div>
 
-          {/* Auth */}
           {user ? (
-            <Link href="/profile" className="flex items-center gap-2 px-2 py-1 rounded-full hover:bg-gray-50 transition-colors">
-              <div className="w-8 h-8 rounded-full bg-indigo-100 text-indigo-700 font-bold text-sm flex items-center justify-center">
-                {user.name.charAt(0).toUpperCase()}
+            <div className="flex items-center gap-1">
+              {/* Notification Bell */}
+              <Link
+                href="/notices"
+                className="relative w-8 h-8 flex items-center justify-center rounded-xl text-slate-500 hover:bg-slate-100 hover:text-slate-900 transition-colors"
+                aria-label="Notifications"
+              >
+                <Bell className="w-4 h-4" />
+                <span className="absolute top-1 right-1 w-2 h-2 bg-rose-500 rounded-full ring-2 ring-white" />
+              </Link>
+
+              {/* Profile Dropdown */}
+              <div className="relative" ref={profileDropdownRef}>
+              <button
+                onClick={() => setProfileDropdownOpen(!profileDropdownOpen)}
+                className="flex items-center gap-2 px-2 py-1 rounded-full hover:bg-slate-100 transition-colors"
+              >
+                <div className="w-8 h-8 rounded-full bg-indigo-100 text-indigo-700 font-bold text-sm flex items-center justify-center">
+                  {user.name.charAt(0).toUpperCase()}
+                </div>
+                <span className="text-sm font-medium text-slate-700 hidden xl:inline-block">{user.name}</span>
+                <ChevronDown className={`w-3.5 h-3.5 text-slate-400 transition-transform ${profileDropdownOpen ? 'rotate-180' : ''}`} />
+              </button>
+
+              {profileDropdownOpen && (
+                <div className="absolute right-0 top-full mt-2 w-64 bg-white border border-slate-200 rounded-2xl shadow-xl p-2 z-50 animate-fade-in text-xs">
+                  <div className="p-3 bg-slate-50 border border-slate-200/80 rounded-xl mb-1 space-y-0.5">
+                    <div className="font-bold text-slate-900 text-sm truncate">{user.name}</div>
+                    <div className="text-[11px] text-slate-500 truncate">{user.email}</div>
+                  </div>
+
+                  <div className="space-y-0.5 py-1">
+                    <Link
+                      href="/profile"
+                      onClick={() => setProfileDropdownOpen(false)}
+                      className="flex items-center gap-2.5 px-3 py-2 rounded-xl text-slate-700 hover:text-slate-900 hover:bg-slate-100 font-bold transition-colors"
+                    >
+                      <User className="w-4 h-4 text-slate-500" />
+                      <span>My Profile</span>
+                    </Link>
+
+                    {/* Dark Mode Toggle Button */}
+                    <button
+                      type="button"
+                      onClick={() => toggleTheme()}
+                      className="w-full flex items-center justify-between px-3 py-2 rounded-xl text-slate-700 hover:text-slate-900 hover:bg-slate-100 font-bold transition-colors cursor-pointer text-left"
+                    >
+                      <div className="flex items-center gap-2.5">
+                        {isDark ? <Sun className="w-4 h-4 text-amber-500" /> : <Moon className="w-4 h-4 text-indigo-600" />}
+                        <span>Dark Mode</span>
+                      </div>
+                      <span className={`px-2 py-0.5 rounded-full text-[10px] font-black uppercase ${
+                        isDark ? 'bg-indigo-950 text-indigo-300 border border-indigo-800' : 'bg-slate-200 text-slate-700'
+                      }`}>
+                        {isDark ? 'ON' : 'OFF'}
+                      </span>
+                    </button>
+                  </div>
+
+                  <div className="border-t border-slate-200 my-1 pt-1">
+                    <button
+                      onClick={async () => {
+                        setProfileDropdownOpen(false);
+                        try {
+                          await fetch('/api/auth/logout', { method: 'POST' });
+                        } catch {}
+                        localStorage.removeItem('jkh_user');
+                        window.location.href = '/';
+                      }}
+                      className="w-full flex items-center gap-2.5 px-3 py-2 rounded-xl text-rose-600 hover:bg-rose-50 font-bold transition-colors cursor-pointer text-left"
+                    >
+                      <LogIn className="w-4 h-4 text-rose-600" />
+                      <span>Sign Out</span>
+                    </button>
+                  </div>
+                </div>
+              )}
               </div>
-              <span className="text-sm font-medium text-gray-700 hidden xl:inline-block">{user.name}</span>
-            </Link>
+            </div>
           ) : (
             <div className="flex items-center gap-2">
               <button
                 onClick={() => openAuth('signin')}
-                className="px-4 py-2 text-sm font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50 rounded-full transition-colors"
+                className="px-4 py-2 text-sm font-medium text-slate-700 hover:text-slate-900 hover:bg-slate-100 rounded-full transition-colors cursor-pointer"
               >
                 Log in
               </button>
               <button
                 onClick={() => openAuth('register')}
-                className="px-4 py-2 text-sm font-medium text-white bg-gray-900 hover:bg-gray-800 rounded-full transition-colors"
+                className="px-4 py-2 text-sm font-medium text-white bg-red-600 hover:bg-red-500 rounded-full transition-colors cursor-pointer shadow-xs"
               >
                 Sign up
               </button>
@@ -206,7 +321,6 @@ export default function DesktopHeader({ user, onSearchOpen, lang, onLangToggle, 
         </div>
       </header>
 
-      {/* Auth Modal */}
       {authSheetOpen && (
         <AuthSheet
           initialMode={authMode}

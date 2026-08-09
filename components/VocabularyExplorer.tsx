@@ -276,15 +276,15 @@ export const VocabularyExplorer: React.FC<VocabularyExplorerProps> = ({ preselec
       ══════════════════════════════════════════════════════════ */}
       {selectedLevel === 'BASICS' && (
         <div className="space-y-2 font-sans pt-0">
-          <div className="flex items-center gap-1.5 overflow-x-auto bg-slate-900/90 border border-slate-800 p-1.5 rounded-2xl">
+          <div className="flex items-center gap-1.5 overflow-x-auto bg-white border border-slate-200 p-1.5 rounded-2xl shadow-xs">
             {(['HIRAGANA', 'KATAKANA', 'DAKUTEN', 'YOON', 'RULES', 'RADICALS', 'KANJI', 'VOCAB'] as const).map((sub) => (
               <button
                 key={sub}
                 onClick={() => setBasicsSubTab(sub)}
                 className={`px-3 py-1.5 rounded-xl text-xs font-extrabold transition-all cursor-pointer whitespace-nowrap ${
                   basicsSubTab === sub
-                    ? 'bg-red-600 text-white shadow-sm'
-                    : 'text-slate-400 hover:text-white hover:bg-slate-800'
+                    ? 'bg-red-600 text-white font-black shadow-xs'
+                    : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100 border border-transparent font-bold'
                 }`}
               >
                 {sub === 'HIRAGANA' && 'あ Hiragana (46)'}
@@ -753,23 +753,23 @@ export const VocabularyExplorer: React.FC<VocabularyExplorerProps> = ({ preselec
       {selectedLevel !== 'BASICS' && selectedLevel !== 'KANJI_1000' && (
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-4 sm:gap-6 items-start font-sans">
           {/* ════ LEFT LESSONS SIDEBAR ════ */}
-          <aside className="lg:col-span-1 bg-white border border-slate-200 rounded-2xl sm:rounded-3xl p-3.5 sm:p-4 text-slate-900 shadow-xs space-y-3">
+          <aside className="lg:col-span-1 bg-white border border-slate-200 rounded-2xl sm:rounded-3xl p-2.5 sm:p-4 text-slate-900 shadow-xs space-y-2.5">
             <div className="flex items-center justify-between pb-2 border-b border-slate-100">
               <div className="flex items-center gap-2 font-black text-xs sm:text-sm text-red-600 uppercase tracking-wider">
                 <BookOpen className="w-4 h-4 text-red-600" />
                 <span>LESSONS</span>
               </div>
-              <span className="text-[10px] font-black px-2 py-0.5 rounded-full bg-slate-100 text-slate-700 border border-slate-200">
+              <span className="text-[10px] font-black px-2 py-0.5 rounded-full bg-slate-100 text-slate-600 border border-slate-200">
                 {availableLessons.length} Total
               </span>
             </div>
 
-            {/* Mobile Dropdown Quick Selector (Custom Bounded Picker) */}
-            <div className="block lg:hidden relative w-full pb-1 z-30">
+            {/* Mobile Dropdown Quick Selector (Clean Light SaaS Picker) */}
+            <div className="block lg:hidden relative w-full pb-0.5 z-30">
               <button
                 type="button"
                 onClick={() => setMobileLessonMenuOpen(!mobileLessonMenuOpen)}
-                className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2.5 text-xs font-black text-slate-900 flex items-center justify-between shadow-xs cursor-pointer"
+                className="w-full bg-slate-50 hover:bg-slate-100 border border-slate-200 rounded-xl px-3.5 py-2 text-xs font-bold text-slate-900 flex items-center justify-between shadow-xs cursor-pointer transition-colors"
               >
                 <span className="truncate">
                   Lesson {selectedLesson}: {JAPANESE_LESSON_TITLES[selectedLesson]?.title || `Lesson ${selectedLesson}`}
@@ -800,7 +800,7 @@ export const VocabularyExplorer: React.FC<VocabularyExplorerProps> = ({ preselec
                             isSel ? 'bg-red-600 text-white font-black shadow-xs' : 'text-slate-700 hover:bg-slate-100 hover:text-slate-900'
                           }`}
                         >
-                          <span className="truncate">Lesson {n}: {meta ? meta.title : `Lesson {n}`}</span>
+                          <span className="truncate">Lesson {n}: {meta ? meta.title : `Lesson ${n}`}</span>
                           {isSel && <Check className="w-3.5 h-3.5 shrink-0 text-white" />}
                         </button>
                       );
@@ -810,7 +810,7 @@ export const VocabularyExplorer: React.FC<VocabularyExplorerProps> = ({ preselec
               )}
             </div>
 
-            <div className="hidden lg:block max-h-[580px] sm:max-h-[640px] overflow-y-auto space-y-1.5 pr-1 scrollbar-thin scrollbar-thumb-slate-200 scrollbar-track-transparent">
+            <div className="hidden lg:block max-h-[580px] sm:max-h-[640px] overflow-y-auto space-y-1.5 pr-1 scrollbar-thin scrollbar-thumb-slate-700 scrollbar-track-transparent">
               {availableLessons.map((n) => {
                 const isSelected = selectedLesson === n;
                 const tracks = selectedLevel === 'N5' ? getAudioTracksForLesson(n) : undefined;
@@ -833,7 +833,7 @@ export const VocabularyExplorer: React.FC<VocabularyExplorerProps> = ({ preselec
                   >
                     <div className="flex items-center gap-2.5 min-w-0 flex-1">
                       <span className={`w-6 h-6 rounded-full font-black text-[11px] flex items-center justify-center shrink-0 ${
-                        isSelected ? 'bg-white text-rose-950 shadow-xs' : 'bg-slate-800 text-slate-300'
+                        isSelected ? 'bg-white text-rose-950 shadow-xs' : 'bg-slate-200 text-slate-700 border border-slate-300'
                       }`}>
                         {n}
                       </span>
@@ -849,7 +849,7 @@ export const VocabularyExplorer: React.FC<VocabularyExplorerProps> = ({ preselec
                         )}
                       </div>
                     </div>
-                    <ChevronRight className={`w-3.5 h-3.5 shrink-0 transition-transform ${isSelected ? 'text-white translate-x-0.5' : 'text-slate-500'}`} />
+                    <ChevronRight className={`w-3.5 h-3.5 shrink-0 transition-transform ${isSelected ? 'text-white translate-x-0.5' : 'text-slate-400'}`} />
                   </button>
                 );
               })}
@@ -873,17 +873,17 @@ export const VocabularyExplorer: React.FC<VocabularyExplorerProps> = ({ preselec
                   <div className="flex items-center gap-2 mt-1.5 flex-wrap">
                     <button
                       onClick={() => setShowShortNoteModal(true)}
-                      className="text-[11px] font-bold text-blue-700 hover:text-blue-900 hover:underline flex items-center gap-1 cursor-pointer bg-blue-50 hover:bg-blue-100 px-2 py-0.5 rounded-md border border-blue-200/80 transition-colors"
+                      className="text-xs font-extrabold text-white bg-blue-600 hover:bg-blue-700 px-3 py-1 rounded-xl shadow-xs transition-all flex items-center gap-1.5 cursor-pointer active:scale-95 border border-blue-500"
                     >
-                      <FileText className="w-3 h-3 text-blue-600" />
+                      <FileText className="w-3.5 h-3.5 text-white" />
                       <span>Meaning Note</span>
                     </button>
 
                     <button
                       onClick={() => setShowGrammarModal(true)}
-                      className="text-[11px] font-bold text-rose-700 hover:text-rose-900 hover:underline flex items-center gap-1 cursor-pointer bg-rose-50 hover:bg-rose-100 px-2 py-0.5 rounded-md border border-rose-200/80 transition-colors"
+                      className="text-xs font-extrabold text-white bg-rose-600 hover:bg-rose-700 px-3 py-1 rounded-xl shadow-xs transition-all flex items-center gap-1.5 cursor-pointer active:scale-95 border border-rose-500"
                     >
-                      <BookCheck className="w-3 h-3 text-rose-600" />
+                      <BookCheck className="w-3.5 h-3.5 text-white" />
                       <span>Grammar Note</span>
                     </button>
 
@@ -1046,7 +1046,7 @@ export const VocabularyExplorer: React.FC<VocabularyExplorerProps> = ({ preselec
                                   <button
                                     key={kIdx}
                                     onClick={() => setInspectKanji(kChar)}
-                                    className="px-1.5 py-0.5 rounded bg-amber-100 hover:bg-amber-600 text-amber-900 hover:text-white border border-amber-300 text-xs font-jp font-bold transition-all flex items-center gap-0.5 cursor-pointer"
+                                    className="px-1.5 py-0.5 rounded bg-slate-100 hover:bg-red-600 text-slate-800 hover:text-white border border-slate-300 text-xs font-jp font-bold transition-all flex items-center gap-0.5 cursor-pointer"
                                     title={`Inspect Kanji ${kChar}`}
                                   >
                                     <span>{kChar}</span>
@@ -1059,17 +1059,17 @@ export const VocabularyExplorer: React.FC<VocabularyExplorerProps> = ({ preselec
                           {hideLessonMeanings && !revealedVocabIds.has(vocab.id) ? (
                             <button
                               onClick={() => toggleVocabReveal(vocab.id)}
-                              className="px-2 py-0.5 rounded-md bg-amber-50 hover:bg-amber-100 text-amber-900 border border-amber-200/90 text-[11px] font-extrabold transition-all flex items-center gap-1 cursor-pointer shadow-2xs self-start sm:self-auto"
+                              className="px-2 py-0.5 rounded-md bg-slate-100 hover:bg-slate-200 text-slate-800 border border-slate-300 text-[11px] font-extrabold transition-all flex items-center gap-1 cursor-pointer shadow-2xs self-start sm:self-auto"
                               title="Click to reveal meaning"
                             >
-                              <Eye className="w-3 h-3 text-amber-700" />
+                              <Eye className="w-3 h-3 text-slate-600" />
                               <span>Meaning</span>
                             </button>
                           ) : (
                             <div className="flex items-center gap-2 text-xs flex-wrap sm:flex-nowrap">
                               <span className="font-semibold text-slate-800">🇬🇧 {vocab.meaning}</span>
                               <span className="text-slate-300 hidden sm:inline">•</span>
-                              <span className="font-bold text-amber-900">🇳🇵 {vocab.meaningNepali}</span>
+                              <span className="font-bold text-slate-900">🇳🇵 {vocab.meaningNepali}</span>
                               {hideLessonMeanings && (
                                 <button
                                   onClick={() => toggleVocabReveal(vocab.id)}
@@ -1095,7 +1095,7 @@ export const VocabularyExplorer: React.FC<VocabularyExplorerProps> = ({ preselec
                             </button>
 
                             {expandedGrammar === vocab.id && vocab.grammarSentences.map((gs, idx) => (
-                              <div key={idx} className="mt-1.5 p-2.5 rounded-lg bg-amber-50/60 border border-amber-200/80 space-y-1 text-xs">
+                              <div key={idx} className="mt-1.5 p-2.5 rounded-lg bg-slate-50 border border-slate-200 space-y-1 text-xs">
                                 <div className="flex items-center justify-between gap-2">
                                   <div className="font-jp font-black text-slate-900">{gs.japanese}</div>
                                   <button
@@ -1106,7 +1106,7 @@ export const VocabularyExplorer: React.FC<VocabularyExplorerProps> = ({ preselec
                                   </button>
                                 </div>
                                 <div className="text-slate-700 text-[11px]">🇬🇧 {gs.english}</div>
-                                <div className="text-amber-900 text-[11px] font-bold">🇳🇵 {gs.nepali}</div>
+                                <div className="text-slate-900 text-[11px] font-bold">🇳🇵 {gs.nepali}</div>
                               </div>
                             ))}
                           </div>
@@ -1123,12 +1123,12 @@ export const VocabularyExplorer: React.FC<VocabularyExplorerProps> = ({ preselec
             ──────────────────────────────────────────────────────────── */}
             {activeLessonTab === 'GRAMMAR' && (
               <div ref={grammarListRef} className="max-h-[620px] overflow-y-auto pr-1 scrollbar-thin scrollbar-thumb-slate-300 space-y-4 font-sans">
-                <div className="p-3.5 rounded-2xl bg-amber-50 border border-amber-200 text-xs text-amber-950 font-bold flex items-center justify-between gap-2">
+                <div className="p-3.5 rounded-2xl bg-slate-100/90 border border-slate-200 text-xs text-slate-900 font-bold flex items-center justify-between gap-2">
                   <div className="flex items-center gap-2">
-                    <BookCheck className="w-4 h-4 text-amber-700 shrink-0" />
+                    <BookCheck className="w-4 h-4 text-red-600 shrink-0" />
                     <span>Minna no Nihongo Lesson {selectedLesson} Grammar Syllabus</span>
                   </div>
-                  <span className="px-2.5 py-0.5 rounded-full bg-amber-700 text-white font-black text-[10px]">
+                  <span className="px-2.5 py-0.5 rounded-full bg-red-600 text-white font-black text-[10px]">
                     Lesson {selectedLesson}
                   </span>
                 </div>
@@ -1140,12 +1140,12 @@ export const VocabularyExplorer: React.FC<VocabularyExplorerProps> = ({ preselec
                 ) : (
                   <div className="space-y-4">
                     {grammarGuide.grammarPoints.map((point, idx) => (
-                      <div key={idx} className="bg-amber-50/50 border border-amber-200/90 rounded-2xl p-4 sm:p-5 shadow-xs space-y-3 font-sans">
-                        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-amber-200/60 pb-2.5">
+                      <div key={idx} className="bg-slate-50/80 border border-slate-200 rounded-2xl p-4 sm:p-5 shadow-xs space-y-3 font-sans">
+                        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-200 pb-2.5">
                           <h3 className="text-sm sm:text-base font-black text-slate-900 font-jp leading-snug">
                             {point.title}
                           </h3>
-                          <span className="self-start sm:self-auto px-2.5 py-1 rounded-lg bg-amber-200/80 text-amber-950 font-mono text-xs font-black border border-amber-300">
+                          <span className="self-start sm:self-auto px-2.5 py-1 rounded-lg bg-slate-900 text-white font-mono text-xs font-black border border-slate-800">
                             {point.pattern}
                           </span>
                         </div>
@@ -1156,15 +1156,15 @@ export const VocabularyExplorer: React.FC<VocabularyExplorerProps> = ({ preselec
                             <span className="text-[10px] font-black uppercase text-rose-800 block tracking-wider">🇬🇧 English Explanation</span>
                             <p className="text-slate-800 font-medium leading-relaxed">{point.explanationEnglish}</p>
                           </div>
-                          <div className="p-3 rounded-xl bg-amber-100/60 border border-amber-300/80 space-y-1">
-                            <span className="text-[10px] font-black uppercase text-amber-950 block tracking-wider">🇳🇵 नेपाली व्याख्या</span>
-                            <p className="text-amber-950 font-extrabold leading-relaxed">{point.explanationNepali}</p>
+                          <div className="p-3 rounded-xl bg-slate-100 border border-slate-200 space-y-1">
+                            <span className="text-[10px] font-black uppercase text-slate-900 block tracking-wider">🇳🇵 नेपाली व्याख्या</span>
+                            <p className="text-slate-900 font-extrabold leading-relaxed">{point.explanationNepali}</p>
                           </div>
                         </div>
 
                         {/* Examples */}
                         {point.examples && point.examples.length > 0 && (
-                          <div className="space-y-2 pt-2 border-t border-amber-200/60">
+                          <div className="space-y-2 pt-2 border-t border-slate-200/80">
                             <span className="text-[10px] font-black uppercase tracking-wider text-slate-400 block">
                               Example Sentences (उदाहरणहरू):
                             </span>
@@ -1175,7 +1175,7 @@ export const VocabularyExplorer: React.FC<VocabularyExplorerProps> = ({ preselec
                                     <div className="text-sm font-black text-slate-900 font-jp">{ex.target}</div>
                                     {ex.reading && <div className="text-[10px] font-bold text-rose-700 italic">{ex.reading}</div>}
                                     <div className="text-xs text-slate-800">🇬🇧 {ex.english}</div>
-                                    <div className="text-xs text-amber-900 font-bold">🇳🇵 {ex.nepali}</div>
+                                    <div className="text-xs text-slate-900 font-bold">🇳🇵 {ex.nepali}</div>
                                   </div>
                                   <button
                                     onClick={() => playPronunciation(ex.target)}
@@ -1244,15 +1244,15 @@ export const VocabularyExplorer: React.FC<VocabularyExplorerProps> = ({ preselec
 
       {/* ── GRAMMAR GUIDE MODAL (White Book Paper Mode) ── */}
       {showGrammarModal && grammarGuide && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-slate-950/85 backdrop-blur-md animate-fade-in">
-          <div className="w-[96vw] sm:w-full max-w-3xl bg-white text-slate-900 border border-slate-200/90 rounded-3xl p-5 sm:p-8 shadow-2xl space-y-5 max-h-[90vh] overflow-y-auto font-sans">
+        <div className="fixed inset-0 z-50 overflow-y-auto flex items-center justify-center p-2 sm:p-4 bg-slate-950/85 backdrop-blur-md animate-fade-in min-h-screen min-h-[100dvh]">
+          <div className="w-[96vw] sm:w-full max-w-3xl bg-white text-slate-900 border border-slate-200/90 rounded-2xl sm:rounded-3xl p-4 sm:p-8 shadow-2xl space-y-5 max-h-[90vh] max-h-[90dvh] overflow-y-auto font-sans my-auto mx-auto shrink-0">
             <div className="flex items-center justify-between pb-3 border-b border-slate-200">
               <div className="flex items-center gap-2">
-                <div className="p-2 rounded-xl bg-amber-100 text-amber-900 border border-amber-300">
+                <div className="p-2 rounded-xl bg-red-50 text-red-600 border border-red-200">
                   <BookCheck className="w-5 h-5" />
                 </div>
                 <div>
-                  <div className="text-xs font-black uppercase tracking-wider text-amber-800">
+                  <div className="text-xs font-black uppercase tracking-wider text-red-600">
                     JLPT {selectedLevel} • Lesson {selectedLesson} Grammar Guide
                   </div>
                   <h3 className="text-base sm:text-xl font-black text-slate-900">{grammarGuide.lessonTitle}</h3>
@@ -1268,9 +1268,9 @@ export const VocabularyExplorer: React.FC<VocabularyExplorerProps> = ({ preselec
 
             <div className="space-y-4">
               {grammarGuide.grammarPoints.map((pt, pIdx) => (
-                <div key={pIdx} className="bg-amber-50/50 border border-amber-200/80 rounded-2xl p-4 sm:p-5 space-y-3 shadow-xs">
-                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-amber-200/80 pb-2">
-                    <span className="text-xs font-black text-amber-900 bg-amber-100 px-2.5 py-1 rounded-lg border border-amber-300 font-jp">
+                <div key={pIdx} className="bg-slate-50 border border-slate-200 rounded-2xl p-4 sm:p-5 space-y-3 shadow-xs">
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-200 pb-2">
+                    <span className="text-xs font-black text-slate-900 bg-slate-200 px-2.5 py-1 rounded-lg border border-slate-300 font-jp">
                       Rule {pIdx + 1}: {pt.title}
                     </span>
                     <span className="text-xs font-jp font-bold text-rose-800 bg-rose-100 px-2 py-0.5 rounded border border-rose-300">
@@ -1284,14 +1284,14 @@ export const VocabularyExplorer: React.FC<VocabularyExplorerProps> = ({ preselec
                       <p className="text-slate-800 font-medium leading-relaxed mt-0.5">{pt.explanationEnglish}</p>
                     </div>
 
-                    <div className="p-3 rounded-xl bg-amber-100/60 border border-amber-300/80">
-                      <span className="text-[10px] font-black uppercase tracking-wider text-amber-950 block">🇳🇵 नेपाली व्याख्या</span>
-                      <p className="text-amber-950 font-extrabold leading-relaxed mt-0.5">{pt.explanationNepali}</p>
+                    <div className="p-3 rounded-xl bg-slate-100 border border-slate-200">
+                      <span className="text-[10px] font-black uppercase tracking-wider text-slate-900 block">🇳🇵 नेपाली व्याख्या</span>
+                      <p className="text-slate-900 font-extrabold leading-relaxed mt-0.5">{pt.explanationNepali}</p>
                     </div>
                   </div>
 
                   {pt.examples && pt.examples.length > 0 && (
-                    <div className="space-y-2 pt-1 border-t border-amber-200/60">
+                    <div className="space-y-2 pt-1 border-t border-slate-200">
                       <span className="text-[10px] font-black uppercase tracking-wider text-slate-500 block">Example Sentences:</span>
                       {pt.examples.map((ex, eIdx) => (
                         <div key={eIdx} className="bg-white p-3 rounded-xl border border-slate-200/80 flex items-start justify-between gap-2 shadow-xs">
@@ -1299,7 +1299,7 @@ export const VocabularyExplorer: React.FC<VocabularyExplorerProps> = ({ preselec
                             <div className="text-sm font-black font-jp text-slate-900">{ex.target}</div>
                             {ex.reading && <div className="text-[10px] text-rose-700 font-bold italic">{ex.reading}</div>}
                             <div className="text-xs text-slate-800">🇬🇧 {ex.english}</div>
-                            <div className="text-xs text-amber-900 font-bold">🇳🇵 {ex.nepali}</div>
+                            <div className="text-xs text-slate-900 font-bold">🇳🇵 {ex.nepali}</div>
                           </div>
                           <button
                             onClick={() => playPronunciation(ex.target)}
@@ -1329,8 +1329,8 @@ export const VocabularyExplorer: React.FC<VocabularyExplorerProps> = ({ preselec
 
       {/* Scanned Minna no Nihongo Textbook Image Modal */}
       {showScannedSheetModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-slate-950/85 backdrop-blur-md animate-fade-in">
-          <div className="w-[96vw] sm:w-full max-w-4xl bg-slate-900 border border-slate-800 rounded-3xl p-4 sm:p-6 shadow-2xl space-y-4 max-h-[90vh] flex flex-col text-white">
+        <div className="fixed inset-0 z-50 overflow-y-auto flex items-center justify-center p-2 sm:p-4 bg-slate-950/85 backdrop-blur-md animate-fade-in min-h-screen min-h-[100dvh]">
+          <div className="w-[96vw] sm:w-full max-w-4xl bg-slate-900 border border-slate-800 rounded-2xl sm:rounded-3xl p-4 sm:p-6 shadow-2xl space-y-4 max-h-[90vh] max-h-[90dvh] flex flex-col text-white my-auto mx-auto shrink-0">
             <div className="flex items-center justify-between pb-3 border-b border-slate-800">
               <div className="flex items-center gap-2">
                 <span className="text-lg">🖼️</span>
@@ -1372,8 +1372,8 @@ export const VocabularyExplorer: React.FC<VocabularyExplorerProps> = ({ preselec
 
       {/* Textbook Japanese Vocab Short Note Modal (4-column sheet view) */}
       {showShortNoteModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-slate-950/85 backdrop-blur-md animate-fade-in print:p-0 print:bg-white">
-          <div className="w-[96vw] sm:w-full max-w-4xl bg-slate-900 border border-slate-800 rounded-2xl sm:rounded-3xl p-4 sm:p-6 shadow-2xl space-y-4 max-h-[90vh] flex flex-col print:max-h-none print:w-full print:border-none print:shadow-none print:bg-white print:text-black text-white">
+        <div className="fixed inset-0 z-50 overflow-y-auto flex items-center justify-center p-2 sm:p-4 bg-slate-950/85 backdrop-blur-md animate-fade-in print:p-0 print:bg-white min-h-screen min-h-[100dvh]">
+          <div className="w-[96vw] sm:w-full max-w-4xl bg-slate-900 border border-slate-800 rounded-2xl sm:rounded-3xl p-4 sm:p-6 shadow-2xl space-y-4 max-h-[90vh] max-h-[90dvh] flex flex-col print:max-h-none print:w-full print:border-none print:shadow-none print:bg-white print:text-black text-white my-auto mx-auto shrink-0">
             {/* Modal Header */}
             <div className="flex items-center justify-between pb-3 border-b border-slate-800 print:hidden">
               <div className="flex items-center gap-2.5">
@@ -1465,8 +1465,8 @@ export const VocabularyExplorer: React.FC<VocabularyExplorerProps> = ({ preselec
 
       {/* Kanji Inspection Modal */}
       {inspectKanji && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-slate-950/85 backdrop-blur-md animate-fade-in">
-          <div className="w-[94vw] sm:w-full max-w-lg bg-slate-900 border border-slate-800 rounded-3xl p-5 sm:p-6 shadow-2xl space-y-4 max-h-[85vh] overflow-y-auto text-white font-sans">
+        <div className="fixed inset-0 z-50 overflow-y-auto flex items-center justify-center p-2 sm:p-4 bg-slate-950/85 backdrop-blur-md animate-fade-in min-h-screen min-h-[100dvh]">
+          <div className="w-[94vw] sm:w-full max-w-lg bg-slate-900 border border-slate-800 rounded-2xl sm:rounded-3xl p-4 sm:p-6 shadow-2xl space-y-4 max-h-[88vh] max-h-[88dvh] overflow-y-auto text-white font-sans my-auto mx-auto shrink-0">
             {(() => {
               const details = getInspectKanjiDetails(inspectKanji);
               return (

@@ -91,11 +91,11 @@ export const KoreanFlashcardCard: React.FC<KoreanFlashcardCardProps> = ({
   };
 
   return (
-    <div className="w-full max-w-2xl mx-auto font-sans space-y-3 sm:space-y-4">
+    <div className="w-full max-w-2xl mx-auto font-sans space-y-3 sm:space-y-4 text-slate-900">
       {/* Level Selector Bar (Only show if not locked) */}
       {!hideLevelSelector && !currentLevel && (
-        <div className="bg-slate-900/90 backdrop-blur-xl border border-slate-800 rounded-2xl sm:rounded-3xl p-2.5 sm:p-3.5 shadow-xl flex items-center justify-between gap-3">
-          <div className="flex items-center gap-1 bg-slate-950 p-1 rounded-xl sm:rounded-2xl border border-slate-800 w-full justify-around">
+        <div className="bg-white border border-slate-200 rounded-2xl sm:rounded-3xl p-2.5 sm:p-3.5 shadow-xs flex items-center justify-between gap-3">
+          <div className="flex items-center gap-1 bg-slate-100 p-1 rounded-xl sm:rounded-2xl border border-slate-200 w-full justify-around">
             {(['EPS', 'TOPIK2', 'TOPIK3', 'TOPIK4'] as const).map((lvl) => (
               <button
                 key={lvl}
@@ -108,8 +108,8 @@ export const KoreanFlashcardCard: React.FC<KoreanFlashcardCardProps> = ({
                 }}
                 className={`flex-1 py-1.5 rounded-lg sm:rounded-xl text-xs font-black transition-all ${
                   selectedLevel === lvl
-                    ? 'bg-gradient-to-r from-emerald-600 to-teal-600 text-white shadow-glow'
-                    : 'text-slate-400 hover:text-white'
+                    ? 'bg-blue-600 text-white shadow-xs'
+                    : 'text-slate-600 hover:text-slate-900'
                 }`}
               >
                 {lvl}
@@ -123,21 +123,21 @@ export const KoreanFlashcardCard: React.FC<KoreanFlashcardCardProps> = ({
       {currentItem && (
         <div className="relative group">
           <div
-            className={`w-full min-h-[320px] sm:min-h-[380px] bg-gradient-to-b from-slate-900 via-slate-900 to-slate-950 border border-slate-800 rounded-3xl p-4 sm:p-6 shadow-2xl transition-all duration-300 flex flex-col justify-between ${
-              isFlipped ? 'border-emerald-500/50 shadow-glow' : 'hover:border-slate-700'
+            className={`w-full min-h-[320px] sm:min-h-[380px] bg-white border border-slate-200 rounded-3xl p-4 sm:p-6 shadow-xs transition-all duration-300 flex flex-col justify-between ${
+              isFlipped ? 'border-emerald-500 shadow-sm' : 'hover:border-slate-300'
             }`}
           >
             {/* Unified Card Header Bar */}
-            <div className="flex items-center justify-between pb-3 border-b border-slate-800/80 gap-2">
+            <div className="flex items-center justify-between pb-3 border-b border-slate-200 gap-2">
               <div className="flex items-center gap-2.5 min-w-0">
-                <div className="w-8 h-8 rounded-lg bg-gradient-to-tr from-emerald-600 to-teal-600 flex items-center justify-center text-white font-black text-lg shadow-md font-kr flex-shrink-0">
+                <div className="w-8 h-8 rounded-lg bg-emerald-600 flex items-center justify-center text-white font-black text-lg shadow-xs font-kr flex-shrink-0">
                   {currentItem.word.slice(0, 1)}
                 </div>
                 <div className="min-w-0">
-                  <span className="text-[10px] sm:text-xs font-black uppercase tracking-wider text-emerald-400 bg-emerald-500/15 border border-emerald-500/30 px-2 py-0.5 rounded-md inline-block">
+                  <span className="text-[10px] sm:text-xs font-black uppercase tracking-wider text-emerald-800 bg-emerald-50 border border-emerald-200 px-2 py-0.5 rounded-md inline-block">
                     {selectedLevel} • Lesson {currentItem.lesson}
                   </span>
-                  <div className="text-[11px] font-bold text-slate-300 mt-0.5 truncate">
+                  <div className="text-[11px] font-bold text-slate-600 mt-0.5 truncate">
                     Word {safeIndex + 1} of {currentList.length}
                   </div>
                 </div>
@@ -148,32 +148,32 @@ export const KoreanFlashcardCard: React.FC<KoreanFlashcardCardProps> = ({
                 <div className="relative">
                   <button
                     onClick={() => setShowFilterDropdown(!showFilterDropdown)}
-                    className="text-xs font-extrabold px-2.5 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 transition-all flex items-center gap-1.5 shadow-sm cursor-pointer"
+                    className="text-xs font-extrabold px-2.5 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-200 transition-all flex items-center gap-1.5 shadow-xs cursor-pointer"
                     title="Filter by Lesson"
                   >
-                    <Filter className="w-3.5 h-3.5 text-emerald-400" />
+                    <Filter className="w-3.5 h-3.5 text-emerald-600" />
                     <span className="hidden xs:inline">
                       {selectedLesson === 'ALL' ? 'Filter' : `L${selectedLesson}`}
                     </span>
-                    <ChevronDown className={`w-3.5 h-3.5 text-slate-400 transition-transform duration-200 ${showFilterDropdown ? 'rotate-180' : ''}`} />
+                    <ChevronDown className={`w-3.5 h-3.5 text-slate-500 transition-transform duration-200 ${showFilterDropdown ? 'rotate-180' : ''}`} />
                   </button>
 
                   {/* Filter Dropdown Popover */}
                   {showFilterDropdown && (
                     <>
                       <div className="fixed inset-0 z-40" onClick={() => setShowFilterDropdown(false)} />
-                      <div className="absolute right-0 top-full mt-2 w-64 bg-slate-900/98 backdrop-blur-2xl border border-slate-800 rounded-2xl p-3 shadow-2xl z-50 space-y-3">
-                        <div className="flex items-center justify-between pb-2 border-b border-slate-800">
-                          <div className="flex items-center gap-1.5 text-xs font-black text-white">
-                            <Filter className="w-3.5 h-3.5 text-emerald-400" />
+                      <div className="absolute right-0 top-full mt-2 w-64 bg-white border border-slate-200 rounded-2xl p-3 shadow-xl z-50 space-y-3">
+                        <div className="flex items-center justify-between pb-2 border-b border-slate-200">
+                          <div className="flex items-center gap-1.5 text-xs font-black text-slate-900">
+                            <Filter className="w-3.5 h-3.5 text-emerald-600" />
                             <span>Flashcard Filters</span>
                           </div>
-                          <span className="text-[10px] text-slate-400 font-bold">{currentList.length} items</span>
+                          <span className="text-[10px] text-slate-500 font-bold">{currentList.length} items</span>
                         </div>
 
                         {/* Lesson Select */}
                         <div>
-                          <label className="text-[10px] font-black uppercase tracking-wider text-slate-400 block mb-1">
+                          <label className="text-[10px] font-black uppercase tracking-wider text-slate-500 block mb-1">
                             Lesson Filter
                           </label>
                           <select
@@ -183,7 +183,7 @@ export const KoreanFlashcardCard: React.FC<KoreanFlashcardCardProps> = ({
                               setCurrentIndex(0);
                               setIsFlipped(false);
                             }}
-                            className="w-full bg-slate-950 border border-slate-800 rounded-xl px-2.5 py-1.5 text-xs text-white font-bold focus:outline-none focus:border-emerald-500"
+                            className="w-full bg-slate-50 border border-slate-200 rounded-xl px-2.5 py-1.5 text-xs text-slate-900 font-bold focus:outline-none focus:border-emerald-500"
                           >
                             <option value="ALL">All Lessons ({uniqueLessons.length} available)</option>
                             {uniqueLessons.map(l => (
@@ -193,9 +193,9 @@ export const KoreanFlashcardCard: React.FC<KoreanFlashcardCardProps> = ({
                         </div>
 
                         {/* Shuffle Mode Toggle */}
-                        <div className="flex items-center justify-between pt-2 border-t border-slate-800">
-                          <div className="flex items-center gap-1.5 text-xs font-bold text-slate-300">
-                            <Shuffle className="w-3.5 h-3.5 text-indigo-400" />
+                        <div className="flex items-center justify-between pt-2 border-t border-slate-200">
+                          <div className="flex items-center gap-1.5 text-xs font-bold text-slate-700">
+                            <Shuffle className="w-3.5 h-3.5 text-indigo-600" />
                             <span>Shuffle Order</span>
                           </div>
                           <button
@@ -204,7 +204,7 @@ export const KoreanFlashcardCard: React.FC<KoreanFlashcardCardProps> = ({
                               setCurrentIndex(0);
                             }}
                             className={`px-3 py-1 rounded-lg text-xs font-black transition-all cursor-pointer ${
-                              isShuffled ? 'bg-emerald-600 text-white shadow-md' : 'bg-slate-800 text-slate-400'
+                              isShuffled ? 'bg-emerald-600 text-white shadow-xs' : 'bg-slate-100 text-slate-600'
                             }`}
                           >
                             {isShuffled ? 'On' : 'Off'}
@@ -218,14 +218,14 @@ export const KoreanFlashcardCard: React.FC<KoreanFlashcardCardProps> = ({
                 {/* Eye Icon Reveal Button */}
                 <button
                   onClick={() => setIsFlipped(!isFlipped)}
-                  className={`text-xs font-extrabold px-3 py-1.5 rounded-xl transition-all flex items-center gap-1.5 shadow-sm flex-shrink-0 cursor-pointer border ${
+                  className={`text-xs font-extrabold px-3 py-1.5 rounded-xl transition-all flex items-center gap-1.5 shadow-xs flex-shrink-0 cursor-pointer border ${
                     isFlipped
-                      ? 'bg-emerald-600 text-white border-emerald-400 shadow-glow'
-                      : 'bg-emerald-600/20 text-emerald-300 border-emerald-500/30 hover:bg-emerald-600 hover:text-white'
+                      ? 'bg-emerald-600 text-white border-emerald-500'
+                      : 'bg-emerald-50 text-emerald-700 border-emerald-200 hover:bg-emerald-600 hover:text-white'
                   }`}
                   title={isFlipped ? 'Hide Answer' : 'Show Answer'}
                 >
-                  <Eye className="w-4 h-4 text-emerald-400" />
+                  <Eye className="w-4 h-4" />
                   <span className="hidden xs:inline">{isFlipped ? 'Hide Answer' : 'Show Answer'}</span>
                 </button>
 
@@ -235,7 +235,7 @@ export const KoreanFlashcardCard: React.FC<KoreanFlashcardCardProps> = ({
                     setCurrentIndex(0);
                     setIsFlipped(false);
                   }}
-                  className="p-1.5 rounded-xl bg-slate-800/90 hover:bg-slate-700 text-slate-400 hover:text-emerald-400 border border-slate-700 transition-all flex items-center justify-center shadow-sm cursor-pointer"
+                  className="p-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-600 hover:text-slate-900 border border-slate-200 transition-all flex items-center justify-center shadow-xs cursor-pointer"
                   title="Restart Deck from Word 1"
                 >
                   <RotateCcw className="w-4 h-4" />
@@ -246,19 +246,19 @@ export const KoreanFlashcardCard: React.FC<KoreanFlashcardCardProps> = ({
             {/* Front View */}
             {!isFlipped ? (
               <div className="my-auto py-6 sm:py-8 text-center space-y-4">
-                <div className="relative inline-flex flex-col items-center justify-center p-6 sm:p-8 rounded-3xl bg-slate-950/80 border border-slate-800 shadow-inner max-w-full">
-                  <div className="text-5xl sm:text-6xl font-kr font-black text-transparent bg-clip-text bg-gradient-to-tr from-white via-emerald-100 to-emerald-400 select-none">
+                <div className="relative inline-flex flex-col items-center justify-center p-6 sm:p-8 rounded-3xl bg-slate-50 border border-slate-200 shadow-xs max-w-full">
+                  <div className="text-5xl sm:text-6xl font-kr font-black text-slate-900 select-none">
                     {currentItem.word}
                   </div>
-                  <div className="text-xs sm:text-sm font-semibold text-slate-400 italic mt-2">
+                  <div className="text-xs sm:text-sm font-semibold text-slate-500 italic mt-2">
                     {currentItem.romanization}
                   </div>
 
                   <button
                     onClick={playAudio}
-                    className="mt-3.5 px-3 py-1.5 rounded-2xl bg-slate-900 hover:bg-emerald-600 text-slate-300 hover:text-white transition-all border border-slate-800 shadow flex items-center gap-2 text-xs font-bold cursor-pointer"
+                    className="mt-3.5 px-3.5 py-1.5 rounded-2xl bg-white hover:bg-emerald-50 text-slate-700 hover:text-emerald-700 transition-all border border-slate-200 shadow-xs flex items-center gap-2 text-xs font-bold cursor-pointer"
                   >
-                    <Volume2 className="w-4 h-4 text-emerald-400" />
+                    <Volume2 className="w-4 h-4 text-emerald-600" />
                     <span>Listen Pronunciation</span>
                   </button>
                 </div>
@@ -267,42 +267,42 @@ export const KoreanFlashcardCard: React.FC<KoreanFlashcardCardProps> = ({
               /* Back View */
               <div className="my-auto py-3 space-y-3.5 text-left">
                 <div>
-                  <div className="text-[10px] sm:text-xs font-bold uppercase tracking-wider text-emerald-400 mb-1">
+                  <div className="text-[10px] sm:text-xs font-bold uppercase tracking-wider text-emerald-700 mb-1">
                     English Meaning
                   </div>
-                  <div className="text-xl sm:text-2xl font-black text-white">{currentItem.meaning}</div>
+                  <div className="text-xl sm:text-2xl font-black text-slate-900">{currentItem.meaning}</div>
                 </div>
 
                 <div>
-                  <div className="text-[10px] sm:text-xs font-bold uppercase tracking-wider text-amber-400 mb-1">
+                  <div className="text-[10px] sm:text-xs font-bold uppercase tracking-wider text-amber-700 mb-1">
                     Nepali Meaning (नेपाली अर्थ)
                   </div>
-                  <div className="text-base sm:text-lg font-bold text-amber-300">🇳🇵 {currentItem.meaningNepali}</div>
+                  <div className="text-base sm:text-lg font-bold text-amber-800">🇳🇵 {currentItem.meaningNepali}</div>
                 </div>
 
                 {currentItem.partOfSpeech && (
                   <div>
-                    <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400 block mb-1">
+                    <span className="text-[10px] font-bold uppercase tracking-wider text-slate-500 block mb-1">
                       Part of Speech
                     </span>
-                    <span className="px-2.5 py-1 rounded-lg bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 text-xs font-bold">
+                    <span className="px-2.5 py-1 rounded-lg bg-emerald-50 text-emerald-700 border border-emerald-200 text-xs font-bold">
                       {currentItem.partOfSpeech}
                     </span>
                   </div>
                 )}
 
                 {currentItem.grammarSentences && currentItem.grammarSentences.length > 0 && (
-                  <div className="bg-slate-950/80 p-3 rounded-xl border border-slate-800 space-y-1">
-                    <span className="text-[10px] font-bold uppercase tracking-wider text-emerald-400 block">
+                  <div className="bg-slate-50 p-3 rounded-xl border border-slate-200 space-y-1">
+                    <span className="text-[10px] font-bold uppercase tracking-wider text-emerald-700 block">
                       Example Sentence
                     </span>
-                    <div className="text-xs sm:text-sm font-kr font-bold text-white">
+                    <div className="text-xs sm:text-sm font-kr font-bold text-slate-900">
                       {currentItem.grammarSentences[0].korean}
                     </div>
-                    <div className="text-[11px] text-slate-400 italic">
+                    <div className="text-[11px] text-slate-500 italic">
                       {currentItem.grammarSentences[0].romanization}
                     </div>
-                    <div className="text-[11px] text-amber-300">
+                    <div className="text-[11px] text-emerald-800 font-semibold">
                       🇳🇵 {currentItem.grammarSentences[0].nepali}
                     </div>
                   </div>
@@ -311,15 +311,15 @@ export const KoreanFlashcardCard: React.FC<KoreanFlashcardCardProps> = ({
             )}
 
             {/* Bottom SRS Rating Buttons & Nav Controls */}
-            <div className="pt-3 border-t border-slate-800 flex flex-col gap-2.5">
+            <div className="pt-3 border-t border-slate-200 flex flex-col gap-2.5">
               {isFlipped && (
                 <div className="grid grid-cols-4 gap-1.5 sm:gap-2">
                   <button
                     onClick={() => setSelectedRating(1)}
                     className={`py-2 px-1 rounded-xl text-center border transition-all cursor-pointer ${
                       selectedRating === 1
-                        ? 'bg-rose-600 border-rose-400 text-white shadow-lg'
-                        : 'bg-rose-950/30 hover:bg-rose-900/50 border-rose-900/60 text-rose-300'
+                        ? 'bg-rose-600 border-rose-500 text-white shadow-xs font-black'
+                        : 'bg-rose-50 hover:bg-rose-100 border-rose-200 text-rose-800 font-bold'
                     }`}
                   >
                     <div className="text-xs font-bold">Again</div>
@@ -330,8 +330,8 @@ export const KoreanFlashcardCard: React.FC<KoreanFlashcardCardProps> = ({
                     onClick={() => setSelectedRating(2)}
                     className={`py-2 px-1 rounded-xl text-center border transition-all cursor-pointer ${
                       selectedRating === 2
-                        ? 'bg-amber-600 border-amber-400 text-white shadow-lg'
-                        : 'bg-amber-950/30 hover:bg-amber-900/50 border-amber-900/60 text-amber-300'
+                        ? 'bg-amber-600 border-amber-500 text-white shadow-xs font-black'
+                        : 'bg-amber-50 hover:bg-amber-100 border-amber-200 text-amber-800 font-bold'
                     }`}
                   >
                     <div className="text-xs font-bold">Hard</div>
@@ -342,8 +342,8 @@ export const KoreanFlashcardCard: React.FC<KoreanFlashcardCardProps> = ({
                     onClick={() => setSelectedRating(3)}
                     className={`py-2 px-1 rounded-xl text-center border transition-all cursor-pointer ${
                       selectedRating === 3
-                        ? 'bg-emerald-600 border-emerald-400 text-white shadow-lg'
-                        : 'bg-emerald-950/30 hover:bg-emerald-900/50 border-emerald-900/60 text-emerald-300'
+                        ? 'bg-emerald-600 border-emerald-500 text-white shadow-xs font-black'
+                        : 'bg-emerald-50 hover:bg-emerald-100 border-emerald-200 text-emerald-800 font-bold'
                     }`}
                   >
                     <div className="text-xs font-bold">Good</div>
@@ -354,8 +354,8 @@ export const KoreanFlashcardCard: React.FC<KoreanFlashcardCardProps> = ({
                     onClick={() => setSelectedRating(4)}
                     className={`py-2 px-1 rounded-xl text-center border transition-all cursor-pointer ${
                       selectedRating === 4
-                        ? 'bg-indigo-600 border-indigo-400 text-white shadow-lg'
-                        : 'bg-indigo-950/30 hover:bg-indigo-900/50 border-indigo-900/60 text-indigo-300'
+                        ? 'bg-blue-600 border-blue-500 text-white shadow-xs font-black'
+                        : 'bg-blue-50 hover:bg-blue-100 border-blue-200 text-blue-800 font-bold'
                     }`}
                   >
                     <div className="text-xs font-bold">Easy</div>
@@ -369,14 +369,14 @@ export const KoreanFlashcardCard: React.FC<KoreanFlashcardCardProps> = ({
                 <button
                   onClick={handlePrev}
                   disabled={safeIndex === 0}
-                  className="px-3.5 py-2 rounded-xl bg-slate-800 disabled:opacity-30 hover:bg-slate-700 text-slate-200 text-xs font-bold transition-all flex items-center gap-1 cursor-pointer border border-slate-700"
+                  className="px-3.5 py-2 rounded-xl bg-slate-100 disabled:opacity-30 hover:bg-slate-200 text-slate-700 text-xs font-bold transition-all flex items-center gap-1 cursor-pointer border border-slate-200"
                 >
                   <ChevronLeft className="w-4 h-4" /> Prev
                 </button>
 
                 <button
                   onClick={() => setIsFlipped(!isFlipped)}
-                  className="flex-1 py-2 px-3 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white text-xs font-extrabold flex items-center justify-center gap-1.5 shadow-glow cursor-pointer"
+                  className="flex-1 py-2 px-3 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-extrabold flex items-center justify-center gap-1.5 shadow-xs cursor-pointer"
                 >
                   <Eye className="w-4 h-4" />
                   <span>{isFlipped ? 'Show Hangul' : 'Show Answer'}</span>
@@ -384,7 +384,7 @@ export const KoreanFlashcardCard: React.FC<KoreanFlashcardCardProps> = ({
 
                 <button
                   onClick={handleNext}
-                  className="px-3.5 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold transition-all flex items-center gap-1 shadow cursor-pointer"
+                  className="px-3.5 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold transition-all flex items-center gap-1 cursor-pointer shadow-xs"
                 >
                   Next <ChevronRight className="w-4 h-4" />
                 </button>

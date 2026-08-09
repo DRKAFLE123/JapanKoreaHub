@@ -20,7 +20,8 @@ import {
   BookOpen,
   ArrowLeft,
   FileText,
-  Play
+  Play,
+  RotateCcw
 } from 'lucide-react';
 import { validateExamSubmission } from '@/lib/auth-security';
 
@@ -411,8 +412,10 @@ interface TimedExamEngineProps {
   activeLanguage?: 'JAPANESE' | 'KOREAN' | string;
   currentLevel?: string;
   preselectedLevel?: string;
+  autoStart?: boolean;
   hideLevelSelector?: boolean;
   hideCategorySelector?: boolean;
+  onExitExam?: () => void;
   onCompleteExam?: (result: ExamResultSummary) => void;
 }
 
@@ -421,6 +424,8 @@ export const TimedExamEngine: React.FC<TimedExamEngineProps> = ({
   activeLanguage: propActiveLanguage,
   currentLevel: propCurrentLevel,
   preselectedLevel,
+  autoStart = false,
+  onExitExam,
   onCompleteExam,
 }) => {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -439,7 +444,17 @@ export const TimedExamEngine: React.FC<TimedExamEngineProps> = ({
   }, [currentLevel, initialLanguage]);
 
   // Exam Selection Screen vs Active Exam Mode
-  const [examStarted, setExamStarted] = useState(false);
+  const [examStarted, setExamStarted] = useState(autoStart);
+  const [pendingExamSet, setPendingExamSet] = useState<any>(null);
+  const [showExitConfirmModal, setShowExitConfirmModal] = useState(false);
+  const [showSubmitConfirmModal, setShowSubmitConfirmModal] = useState(false);
+  const [examResult, setExamResult] = useState<{
+    score: number;
+    correctCount: number;
+    totalQuestions: number;
+    passed: boolean;
+    timeSpentSeconds: number;
+  } | null>(null);
   const [selectedMockSet, setSelectedMockSet] = useState<string>(() => {
     if (normalizedLevel === 'N4') return 'N4_SET_1';
     if (normalizedLevel === 'EPS') return 'EPS_SET_1';
@@ -496,9 +511,38 @@ export const TimedExamEngine: React.FC<TimedExamEngineProps> = ({
     setFlaggedQuestions({});
     setSecondsRemaining(50 * 60);
     setIsSubmitted(false);
+    setExamResult(null);
+    setShowSubmitConfirmModal(false);
+    setShowExitConfirmModal(false);
     setAudioPlaysCount({});
     setExamStarted(true);
   };
+
+  const handleRequestExit = () => {
+    if (isSubmitted || !examStarted) {
+      if (onExitExam) onExitExam();
+      else setExamStarted(false);
+    } else {
+      setShowExitConfirmModal(true);
+    }
+  };
+
+  const handleConfirmExit = () => {
+    setShowExitConfirmModal(false);
+    setExamStarted(false);
+    if (onExitExam) onExitExam();
+  };
+
+  useEffect(() => {
+    if (!examStarted || isSubmitted) return;
+    const handleBeforeUnload = (e: BeforeUnloadEvent) => {
+      e.preventDefault();
+      e.returnValue = 'You have an active exam session in progress. Exiting will discard your current progress.';
+      return e.returnValue;
+    };
+    window.addEventListener('beforeunload', handleBeforeUnload);
+    return () => window.removeEventListener('beforeunload', handleBeforeUnload);
+  }, [examStarted, isSubmitted]);
 
   useEffect(() => {
     if (!examStarted || isSubmitted) return;
@@ -560,6 +604,7 @@ export const TimedExamEngine: React.FC<TimedExamEngineProps> = ({
 
   const handleSubmitExam = () => {
     setIsSubmitted(true);
+    setShowSubmitConfirmModal(false);
     let correctCount = 0;
     questions.forEach((q) => {
       if (selectedAnswers[q.id] === q.correctAnswer) {
@@ -567,9 +612,17 @@ export const TimedExamEngine: React.FC<TimedExamEngineProps> = ({
       }
     });
 
-    const score = Math.round((correctCount / questions.length) * 100);
+    const score = Math.round((correctCount / (questions.length || 1)) * 100);
     const passed = score >= 70;
     const timeSpentSeconds = 50 * 60 - secondsRemaining;
+
+    setExamResult({
+      score,
+      correctCount,
+      totalQuestions: questions.length,
+      passed,
+      timeSpentSeconds,
+    });
 
     const check = validateExamSubmission(questions.length, timeSpentSeconds, score);
     if (!check.valid) {
@@ -715,11 +768,11 @@ export const TimedExamEngine: React.FC<TimedExamEngineProps> = ({
   // =========================================================================
   if (!examStarted) {
     return (
-      <div className="w-full max-w-4xl mx-auto space-y-4 font-sans animate-fade-in">
+      <div className="w-full max-w-4xl mx-auto space-y-4 font-sans">
         {/* Header Banner Card */}
-        <div className="bg-white border border-slate-200 rounded-3xl p-5 sm:p-6 shadow-sm flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+        <div className="bg-white border border-slate-200 rounded-3xl p-5 sm:p-6 shadow-xs flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
           <div>
-            <div className="flex items-center gap-2 text-xs font-black uppercase tracking-wider text-rose-600 mb-1">
+            <div className="flex items-center gap-2 text-xs font-black uppercase tracking-wider text-red-600 mb-1">
               <Award className="w-4 h-4 text-amber-500" />
               <span>Official Mock Exam Directory — Level: {normalizedLevel}</span>
             </div>
@@ -730,7 +783,7 @@ export const TimedExamEngine: React.FC<TimedExamEngineProps> = ({
               Select an official timed mock test below. All tests feature auto-grading, answer keys, and detailed explanations.
             </p>
           </div>
-          <span className="px-3 py-1.5 rounded-xl bg-rose-50 text-rose-700 font-extrabold text-xs border border-rose-200 shrink-0">
+          <span className="px-3 py-1.5 rounded-xl bg-red-50 text-red-700 font-extrabold text-xs border border-red-200 shrink-0">
             🔒 Level Locked: {normalizedLevel}
           </span>
         </div>
@@ -759,8 +812,8 @@ export const TimedExamEngine: React.FC<TimedExamEngineProps> = ({
               </div>
 
               <button
-                onClick={() => startExamSet(exam.id)}
-                className="w-full sm:w-auto px-5 py-3 rounded-xl bg-rose-600 hover:bg-rose-700 text-white font-extrabold text-xs shadow-sm transition-all cursor-pointer flex items-center justify-center gap-2 shrink-0"
+                onClick={() => setPendingExamSet(exam)}
+                className="w-full sm:w-auto px-5 py-3 rounded-xl bg-red-600 hover:bg-red-500 text-white font-black text-xs shadow-xs transition-all cursor-pointer flex items-center justify-center gap-2 shrink-0 border border-red-500"
               >
                 <Play className="w-4 h-4 fill-white" />
                 <span>Start Mock Exam</span>
@@ -768,6 +821,78 @@ export const TimedExamEngine: React.FC<TimedExamEngineProps> = ({
             </div>
           ))}
         </div>
+
+        {/* ── EXAM CONFIRMATION MODAL INSIDE LEVEL DIRECTORY ── */}
+        {pendingExamSet && (
+          <div className="fixed inset-0 z-[100] overflow-y-auto flex items-center justify-center p-3 sm:p-4 bg-slate-900/60 backdrop-blur-sm min-h-screen min-h-[100dvh]">
+            <div className="w-full max-w-lg bg-white text-slate-900 border border-slate-200 rounded-3xl p-6 sm:p-7 shadow-2xl space-y-5 my-auto mx-auto shrink-0 font-sans">
+              {/* Modal Header */}
+              <div className="flex items-start justify-between pb-3 border-b border-slate-200">
+                <div className="flex items-center gap-3">
+                  <div className="p-3 rounded-2xl bg-red-50 text-red-600 border border-red-200 text-2xl">
+                    ⏱️
+                  </div>
+                  <div>
+                    <div className="text-xs font-black uppercase tracking-wider text-red-600 flex items-center gap-1.5">
+                      <span>{pendingExamSet.badge}</span>
+                      <span>•</span>
+                      <span className="text-slate-500">Level {normalizedLevel}</span>
+                    </div>
+                    <h3 className="text-lg sm:text-xl font-black text-slate-900 leading-snug">{pendingExamSet.title}</h3>
+                  </div>
+                </div>
+                <button
+                  onClick={() => setPendingExamSet(null)}
+                  className="p-2 rounded-xl bg-slate-100 hover:bg-rose-600 text-slate-500 hover:text-white transition-all cursor-pointer"
+                >
+                  <X className="w-4 h-4" />
+                </button>
+              </div>
+
+              {/* Test Specs Grid */}
+              <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200 space-y-2 text-xs">
+                <div className="font-black text-slate-900 text-sm">Exam Overview &amp; Specifications:</div>
+                <div className="text-slate-700 font-bold">{pendingExamSet.specs}</div>
+                <p className="text-slate-500 leading-relaxed font-medium">{pendingExamSet.desc}</p>
+              </div>
+
+              {/* Exam Rules & Instructions */}
+              <div className="p-4 rounded-2xl bg-amber-50/80 border border-amber-200/90 text-xs text-amber-950 space-y-2">
+                <div className="font-black uppercase tracking-wider text-amber-900 flex items-center gap-1.5">
+                  <span>⚠️ Timed Exam Instructions</span>
+                </div>
+                <ul className="space-y-1.5 text-slate-800 font-medium pl-1 list-disc list-inside">
+                  <li>The countdown timer starts immediately upon clicking <strong>Begin Exam Now</strong>.</li>
+                  <li>Section locking and automatic score evaluation apply.</li>
+                </ul>
+              </div>
+
+              {/* Modal Actions */}
+              <div className="flex items-center gap-3 pt-2">
+                <button
+                  type="button"
+                  onClick={() => setPendingExamSet(null)}
+                  className="flex-1 py-3 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-extrabold text-xs transition-colors cursor-pointer border border-slate-200"
+                >
+                  Cancel
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => {
+                    const id = pendingExamSet.id;
+                    setPendingExamSet(null);
+                    startExamSet(id);
+                  }}
+                  className="flex-1 py-3 rounded-xl font-black text-xs text-white bg-red-600 hover:bg-red-500 border border-red-500 shadow-xs transition-colors cursor-pointer flex items-center justify-center gap-2"
+                >
+                  <Play className="w-3.5 h-3.5 fill-white" />
+                  <span>Begin Exam Now</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     );
   }
@@ -788,7 +913,7 @@ export const TimedExamEngine: React.FC<TimedExamEngineProps> = ({
       <div className="bg-white border border-slate-200 rounded-2xl sm:rounded-3xl p-3.5 sm:p-5 shadow-xs flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 text-slate-900">
         <div className="flex items-center gap-3">
           <button
-            onClick={() => setExamStarted(false)}
+            onClick={handleRequestExit}
             className="p-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-200 text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 shrink-0"
             title="Return to Mock Exam List"
           >
@@ -831,14 +956,68 @@ export const TimedExamEngine: React.FC<TimedExamEngineProps> = ({
 
           {!isSubmitted && (
             <button
-              onClick={handleSubmitExam}
-              className="px-4 sm:px-5 py-2 sm:py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs shadow-xs transition-all cursor-pointer"
+              onClick={() => setShowSubmitConfirmModal(true)}
+              className="px-4 sm:px-5 py-2 sm:py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-black text-xs shadow-xs transition-all cursor-pointer border border-emerald-500"
             >
               Submit Exam
             </button>
           )}
         </div>
       </div>
+
+      {/* 📊 EXAM MARKS & SCORE SUMMARY REPORT CARD */}
+      {isSubmitted && examResult && (
+        <div className={`p-6 rounded-3xl border shadow-md transition-all font-sans ${
+          examResult.passed ? 'bg-emerald-50/90 border-emerald-200 text-emerald-950' : 'bg-rose-50/90 border-rose-200 text-rose-950'
+        }`}>
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+            <div className="flex items-center gap-4">
+              <div className={`p-4 rounded-2xl text-3xl font-black ${
+                examResult.passed ? 'bg-emerald-100 text-emerald-700 border border-emerald-200' : 'bg-rose-100 text-rose-700 border border-rose-200'
+              }`}>
+                {examResult.passed ? '🏆' : '📊'}
+              </div>
+              <div>
+                <div className="flex items-center gap-2">
+                  <span className={`px-2.5 py-0.5 rounded-lg text-xs font-black uppercase tracking-wider ${
+                    examResult.passed ? 'bg-emerald-600 text-white' : 'bg-rose-600 text-white'
+                  }`}>
+                    {examResult.passed ? 'PASSED — EXAM SUCCESS' : 'NEEDS IMPROVEMENT'}
+                  </span>
+                  <span className="text-xs font-bold opacity-75">
+                    • Time Spent: {formatTime(examResult.timeSpentSeconds)}
+                  </span>
+                </div>
+                <h3 className="text-xl sm:text-2xl font-black mt-1">
+                  Your Score: {examResult.score}% ({examResult.correctCount} / {examResult.totalQuestions} Marks)
+                </h3>
+                <p className="text-xs opacity-80 mt-0.5">
+                  {examResult.passed 
+                    ? 'Congratulations! You passed the official target threshold. Review answer keys below.' 
+                    : 'Keep practicing! Review the detailed explanations below to improve your score.'}
+                </p>
+              </div>
+            </div>
+
+            <div className="flex items-center gap-2 shrink-0">
+              <button
+                onClick={() => {
+                  if (selectedMockSet) startExamSet(selectedMockSet);
+                }}
+                className="px-4 py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-white text-xs font-black shadow-xs transition-all cursor-pointer flex items-center gap-1.5"
+              >
+                <RotateCcw className="w-4 h-4" /> Retake Test
+              </button>
+              <button
+                onClick={handleConfirmExit}
+                className="px-4 py-2.5 rounded-xl bg-white hover:bg-slate-100 text-slate-800 border border-slate-200 text-xs font-bold shadow-xs transition-all cursor-pointer flex items-center gap-1.5"
+              >
+                <ArrowLeft className="w-4 h-4" /> Exit
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Main Active Question & Navigator Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
@@ -1024,6 +1203,132 @@ export const TimedExamEngine: React.FC<TimedExamEngineProps> = ({
           </div>
         </div>
       </div>
+
+      {/* ── EXIT EXAM CONFIRMATION MODAL ── */}
+      {showExitConfirmModal && (
+        <div className="fixed inset-0 z-[120] overflow-y-auto flex items-center justify-center p-3 sm:p-4 bg-slate-900/60 backdrop-blur-sm min-h-screen min-h-[100dvh]">
+          <div className="w-full max-w-md bg-white text-slate-900 border border-slate-200 rounded-3xl p-6 sm:p-7 shadow-2xl space-y-5 my-auto mx-auto shrink-0 font-sans">
+            <div className="flex items-start justify-between pb-3 border-b border-slate-200">
+              <div className="flex items-center gap-3">
+                <div className="p-3 rounded-2xl bg-amber-50 text-amber-600 border border-amber-200 text-2xl">
+                  ⚠️
+                </div>
+                <div>
+                  <h3 className="text-lg font-black text-slate-900">Quit Exam Session?</h3>
+                  <p className="text-xs text-slate-500 font-medium mt-0.5">Active timed exam in progress</p>
+                </div>
+              </div>
+              <button
+                onClick={() => setShowExitConfirmModal(false)}
+                className="p-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-500 transition-all cursor-pointer"
+              >
+                <X className="w-4 h-4" />
+              </button>
+            </div>
+
+            <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200 text-xs space-y-2 text-slate-700 leading-relaxed font-medium">
+              <p>
+                Are you sure you want to leave this exam? Your current answers and progress will be <strong>lost</strong>, and your timer will stop.
+              </p>
+            </div>
+
+            <div className="flex items-center gap-3 pt-2">
+              <button
+                type="button"
+                onClick={() => setShowExitConfirmModal(false)}
+                className="flex-1 py-3 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-extrabold text-xs transition-colors cursor-pointer border border-slate-200"
+              >
+                Resume Exam
+              </button>
+
+              <button
+                type="button"
+                onClick={handleConfirmExit}
+                className="flex-1 py-3 rounded-xl font-black text-xs text-white bg-red-600 hover:bg-red-500 border border-red-500 shadow-xs transition-colors cursor-pointer flex items-center justify-center gap-1.5"
+              >
+                <span>Exit Exam</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* ── SUBMIT EXAM CONFIRMATION MODAL ── */}
+      {showSubmitConfirmModal && (
+        <div className="fixed inset-0 z-[120] overflow-y-auto flex items-center justify-center p-3 sm:p-4 bg-slate-900/60 backdrop-blur-sm min-h-screen min-h-[100dvh]">
+          <div className="w-full max-w-md bg-white text-slate-900 border border-slate-200 rounded-3xl p-6 sm:p-7 shadow-2xl space-y-5 my-auto mx-auto shrink-0 font-sans">
+            {/* Header */}
+            <div className="flex items-start justify-between pb-3 border-b border-slate-200">
+              <div className="flex items-center gap-3">
+                <div className="p-3 rounded-2xl bg-emerald-50 text-emerald-600 border border-emerald-200 text-2xl">
+                  📝
+                </div>
+                <div>
+                  <h3 className="text-lg font-black text-slate-900">Submit Exam Session?</h3>
+                  <p className="text-xs text-slate-500 font-medium mt-0.5">Please confirm your submission</p>
+                </div>
+              </div>
+              <button
+                onClick={() => setShowSubmitConfirmModal(false)}
+                className="p-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-500 transition-all cursor-pointer"
+              >
+                <X className="w-4 h-4" />
+              </button>
+            </div>
+
+            {/* Summary Grid */}
+            <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200 space-y-2.5 text-xs">
+              <div className="flex items-center justify-between py-1 border-b border-slate-200/60">
+                <span className="text-slate-500 font-bold">Total Questions:</span>
+                <span className="font-black text-slate-900">{questions.length}</span>
+              </div>
+              <div className="flex items-center justify-between py-1 border-b border-slate-200/60">
+                <span className="text-slate-500 font-bold">Answered Questions:</span>
+                <span className="font-black text-emerald-600">{Object.keys(selectedAnswers).length}</span>
+              </div>
+              <div className="flex items-center justify-between py-1 border-b border-slate-200/60">
+                <span className="text-slate-500 font-bold">Unanswered Questions:</span>
+                <span className={`font-black ${questions.length - Object.keys(selectedAnswers).length > 0 ? 'text-amber-600' : 'text-slate-700'}`}>
+                  {questions.length - Object.keys(selectedAnswers).length}
+                </span>
+              </div>
+              <div className="flex items-center justify-between py-1">
+                <span className="text-slate-500 font-bold">Time Remaining:</span>
+                <span className="font-mono font-black text-blue-600">{formatTime(secondsRemaining)}</span>
+              </div>
+            </div>
+
+            {/* Action Buttons: Submit & View Results / Exit Without Submitting / Cancel */}
+            <div className="space-y-2 pt-1">
+              <button
+                type="button"
+                onClick={handleSubmitExam}
+                className="w-full py-3 px-4 rounded-xl font-black text-xs text-white bg-emerald-600 hover:bg-emerald-500 border border-emerald-500 shadow-xs transition-colors cursor-pointer flex items-center justify-center gap-2"
+              >
+                <Check className="w-4 h-4" />
+                <span>Submit &amp; View Results</span>
+              </button>
+
+              <button
+                type="button"
+                onClick={handleConfirmExit}
+                className="w-full py-2.5 px-4 rounded-xl font-bold text-xs text-rose-700 bg-rose-50 hover:bg-rose-100 border border-rose-200 transition-colors cursor-pointer flex items-center justify-center gap-2"
+              >
+                <X className="w-4 h-4" />
+                <span>Exit Without Submitting</span>
+              </button>
+
+              <button
+                type="button"
+                onClick={() => setShowSubmitConfirmModal(false)}
+                className="w-full py-2 px-4 rounded-xl font-bold text-xs text-slate-500 hover:text-slate-800 transition-colors cursor-pointer text-center"
+              >
+                Continue Answering Questions
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

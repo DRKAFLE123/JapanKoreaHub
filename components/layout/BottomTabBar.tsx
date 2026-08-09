@@ -33,7 +33,7 @@ export default function BottomTabBar() {
   };
 
   return (
-    <nav className="bottom-tab-bar md:hidden">
+    <nav className="bottom-tab-bar md:hidden bg-white border-t border-slate-200">
       {tabs.map(({ key, href, label, Icon }) => {
         const active = isActive(href);
         return (
@@ -45,21 +45,21 @@ export default function BottomTabBar() {
             <Icon
               className={`w-[22px] h-[22px] transition-colors ${
                 active 
-                  ? activeCountry === 'japan' ? 'text-red-600' : activeCountry === 'korea' ? 'text-blue-600' : 'text-gray-900'
-                  : 'text-gray-400'
+                  ? activeCountry === 'japan' ? 'text-red-400' : activeCountry === 'korea' ? 'text-blue-400' : 'text-white'
+                  : 'text-slate-400'
               }`}
               strokeWidth={active ? 2.5 : 1.8}
             />
             <span className={`text-[10px] font-medium transition-colors ${
               active 
-                ? activeCountry === 'japan' ? 'text-red-600 font-bold' : activeCountry === 'korea' ? 'text-blue-600 font-bold' : 'text-gray-900 font-bold'
-                : 'text-gray-400'
+                ? activeCountry === 'japan' ? 'text-red-400 font-bold' : activeCountry === 'korea' ? 'text-blue-400 font-bold' : 'text-white font-bold'
+                : 'text-slate-400'
             }`}>
               {label}
             </span>
             {active && (
               <span className={`absolute bottom-0 w-8 h-0.5 rounded-full ${
-                activeCountry === 'japan' ? 'bg-red-600' : activeCountry === 'korea' ? 'bg-blue-600' : 'bg-gray-900'
+                activeCountry === 'japan' ? 'bg-red-500' : activeCountry === 'korea' ? 'bg-blue-500' : 'bg-white'
               }`} />
             )}
           </Link>

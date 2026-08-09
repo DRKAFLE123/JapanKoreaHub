@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Sparkles, BookOpen, Layers, Headphones, Clock, Target, Award, Calendar, Flame, CheckCircle2, ChevronRight, Zap, ArrowLeft, FileText, Globe } from 'lucide-react';
+import { Sparkles, BookOpen, Layers, Headphones, Clock, Target, Award, Calendar, Flame, CheckCircle2, ChevronRight, Zap, ArrowLeft, FileText, Globe, Maximize2, Minimize2 } from 'lucide-react';
 import { LevelPassTricks } from './LevelPassTricks';
 import { LevelStudyPlanModal } from './LevelStudyPlanModal';
 import { VocabularyExplorer } from './VocabularyExplorer';
@@ -26,12 +26,12 @@ interface LevelHubDashboardProps {
 
 const JAPAN_LEVEL_LIST: { id: LevelType; label: string }[] = [
   { id: 'BASICS',     label: 'Basics' },
-  { id: 'N5',         label: 'JLPT N5' },
-  { id: 'N4',         label: 'JLPT N4' },
-  { id: 'N3',         label: 'JLPT N3' },
-  { id: 'N2',         label: 'JLPT N2' },
-  { id: 'N1',         label: 'JLPT N1' },
-  { id: 'JFT',        label: 'JFT-Basic' },
+  { id: 'N5',         label: 'N5' },
+  { id: 'N4',         label: 'N4' },
+  { id: 'N3',         label: 'N3' },
+  { id: 'N2',         label: 'N2' },
+  { id: 'N1',         label: 'N1' },
+  { id: 'JFT',        label: 'JFT' },
   { id: 'KANJI_1000', label: 'Kanji (1000)' },
 ];
 
@@ -43,6 +43,8 @@ export const LevelHubDashboard: React.FC<LevelHubDashboardProps> = ({
   onTabChange,
 }) => {
   const [currentLevel, setCurrentLevel] = useState<LevelType>(propLevel);
+  const [activeTabState, setActiveTabState] = useState<LevelSubTab>(externalActiveTab || 'VOCABULARY');
+  const [isFocusMode, setIsFocusMode] = useState<boolean>(false);
   const [activeTab, setActiveTab] = useState<LevelSubTab>('VOCABULARY');
   const { isCollapsed, toggleCollapse } = useSidebarCollapse();
 
@@ -126,25 +128,13 @@ export const LevelHubDashboard: React.FC<LevelHubDashboardProps> = ({
   };
 
   return (
-    <div className="space-y-2 animate-fade-in font-sans">
+    <div className={`space-y-2 animate-fade-in font-sans ${isFocusMode ? 'fixed inset-0 z-[100] bg-slate-50 dark:bg-slate-950 p-2 sm:p-5 overflow-y-auto' : ''}`}>
       
-      {/* 🌐 ROW 1: CURRICULUM LEVEL BAR (Mobile Responsive Horizontal Scroll) */}
-      <div className="flex items-center justify-between gap-2 overflow-x-auto no-scrollbar py-1 bg-white p-2 rounded-2xl border border-slate-200 shadow-xs">
-        <div className="flex items-center gap-2">
-          {/* Desktop Sidebar Minimize / Expand Toggle Button */}
-          <button
-            onClick={toggleCollapse}
-            title={isCollapsed ? 'Expand Sidebar' : 'Minimize Sidebar'}
-            className="hidden lg:flex items-center gap-1.5 px-2.5 py-1 rounded-xl bg-slate-100 text-slate-700 hover:text-slate-900 hover:bg-slate-200 border border-slate-200 text-xs font-bold transition-all cursor-pointer"
-          >
-            {isCollapsed ? <PanelLeftOpen className="w-3.5 h-3.5 text-red-600" /> : <PanelLeftClose className="w-3.5 h-3.5 text-red-600" />}
-            <span>{isCollapsed ? 'Expand Sidebar' : 'Minimize Sidebar'}</span>
-          </button>
-
-          <div className="flex items-center gap-1.5 text-xs font-black uppercase tracking-wider text-slate-500 whitespace-nowrap pl-1 pr-2">
-            <Globe className="w-3.5 h-3.5 text-red-600" />
-            <span>Curriculum Level:</span>
-          </div>
+      {/* 🌐 ROW 1: CURRICULUM LEVEL BAR + FOCUS MODE TOGGLE */}
+      <div className="flex items-center justify-between gap-2 overflow-x-auto no-scrollbar py-1 bg-white dark:bg-slate-900 p-2 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-xs">
+        <div className="flex items-center gap-1.5 text-xs font-black uppercase tracking-wider text-slate-500 whitespace-nowrap pl-1 pr-1">
+          <Globe className="w-3.5 h-3.5 text-red-600" />
+          <span>Course:</span>
         </div>
 
         <div className="flex items-center gap-1.5 flex-nowrap">
@@ -154,22 +144,36 @@ export const LevelHubDashboard: React.FC<LevelHubDashboardProps> = ({
               <button
                 key={lvl.id}
                 onClick={() => handleLevelSwitch(lvl.id)}
-                className={`px-3 py-1 rounded-xl text-xs font-extrabold transition-all cursor-pointer whitespace-nowrap border ${
+                className={`px-2.5 py-1 rounded-xl text-xs font-extrabold transition-all cursor-pointer whitespace-nowrap border ${
                   isSelected
-                    ? 'bg-red-600 text-white shadow-xs border-red-500'
-                    : 'bg-slate-100 text-slate-700 hover:text-slate-900 hover:bg-slate-200 border-slate-200'
+                    ? 'bg-red-600 text-white shadow-xs border-red-500 font-black'
+                    : 'bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:text-slate-900 hover:bg-slate-200 border-slate-200 dark:border-slate-700 font-bold'
                 }`}
               >
                 {lvl.label}
               </button>
             );
           })}
+
+          {/* ⛶ FOCUS MODE TOGGLE BUTTON */}
+          <button
+            onClick={() => setIsFocusMode(!isFocusMode)}
+            className={`ml-1 px-3 py-1 rounded-xl text-xs font-extrabold transition-all flex items-center gap-1.5 cursor-pointer whitespace-nowrap border ${
+              isFocusMode
+                ? 'bg-red-600 text-white border-red-500 shadow-md font-black animate-pulse'
+                : 'bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200 border-slate-200 dark:border-slate-700 font-bold'
+            }`}
+            title={isFocusMode ? "Exit Fullscreen Focus Mode" : "Enter Distraction-Free Fullscreen Focus Mode"}
+          >
+            {isFocusMode ? <Minimize2 className="w-3.5 h-3.5" /> : <Maximize2 className="w-3.5 h-3.5" />}
+            <span>{isFocusMode ? 'Exit Focus' : 'Focus'}</span>
+          </button>
         </div>
       </div>
 
       {/* 📖 ROW 2: OPTIONS SUB-MENU BAR (Tailored to selected level) */}
-      {currentLevel !== 'BASICS' && (
-        <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar py-1 bg-white p-1.5 rounded-2xl border border-slate-200 shadow-xs">
+      {currentLevel !== 'BASICS' && currentLevel !== 'KANJI_1000' && (
+        <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar py-1 bg-white dark:bg-slate-900 p-1.5 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-xs">
           {getSubTabs().map((tab) => {
             const isActive = activeTab === tab.id;
             return (
@@ -178,8 +182,8 @@ export const LevelHubDashboard: React.FC<LevelHubDashboardProps> = ({
                 onClick={() => handleTabClick(tab.id as LevelSubTab)}
                 className={`px-3 py-1.5 rounded-xl text-xs font-extrabold transition-all flex items-center gap-1.5 cursor-pointer whitespace-nowrap ${
                   isActive
-                    ? 'bg-red-600 text-white shadow-xs border border-red-500'
-                    : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100 border border-transparent'
+                    ? 'bg-red-600 text-white shadow-xs border border-red-500 font-black'
+                    : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 hover:bg-slate-100 dark:hover:bg-slate-800 border border-transparent font-bold'
                 }`}
               >
                 <span>{tab.emoji}</span>
