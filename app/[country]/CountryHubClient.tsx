@@ -124,39 +124,56 @@ export default function CountryHubClient({ country }: { country: Country }) {
       <main className="max-w-6xl mx-auto px-4 pt-4 md:pt-8 space-y-8">
 
         {/* 🚀 LIGHT HERO SECTION */}
-        <section className={`relative overflow-hidden rounded-3xl bg-gradient-to-br ${cfg.theme.heroGrad} border p-6 sm:p-10 shadow-sm space-y-4`}>
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-black uppercase tracking-wider bg-white/90 border border-slate-200 text-slate-700 shadow-xs">
-            <span>{isNe ? (country === 'japan' ? '🇯🇵 जापानी पोर्टल' : '🇰🇷 कोरियन पोर्टल') : cfg.hero.badge}</span>
-          </div>
+        <section className={`relative overflow-hidden rounded-3xl bg-gradient-to-br ${cfg.theme.heroGrad} border p-6 sm:p-10 shadow-sm`}>
+          <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
+            
+            {/* Left Content */}
+            <div className="md:col-span-7 space-y-4">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-black uppercase tracking-wider bg-white/90 border border-slate-200 text-slate-700 shadow-xs">
+                <span>{isNe ? (country === 'japan' ? '🇯🇵 जापानी पोर्टल' : '🇰🇷 कोरियन पोर्टल') : cfg.hero.badge}</span>
+              </div>
 
-          <div className="space-y-1">
-            <h1 className="text-3xl sm:text-5xl font-black text-slate-900 tracking-tight">
-              {heroTitle}
-            </h1>
-            <p className={`text-base sm:text-xl font-bold ${cfg.theme.accentText}`}>
-              {isNe ? t('heroTitle') : cfg.hero.tagline}
-            </p>
-          </div>
+              <div className="space-y-1">
+                <h1 className="text-3xl sm:text-4xl md:text-5xl font-black text-slate-900 tracking-tight">
+                  {heroTitle}
+                </h1>
+                <p className={`text-base sm:text-xl font-bold ${cfg.theme.accentText}`}>
+                  {isNe ? t('heroTitle') : cfg.hero.tagline}
+                </p>
+              </div>
 
-          <p className="text-sm sm:text-base text-slate-600 max-w-2xl leading-relaxed font-medium">
-            {heroSub}
-          </p>
+              <p className="text-sm sm:text-base text-slate-600 max-w-2xl leading-relaxed font-medium">
+                {heroSub}
+              </p>
 
-          <div className="pt-2 flex flex-wrap items-center gap-3">
-            <Link
-              href={`/${country}/learn`}
-              className={`px-5 py-2.5 rounded-xl text-sm font-extrabold transition-all flex items-center gap-2 cursor-pointer ${cfg.theme.primaryBtn}`}
-            >
-              <span>{startTrackLabel}</span>
-              <ArrowRight className="w-4 h-4" />
-            </Link>
+              <div className="pt-2 flex flex-wrap items-center gap-3">
+                <Link
+                  href={`/${country}/learn`}
+                  className={`px-5 py-2.5 rounded-xl text-sm font-extrabold transition-all flex items-center gap-2 cursor-pointer ${cfg.theme.primaryBtn}`}
+                >
+                  <span>{startTrackLabel}</span>
+                  <ArrowRight className="w-4 h-4" />
+                </Link>
+                <Link
+                  href="/consultancy"
+                  className="px-5 py-2.5 rounded-xl text-sm font-bold bg-white border border-slate-200 text-slate-700 hover:bg-slate-50 transition-colors"
+                >
+                  {isNe ? 'सेवाहरू हेर्नुहोस्' : 'Explore Services'}
+                </Link>
+              </div>
+            </div>
 
-            <Link
-              href="/consultancy"
-              className="px-5 py-2.5 rounded-xl text-sm font-bold bg-white text-slate-700 hover:text-slate-900 hover:bg-slate-100 border border-slate-200 shadow-xs transition-all flex items-center gap-2 cursor-pointer"
-            >
-              <span>🤝 {t('getExpertGuidance')}</span>
-            </Link>
+            {/* Right Landmark Illustration */}
+            <div className="md:col-span-5 flex justify-center items-center">
+              <div className="relative w-full max-w-sm">
+                <img
+                  src={country === 'japan' ? '/japan_hero_landmarks.png' : '/korea_hero_landmarks.png'}
+                  alt={`${cfg.name} Landmarks`}
+                  className="w-full h-auto object-contain drop-shadow-sm rounded-2xl hover:scale-102 transition-transform duration-300"
+                />
+              </div>
+            </div>
+
           </div>
         </section>
 

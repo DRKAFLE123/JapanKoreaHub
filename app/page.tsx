@@ -138,21 +138,56 @@ export default function HomePage() {
       />
 
       {/* Main content */}
-      <main className="pt-14 pb-20 md:pt-0 md:pb-0 max-w-4xl mx-auto">
+      <main className="pt-14 pb-20 md:pt-0 md:pb-0 max-w-5xl mx-auto">
 
         {/* ── Hero ── */}
-        <section className="px-4 pt-8 pb-6 text-center max-w-2xl mx-auto space-y-3">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-slate-100 border border-slate-200 text-xs font-semibold text-slate-700">
-            🌏 Your gateway to Japan & Korea
+        <section className="px-4 pt-6 md:pt-10 pb-8 mb-4">
+          <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
+            
+            {/* Left Content */}
+            <div className="md:col-span-7 space-y-4 text-left">
+              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-slate-100 border border-slate-200 text-xs font-semibold text-slate-700">
+                🌏 Your gateway to Japan &amp; Korea
+              </div>
+
+              <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-gray-900 tracking-tight leading-tight">
+                Learn. Study. Work. Live.
+              </h1>
+
+              <p className="text-xs sm:text-sm text-gray-600 leading-relaxed max-w-lg">
+                Japanese &amp; Korean learning, exam preparation, visa information, study opportunities, jobs and life guides — all in one place.
+              </p>
+
+              {/* Action CTA Buttons */}
+              <div className="flex items-center gap-3 pt-2">
+                <Link
+                  href="/learn"
+                  className="px-6 py-3 rounded-2xl bg-red-600 hover:bg-red-500 text-white text-sm font-bold shadow-sm transition-all cursor-pointer"
+                >
+                  Get Started
+                </Link>
+                <Link
+                  href="/consultancy"
+                  className="px-6 py-3 rounded-2xl bg-white border border-gray-200 hover:bg-gray-50 text-gray-800 text-sm font-bold shadow-sm transition-all cursor-pointer"
+                >
+                  Explore Services
+                </Link>
+              </div>
+            </div>
+
+            {/* Right Landmark Illustration Graphic */}
+            <div className="md:col-span-5 flex justify-center items-center">
+              <div className="relative w-full max-w-md">
+                <div className="absolute inset-0 bg-gradient-to-tr from-rose-100/50 via-indigo-100/40 to-blue-100/50 rounded-full blur-2xl -z-10" />
+                <img
+                  src="/japan_korea_hero_landmarks.png"
+                  alt="Japan &amp; Korea Platform Landmarks"
+                  className="w-full h-auto object-contain drop-shadow-sm rounded-2xl hover:scale-102 transition-transform duration-300"
+                />
+              </div>
+            </div>
+
           </div>
-
-          <h1 className="text-3xl sm:text-4xl font-extrabold text-gray-900 tracking-tight leading-tight">
-            Learn. Study. Work. Live.
-          </h1>
-
-          <p className="text-xs sm:text-sm text-gray-600 leading-relaxed max-w-xl mx-auto">
-            Japanese & Korean learning, exam preparation, visa information, study opportunities, jobs and life guides — all in one place.
-          </p>
         </section>
 
         {/* ── Intent Grid ── */}
