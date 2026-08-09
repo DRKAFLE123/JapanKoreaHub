@@ -1,3 +1,4 @@
+import { Suspense } from 'react';
 import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
 import LearnHubClient from './LearnHubClient';
@@ -31,5 +32,13 @@ export async function generateMetadata({ params }: { params: Promise<{ country: 
 export default async function LearnPage({ params }: { params: Promise<{ country: string }> }) {
   const { country } = await params;
   if (!META[country]) notFound();
-  return <LearnHubClient country={country as 'japan' | 'korea'} />;
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen bg-slate-50 flex items-center justify-center text-slate-400 text-sm font-medium">
+        Loading...
+      </div>
+    }>
+      <LearnHubClient country={country as 'japan' | 'korea'} />
+    </Suspense>
+  );
 }
