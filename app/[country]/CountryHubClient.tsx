@@ -163,13 +163,13 @@ export default function CountryHubClient({ country }: { country: Country }) {
               </div>
             </div>
 
-            {/* Right Landmark Illustration */}
+            {/* Right Landmark Illustration — Blended into background (no card box) */}
             <div className="md:col-span-5 flex justify-center items-center">
               <div className="relative w-full max-w-sm">
                 <img
                   src={country === 'japan' ? '/japan_hero_landmarks.png' : '/korea_hero_landmarks.png'}
                   alt={`${cfg.name} Landmarks`}
-                  className="w-full h-auto object-contain drop-shadow-sm rounded-2xl hover:scale-102 transition-transform duration-300"
+                  className="w-full h-auto object-contain mix-blend-multiply hover:scale-102 transition-transform duration-300 pointer-events-none"
                 />
               </div>
             </div>
