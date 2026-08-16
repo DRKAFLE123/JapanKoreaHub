@@ -32,6 +32,7 @@ import { KANJI_1000_DATA, Kanji1000Item } from '@/lib/kanji-1000-data';
 import { getAuthUser, getMarkedUnknownWords, isWordMarked, toggleMarkedWord, recordCardReviewStat, AuthUser } from '@/lib/practice-later';
 import SignupGate from '@/components/gates/SignupGate';
 import AuthSheet from '@/components/auth/AuthSheet';
+import { useTranslation } from '@/lib/i18n/LanguageContext';
 
 export type FlashcardMode = 'JAPANESE_FIRST' | 'MEANING_FIRST' | 'MIXED';
 export type AnswerLang = 'ENGLISH' | 'NEPALI' | 'BOTH';
@@ -82,6 +83,7 @@ export interface KanjiCardProps {
 }
 
 export const KanjiCard: React.FC<KanjiCardProps> = ({ currentLevel, hideLevelSelector = false }) => {
+  const { langMode } = useTranslation();
   const [selectedLevel, setSelectedLevel] = useState<'BASICS' | 'N5' | 'N4' | 'N3' | 'N2' | 'N1' | 'JFT' | 'KANJI_1000'>(currentLevel || 'N5');
 
   React.useEffect(() => {
@@ -94,7 +96,13 @@ export const KanjiCard: React.FC<KanjiCardProps> = ({ currentLevel, hideLevelSel
 
   const [selectedLesson, setSelectedLesson] = useState<number | 'ALL'>('ALL');
   const [contentCategory, setContentCategory] = useState<ContentCategory>('KANJI');
-  const [answerLang, setAnswerLang] = useState<AnswerLang>('BOTH');
+  const [answerLang, setAnswerLang] = useState<AnswerLang>(() =>
+    langMode === 'en' ? 'ENGLISH' : langMode === 'ne' ? 'NEPALI' : 'BOTH'
+  );
+
+  useEffect(() => {
+    setAnswerLang(langMode === 'en' ? 'ENGLISH' : langMode === 'ne' ? 'NEPALI' : 'BOTH');
+  }, [langMode]);
   const [cardMode, setCardMode] = useState<FlashcardMode>('JAPANESE_FIRST');
   const [isShuffled, setIsShuffled] = useState<boolean>(true);
   const [shuffleSeed, setShuffleSeed] = useState<number>(() => Date.now());

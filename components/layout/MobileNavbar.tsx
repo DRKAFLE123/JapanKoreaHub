@@ -8,6 +8,7 @@ import MobileDrawer from '@/components/layout/MobileDrawer';
 
 import { useCountry } from '@/lib/context/CountryContext';
 import NotificationBell from '@/components/notifications/NotificationBell';
+import LanguageDropdown from '@/components/layout/LanguageDropdown';
 
 interface MobileNavbarProps {
   user?: { name: string; email: string } | null;
@@ -75,19 +76,8 @@ export default function MobileNavbar({ user, lang, onLangToggle, onSearchOpen }:
               <Search className="w-4 h-4" />
             </button>
 
-            {/* EN / ने toggle */}
-            <button
-              onClick={onLangToggle}
-              className="flex items-center rounded-full overflow-hidden border border-slate-300 text-xs font-semibold cursor-pointer"
-              style={{ height: 30 }}
-            >
-              <span className={`px-2.5 py-1 transition-colors ${lang === 'en' ? 'bg-red-600 text-white' : 'bg-transparent text-slate-500'}`}>
-                EN
-              </span>
-              <span className={`px-2.5 py-1 transition-colors ${lang === 'ne' ? 'bg-red-600 text-white' : 'bg-transparent text-slate-500'}`}>
-                ने
-              </span>
-            </button>
+            {/* 3-Way Language Toggle Dropdown */}
+            <LanguageDropdown />
 
             {/* Sign In / User button */}
             {user ? (

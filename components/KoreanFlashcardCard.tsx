@@ -5,6 +5,7 @@ import { KOREAN_VOCAB_DATA, KoreanVocabItem, getKoreanVocabByLevel } from '@/lib
 import { getAuthUser, getMarkedUnknownWords, isWordMarked, toggleMarkedWord, recordCardReviewStat, AuthUser } from '@/lib/practice-later';
 import SignupGate from '@/components/gates/SignupGate';
 import AuthSheet from '@/components/auth/AuthSheet';
+import { useTranslation } from '@/lib/i18n/LanguageContext';
 
 export interface KoreanFlashcardCardProps {
   currentLevel?: KoreanVocabItem['level'];
@@ -15,6 +16,7 @@ export const KoreanFlashcardCard: React.FC<KoreanFlashcardCardProps> = ({
   currentLevel,
   hideLevelSelector = false,
 }) => {
+  const { langMode } = useTranslation();
   const [selectedLevel, setSelectedLevel] = useState<KoreanVocabItem['level']>(currentLevel || 'EPS');
   const [selectedLesson, setSelectedLesson] = useState<number | 'ALL'>('ALL');
   const [isShuffled, setIsShuffled] = useState<boolean>(false);
@@ -417,19 +419,23 @@ export const KoreanFlashcardCard: React.FC<KoreanFlashcardCardProps> = ({
             ) : (
               /* Back View */
               <div className="my-auto py-3 space-y-3.5 text-left">
-                <div>
-                  <div className="text-[10px] sm:text-xs font-bold uppercase tracking-wider text-emerald-700 mb-1">
-                    English Meaning
+                {(langMode === 'en' || langMode === 'both') && (
+                  <div>
+                    <div className="text-[10px] sm:text-xs font-bold uppercase tracking-wider text-emerald-700 mb-1">
+                      English Meaning
+                    </div>
+                    <div className="text-xl sm:text-2xl font-black text-slate-900">{currentItem.meaning}</div>
                   </div>
-                  <div className="text-xl sm:text-2xl font-black text-slate-900">{currentItem.meaning}</div>
-                </div>
+                )}
 
-                <div>
-                  <div className="text-[10px] sm:text-xs font-bold uppercase tracking-wider text-amber-700 mb-1">
-                    Nepali Meaning (नेपाली अर्थ)
+                {(langMode === 'ne' || langMode === 'both') && (
+                  <div>
+                    <div className="text-[10px] sm:text-xs font-bold uppercase tracking-wider text-amber-700 mb-1">
+                      Nepali Meaning (नेपाली अर्थ)
+                    </div>
+                    <div className="text-base sm:text-lg font-bold text-amber-800">🇳🇵 {currentItem.meaningNepali || currentItem.meaning}</div>
                   </div>
-                  <div className="text-base sm:text-lg font-bold text-amber-800">🇳🇵 {currentItem.meaningNepali}</div>
-                </div>
+                )}
 
                 {currentItem.partOfSpeech && (
                   <div>

@@ -7,6 +7,7 @@ import AuthSheet from '@/components/auth/AuthSheet';
 import { useCountry } from '@/lib/context/CountryContext';
 import { useTheme } from '@/lib/context/ThemeContext';
 import NotificationBell from '@/components/notifications/NotificationBell';
+import LanguageDropdown from '@/components/layout/LanguageDropdown';
 
 interface DesktopHeaderProps {
   user?: { name: string; email: string } | null;
@@ -215,11 +216,8 @@ export default function DesktopHeader({ user, onSearchOpen, lang, onLangToggle, 
             </div>
           </nav>
 
-          <button onClick={onLangToggle} className="flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-slate-200 text-sm font-medium text-slate-700 hover:bg-slate-100 transition-colors cursor-pointer">
-            <Globe className="w-4 h-4 text-slate-400" />
-            {lang === 'en' ? 'EN' : 'ने'}
-            <ChevronDown className="w-3 h-3 text-slate-400" />
-          </button>
+          {/* 3-Way Language Dropdown Selector */}
+          <LanguageDropdown />
 
           {/* Interactive Notification Bell with Unread Popover */}
           <NotificationBell />

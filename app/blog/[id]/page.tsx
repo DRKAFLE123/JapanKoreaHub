@@ -4,6 +4,8 @@ import { notFound } from 'next/navigation';
 import { INITIAL_POSTS, findPostBySlugOrId, getPostSlug } from '@/lib/blog-data';
 import { BlogArticleView } from '@/components/BlogArticleView';
 
+import { getSiteBaseUrl } from '@/lib/site-config';
+
 interface Props {
   params: Promise<{ id: string }> | { id: string };
 }
@@ -24,23 +26,25 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const post = findPostBySlugOrId(resolvedParams.id);
   if (!post) {
     return {
-      title: 'Article Not Found | LanguageGuru',
+      title: 'Article Not Found | JapanKoreaHub',
       description: 'The requested blog article could not be found.',
     };
   }
 
   const postSlug = getPostSlug(post);
-  const canonicalUrl = `https://languageguru.app/blog/${postSlug}`;
+  const baseUrl = getSiteBaseUrl();
+  const canonicalUrl = `${baseUrl}/blog/${postSlug}`;
+  const imageUrl = post.image ? (post.image.startsWith('http') ? post.image : `${baseUrl}${post.image}`) : `${baseUrl}/images/simple_ssw_visa_japan_banner.png`;
 
   return {
-    title: `${post.title} | LanguageGuru`,
+    title: `${post.title} | JapanKoreaHub`,
     description: post.excerpt,
     keywords: [
       ...post.tags,
       post.country,
       post.category,
       'E-7 Visa Korea',
-      'LanguageGuru Blog',
+      'JapanKoreaHub Blog',
       'Japan SSW Visa',
       'EPS TOPIK Korea',
       'Prometric Exam'
@@ -52,17 +56,24 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       title: post.title,
       description: post.excerpt,
       url: canonicalUrl,
-      siteName: 'LanguageGuru',
+      siteName: 'JapanKoreaHub',
       type: 'article',
       publishedTime: post.date,
       authors: [post.author],
-      images: post.image ? [{ url: `https://languageguru.app${post.image}`, width: 1200, height: 630, alt: post.title }] : undefined,
+      images: [
+        {
+          url: imageUrl,
+          width: 1200,
+          height: 630,
+          alt: post.title,
+        },
+      ],
     },
     twitter: {
       card: 'summary_large_image',
       title: post.title,
       description: post.excerpt,
-      images: post.image ? [`https://languageguru.app${post.image}`] : undefined,
+      images: [imageUrl],
     },
   };
 }
