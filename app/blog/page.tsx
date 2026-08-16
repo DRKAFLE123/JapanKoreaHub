@@ -9,7 +9,7 @@ export const metadata: Metadata = {
 
 export default function BlogPage() {
   return (
-    <main className="min-h-screen bg-slate-50 text-slate-900 py-8 px-4 sm:px-8">
+    <main className="min-h-screen bg-slate-50 text-slate-900 py-3 sm:py-6 px-3 sm:px-8">
       <BlogHub />
     </main>
   );

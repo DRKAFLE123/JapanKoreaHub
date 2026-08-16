@@ -118,7 +118,7 @@ export default function MainLayoutWrapper({ children }: { children: React.ReactN
               onMenuToggle={() => setSidebarOpen(!sidebarOpen)}
             />
             
-            <div className="flex flex-1 pt-14 md:pt-16">
+            <div className="flex flex-1 pt-14 sm:pt-16 md:pt-16">
               <Sidebar
                 user={user}
                 isOpen={sidebarOpen}
