@@ -55,7 +55,7 @@ export default function LearnSlugClient({ country, slug }: Props) {
 
     return (
       <div className="min-h-screen bg-slate-50 text-slate-900 pb-24">
-        <div className="px-4 py-2 bg-white border-b border-slate-200 sticky top-0 z-40 flex items-center justify-between shadow-xs">
+        <div className="px-4 py-2 bg-white border-b border-slate-200 sticky top-14 md:top-16 z-30 flex items-center justify-between shadow-xs">
           <Link href={`/${country}/learn`} className="inline-flex items-center gap-1.5 text-xs font-semibold text-slate-600 hover:text-slate-900 transition-colors">
             <ArrowLeft className="w-4 h-4" />
             Back to {flag} {cName} Learning Hub

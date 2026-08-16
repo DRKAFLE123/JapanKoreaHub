@@ -47,12 +47,9 @@ export default function LearnHubClient({ country }: { country: Country }) {
   }, [rawLevelParam, country]);
 
   return (
-    <div className="min-h-screen bg-slate-50 text-slate-900 font-sans pb-20 pt-14 md:pt-3">
-      {/* Mobile Top Navbar */}
-      <MobileNavbar user={null} lang="en" onLangToggle={() => {}} onSearchOpen={() => {}} />
-
+    <div className="min-h-screen bg-slate-50 text-slate-900 font-sans pb-20 pt-0">
       {/* Main Dedicated Focus Mode Learning Canvas */}
-      <main className="w-full px-2 sm:px-4 py-2 sm:py-3">
+      <main className="w-full px-1.5 sm:px-4 py-0.5 sm:py-1">
         {country === 'japan' ? (
           <LevelHubDashboard
             level={japanLevel}
