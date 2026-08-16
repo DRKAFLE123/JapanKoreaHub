@@ -156,7 +156,7 @@ export default function NotificationBell() {
 
       {/* Unread Notifications Popover Dropdown */}
       {isOpen && (
-        <div className="absolute top-full right-0 mt-2 w-80 sm:w-96 bg-white border border-slate-200 rounded-3xl shadow-2xl z-50 overflow-hidden animate-fade-in font-sans">
+        <div className="fixed top-14 left-2 right-2 max-w-sm mx-auto sm:absolute sm:top-full sm:right-0 sm:left-auto sm:w-96 sm:max-w-none bg-white border border-slate-200 rounded-3xl shadow-2xl z-50 overflow-hidden animate-fade-in font-sans">
           
           {/* Popover Header */}
           <div className="p-4 bg-slate-50/80 border-b border-slate-100 flex items-center justify-between">

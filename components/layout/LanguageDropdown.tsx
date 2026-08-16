@@ -21,7 +21,7 @@ export default function LanguageDropdown() {
   const OPTIONS: { id: LanguageMode; label: string; sublabel: string; flag: string }[] = [
     { id: 'en', label: 'English', sublabel: 'English meanings only', flag: '🇬🇧' },
     { id: 'ne', label: 'नेपाली', sublabel: 'नेपाली अर्थ मात्र', flag: '🇳🇵' },
-    { id: 'both', label: 'Both / दुवै', sublabel: 'English + नेपाली (Dual)', flag: '🌐' },
+    { id: 'both', label: 'Both / दुवै', sublabel: 'English + नेपाली (Dual)', flag: '🌐🌐' },
   ];
 
   const currentOption = OPTIONS.find((opt) => opt.id === langMode) || OPTIONS[2];
@@ -30,19 +30,20 @@ export default function LanguageDropdown() {
     <div className="relative" ref={dropdownRef}>
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="flex items-center gap-2 px-3 py-1.5 rounded-full border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-xs font-semibold text-slate-700 dark:text-slate-200 hover:border-red-400 hover:shadow-sm transition-all cursor-pointer select-none"
+        className="flex items-center gap-1.5 px-2 sm:px-3 py-1.5 rounded-full border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-xs font-semibold text-slate-700 dark:text-slate-200 hover:border-red-400 hover:shadow-sm transition-all cursor-pointer select-none"
         title="Select Display Language Mode"
       >
-        <Globe className="w-3.5 h-3.5 text-red-500" />
+        <Globe className="w-3.5 h-3.5 text-red-500 shrink-0" />
         <span className="flex items-center gap-1">
           <span>{currentOption.flag}</span>
-          <span className="font-bold">{currentOption.label}</span>
+          <span className="hidden sm:inline font-bold">{currentOption.label}</span>
+          <span className="sm:hidden font-bold">{currentOption.id === 'both' ? 'Both' : currentOption.label}</span>
         </span>
-        <ChevronDown className={`w-3 h-3 text-slate-400 transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`} />
+        <ChevronDown className={`w-3 h-3 text-slate-400 shrink-0 transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`} />
       </button>
 
       {isOpen && (
-        <div className="absolute right-0 mt-2 w-56 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-2xl py-2 z-50 animate-in fade-in zoom-in-95 duration-150">
+        <div className="fixed top-14 right-2 w-56 max-w-[calc(100vw-16px)] sm:absolute sm:top-full sm:right-0 sm:mt-2 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-2xl py-2 z-50 animate-in fade-in zoom-in-95 duration-150">
           <div className="px-3.5 py-1.5 mb-1 border-b border-slate-100 dark:border-slate-800">
             <div className="text-[10px] font-extrabold uppercase tracking-wider text-slate-400 dark:text-slate-500">
               Content Language Mode
