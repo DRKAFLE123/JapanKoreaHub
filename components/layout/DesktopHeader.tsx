@@ -225,18 +225,74 @@ export default function DesktopHeader({ user, onSearchOpen, lang, onLangToggle, 
           <div className="w-px h-6 bg-slate-200 mx-1"></div>
 
           {user ? (
-            <Link
-              href="/profile"
-              className="flex items-center gap-2 px-2.5 py-1.5 rounded-full hover:bg-slate-100 transition-all cursor-pointer group"
-              title="View My Profile"
-            >
-              <div className="w-8 h-8 rounded-full bg-indigo-600 text-white font-black text-xs flex items-center justify-center shadow-xs group-hover:scale-105 transition-transform">
-                {user.name.charAt(0).toUpperCase()}
-              </div>
-              <span className="text-xs font-extrabold text-slate-700 hidden xl:inline-block group-hover:text-indigo-600 transition-colors">
-                {user.name}
-              </span>
-            </Link>
+            <div className="relative" ref={profileDropdownRef}>
+              <button
+                onClick={() => setProfileDropdownOpen(!profileDropdownOpen)}
+                className="flex items-center gap-2 px-2.5 py-1.5 rounded-full hover:bg-slate-100 transition-all cursor-pointer group"
+              >
+                <div className="w-8 h-8 rounded-full bg-indigo-600 text-white font-black text-xs flex items-center justify-center shadow-xs group-hover:scale-105 transition-transform">
+                  {user.name.charAt(0).toUpperCase()}
+                </div>
+                <span className="text-xs font-extrabold text-slate-700 hidden xl:inline-block group-hover:text-indigo-600 transition-colors">
+                  {user.name}
+                </span>
+                <ChevronDown className={`w-3.5 h-3.5 text-slate-400 transition-transform ${profileDropdownOpen ? 'rotate-180' : ''}`} />
+              </button>
+
+              {profileDropdownOpen && (
+                <div className="absolute right-0 top-full mt-2 w-64 bg-white border border-slate-200 rounded-2xl shadow-xl p-2 z-50 animate-fade-in text-xs font-sans">
+                  <div className="p-3 bg-slate-50 border border-slate-200/80 rounded-xl mb-1 space-y-0.5">
+                    <div className="font-bold text-slate-900 text-sm truncate">{user.name}</div>
+                    <div className="text-[11px] text-slate-500 truncate">{user.email}</div>
+                  </div>
+
+                  <div className="space-y-0.5 py-1">
+                    <Link
+                      href="/profile"
+                      onClick={() => setProfileDropdownOpen(false)}
+                      className="flex items-center gap-2.5 px-3 py-2 rounded-xl text-slate-700 hover:text-slate-900 hover:bg-slate-100 font-bold transition-colors"
+                    >
+                      <User className="w-4 h-4 text-slate-500" />
+                      <span>My Profile</span>
+                    </Link>
+
+                    {/* Dark Mode Toggle Button */}
+                    <button
+                      type="button"
+                      onClick={() => toggleTheme()}
+                      className="w-full flex items-center justify-between px-3 py-2 rounded-xl text-slate-700 hover:text-slate-900 hover:bg-slate-100 font-bold transition-colors cursor-pointer text-left"
+                    >
+                      <div className="flex items-center gap-2.5">
+                        {isDark ? <Sun className="w-4 h-4 text-amber-500" /> : <Moon className="w-4 h-4 text-indigo-600" />}
+                        <span>Dark Mode</span>
+                      </div>
+                      <span className={`px-2 py-0.5 rounded-full text-[10px] font-black uppercase ${
+                        isDark ? 'bg-indigo-950 text-indigo-300 border border-indigo-800' : 'bg-slate-200 text-slate-700'
+                      }`}>
+                        {isDark ? 'ON' : 'OFF'}
+                      </span>
+                    </button>
+                  </div>
+
+                  <div className="border-t border-slate-200 my-1 pt-1">
+                    <button
+                      onClick={async () => {
+                        setProfileDropdownOpen(false);
+                        try {
+                          await fetch('/api/auth/logout', { method: 'POST' });
+                        } catch {}
+                        localStorage.removeItem('jkh_user');
+                        window.location.href = '/';
+                      }}
+                      className="w-full flex items-center gap-2.5 px-3 py-2 rounded-xl text-rose-600 hover:bg-rose-50 font-bold transition-colors cursor-pointer text-left"
+                    >
+                      <LogIn className="w-4 h-4 text-rose-600" />
+                      <span>Sign Out</span>
+                    </button>
+                  </div>
+                </div>
+              )}
+            </div>
           ) : (
             <div className="flex items-center gap-2">
               <button

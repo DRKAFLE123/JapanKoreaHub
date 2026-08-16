@@ -223,7 +223,7 @@ export const LevelHubDashboard: React.FC<LevelHubDashboardProps> = ({
             )}
 
             {activeTab === 'FLASHCARDS' && (
-              <KanjiCard />
+              <KanjiCard currentLevel={currentLevel} />
             )}
 
             {activeTab === 'LISTENING' && (
