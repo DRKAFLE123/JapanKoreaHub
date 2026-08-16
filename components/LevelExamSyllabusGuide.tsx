@@ -29,6 +29,8 @@ export const LevelExamSyllabusGuide: React.FC<LevelExamSyllabusGuideProps> = ({ 
   const [selectedCategoryFilter, setSelectedCategoryFilter] = useState<string>('ALL');
   const [expandedLessonId, setExpandedLessonId] = useState<number | null>(6); // Default open Lesson 6 (first formal grammar lesson)
   const [expandedAll, setExpandedAll] = useState(false);
+  const [syllabusViewMode, setSyllabusViewMode] = useState<'TABLE' | 'ACCORDION'>('TABLE');
+
 
   // Audio TTS player
   const speakText = (text: string, lang: 'ko-KR' | 'ja-JP' = 'ko-KR') => {
@@ -727,6 +729,149 @@ export const LevelExamSyllabusGuide: React.FC<LevelExamSyllabusGuideProps> = ({ 
 
   const isKoreanLevel = level.startsWith('EPS') || level.startsWith('TOPIK');
 
+  const getEpsFunctionJob = (lesson: number): string => {
+    const map: Record<number, string> = {
+      1: '한글 자음과 모음 익히기 (Learning Hangeul Consonants & Vowels)',
+      2: '받침 및 음가 익히기 (Mastering Batchim & Phonetics)',
+      3: '교실 지시어 사용하기 (Using Classroom Commands)',
+      4: '만났을 때와 헤어질 때 인사하기 (Greetings & Farewells)',
+      5: '주말 및 축하 인사 나누기 (Weekend & Congratulations Greetings)',
+      6: '자기소개하기 (Introducing oneself)',
+      7: '장소 및 물건 묻고 대답하기 (Asking & answering about places and objects)',
+      8: '일과 시간 묻고 대답하기 (Asking & answering about daily routine and time)',
+      9: '가족에 대해 묻고 대답하기 (Asking & answering about family)',
+      10: '날짜와 장소 묻고 대답하기 (Asking & answering about dates and places)',
+      11: '물품 구매하기 (Purchasing goods)',
+      12: '위치와 길 찾기 (Finding locations and directions)',
+      13: '약속 시간과 장소 정하기 (Making an appointment)',
+      14: '음식 주문하기 (Ordering food)',
+      15: '날씨와 기분 이야기하기 (Talking about weather and feelings)',
+      16: '취미 이야기하기 (Talking about hobbies)',
+      17: '여행 경험 및 계획 이야기하기 (Discussing past trips & planning trips)',
+      18: '교통수단과 이동 방법 말하기 (Talking about transport & travel methods)',
+      19: '전화하기 및 인터넷 사용하기 (Making calls & using internet)',
+      20: '집안일 분담 및 제안하기 (Sharing housework & offering help)',
+      21: '도움 제안하기 및 초대하기 (Offering help & invitations)',
+      22: '금지 및 허가 표현하기 (Expressing prohibitions & permissions)',
+      23: '예절 및 존댓말 표현하기 (Showing respect & manners)',
+      24: '동시 동작 및 학습법 이야기하기 (Describing simultaneous actions & learning methods)',
+      25: '종교 활동 및 빈도 표현하기 (Talking about religious activities & frequency)',
+      26: '약 복용 및 순서 설명하기 (Explaining medication & sequential actions)',
+      27: '증상 설명 및 병원 이용하기 (Describing symptoms & hospital visit)',
+      28: '은행 이용 및 목적 말하기 (Using bank & stating purposes)',
+      29: '우체국 이용 및 송금하기 (Using post office & sending money)',
+      30: '센터 이용 문의하기 (Inquiring about support centers)',
+      31: '기후 및 특징 비교하기 (Comparing climate & features)',
+      32: '계절 음식 및 요리법 이야기하기 (Talking about seasonal foods & recipes)',
+      33: '명절 풍습 및 계획 설명하기 (Explaining holiday customs & plans)',
+      34: '경조사 선물 및 축하하기 (Suggesting gifts & celebrating events)',
+      35: '한류 및 대중문화 설명하기 (Explaining Hallyu & Pop culture)',
+      36: '복장 점검 및 작업 복장 조언하기 (Checking attire & dress code)',
+      37: '기숙사 및 시설 관리하기 (Managing dormitory & facilities)',
+      38: '직장 분위기 및 동료 관계 이야기하기 (Talking about workplace atmosphere)',
+      39: '회식 일정 전달 및 참석하기 (Communicating dinner plans & attendance)',
+      40: '성희롱 예방 및 사과하기 (Preventing harassment & apologizing)',
+      41: '공구 선택 및 작업 지시하기 (Choosing tools & directing work)',
+      42: '기계 작동 및 포장 작업하기 (Operating machinery & packaging)',
+      43: '건설 자재 운반 및 작업 보고하기 (Transporting materials & reporting)',
+      44: '작업장 정리정돈 및 이유 설명하기 (Organizing workplace & explaining reasons)',
+      45: '농기구 준비 및 농작물 재배하기 (Preparing farming tools & crop farming)',
+      46: '축사 관리 및 사료 주기 (Managing barn & feeding livestock)',
+      47: '어구 정비 및 재고 관리하기 (Maintaining fishing gear & inventory)',
+      48: '안전사고 예방 및 주의하기 (Preventing industrial accidents)',
+      49: '보호구 착용 및 점검하기 (Wearing protective gear & inspection)',
+      50: '건강 상태 체크 및 격려하기 (Checking health status & encouraging peers)',
+      51: 'EPS 고용허가제 절차 문의하기 (Inquiring about EPS application process)',
+      52: '근로 계약서 내용 확인하기 (Checking labor contract terms)',
+      53: '외국인 등록 및 출입국 절차 진행하기 (Alien registration & immigration steps)',
+      54: '전용 보험 가입 및 신청하기 (Applying for EPS dedicated insurance)',
+      55: '급여 명세서 확인 및 수당 계산하기 (Checking pay slips & allowances)',
+      56: '휴가 신청 및 휴일 확인하기 (Applying for leave & checking holidays)',
+      57: '사업장 변경 사유 설명 및 신청하기 (Applying for workplace change)',
+      58: '체류 기간 연장 및 재입국 신청하기 (Extending stay period & re-entry permit)',
+      59: '작업장 안전 수칙 준수하기 (Complying with industrial safety rules)',
+      60: '한국 생활 경험 공유 및 귀국 준비하기 (Sharing Korea life experience & return prep)'
+    };
+    return map[lesson] || '단원 목표 및 직무 구조';
+  };
+
+  const getEpsGrammarSummary = (item: EPSLessonGrammar): string => {
+    if (item.grammarSummary) return item.grammarSummary;
+    const g1 = item.grammarPoint1?.pattern || item.grammarPoint1?.title;
+    const g2 = item.grammarPoint2?.pattern || item.grammarPoint2?.title;
+    if (g1 && g2) return `${g1}, ${g2}`;
+    if (g1) return g1;
+    if (item.isPreparatory) return '한글 자모 (Phonetics)';
+    return '기본 문법 (Grammar)';
+  };
+
+  const getEpsCultureInfo = (lesson: number): string => {
+    const map: Record<number, string> = {
+      1: '한글의 창제 원리 (Principles of Hangeul)',
+      2: '한글 자모 표기법 (Hangeul Spelling Rules)',
+      3: '한국의 교육 문화 (Korean Classroom Culture)',
+      4: '한국의 인사 예절 (Korean Greeting Manners)',
+      5: '한국의 주말 문화 (Korean Weekend Life)',
+      6: '인사 예절 (Greeting Manners)',
+      7: '한국의 좌식 문화 (Floor-sitting Culture) / 생활필수품 (Daily Necessities)',
+      8: '출근 시간을 지킵시다 (Let\'s get to work on time)',
+      9: '높임말과 반말 (Honorific Forms & Casual Speech)',
+      10: '한국의 공휴일 (National Holidays in Korea)',
+      11: '의류 (Clothing)',
+      12: '길거리 (Streets)',
+      13: '한국 사람들이 인사로 하는 약속 (Promises Koreans make as greetings)',
+      14: '음식 메뉴 (Food Menu)',
+      15: '한국의 사계절 (Four Seasons of Korea)',
+      16: '취미 활동 프로그램 (Community Support Programs for Hobbies)',
+      17: '한국의 관광지 (Tourist Sites in Korea)',
+      18: '대중교통 이용법 (Using Public Transport)',
+      19: '유용한 전화번호 (Useful Emergency Phone Numbers)',
+      20: '쓰레기 분리수거 (Garbage Sorting & Recycling)',
+      21: '한국의 집들이 (Housewarming Party Culture)',
+      22: '공공장소 표지판 (Public Safety Signs)',
+      23: '한국의 어르신 예절 (Elder Respect Culture)',
+      24: '한국의 교육 프로그램 (Korean Training Programs)',
+      25: '한국의 종교 (Religions in Korea)',
+      26: '가정 비상약 (Home First Aid Kit)',
+      27: '외국인 근로자 병원 안내 (Hospital Services for Foreigners)',
+      28: '외국인 전용 금융 서비스 (Banking Services for Foreigners)',
+      29: '국제 특급 우편 (EMS Express Mail)',
+      30: '외국인력지원센터 활용 (Foreign Worker Support Centers)',
+      31: '한국의 특별시와 광역시 (Metropolitan Cities of Korea)',
+      32: '한국의 보양식 (Korean Health Foods)',
+      33: '한국의 명절 놀이 (Traditional Holiday Games)',
+      34: '한국의 축의금과 조의금 (Condolence & Wedding Money)',
+      35: '한류 여행지와 굿즈 (Hallyu Tourism)',
+      36: '작업장에서의 복장 수칙 (Workplace Dress Code)',
+      37: '한국의 기숙사 에티켓 (Dormitory Etiquette)',
+      38: '직장 내 호칭 예절 (Workplace Titles & Address)',
+      39: '한국의 회식 문화와 예절 (Corporate Dining Manners)',
+      40: '직장 내 성희롱 예방 교육 (Workplace Harassment Prevention)',
+      41: '안전한 공구 관리법 (Hand Tool Maintenance)',
+      42: '작업장 기계 점검 수칙 (Machinery Inspection Rules)',
+      43: '건설 현장 안전 수칙 (Construction Safety Rules)',
+      44: '작업장 5S 운동 (5S Workplace Management)',
+      45: '한국의 농촌 생활 (Rural Farming Life)',
+      46: '축산 농가 위생 관리 (Livestock Farm Hygiene Rules)',
+      47: '한국의 양식장과 어촌 (Fishery Farms in Korea)',
+      48: '작업장 비상대피 수칙 (Emergency Evacuation Rules)',
+      49: '올바른 보호구 착용법 (Proper Use of Protective Gear)',
+      50: '산업재해보상보험 혜택 (Industrial Accident Compensation)',
+      51: '고용허가제 제도 안내 (Overview of EPS System)',
+      52: '표준근로계약서 이해 (Understanding Labor Contract)',
+      53: '출입국관리사무소 이용 안내 (Immigration Office Services)',
+      54: '외국인 근로자 전용 보험 (Foreign Worker Insurance)',
+      55: '최저임금제도와 수당 (Minimum Wage Rules)',
+      56: '한국의 연차 휴가제도 (Annual Paid Leave System)',
+      57: '사업장 변경 신청 수칙 (Rules for Workplace Change)',
+      58: '체류 기간 연장 및 재입국 신청하기 (Extending stay period & re-entry permit)',
+      59: '한국의 산업안전보건법 (Occupational Safety & Health Act)',
+      60: '성공적인 한국 생활과 귀국 (Successful Life in Korea & Returning Home)'
+    };
+    return map[lesson] || '한국 문화 및 정보';
+  };
+
+
   // Filtered EPS Lessons
   const filteredEpsLessons = useMemo(() => {
     return EPS_60_LESSONS_GRAMMAR.filter((lesson) => {
@@ -932,14 +1077,38 @@ export const LevelExamSyllabusGuide: React.FC<LevelExamSyllabusGuideProps> = ({ 
                   </p>
                 </div>
 
-                <div className="flex items-center gap-2">
-                  <button
-                    onClick={() => setExpandedAll(!expandedAll)}
-                    className="px-3.5 py-1.5 rounded-xl bg-slate-50 border border-slate-300 hover:bg-slate-100 hover:border-slate-400 text-slate-700 text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 shadow-xs"
-                  >
-                    {expandedAll ? <ChevronUp className="w-3.5 h-3.5" /> : <ChevronDown className="w-3.5 h-3.5" />}
-                    <span>{expandedAll ? 'Collapse All' : 'Expand All'}</span>
-                  </button>
+                <div className="flex flex-wrap items-center gap-2">
+                  {/* View Mode Switcher */}
+                  <div className="flex items-center bg-slate-100 p-1 rounded-xl border border-slate-300">
+                    <button
+                      onClick={() => setSyllabusViewMode('TABLE')}
+                      className={`px-3 py-1.5 rounded-lg text-xs font-black transition-all flex items-center gap-1.5 cursor-pointer ${
+                        syllabusViewMode === 'TABLE' ? 'bg-indigo-600 text-white shadow-xs' : 'text-slate-700 hover:text-indigo-600'
+                      }`}
+                    >
+                      <ListFilter className="w-3.5 h-3.5" />
+                      <span>Official Book Table</span>
+                    </button>
+                    <button
+                      onClick={() => setSyllabusViewMode('ACCORDION')}
+                      className={`px-3 py-1.5 rounded-lg text-xs font-black transition-all flex items-center gap-1.5 cursor-pointer ${
+                        syllabusViewMode === 'ACCORDION' ? 'bg-indigo-600 text-white shadow-xs' : 'text-slate-700 hover:text-indigo-600'
+                      }`}
+                    >
+                      <Layers className="w-3.5 h-3.5" />
+                      <span>Accordion Cards</span>
+                    </button>
+                  </div>
+
+                  {syllabusViewMode === 'ACCORDION' && (
+                    <button
+                      onClick={() => setExpandedAll(!expandedAll)}
+                      className="px-3.5 py-1.5 rounded-xl bg-slate-50 border border-slate-300 hover:bg-slate-100 hover:border-slate-400 text-slate-700 text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 shadow-xs"
+                    >
+                      {expandedAll ? <ChevronUp className="w-3.5 h-3.5" /> : <ChevronDown className="w-3.5 h-3.5" />}
+                      <span>{expandedAll ? 'Collapse All' : 'Expand All'}</span>
+                    </button>
+                  )}
                 </div>
               </div>
 
@@ -1017,8 +1186,83 @@ export const LevelExamSyllabusGuide: React.FC<LevelExamSyllabusGuideProps> = ({ 
                 </div>
               </div>
 
-              {/* Lesson Cards Accordion List */}
-              <div className="space-y-3">
+              {/* Syllabus View Section */}
+              {syllabusViewMode === 'TABLE' ? (
+                /* OFFICIAL HRD KOREA TEXTBOOK 7-COLUMN TABLE VIEW */
+                <div className="overflow-x-auto rounded-2xl border border-slate-200 shadow-md bg-white">
+                  <table className="w-full text-left border-collapse text-xs">
+                    <thead>
+                      <tr className="bg-slate-100 text-slate-800 border-b border-slate-300 font-black text-[11px] uppercase tracking-wider sticky top-0 z-10">
+                        <th className="py-3.5 px-3 border-r border-slate-200 text-center w-28 shrink-0 bg-slate-100">주제<br/><span className="text-[10px] text-slate-500 font-bold">Topic</span></th>
+                        <th className="py-3.5 px-2 border-r border-slate-200 text-center w-14 shrink-0 bg-slate-100">과<br/><span className="text-[10px] text-slate-500 font-bold">Chapter</span></th>
+                        <th className="py-3.5 px-4 border-r border-slate-200 min-w-[220px] bg-slate-100">제목<br/><span className="text-[10px] text-slate-500 font-bold">Title</span></th>
+                        <th className="py-3.5 px-3 border-r border-slate-200 min-w-[190px] bg-slate-100">기능 / 직무 구조<br/><span className="text-[10px] text-slate-500 font-bold">Function / Job</span></th>
+                        <th className="py-3.5 px-3 border-r border-slate-200 min-w-[170px] bg-slate-100">어휘<br/><span className="text-[10px] text-slate-500 font-bold">Vocabulary</span></th>
+                        <th className="py-3.5 px-3 border-r border-slate-200 min-w-[160px] bg-slate-100">문법<br/><span className="text-[10px] text-slate-500 font-bold">Grammar</span></th>
+                        <th className="py-3.5 px-3 min-w-[190px] bg-slate-100">정보 / 문화<br/><span className="text-[10px] text-slate-500 font-bold">Information / Culture</span></th>
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-slate-200">
+                      {filteredEpsLessons.map((item) => (
+                        <tr key={item.lesson} className="hover:bg-indigo-50/40 transition-colors">
+                          {/* 1. Topic */}
+                          <td className="py-3.5 px-2 border-r border-slate-200 text-center align-top">
+                            <span className={`px-2 py-1 rounded-lg text-[10px] font-black inline-block leading-tight ${
+                              item.topicCategory.includes('Preparatory') ? 'bg-lime-100 text-lime-950 border border-lime-300' :
+                              item.topicCategory.includes('Basic') ? 'bg-sky-100 text-sky-950 border border-sky-300' :
+                              item.topicCategory.includes('Hobbies') || item.topicCategory.includes('Daily') ? 'bg-purple-100 text-purple-950 border border-purple-300' :
+                              'bg-amber-100 text-amber-950 border border-amber-300'
+                            }`}>
+                              {item.topicCategory}
+                            </span>
+                          </td>
+
+                          {/* 2. Chapter */}
+                          <td className="py-3.5 px-2 border-r border-slate-200 text-center font-black text-sm align-top text-slate-900">
+                            <span className="w-7 h-7 rounded-lg bg-indigo-50 border border-indigo-200 text-indigo-800 flex items-center justify-center mx-auto text-xs font-black">
+                              {item.lesson}
+                            </span>
+                          </td>
+
+                          {/* 3. Title */}
+                          <td className="py-3.5 px-4 border-r border-slate-200 align-top space-y-0.5">
+                            <div className="font-kr font-black text-slate-900 text-sm flex items-center gap-2">
+                              <span>{item.titleKorean}</span>
+                              <span className="text-[10px] px-1.5 py-0.5 rounded bg-slate-100 text-slate-600 font-mono font-bold">B{item.book}</span>
+                            </div>
+                            <div className="text-xs font-medium text-slate-600">{item.titleEnglish}</div>
+                            <div className="text-[11px] font-medium text-emerald-800">🇳🇵 {item.titleNepali}</div>
+                          </td>
+
+                          {/* 4. Function / Job */}
+                          <td className="py-3.5 px-3 border-r border-slate-200 align-top text-slate-800 font-medium text-xs leading-relaxed">
+                            {item.functionJob || getEpsFunctionJob(item.lesson)}
+                          </td>
+
+                          {/* 5. Vocabulary */}
+                          <td className="py-3.5 px-3 border-r border-slate-200 align-top text-slate-800 font-semibold text-xs leading-relaxed font-kr">
+                            {item.vocabularyTopic}
+                          </td>
+
+                          {/* 6. Grammar */}
+                          <td className="py-3.5 px-3 border-r border-slate-200 align-top">
+                            <div className="inline-block px-2.5 py-1 rounded-lg bg-rose-50 border border-rose-200 text-rose-900 font-bold text-xs">
+                              {getEpsGrammarSummary(item)}
+                            </div>
+                          </td>
+
+                          {/* 7. Information / Culture */}
+                          <td className="py-3.5 px-3 align-top text-slate-800 font-medium text-xs leading-relaxed">
+                            {getEpsCultureInfo(item.lesson)}
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              ) : (
+                /* Accordion Cards View */
+                <div className="space-y-3">
                 {filteredEpsLessons.map((lesson) => {
                   const isOpen = expandedAll || expandedLessonId === lesson.lesson;
 
@@ -1190,6 +1434,7 @@ export const LevelExamSyllabusGuide: React.FC<LevelExamSyllabusGuideProps> = ({ 
                   );
                 })}
               </div>
+              )}
 
             </div>
           ) : (

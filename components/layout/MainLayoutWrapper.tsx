@@ -5,9 +5,12 @@ import BottomTabBar from './BottomTabBar';
 import DesktopHeader from './DesktopHeader';
 import Sidebar from './Sidebar';
 import GlobalSearch from '../search/GlobalSearch';
+import ContentProtection from '../security/ContentProtection';
 import { LanguageProvider } from '@/lib/i18n/LanguageContext';
 import { CountryProvider } from '@/lib/context/CountryContext';
 import { ThemeProvider } from '@/lib/context/ThemeContext';
+
+import { usePathname } from 'next/navigation';
 
 interface SidebarCollapseContextType {
   isCollapsed: boolean;
@@ -24,6 +27,7 @@ const SidebarCollapseContext = createContext<SidebarCollapseContextType>({
 export const useSidebarCollapse = () => useContext(SidebarCollapseContext);
 
 export default function MainLayoutWrapper({ children }: { children: React.ReactNode }) {
+  const pathname = usePathname();
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const [isCollapsed, setIsCollapsed] = useState(false);
@@ -77,11 +81,25 @@ export default function MainLayoutWrapper({ children }: { children: React.ReactN
     localStorage.setItem('jkh_sidebar_collapsed', String(val));
   };
 
+  // Standalone layout for Admin CMS
+  if (pathname?.startsWith('/admin')) {
+    return (
+      <ThemeProvider>
+        <LanguageProvider>
+          <CountryProvider>
+            {children}
+          </CountryProvider>
+        </LanguageProvider>
+      </ThemeProvider>
+    );
+  }
+
   return (
     <ThemeProvider>
       <LanguageProvider>
         <CountryProvider>
           <SidebarCollapseContext.Provider value={{ isCollapsed, toggleCollapse, setCollapsed }}>
+            <ContentProtection />
             <div className="min-h-screen bg-slate-50 text-slate-900 flex flex-col transition-colors">
             {/* Mobile Top Navbar (Visible on mobile screens) */}
             <MobileNavbar
@@ -102,6 +120,7 @@ export default function MainLayoutWrapper({ children }: { children: React.ReactN
             
             <div className="flex flex-1 pt-0 md:pt-16">
               <Sidebar
+                user={user}
                 isOpen={sidebarOpen}
                 isCollapsed={isCollapsed}
                 onToggleCollapse={toggleCollapse}

@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import {
   BookOpen, Layers, Headphones, Clock, FileText, Globe,
   Sparkles, Award, Factory, Leaf, HardHat, Waves, ShieldCheck,
@@ -743,128 +743,130 @@ export const KoreanHubDashboard: React.FC<KoreanHubDashboardProps> = ({
   return (
     <div className={`space-y-2 font-sans w-full max-w-full overflow-x-hidden ${isFocusMode ? 'fixed inset-0 z-[100] bg-slate-50 dark:bg-slate-950 p-2 sm:p-5 overflow-y-auto' : ''}`}>
 
-      {/* 🌐 ROW 1: KOREAN CURRICULUM LEVEL BAR + FOCUS MODE TOGGLE */}
-      <div className="flex items-center justify-between gap-2 overflow-x-auto no-scrollbar py-1 bg-white dark:bg-slate-900 p-2 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-xs">
-        <div className="flex items-center gap-1.5 text-xs font-black uppercase tracking-wider text-slate-500 whitespace-nowrap pl-1 pr-1">
-          <Globe className="w-3.5 h-3.5 text-blue-600" />
-          <span>Course:</span>
+      {/* 🌐 UNIFIED KOREAN LEVEL & SUB-MENU NAVIGATION CARD */}
+      <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-2 space-y-1.5 shadow-xs">
+        {/* ROW 1: Level Switcher */}
+        <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar touch-pan-x py-0.5 w-full">
+          <div className="flex items-center gap-1 text-xs font-black uppercase tracking-wider text-slate-500 whitespace-nowrap pl-1 pr-0.5 shrink-0">
+            <Globe className="w-3.5 h-3.5 text-blue-600" />
+            <span className="hidden sm:inline">Course:</span>
+          </div>
+
+          <div className="flex items-center gap-1.5 flex-nowrap shrink-0">
+            {KOREA_LEVEL_LIST.map((lvl) => {
+              const isSelected = level === lvl.id;
+              return (
+                <button
+                  key={lvl.id}
+                  onClick={() => {
+                    if (onSelectLevel) onSelectLevel(lvl.id);
+                  }}
+                  className={`px-2.5 py-1 rounded-xl text-xs font-extrabold transition-all cursor-pointer whitespace-nowrap border ${
+                    isSelected
+                      ? 'bg-blue-600 text-white shadow-xs border-blue-500 font-black'
+                      : 'bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:text-slate-900 hover:bg-slate-200 border-slate-200 dark:border-slate-700 font-bold'
+                  }`}
+                >
+                  {lvl.label}
+                </button>
+              );
+            })}
+
+            {/* ⛶ FOCUS MODE TOGGLE BUTTON */}
+            <button
+              onClick={() => setIsFocusMode(!isFocusMode)}
+              className={`ml-1 px-3 py-1 rounded-xl text-xs font-extrabold transition-all flex items-center gap-1.5 cursor-pointer whitespace-nowrap border ${
+                isFocusMode
+                  ? 'bg-blue-600 text-white border-blue-500 shadow-md font-black animate-pulse'
+                  : 'bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200 border-slate-200 dark:border-slate-700 font-bold'
+              }`}
+              title={isFocusMode ? "Exit Fullscreen Focus Mode" : "Enter Distraction-Free Fullscreen Focus Mode"}
+            >
+              {isFocusMode ? <Minimize2 className="w-3.5 h-3.5" /> : <Maximize2 className="w-3.5 h-3.5" />}
+              <span>{isFocusMode ? 'Exit Focus' : 'Focus'}</span>
+            </button>
+          </div>
         </div>
 
-        <div className="flex items-center gap-1.5 flex-nowrap">
-          {KOREA_LEVEL_LIST.map((lvl) => {
-            const isSelected = level === lvl.id;
+        {/* ROW 2: Options Sub-Menu (Micro-Pill Navigation) */}
+        <div className="pt-1.5 border-t border-slate-100 dark:border-slate-800/80 flex items-center gap-1 overflow-x-auto no-scrollbar touch-pan-x py-0.5">
+          {subTabs.map(tab => {
+            const isActive = activeTab === tab.id;
+
+            if (tab.id === 'BASICS_MODULES') {
+              return (
+                <div key={tab.id} className="relative shrink-0">
+                  <button
+                    onClick={() => {
+                      setActiveTab('BASICS_MODULES');
+                      setShowModuleDropdown(!showModuleDropdown);
+                    }}
+                    className={`flex items-center gap-1 px-2.5 py-1 rounded-lg text-[10.5px] font-extrabold transition-all cursor-pointer ${
+                      isActive
+                        ? `bg-gradient-to-r ${meta.color} text-white shadow-glow font-black`
+                        : 'bg-slate-50 dark:bg-slate-800/50 text-slate-600 dark:text-slate-400 hover:text-slate-900 hover:bg-slate-100 dark:hover:bg-slate-800 font-bold'
+                    }`}
+                  >
+                    <span className="text-[10px]">{tab.emoji}</span>
+                    <span>{tab.label}</span>
+                    <ChevronDown className={`w-3.5 h-3.5 text-slate-400 transition-transform duration-200 ${showModuleDropdown ? 'rotate-180' : ''}`} />
+                  </button>
+
+                  {/* Click Dropdown Card for 12 Modules Quick Jump */}
+                  {showModuleDropdown && (
+                    <>
+                      <div className="fixed inset-0 z-[90]" onClick={() => setShowModuleDropdown(false)} />
+                      <div className="absolute top-full left-0 mt-2 w-80 bg-white border border-slate-200 rounded-2xl p-2.5 shadow-2xl z-[100] space-y-1 max-h-[75vh] overflow-y-auto scrollbar-thin text-slate-900">
+                        <div className="px-2 py-1 text-[10px] font-black uppercase tracking-wider text-emerald-600 border-b border-slate-100 mb-1 flex items-center justify-between">
+                          <span>Korean Basics Modules (12)</span>
+                          <span>Quick Jump</span>
+                        </div>
+
+                        {KOREAN_BASICS_MODULES.map((m) => (
+                          <button
+                            key={m.id}
+                            onClick={() => {
+                              setSelectedModuleId(m.id);
+                              setActiveTab('BASICS_MODULES');
+                              setShowModuleDropdown(false);
+                            }}
+                            className="w-full text-left p-2 rounded-xl hover:bg-emerald-50 border border-transparent transition-all flex items-center justify-between group/item cursor-pointer"
+                          >
+                            <div className="flex items-center gap-2 min-w-0">
+                              <span className="text-base">{m.emoji}</span>
+                              <div className="truncate">
+                                <div className="text-xs font-bold text-slate-900 group-hover/item:text-emerald-700 truncate">
+                                  Mod {m.moduleNumber}: {m.title}
+                                </div>
+                                <div className="text-[10px] text-slate-500 truncate">{m.lessons.length} Lessons • {m.badgeName}</div>
+                              </div>
+                            </div>
+                            <ChevronRight className="w-3.5 h-3.5 text-slate-400 group-hover/item:text-emerald-600 shrink-0" />
+                          </button>
+                        ))}
+                      </div>
+                    </>
+                  )}
+                </div>
+              );
+            }
+
             return (
               <button
-                key={lvl.id}
-                onClick={() => {
-                  if (onSelectLevel) onSelectLevel(lvl.id);
-                }}
-                className={`px-2.5 py-1 rounded-xl text-xs font-extrabold transition-all cursor-pointer whitespace-nowrap border ${
-                  isSelected
-                    ? 'bg-blue-600 text-white shadow-xs border-blue-500 font-black'
-                    : 'bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:text-slate-900 hover:bg-slate-200 border-slate-200 dark:border-slate-700 font-bold'
+                key={tab.id}
+                onClick={() => handleTabClick(tab.id)}
+                className={`flex items-center gap-1 px-2.5 py-1 rounded-lg text-[10.5px] font-extrabold whitespace-nowrap transition-all shrink-0 cursor-pointer ${
+                  isActive
+                    ? 'bg-blue-600 text-white shadow-xs border border-blue-500 font-black'
+                    : 'bg-slate-50 dark:bg-slate-800/50 text-slate-600 dark:text-slate-400 hover:text-slate-900 hover:bg-slate-100 dark:hover:bg-slate-800 border border-slate-200/60 dark:border-slate-700/60 font-bold'
                 }`}
               >
-                {lvl.label}
+                <span className="text-[10px]">{tab.emoji}</span>
+                <span>{tab.label}</span>
               </button>
             );
           })}
-
-          {/* ⛶ FOCUS MODE TOGGLE BUTTON */}
-          <button
-            onClick={() => setIsFocusMode(!isFocusMode)}
-            className={`ml-1 px-3 py-1 rounded-xl text-xs font-extrabold transition-all flex items-center gap-1.5 cursor-pointer whitespace-nowrap border ${
-              isFocusMode
-                ? 'bg-blue-600 text-white border-blue-500 shadow-md font-black animate-pulse'
-                : 'bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200 border-slate-200 dark:border-slate-700 font-bold'
-            }`}
-            title={isFocusMode ? "Exit Fullscreen Focus Mode" : "Enter Distraction-Free Fullscreen Focus Mode"}
-          >
-            {isFocusMode ? <Minimize2 className="w-3.5 h-3.5" /> : <Maximize2 className="w-3.5 h-3.5" />}
-            <span>{isFocusMode ? 'Exit Focus' : 'Focus'}</span>
-          </button>
         </div>
-      </div>
-
-      {/* 📖 ROW 2: OPTIONS SUB-MENU BAR (Tailored to selected Korean level) */}
-      <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar py-1 bg-white p-1.5 rounded-2xl border border-slate-200 shadow-xs">
-
-        {subTabs.map(tab => {
-          const isActive = activeTab === tab.id;
-
-          if (tab.id === 'BASICS_MODULES') {
-            return (
-              <div key={tab.id} className="relative shrink-0">
-                <button
-                  onClick={() => {
-                    setActiveTab('BASICS_MODULES');
-                    setShowModuleDropdown(!showModuleDropdown);
-                  }}
-                  className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-extrabold transition-all cursor-pointer ${
-                    isActive
-                      ? `bg-gradient-to-r ${meta.color} text-white shadow-glow font-black`
-                      : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100 font-bold'
-                  }`}
-                >
-                  <span>{tab.emoji}</span>
-                  <span>{tab.label}</span>
-                  <ChevronDown className={`w-3.5 h-3.5 text-slate-400 transition-transform duration-200 ${showModuleDropdown ? 'rotate-180' : ''}`} />
-                </button>
-
-                {/* Click Dropdown Card for 12 Modules Quick Jump */}
-                {showModuleDropdown && (
-                  <>
-                    <div className="fixed inset-0 z-[90]" onClick={() => setShowModuleDropdown(false)} />
-                    <div className="absolute top-full left-0 mt-2 w-80 bg-white border border-slate-200 rounded-2xl p-2.5 shadow-2xl z-[100] space-y-1 max-h-[75vh] overflow-y-auto scrollbar-thin text-slate-900">
-                      <div className="px-2 py-1 text-[10px] font-black uppercase tracking-wider text-emerald-600 border-b border-slate-100 mb-1 flex items-center justify-between">
-                        <span>Korean Basics Modules (12)</span>
-                        <span>Quick Jump</span>
-                      </div>
-
-                      {KOREAN_BASICS_MODULES.map((m) => (
-                        <button
-                          key={m.id}
-                          onClick={() => {
-                            setSelectedModuleId(m.id);
-                            setActiveTab('BASICS_MODULES');
-                            setShowModuleDropdown(false);
-                          }}
-                          className="w-full text-left p-2 rounded-xl hover:bg-emerald-50 border border-transparent transition-all flex items-center justify-between group/item cursor-pointer"
-                        >
-                          <div className="flex items-center gap-2 min-w-0">
-                            <span className="text-base">{m.emoji}</span>
-                            <div className="truncate">
-                              <div className="text-xs font-bold text-slate-900 group-hover/item:text-emerald-700 truncate">
-                                Mod {m.moduleNumber}: {m.title}
-                              </div>
-                              <div className="text-[10px] text-slate-500 truncate">{m.lessons.length} Lessons • {m.badgeName}</div>
-                            </div>
-                          </div>
-                          <ChevronRight className="w-3.5 h-3.5 text-slate-400 group-hover/item:text-emerald-600 shrink-0" />
-                        </button>
-                      ))}
-                    </div>
-                  </>
-                )}
-              </div>
-            );
-          }
-
-          return (
-            <button
-              key={tab.id}
-              onClick={() => handleTabClick(tab.id)}
-              className={`flex items-center gap-1.5 px-3 py-1 rounded-xl text-xs font-extrabold whitespace-nowrap transition-all shrink-0 cursor-pointer ${
-                isActive
-                  ? 'bg-blue-600 text-white shadow-xs border border-blue-500 font-black'
-                  : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100 border border-transparent font-bold'
-              }`}
-            >
-              <span>{tab.emoji}</span>
-              <span>{tab.label}</span>
-            </button>
-          );
-        })}
       </div>
 
       {/* Active Content Body */}

@@ -64,3 +64,15 @@ export function checkMockExamAccess(user: { plan?: string } | null, examsTakenCo
 
   return { allowed: true };
 }
+
+export function checkPracticeAccess(user: { name?: string; email?: string } | null): GateCheckResult {
+  if (user) {
+    return { allowed: true };
+  }
+  return {
+    allowed: false,
+    gateType: 'SIGNUP',
+    reason: 'Please sign in or create a free account to practice flashcards and track your progress!',
+  };
+}
+

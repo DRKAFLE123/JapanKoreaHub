@@ -7,7 +7,8 @@ import {
   CheckCircle2, AlertCircle, Send, FileText, Tag, MessageSquare, Clock
 } from 'lucide-react';
 
-import { INITIAL_POSTS, BlogPost } from '@/lib/blog-data';
+import Link from 'next/link';
+import { INITIAL_POSTS, BlogPost, getPostSlug } from '@/lib/blog-data';
 
 export interface BlogHubProps {
   onNavigateView?: (view: 'LANDING' | 'JAPANESE' | 'KOREAN') => void;
@@ -33,11 +34,27 @@ export const BlogHub: React.FC<BlogHubProps> = ({ onNavigateView, onOpenMockTest
   const [newExcerpt, setNewExcerpt] = useState('');
   const [newContent, setNewContent] = useState('');
 
+  const [isAdmin, setIsAdmin] = useState(false);
+
+  useEffect(() => {
+    fetch('/api/auth/me')
+      .then(res => res.json())
+      .then(data => {
+        if (data.authenticated && data.user?.role === 'ADMIN') {
+          setIsAdmin(true);
+        }
+      })
+      .catch(() => {});
+  }, []);
+
   useEffect(() => {
     const saved = localStorage.getItem('lg_blog_posts');
     if (saved) {
       try {
-        setPosts(JSON.parse(saved));
+        const parsed: BlogPost[] = JSON.parse(saved);
+        const initialIds = new Set(INITIAL_POSTS.map(p => p.id));
+        const userCreated = parsed.filter(p => !initialIds.has(p.id));
+        setPosts([...INITIAL_POSTS, ...userCreated]);
       } catch (_) {
         setPosts(INITIAL_POSTS);
       }
@@ -60,7 +77,7 @@ export const BlogHub: React.FC<BlogHubProps> = ({ onNavigateView, onOpenMockTest
       title: newTitle,
       category: newCategory,
       country: newCountry,
-      author: 'Community Publisher',
+      author: 'Administrator',
       date: new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }),
       readTime: '3 min read',
       excerpt: newExcerpt || newContent.slice(0, 140) + '...',
@@ -70,7 +87,7 @@ export const BlogHub: React.FC<BlogHubProps> = ({ onNavigateView, onOpenMockTest
       quota: newQuota,
       deadline: newDeadline,
       requirement: newRequirement,
-      tags: [newCategory, newCountry, 'Community Post'],
+      tags: [newCategory, newCountry, 'Official Post'],
       isFeatured: false,
     };
 
@@ -104,37 +121,32 @@ export const BlogHub: React.FC<BlogHubProps> = ({ onNavigateView, onOpenMockTest
   });
 
   return (
-    <div className="w-full max-w-7xl mx-auto space-y-8 font-sans pb-16">
+    <div className="w-full max-w-7xl mx-auto space-y-6 font-sans pb-16">
       
-      {/* Header Banner */}
-      <div className="bg-gradient-to-r from-slate-900 via-indigo-950 to-slate-900 border border-slate-800 rounded-3xl p-6 sm:p-10 shadow-2xl space-y-4 relative overflow-hidden">
-        <div className="absolute -top-12 -right-12 w-64 h-64 bg-indigo-500/10 rounded-full blur-3xl pointer-events-none" />
-        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 relative z-10">
-          <div className="space-y-2">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-500/20 text-indigo-300 border border-indigo-500/30 text-xs font-bold">
-              <Sparkles className="w-4 h-4 text-amber-400" />
-              <span>Official Visa News &amp; Employer Vacancies</span>
-            </div>
-            <h1 className="text-3xl sm:text-4xl font-black text-white tracking-tight">
-              LanguageGuru Career &amp; Visa Blog
-            </h1>
-            <p className="text-xs sm:text-sm text-slate-300 max-w-2xl leading-relaxed">
-              Stay updated with authentic employer recruitment vacancies, Japanese SSW / Student visa updates, HRD Korea E-9 roster calls, and Prometric exam seat releases.
-            </p>
-          </div>
+      {/* Header Section */}
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pt-2">
+        <div className="space-y-1">
+          <h1 className="text-3xl sm:text-4xl font-black text-slate-900 tracking-tight">
+            Blog &amp; Vacancies
+          </h1>
+          <p className="text-xs sm:text-sm text-slate-500 font-medium">
+            Authentic employer recruitment vacancies, Japanese SSW updates, HRD Korea E-9 notices &amp; Prometric seat releases
+          </p>
+        </div>
 
+        {isAdmin && (
           <button
             onClick={() => setShowCreateModal(true)}
-            className="w-full sm:w-auto px-5 py-3 rounded-2xl bg-gradient-to-r from-rose-600 via-pink-600 to-indigo-600 hover:from-rose-500 hover:to-indigo-500 text-white text-xs font-extrabold shadow-glow flex items-center justify-center gap-2.5 transition-all cursor-pointer shrink-0"
+            className="w-full sm:w-auto px-4 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-black shadow-xs flex items-center justify-center gap-2 transition-all cursor-pointer shrink-0"
           >
             <Plus className="w-4 h-4" />
             <span>Post Announcement / Vacancy</span>
           </button>
-        </div>
+        )}
       </div>
 
       {/* Filter & Search Toolbar */}
-      <div className="flex flex-col md:flex-row items-center justify-between gap-4 bg-slate-900/80 border border-slate-800 rounded-2xl p-4">
+      <div className="flex flex-col md:flex-row items-center justify-between gap-4 bg-white border border-slate-200 rounded-2xl p-4 shadow-sm">
         {/* Category Tabs */}
         <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar w-full md:w-auto">
           {[
@@ -150,8 +162,8 @@ export const BlogHub: React.FC<BlogHubProps> = ({ onNavigateView, onOpenMockTest
               onClick={() => setActiveCategory(cat.id as any)}
               className={`px-3.5 py-2 rounded-xl text-xs font-extrabold transition-all whitespace-nowrap cursor-pointer ${
                 activeCategory === cat.id
-                  ? 'bg-indigo-600 text-white shadow-glow'
-                  : 'bg-slate-950 text-slate-400 hover:text-white border border-slate-800'
+                  ? 'bg-indigo-600 text-white shadow-xs'
+                  : 'bg-slate-100 text-slate-700 hover:bg-slate-200 hover:text-slate-900 border border-slate-200/80'
               }`}
             >
               {cat.label}
@@ -167,7 +179,7 @@ export const BlogHub: React.FC<BlogHubProps> = ({ onNavigateView, onOpenMockTest
             placeholder="Search news, vacancies..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full bg-slate-950 border border-slate-800 rounded-xl pl-9 pr-3 py-2 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-indigo-500 transition-all"
+            className="w-full bg-slate-50 border border-slate-200 rounded-xl pl-9 pr-3 py-2 text-xs text-slate-900 placeholder-slate-400 focus:outline-none focus:bg-white focus:border-indigo-500 transition-all font-medium"
           />
         </div>
       </div>
@@ -175,50 +187,57 @@ export const BlogHub: React.FC<BlogHubProps> = ({ onNavigateView, onOpenMockTest
       {/* Posts Cards Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {filteredPosts.length === 0 ? (
-          <div className="col-span-full text-center py-12 bg-slate-900/50 border border-slate-800 rounded-3xl text-slate-400 space-y-2">
-            <AlertCircle className="w-8 h-8 text-amber-400 mx-auto" />
-            <p className="text-sm font-bold text-white">No articles or vacancies found</p>
+          <div className="col-span-full text-center py-12 bg-white border border-slate-200 rounded-3xl text-slate-500 space-y-2 shadow-sm">
+            <AlertCircle className="w-8 h-8 text-amber-500 mx-auto" />
+            <p className="text-sm font-bold text-slate-900">No articles or vacancies found</p>
             <p className="text-xs text-slate-500">Try adjusting your category filter or search keywords</p>
           </div>
         ) : (
           filteredPosts.map((post) => (
-            <div
+            <Link
               key={post.id}
-              onClick={() => setSelectedPost(post)}
-              className="bg-slate-900/90 border border-slate-800 hover:border-indigo-500/50 rounded-3xl p-6 shadow-xl space-y-4 flex flex-col justify-between transition-all hover:-translate-y-1 cursor-pointer group"
+              href={`/blog/${getPostSlug(post)}`}
+              className="bg-white border border-slate-200/90 hover:border-indigo-400 rounded-3xl p-5 shadow-xs hover:shadow-md space-y-4 flex flex-col justify-between transition-all hover:-translate-y-1 cursor-pointer group overflow-hidden"
             >
               <div className="space-y-3">
+                {/* Optional Featured Image Preview */}
+                {post.image && (
+                  <div className="w-full aspect-[16/9] rounded-2xl overflow-hidden border border-slate-200 bg-slate-100">
+                    <img src={post.image} alt={post.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
+                  </div>
+                )}
+
                 {/* Header Tag Badges */}
                 <div className="flex items-center justify-between gap-2">
-                  <span className={`text-[10px] font-black uppercase tracking-wider px-2 py-0.5 rounded-md ${
-                    post.category === 'VACANCY' ? 'bg-rose-950 text-rose-300 border border-rose-500/30' :
-                    post.category === 'VISA'    ? 'bg-amber-950 text-amber-300 border border-amber-500/30' :
-                    'bg-indigo-950 text-indigo-300 border border-indigo-500/30'
+                  <span className={`text-[10px] font-black uppercase tracking-wider px-2.5 py-0.5 rounded-md ${
+                    post.category === 'VACANCY' ? 'bg-rose-50 text-rose-700 border border-rose-200' :
+                    post.category === 'VISA'    ? 'bg-amber-50 text-amber-800 border border-amber-200' :
+                    'bg-indigo-50 text-indigo-700 border border-indigo-200'
                   }`}>
                     {post.category}
                   </span>
 
-                  <span className="text-[10px] font-bold text-slate-400 flex items-center gap-1">
-                    <Clock className="w-3 h-3 text-slate-500" />
+                  <span className="text-[10px] font-bold text-slate-500 flex items-center gap-1">
+                    <Clock className="w-3 h-3 text-slate-400" />
                     <span>{post.date}</span>
                   </span>
                 </div>
 
                 {/* Article Title */}
-                <h3 className="text-base font-black text-white group-hover:text-indigo-300 transition-colors leading-snug line-clamp-2">
+                <h3 className="text-base font-black text-slate-900 group-hover:text-indigo-600 transition-colors leading-snug line-clamp-2">
                   {post.title}
                 </h3>
 
                 {/* Vacancy Details Strip (If Vacancy) */}
                 {post.salary && (
-                  <div className="bg-slate-950/80 border border-slate-800 rounded-xl p-2.5 space-y-1 text-xs font-medium text-slate-300">
-                    <div className="flex items-center justify-between text-emerald-400 font-bold">
+                  <div className="bg-slate-50 border border-slate-200 rounded-xl p-2.5 space-y-1 text-xs font-medium text-slate-800">
+                    <div className="flex items-center justify-between text-emerald-700 font-black">
                       <span className="flex items-center gap-1"><DollarSign className="w-3.5 h-3.5" /> {post.salary}</span>
-                      {post.quota && <span className="px-2 py-0.5 rounded bg-emerald-950 text-[10px] text-emerald-300 border border-emerald-500/20">{post.quota}</span>}
+                      {post.quota && <span className="px-2 py-0.5 rounded bg-emerald-100 text-[10px] text-emerald-800 border border-emerald-300 font-bold">{post.quota}</span>}
                     </div>
                     {post.location && (
-                      <div className="flex items-center gap-1.5 text-[11px] text-slate-400">
-                        <MapPin className="w-3 h-3 text-rose-400 shrink-0" />
+                      <div className="flex items-center gap-1.5 text-[11px] text-slate-600 font-semibold">
+                        <MapPin className="w-3 h-3 text-rose-500 shrink-0" />
                         <span className="truncate">{post.location}</span>
                       </div>
                     )}
@@ -226,37 +245,37 @@ export const BlogHub: React.FC<BlogHubProps> = ({ onNavigateView, onOpenMockTest
                 )}
 
                 {/* Excerpt */}
-                <p className="text-xs text-slate-400 leading-relaxed line-clamp-3">
+                <p className="text-xs text-slate-600 leading-relaxed font-medium line-clamp-3">
                   {post.excerpt}
                 </p>
               </div>
 
               {/* Card Footer */}
-              <div className="pt-3 border-t border-slate-800/80 flex items-center justify-between text-xs text-indigo-400 font-extrabold group-hover:text-indigo-300">
+              <div className="pt-3 border-t border-slate-100 flex items-center justify-between text-xs text-indigo-600 font-extrabold group-hover:text-indigo-700">
                 <span>Read Full Announcement</span>
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
               </div>
-            </div>
+            </Link>
           ))
         )}
       </div>
 
       {/* FULL ARTICLE READER MODAL */}
       {selectedPost && (
-        <div className="fixed inset-0 z-[90] flex items-center justify-center p-3 sm:p-6 bg-slate-950/90 backdrop-blur-md animate-fade-in font-sans">
-          <div className="w-full max-w-4xl max-h-[90vh] bg-slate-900 border border-slate-800 rounded-3xl shadow-2xl flex flex-col overflow-hidden">
+        <div className="fixed inset-0 z-[90] flex items-center justify-center p-3 sm:p-6 bg-slate-900/60 backdrop-blur-xs animate-fade-in font-sans">
+          <div className="w-full max-w-4xl max-h-[90vh] bg-white border border-slate-200 rounded-3xl shadow-2xl flex flex-col overflow-hidden text-slate-900">
             
             {/* Modal Header */}
-            <div className="flex items-center justify-between px-6 py-4 border-b border-slate-800 bg-slate-950/80">
+            <div className="flex items-center justify-between px-6 py-4 border-b border-slate-200 bg-slate-50">
               <div className="flex items-center gap-2">
-                <span className="px-2.5 py-0.5 rounded-full bg-indigo-500/20 text-indigo-300 text-xs font-bold border border-indigo-500/30">
+                <span className="px-2.5 py-0.5 rounded-full bg-indigo-50 text-indigo-700 text-xs font-bold border border-indigo-200">
                   {selectedPost.category}
                 </span>
-                <span className="text-xs text-slate-400">• {selectedPost.readTime}</span>
+                <span className="text-xs text-slate-500">• {selectedPost.readTime}</span>
               </div>
               <button
                 onClick={() => setSelectedPost(null)}
-                className="p-2 rounded-xl bg-slate-800 hover:bg-rose-600 text-slate-300 hover:text-white transition-all cursor-pointer"
+                className="p-2 rounded-xl bg-slate-100 hover:bg-rose-500 text-slate-500 hover:text-white transition-all cursor-pointer"
               >
                 <X className="w-5 h-5" />
               </button>
@@ -265,29 +284,36 @@ export const BlogHub: React.FC<BlogHubProps> = ({ onNavigateView, onOpenMockTest
             {/* Modal Content Pane */}
             <div className="p-6 sm:p-8 overflow-y-auto space-y-6">
               <div className="space-y-3">
-                <h1 className="text-2xl sm:text-3xl font-black text-white leading-tight">
+                <h1 className="text-2xl sm:text-3xl font-black text-slate-900 leading-tight">
                   {selectedPost.title}
                 </h1>
-                <div className="flex items-center gap-4 text-xs text-slate-400 font-medium border-b border-slate-800 pb-4">
-                  <span>By <strong className="text-slate-200">{selectedPost.author}</strong></span>
+                <div className="flex items-center gap-4 text-xs text-slate-500 font-medium border-b border-slate-200 pb-4">
+                  <span>By <strong className="text-slate-800">{selectedPost.author}</strong></span>
                   <span>•</span>
                   <span>{selectedPost.date}</span>
                 </div>
               </div>
 
+              {/* Modal Featured Image */}
+              {selectedPost.image && (
+                <div className="w-full aspect-video sm:aspect-[21/9] rounded-2xl overflow-hidden border border-slate-200 shadow-md">
+                  <img src={selectedPost.image} alt={selectedPost.title} className="w-full h-full object-cover" />
+                </div>
+              )}
+
               {/* Vacancy Details Box if Salary Available */}
               {selectedPost.salary && (
-                <div className="bg-slate-950/90 border border-slate-800 rounded-2xl p-5 grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div className="bg-slate-50 border border-slate-200 rounded-2xl p-5 grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div className="space-y-1">
                     <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400">Offered Salary</span>
-                    <div className="text-base font-black text-emerald-400 flex items-center gap-1.5">
+                    <div className="text-base font-black text-emerald-700 flex items-center gap-1.5">
                       <DollarSign className="w-4 h-4" /> {selectedPost.salary}
                     </div>
                   </div>
                   {selectedPost.quota && (
                     <div className="space-y-1">
                       <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400">Available Openings</span>
-                      <div className="text-base font-black text-indigo-300 flex items-center gap-1.5">
+                      <div className="text-base font-black text-indigo-700 flex items-center gap-1.5">
                         <Briefcase className="w-4 h-4" /> {selectedPost.quota}
                       </div>
                     </div>
@@ -295,23 +321,23 @@ export const BlogHub: React.FC<BlogHubProps> = ({ onNavigateView, onOpenMockTest
                   {selectedPost.location && (
                     <div className="space-y-1">
                       <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400">Job Location</span>
-                      <div className="text-xs font-bold text-slate-200 flex items-center gap-1.5">
-                        <MapPin className="w-4 h-4 text-rose-400" /> {selectedPost.location}
+                      <div className="text-xs font-bold text-slate-800 flex items-center gap-1.5">
+                        <MapPin className="w-4 h-4 text-rose-500" /> {selectedPost.location}
                       </div>
                     </div>
                   )}
                   {selectedPost.deadline && (
                     <div className="space-y-1">
                       <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400">Application Deadline</span>
-                      <div className="text-xs font-bold text-amber-300 flex items-center gap-1.5">
+                      <div className="text-xs font-bold text-amber-800 flex items-center gap-1.5">
                         <Calendar className="w-4 h-4" /> {selectedPost.deadline}
                       </div>
                     </div>
                   )}
                   {selectedPost.requirement && (
-                    <div className="col-span-full pt-2 border-t border-slate-800 space-y-1">
+                    <div className="col-span-full pt-2 border-t border-slate-200 space-y-1">
                       <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400">Minimum Exam Requirement</span>
-                      <div className="text-xs font-bold text-rose-300 flex items-center gap-1.5">
+                      <div className="text-xs font-bold text-rose-700 flex items-center gap-1.5">
                         <Award className="w-4 h-4" /> {selectedPost.requirement}
                       </div>
                     </div>
@@ -320,15 +346,15 @@ export const BlogHub: React.FC<BlogHubProps> = ({ onNavigateView, onOpenMockTest
               )}
 
               {/* Full Article Text */}
-              <div className="prose prose-invert max-w-none text-xs sm:text-sm text-slate-300 leading-relaxed whitespace-pre-line space-y-4">
+              <div className="prose max-w-none text-xs sm:text-sm text-slate-700 leading-relaxed whitespace-pre-line space-y-4 font-medium">
                 {selectedPost.content}
               </div>
 
               {/* Tags */}
-              <div className="pt-4 border-t border-slate-800 flex items-center gap-2 flex-wrap">
-                <Tag className="w-4 h-4 text-slate-500" />
+              <div className="pt-4 border-t border-slate-200 flex items-center gap-2 flex-wrap">
+                <Tag className="w-4 h-4 text-slate-400" />
                 {selectedPost.tags.map((t) => (
-                  <span key={t} className="px-2.5 py-1 rounded-lg bg-slate-950 border border-slate-800 text-[11px] font-bold text-slate-400">
+                  <span key={t} className="px-2.5 py-1 rounded-lg bg-slate-100 border border-slate-200 text-[11px] font-bold text-slate-600">
                     #{t}
                   </span>
                 ))}
@@ -336,10 +362,10 @@ export const BlogHub: React.FC<BlogHubProps> = ({ onNavigateView, onOpenMockTest
             </div>
 
             {/* Modal Bottom Bar */}
-            <div className="px-6 py-4 border-t border-slate-800 bg-slate-950/80 flex items-center justify-between gap-4">
+            <div className="px-6 py-4 border-t border-slate-200 bg-slate-50 flex items-center justify-between gap-4">
               <button
                 onClick={() => setSelectedPost(null)}
-                className="px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-extrabold cursor-pointer"
+                className="px-4 py-2 rounded-xl bg-slate-200 hover:bg-slate-300 text-slate-700 text-xs font-extrabold cursor-pointer"
               >
                 Close Article
               </button>
@@ -349,7 +375,7 @@ export const BlogHub: React.FC<BlogHubProps> = ({ onNavigateView, onOpenMockTest
                   alert(`Application request for "${selectedPost.title}" registered! Our career counselors will contact you.`);
                   setSelectedPost(null);
                 }}
-                className="px-6 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-extrabold shadow-glow flex items-center gap-2 cursor-pointer"
+                className="px-6 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-extrabold shadow-sm flex items-center gap-2 cursor-pointer"
               >
                 <Send className="w-4 h-4" />
                 <span>Submit Job Application / Inquiry</span>
@@ -362,16 +388,16 @@ export const BlogHub: React.FC<BlogHubProps> = ({ onNavigateView, onOpenMockTest
 
       {/* CREATE NEW POST MODAL */}
       {showCreateModal && (
-        <div className="fixed inset-0 z-[95] flex items-center justify-center p-3 sm:p-6 bg-slate-950/90 backdrop-blur-md animate-fade-in font-sans">
-          <div className="w-full max-w-2xl max-h-[90vh] bg-slate-900 border border-slate-800 rounded-3xl shadow-2xl flex flex-col overflow-hidden">
+        <div className="fixed inset-0 z-[95] flex items-center justify-center p-3 sm:p-6 bg-slate-900/60 backdrop-blur-xs animate-fade-in font-sans">
+          <div className="w-full max-w-2xl max-h-[90vh] bg-white border border-slate-200 rounded-3xl shadow-2xl flex flex-col overflow-hidden text-slate-900">
             
-            <div className="flex items-center justify-between px-6 py-4 border-b border-slate-800 bg-slate-950/80">
-              <h3 className="text-base font-black text-white flex items-center gap-2">
-                <Plus className="w-5 h-5 text-indigo-400" /> Post New Announcement or Job Vacancy
+            <div className="flex items-center justify-between px-6 py-4 border-b border-slate-200 bg-slate-50">
+              <h3 className="text-base font-black text-slate-900 flex items-center gap-2">
+                <Plus className="w-5 h-5 text-indigo-600" /> Post New Announcement or Job Vacancy
               </h3>
               <button
                 onClick={() => setShowCreateModal(false)}
-                className="p-1.5 rounded-xl bg-slate-800 text-slate-400 hover:text-white"
+                className="p-1.5 rounded-xl bg-slate-200 text-slate-500 hover:text-slate-900"
               >
                 <X className="w-5 h-5" />
               </button>
@@ -379,24 +405,23 @@ export const BlogHub: React.FC<BlogHubProps> = ({ onNavigateView, onOpenMockTest
 
             <form onSubmit={handleCreatePost} className="p-6 overflow-y-auto space-y-4">
               <div className="space-y-1">
-                <label className="text-xs font-bold text-slate-300">Announcement Title *</label>
+                <label className="text-xs font-bold text-slate-700">Announcement Title *</label>
                 <input
-                  type="text"
-                  required
+                  type="text" required
                   placeholder="e.g. 📢 SSW Nursing Care Recruitment 2026 (Tokyo)"
                   value={newTitle}
                   onChange={(e) => setNewTitle(e.target.value)}
-                  className="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-xs text-white placeholder-slate-600 focus:outline-none focus:border-indigo-500"
+                  className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs text-slate-900 placeholder-slate-400 focus:outline-none focus:bg-white focus:border-indigo-500 font-medium"
                 />
               </div>
 
               <div className="grid grid-cols-2 gap-3">
                 <div className="space-y-1">
-                  <label className="text-xs font-bold text-slate-300">Category</label>
+                  <label className="text-xs font-bold text-slate-700">Category</label>
                   <select
                     value={newCategory}
                     onChange={(e) => setNewCategory(e.target.value as any)}
-                    className="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-indigo-500"
+                    className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs text-slate-900 font-medium"
                   >
                     <option value="VACANCY">📢 Job Vacancy</option>
                     <option value="VISA">💼 Visa Policy</option>
@@ -406,11 +431,11 @@ export const BlogHub: React.FC<BlogHubProps> = ({ onNavigateView, onOpenMockTest
                 </div>
 
                 <div className="space-y-1">
-                  <label className="text-xs font-bold text-slate-300">Target Country</label>
+                  <label className="text-xs font-bold text-slate-700">Target Country</label>
                   <select
                     value={newCountry}
                     onChange={(e) => setNewCountry(e.target.value as any)}
-                    className="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-indigo-500"
+                    className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs text-slate-900 font-medium"
                   >
                     <option value="JAPAN">🇯🇵 Japan</option>
                     <option value="KOREA">🇰🇷 Korea</option>
@@ -420,94 +445,84 @@ export const BlogHub: React.FC<BlogHubProps> = ({ onNavigateView, onOpenMockTest
               </div>
 
               {newCategory === 'VACANCY' && (
-                <div className="grid grid-cols-2 gap-3 p-3 bg-slate-950/60 border border-slate-800 rounded-xl">
+                <div className="grid grid-cols-2 gap-3 p-3 bg-slate-50 border border-slate-200 rounded-xl">
                   <div className="space-y-1">
-                    <label className="text-[11px] font-bold text-slate-400">Offered Salary</label>
+                    <label className="text-[11px] font-bold text-slate-600">Offered Salary</label>
                     <input
                       type="text"
                       placeholder="e.g. 215,000 JPY / Month"
                       value={newSalary}
                       onChange={(e) => setNewSalary(e.target.value)}
-                      className="w-full bg-slate-900 border border-slate-800 rounded-lg px-2.5 py-1.5 text-xs text-white"
+                      className="w-full bg-white border border-slate-200 rounded-lg px-2.5 py-1.5 text-xs text-slate-900"
                     />
                   </div>
                   <div className="space-y-1">
-                    <label className="text-[11px] font-bold text-slate-400">Vacancies Count</label>
+                    <label className="text-[11px] font-bold text-slate-600">Vacancies Count</label>
                     <input
                       type="text"
                       placeholder="e.g. 45 Openings"
                       value={newQuota}
                       onChange={(e) => setNewQuota(e.target.value)}
-                      className="w-full bg-slate-900 border border-slate-800 rounded-lg px-2.5 py-1.5 text-xs text-white"
+                      className="w-full bg-white border border-slate-200 rounded-lg px-2.5 py-1.5 text-xs text-slate-900"
                     />
                   </div>
                   <div className="space-y-1">
-                    <label className="text-[11px] font-bold text-slate-400">Job Location</label>
+                    <label className="text-[11px] font-bold text-slate-600">Job Location</label>
                     <input
                       type="text"
                       placeholder="e.g. Tokyo & Osaka, Japan"
                       value={newLocation}
                       onChange={(e) => setNewLocation(e.target.value)}
-                      className="w-full bg-slate-900 border border-slate-800 rounded-lg px-2.5 py-1.5 text-xs text-white"
+                      className="w-full bg-white border border-slate-200 rounded-lg px-2.5 py-1.5 text-xs text-slate-900"
                     />
                   </div>
                   <div className="space-y-1">
-                    <label className="text-[11px] font-bold text-slate-400">Deadline</label>
+                    <label className="text-[11px] font-bold text-slate-600">Deadline</label>
                     <input
                       type="text"
                       placeholder="e.g. August 30, 2026"
                       value={newDeadline}
                       onChange={(e) => setNewDeadline(e.target.value)}
-                      className="w-full bg-slate-900 border border-slate-800 rounded-lg px-2.5 py-1.5 text-xs text-white"
-                    />
-                  </div>
-                  <div className="col-span-2 space-y-1">
-                    <label className="text-[11px] font-bold text-slate-400">Minimum Exam Requirement</label>
-                    <input
-                      type="text"
-                      placeholder="e.g. JLPT N4 / JFT-Basic + Prometric Nursing Skill Test Pass"
-                      value={newRequirement}
-                      onChange={(e) => setNewRequirement(e.target.value)}
-                      className="w-full bg-slate-900 border border-slate-800 rounded-lg px-2.5 py-1.5 text-xs text-white"
+                      className="w-full bg-white border border-slate-200 rounded-lg px-2.5 py-1.5 text-xs text-slate-900"
                     />
                   </div>
                 </div>
               )}
 
               <div className="space-y-1">
-                <label className="text-xs font-bold text-slate-300">Short Excerpt</label>
+                <label className="text-xs font-bold text-slate-700">Short Excerpt</label>
                 <input
                   type="text"
                   placeholder="Brief 1-sentence summary of the post"
                   value={newExcerpt}
                   onChange={(e) => setNewExcerpt(e.target.value)}
-                  className="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-xs text-white"
+                  className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs text-slate-900"
                 />
               </div>
 
               <div className="space-y-1">
-                <label className="text-xs font-bold text-slate-300">Full Announcement Content *</label>
+                <label className="text-xs font-bold text-slate-700">Full Announcement Content *</label>
                 <textarea
                   required
                   rows={6}
                   placeholder="Write the full post text, details, requirements, and application instructions..."
                   value={newContent}
                   onChange={(e) => setNewContent(e.target.value)}
-                  className="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-xs text-white placeholder-slate-600 focus:outline-none focus:border-indigo-500"
+                  className="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-xs text-slate-900 placeholder-slate-400 focus:outline-none focus:bg-white focus:border-indigo-500"
                 />
               </div>
 
-              <div className="pt-3 border-t border-slate-800 flex items-center justify-end gap-3">
+              <div className="pt-3 border-t border-slate-200 flex items-center justify-end gap-3">
                 <button
                   type="button"
                   onClick={() => setShowCreateModal(false)}
-                  className="px-4 py-2 rounded-xl bg-slate-800 text-slate-300 text-xs font-bold"
+                  className="px-4 py-2 rounded-xl bg-slate-200 text-slate-700 text-xs font-bold"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
-                  className="px-6 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-extrabold shadow-glow"
+                  className="px-6 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-extrabold shadow-sm"
                 >
                   Publish Announcement
                 </button>

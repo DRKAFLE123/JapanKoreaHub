@@ -383,9 +383,9 @@ export const VocabularyExplorer: React.FC<VocabularyExplorerProps> = ({ preselec
                       setPracticeTitle('Basic Kanji (100) Practice');
                       setIsPracticeOpen(true);
                     }}
-                    className="px-3 py-1 rounded-xl text-[11px] font-black bg-rose-800 hover:bg-rose-700 text-white border border-rose-700 transition-all cursor-pointer flex items-center gap-1 shadow-xs"
+                    className="px-3.5 py-1.5 rounded-xl text-[11px] font-black bg-gradient-to-r from-red-600 to-rose-600 hover:from-red-500 hover:to-rose-500 text-white border border-red-500 transition-all cursor-pointer flex items-center gap-1 shadow-sm active:scale-95"
                   >
-                    💮 Practice (अभ्यास)
+                    <span>💮 Practice (अभ्यास)</span>
                   </button>
                   <div className="text-xs font-black text-rose-800 bg-rose-100 border border-rose-200 px-2 py-0.5 rounded-lg font-mono">
                     100 Kanji Total
@@ -568,35 +568,15 @@ export const VocabularyExplorer: React.FC<VocabularyExplorerProps> = ({ preselec
         return (
           <div className="bg-[#fcf8f2] text-[#2d2219] border border-[#e8decb] rounded-2xl sm:rounded-3xl p-4 sm:p-6 shadow-xl space-y-4 font-sans relative">
             {/* Header Ribbon */}
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-3 border-b border-[#e8decb] gap-2">
-              <div>
-                <div className="text-xs font-black uppercase tracking-wider text-rose-800">💮 Japanese Kanji Hub (1000)</div>
-                <div className="text-[10px] font-bold text-[#5c4a3c] mt-0.5">Learn 1000 high-frequency Kanji with Nepali explanation and examples</div>
-              </div>
-              <div className="flex items-center gap-2 self-start sm:self-auto">
-                <button
-                  onClick={() => {
-                    setPracticeDeck(filtered1000Kanjis);
-                    const tierLabel = kanjiActiveTier === 'all' ? 'All 1000' :
-                                      kanjiActiveTier === 'basic' ? 'Basic (350)' :
-                                      kanjiActiveTier === 'intermediate' ? 'Intermediate (350)' : 'Advanced (300)';
-                    setPracticeTitle(`Kanji Hub ${tierLabel} Practice`);
-                    setIsPracticeOpen(true);
-                  }}
-                  className="px-3.5 py-1.5 rounded-xl text-[11px] font-black bg-rose-800 hover:bg-rose-700 text-white border border-rose-700 transition-all cursor-pointer flex items-center gap-1 shadow-xs"
-                >
-                  💮 Practice (अभ्यास)
-                </button>
-                <div className="text-xs font-black text-rose-800 bg-rose-100 border border-rose-200 px-2 py-0.5 rounded-lg font-mono">
-                  {filtered1000Kanjis.length} / 1000 Kanji Found
-                </div>
-              </div>
+            <div className="pb-3 border-b border-[#e8decb]">
+              <div className="text-xs font-black uppercase tracking-wider text-rose-800">💮 Japanese Kanji Hub (1000)</div>
+              <div className="text-[10px] font-bold text-[#5c4a3c] mt-0.5">Learn 1000 high-frequency Kanji with Nepali explanation and examples</div>
             </div>
 
-            {/* Filter and Search Controls */}
-            <div className="flex flex-col md:flex-row gap-3 items-center justify-between">
+            {/* Filter, Search, and Practice Controls */}
+            <div className="flex flex-col lg:flex-row gap-3 items-stretch lg:items-center justify-between">
               {/* Search Input */}
-              <div className="relative w-full md:w-80">
+              <div className="relative w-full lg:w-72 shrink-0">
                 <input
                   type="text"
                   value={kanjiSearchQuery}
@@ -610,8 +590,8 @@ export const VocabularyExplorer: React.FC<VocabularyExplorerProps> = ({ preselec
                 <div className="absolute left-3 top-2.5 text-xs text-[#a89e8c] font-black font-jp">検</div>
               </div>
 
-              {/* Tier Switches */}
-              <div className="flex flex-wrap gap-1.5 w-full md:w-auto justify-start md:justify-end">
+              {/* Tier Switches + Practice Button */}
+              <div className="flex flex-wrap items-center gap-1.5 w-full lg:w-auto justify-start lg:justify-end">
                 {(['all', 'basic', 'intermediate', 'advanced'] as const).map((tier) => (
                   <button
                     key={tier}
@@ -619,7 +599,7 @@ export const VocabularyExplorer: React.FC<VocabularyExplorerProps> = ({ preselec
                       setKanjiActiveTier(tier);
                       setKanjiCurrentPage(1);
                     }}
-                    className={`px-3 py-1.5 rounded-lg text-[11px] font-black tracking-wide border transition-all cursor-pointer ${
+                    className={`px-3 py-1.5 rounded-xl text-[11px] font-black tracking-wide border transition-all cursor-pointer ${
                       kanjiActiveTier === tier
                         ? 'bg-rose-800 border-rose-800 text-white shadow-xs'
                         : 'bg-white border-[#e8decb] text-[#5c4a3c] hover:bg-[#fbf6eb]'
@@ -631,6 +611,22 @@ export const VocabularyExplorer: React.FC<VocabularyExplorerProps> = ({ preselec
                     {tier === 'advanced' && 'उच्च Advanced (300)'}
                   </button>
                 ))}
+
+                {/* Practice Button aligned right next to filters */}
+                <button
+                  onClick={() => {
+                    setPracticeDeck(filtered1000Kanjis);
+                    const tierLabel = kanjiActiveTier === 'all' ? 'All 1000' :
+                                      kanjiActiveTier === 'basic' ? 'Basic (350)' :
+                                      kanjiActiveTier === 'intermediate' ? 'Intermediate (350)' : 'Advanced (300)';
+                    setPracticeTitle(`Kanji Hub ${tierLabel} Practice`);
+                    setIsPracticeOpen(true);
+                  }}
+                  className="px-3.5 py-1.5 rounded-xl text-[11px] font-black bg-gradient-to-r from-red-600 to-rose-600 hover:from-red-500 hover:to-rose-500 text-white border border-red-500 transition-all cursor-pointer flex items-center gap-1.5 shadow-sm active:scale-95 ml-auto sm:ml-0"
+                >
+                  <Sparkles className="w-3.5 h-3.5 text-amber-300" />
+                  <span>Practice (अभ्यास)</span>
+                </button>
               </div>
             </div>
 
@@ -857,86 +853,82 @@ export const VocabularyExplorer: React.FC<VocabularyExplorerProps> = ({ preselec
           </aside>
 
           {/* ════ RIGHT CONTENT AREA (White Book Paper Mode) ════ */}
-          <main id="vocab-content-area" ref={mainRef} className="lg:col-span-3 bg-white text-slate-900 border border-slate-200/90 rounded-2xl sm:rounded-3xl p-4 sm:p-6 shadow-2xl space-y-4 font-sans scroll-mt-24">
-            {/* Header Ribbon Controls (Compact) */}
-            <div className="space-y-2.5 pb-2.5 border-b border-slate-200 font-sans">
-              <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-2.5">
-                <div>
-                  <div className="text-[10px] sm:text-xs font-black uppercase tracking-wider text-rose-600">
-                    JLPT {effectiveLevel} • Lesson {selectedLesson}
-                  </div>
-                  <h2 className="text-base sm:text-lg font-black text-slate-900 mt-0.5">
-                    Minna no Nihongo (第{selectedLesson}課)
-                  </h2>
-
-                  {/* Small text links below lesson title */}
-                  <div className="flex items-center gap-2 mt-1.5 flex-wrap">
-                    <button
-                      onClick={() => setShowShortNoteModal(true)}
-                      className="text-xs font-extrabold text-white bg-blue-600 hover:bg-blue-700 px-3 py-1 rounded-xl shadow-xs transition-all flex items-center gap-1.5 cursor-pointer active:scale-95 border border-blue-500"
-                    >
-                      <FileText className="w-3.5 h-3.5 text-white" />
-                      <span>Meaning Note</span>
-                    </button>
-
-                    <button
-                      onClick={() => setShowGrammarModal(true)}
-                      className="text-xs font-extrabold text-white bg-rose-600 hover:bg-rose-700 px-3 py-1 rounded-xl shadow-xs transition-all flex items-center gap-1.5 cursor-pointer active:scale-95 border border-rose-500"
-                    >
-                      <BookCheck className="w-3.5 h-3.5 text-white" />
-                      <span>Grammar Note</span>
-                    </button>
-
-                    <button
-                      onClick={() => setHideLessonMeanings(!hideLessonMeanings)}
-                      className={`text-[11px] font-bold flex items-center gap-1 cursor-pointer px-2 py-0.5 rounded-md border transition-all ${
-                        hideLessonMeanings
-                          ? 'bg-rose-100 text-rose-900 border-rose-300 font-extrabold shadow-2xs'
-                          : 'bg-slate-100 text-slate-700 hover:bg-slate-200 border-slate-200'
-                      }`}
-                      title={hideLessonMeanings ? "Click to show all meanings" : "Click to hide meanings for self-test revision"}
-                    >
-                      {hideLessonMeanings ? (
-                        <>
-                          <EyeOff className="w-3 h-3 text-rose-700" />
-                          <span>Meanings Hidden</span>
-                        </>
-                      ) : (
-                        <>
-                          <Eye className="w-3 h-3 text-slate-600" />
-                          <span>Hide Meanings</span>
-                        </>
-                      )}
-                    </button>
-
-                    {selectedLesson > 25 && (
-                      <button
-                        onClick={() => setShowScannedSheetModal(true)}
-                        className="text-[11px] font-bold text-emerald-700 hover:text-emerald-900 hover:underline flex items-center gap-1 cursor-pointer bg-emerald-50 hover:bg-emerald-100 px-2 py-0.5 rounded-md border border-emerald-200/80 transition-colors"
-                      >
-                        <span>🖼️ Book Sheet</span>
-                      </button>
+          <main id="vocab-content-area" ref={mainRef} className="lg:col-span-3 bg-white text-slate-900 border border-slate-200/90 rounded-2xl sm:rounded-3xl p-3 sm:p-6 shadow-2xl space-y-3 font-sans scroll-mt-24">
+            {/* Header Ribbon Controls (Clean & Well-Arranged) */}
+            <div className="pb-3 border-b border-slate-200 font-sans space-y-3">
+              <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-3">
+                {/* Left Side: Lesson Title & Quick Utility Controls */}
+                <div className="space-y-1.5">
+                  <div className="flex items-center gap-2 flex-wrap">
+                    <span className="text-[10px] sm:text-xs font-black uppercase tracking-wider text-rose-600 bg-rose-50 px-2 py-0.5 rounded-md border border-rose-200/80">
+                      JLPT {effectiveLevel} • Lesson {selectedLesson}
+                    </span>
+                    {JAPANESE_LESSON_TITLES[selectedLesson] && (
+                      <span className="text-xs font-bold text-slate-500">
+                        {JAPANESE_LESSON_TITLES[selectedLesson].topic}
+                      </span>
                     )}
+                  </div>
+
+                  <div className="flex items-center gap-3 flex-wrap">
+                    <h2 className="text-base sm:text-xl font-black text-slate-900">
+                      Minna no Nihongo (第{selectedLesson}課)
+                    </h2>
+
+                    {/* Lesson Utility Buttons */}
+                    <div className="flex items-center gap-2 flex-wrap">
+                      <button
+                        onClick={() => setHideLessonMeanings(!hideLessonMeanings)}
+                        className={`text-xs font-extrabold flex items-center gap-1.5 cursor-pointer px-2.5 py-1 rounded-lg border transition-all ${
+                          hideLessonMeanings
+                            ? 'bg-rose-100 text-rose-900 border-rose-300 shadow-2xs'
+                            : 'bg-slate-100 text-slate-700 hover:bg-slate-200 border-slate-200/90'
+                        }`}
+                        title={hideLessonMeanings ? "Click to show all meanings" : "Click to hide meanings for self-test revision"}
+                      >
+                        {hideLessonMeanings ? (
+                          <>
+                            <EyeOff className="w-3.5 h-3.5 text-rose-700" />
+                            <span>Meanings Hidden</span>
+                          </>
+                        ) : (
+                          <>
+                            <Eye className="w-3.5 h-3.5 text-slate-600" />
+                            <span>Hide Meanings</span>
+                          </>
+                        )}
+                      </button>
+
+                      {selectedLesson > 25 && (
+                        <button
+                          onClick={() => setShowScannedSheetModal(true)}
+                          className="text-xs font-extrabold text-emerald-700 hover:text-emerald-900 flex items-center gap-1.5 cursor-pointer bg-emerald-50 hover:bg-emerald-100 px-2.5 py-1 rounded-lg border border-emerald-200/80 transition-colors"
+                        >
+                          <span>🖼️ Book Sheet</span>
+                        </button>
+                      )}
+                    </div>
                   </div>
                 </div>
 
-                <div className="flex items-center gap-2 flex-wrap self-stretch md:self-auto justify-start md:justify-end">
+                {/* Right Side: Audio Controls & Main Tab Switcher */}
+                <div className="flex items-center gap-2 flex-wrap self-stretch lg:self-auto justify-start lg:justify-end">
                   {/* Audio Controls */}
                   {(() => {
                     const tracks = selectedLevel === 'N5' ? getAudioTracksForLesson(selectedLesson) : undefined;
                     if (!tracks) return null;
                     const btns: { type: 'vocab' | 'dialogue' | 'drill'; label: string; url: string; icon: React.ReactNode; color: string; activeColor: string }[] = [
-                      { type: 'vocab',    label: 'Vocab',    url: tracks.vocab,    icon: <Music className="w-3 h-3" />,     color: 'bg-violet-700 hover:bg-violet-600',   activeColor: 'bg-violet-500 ring-1 ring-violet-300' },
-                      { type: 'dialogue', label: 'Dialogue', url: tracks.dialogue, icon: <Headphones className="w-3 h-3" />, color: 'bg-emerald-700 hover:bg-emerald-600', activeColor: 'bg-emerald-500 ring-1 ring-emerald-300' },
-                      { type: 'drill',    label: 'Drills',   url: tracks.drill,    icon: <Mic2 className="w-3 h-3" />,      color: 'bg-sky-700 hover:bg-sky-600',         activeColor: 'bg-sky-500 ring-1 ring-sky-300' },
+                      { type: 'vocab',    label: 'Vocab',    url: tracks.vocab,    icon: <Music className="w-3.5 h-3.5" />,     color: 'bg-violet-700 hover:bg-violet-600',   activeColor: 'bg-violet-500 ring-2 ring-violet-300' },
+                      { type: 'dialogue', label: 'Dialogue', url: tracks.dialogue, icon: <Headphones className="w-3.5 h-3.5" />, color: 'bg-emerald-700 hover:bg-emerald-600', activeColor: 'bg-emerald-500 ring-2 ring-emerald-300' },
+                      { type: 'drill',    label: 'Drills',   url: tracks.drill,    icon: <Mic2 className="w-3.5 h-3.5" />,      color: 'bg-sky-700 hover:bg-sky-600',         activeColor: 'bg-sky-500 ring-2 ring-sky-300' },
                     ];
                     return (
-                      <div className="flex items-center gap-1">
+                      <div className="flex items-center gap-1 bg-slate-100/80 p-1 rounded-xl border border-slate-200/80">
                         {btns.map((btn) => (
                           <button
                             key={btn.type}
                             onClick={() => playLessonTrack(btn.type, btn.url)}
-                            className={`flex items-center gap-1 px-2.5 py-1.5 rounded-xl text-white text-xs font-black transition-all shadow-xs cursor-pointer ${playingTrack === btn.type ? btn.activeColor : btn.color}`}
+                            className={`flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-white text-xs font-black transition-all shadow-2xs cursor-pointer ${playingTrack === btn.type ? btn.activeColor : btn.color}`}
                           >
                             {playingTrack === btn.type ? (
                               <span className="flex gap-0.5 items-center">
@@ -950,7 +942,7 @@ export const VocabularyExplorer: React.FC<VocabularyExplorerProps> = ({ preselec
                           </button>
                         ))}
                         {playingTrack && (
-                          <button onClick={stopAudio} className="p-1.5 rounded-xl bg-rose-700 hover:bg-rose-600 text-white cursor-pointer" title="Stop audio">
+                          <button onClick={stopAudio} className="p-1 rounded-lg bg-rose-700 hover:bg-rose-600 text-white cursor-pointer" title="Stop audio">
                             <Square className="w-3 h-3 fill-white" />
                           </button>
                         )}

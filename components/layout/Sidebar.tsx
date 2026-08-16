@@ -18,12 +18,35 @@ interface SidebarProps {
   isCollapsed?: boolean;
   onToggleCollapse?: () => void;
   onClose?: () => void;
+  user?: { name: string; email: string; role?: string } | null;
 }
 
-export default function Sidebar({ isOpen, isCollapsed = false, onToggleCollapse, onClose }: SidebarProps) {
+export default function Sidebar({ isOpen, isCollapsed = false, onToggleCollapse, onClose, user }: SidebarProps) {
   const pathname = usePathname();
   const [authSheetOpen, setAuthSheetOpen] = useState(false);
   const { activeCountry, setCountryFocus } = useCountry();
+  const [currentUser, setCurrentUser] = useState<{ name: string; email: string; role?: string } | null>(user || null);
+
+  React.useEffect(() => {
+    if (user) {
+      setCurrentUser(user);
+      return;
+    }
+    const saved = localStorage.getItem('jkh_user');
+    if (saved) {
+      try {
+        setCurrentUser(JSON.parse(saved));
+      } catch (_) {}
+    }
+    fetch('/api/auth/me')
+      .then(r => r.ok ? r.json() : null)
+      .then(d => {
+        if (d?.authenticated && d.user) {
+          setCurrentUser(d.user);
+        }
+      })
+      .catch(() => {});
+  }, [user]);
 
   const isActive = (href: string) => {
     if (href === '/') return pathname === '/';
@@ -144,17 +167,21 @@ export default function Sidebar({ isOpen, isCollapsed = false, onToggleCollapse,
                   title={isCollapsed ? link.label : undefined}
                   onClick={() => { if(window.innerWidth < 1024) onClose?.(); }}
                   className={`
-                    flex items-center gap-3 rounded-xl text-sm font-medium transition-colors
-                    ${isCollapsed ? 'justify-center p-2.5' : 'px-3 py-2'}
+                    flex items-center gap-3 rounded-xl text-sm transition-all duration-150
+                    ${isCollapsed ? 'justify-center p-2.5' : 'px-3.5 py-2.5'}
                     ${active 
-                      ? activeCountry === 'japan' ? 'bg-red-50 text-red-700 font-bold' : activeCountry === 'korea' ? 'bg-blue-50 text-blue-700 font-bold' : 'bg-slate-100 text-slate-900'
-                      : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50'
+                      ? activeCountry === 'japan' 
+                        ? 'bg-red-50 text-red-700 font-extrabold border-l-4 border-red-600 rounded-r-xl' 
+                        : activeCountry === 'korea' 
+                          ? 'bg-blue-50 text-blue-700 font-extrabold border-l-4 border-blue-600 rounded-r-xl' 
+                          : 'bg-indigo-50 text-indigo-700 font-extrabold border-l-4 border-indigo-600 rounded-r-xl'
+                      : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50 font-medium'
                     }
                   `}
                 >
-                  <link.Icon className={`w-4 h-4 shrink-0 ${
+                  <link.Icon className={`w-4 h-4 shrink-0 transition-colors ${
                     active 
-                      ? activeCountry === 'japan' ? 'text-red-600' : activeCountry === 'korea' ? 'text-blue-600' : 'text-slate-900'
+                      ? activeCountry === 'japan' ? 'text-red-600' : activeCountry === 'korea' ? 'text-blue-600' : 'text-indigo-600'
                       : 'text-slate-400'
                   }`} />
                   {!isCollapsed && <span>{link.label}</span>}
@@ -175,14 +202,14 @@ export default function Sidebar({ isOpen, isCollapsed = false, onToggleCollapse,
                     href={link.href}
                     onClick={() => { if(window.innerWidth < 1024) onClose?.(); }}
                     className={`
-                      flex items-center gap-3 px-3 py-2 rounded-xl text-sm font-medium transition-colors
+                      flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm transition-all duration-150
                       ${active 
-                        ? 'bg-slate-100 text-slate-900' 
-                        : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50'
+                        ? 'bg-indigo-50 text-indigo-700 font-extrabold border-l-4 border-indigo-600 rounded-r-xl' 
+                        : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50 font-medium'
                       }
                     `}
                   >
-                    <link.Icon className={`w-4 h-4 ${active ? 'text-slate-900' : 'text-slate-400'}`} />
+                    <link.Icon className={`w-4 h-4 ${active ? 'text-indigo-600' : 'text-slate-400'}`} />
                     {link.label}
                   </Link>
                 );
@@ -193,18 +220,18 @@ export default function Sidebar({ isOpen, isCollapsed = false, onToggleCollapse,
 
         {/* Consult Now CTA (Hidden when collapsed) */}
           {!isCollapsed && (
-            <div className="px-3 pb-2">
+            <div className="px-3 pb-3">
               <div className="relative group/consult">
                 <Link
                   href="/consultancy"
                   onClick={() => { if(window.innerWidth < 1024) onClose?.(); }}
-                  className="flex items-center justify-between gap-2 w-full px-4 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold transition-all shadow-sm"
+                  className="flex items-center justify-between gap-2 w-full px-4 py-3 rounded-2xl bg-emerald-500 hover:bg-emerald-600 active:bg-emerald-700 text-white text-xs font-black transition-all duration-200 shadow-md shadow-emerald-500/20 hover:shadow-lg hover:shadow-emerald-500/30 hover:-translate-y-0.5 border border-emerald-400/30 cursor-pointer"
                 >
-                  <div className="flex items-center gap-2">
-                    <Handshake className="w-4 h-4 shrink-0" />
-                    <span>Consult Now</span>
+                  <div className="flex items-center gap-2.5">
+                    <Handshake className="w-4.5 h-4.5 shrink-0 group-hover/consult:rotate-12 transition-transform duration-200" />
+                    <span className="tracking-wide">Consult Now</span>
                   </div>
-                  <ArrowRight className="w-3.5 h-3.5 group-hover/consult:translate-x-0.5 transition-transform" />
+                  <ArrowRight className="w-4 h-4 group-hover/consult:translate-x-1.5 transition-transform duration-200" />
                 </Link>
 
                 {/* Hover card */}
@@ -233,21 +260,52 @@ export default function Sidebar({ isOpen, isCollapsed = false, onToggleCollapse,
             </div>
           )}
 
-        {/* Free Account Card (Hidden when collapsed) */}
+        {/* Account Card / Promo Card (Hidden when collapsed) */}
         {!isCollapsed && (
           <div className="px-3 py-4 mt-auto">
-            <div className="p-4 bg-gradient-to-br from-indigo-50 to-purple-50 rounded-2xl border border-indigo-100/50">
-              <p className="font-bold text-sm text-indigo-950 mb-1">100% Free Account</p>
-              <p className="text-xs text-indigo-800/80 mb-3 leading-relaxed">
-                Create a free account to track your study streak, save cards, and unlock full mock tests.
-              </p>
-              <button
-                onClick={() => setAuthSheetOpen(true)}
-                className="w-full py-2 bg-red-600 hover:bg-red-500 text-white text-xs font-bold rounded-xl shadow-sm transition-colors cursor-pointer"
-              >
-                Create Free Account
-              </button>
-            </div>
+            {currentUser ? (
+              <div className="p-3.5 bg-gradient-to-br from-indigo-50 via-purple-50 to-indigo-50 rounded-2xl border border-indigo-100 shadow-xs space-y-2.5">
+                <div className="flex items-center justify-between">
+                  <span className="px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 text-[10px] font-black uppercase tracking-wider">
+                    {currentUser.role === 'ADMIN' ? '👑 Admin' : currentUser.role === 'INSTRUCTOR' ? '🎓 Instructor' : '✨ Free Member'}
+                  </span>
+                  <span className="text-[10px] font-extrabold text-amber-600 flex items-center gap-1">
+                    🔥 28d Streak
+                  </span>
+                </div>
+
+                <div className="flex items-center gap-2.5 pt-0.5">
+                  <div className="w-8 h-8 rounded-full bg-indigo-600 text-white font-black text-xs flex items-center justify-center shadow-xs shrink-0">
+                    {currentUser.name?.[0]?.toUpperCase() || 'U'}
+                  </div>
+                  <div className="truncate text-xs">
+                    <div className="font-black text-slate-900 truncate">{currentUser.name}</div>
+                    <div className="text-[10px] text-slate-500 truncate">{currentUser.email}</div>
+                  </div>
+                </div>
+
+                <Link
+                  href="/profile"
+                  onClick={() => { if (window.innerWidth < 1024) onClose?.(); }}
+                  className="w-full py-2 bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-black rounded-xl shadow-xs transition-all text-center block cursor-pointer"
+                >
+                  View My Profile →
+                </Link>
+              </div>
+            ) : (
+              <div className="p-4 bg-gradient-to-br from-indigo-50 to-purple-50 rounded-2xl border border-indigo-100/50">
+                <p className="font-bold text-sm text-indigo-950 mb-1">100% Free Account</p>
+                <p className="text-xs text-indigo-800/80 mb-3 leading-relaxed">
+                  Create a free account to track your study streak, save cards, and unlock full mock tests.
+                </p>
+                <button
+                  onClick={() => setAuthSheetOpen(true)}
+                  className="w-full py-2 bg-red-600 hover:bg-red-500 text-white text-xs font-bold rounded-xl shadow-sm transition-colors cursor-pointer"
+                >
+                  Create Free Account
+                </button>
+              </div>
+            )}
           </div>
         )}
       </aside>

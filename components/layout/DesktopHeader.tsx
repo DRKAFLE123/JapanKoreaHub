@@ -6,6 +6,7 @@ import AuthSheet from '@/components/auth/AuthSheet';
 
 import { useCountry } from '@/lib/context/CountryContext';
 import { useTheme } from '@/lib/context/ThemeContext';
+import NotificationBell from '@/components/notifications/NotificationBell';
 
 interface DesktopHeaderProps {
   user?: { name: string; email: string } | null;
@@ -180,10 +181,10 @@ export default function DesktopHeader({ user, onSearchOpen, lang, onLangToggle, 
             >
               <Link
                 href="/consultancy"
-                className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-sm font-bold transition-all shadow-sm"
+                className="flex items-center gap-2 px-4 py-2 rounded-xl bg-emerald-500 hover:bg-emerald-600 active:bg-emerald-700 text-white text-xs font-black transition-all duration-200 shadow-md shadow-emerald-500/20 hover:shadow-lg hover:shadow-emerald-500/30 hover:-translate-y-0.5 border border-emerald-400/30 cursor-pointer"
               >
-                Consult Now
-                <ArrowRight className="w-3.5 h-3.5 group-hover/consult:translate-x-0.5 transition-transform" />
+                <span>Consult Now</span>
+                <ArrowRight className="w-3.5 h-3.5 group-hover/consult:translate-x-1 transition-transform duration-200" />
               </Link>
 
               {/* Hover card */}
@@ -220,20 +221,13 @@ export default function DesktopHeader({ user, onSearchOpen, lang, onLangToggle, 
             <ChevronDown className="w-3 h-3 text-slate-400" />
           </button>
 
+          {/* Interactive Notification Bell with Unread Popover */}
+          <NotificationBell />
+
           <div className="w-px h-6 bg-slate-200 mx-1"></div>
 
           {user ? (
             <div className="flex items-center gap-1">
-              {/* Notification Bell */}
-              <Link
-                href="/notices"
-                className="relative w-8 h-8 flex items-center justify-center rounded-xl text-slate-500 hover:bg-slate-100 hover:text-slate-900 transition-colors"
-                aria-label="Notifications"
-              >
-                <Bell className="w-4 h-4" />
-                <span className="absolute top-1 right-1 w-2 h-2 bg-rose-500 rounded-full ring-2 ring-white" />
-              </Link>
-
               {/* Profile Dropdown */}
               <div className="relative" ref={profileDropdownRef}>
               <button

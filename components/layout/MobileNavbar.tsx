@@ -7,6 +7,7 @@ import AuthSheet from '@/components/auth/AuthSheet';
 import MobileDrawer from '@/components/layout/MobileDrawer';
 
 import { useCountry } from '@/lib/context/CountryContext';
+import NotificationBell from '@/components/notifications/NotificationBell';
 
 interface MobileNavbarProps {
   user?: { name: string; email: string } | null;
@@ -61,19 +62,9 @@ export default function MobileNavbar({ user, lang, onLangToggle, onSearchOpen }:
           </div>
 
           {/* Right controls */}
-          <div className="flex items-center gap-1.5 shrink-0">
-            {/* Notification bell — only when logged in */}
-            {user && (
-              <Link
-                href="/notices"
-                className="relative w-8 h-8 flex items-center justify-center rounded-xl text-slate-500 hover:bg-slate-100 transition-colors"
-                aria-label="Notifications"
-              >
-                <Bell className="w-4 h-4" />
-                {/* Badge */}
-                <span className="absolute top-1 right-1 w-2 h-2 bg-rose-600 rounded-full ring-2 ring-white" />
-              </Link>
-            )}
+          <div className="flex items-center gap-1 shrink-0">
+            {/* Interactive Notification Bell */}
+            <NotificationBell />
 
             {/* Search icon */}
             <button

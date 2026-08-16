@@ -11,7 +11,11 @@ export interface EPSLessonGrammar {
   titleKorean: string;
   titleEnglish: string;
   titleNepali: string;
-  topicCategory: string;
+  topicCategory: string; // 주제 Topic (e.g. "예비편 Preparatory Lessons", "기본생활 Basic Life")
+  functionJob?: string; // 기능/직무 구조 Function / Job
+  vocabularyTopic: string; // 어휘 Vocabulary
+  grammarSummary?: string; // 문법 Grammar summary
+  cultureInfo?: string; // 정보/문화 Information / Culture
   isPreparatory?: boolean;
   preparatoryNote?: string;
   grammarPoint1?: {
@@ -38,8 +42,8 @@ export interface EPSLessonGrammar {
       nepali: string;
     };
   };
-  vocabularyTopic: string;
 }
+
 
 export const EPS_60_LESSONS_GRAMMAR: EPSLessonGrammar[] = [
   // ── BOOK 1: LESSONS 1–5 (PREPARATORY LESSONS - NO FORMAL GRAMMAR IN HRD SYLLABUS) ──

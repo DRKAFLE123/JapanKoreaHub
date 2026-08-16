@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import {
-  BookOpen, Search, Volume2, ChevronDown, ChevronRight, ChevronLeft, MessageSquare, Globe, Award, ListFilter, BookCheck, X, FileText, Printer, Book, Check
+  BookOpen, Search, Volume2, ChevronDown, ChevronRight, ChevronLeft, MessageSquare, Globe, Award, ListFilter, BookCheck, X, FileText, Printer, Book, Check, ArrowRight, Sparkles, Lightbulb
 } from 'lucide-react';
 import {
   KOREAN_VOCAB_DATA, KoreanVocabItem, EPS_LESSON_TITLES,
@@ -10,6 +10,9 @@ import {
   getAvailableKoreanLevels, getAvailableKoreanLessons
 } from '@/lib/korean-vocab';
 import { getGrammarGuide, LessonGrammarGuide } from '@/lib/grammar-guide';
+import { isWordMarked, toggleMarkedWord, getAuthUser } from '@/lib/practice-later';
+import { Bookmark, Lock } from 'lucide-react';
+
 
 const LEVEL_LABELS: Record<KoreanVocabItem['level'], string> = {
   EPS: 'EPS-TOPIK (60 Complete Lessons)',
@@ -47,7 +50,10 @@ export interface KoreanVocabularyExplorerProps {
 
 export const KoreanVocabularyExplorer: React.FC<KoreanVocabularyExplorerProps> = ({ preselectedLevel }) => {
   const [selectedLevel, setSelectedLevel] = useState<KoreanVocabItem['level']>(preselectedLevel || 'EPS');
-  const [selectedLesson, setSelectedLesson] = useState<number>(1);
+  const [selectedLesson, setSelectedLesson] = useState<number>(() => {
+    const lvl = preselectedLevel || 'EPS';
+    return lvl.startsWith('EPS') ? 6 : 1;
+  });
   const [activeLessonTab, setActiveLessonTab] = useState<'VOCAB' | 'GRAMMAR'>('VOCAB');
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [expandedGrammar, setExpandedGrammar] = useState<string | null>(null);
@@ -62,7 +68,7 @@ export const KoreanVocabularyExplorer: React.FC<KoreanVocabularyExplorerProps> =
   useEffect(() => {
     if (preselectedLevel) {
       setSelectedLevel(preselectedLevel);
-      setSelectedLesson(1);
+      setSelectedLesson(preselectedLevel.startsWith('EPS') ? 6 : 1);
       setActiveLessonTab('VOCAB');
     }
   }, [preselectedLevel]);
@@ -111,8 +117,8 @@ export const KoreanVocabularyExplorer: React.FC<KoreanVocabularyExplorerProps> =
       {/* Main 2-Column Layout: Left Lessons Sidebar + Right White Book Page Content */}
       <div className="grid grid-cols-1 lg:grid-cols-4 gap-4 sm:gap-6 items-start">
           {/* Left Column: Lessons Sidebar (Japanese Style) */}
-          <div className="lg:col-span-1 bg-white border border-slate-200 rounded-2xl sm:rounded-3xl p-3.5 sm:p-4 text-slate-900 shadow-xs space-y-3">
-            <div className="flex items-center justify-between pb-2 border-b border-slate-100">
+          <div className="lg:col-span-1 bg-white border border-slate-200 rounded-2xl sm:rounded-3xl p-3.5 sm:p-4 text-slate-900 shadow-xs space-y-3 lg:sticky lg:top-20 lg:h-[calc(100vh-6rem)] lg:max-h-[calc(100vh-6rem)] flex flex-col overflow-hidden">
+            <div className="flex items-center justify-between pb-2 border-b border-slate-100 shrink-0">
               <div className="flex items-center gap-2 font-black text-xs sm:text-sm text-emerald-600 uppercase tracking-wider">
                 <BookOpen className="w-4 h-4 text-emerald-600" />
                 <span>LESSONS</span>
@@ -123,7 +129,7 @@ export const KoreanVocabularyExplorer: React.FC<KoreanVocabularyExplorerProps> =
             </div>
 
             {/* Mobile Dropdown Quick Selector (Custom Bounded Picker) */}
-            <div className="block lg:hidden relative w-full pb-1 z-30">
+            <div className="block lg:hidden relative w-full pb-1 z-30 shrink-0">
               <button
                 type="button"
                 onClick={() => setMobileLessonMenuOpen(!mobileLessonMenuOpen)}
@@ -167,10 +173,11 @@ export const KoreanVocabularyExplorer: React.FC<KoreanVocabularyExplorerProps> =
             </div>
 
             {/* Scrollable Lesson Items List */}
-            <div className="hidden lg:block max-h-[580px] sm:max-h-[640px] overflow-y-auto space-y-1.5 pr-1 scrollbar-thin scrollbar-thumb-slate-200 scrollbar-track-transparent">
+            <div className="hidden lg:block flex-1 overflow-y-auto space-y-1.5 pr-1 scrollbar-thin scrollbar-thumb-slate-200 scrollbar-track-transparent">
             {availableLessons.map((n) => {
               const isSelected = selectedLesson === n;
               const title = getLessonTitle(selectedLevel, n);
+              const isPrep = selectedLevel.startsWith('EPS') && n <= 5;
               return (
                 <button
                   key={n}
@@ -182,12 +189,14 @@ export const KoreanVocabularyExplorer: React.FC<KoreanVocabularyExplorerProps> =
                   className={`w-full text-left p-2.5 rounded-xl text-xs transition-all flex items-center justify-between gap-2 cursor-pointer ${
                     isSelected
                       ? 'bg-emerald-600 text-white font-black shadow-xs border-l-4 border-emerald-400'
+                      : isPrep
+                      ? 'bg-amber-50/90 text-amber-950 hover:bg-amber-100/70 border border-amber-300/70'
                       : 'bg-slate-50 text-slate-700 hover:text-slate-900 hover:bg-slate-100 border border-slate-200/80'
                   }`}
                 >
                   <div className="flex items-center gap-2 min-w-0">
                     <span className={`w-6 h-6 rounded-full font-black text-[11px] flex items-center justify-center shrink-0 ${
-                      isSelected ? 'bg-white text-emerald-800 shadow-xs' : 'bg-slate-200 text-slate-700'
+                      isSelected ? 'bg-white text-emerald-800 shadow-xs' : isPrep ? 'bg-amber-200 text-amber-950' : 'bg-slate-200 text-slate-700'
                     }`}>
                       {n}
                     </span>
@@ -195,6 +204,11 @@ export const KoreanVocabularyExplorer: React.FC<KoreanVocabularyExplorerProps> =
                       {title}
                     </span>
                   </div>
+                  {isPrep && !isSelected && (
+                    <span className="text-[9px] font-black px-1.5 py-0.5 rounded bg-amber-200/90 text-amber-950 shrink-0">
+                      Prep
+                    </span>
+                  )}
                   <ChevronRight className={`w-3.5 h-3.5 shrink-0 transition-transform ${isSelected ? 'text-white translate-x-0.5' : 'text-slate-400'}`} />
                 </button>
               );
@@ -202,8 +216,8 @@ export const KoreanVocabularyExplorer: React.FC<KoreanVocabularyExplorerProps> =
           </div>
         </div>
 
-        {/* Right Column: White Book Paper Mode Reading Content */}
-        <div id="korean-vocab-content-area" ref={mainRef} className="lg:col-span-3 bg-white text-slate-900 border border-slate-200/90 rounded-2xl sm:rounded-3xl p-4 sm:p-6 shadow-2xl space-y-4 font-sans scroll-mt-24">
+        {/* Right Column: White Book Paper Mode Reading Content (Scrollable fixed height) */}
+        <div id="korean-vocab-content-area" ref={mainRef} className="lg:col-span-3 bg-white text-slate-900 border border-slate-200/90 rounded-2xl sm:rounded-3xl p-4 sm:p-6 shadow-2xl space-y-4 font-sans scroll-mt-24 lg:sticky lg:top-20 lg:h-[calc(100vh-6rem)] lg:max-h-[calc(100vh-6rem)] overflow-y-auto scrollbar-thin scrollbar-thumb-slate-300 scrollbar-track-transparent">
           {/* Header & In-Page View Switcher Tabs (Vocab vs Grammar) */}
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 pb-3.5 border-b border-slate-200">
             <div>
@@ -213,25 +227,6 @@ export const KoreanVocabularyExplorer: React.FC<KoreanVocabularyExplorerProps> =
               <h2 className="text-base sm:text-xl font-black text-slate-900 mt-0.5">
                 {searchQuery ? 'Search Results' : `Lesson ${selectedLesson}: ${getLessonTitle(selectedLevel, selectedLesson)}`}
               </h2>
-
-              {/* Small text links below lesson title */}
-              <div className="flex items-center gap-2 mt-1.5 flex-wrap">
-                <button
-                  onClick={() => setShowShortNoteModal(true)}
-                  className="text-xs font-extrabold text-white bg-blue-600 hover:bg-blue-700 px-3 py-1 rounded-xl shadow-xs transition-all flex items-center gap-1.5 cursor-pointer active:scale-95 border border-blue-500"
-                >
-                  <FileText className="w-3.5 h-3.5 text-white" />
-                  <span>Meaning Note</span>
-                </button>
-
-                <button
-                  onClick={() => setShowGrammarModal(true)}
-                  className="text-xs font-extrabold text-white bg-emerald-600 hover:bg-emerald-700 px-3 py-1 rounded-xl shadow-xs transition-all flex items-center gap-1.5 cursor-pointer active:scale-95 border border-emerald-500"
-                >
-                  <BookCheck className="w-3.5 h-3.5 text-white" />
-                  <span>Grammar Note</span>
-                </button>
-              </div>
             </div>
 
             {/* In-Page Tab Switcher (Vocabulary vs Grammar) */}
@@ -262,6 +257,56 @@ export const KoreanVocabularyExplorer: React.FC<KoreanVocabularyExplorerProps> =
             </div>
           </div>
 
+          {/* Preparatory Lessons Notice Banner for Lessons 1-5 */}
+          {selectedLevel.startsWith('EPS') && selectedLesson <= 5 && (
+            <div className="p-4 sm:p-5 rounded-2xl bg-amber-50 border border-amber-300 text-amber-950 space-y-3 shadow-xs font-sans">
+              <div className="flex items-start gap-3">
+                <div className="w-10 h-10 rounded-xl bg-amber-500/20 text-amber-900 flex items-center justify-center font-black text-lg shrink-0 border border-amber-400/40">
+                  💡
+                </div>
+                <div className="space-y-1">
+                  <div className="flex items-center gap-2">
+                    <span className="px-2 py-0.5 rounded-md bg-amber-200 text-amber-950 text-[10px] font-black uppercase tracking-wider">
+                      HRD Korea Textbook Notice
+                    </span>
+                    <span className="text-xs font-black text-amber-950">
+                      Lessons 1–5: Preparatory Orientation
+                    </span>
+                  </div>
+                  <p className="text-xs text-amber-900 leading-relaxed font-medium mt-1">
+                    In the official HRD Korea EPS-TOPIK Textbook, <strong>Lessons 1 to 5</strong> are Preparatory Orientation Lessons covering Hangeul vowels &amp; consonants, batchim phonetics, classroom commands, and daily greetings.
+                  </p>
+                  <p className="text-xs text-amber-950 font-bold leading-relaxed">
+                    Formal tested EPS-TOPIK vocabulary lists and grammar rules begin from <strong>Lesson 6 (저는 투안입니다 - My Name is Tuan)</strong>.
+                  </p>
+                </div>
+              </div>
+
+              {/* Direct Action Buttons */}
+              <div className="flex flex-wrap items-center gap-2.5 pt-2 border-t border-amber-200">
+                <button
+                  onClick={() => {
+                    setSelectedLesson(6);
+                    setSearchQuery('');
+                    setActiveLessonTab('VOCAB');
+                  }}
+                  className="px-4 py-2 rounded-xl bg-emerald-700 hover:bg-emerald-800 text-white text-xs font-black transition-all flex items-center gap-2 cursor-pointer shadow-xs"
+                >
+                  <ArrowRight className="w-4 h-4 text-emerald-200" />
+                  <span>Go Directly to Lesson 6 Vocabulary</span>
+                </button>
+
+                <a
+                  href="/korea/learn/basics"
+                  className="px-4 py-2 rounded-xl bg-white hover:bg-amber-100/80 border border-amber-300 text-amber-950 text-xs font-extrabold transition-all flex items-center gap-2"
+                >
+                  <BookOpen className="w-3.5 h-3.5 text-amber-800" />
+                  <span>Study Hangeul &amp; Phonetics Basics</span>
+                </a>
+              </div>
+            </div>
+          )}
+
           {/* Search Bar for Vocabulary View */}
           {activeLessonTab === 'VOCAB' && (
             <div className="relative w-full">
@@ -282,81 +327,202 @@ export const KoreanVocabularyExplorer: React.FC<KoreanVocabularyExplorerProps> =
           {activeLessonTab === 'VOCAB' && (
             <div ref={vocabListRef} className="max-h-[620px] overflow-y-auto pr-1 scrollbar-thin scrollbar-thumb-slate-300 scrollbar-track-transparent">
               {filteredVocab.length === 0 ? (
-                <div className="text-center py-12 text-slate-500 text-xs font-semibold">
-                  No matching vocabulary found for this lesson.
+                <div className="text-center py-12 px-6 bg-amber-50/50 border border-dashed border-amber-300 rounded-2xl space-y-3 font-sans">
+                  <div className="w-12 h-12 rounded-2xl bg-amber-100 border border-amber-300 text-amber-950 flex items-center justify-center mx-auto text-xl font-bold">
+                    📭
+                  </div>
+                  <div className="space-y-1">
+                    <h3 className="text-sm font-black text-slate-900">
+                      {selectedLevel.startsWith('EPS') && selectedLesson <= 5
+                        ? `Lesson ${selectedLesson} is a Preparatory Orientation Lesson (No Vocabulary Lists)`
+                        : 'No Vocabulary Items Found'}
+                    </h3>
+                    <p className="text-xs text-slate-600 max-w-md mx-auto leading-relaxed">
+                      {selectedLevel.startsWith('EPS') && selectedLesson <= 5
+                        ? `Official HRD Korea Textbook Lessons 1–5 focus on Hangeul alphabet, phonetics & classroom greetings. Official tested vocabulary meanings start in Lesson 6 (저는 투안입니다).`
+                        : `No matching vocabulary items found for this search.`}
+                    </p>
+                  </div>
+                  {selectedLevel.startsWith('EPS') && selectedLesson <= 5 && (
+                    <button
+                      onClick={() => {
+                        setSelectedLesson(6);
+                        setSearchQuery('');
+                      }}
+                      className="px-4 py-2 rounded-xl bg-emerald-700 hover:bg-emerald-800 text-white text-xs font-black transition-all inline-flex items-center gap-2 cursor-pointer shadow-xs mt-2"
+                    >
+                      <ArrowRight className="w-4 h-4 text-emerald-200" />
+                      <span>Jump to Lesson 6 Tested Vocabulary</span>
+                    </button>
+                  )}
                 </div>
               ) : (
-                <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-2.5 sm:gap-3">
-                  {filteredVocab.map((vocab, vIdx) => (
-                    <div
-                      key={vocab.id}
-                      className="bg-white border border-slate-200/90 hover:border-emerald-500/80 rounded-xl p-2.5 sm:p-3 transition-all shadow-xs hover:shadow-md space-y-1.5 group font-sans flex flex-col justify-between"
-                    >
-                      <div className="space-y-1">
-                        <div className="flex items-center justify-between gap-1.5">
-                          <div className="flex items-center gap-1.5 min-w-0">
-                            <span className="w-5 h-5 rounded-md bg-emerald-100 border border-emerald-300 text-emerald-950 font-black text-[10px] flex items-center justify-center shrink-0">
-                              {vIdx + 1}
-                            </span>
-                            <span className="text-base sm:text-lg font-black font-kr text-slate-900 leading-none truncate">
-                              {vocab.word}
-                            </span>
-                            <button
-                              onClick={() => playPronunciation(vocab.word)}
-                              className="p-1 rounded-md bg-slate-100 hover:bg-emerald-600 text-slate-600 hover:text-white border border-slate-200 transition-all cursor-pointer shrink-0"
-                              title="Play pronunciation"
-                            >
-                              <Volume2 className="w-3 h-3" />
-                            </button>
-                          </div>
+                /* Grouped Vocabulary Cards by Topic Headings */
+                (() => {
+                  const groups: { [key: string]: KoreanVocabItem[] } = {};
+                  filteredVocab.forEach(item => {
+                    const cat = item.topicCategory || (item.isCultureVocab ? '정보/문화: 문화 어휘 (Culture)' : '어휘: 기본 어휘 (Vocabulary)');
+                    if (!groups[cat]) groups[cat] = [];
+                    groups[cat].push(item);
+                  });
 
-                          <span className="text-[9px] px-1.5 py-0.5 rounded font-black bg-emerald-100 text-emerald-900 border border-emerald-300 shrink-0">
-                            {vocab.partOfSpeech || `L${vocab.lesson}`}
-                          </span>
-                        </div>
+                  const groupNames = Object.keys(groups);
 
-                        <div className="text-[11px] font-bold text-emerald-700 italic leading-none">
-                          {vocab.romanization}
-                        </div>
+                  return (
+                    <div className="space-y-6 font-sans">
+                      {groupNames.map((groupName) => {
+                        const items = groups[groupName];
+                        const isCulture = groupName.includes('정보/문화') || groupName.includes('Culture') || items.some(i => i.isCultureVocab);
 
-                        <div className="text-xs font-bold text-slate-800 pt-0.5 space-y-0.5">
-                          <div className="text-slate-900">🇬🇧 {vocab.meaning}</div>
-                          <div className="text-amber-900 font-black">🇳🇵 {vocab.meaningNepali}</div>
-                        </div>
-                      </div>
-
-                      {vocab.grammarSentences && vocab.grammarSentences.length > 0 && (
-                        <div className="pt-1 border-t border-slate-100">
-                          <button
-                            onClick={() => setExpandedGrammar(expandedGrammar === vocab.id ? null : vocab.id)}
-                            className="flex items-center gap-1 text-[10px] text-emerald-700 hover:text-emerald-800 font-extrabold transition-colors cursor-pointer"
-                          >
-                            <MessageSquare className="w-2.5 h-2.5" />
-                            <span>{expandedGrammar === vocab.id ? 'Hide example' : 'Show example'}</span>
-                            <ChevronDown className={`w-2.5 h-2.5 transition-transform ${expandedGrammar === vocab.id ? 'rotate-180' : ''}`} />
-                          </button>
-
-                          {expandedGrammar === vocab.id && vocab.grammarSentences.map((gs, idx) => (
-                            <div key={idx} className="mt-1.5 p-2 rounded-lg bg-amber-50/60 border border-amber-200/80 space-y-1 text-[11px]">
-                              <div className="flex items-start justify-between gap-1">
-                                <div className="font-kr font-black text-slate-900 text-xs">{gs.korean}</div>
-                                <button
-                                  onClick={() => playPronunciation(gs.korean)}
-                                  className="p-0.5 rounded bg-white text-slate-600 hover:text-emerald-600 border border-slate-200 shrink-0 cursor-pointer"
-                                >
-                                  <Volume2 className="w-2.5 h-2.5" />
-                                </button>
+                        return (
+                          <div key={groupName} className="space-y-3">
+                            {/* Topic Section Header */}
+                            <div className={`p-3 rounded-2xl border flex items-center justify-between gap-3 ${
+                              isCulture
+                                ? 'bg-purple-900 text-white border-purple-800 shadow-xs'
+                                : 'bg-slate-100 border-slate-200 text-slate-900'
+                            }`}>
+                              <div className="flex items-center gap-2.5">
+                                <span className={`w-7 h-7 rounded-xl flex items-center justify-center font-black text-xs shrink-0 ${
+                                  isCulture ? 'bg-purple-700 text-white' : 'bg-emerald-600 text-white'
+                                }`}>
+                                  {isCulture ? '🏛️' : '📚'}
+                                </span>
+                                <div>
+                                  <h3 className="text-xs sm:text-sm font-black tracking-wide font-kr">
+                                    {groupName}
+                                  </h3>
+                                  <p className={`text-[10px] font-semibold ${isCulture ? 'text-purple-200' : 'text-slate-500'}`}>
+                                    {isCulture ? 'Official Culture & Information Section Vocabulary' : 'Official HRD Korea Textbook Vocabulary Section'}
+                                  </p>
+                                </div>
                               </div>
-                              <div className="text-[10px] text-slate-500 italic">{gs.romanization}</div>
-                              <div className="text-[10px] text-slate-800">🇬🇧 {gs.english}</div>
-                              <div className="text-[10px] text-amber-900 font-bold">🇳🇵 {gs.nepali}</div>
+
+                              <span className={`text-[10px] font-black px-2.5 py-1 rounded-full border ${
+                                isCulture ? 'bg-purple-950 text-purple-200 border-purple-700' : 'bg-white text-slate-700 border-slate-300'
+                              }`}>
+                                {items.length} {items.length === 1 ? 'item' : 'items'}
+                              </span>
                             </div>
-                          ))}
-                        </div>
-                      )}
+
+                            {/* Cards Grid */}
+                            <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-2.5 sm:gap-3">
+                              {items.map((vocab, vIdx) => (
+                                <div
+                                  key={vocab.id}
+                                  className={`bg-white border rounded-xl p-2.5 sm:p-3 transition-all shadow-xs hover:shadow-md space-y-1.5 group font-sans flex flex-col justify-between ${
+                                    vocab.isCultureVocab ? 'border-purple-200 hover:border-purple-500 bg-purple-50/20' : 'border-slate-200/90 hover:border-emerald-500/80'
+                                  }`}
+                                >
+                                  <div className="space-y-1">
+                                    <div className="flex items-center justify-between gap-1.5">
+                                      <div className="flex items-center gap-1.5 min-w-0">
+                                        <span className={`w-5 h-5 rounded-md font-black text-[10px] flex items-center justify-center shrink-0 ${
+                                          vocab.isCultureVocab ? 'bg-purple-100 border border-purple-300 text-purple-950' : 'bg-emerald-100 border border-emerald-300 text-emerald-950'
+                                        }`}>
+                                          {vIdx + 1}
+                                        </span>
+                                        <span className="text-base sm:text-lg font-black font-kr text-slate-900 leading-none truncate">
+                                          {vocab.word}
+                                        </span>
+                                        <button
+                                          onClick={() => playPronunciation(vocab.word)}
+                                          className="p-1 rounded-md bg-slate-100 hover:bg-emerald-600 text-slate-600 hover:text-white border border-slate-200 transition-all cursor-pointer shrink-0"
+                                          title="Play pronunciation"
+                                        >
+                                          <Volume2 className="w-3 h-3" />
+                                        </button>
+                                      </div>
+
+                                      <div className="flex items-center gap-1 shrink-0">
+                                        <button
+                                          onClick={() => {
+                                            const user = getAuthUser();
+                                            if (!user) {
+                                              alert('Please sign in to tick words for practice later!');
+                                              return;
+                                            }
+                                            toggleMarkedWord({
+                                              id: `ko-${vocab.word}`,
+                                              language: 'korean',
+                                              level: selectedLevel,
+                                              word: vocab.word,
+                                              reading: vocab.romanization,
+                                              meaning: vocab.meaning,
+                                              meaningNepali: vocab.meaningNepali,
+                                              lesson: vocab.lesson,
+                                            });
+                                          }}
+                                          className={`p-1 rounded-md transition-all border cursor-pointer ${
+                                            isWordMarked(`ko-${vocab.word}`)
+                                              ? 'bg-amber-500 text-white border-amber-400'
+                                              : 'bg-slate-100 text-slate-500 hover:bg-amber-50 hover:text-amber-700 border-slate-200'
+                                          }`}
+                                          title={isWordMarked(`ko-${vocab.word}`) ? 'Ticked for Practice' : 'Tick for Practice Later'}
+                                        >
+                                          <Bookmark className={`w-3 h-3 ${isWordMarked(`ko-${vocab.word}`) ? 'fill-current' : ''}`} />
+                                        </button>
+
+                                        {vocab.isCultureVocab ? (
+                                          <span className="text-[9px] px-1.5 py-0.5 rounded font-black bg-purple-100 text-purple-900 border border-purple-300">
+                                            Culture
+                                          </span>
+                                        ) : (
+                                          <span className="text-[9px] px-1.5 py-0.5 rounded font-black bg-emerald-100 text-emerald-900 border border-emerald-300">
+                                            {vocab.partOfSpeech || `L${vocab.lesson}`}
+                                          </span>
+                                        )}
+                                      </div>
+                                    </div>
+
+                                    <div className="text-[11px] font-bold text-emerald-700 italic leading-none">
+                                      {vocab.romanization}
+                                    </div>
+
+                                    <div className="text-xs font-bold text-slate-800 pt-0.5 space-y-0.5">
+                                      <div className="text-slate-900">🇬🇧 {vocab.meaning}</div>
+                                      <div className="text-amber-900 font-black">🇳🇵 {vocab.meaningNepali}</div>
+                                    </div>
+                                  </div>
+
+                                  {vocab.grammarSentences && vocab.grammarSentences.length > 0 && (
+                                    <div className="pt-1 border-t border-slate-100">
+                                      <button
+                                        onClick={() => setExpandedGrammar(expandedGrammar === vocab.id ? null : vocab.id)}
+                                        className="flex items-center gap-1 text-[10px] text-emerald-700 hover:text-emerald-800 font-extrabold transition-colors cursor-pointer"
+                                      >
+                                        <MessageSquare className="w-2.5 h-2.5" />
+                                        <span>{expandedGrammar === vocab.id ? 'Hide example' : 'Show example'}</span>
+                                        <ChevronDown className={`w-2.5 h-2.5 transition-transform ${expandedGrammar === vocab.id ? 'rotate-180' : ''}`} />
+                                      </button>
+
+                                      {expandedGrammar === vocab.id && vocab.grammarSentences.map((gs, idx) => (
+                                        <div key={idx} className="mt-1.5 p-2 rounded-lg bg-amber-50/60 border border-amber-200/80 space-y-1 text-[11px]">
+                                          <div className="flex items-start justify-between gap-1">
+                                            <div className="font-kr font-black text-slate-900 text-xs">{gs.korean}</div>
+                                            <button
+                                              onClick={() => playPronunciation(gs.korean)}
+                                              className="p-0.5 rounded bg-white text-slate-600 hover:text-emerald-600 border border-slate-200 shrink-0 cursor-pointer"
+                                            >
+                                              <Volume2 className="w-2.5 h-2.5" />
+                                            </button>
+                                          </div>
+                                          <div className="text-[10px] text-slate-500 italic">{gs.romanization}</div>
+                                          <div className="text-[10px] text-slate-800">🇬🇧 {gs.english}</div>
+                                          <div className="text-[10px] text-amber-900 font-bold">🇳🇵 {gs.nepali}</div>
+                                        </div>
+                                      ))}
+                                    </div>
+                                  )}
+                                </div>
+                              ))}
+                            </div>
+                          </div>
+                        );
+                      })}
                     </div>
-                  ))}
-                </div>
+                  )
+                })()
               )}
             </div>
           )}

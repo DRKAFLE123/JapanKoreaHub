@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import {
   RotateCcw,
   Volume2,
@@ -20,12 +20,18 @@ import {
   Layers,
   Eye,
   EyeOff,
-  MessageSquare
+  MessageSquare,
+  Bookmark,
+  Lock,
+  User,
 } from 'lucide-react';
 import { calculateSM2, SrsItemState, SrsRating } from '@/lib/srs-engine';
 import { getKanjiByLevel, KanjiItem } from '@/lib/kanji-dataset';
 import { getVocabByLevel, VocabItem } from '@/lib/nihongo-vocab';
 import { KANJI_1000_DATA, Kanji1000Item } from '@/lib/kanji-1000-data';
+import { getAuthUser, getMarkedUnknownWords, isWordMarked, toggleMarkedWord, recordCardReviewStat, AuthUser } from '@/lib/practice-later';
+import SignupGate from '@/components/gates/SignupGate';
+import AuthSheet from '@/components/auth/AuthSheet';
 
 export type FlashcardMode = 'JAPANESE_FIRST' | 'MEANING_FIRST' | 'MIXED';
 export type AnswerLang = 'ENGLISH' | 'NEPALI' | 'BOTH';
@@ -99,6 +105,38 @@ export const KanjiCard: React.FC<KanjiCardProps> = ({ currentLevel, hideLevelSel
   const [selectedRating, setSelectedRating] = useState<SrsRating | null>(null);
   const [showAdvanceModal, setShowAdvanceModal] = useState<boolean>(false);
 
+  // Auth & Unknown words state
+  const [authUser, setAuthUser] = useState<AuthUser | null>(null);
+  const [onlyUnknownMode, setOnlyUnknownMode] = useState<boolean>(false);
+  const [markedVersion, setMarkedVersion] = useState<number>(0);
+  const [signupGateOpen, setSignupGateOpen] = useState<boolean>(false);
+  const [signupGateReason, setSignupGateReason] = useState<string>('');
+  const [authSheetOpen, setAuthSheetOpen] = useState<boolean>(false);
+
+  useEffect(() => {
+    setAuthUser(getAuthUser());
+    const handleSync = () => {
+      setAuthUser(getAuthUser());
+      setMarkedVersion(v => v + 1);
+    };
+    window.addEventListener('lg_unknown_words_changed', handleSync);
+    window.addEventListener('storage', handleSync);
+    return () => {
+      window.removeEventListener('lg_unknown_words_changed', handleSync);
+      window.removeEventListener('storage', handleSync);
+    };
+  }, []);
+
+  const requireAuth = (reason?: string): boolean => {
+    const user = getAuthUser();
+    if (!user) {
+      setSignupGateReason(reason || 'Please sign in or create a free account to practice Japanese flashcards and track your progress!');
+      setSignupGateOpen(true);
+      return false;
+    }
+    return true;
+  };
+
   // Available lessons count by level
   const maxLessonForLevel = selectedLevel === 'N5' ? 25 :
                             selectedLevel === 'N4' ? 50 :
@@ -108,7 +146,7 @@ export const KanjiCard: React.FC<KanjiCardProps> = ({ currentLevel, hideLevelSel
   const minLessonForLevel = 1;
 
   // Build unified deck based on selected level, lesson, category and shuffle state
-  const deck: UnifiedCardItem[] = useMemo(() => {
+  const baseDeck: UnifiedCardItem[] = useMemo(() => {
     const vocabLevel = (selectedLevel === 'KANJI_1000' || selectedLevel === 'BASICS' || selectedLevel === 'JFT') ? 'N5' : selectedLevel as any;
     let rawVocab = getVocabByLevel(vocabLevel);
 
@@ -194,9 +232,23 @@ export const KanjiCard: React.FC<KanjiCardProps> = ({ currentLevel, hideLevelSel
     return resultDeck;
   }, [selectedLevel, selectedLesson, contentCategory, isShuffled, shuffleSeed]);
 
+  // Dynamic deck filtering for unknown practice mode
+  const deck: UnifiedCardItem[] = useMemo(() => {
+    if (onlyUnknownMode) {
+      return baseDeck.filter(item => isWordMarked(`jp-${item.id}`));
+    }
+    return baseDeck;
+  }, [baseDeck, onlyUnknownMode, markedVersion]);
+
+  const allUnknownCount = useMemo(() => {
+    return getMarkedUnknownWords('japanese').length;
+  }, [markedVersion]);
+
   const currentListLength = deck.length;
   const safeIndex = Math.min(currentIndex, Math.max(0, currentListLength - 1));
   const currentCard: UnifiedCardItem | undefined = deck[safeIndex] || deck[0];
+
+  const isCurrentCardMarked = currentCard ? isWordMarked(`jp-${currentCard.id}`) : false;
 
   // Determine if the current card displays Meaning on front
   const isMeaningFront =
@@ -219,6 +271,8 @@ export const KanjiCard: React.FC<KanjiCardProps> = ({ currentLevel, hideLevelSel
   };
 
   const handleNext = () => {
+    if (!requireAuth('Sign in or register to practice Japanese cards and track your progress!')) return;
+    recordCardReviewStat();
     setIsFlipped(false);
     setSelectedRating(null);
     if (safeIndex < currentListLength - 1) {
@@ -258,6 +312,77 @@ export const KanjiCard: React.FC<KanjiCardProps> = ({ currentLevel, hideLevelSel
 
   return (
     <div className="w-full max-w-3xl mx-auto font-sans space-y-3 sm:space-y-4">
+      {/* Top Banner: User Status & Practice Mode Selector */}
+      <div className="bg-white border border-slate-200 rounded-2xl sm:rounded-3xl p-3 shadow-xs flex flex-wrap items-center justify-between gap-2.5">
+        {/* User Auth Status Badge */}
+        <div className="flex items-center gap-2">
+          {authUser ? (
+            <div className="flex items-center gap-1.5 px-3 py-1 rounded-xl bg-rose-50 border border-rose-200 text-rose-800 text-xs font-black">
+              <span className="w-2 h-2 rounded-full bg-rose-500 animate-pulse" />
+              <span>👤 {authUser.name}</span>
+              <span className="hidden xs:inline text-[10px] opacity-75">• Synced</span>
+            </div>
+          ) : (
+            <button
+              onClick={() => setAuthSheetOpen(true)}
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-gradient-to-r from-amber-500 to-orange-500 text-white text-xs font-black shadow-xs hover:opacity-90 transition-opacity cursor-pointer"
+            >
+              <Lock className="w-3.5 h-3.5" />
+              <span>Sign In to Track Progress</span>
+            </button>
+          )}
+        </div>
+
+        {/* Practice Mode Toggle Pills: All vs Unknown */}
+        <div className="flex items-center gap-1 bg-slate-100 p-1 rounded-xl border border-slate-200 text-xs font-bold">
+          <button
+            onClick={() => {
+              setOnlyUnknownMode(false);
+              setCurrentIndex(0);
+            }}
+            className={`px-3 py-1 rounded-lg text-xs font-black transition-all cursor-pointer ${
+              !onlyUnknownMode ? 'bg-rose-600 text-white shadow-xs' : 'text-slate-600 hover:text-slate-900'
+            }`}
+          >
+            All Cards ({baseDeck.length})
+          </button>
+
+          <button
+            onClick={() => {
+              if (!requireAuth('Sign in or create a free account to practice your saved unknown Japanese cards!')) return;
+              setOnlyUnknownMode(true);
+              setCurrentIndex(0);
+            }}
+            className={`px-3 py-1 rounded-lg text-xs font-black transition-all flex items-center gap-1.5 cursor-pointer ${
+              onlyUnknownMode ? 'bg-amber-600 text-white shadow-xs' : 'text-slate-600 hover:text-slate-900'
+            }`}
+          >
+            <Bookmark className={`w-3.5 h-3.5 ${allUnknownCount > 0 ? 'fill-current text-amber-400' : ''}`} />
+            <span>Unknown ({allUnknownCount})</span>
+          </button>
+        </div>
+      </div>
+
+      {/* Empty State when in Practice Unknown Mode and list is empty */}
+      {onlyUnknownMode && deck.length === 0 && (
+        <div className="w-full bg-white border border-slate-200 rounded-3xl p-8 shadow-xs text-center space-y-4 my-4">
+          <div className="w-16 h-16 rounded-full bg-amber-100 text-amber-600 flex items-center justify-center mx-auto border border-amber-200">
+            <Bookmark className="w-8 h-8" />
+          </div>
+          <div>
+            <h3 className="text-lg font-black text-slate-900">No Unknown Japanese Cards Marked</h3>
+            <p className="text-xs text-slate-500 mt-1 max-w-sm mx-auto">
+              Click the <strong className="text-slate-800">🔖 Tick Unknown</strong> button on any Kanji or Vocab card to add it to your practice deck!
+            </p>
+          </div>
+          <button
+            onClick={() => setOnlyUnknownMode(false)}
+            className="px-5 py-2.5 rounded-xl bg-rose-600 text-white text-xs font-extrabold shadow-xs hover:bg-rose-500 transition-colors cursor-pointer"
+          >
+            Explore All Cards ({baseDeck.length})
+          </button>
+        </div>
+      )}
 
       {/* ── UNIFIED FLASHCARD BOARD ── */}
       {currentCard ? (
@@ -266,13 +391,14 @@ export const KanjiCard: React.FC<KanjiCardProps> = ({ currentLevel, hideLevelSel
             onClick={(e) => {
               const target = e.target as HTMLElement;
               if (target.closest('button') || target.closest('select') || target.closest('a')) return;
+              if (!requireAuth('Sign in to flip cards and track progress!')) return;
               setIsFlipped(prev => !prev);
             }}
             style={{ cursor: 'pointer' }}
             className={`w-full min-h-[380px] sm:min-h-[440px] bg-white text-slate-900 border border-slate-200 rounded-3xl p-4 sm:p-6 shadow-xs transition-all duration-300 flex flex-col justify-between select-none overflow-hidden ${isFlipped ? 'border-rose-600/60 shadow-sm' : 'hover:border-slate-300'
               }`}
           >
-            {/* Card Header Bar (Integrated Lesson Badge, Counter & Flip button) */}
+            {/* Card Header Bar */}
             <div className="flex items-center justify-between pb-3 border-b border-slate-200 gap-2">
               <div className="flex items-center gap-2 min-w-0">
                 <div className="w-8 h-8 rounded-lg bg-rose-600 text-white flex items-center justify-center font-black text-base shadow-xs font-jp flex-shrink-0">
@@ -290,20 +416,49 @@ export const KanjiCard: React.FC<KanjiCardProps> = ({ currentLevel, hideLevelSel
                     </span>
                   </div>
                   <div className="text-[11px] font-bold text-slate-500 mt-0.5 truncate">
-                    Card {safeIndex + 1} of {currentListLength} {isShuffled && '(Random)'}
+                    Card {safeIndex + 1} of {currentListLength} {onlyUnknownMode && '(Unknown Deck)'}
                   </div>
                 </div>
               </div>
 
               {/* Quick Header Controls */}
               <div className="flex items-center gap-1.5 flex-shrink-0">
-                {/* 1. Header Eye Button (Left of Filter) */}
+                {/* Tick Unknown Toggle Button */}
                 <button
                   onClick={(e) => {
                     e.stopPropagation();
+                    if (!requireAuth('Sign in or register to tick unknown Japanese cards for practice!')) return;
+                    toggleMarkedWord({
+                      id: `jp-${currentCard.id}`,
+                      language: 'japanese',
+                      level: selectedLevel,
+                      word: currentCard.japaneseWord,
+                      reading: currentCard.reading,
+                      meaning: currentCard.meaningEnglish,
+                      meaningNepali: currentCard.meaningNepali,
+                      lesson: currentCard.lessonNumber,
+                    });
+                    setMarkedVersion(v => v + 1);
+                  }}
+                  className={`text-xs font-black px-2.5 py-1.5 rounded-xl transition-all flex items-center gap-1 shadow-2xs border cursor-pointer min-h-[38px] ${
+                    isCurrentCardMarked
+                      ? 'bg-amber-500 text-white border-amber-400 shadow-amber-200'
+                      : 'bg-amber-50 text-amber-800 hover:bg-amber-100 border-amber-200'
+                  }`}
+                  title={isCurrentCardMarked ? 'Remove from Unknown Practice' : 'Tick as Unknown Card'}
+                >
+                  <Bookmark className={`w-3.5 h-3.5 ${isCurrentCardMarked ? 'fill-current text-white' : 'text-amber-600'}`} />
+                  <span className="hidden sm:inline">{isCurrentCardMarked ? 'Ticked Unknown' : 'Tick Unknown'}</span>
+                </button>
+
+                {/* Header Eye Button */}
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    if (!requireAuth('Sign in or create a free account to practice flashcards and track progress!')) return;
                     setIsFlipped(prev => !prev);
                   }}
-                  className="px-2.5 py-1.5 rounded-xl bg-slate-50 text-slate-700 hover:bg-slate-100 border border-slate-200 text-xs font-black transition-all flex items-center gap-1.5 cursor-pointer select-none active:scale-95 shadow-2xs"
+                  className="px-2.5 py-1.5 rounded-xl bg-slate-50 text-slate-700 hover:bg-slate-100 border border-slate-200 text-xs font-black transition-all flex items-center gap-1.5 cursor-pointer select-none active:scale-95 shadow-2xs min-h-[38px]"
                   title={isFlipped ? "Click to hide answer" : "Click to show answer"}
                 >
                   {isFlipped ? (
@@ -318,6 +473,7 @@ export const KanjiCard: React.FC<KanjiCardProps> = ({ currentLevel, hideLevelSel
                     </>
                   )}
                 </button>
+
 
                 {/* 2. Filter Dropdown Button with Event Isolation */}
                 <div className="relative filter-popover-container" onClick={(e) => e.stopPropagation()}>
@@ -699,6 +855,26 @@ export const KanjiCard: React.FC<KanjiCardProps> = ({ currentLevel, hideLevelSel
         </div>
       )}
 
+      {/* Sign Up / Login Gate Modal */}
+      <SignupGate
+        isOpen={signupGateOpen}
+        onClose={() => setSignupGateOpen(false)}
+        reason={signupGateReason}
+      />
+
+      {/* Full Auth Sheet Modal */}
+      {authSheetOpen && (
+        <AuthSheet
+          initialMode="signin"
+          onClose={() => setAuthSheetOpen(false)}
+          onSuccess={(user) => {
+            setAuthUser(user);
+            setAuthSheetOpen(false);
+            window.dispatchEvent(new Event('lg_auth_changed'));
+          }}
+        />
+      )}
+
       {/* ── ADVANCE LEVEL MODAL ── */}
       {showAdvanceModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/85 backdrop-blur-md animate-fade-in">
@@ -733,3 +909,4 @@ export const KanjiCard: React.FC<KanjiCardProps> = ({ currentLevel, hideLevelSel
     </div>
   );
 };
+

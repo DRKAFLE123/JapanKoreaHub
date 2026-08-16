@@ -1,7 +1,10 @@
-import React, { useState, useMemo } from 'react';
-import { RotateCcw, Volume2, ChevronRight, ChevronLeft, Award, ArrowRight, BookOpen, Globe, Eye, Filter, ChevronDown, Shuffle } from 'lucide-react';
+import React, { useState, useMemo, useEffect } from 'react';
+import { RotateCcw, Volume2, ChevronRight, ChevronLeft, Award, ArrowRight, BookOpen, Globe, Eye, Filter, ChevronDown, Shuffle, Bookmark, Lock, User, Sparkles, CheckCircle2 } from 'lucide-react';
 import { calculateSM2, SrsItemState, SrsRating } from '@/lib/srs-engine';
 import { KOREAN_VOCAB_DATA, KoreanVocabItem, getKoreanVocabByLevel } from '@/lib/korean-vocab';
+import { getAuthUser, getMarkedUnknownWords, isWordMarked, toggleMarkedWord, recordCardReviewStat, AuthUser } from '@/lib/practice-later';
+import SignupGate from '@/components/gates/SignupGate';
+import AuthSheet from '@/components/auth/AuthSheet';
 
 export interface KoreanFlashcardCardProps {
   currentLevel?: KoreanVocabItem['level'];
@@ -22,6 +25,28 @@ export const KoreanFlashcardCard: React.FC<KoreanFlashcardCardProps> = ({
   const [selectedRating, setSelectedRating] = useState<SrsRating | null>(null);
   const [showAdvanceModal, setShowAdvanceModal] = useState<boolean>(false);
 
+  // Auth & Unknown words state
+  const [authUser, setAuthUser] = useState<AuthUser | null>(null);
+  const [onlyUnknownMode, setOnlyUnknownMode] = useState<boolean>(false);
+  const [markedVersion, setMarkedVersion] = useState<number>(0);
+  const [signupGateOpen, setSignupGateOpen] = useState<boolean>(false);
+  const [signupGateReason, setSignupGateReason] = useState<string>('');
+  const [authSheetOpen, setAuthSheetOpen] = useState<boolean>(false);
+
+  useEffect(() => {
+    setAuthUser(getAuthUser());
+    const handleSync = () => {
+      setAuthUser(getAuthUser());
+      setMarkedVersion(v => v + 1);
+    };
+    window.addEventListener('lg_unknown_words_changed', handleSync);
+    window.addEventListener('storage', handleSync);
+    return () => {
+      window.removeEventListener('lg_unknown_words_changed', handleSync);
+      window.removeEventListener('storage', handleSync);
+    };
+  }, []);
+
   React.useEffect(() => {
     if (currentLevel) {
       setSelectedLevel(currentLevel);
@@ -30,19 +55,41 @@ export const KoreanFlashcardCard: React.FC<KoreanFlashcardCardProps> = ({
     }
   }, [currentLevel]);
 
+  const requireAuth = (reason?: string): boolean => {
+    const user = getAuthUser();
+    if (!user) {
+      setSignupGateReason(reason || 'Please sign in or create a free account to practice flashcards and track your progress!');
+      setSignupGateOpen(true);
+      return false;
+    }
+    return true;
+  };
+
   const fullList = useMemo(() => getKoreanVocabByLevel(selectedLevel), [selectedLevel]);
   const uniqueLessons = useMemo(() => Array.from(new Set(fullList.map(item => item.lesson))).sort((a, b) => a - b), [fullList]);
 
+  // Filtered list based on lesson, shuffle, and unknown mode
   const currentList = useMemo(() => {
     let list = selectedLesson === 'ALL' ? fullList : fullList.filter(item => item.lesson === selectedLesson);
+
+    if (onlyUnknownMode) {
+      list = list.filter(item => isWordMarked(`ko-${item.word}`));
+    }
+
     if (isShuffled) {
       list = [...list].sort(() => 0.5 - Math.random());
     }
-    return list.length > 0 ? list : fullList;
-  }, [selectedLevel, selectedLesson, isShuffled, fullList]);
+    return list;
+  }, [selectedLevel, selectedLesson, isShuffled, fullList, onlyUnknownMode, markedVersion]);
+
+  const allUnknownCount = useMemo(() => {
+    return getMarkedUnknownWords('korean').length;
+  }, [markedVersion]);
 
   const safeIndex = Math.min(currentIndex, Math.max(0, currentList.length - 1));
-  const currentItem: KoreanVocabItem = currentList[safeIndex] || currentList[0];
+  const currentItem: KoreanVocabItem | undefined = currentList[safeIndex] || currentList[0];
+
+  const isCurrentItemMarked = currentItem ? isWordMarked(`ko-${currentItem.word}`) : false;
 
   const currentSrsState: SrsItemState = { easeFactor: 2.5, intervalDays: 0, repetitions: 0 };
   const srsAgain = calculateSM2(currentSrsState, 1);
@@ -61,6 +108,8 @@ export const KoreanFlashcardCard: React.FC<KoreanFlashcardCardProps> = ({
   };
 
   const handleNext = () => {
+    if (!requireAuth('Sign in or register to flip through cards and record your practice streak!')) return;
+    recordCardReviewStat();
     setIsFlipped(false);
     setSelectedRating(null);
     if (safeIndex < currentList.length - 1) {
@@ -92,6 +141,57 @@ export const KoreanFlashcardCard: React.FC<KoreanFlashcardCardProps> = ({
 
   return (
     <div className="w-full max-w-2xl mx-auto font-sans space-y-3 sm:space-y-4 text-slate-900">
+      {/* Top Banner: User Status & Practice Mode Selector */}
+      <div className="bg-white border border-slate-200 rounded-2xl sm:rounded-3xl p-3 shadow-xs flex flex-wrap items-center justify-between gap-2.5">
+        {/* User Auth Status Badge */}
+        <div className="flex items-center gap-2">
+          {authUser ? (
+            <div className="flex items-center gap-1.5 px-3 py-1 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs font-black">
+              <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+              <span>👤 {authUser.name}</span>
+              <span className="hidden xs:inline text-[10px] opacity-75">• Synced</span>
+            </div>
+          ) : (
+            <button
+              onClick={() => setAuthSheetOpen(true)}
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-gradient-to-r from-amber-500 to-orange-500 text-white text-xs font-black shadow-xs hover:opacity-90 transition-opacity cursor-pointer"
+            >
+              <Lock className="w-3.5 h-3.5" />
+              <span>Sign In to Track Progress</span>
+            </button>
+          )}
+        </div>
+
+        {/* Practice Mode Toggle Pills: All vs Unknown */}
+        <div className="flex items-center gap-1 bg-slate-100 p-1 rounded-xl border border-slate-200 text-xs font-bold">
+          <button
+            onClick={() => {
+              setOnlyUnknownMode(false);
+              setCurrentIndex(0);
+            }}
+            className={`px-3 py-1 rounded-lg text-xs font-black transition-all cursor-pointer ${
+              !onlyUnknownMode ? 'bg-emerald-600 text-white shadow-xs' : 'text-slate-600 hover:text-slate-900'
+            }`}
+          >
+            All Words ({fullList.length})
+          </button>
+
+          <button
+            onClick={() => {
+              if (!requireAuth('Sign in or create a free account to practice your saved unknown words!')) return;
+              setOnlyUnknownMode(true);
+              setCurrentIndex(0);
+            }}
+            className={`px-3 py-1 rounded-lg text-xs font-black transition-all flex items-center gap-1.5 cursor-pointer ${
+              onlyUnknownMode ? 'bg-amber-600 text-white shadow-xs' : 'text-slate-600 hover:text-slate-900'
+            }`}
+          >
+            <Bookmark className={`w-3.5 h-3.5 ${allUnknownCount > 0 ? 'fill-current text-amber-400' : ''}`} />
+            <span>Unknown ({allUnknownCount})</span>
+          </button>
+        </div>
+      </div>
+
       {/* Level Selector Bar (Only show if not locked) */}
       {!hideLevelSelector && !currentLevel && (
         <div className="bg-white border border-slate-200 rounded-2xl sm:rounded-3xl p-2.5 sm:p-3.5 shadow-xs flex items-center justify-between gap-3">
@@ -119,6 +219,27 @@ export const KoreanFlashcardCard: React.FC<KoreanFlashcardCardProps> = ({
         </div>
       )}
 
+      {/* Empty State when in Practice Unknown Mode and list is empty */}
+      {onlyUnknownMode && currentList.length === 0 && (
+        <div className="w-full bg-white border border-slate-200 rounded-3xl p-8 shadow-xs text-center space-y-4 my-4">
+          <div className="w-16 h-16 rounded-full bg-amber-100 text-amber-600 flex items-center justify-center mx-auto border border-amber-200">
+            <Bookmark className="w-8 h-8" />
+          </div>
+          <div>
+            <h3 className="text-lg font-black text-slate-900">No Unknown Words Marked Yet</h3>
+            <p className="text-xs text-slate-500 mt-1 max-w-sm mx-auto">
+              Click the <strong className="text-slate-800">🔖 Tick Unknown</strong> button on any flashcard or vocabulary item to add it to your personalized practice deck!
+            </p>
+          </div>
+          <button
+            onClick={() => setOnlyUnknownMode(false)}
+            className="px-5 py-2.5 rounded-xl bg-emerald-600 text-white text-xs font-extrabold shadow-xs hover:bg-emerald-500 transition-colors cursor-pointer"
+          >
+            Explore All Words ({fullList.length})
+          </button>
+        </div>
+      )}
+
       {/* Flashcard Component */}
       {currentItem && (
         <div className="relative group">
@@ -138,17 +259,44 @@ export const KoreanFlashcardCard: React.FC<KoreanFlashcardCardProps> = ({
                     {selectedLevel} • Lesson {currentItem.lesson}
                   </span>
                   <div className="text-[11px] font-bold text-slate-600 mt-0.5 truncate">
-                    Word {safeIndex + 1} of {currentList.length}
+                    Word {safeIndex + 1} of {currentList.length} {onlyUnknownMode && '(Unknown Deck)'}
                   </div>
                 </div>
               </div>
 
-              {/* Header Right Actions: Filter Dropdown & Flip Button */}
-              <div className="flex items-center gap-2 flex-shrink-0">
+              {/* Header Right Actions: Filter Dropdown, Tick Bookmark & Reveal Button */}
+              <div className="flex items-center gap-1.5 sm:gap-2 flex-shrink-0">
+                {/* Tick Unknown Word Toggle Button */}
+                <button
+                  onClick={() => {
+                    if (!requireAuth('Sign in or register to tick unknown words for practice!')) return;
+                    toggleMarkedWord({
+                      id: `ko-${currentItem.word}`,
+                      language: 'korean',
+                      level: selectedLevel,
+                      word: currentItem.word,
+                      reading: currentItem.romanization,
+                      meaning: currentItem.meaning,
+                      meaningNepali: currentItem.meaningNepali,
+                      lesson: currentItem.lesson,
+                    });
+                    setMarkedVersion(v => v + 1);
+                  }}
+                  className={`text-xs font-black px-2.5 py-1.5 rounded-xl transition-all flex items-center gap-1 shadow-xs border cursor-pointer min-h-[38px] ${
+                    isCurrentItemMarked
+                      ? 'bg-amber-500 text-white border-amber-400 shadow-amber-200'
+                      : 'bg-amber-50 text-amber-800 hover:bg-amber-100 border-amber-200'
+                  }`}
+                  title={isCurrentItemMarked ? 'Remove from Unknown Practice' : 'Tick as Unknown Word'}
+                >
+                  <Bookmark className={`w-3.5 h-3.5 ${isCurrentItemMarked ? 'fill-current text-white' : 'text-amber-600'}`} />
+                  <span className="hidden sm:inline">{isCurrentItemMarked ? 'Ticked Unknown' : 'Tick Unknown'}</span>
+                </button>
+
                 <div className="relative">
                   <button
                     onClick={() => setShowFilterDropdown(!showFilterDropdown)}
-                    className="text-xs font-extrabold px-2.5 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-200 transition-all flex items-center gap-1.5 shadow-xs cursor-pointer"
+                    className="text-xs font-extrabold px-2.5 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-200 transition-all flex items-center gap-1 shadow-xs cursor-pointer min-h-[38px]"
                     title="Filter by Lesson"
                   >
                     <Filter className="w-3.5 h-3.5 text-emerald-600" />
@@ -217,8 +365,11 @@ export const KoreanFlashcardCard: React.FC<KoreanFlashcardCardProps> = ({
 
                 {/* Eye Icon Reveal Button */}
                 <button
-                  onClick={() => setIsFlipped(!isFlipped)}
-                  className={`text-xs font-extrabold px-3 py-1.5 rounded-xl transition-all flex items-center gap-1.5 shadow-xs flex-shrink-0 cursor-pointer border ${
+                  onClick={() => {
+                    if (!requireAuth('Sign in or create a free account to practice flashcards and track progress!')) return;
+                    setIsFlipped(!isFlipped);
+                  }}
+                  className={`text-xs font-extrabold px-3 py-1.5 rounded-xl transition-all flex items-center gap-1.5 shadow-xs flex-shrink-0 cursor-pointer border min-h-[38px] ${
                     isFlipped
                       ? 'bg-emerald-600 text-white border-emerald-500'
                       : 'bg-emerald-50 text-emerald-700 border-emerald-200 hover:bg-emerald-600 hover:text-white'
@@ -235,7 +386,7 @@ export const KoreanFlashcardCard: React.FC<KoreanFlashcardCardProps> = ({
                     setCurrentIndex(0);
                     setIsFlipped(false);
                   }}
-                  className="p-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-600 hover:text-slate-900 border border-slate-200 transition-all flex items-center justify-center shadow-xs cursor-pointer"
+                  className="p-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-600 hover:text-slate-900 border border-slate-200 transition-all flex items-center justify-center shadow-xs cursor-pointer min-h-[38px] min-w-[38px]"
                   title="Restart Deck from Word 1"
                 >
                   <RotateCcw className="w-4 h-4" />
@@ -256,7 +407,7 @@ export const KoreanFlashcardCard: React.FC<KoreanFlashcardCardProps> = ({
 
                   <button
                     onClick={playAudio}
-                    className="mt-3.5 px-3.5 py-1.5 rounded-2xl bg-white hover:bg-emerald-50 text-slate-700 hover:text-emerald-700 transition-all border border-slate-200 shadow-xs flex items-center gap-2 text-xs font-bold cursor-pointer"
+                    className="mt-3.5 px-3.5 py-2 rounded-2xl bg-white hover:bg-emerald-50 text-slate-700 hover:text-emerald-700 transition-all border border-slate-200 shadow-xs flex items-center gap-2 text-xs font-bold cursor-pointer min-h-[40px]"
                   >
                     <Volume2 className="w-4 h-4 text-emerald-600" />
                     <span>Listen Pronunciation</span>
@@ -315,8 +466,12 @@ export const KoreanFlashcardCard: React.FC<KoreanFlashcardCardProps> = ({
               {isFlipped && (
                 <div className="grid grid-cols-4 gap-1.5 sm:gap-2">
                   <button
-                    onClick={() => setSelectedRating(1)}
-                    className={`py-2 px-1 rounded-xl text-center border transition-all cursor-pointer ${
+                    onClick={() => {
+                      if (!requireAuth()) return;
+                      recordCardReviewStat();
+                      setSelectedRating(1);
+                    }}
+                    className={`py-2 px-1 rounded-xl text-center border transition-all cursor-pointer min-h-[44px] ${
                       selectedRating === 1
                         ? 'bg-rose-600 border-rose-500 text-white shadow-xs font-black'
                         : 'bg-rose-50 hover:bg-rose-100 border-rose-200 text-rose-800 font-bold'
@@ -327,8 +482,12 @@ export const KoreanFlashcardCard: React.FC<KoreanFlashcardCardProps> = ({
                   </button>
 
                   <button
-                    onClick={() => setSelectedRating(2)}
-                    className={`py-2 px-1 rounded-xl text-center border transition-all cursor-pointer ${
+                    onClick={() => {
+                      if (!requireAuth()) return;
+                      recordCardReviewStat();
+                      setSelectedRating(2);
+                    }}
+                    className={`py-2 px-1 rounded-xl text-center border transition-all cursor-pointer min-h-[44px] ${
                       selectedRating === 2
                         ? 'bg-amber-600 border-amber-500 text-white shadow-xs font-black'
                         : 'bg-amber-50 hover:bg-amber-100 border-amber-200 text-amber-800 font-bold'
@@ -339,8 +498,12 @@ export const KoreanFlashcardCard: React.FC<KoreanFlashcardCardProps> = ({
                   </button>
 
                   <button
-                    onClick={() => setSelectedRating(3)}
-                    className={`py-2 px-1 rounded-xl text-center border transition-all cursor-pointer ${
+                    onClick={() => {
+                      if (!requireAuth()) return;
+                      recordCardReviewStat();
+                      setSelectedRating(3);
+                    }}
+                    className={`py-2 px-1 rounded-xl text-center border transition-all cursor-pointer min-h-[44px] ${
                       selectedRating === 3
                         ? 'bg-emerald-600 border-emerald-500 text-white shadow-xs font-black'
                         : 'bg-emerald-50 hover:bg-emerald-100 border-emerald-200 text-emerald-800 font-bold'
@@ -351,8 +514,12 @@ export const KoreanFlashcardCard: React.FC<KoreanFlashcardCardProps> = ({
                   </button>
 
                   <button
-                    onClick={() => setSelectedRating(4)}
-                    className={`py-2 px-1 rounded-xl text-center border transition-all cursor-pointer ${
+                    onClick={() => {
+                      if (!requireAuth()) return;
+                      recordCardReviewStat();
+                      setSelectedRating(4);
+                    }}
+                    className={`py-2 px-1 rounded-xl text-center border transition-all cursor-pointer min-h-[44px] ${
                       selectedRating === 4
                         ? 'bg-blue-600 border-blue-500 text-white shadow-xs font-black'
                         : 'bg-blue-50 hover:bg-blue-100 border-blue-200 text-blue-800 font-bold'
@@ -369,14 +536,17 @@ export const KoreanFlashcardCard: React.FC<KoreanFlashcardCardProps> = ({
                 <button
                   onClick={handlePrev}
                   disabled={safeIndex === 0}
-                  className="px-3.5 py-2 rounded-xl bg-slate-100 disabled:opacity-30 hover:bg-slate-200 text-slate-700 text-xs font-bold transition-all flex items-center gap-1 cursor-pointer border border-slate-200"
+                  className="px-3.5 py-2.5 rounded-xl bg-slate-100 disabled:opacity-30 hover:bg-slate-200 text-slate-700 text-xs font-bold transition-all flex items-center gap-1 cursor-pointer border border-slate-200 min-h-[44px]"
                 >
                   <ChevronLeft className="w-4 h-4" /> Prev
                 </button>
 
                 <button
-                  onClick={() => setIsFlipped(!isFlipped)}
-                  className="flex-1 py-2 px-3 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-extrabold flex items-center justify-center gap-1.5 shadow-xs cursor-pointer"
+                  onClick={() => {
+                    if (!requireAuth('Sign in or create a free account to practice flashcards and track progress!')) return;
+                    setIsFlipped(!isFlipped);
+                  }}
+                  className="flex-1 py-2.5 px-3 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-extrabold flex items-center justify-center gap-1.5 shadow-xs cursor-pointer min-h-[44px]"
                 >
                   <Eye className="w-4 h-4" />
                   <span>{isFlipped ? 'Show Hangul' : 'Show Answer'}</span>
@@ -384,7 +554,7 @@ export const KoreanFlashcardCard: React.FC<KoreanFlashcardCardProps> = ({
 
                 <button
                   onClick={handleNext}
-                  className="px-3.5 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold transition-all flex items-center gap-1 cursor-pointer shadow-xs"
+                  className="px-3.5 py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold transition-all flex items-center gap-1 cursor-pointer shadow-xs min-h-[44px]"
                 >
                   Next <ChevronRight className="w-4 h-4" />
                 </button>
@@ -408,6 +578,26 @@ export const KoreanFlashcardCard: React.FC<KoreanFlashcardCardProps> = ({
             <span>Reset Deck to Card 1</span>
           </button>
         </div>
+      )}
+
+      {/* Sign Up / Login Gate Modal */}
+      <SignupGate
+        isOpen={signupGateOpen}
+        onClose={() => setSignupGateOpen(false)}
+        reason={signupGateReason}
+      />
+
+      {/* Full Auth Sheet Modal */}
+      {authSheetOpen && (
+        <AuthSheet
+          initialMode="signin"
+          onClose={() => setAuthSheetOpen(false)}
+          onSuccess={(user) => {
+            setAuthUser(user);
+            setAuthSheetOpen(false);
+            window.dispatchEvent(new Event('lg_auth_changed'));
+          }}
+        />
       )}
 
       {/* Auto Advance Modal */}
@@ -446,3 +636,4 @@ export const KoreanFlashcardCard: React.FC<KoreanFlashcardCardProps> = ({
     </div>
   );
 };
+

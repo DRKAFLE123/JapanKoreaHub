@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Sparkles, BookOpen, Layers, Headphones, Clock, Target, Award, Calendar, Flame, CheckCircle2, ChevronRight, Zap, ArrowLeft, FileText, Globe, Maximize2, Minimize2 } from 'lucide-react';
 import { LevelPassTricks } from './LevelPassTricks';
 import { LevelStudyPlanModal } from './LevelStudyPlanModal';
@@ -47,6 +47,15 @@ export const LevelHubDashboard: React.FC<LevelHubDashboardProps> = ({
   const [isFocusMode, setIsFocusMode] = useState<boolean>(false);
   const [activeTab, setActiveTab] = useState<LevelSubTab>('VOCABULARY');
   const { isCollapsed, toggleCollapse } = useSidebarCollapse();
+
+  const row1Ref = useRef<HTMLDivElement | null>(null);
+  const row2Ref = useRef<HTMLDivElement | null>(null);
+
+  const scrollRowRight = (ref: React.RefObject<HTMLDivElement | null>) => {
+    if (ref.current) {
+      ref.current.scrollBy({ left: 180, behavior: 'smooth' });
+    }
+  };
 
   useEffect(() => {
     setCurrentLevel(propLevel);
@@ -130,69 +139,72 @@ export const LevelHubDashboard: React.FC<LevelHubDashboardProps> = ({
   return (
     <div className={`space-y-2 animate-fade-in font-sans ${isFocusMode ? 'fixed inset-0 z-[100] bg-slate-50 dark:bg-slate-950 p-2 sm:p-5 overflow-y-auto' : ''}`}>
       
-      {/* 🌐 ROW 1: CURRICULUM LEVEL BAR + FOCUS MODE TOGGLE */}
-      <div className="flex items-center justify-between gap-2 overflow-x-auto no-scrollbar py-1 bg-white dark:bg-slate-900 p-2 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-xs">
-        <div className="flex items-center gap-1.5 text-xs font-black uppercase tracking-wider text-slate-500 whitespace-nowrap pl-1 pr-1">
-          <Globe className="w-3.5 h-3.5 text-red-600" />
-          <span>Course:</span>
+      {/* 🌐 UNIFIED LEVEL & SUB-MENU NAVIGATION CARD */}
+      <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-2 space-y-1.5 shadow-xs">
+        {/* ROW 1: Level Switcher */}
+        <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar touch-pan-x py-0.5 w-full">
+          <div className="flex items-center gap-1 text-xs font-black uppercase tracking-wider text-slate-500 whitespace-nowrap pl-1 pr-0.5 shrink-0">
+            <Globe className="w-3.5 h-3.5 text-red-600" />
+            <span className="hidden sm:inline">Course:</span>
+          </div>
+
+          <div className="flex items-center gap-1.5 flex-nowrap shrink-0">
+            {JAPAN_LEVEL_LIST.map((lvl) => {
+              const isSelected = currentLevel === lvl.id;
+              return (
+                <button
+                  key={lvl.id}
+                  onClick={() => handleLevelSwitch(lvl.id)}
+                  className={`px-2.5 py-1 rounded-xl text-xs font-extrabold transition-all cursor-pointer whitespace-nowrap border ${
+                    isSelected
+                      ? 'bg-red-600 text-white shadow-xs border-red-500 font-black'
+                      : 'bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:text-slate-900 hover:bg-slate-200 border-slate-200 dark:border-slate-700 font-bold'
+                  }`}
+                >
+                  {lvl.label}
+                </button>
+              );
+            })}
+
+            {/* ⛶ FOCUS MODE TOGGLE BUTTON */}
+            <button
+              onClick={() => setIsFocusMode(!isFocusMode)}
+              className={`ml-1 px-3 py-1 rounded-xl text-xs font-extrabold transition-all flex items-center gap-1.5 cursor-pointer whitespace-nowrap border ${
+                isFocusMode
+                  ? 'bg-red-600 text-white border-red-500 shadow-md font-black animate-pulse'
+                  : 'bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200 border-slate-200 dark:border-slate-700 font-bold'
+              }`}
+              title={isFocusMode ? "Exit Fullscreen Focus Mode" : "Enter Distraction-Free Fullscreen Focus Mode"}
+            >
+              {isFocusMode ? <Minimize2 className="w-3.5 h-3.5" /> : <Maximize2 className="w-3.5 h-3.5" />}
+              <span>{isFocusMode ? 'Exit Focus' : 'Focus'}</span>
+            </button>
+          </div>
         </div>
 
-        <div className="flex items-center gap-1.5 flex-nowrap">
-          {JAPAN_LEVEL_LIST.map((lvl) => {
-            const isSelected = currentLevel === lvl.id;
-            return (
-              <button
-                key={lvl.id}
-                onClick={() => handleLevelSwitch(lvl.id)}
-                className={`px-2.5 py-1 rounded-xl text-xs font-extrabold transition-all cursor-pointer whitespace-nowrap border ${
-                  isSelected
-                    ? 'bg-red-600 text-white shadow-xs border-red-500 font-black'
-                    : 'bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:text-slate-900 hover:bg-slate-200 border-slate-200 dark:border-slate-700 font-bold'
-                }`}
-              >
-                {lvl.label}
-              </button>
-            );
-          })}
-
-          {/* ⛶ FOCUS MODE TOGGLE BUTTON */}
-          <button
-            onClick={() => setIsFocusMode(!isFocusMode)}
-            className={`ml-1 px-3 py-1 rounded-xl text-xs font-extrabold transition-all flex items-center gap-1.5 cursor-pointer whitespace-nowrap border ${
-              isFocusMode
-                ? 'bg-red-600 text-white border-red-500 shadow-md font-black animate-pulse'
-                : 'bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200 border-slate-200 dark:border-slate-700 font-bold'
-            }`}
-            title={isFocusMode ? "Exit Fullscreen Focus Mode" : "Enter Distraction-Free Fullscreen Focus Mode"}
-          >
-            {isFocusMode ? <Minimize2 className="w-3.5 h-3.5" /> : <Maximize2 className="w-3.5 h-3.5" />}
-            <span>{isFocusMode ? 'Exit Focus' : 'Focus'}</span>
-          </button>
-        </div>
+        {/* ROW 2: Sub-Menu Options (Micro-Pill Navigation) */}
+        {currentLevel !== 'BASICS' && currentLevel !== 'KANJI_1000' && (
+          <div className="pt-1.5 border-t border-slate-100 dark:border-slate-800/80 flex items-center gap-1 overflow-x-auto no-scrollbar touch-pan-x py-0.5">
+            {getSubTabs().map((tab) => {
+              const isActive = activeTab === tab.id;
+              return (
+                <button
+                  key={tab.id}
+                  onClick={() => handleTabClick(tab.id as LevelSubTab)}
+                  className={`px-2.5 py-1 rounded-lg text-[10.5px] font-extrabold transition-all flex items-center gap-1 cursor-pointer whitespace-nowrap shrink-0 ${
+                    isActive
+                      ? 'bg-red-600 text-white shadow-xs border border-red-500 font-black'
+                      : 'bg-slate-50 dark:bg-slate-800/50 text-slate-600 dark:text-slate-400 hover:text-slate-900 hover:bg-slate-100 dark:hover:bg-slate-800 border border-slate-200/60 dark:border-slate-700/60 font-bold'
+                  }`}
+                >
+                  <span className="text-[10px]">{tab.emoji}</span>
+                  <span>{tab.label}</span>
+                </button>
+              );
+            })}
+          </div>
+        )}
       </div>
-
-      {/* 📖 ROW 2: OPTIONS SUB-MENU BAR (Tailored to selected level) */}
-      {currentLevel !== 'BASICS' && currentLevel !== 'KANJI_1000' && (
-        <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar py-1 bg-white dark:bg-slate-900 p-1.5 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-xs">
-          {getSubTabs().map((tab) => {
-            const isActive = activeTab === tab.id;
-            return (
-              <button
-                key={tab.id}
-                onClick={() => handleTabClick(tab.id as LevelSubTab)}
-                className={`px-3 py-1.5 rounded-xl text-xs font-extrabold transition-all flex items-center gap-1.5 cursor-pointer whitespace-nowrap ${
-                  isActive
-                    ? 'bg-red-600 text-white shadow-xs border border-red-500 font-black'
-                    : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 hover:bg-slate-100 dark:hover:bg-slate-800 border border-transparent font-bold'
-                }`}
-              >
-                <span>{tab.emoji}</span>
-                <span>{tab.label}</span>
-              </button>
-            );
-          })}
-        </div>
-      )}
 
       {/* Active Level Content Body */}
       <div className="pt-1">

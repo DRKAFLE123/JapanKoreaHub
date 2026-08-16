@@ -687,106 +687,131 @@ export const KoreanBasicsModuleSystem: React.FC<KoreanBasicsModuleSystemProps> =
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 items-start">
-          {/* Collapsible Left Course Navigator Sidebar — full height */}
-          <div className={`lg:col-span-1 bg-slate-950 border border-slate-800 rounded-3xl shadow-2xl flex flex-col sticky top-16 overflow-hidden ${sidebarOpen ? 'flex' : 'hidden lg:flex'}`} style={{height: 'calc(100vh - 72px)'}}>
-            {/* Header */}
-            <div className="flex items-center justify-between px-4 pt-4 pb-3 border-b border-slate-800 shrink-0">
-              <div className="text-[11px] font-black uppercase tracking-widest text-slate-400">📚 Course Content</div>
-              <button
-                onClick={() => setShowProgressModal(true)}
-                className="text-[10px] text-emerald-400 hover:text-emerald-300 font-extrabold cursor-pointer flex items-center gap-1 bg-emerald-950/60 hover:bg-emerald-900/60 border border-emerald-500/30 px-2 py-1 rounded-lg transition-all"
-                title="View Progress & Milestone Roadmap"
-              >
-                <Award className="w-3 h-3 text-emerald-400" />
-                <span>Progress</span>
-              </button>
-            </div>
-
-            {/* Scrollable module+lesson list */}
-            <div className="flex-1 overflow-y-auto px-2 py-2 space-y-0.5 scrollbar-thin scrollbar-thumb-slate-700">
-              {KOREAN_BASICS_MODULES.map((m) => {
-                const isSelectedMod = m.id === selectedModule.id;
-
-                return (
-                  <div key={m.id}>
-                    {/* ── MODULE ROW ── */}
+            {/* Collapsible Left Course Navigator Sidebar — Fixed Height Independent Scroll */}
+            <div className={`lg:col-span-1 bg-slate-950 border border-slate-800 rounded-3xl shadow-2xl flex flex-col lg:sticky lg:top-20 overflow-hidden lg:h-[calc(100vh-6rem)] lg:max-h-[calc(100vh-6rem)] ${
+              sidebarOpen
+                ? 'fixed inset-y-0 left-0 z-50 w-80 bg-slate-950/98 p-2 border-r border-slate-800 shadow-2xl flex'
+                : 'hidden lg:flex'
+            }`}>
+              {/* Header */}
+              <div className="flex items-center justify-between px-4 pt-4 pb-3 border-b border-slate-800 shrink-0">
+                <div className="text-[11px] font-black uppercase tracking-widest text-slate-400">📚 Course Content</div>
+                <div className="flex items-center gap-2">
+                  <button
+                    onClick={() => setShowProgressModal(true)}
+                    className="text-[10px] text-emerald-400 hover:text-emerald-300 font-extrabold cursor-pointer flex items-center gap-1 bg-emerald-950/60 hover:bg-emerald-900/60 border border-emerald-500/30 px-2 py-1 rounded-lg transition-all"
+                    title="View Progress & Milestone Roadmap"
+                  >
+                    <Award className="w-3 h-3 text-emerald-400" />
+                    <span>Progress</span>
+                  </button>
+                  {sidebarOpen && (
                     <button
-                      onClick={() => {
-                        setSelectedModule(m);
-                        setSelectedLesson(m.lessons[0]);
-                      }}
-                      className={`w-full text-left px-3 py-2.5 rounded-xl flex items-center gap-2.5 transition-all cursor-pointer group ${
-                        isSelectedMod
-                          ? 'bg-emerald-900/50 border border-emerald-600/40'
-                          : 'hover:bg-slate-800/70 border border-transparent'
-                      }`}
+                      onClick={() => setSidebarOpen(false)}
+                      className="lg:hidden text-xs text-slate-400 hover:text-white p-1"
                     >
-                      {/* Module number badge */}
-                      <span className={`shrink-0 w-6 h-6 rounded-lg text-[10px] font-black flex items-center justify-center ${
-                        isSelectedMod ? 'bg-emerald-500 text-white' : 'bg-slate-800 text-slate-400 group-hover:bg-slate-700 group-hover:text-slate-200'
-                      }`}>
-                        {m.moduleNumber}
-                      </span>
-                      <span className={`flex-1 truncate text-xs font-extrabold uppercase tracking-wide ${
-                        isSelectedMod ? 'text-emerald-300' : 'text-slate-400 group-hover:text-slate-100'
-                      }`}>
-                        {m.title}
-                      </span>
-                      <span className={`shrink-0 text-[10px] font-bold px-1.5 py-0.5 rounded-md ${
-                        isSelectedMod ? 'bg-emerald-800/60 text-emerald-300' : 'text-slate-600'
-                      }`}>
-                        {m.lessons.length}L
-                      </span>
+                      ✕
                     </button>
+                  )}
+                </div>
+              </div>
 
-                    {/* ── LESSON ROWS (only when module is expanded) ── */}
-                    {isSelectedMod && (
-                      <div className="ml-3 pl-3 border-l-2 border-emerald-700/40 mt-0.5 mb-1 space-y-0.5">
-                        {m.lessons.map((l) => {
-                          const isCurrentLess = l.id === selectedLesson.id;
-                          const isDone = progress.completedLessons.includes(l.id);
-                          return (
-                            <button
-                              key={l.id}
-                              onClick={() => openLesson(m, l)}
-                              className={`w-full text-left px-2.5 py-1.5 rounded-lg flex items-center justify-between gap-2 cursor-pointer transition-all ${
-                                isCurrentLess
-                                  ? 'bg-emerald-600 text-white'
-                                  : isDone
-                                    ? 'text-emerald-400 hover:bg-slate-800/80'
-                                    : 'text-slate-500 hover:text-slate-200 hover:bg-slate-800/60'
-                              }`}
-                            >
-                              <div className="flex items-center gap-1.5 min-w-0">
-                                <span className={`shrink-0 w-4 h-4 rounded text-[9px] font-black flex items-center justify-center ${
-                                  isCurrentLess ? 'bg-white/20 text-white' : isDone ? 'bg-emerald-900 text-emerald-400' : 'bg-slate-800 text-slate-500'
-                                }`}>
-                                  {l.lessonNumber}
-                                </span>
-                                <span className={`truncate text-[11px] italic ${
-                                  isCurrentLess ? 'font-bold not-italic' : 'font-medium'
-                                }`}>
-                                  {l.title}
-                                </span>
-                              </div>
-                              {isDone && <Check className="w-3 h-3 text-emerald-400 shrink-0" />}
-                            </button>
-                          );
-                        })}
-                      </div>
-                    )}
-                  </div>
-                );
-              })}
+              {/* Scrollable module+lesson list */}
+              <div className="flex-1 overflow-y-auto px-2 py-2 space-y-0.5 scrollbar-thin scrollbar-thumb-slate-800 scrollbar-track-transparent">
+                {KOREAN_BASICS_MODULES.map((m) => {
+                  const isSelectedMod = m.id === selectedModule.id;
+
+                  return (
+                    <div key={m.id}>
+                      {/* ── MODULE ROW ── */}
+                      <button
+                        onClick={() => {
+                          setSelectedModule(m);
+                          setSelectedLesson(m.lessons[0]);
+                        }}
+                        className={`w-full text-left px-3 py-2.5 rounded-xl flex items-center gap-2.5 transition-all cursor-pointer group ${
+                          isSelectedMod
+                            ? 'bg-emerald-900/50 border border-emerald-600/40'
+                            : 'hover:bg-slate-800/70 border border-transparent'
+                        }`}
+                      >
+                        {/* Module number badge */}
+                        <span className={`shrink-0 w-6 h-6 rounded-lg text-[10px] font-black flex items-center justify-center ${
+                          isSelectedMod ? 'bg-emerald-500 text-white' : 'bg-slate-800 text-slate-400 group-hover:bg-slate-700 group-hover:text-slate-200'
+                        }`}>
+                          {m.moduleNumber}
+                        </span>
+                        <span className={`flex-1 truncate text-xs font-extrabold uppercase tracking-wide ${
+                          isSelectedMod ? 'text-emerald-300' : 'text-slate-400 group-hover:text-slate-100'
+                        }`}>
+                          {m.title}
+                        </span>
+                        <span className={`shrink-0 text-[10px] font-bold px-1.5 py-0.5 rounded-md ${
+                          isSelectedMod ? 'bg-emerald-800/60 text-emerald-300' : 'text-slate-600'
+                        }`}>
+                          {m.lessons.length}L
+                        </span>
+                      </button>
+
+                      {/* ── LESSON ROWS (only when module is expanded) ── */}
+                      {isSelectedMod && (
+                        <div className="ml-3 pl-3 border-l-2 border-emerald-700/40 mt-0.5 mb-1 space-y-0.5">
+                          {m.lessons.map((l) => {
+                            const isCurrentLess = l.id === selectedLesson.id;
+                            const isDone = progress.completedLessons.includes(l.id);
+                            return (
+                              <button
+                                key={l.id}
+                                onClick={() => {
+                                  openLesson(m, l);
+                                  setSidebarOpen(false);
+                                }}
+                                className={`w-full text-left px-2.5 py-1.5 rounded-lg flex items-center justify-between gap-2 cursor-pointer transition-all ${
+                                  isCurrentLess
+                                    ? 'bg-emerald-600 text-white'
+                                    : isDone
+                                      ? 'text-emerald-400 hover:bg-slate-800/80'
+                                      : 'text-slate-500 hover:text-slate-200 hover:bg-slate-800/60'
+                                }`}
+                              >
+                                <div className="flex items-center gap-1.5 min-w-0">
+                                  <span className={`shrink-0 w-4 h-4 rounded text-[9px] font-black flex items-center justify-center ${
+                                    isCurrentLess ? 'bg-white/20 text-white' : isDone ? 'bg-emerald-900 text-emerald-400' : 'bg-slate-800 text-slate-500'
+                                  }`}>
+                                    {l.lessonNumber}
+                                  </span>
+                                  <span className={`truncate text-[11px] italic ${
+                                    isCurrentLess ? 'font-bold not-italic' : 'font-medium'
+                                  }`}>
+                                    {l.title}
+                                  </span>
+                                </div>
+                                {isDone && <Check className="w-3 h-3 text-emerald-400 shrink-0" />}
+                              </button>
+                            );
+                          })}
+                        </div>
+                      )}
+                    </div>
+                  );
+                })}
+              </div>
             </div>
-          </div>
 
-          {/* Main Lesson Content Area with Light Book Mode (bg-white) - Full Width Layout */}
-          <div className={`lg:col-span-3 rounded-3xl p-4 sm:p-6 shadow-2xl space-y-4 w-full min-w-0 transition-all duration-300 ${
-            readerTheme === 'LIGHT'
-              ? 'bg-white text-slate-900 border border-slate-200/90'
-              : 'bg-slate-900/95 text-slate-100 border border-slate-800'
-          }`}>
+            {/* Mobile Backdrop overlay when drawer is open */}
+            {sidebarOpen && (
+              <div
+                onClick={() => setSidebarOpen(false)}
+                className="lg:hidden fixed inset-0 z-40 bg-black/60 backdrop-blur-xs"
+              />
+            )}
+
+            {/* Main Lesson Content Area with Light/Dark Mode — Fixed Viewport Height & Independent Smooth Scroll */}
+            <div className={`lg:col-span-3 rounded-3xl p-4 sm:p-6 shadow-2xl space-y-4 w-full min-w-0 transition-all duration-300 lg:sticky lg:top-20 lg:h-[calc(100vh-6rem)] lg:max-h-[calc(100vh-6rem)] overflow-y-auto scrollbar-thin scrollbar-thumb-slate-300 dark:scrollbar-thumb-slate-700 scrollbar-track-transparent ${
+              readerTheme === 'LIGHT'
+                ? 'bg-white text-slate-900 border border-slate-200/90'
+                : 'bg-slate-900/95 text-slate-100 border border-slate-800'
+            }`}>
             {/* Top Reader Navigation & Theme Toggle Bar (Compact) */}
             <div className={`flex items-center justify-between pb-2.5 gap-3 flex-wrap border-b ${
               readerTheme === 'LIGHT' ? 'border-slate-200' : 'border-slate-800'
