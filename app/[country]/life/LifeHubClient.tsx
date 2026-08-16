@@ -31,9 +31,7 @@ export default function LifeHubClient({ country }: { country: Country }) {
 
   return (
     <div className="min-h-screen bg-white pb-24">
-      <MobileNavbar user={null} lang="en" onLangToggle={() => {}} onSearchOpen={() => {}} />
-
-      <main className="pt-14 max-w-4xl mx-auto">
+      <main className="max-w-4xl mx-auto">
         {/* Breadcrumb */}
         <div className="px-4 pt-4 pb-2">
           <Link href={`/${country}`} className="inline-flex items-center gap-1 text-sm text-gray-500 hover:text-gray-700 transition-colors">

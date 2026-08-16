@@ -74,9 +74,7 @@ export default function ProfilePage() {
 
   return (
     <div className="min-h-screen bg-slate-50 text-slate-900 font-sans pb-24">
-      <MobileNavbar user={null} lang="en" onLangToggle={() => {}} onSearchOpen={() => {}} />
-
-      <main className="max-w-4xl mx-auto px-3 sm:px-6 pt-16 md:pt-6 space-y-6">
+      <main className="max-w-4xl mx-auto px-3 sm:px-6 pt-4 sm:pt-6 space-y-6">
 
         {/* 👤 HERO PROFILE CARD */}
         <div className="bg-white border border-slate-200 rounded-3xl p-5 sm:p-8 shadow-xs relative overflow-hidden">

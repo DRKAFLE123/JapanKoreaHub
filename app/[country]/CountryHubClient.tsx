@@ -119,9 +119,7 @@ export default function CountryHubClient({ country }: { country: Country }) {
 
   return (
     <div className="min-h-screen bg-slate-50 text-slate-900 font-sans pb-24">
-      <MobileNavbar user={null} lang={lang} onLangToggle={toggleLang} onSearchOpen={() => {}} />
-
-      <main className="max-w-6xl mx-auto px-4 pt-4 md:pt-8 space-y-8">
+      <main className="max-w-6xl mx-auto px-4 pt-2 sm:pt-4 md:pt-8 space-y-8">
 
         {/* 🚀 LIGHT HERO SECTION */}
         <section className={`relative overflow-hidden rounded-3xl bg-gradient-to-br ${cfg.theme.heroGrad} border p-6 sm:p-10 shadow-sm`}>

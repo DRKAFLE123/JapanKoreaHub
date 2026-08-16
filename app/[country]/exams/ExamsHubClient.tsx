@@ -290,9 +290,7 @@ export default function ExamsHubClient({ country }: { country: Country }) {
 
   return (
     <div className="min-h-screen bg-slate-50 text-slate-900 font-sans pb-24">
-      <MobileNavbar user={null} lang="en" onLangToggle={() => {}} onSearchOpen={() => {}} />
-
-      <main className="max-w-6xl mx-auto px-2 sm:px-4 pt-16 md:pt-4 space-y-3">
+      <main className="max-w-6xl mx-auto px-2 sm:px-4 pt-2 sm:pt-4 space-y-3">
 
         {/* 🌐 ROW 1: CURRICULUM LEVEL SELECTION BAR */}
         <div className="flex items-center justify-between gap-2 overflow-x-auto no-scrollbar py-1 bg-white p-2 rounded-2xl border border-slate-200 shadow-xs">

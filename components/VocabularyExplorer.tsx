@@ -17,6 +17,9 @@ import { RadicalBreakdown } from '@/components/RadicalBreakdown';
 import { BASIC_KANJI_100, BASIC_VOCAB_200 } from '@/lib/basics-japanese-data';
 import { KANJI_1000_DATA, Kanji1000Item } from '@/lib/kanji-1000-data';
 import { KanjiPracticeModal } from '@/components/KanjiPracticeModal';
+import { isWordMarked, toggleMarkedWord, getAuthUser } from '@/lib/practice-later';
+import AuthSheet from '@/components/auth/AuthSheet';
+import SignupGate from '@/components/gates/SignupGate';
 
 const LEVEL_LABELS: Record<string, string> = {
   BASICS: '🎯 Japanese Basics (Kana, Rules & Kanji Radicals)',
@@ -101,7 +104,21 @@ export const VocabularyExplorer: React.FC<VocabularyExplorerProps> = ({ preselec
   const [selectedLesson, setSelectedLesson] = useState<number>(1);
   const [activeLessonTab, setActiveLessonTab] = useState<'VOCAB' | 'GRAMMAR'>('VOCAB');
 
-  // 1000 Kanji Hub states
+  // Auth & Unknown words state
+  const [markedVersion, setMarkedVersion] = useState<number>(0);
+  const [signupGateOpen, setSignupGateOpen] = useState<boolean>(false);
+  const [signupGateReason, setSignupGateReason] = useState<string>('');
+  const [authSheetOpen, setAuthSheetOpen] = useState<boolean>(false);
+
+  const requireAuth = (reason?: string): boolean => {
+    const user = getAuthUser();
+    if (!user) {
+      setSignupGateReason(reason || 'Please sign in or register to bookmark words!');
+      setSignupGateOpen(true);
+      return false;
+    }
+    return true;
+  };
   const [kanjiSearchQuery, setKanjiSearchQuery] = useState<string>('');
   const [kanjiActiveTier, setKanjiActiveTier] = useState<'all' | 'basic' | 'intermediate' | 'advanced'>('all');
   const [kanjiCurrentPage, setKanjiCurrentPage] = useState<number>(1);
@@ -672,11 +689,40 @@ export const VocabularyExplorer: React.FC<VocabularyExplorerProps> = ({ preselec
                 </div>
               ) : (
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  {paginatedKanjis.map((kanji) => (
-                    <div
-                      key={kanji.number}
-                      className="p-4 bg-white border border-[#e8decb] rounded-2xl hover:shadow-md hover:border-amber-900/20 transition-all flex gap-4 items-start relative group"
-                    >
+                  {paginatedKanjis.map((kanji) => {
+                    const wordId = `kanji-1000-${kanji.number}`;
+                    const isMarked = isWordMarked(wordId);
+                    return (
+                      <div
+                        key={kanji.number}
+                        className="p-4 bg-white border border-[#e8decb] rounded-2xl hover:shadow-md hover:border-amber-900/20 transition-all flex gap-4 items-start relative group"
+                      >
+                        {/* Bookmark Button */}
+                        <button
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            if (!requireAuth('Sign in or register to bookmark difficult Kanji for practice!')) return;
+                            toggleMarkedWord({
+                              id: wordId,
+                              language: 'japanese',
+                              level: 'KANJI_1000',
+                              word: kanji.character,
+                              reading: kanji.readings,
+                              meaning: kanji.meaningEn,
+                              meaningNepali: kanji.meaningNe,
+                              lesson: Math.ceil(kanji.number / 25),
+                            });
+                            setMarkedVersion(v => v + 1);
+                          }}
+                          className={`absolute top-3 right-3 p-1.5 rounded-xl border transition-all cursor-pointer z-10 ${
+                            isMarked
+                              ? 'bg-amber-500 text-white border-amber-400 shadow-xs'
+                              : 'bg-[#fbf6eb] text-[#8a7b6c] hover:text-amber-600 hover:bg-amber-50 border-[#e8decb]'
+                          }`}
+                          title={isMarked ? 'Bookmarked in practice deck' : 'Bookmark Kanji'}
+                        >
+                          <Bookmark className={`w-3.5 h-3.5 ${isMarked ? 'fill-current text-white' : ''}`} />
+                        </button>
                       {/* Left: Stamp Number & Large Character */}
                       <div className="flex flex-col items-center shrink-0 w-20 p-2 bg-[#fbf6eb] border border-[#e8decb] rounded-xl">
                         <span className="text-[10px] font-black text-rose-700 bg-rose-50 border border-rose-200 px-2 py-0.5 rounded-md font-mono mb-1.5">
@@ -728,7 +774,8 @@ export const VocabularyExplorer: React.FC<VocabularyExplorerProps> = ({ preselec
                         )}
                       </div>
                     </div>
-                  ))}
+                  );
+                })}
                 </div>
               )}
             </div>
@@ -1537,6 +1584,17 @@ export const VocabularyExplorer: React.FC<VocabularyExplorerProps> = ({ preselec
         initialKanjis={practiceDeck}
         title={practiceTitle}
       />
+      <SignupGate
+        isOpen={signupGateOpen}
+        onClose={() => setSignupGateOpen(false)}
+        reason={signupGateReason}
+      />
+      {authSheetOpen && (
+        <AuthSheet
+          initialMode="signin"
+          onClose={() => setAuthSheetOpen(false)}
+        />
+      )}
     </div>
   );
 };

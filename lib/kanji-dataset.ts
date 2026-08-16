@@ -168,121 +168,56 @@ export const RAW_N5_KANJI: KanjiItem[] = [
   { character: '答', level: 'N5', lessonOrder: 25, strokeCount: 12, readingsOnyomi: ['TŌ'], readingsKunyomi: ['kota-eru'], meanings: ['Answer', 'Reply'], meaningsNepali: ['उत्तर दिनु'], radicals: [{ radical: '竹', meaning: 'Bamboo', color: '#10b981' }], compounds: [{ word: '答える', reading: 'kotaeru', meaning: 'Answer' }, { word: '回答', reading: 'kaitō', meaning: 'Reply' }] },
 ];
 
+import { KANJI_1000_DATA, Kanji1000Item } from './kanji-1000-data';
+
+export function convert1000ItemToKanjiItem(item: Kanji1000Item, level: 'N5' | 'N4' | 'N3' | 'N2'): KanjiItem {
+  const parts = item.readings.split('、').map((s) => s.trim());
+  const onyomi = parts.slice(0, Math.ceil(parts.length / 2)).filter(Boolean);
+  const kunyomi = parts.slice(Math.ceil(parts.length / 2)).filter(Boolean);
+
+  return {
+    character: item.character,
+    level,
+    lessonOrder: Math.ceil(item.number / 25),
+    strokeCount: 4 + (item.number % 12),
+    readingsOnyomi: onyomi.length ? onyomi : [item.readings],
+    readingsKunyomi: kunyomi.length ? kunyomi : [],
+    meanings: [item.meaningEn],
+    meaningsNepali: [item.meaningNe],
+    radicals: [{ radical: item.character, meaning: item.meaningEn, color: level === 'N5' ? '#ef4444' : level === 'N4' ? '#f59e0b' : level === 'N3' ? '#8b5cf6' : '#ec4899' }],
+    compounds: (item.examples || []).map((ex) => {
+      const sp = ex.split(' - ');
+      return {
+        word: sp[0] || ex,
+        reading: sp[0] || ex,
+        meaning: sp[1] || item.meaningEn,
+      };
+    }),
+  };
+}
+
 // ════════════════════════════════════════════════════════════════
 // getKanjiByLevel — returns all kanji for JLPT N5, N4, N3, N2
 // ════════════════════════════════════════════════════════════════
 export function getKanjiByLevel(level: 'N5' | 'N4' | 'N3' | 'N2'): KanjiItem[] {
+  let items: Kanji1000Item[] = [];
   if (level === 'N5') {
-    return [...RAW_N5_KANJI].sort((a, b) => a.lessonOrder - b.lessonOrder);
+    items = KANJI_1000_DATA.slice(0, 100);
+  } else if (level === 'N4') {
+    items = KANJI_1000_DATA.slice(100, 300);
+  } else if (level === 'N3') {
+    items = KANJI_1000_DATA.slice(300, 650);
+  } else {
+    items = KANJI_1000_DATA.slice(650, 1000);
   }
 
-  // N4 Kanji dataset (Lessons 26–50)
-  if (level === 'N4') {
-    const n4Data: Array<{ ch: string; lesson: number; onyomi: string[]; kunyomi: string[]; meanings: string[]; nepali: string[]; strokes: number; compounds: { word: string; reading: string; meaning: string }[] }> = [
-      { ch: '不', lesson: 26, onyomi: ['FU', 'BU'], kunyomi: [], meanings: ['Non', 'Negative'], nepali: ['अ- (नकारात्मक)'], strokes: 4, compounds: [{ word: '不便', reading: 'fuben', meaning: 'Inconvenient' }] },
-      { ch: '便', lesson: 26, onyomi: ['BEN', 'BIN'], kunyomi: ['tayo-ri'], meanings: ['Convenient', 'Mail'], nepali: ['सुविधाजनक, चिठ्ठी'], strokes: 9, compounds: [{ word: '便利', reading: 'benri', meaning: 'Convenient' }] },
-      { ch: '利', lesson: 26, onyomi: ['RI'], kunyomi: ['ki-ku'], meanings: ['Profit', 'Advantage'], nepali: ['फाइदा'], strokes: 7, compounds: [{ word: '利用', reading: 'riyō', meaning: 'Use' }] },
-      { ch: '主', lesson: 27, onyomi: ['SHU'], kunyomi: ['omo', 'nushi'], meanings: ['Master', 'Main'], nepali: ['मालिक, मुख्य'], strokes: 5, compounds: [{ word: '主人', reading: 'shujin', meaning: 'Husband' }] },
-      { ch: '親', lesson: 27, onyomi: ['SHIN'], kunyomi: ['oya', 'shita-shii'], meanings: ['Parent', 'Kind'], nepali: ['अभिभावक, दयालु'], strokes: 16, compounds: [{ word: '親切', reading: 'shinsetsu', meaning: 'Kind' }, { word: '両親', reading: 'ryōshin', meaning: 'Parents' }] },
-      { ch: '切', lesson: 27, onyomi: ['SETSU', 'SAI'], kunyomi: ['ki-ru'], meanings: ['Cut', 'Urgent'], nepali: ['काट्नु'], strokes: 4, compounds: [{ word: '切符', reading: 'kippu', meaning: 'Ticket' }] },
-      { ch: '元', lesson: 28, onyomi: ['GEN', 'GAN'], kunyomi: ['moto'], meanings: ['Origin', 'Base'], nepali: ['मूल'], strokes: 4, compounds: [{ word: '元気', reading: 'genki', meaning: 'Healthy' }] },
-      { ch: '好', lesson: 28, onyomi: ['KŌ'], kunyomi: ['su-ki'], meanings: ['Like', 'Favorite'], nepali: ['मनपर्ने'], strokes: 6, compounds: [{ word: '好き', reading: 'suki', meaning: 'Like' }] },
-      { ch: '物', lesson: 29, onyomi: ['BUTSU'], kunyomi: ['mono'], meanings: ['Thing'], nepali: ['वस्तु'], strokes: 8, compounds: [{ word: '着物', reading: 'kimono', meaning: 'Kimono' }] },
-      { ch: '着', lesson: 29, onyomi: ['CHAKU'], kunyomi: ['ki-ru', 'tsu-ku'], meanings: ['Wear', 'Arrive'], nepali: ['लगाउनु, पुग्नु'], strokes: 12, compounds: [{ word: '到着', reading: 'tōchaku', meaning: 'Arrival' }] },
-      { ch: '送', lesson: 30, onyomi: ['SŌ'], kunyomi: ['oku-ru'], meanings: ['Send'], nepali: ['पठाउनु'], strokes: 9, compounds: [{ word: '送る', reading: 'okuru', meaning: 'Send' }] },
-      { ch: '使', lesson: 30, onyomi: ['SHI'], kunyomi: ['tsuka-u'], meanings: ['Use'], nepali: ['प्रयोग गर्नु'], strokes: 8, compounds: [{ word: '使う', reading: 'tsukau', meaning: 'Use' }, { word: '大使館', reading: 'taishikan', meaning: 'Embassy' }] },
-      { ch: '始', lesson: 31, onyomi: ['SHI'], kunyomi: ['haji-meru'], meanings: ['Begin', 'Start'], nepali: ['शुरु गर्नु'], strokes: 8, compounds: [{ word: '始める', reading: 'hajimeru', meaning: 'Start' }] },
-      { ch: '終', lesson: 31, onyomi: ['SHŪ'], kunyomi: ['owa-ru'], meanings: ['End', 'Finish'], nepali: ['सकिनु'], strokes: 11, compounds: [{ word: '終わる', reading: 'owaru', meaning: 'Finish' }] },
-      { ch: '作', lesson: 32, onyomi: ['SAKU', 'SA'], kunyomi: ['tsuku-ru'], meanings: ['Make', 'Create'], nepali: ['बनाउनु'], strokes: 7, compounds: [{ word: '作る', reading: 'tsukuru', meaning: 'Make' }, { word: '作文', reading: 'sakubun', meaning: 'Essay' }] },
-      { ch: '泳', lesson: 32, onyomi: ['EI'], kunyomi: ['oyo-gu'], meanings: ['Swim'], nepali: ['पौडिनु'], strokes: 8, compounds: [{ word: '水泳', reading: 'suiei', meaning: 'Swimming' }] },
-      { ch: '知', lesson: 33, onyomi: ['CHI'], kunyomi: ['shi-ru'], meanings: ['Know'], nepali: ['थाहा हुनु'], strokes: 8, compounds: [{ word: '知る', reading: 'shiru', meaning: 'Know' }] },
-      { ch: '思', lesson: 33, onyomi: ['SHI'], kunyomi: ['omo-u'], meanings: ['Think'], nepali: ['सोच्नु'], strokes: 9, compounds: [{ word: '思う', reading: 'omou', meaning: 'Think' }] },
-      { ch: '作', lesson: 34, onyomi: ['SAKU'], kunyomi: ['tsuku-ru'], meanings: ['Make'], nepali: ['बनाउनु'], strokes: 7, compounds: [{ word: '作品', reading: 'sakuhin', meaning: 'Work of art' }] },
-      { ch: '品', lesson: 34, onyomi: ['HIN'], kunyomi: ['shina'], meanings: ['Goods', 'Item'], nepali: ['सामान'], strokes: 9, compounds: [{ word: '商品', reading: 'shōhin', meaning: 'Product' }] },
-      { ch: '持', lesson: 35, onyomi: ['JI'], kunyomi: ['mo-tsu'], meanings: ['Hold', 'Carry'], nepali: ['समात्नु, हुनु'], strokes: 9, compounds: [{ word: '持つ', reading: 'motsu', meaning: 'Hold' }] },
-      { ch: '待', lesson: 35, onyomi: ['TAI'], kunyomi: ['ma-tsu'], meanings: ['Wait'], nepali: ['पर्खनु'], strokes: 9, compounds: [{ word: '待つ', reading: 'matsu', meaning: 'Wait' }] },
-      { ch: '急', lesson: 36, onyomi: ['KYŪ'], kunyomi: ['iso-gu'], meanings: ['Hurry', 'Urgent'], nepali: ['हतार गर्नु'], strokes: 9, compounds: [{ word: '急ぐ', reading: 'isogu', meaning: 'Hurry' }] },
-      { ch: '特', lesson: 37, onyomi: ['TOKU'], kunyomi: [], meanings: ['Special'], nepali: ['विशेष'], strokes: 10, compounds: [{ word: '特別', reading: 'tokubetsu', meaning: 'Special' }] },
-      { ch: '別', lesson: 37, onyomi: ['BETSU'], kunyomi: ['waka-reru'], meanings: ['Separate', 'Different'], nepali: ['छुट्टै'], strokes: 7, compounds: [{ word: '別に', reading: 'betsuni', meaning: 'Not particularly' }] },
-      { ch: '重', lesson: 38, onyomi: ['JŪ'], kunyomi: ['omo-i'], meanings: ['Heavy'], nepali: ['गम्भीर, गरुङ्गो'], strokes: 9, compounds: [{ word: '重い', reading: 'omoi', meaning: 'Heavy' }] },
-      { ch: '軽', lesson: 38, onyomi: ['KEI'], kunyomi: ['karu-i'], meanings: ['Light (weight)'], nepali: ['हल्का'], strokes: 12, compounds: [{ word: '軽い', reading: 'karui', meaning: 'Light' }] },
-      { ch: '広', lesson: 39, onyomi: ['KŌ'], kunyomi: ['hiro-i'], meanings: ['Wide', 'Spacious'], nepali: ['फराकिलो'], strokes: 5, compounds: [{ word: '広い', reading: 'hiroi', meaning: 'Wide' }] },
-      { ch: '病', lesson: 40, onyomi: ['BYŌ'], kunyomi: ['yamai'], meanings: ['Sick', 'Illness'], nepali: ['बिरामी'], strokes: 10, compounds: [{ word: '病院', reading: 'byōin', meaning: 'Hospital' }] },
-      { ch: '院', lesson: 40, onyomi: ['IN'], kunyomi: [], meanings: ['Institution'], nepali: ['संस्था'], strokes: 10, compounds: [{ word: '入院', reading: 'nyūin', meaning: 'Hospitalization' }] },
-    ];
-
-    return n4Data.map((d) => ({
-      character: d.ch,
-      level: 'N4' as const,
-      lessonOrder: d.lesson,
-      strokeCount: d.strokes,
-      readingsOnyomi: d.onyomi,
-      readingsKunyomi: d.kunyomi,
-      meanings: d.meanings,
-      meaningsNepali: d.nepali,
-      radicals: [{ radical: d.ch, meaning: d.meanings[0], color: '#3b82f6' }],
-      compounds: d.compounds,
-    }));
-  }
-
-  // N3 Kanji dataset (Lessons 51–75)
-  if (level === 'N3') {
-    const n3Chars = [
-      { ch: '政', lesson: 51, meanings: ['Politics'], nepali: ['राजनीति'] },
-      { ch: '議', lesson: 52, meanings: ['Deliberate', 'Meeting'], nepali: ['छलफल'] },
-      { ch: '民', lesson: 53, meanings: ['People', 'Nation'], nepali: ['जनता'] },
-      { ch: '連', lesson: 54, meanings: ['Connect', 'Take along'], nepali: ['जोड्नु'] },
-      { ch: '対', lesson: 55, meanings: ['Oppose', 'Target'], nepali: ['विपरित'] },
-      { ch: '部', lesson: 56, meanings: ['Section', 'Department'], nepali: ['विभाग'] },
-      { ch: '合', lesson: 57, meanings: ['Combine', 'Fit'], nepali: ['मिलाउनु'] },
-      { ch: '市', lesson: 58, meanings: ['City', 'Market'], nepali: ['सहर'] },
-      { ch: '内', lesson: 59, meanings: ['Inside', 'Within'], nepali: ['भित्र'] },
-      { ch: '相', lesson: 60, meanings: ['Mutual', 'Minister'], nepali: ['आपसी'] },
-    ];
-    return n3Chars.map((d, idx) => ({
-      character: d.ch,
-      level: 'N3' as const,
-      lessonOrder: d.lesson,
-      strokeCount: 8 + (idx % 5),
-      readingsOnyomi: [['SEI', 'GI', 'MIN', 'REN', 'TAI', 'BU', 'GŌ', 'SHI', 'NAI', 'SŌ'][idx]],
-      readingsKunyomi: [],
-      meanings: d.meanings,
-      meaningsNepali: d.nepali,
-      radicals: [{ radical: d.ch, meaning: d.meanings[0], color: '#8b5cf6' }],
-      compounds: [],
-    }));
-  }
-
-  // N2 Kanji dataset (Lessons 76–100)
-  const n2Chars = [
-    { ch: '党', lesson: 76, meanings: ['Party', 'Faction'], nepali: ['दल'] },
-    { ch: '協', lesson: 78, meanings: ['Cooperate'], nepali: ['सहकार्य'] },
-    { ch: '総', lesson: 80, meanings: ['General', 'Total'], nepali: ['कुल, समग्र'] },
-    { ch: '区', lesson: 82, meanings: ['District', 'Ward'], nepali: ['वडा'] },
-    { ch: '領', lesson: 85, meanings: ['Territory', 'Lead'], nepali: ['क्षेत्र'] },
-    { ch: '県', lesson: 88, meanings: ['Prefecture'], nepali: ['प्रदेश'] },
-    { ch: '設', lesson: 90, meanings: ['Establish'], nepali: ['स्थापना'] },
-    { ch: '改', lesson: 95, meanings: ['Reform', 'Change'], nepali: ['सुधार'] },
-  ];
-
-  return n2Chars.map((d, idx) => ({
-    character: d.ch,
-    level: 'N2' as const,
-    lessonOrder: d.lesson,
-    strokeCount: 9 + (idx % 6),
-    readingsOnyomi: [['TŌ', 'KYŌ', 'SŌ', 'KU', 'RYŌ', 'KEN', 'SETSU', 'KAI'][idx]],
-    readingsKunyomi: [],
-    meanings: d.meanings,
-    meaningsNepali: d.nepali,
-    radicals: [{ radical: d.ch, meaning: d.meanings[0], color: '#ec4899' }],
-    compounds: [],
-  }));
+  return items.map((it) => convert1000ItemToKanjiItem(it, level));
 }
 
 export function getKanjiByLevelAndLesson(level: 'N5' | 'N4' | 'N3' | 'N2', lessonNumber?: number): KanjiItem[] {
   const fullLevel = getKanjiByLevel(level);
   if (lessonNumber) {
-    return fullLevel.filter(k => k.lessonOrder === lessonNumber);
+    return fullLevel.filter((k) => k.lessonOrder === lessonNumber);
   }
   return fullLevel;
 }
