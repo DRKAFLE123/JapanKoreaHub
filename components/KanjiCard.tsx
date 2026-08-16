@@ -89,6 +89,7 @@ export const KanjiCard: React.FC<KanjiCardProps> = ({ currentLevel, hideLevelSel
   React.useEffect(() => {
     if (currentLevel) {
       setSelectedLevel(currentLevel);
+      setSelectedLesson('ALL');
       setCurrentIndex(0);
       setIsFlipped(false);
     }
@@ -162,19 +163,21 @@ export const KanjiCard: React.FC<KanjiCardProps> = ({ currentLevel, hideLevelSel
     if (selectedLevel === 'N5' || selectedLevel === 'BASICS') {
       slicedKanji1000 = KANJI_1000_DATA.slice(0, 100);
     } else if (selectedLevel === 'N4') {
-      slicedKanji1000 = KANJI_1000_DATA.slice(0, 300);
+      slicedKanji1000 = KANJI_1000_DATA.slice(100, 300);
     } else if (selectedLevel === 'JFT') {
-      slicedKanji1000 = KANJI_1000_DATA.slice(0, 500);
+      slicedKanji1000 = KANJI_1000_DATA.slice(0, 350);
     } else if (selectedLevel === 'N3') {
-      slicedKanji1000 = KANJI_1000_DATA.slice(0, 650);
+      slicedKanji1000 = KANJI_1000_DATA.slice(300, 650);
     } else {
       // N2, N1, KANJI_1000
       slicedKanji1000 = KANJI_1000_DATA;
     }
 
     if (selectedLesson !== 'ALL') {
-      rawVocab = rawVocab.filter(v => v.lesson === selectedLesson);
-      slicedKanji1000 = slicedKanji1000.filter(k => Math.ceil(k.number / 25) === selectedLesson);
+      const vocabFiltered = rawVocab.filter(v => v.lesson === selectedLesson);
+      const kanjiFiltered = slicedKanji1000.filter(k => Math.ceil(k.number / 25) === selectedLesson);
+      if (vocabFiltered.length > 0) rawVocab = vocabFiltered;
+      if (kanjiFiltered.length > 0) slicedKanji1000 = kanjiFiltered;
     }
 
     const vocabCards: UnifiedCardItem[] = rawVocab.map((v) => ({
