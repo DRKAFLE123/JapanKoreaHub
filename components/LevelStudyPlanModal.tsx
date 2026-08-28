@@ -40,8 +40,8 @@ export const LevelStudyPlanModal: React.FC<LevelStudyPlanModalProps> = ({ level,
 
   // Quota Calculator based on level & duration
   const getQuotas = (days: number) => {
-    const totalVocab = level === 'BASICS' ? 100 : level === 'N5' ? 800 : level === 'N4' ? 1500 : level === 'N3' ? 3000 : level === 'N2' ? 6000 : level === 'N1' ? 10000 : 1200;
-    const totalGrammar = level === 'BASICS' ? 15 : level === 'N5' ? 40 : level === 'N4' ? 50 : level === 'N3' ? 60 : level === 'N2' ? 80 : level === 'N1' ? 100 : 45;
+    const totalVocab = level === 'BASICS' ? 500 : level === 'N5' ? 800 : level === 'N4' ? 1500 : level === 'N3' ? 3000 : level === 'N2' ? 6000 : level === 'N1' ? 10000 : 1200;
+    const totalGrammar = level === 'BASICS' ? 100 : level === 'N5' ? 40 : level === 'N4' ? 50 : level === 'N3' ? 60 : level === 'N2' ? 80 : level === 'N1' ? 100 : 45;
     const totalLessons = level === 'BASICS' ? 10 : level === 'N5' ? 25 : level === 'N4' ? 25 : level === 'N3' ? 12 : level === 'N2' ? 18 : level === 'N1' ? 20 : 20;
 
     const dailyVocab = Math.max(5, Math.ceil(totalVocab / days));

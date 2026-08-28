@@ -7,14 +7,15 @@ import {
 } from 'lucide-react';
 import {
   NIHONGO_VOCAB_DATA, JAPANESE_HIRAGANA, JAPANESE_KATAKANA, JAPANESE_DAKUTON_HANDAKUTON,
-  JAPANESE_YOON, VocabItem, KanaItem,
+  JAPANESE_YOON, VocabItem, KanaItem, kanaToRomaji,
   getVocabByLevel, getVocabByLevelAndLesson, getAvailableLessonsForLevel
 } from '@/lib/nihongo-vocab';
 import { getAudioTracksForLesson } from '@/lib/n5-audio-tracks';
 import { getKanjiByLevel, KanjiItem } from '@/lib/kanji-dataset';
 import { getGrammarGuide, LessonGrammarGuide } from '@/lib/grammar-guide';
 import { RadicalBreakdown } from '@/components/RadicalBreakdown';
-import { BASIC_KANJI_100, BASIC_VOCAB_200 } from '@/lib/basics-japanese-data';
+import { BASIC_KANJI_100, BASIC_VOCAB_200, BASIC_VOCAB_500 } from '@/lib/basics-japanese-data';
+import { JAPANESE_100_GRAMMAR_BASICS, BasicGrammarItem } from '@/lib/japanese-100-grammar-basics';
 import { KANJI_1000_DATA, Kanji1000Item } from '@/lib/kanji-1000-data';
 import { KanjiPracticeModal } from '@/components/KanjiPracticeModal';
 import { isWordMarked, toggleMarkedWord, getAuthUser } from '@/lib/practice-later';
@@ -97,7 +98,7 @@ export interface VocabularyExplorerProps {
   preselectedLevel?: 'BASICS' | 'N5' | 'N4' | 'N3' | 'N2' | 'N1' | 'JFT' | 'KANJI_1000';
 }
 
-type BasicsSubTab = 'HIRAGANA' | 'KATAKANA' | 'DAKUTEN' | 'YOON' | 'RULES' | 'RADICALS' | 'KANJI' | 'VOCAB';
+type BasicsSubTab = 'HIRAGANA' | 'KATAKANA' | 'DAKUTEN' | 'YOON' | 'RULES' | 'GRAMMAR' | 'RADICALS' | 'KANJI' | 'VOCAB';
 
 export const VocabularyExplorer: React.FC<VocabularyExplorerProps> = ({ preselectedLevel }) => {
   const [selectedLevel, setSelectedLevel] = useState<'BASICS' | 'N5' | 'N4' | 'N3' | 'N2' | 'N1' | 'JFT' | 'KANJI_1000'>(preselectedLevel || 'N5');
@@ -177,6 +178,9 @@ export const VocabularyExplorer: React.FC<VocabularyExplorerProps> = ({ preselec
   const [modalLangMode, setModalLangMode] = useState<'en' | 'np' | 'both'>('both');
   const [basicsSubTab, setBasicsSubTab] = useState<BasicsSubTab>('HIRAGANA');
   const [activeKanaChar, setActiveKanaChar] = useState<string | null>(null);
+  const [basicsVocabSet, setBasicsVocabSet] = useState<1 | 2>(1);
+  const [grammarCategoryFilter, setGrammarCategoryFilter] = useState<string>('all');
+  const [grammarSearchQuery, setGrammarSearchQuery] = useState<string>('');
 
   const [mobileLessonMenuOpen, setMobileLessonMenuOpen] = useState<boolean>(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
@@ -256,12 +260,17 @@ export const VocabularyExplorer: React.FC<VocabularyExplorerProps> = ({ preselec
     : null;
 
   const filteredVocab = searchQuery
-    ? allLevelVocab.filter((v: VocabItem) =>
-        v.word.includes(searchQuery) ||
-        v.reading.includes(searchQuery) ||
-        v.meaning.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        v.meaningNepali.includes(searchQuery)
-      )
+    ? allLevelVocab.filter((v: VocabItem) => {
+        const romajiStr = v.romaji || kanaToRomaji(v.reading || v.word);
+        const q = searchQuery.toLowerCase().trim();
+        return (
+          v.word.includes(searchQuery) ||
+          v.reading.includes(searchQuery) ||
+          romajiStr.toLowerCase().includes(q) ||
+          v.meaning.toLowerCase().includes(q) ||
+          v.meaningNepali.includes(searchQuery)
+        );
+      })
     : lessonVocab;
 
   const getInspectKanjiDetails = (char: string): KanjiItem => {
@@ -294,7 +303,7 @@ export const VocabularyExplorer: React.FC<VocabularyExplorerProps> = ({ preselec
       {selectedLevel === 'BASICS' && (
         <div className="space-y-2 font-sans pt-0">
           <div className="flex items-center gap-1.5 overflow-x-auto bg-white border border-slate-200 p-1.5 rounded-2xl shadow-xs">
-            {(['HIRAGANA', 'KATAKANA', 'DAKUTEN', 'YOON', 'RULES', 'RADICALS', 'KANJI', 'VOCAB'] as const).map((sub) => (
+            {(['HIRAGANA', 'KATAKANA', 'DAKUTEN', 'YOON', 'RULES', 'GRAMMAR', 'RADICALS', 'KANJI', 'VOCAB'] as const).map((sub) => (
               <button
                 key={sub}
                 onClick={() => setBasicsSubTab(sub)}
@@ -308,10 +317,11 @@ export const VocabularyExplorer: React.FC<VocabularyExplorerProps> = ({ preselec
                 {sub === 'KATAKANA' && 'ア Katakana (46)'}
                 {sub === 'DAKUTEN' && '゛ Dakuten/Handakuten (25)'}
                 {sub === 'YOON' && 'きゃ Yoon Combination (33)'}
-                {sub === 'RULES' && '📖 Grammar Rules'}
+                {sub === 'RULES' && '📜 Phonetic Rules'}
+                {sub === 'GRAMMAR' && '📖 100 Grammar Basics'}
                 {sub === 'RADICALS' && '🧩 Kanji Radicals'}
                 {sub === 'KANJI' && '💮 Basic Kanji (100)'}
-                {sub === 'VOCAB' && '📖 Basic Vocab (200)'}
+                {sub === 'VOCAB' && '📚 Basic Vocab (500)'}
               </button>
             ))}
           </div>
@@ -477,83 +487,349 @@ export const VocabularyExplorer: React.FC<VocabularyExplorerProps> = ({ preselec
           )}
 
 
+          {basicsSubTab === 'GRAMMAR' && (
+            <div className="bg-white text-slate-900 border border-slate-200 rounded-2xl sm:rounded-3xl p-4 sm:p-6 shadow-xl space-y-4 font-sans relative">
+              <div className="flex flex-col md:flex-row md:items-center justify-between pb-3 border-b border-slate-200 gap-3">
+                <div>
+                  <div className="text-xs font-black uppercase tracking-wider text-rose-700 flex items-center gap-1.5">
+                    <Sparkles className="w-4 h-4 text-amber-500" />
+                    <span>📖 100 Japanese Grammar Basics Handbook</span>
+                  </div>
+                  <div className="text-xs font-bold text-slate-500 mt-0.5">
+                    Essential grammar patterns with dual English & 🇳🇵 Nepali explanations and pronunciation audio.
+                  </div>
+                </div>
+
+                {/* Search & Stats */}
+                <div className="flex items-center gap-2">
+                  <div className="relative">
+                    <Search className="w-3.5 h-3.5 absolute left-2.5 top-1/2 -translate-y-1/2 text-slate-400" />
+                    <input
+                      type="text"
+                      placeholder="Search 100 grammar rules..."
+                      value={grammarSearchQuery}
+                      onChange={(e) => setGrammarSearchQuery(e.target.value)}
+                      className="pl-8 pr-3 py-1.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-bold text-slate-800 placeholder-slate-400 focus:outline-hidden focus:ring-2 focus:ring-rose-500 w-48 sm:w-64"
+                    />
+                  </div>
+                  <div className="text-xs font-black text-rose-700 bg-rose-50 border border-rose-200 px-2.5 py-1 rounded-xl font-mono shrink-0">
+                    100 Points
+                  </div>
+                </div>
+              </div>
+
+              {/* Category Filter Pills */}
+              <div className="flex items-center gap-1.5 overflow-x-auto pb-1 scrollbar-thin">
+                <button
+                  onClick={() => setGrammarCategoryFilter('all')}
+                  className={`px-3 py-1 rounded-xl text-[11px] font-extrabold transition-all cursor-pointer whitespace-nowrap ${
+                    grammarCategoryFilter === 'all'
+                      ? 'bg-slate-900 text-white shadow-xs'
+                      : 'bg-slate-100 text-slate-600 hover:bg-slate-200 font-bold'
+                  }`}
+                >
+                  All (100)
+                </button>
+                {Array.from(new Set(JAPANESE_100_GRAMMAR_BASICS.map(g => g.category))).map(cat => (
+                  <button
+                    key={cat}
+                    onClick={() => setGrammarCategoryFilter(cat)}
+                    className={`px-3 py-1 rounded-xl text-[11px] font-extrabold transition-all cursor-pointer whitespace-nowrap ${
+                      grammarCategoryFilter === cat
+                        ? 'bg-rose-600 text-white shadow-xs'
+                        : 'bg-slate-100 text-slate-600 hover:bg-slate-200 font-bold'
+                    }`}
+                  >
+                    {cat}
+                  </button>
+                ))}
+              </div>
+
+              {/* Grammar Cards List */}
+              <div className="max-h-[650px] overflow-y-auto pr-1 space-y-3 scrollbar-thin scrollbar-thumb-slate-300">
+                {JAPANESE_100_GRAMMAR_BASICS
+                  .filter(g => {
+                    const matchesCategory = grammarCategoryFilter === 'all' || g.category === grammarCategoryFilter;
+                    const q = grammarSearchQuery.toLowerCase().trim();
+                    const matchesQuery = !q || 
+                      g.title.toLowerCase().includes(q) ||
+                      g.pattern.toLowerCase().includes(q) ||
+                      g.explanationEnglish.toLowerCase().includes(q) ||
+                      g.explanationNepali.toLowerCase().includes(q);
+                    return matchesCategory && matchesQuery;
+                  })
+                  .map((rule) => (
+                    <div
+                      key={rule.id}
+                      className="p-4 bg-slate-50/80 border border-slate-200 rounded-2xl hover:border-rose-300 hover:bg-white transition-all space-y-2.5 shadow-xs"
+                    >
+                      <div className="flex items-start justify-between gap-3">
+                        <div className="space-y-1 min-w-0">
+                          <div className="flex items-center gap-2 flex-wrap">
+                            <span className="text-[10px] font-black uppercase tracking-wider text-rose-700 bg-rose-100 border border-rose-200 px-2 py-0.5 rounded-md font-mono">
+                              Rule #{rule.id} • {rule.category}
+                            </span>
+                          </div>
+                          <h4 className="text-sm sm:text-base font-black text-slate-900">
+                            {rule.title}
+                          </h4>
+                        </div>
+                        <div className="bg-amber-100 border border-amber-300 text-amber-900 px-3 py-1 rounded-xl text-xs font-mono font-black shrink-0">
+                          {rule.pattern}
+                        </div>
+                      </div>
+
+                      {/* Dual Language Explanations */}
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-xs">
+                        <div className="p-2.5 bg-white border border-slate-200 rounded-xl space-y-0.5">
+                          <div className="text-[10px] font-black uppercase text-slate-400">🇬🇧 English Explanation</div>
+                          <p className="text-slate-700 font-medium leading-relaxed">{rule.explanationEnglish}</p>
+                        </div>
+                        <div className="p-2.5 bg-rose-50/60 border border-rose-200/80 rounded-xl space-y-0.5">
+                          <div className="text-[10px] font-black uppercase text-rose-700">🇳🇵 नेपाली व्याख्या</div>
+                          <p className="text-slate-800 font-semibold leading-relaxed">{rule.explanationNepali}</p>
+                        </div>
+                      </div>
+
+                      {/* Example Sentences */}
+                      <div className="space-y-1.5 pt-1">
+                        <div className="text-[10px] font-black uppercase tracking-wider text-slate-400">Example Sentences:</div>
+                        {rule.examples.map((ex, idx) => (
+                          <div key={idx} className="p-2.5 bg-white border border-slate-200/90 rounded-xl flex items-center justify-between gap-3">
+                            <div className="min-w-0 space-y-0.5">
+                              <div className="text-sm font-black text-slate-900 font-jp tracking-wider">
+                                {ex.target}
+                              </div>
+                              <div className="text-[11px] font-bold text-slate-500 font-jp">
+                                {ex.reading}
+                              </div>
+                              <div className="text-xs font-bold text-slate-700">
+                                🇬🇧 {ex.english} <span className="text-slate-400 mx-1">•</span> <span className="text-rose-800">🇳🇵 {ex.nepali}</span>
+                              </div>
+                            </div>
+                            <button
+                              onClick={() => playPronunciation(ex.target)}
+                              className="p-2 rounded-xl bg-rose-50 hover:bg-rose-600 text-rose-700 hover:text-white border border-rose-200 transition-all cursor-pointer shrink-0"
+                              title="Listen Pronunciation"
+                            >
+                              <Volume2 className="w-4 h-4" />
+                            </button>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  ))}
+              </div>
+            </div>
+          )}
+
           {basicsSubTab === 'VOCAB' && (
             <div className="bg-[#fcf8f2] text-[#2d2219] border border-[#e8decb] rounded-2xl sm:rounded-3xl p-4 sm:p-6 shadow-xl space-y-4 font-sans relative">
-              <div className="flex items-center justify-between pb-3 border-b border-[#e8decb]">
+              <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between pb-3 border-b border-[#e8decb] gap-3">
                 <div>
-                  <div className="text-xs font-black uppercase tracking-wider text-rose-800">📖 Beginner Kana Vocabulary (200)</div>
-                  <div className="text-[10px] font-bold text-[#5c4a3c] mt-0.5">Dual-column scrollable list of high-frequency words (no Kanji)</div>
+                  <div className="text-xs font-black uppercase tracking-wider text-rose-800 flex items-center gap-2">
+                    <span>📖 Beginner Kana Vocabulary (500 Words Total)</span>
+                  </div>
+                  <div className="text-[10px] font-bold text-[#5c4a3c] mt-0.5">
+                    Essential daily vocabulary with Romaji and 🇳🇵 Nepali translations
+                  </div>
                 </div>
-                <div className="text-xs font-black text-rose-800 bg-rose-100 border border-rose-200 px-2 py-0.5 rounded-lg font-mono">
-                  200 Words Total
+                <div className="flex items-center gap-2">
+                  <div className="text-xs font-black text-rose-800 bg-rose-100 border border-rose-200 px-2.5 py-1 rounded-lg font-mono">
+                    500 Words Total
+                  </div>
+                </div>
+              </div>
+
+              {/* Set Filter Bar & Next/Prev Controls at Top */}
+              <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-2 p-2 bg-[#f4ebe0] border border-[#e2d6c3] rounded-xl">
+                <div className="flex items-center gap-1.5">
+                  <button
+                    onClick={() => setBasicsVocabSet(1)}
+                    className={`px-3 py-1.5 rounded-lg text-xs font-black transition-all cursor-pointer flex items-center gap-1.5 ${
+                      basicsVocabSet === 1
+                        ? 'bg-rose-700 text-white shadow-xs'
+                        : 'bg-white text-[#5c4a3c] hover:bg-rose-50 border border-[#e2d6c3]'
+                    }`}
+                  >
+                    <span>🎯 Set 1: Basic Words (1–200)</span>
+                    <span className="text-[10px] opacity-80 font-mono">(Default)</span>
+                  </button>
+                  <button
+                    onClick={() => setBasicsVocabSet(2)}
+                    className={`px-3 py-1.5 rounded-lg text-xs font-black transition-all cursor-pointer flex items-center gap-1.5 ${
+                      basicsVocabSet === 2
+                        ? 'bg-rose-700 text-white shadow-xs'
+                        : 'bg-white text-[#5c4a3c] hover:bg-rose-50 border border-[#e2d6c3]'
+                    }`}
+                  >
+                    <span>🚀 Set 2: Extended Words (201–500)</span>
+                    <span className="text-[10px] bg-rose-100 text-rose-800 px-1.5 py-0.2 rounded-md font-mono">+300 More</span>
+                  </button>
+                </div>
+
+                {/* Quick Next / Prev Buttons */}
+                <div className="flex items-center gap-1 justify-end">
+                  <button
+                    onClick={() => setBasicsVocabSet(1)}
+                    disabled={basicsVocabSet === 1}
+                    className={`px-2.5 py-1 rounded-lg text-xs font-extrabold flex items-center gap-1 transition-all ${
+                      basicsVocabSet === 1
+                        ? 'opacity-40 cursor-not-allowed bg-transparent text-[#5c4a3c]'
+                        : 'bg-white text-[#2d2219] hover:bg-rose-100 cursor-pointer border border-[#e2d6c3]'
+                    }`}
+                  >
+                    <ChevronLeft className="w-3.5 h-3.5" />
+                    <span>Set 1</span>
+                  </button>
+                  <button
+                    onClick={() => setBasicsVocabSet(2)}
+                    disabled={basicsVocabSet === 2}
+                    className={`px-3 py-1 rounded-lg text-xs font-extrabold flex items-center gap-1 transition-all ${
+                      basicsVocabSet === 2
+                        ? 'opacity-40 cursor-not-allowed bg-transparent text-[#5c4a3c]'
+                        : 'bg-rose-600 text-white hover:bg-rose-700 cursor-pointer shadow-xs font-black'
+                    }`}
+                  >
+                    <span>Next Set (300 Words)</span>
+                    <ChevronRight className="w-3.5 h-3.5" />
+                  </button>
                 </div>
               </div>
 
               {/* Dual Column list view - Scroll at once */}
               <div className="max-h-[600px] overflow-y-auto pr-1 scrollbar-thin scrollbar-thumb-[#e8decb] scrollbar-track-transparent">
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-                  {/* Left Column (Items 1-100) */}
-                  <div className="space-y-2">
-                    {BASIC_VOCAB_200.slice(0, 100).map((vocab, i) => (
-                      <div
-                        key={i}
-                        className="p-3 bg-[#fbf6eb] border border-[#e8decb]/80 rounded-xl hover:border-amber-900/10 hover:shadow-xs transition-all flex items-center justify-between gap-3"
-                      >
-                        <div className="min-w-0 space-y-0.5">
-                          <div className="flex items-center gap-2">
-                            <span className="text-[10px] font-black text-[#5c4a3c] font-mono">{i + 1}</span>
-                            <span className="text-base font-black text-[#2d2219] font-jp tracking-wider">{vocab.word}</span>
+                {basicsVocabSet === 1 ? (
+                  /* SET 1: Items 1 to 200 */
+                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                    {/* Left Column (Items 1-100) */}
+                    <div className="space-y-2">
+                      {BASIC_VOCAB_500.slice(0, 100).map((vocab, i) => (
+                        <div
+                          key={i}
+                          className="p-3 bg-[#fbf6eb] border border-[#e8decb]/80 rounded-xl hover:border-amber-900/10 hover:shadow-xs transition-all flex items-center justify-between gap-3"
+                        >
+                          <div className="min-w-0 space-y-0.5">
+                            <div className="flex items-center gap-2">
+                              <span className="text-[10px] font-black text-[#5c4a3c] font-mono">{i + 1}</span>
+                              <span className="text-base font-black text-[#2d2219] font-jp tracking-wider">{vocab.word}</span>
+                            </div>
+                            <div className="text-[11px] font-extrabold text-[#5c4a3c] font-mono pl-5">({vocab.romaji})</div>
                           </div>
-                          <div className="text-[11px] font-extrabold text-[#5c4a3c] font-mono pl-5">({vocab.romaji})</div>
-                        </div>
-                        <div className="text-right flex items-center gap-3">
-                          <div className="min-w-0">
-                            <div className="text-xs font-black text-[#2d2219] truncate max-w-[160px]">{vocab.meaning}</div>
-                            <div className="text-[11px] font-bold text-[#5c4a3c] truncate max-w-[160px]">{vocab.meaningNepali}</div>
+                          <div className="text-right flex items-center gap-3">
+                            <div className="min-w-0">
+                              <div className="text-xs font-black text-[#2d2219] truncate max-w-[160px]">{vocab.meaning}</div>
+                              <div className="text-[11px] font-bold text-[#5c4a3c] truncate max-w-[160px]">{vocab.meaningNepali}</div>
+                            </div>
+                            <button
+                              onClick={() => playPronunciation(vocab.word)}
+                              className="p-1 rounded-lg bg-rose-50 hover:bg-rose-600 text-rose-700 hover:text-white border border-rose-200 transition-all cursor-pointer flex-shrink-0"
+                              title="Speak"
+                            >
+                              <Volume2 className="w-3.5 h-3.5" />
+                            </button>
                           </div>
-                          <button
-                            onClick={() => playPronunciation(vocab.word)}
-                            className="p-1 rounded-lg bg-rose-50 hover:bg-rose-600 text-rose-700 hover:text-white border border-rose-200 transition-all cursor-pointer flex-shrink-0"
-                            title="Speak"
-                          >
-                            <Volume2 className="w-3.5 h-3.5" />
-                          </button>
                         </div>
-                      </div>
-                    ))}
-                  </div>
+                      ))}
+                    </div>
 
-                  {/* Right Column (Items 101-200) */}
-                  <div className="space-y-2">
-                    {BASIC_VOCAB_200.slice(100, 200).map((vocab, i) => (
-                      <div
-                        key={i}
-                        className="p-3 bg-[#fbf6eb] border border-[#e8decb]/80 rounded-xl hover:border-amber-900/10 hover:shadow-xs transition-all flex items-center justify-between gap-3"
-                      >
-                        <div className="min-w-0 space-y-0.5">
-                          <div className="flex items-center gap-2">
-                            <span className="text-[10px] font-black text-[#5c4a3c] font-mono">{i + 101}</span>
-                            <span className="text-base font-black text-[#2d2219] font-jp tracking-wider">{vocab.word}</span>
+                    {/* Right Column (Items 101-200) */}
+                    <div className="space-y-2">
+                      {BASIC_VOCAB_500.slice(100, 200).map((vocab, i) => (
+                        <div
+                          key={i}
+                          className="p-3 bg-[#fbf6eb] border border-[#e8decb]/80 rounded-xl hover:border-amber-900/10 hover:shadow-xs transition-all flex items-center justify-between gap-3"
+                        >
+                          <div className="min-w-0 space-y-0.5">
+                            <div className="flex items-center gap-2">
+                              <span className="text-[10px] font-black text-[#5c4a3c] font-mono">{i + 101}</span>
+                              <span className="text-base font-black text-[#2d2219] font-jp tracking-wider">{vocab.word}</span>
+                            </div>
+                            <div className="text-[11px] font-extrabold text-[#5c4a3c] font-mono pl-5">({vocab.romaji})</div>
                           </div>
-                          <div className="text-[11px] font-extrabold text-[#5c4a3c] font-mono pl-5">({vocab.romaji})</div>
-                        </div>
-                        <div className="text-right flex items-center gap-3">
-                          <div className="min-w-0">
-                            <div className="text-xs font-black text-[#2d2219] truncate max-w-[160px]">{vocab.meaning}</div>
-                            <div className="text-[11px] font-bold text-[#5c4a3c] truncate max-w-[160px]">{vocab.meaningNepali}</div>
+                          <div className="text-right flex items-center gap-3">
+                            <div className="min-w-0">
+                              <div className="text-xs font-black text-[#2d2219] truncate max-w-[160px]">{vocab.meaning}</div>
+                              <div className="text-[11px] font-bold text-[#5c4a3c] truncate max-w-[160px]">{vocab.meaningNepali}</div>
+                            </div>
+                            <button
+                              onClick={() => playPronunciation(vocab.word)}
+                              className="p-1 rounded-lg bg-rose-50 hover:bg-rose-600 text-rose-700 hover:text-white border border-rose-200 transition-all cursor-pointer flex-shrink-0"
+                              title="Speak"
+                            >
+                              <Volume2 className="w-3.5 h-3.5" />
+                            </button>
                           </div>
-                          <button
-                            onClick={() => playPronunciation(vocab.word)}
-                            className="p-1 rounded-lg bg-rose-50 hover:bg-rose-600 text-rose-700 hover:text-white border border-rose-200 transition-all cursor-pointer flex-shrink-0"
-                            title="Speak"
-                          >
-                            <Volume2 className="w-3.5 h-3.5" />
-                          </button>
                         </div>
-                      </div>
-                    ))}
+                      ))}
+                    </div>
                   </div>
-                </div>
+                ) : (
+                  /* SET 2: Items 201 to 500 (300 Words) */
+                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                    {/* Left Column (Items 201-350) */}
+                    <div className="space-y-2">
+                      {BASIC_VOCAB_500.slice(200, 350).map((vocab, i) => (
+                        <div
+                          key={i}
+                          className="p-3 bg-[#fbf6eb] border border-[#e8decb]/80 rounded-xl hover:border-amber-900/10 hover:shadow-xs transition-all flex items-center justify-between gap-3"
+                        >
+                          <div className="min-w-0 space-y-0.5">
+                            <div className="flex items-center gap-2">
+                              <span className="text-[10px] font-black text-[#5c4a3c] font-mono">{i + 201}</span>
+                              <span className="text-base font-black text-[#2d2219] font-jp tracking-wider">{vocab.word}</span>
+                            </div>
+                            <div className="text-[11px] font-extrabold text-[#5c4a3c] font-mono pl-5">({vocab.romaji})</div>
+                          </div>
+                          <div className="text-right flex items-center gap-3">
+                            <div className="min-w-0">
+                              <div className="text-xs font-black text-[#2d2219] truncate max-w-[160px]">{vocab.meaning}</div>
+                              <div className="text-[11px] font-bold text-[#5c4a3c] truncate max-w-[160px]">{vocab.meaningNepali}</div>
+                            </div>
+                            <button
+                              onClick={() => playPronunciation(vocab.word)}
+                              className="p-1 rounded-lg bg-rose-50 hover:bg-rose-600 text-rose-700 hover:text-white border border-rose-200 transition-all cursor-pointer flex-shrink-0"
+                              title="Speak"
+                            >
+                              <Volume2 className="w-3.5 h-3.5" />
+                            </button>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+
+                    {/* Right Column (Items 351-500) */}
+                    <div className="space-y-2">
+                      {BASIC_VOCAB_500.slice(350, 500).map((vocab, i) => (
+                        <div
+                          key={i}
+                          className="p-3 bg-[#fbf6eb] border border-[#e8decb]/80 rounded-xl hover:border-amber-900/10 hover:shadow-xs transition-all flex items-center justify-between gap-3"
+                        >
+                          <div className="min-w-0 space-y-0.5">
+                            <div className="flex items-center gap-2">
+                              <span className="text-[10px] font-black text-[#5c4a3c] font-mono">{i + 351}</span>
+                              <span className="text-base font-black text-[#2d2219] font-jp tracking-wider">{vocab.word}</span>
+                            </div>
+                            <div className="text-[11px] font-extrabold text-[#5c4a3c] font-mono pl-5">({vocab.romaji})</div>
+                          </div>
+                          <div className="text-right flex items-center gap-3">
+                            <div className="min-w-0">
+                              <div className="text-xs font-black text-[#2d2219] truncate max-w-[160px]">{vocab.meaning}</div>
+                              <div className="text-[11px] font-bold text-[#5c4a3c] truncate max-w-[160px]">{vocab.meaningNepali}</div>
+                            </div>
+                            <button
+                              onClick={() => playPronunciation(vocab.word)}
+                              className="p-1 rounded-lg bg-rose-50 hover:bg-rose-600 text-rose-700 hover:text-white border border-rose-200 transition-all cursor-pointer flex-shrink-0"
+                              title="Speak"
+                            >
+                              <Volume2 className="w-3.5 h-3.5" />
+                            </button>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
               </div>
             </div>
           )}
@@ -1067,6 +1343,9 @@ export const VocabularyExplorer: React.FC<VocabularyExplorerProps> = ({ preselec
                             </span>
                             <div className="text-lg sm:text-xl font-black font-jp text-slate-900 leading-none">{vocab.word}</div>
                             <span className="text-xs font-bold font-jp text-rose-600">{vocab.reading}</span>
+                            <span className="text-xs font-bold font-mono text-slate-600 bg-slate-100 px-2 py-0.5 rounded-md border border-slate-200 shadow-2xs">
+                              ({vocab.romaji || kanaToRomaji(vocab.reading || vocab.word)})
+                            </span>
                             <button
                               onClick={() => playPronunciation(vocab.reading)}
                               className="p-1 rounded-md bg-slate-100 hover:bg-rose-600 text-slate-600 hover:text-white border border-slate-200 transition-all cursor-pointer"
@@ -1474,7 +1753,8 @@ export const VocabularyExplorer: React.FC<VocabularyExplorerProps> = ({ preselec
                         {v.word}
                       </td>
                       <td className="py-2.5 px-3.5 font-jp font-bold text-rose-300 border-r border-slate-800/40 print:text-black print:border-black">
-                        {v.reading}
+                        <div>{v.reading}</div>
+                        <div className="text-[11px] font-mono text-slate-400 font-normal">({v.romaji || kanaToRomaji(v.reading || v.word)})</div>
                       </td>
                       <td className="py-2.5 px-3.5 text-slate-200 font-medium border-r border-slate-800/40 print:text-black print:border-black">
                         {v.meaning}
