@@ -302,12 +302,12 @@ export const VocabularyExplorer: React.FC<VocabularyExplorerProps> = ({ preselec
       ══════════════════════════════════════════════════════════ */}
       {selectedLevel === 'BASICS' && (
         <div className="space-y-2 font-sans pt-0">
-          <div className="flex items-center gap-1.5 overflow-x-auto bg-white border border-slate-200 p-1.5 rounded-2xl shadow-xs">
+          <div className="flex items-center gap-1.5 overflow-x-auto bg-white border border-slate-200 p-2 rounded-2xl shadow-xs scrollbar-thin scrollbar-thumb-slate-300 hover:scrollbar-thumb-slate-400 scrollbar-track-slate-100 touch-pan-x overscroll-contain pb-2 font-sans">
             {(['HIRAGANA', 'KATAKANA', 'DAKUTEN', 'YOON', 'RULES', 'GRAMMAR', 'RADICALS', 'KANJI', 'VOCAB'] as const).map((sub) => (
               <button
                 key={sub}
                 onClick={() => setBasicsSubTab(sub)}
-                className={`px-3 py-1.5 rounded-xl text-xs font-extrabold transition-all cursor-pointer whitespace-nowrap ${
+                className={`px-3 py-1.5 rounded-xl text-xs font-extrabold transition-all cursor-pointer whitespace-nowrap shrink-0 ${
                   basicsSubTab === sub
                     ? 'bg-red-600 text-white font-black shadow-xs'
                     : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100 border border-transparent font-bold'
@@ -315,11 +315,11 @@ export const VocabularyExplorer: React.FC<VocabularyExplorerProps> = ({ preselec
               >
                 {sub === 'HIRAGANA' && 'あ Hiragana (46)'}
                 {sub === 'KATAKANA' && 'ア Katakana (46)'}
-                {sub === 'DAKUTEN' && '゛ Dakuten/Handakuten (25)'}
-                {sub === 'YOON' && 'きゃ Yoon Combination (33)'}
-                {sub === 'RULES' && '📜 Phonetic Rules'}
-                {sub === 'GRAMMAR' && '📖 100 Grammar Basics'}
-                {sub === 'RADICALS' && '🧩 Kanji Radicals'}
+                {sub === 'DAKUTEN' && '゛ Dakuten (25)'}
+                {sub === 'YOON' && 'きゃ Yoon (33)'}
+                {sub === 'RULES' && '📜 Rules'}
+                {sub === 'GRAMMAR' && '📖 100 Grammar'}
+                {sub === 'RADICALS' && '🧩 Radicals'}
                 {sub === 'KANJI' && '💮 Basic Kanji (100)'}
                 {sub === 'VOCAB' && '📚 Basic Vocab (500)'}
               </button>
@@ -641,64 +641,70 @@ export const VocabularyExplorer: React.FC<VocabularyExplorerProps> = ({ preselec
                 </div>
               </div>
 
-              {/* Set Filter Bar & Next/Prev Controls at Top */}
-              <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-2 p-2 bg-[#f4ebe0] border border-[#e2d6c3] rounded-xl">
-                <div className="flex items-center gap-1.5">
+              {/* Sleek Compact Segmented Set Switcher */}
+              <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-2.5 p-2 bg-[#f4ebe0] border border-[#e2d6c3] rounded-2xl">
+                {/* Segmented Pill Tabs */}
+                <div className="grid grid-cols-2 gap-1 bg-[#e8decb]/70 p-1 rounded-xl w-full sm:w-auto shrink-0">
                   <button
                     onClick={() => setBasicsVocabSet(1)}
-                    className={`px-3 py-1.5 rounded-lg text-xs font-black transition-all cursor-pointer flex items-center gap-1.5 ${
+                    className={`px-3 py-1.5 rounded-lg text-xs font-black transition-all cursor-pointer flex items-center justify-center gap-1.5 ${
                       basicsVocabSet === 1
                         ? 'bg-rose-700 text-white shadow-xs'
-                        : 'bg-white text-[#5c4a3c] hover:bg-rose-50 border border-[#e2d6c3]'
+                        : 'text-[#5c4a3c] hover:bg-[#fbf6eb] font-bold'
                     }`}
                   >
-                    <span>🎯 Set 1: Basic Words (1–200)</span>
-                    <span className="text-[10px] opacity-80 font-mono">(Default)</span>
+                    <span>🎯 Set 1 (1–200)</span>
+                    <span className="text-[9px] opacity-75 font-mono hidden md:inline">(Default)</span>
                   </button>
                   <button
                     onClick={() => setBasicsVocabSet(2)}
-                    className={`px-3 py-1.5 rounded-lg text-xs font-black transition-all cursor-pointer flex items-center gap-1.5 ${
+                    className={`px-3 py-1.5 rounded-lg text-xs font-black transition-all cursor-pointer flex items-center justify-center gap-1.5 ${
                       basicsVocabSet === 2
                         ? 'bg-rose-700 text-white shadow-xs'
-                        : 'bg-white text-[#5c4a3c] hover:bg-rose-50 border border-[#e2d6c3]'
+                        : 'text-[#5c4a3c] hover:bg-[#fbf6eb] font-bold'
                     }`}
                   >
-                    <span>🚀 Set 2: Extended Words (201–500)</span>
-                    <span className="text-[10px] bg-rose-100 text-rose-800 px-1.5 py-0.2 rounded-md font-mono">+300 More</span>
+                    <span>🚀 Set 2 (201–500)</span>
+                    <span className="text-[9px] bg-rose-100 text-rose-800 px-1 py-0.2 rounded font-mono hidden md:inline">+300</span>
                   </button>
                 </div>
 
-                {/* Quick Next / Prev Buttons */}
-                <div className="flex items-center gap-1 justify-end">
-                  <button
-                    onClick={() => setBasicsVocabSet(1)}
-                    disabled={basicsVocabSet === 1}
-                    className={`px-2.5 py-1 rounded-lg text-xs font-extrabold flex items-center gap-1 transition-all ${
-                      basicsVocabSet === 1
-                        ? 'opacity-40 cursor-not-allowed bg-transparent text-[#5c4a3c]'
-                        : 'bg-white text-[#2d2219] hover:bg-rose-100 cursor-pointer border border-[#e2d6c3]'
-                    }`}
-                  >
-                    <ChevronLeft className="w-3.5 h-3.5" />
-                    <span>Set 1</span>
-                  </button>
-                  <button
-                    onClick={() => setBasicsVocabSet(2)}
-                    disabled={basicsVocabSet === 2}
-                    className={`px-3 py-1 rounded-lg text-xs font-extrabold flex items-center gap-1 transition-all ${
-                      basicsVocabSet === 2
-                        ? 'opacity-40 cursor-not-allowed bg-transparent text-[#5c4a3c]'
-                        : 'bg-rose-600 text-white hover:bg-rose-700 cursor-pointer shadow-xs font-black'
-                    }`}
-                  >
-                    <span>Next Set (300 Words)</span>
-                    <ChevronRight className="w-3.5 h-3.5" />
-                  </button>
+                {/* Compact Prev / Next Navigation Controls */}
+                <div className="flex items-center justify-between sm:justify-end gap-2 px-1">
+                  <span className="text-[11px] font-bold text-[#5c4a3c] font-mono">
+                    Showing {basicsVocabSet === 1 ? '1–200' : '201–500'} of 500
+                  </span>
+                  <div className="flex items-center gap-1">
+                    <button
+                      onClick={() => setBasicsVocabSet(1)}
+                      disabled={basicsVocabSet === 1}
+                      className={`px-2.5 py-1 rounded-lg text-xs font-extrabold flex items-center gap-1 transition-all ${
+                        basicsVocabSet === 1
+                          ? 'opacity-40 cursor-not-allowed text-[#8c7868]'
+                          : 'bg-white text-[#2d2219] hover:bg-rose-100 cursor-pointer border border-[#e2d6c3] shadow-xs'
+                      }`}
+                    >
+                      <ChevronLeft className="w-3.5 h-3.5" />
+                      <span>Set 1</span>
+                    </button>
+                    <button
+                      onClick={() => setBasicsVocabSet(2)}
+                      disabled={basicsVocabSet === 2}
+                      className={`px-2.5 py-1 rounded-lg text-xs font-extrabold flex items-center gap-1 transition-all ${
+                        basicsVocabSet === 2
+                          ? 'opacity-40 cursor-not-allowed text-[#8c7868]'
+                          : 'bg-rose-700 text-white hover:bg-rose-800 cursor-pointer shadow-xs font-black'
+                      }`}
+                    >
+                      <span>Set 2</span>
+                      <ChevronRight className="w-3.5 h-3.5" />
+                    </button>
+                  </div>
                 </div>
               </div>
 
-              {/* Dual Column list view - Scroll at once */}
-              <div className="max-h-[600px] overflow-y-auto pr-1 scrollbar-thin scrollbar-thumb-[#e8decb] scrollbar-track-transparent">
+              {/* Dual Column list view - Smooth Scroll */}
+              <div className="max-h-[600px] sm:max-h-[680px] overflow-y-auto pr-1.5 scrollbar-thin scrollbar-thumb-amber-300/80 hover:scrollbar-thumb-amber-400 scrollbar-track-amber-50/50 overscroll-contain">
                 {basicsVocabSet === 1 ? (
                   /* SET 1: Items 1 to 200 */
                   <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
