@@ -49,8 +49,13 @@ interface Props {
 export default function BuildingCleaningBookReader({ country = 'japan' }: Props) {
   const [selectedChapterId, setSelectedChapterId] = useState<number>(1);
   const [showNepali, setShowNepali] = useState<boolean>(true);
-  const [showFurigana, setShowFurigana] = useState<boolean>(true);
+  const [furiganaMode, setFuriganaMode] = useState<'katakana' | 'hiragana' | 'off'>('katakana');
+  const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(true);
   const [activeView, setActiveView] = useState<'reader' | 'equipment-guide' | 'mock-exam' | 'glossary'>('reader');
+
+  const isFuriganaOn = furiganaMode !== 'off';
+  const furiganaType = furiganaMode === 'katakana' ? 'katakana' : 'hiragana';
+  const showFurigana = isFuriganaOn;
   
   // Section test answers state: { [questionId]: selectedOptionIndex }
   const [testAnswers, setTestAnswers] = useState<Record<string, number>>({});
@@ -264,17 +269,23 @@ export default function BuildingCleaningBookReader({ country = 'japan' }: Props)
             </button>
 
             <button
-              onClick={() => setShowFurigana(!showFurigana)}
-              title={showFurigana ? 'Hide Furigana' : 'Show Furigana reading aids'}
+              onClick={() => {
+                if (furiganaMode === 'katakana') setFuriganaMode('hiragana');
+                else if (furiganaMode === 'hiragana') setFuriganaMode('off');
+                else setFuriganaMode('katakana');
+              }}
+              title="Click to cycle: Katakana (カタカナ) → Hiragana (ひらがな) → OFF"
               className={`px-2.5 py-1.5 rounded-xl text-xs font-bold border transition-all flex items-center gap-1.5 cursor-pointer ${
-                showFurigana
+                furiganaMode !== 'off'
                   ? 'bg-emerald-50 border-emerald-200 text-emerald-800 shadow-xs'
                   : 'bg-white border-slate-200 text-slate-500 hover:bg-slate-50'
               }`}
             >
-              {showFurigana ? <Eye className="w-3.5 h-3.5 text-emerald-600" /> : <EyeOff className="w-3.5 h-3.5" />}
+              {furiganaMode !== 'off' ? <Eye className="w-3.5 h-3.5 text-emerald-600" /> : <EyeOff className="w-3.5 h-3.5" />}
               <span className="hidden sm:inline">Furigana</span>
-              <span className="text-[10px] font-black uppercase">{showFurigana ? 'ON' : 'OFF'}</span>
+              <span className="text-[10px] font-black uppercase px-1.5 py-0.5 rounded bg-white/80 border border-emerald-200">
+                {furiganaMode === 'katakana' ? 'カタカナ' : furiganaMode === 'hiragana' ? 'ひらがな' : 'OFF'}
+              </span>
             </button>
           </div>
 
@@ -292,120 +303,130 @@ export default function BuildingCleaningBookReader({ country = 'japan' }: Props)
       </header>
 
       {/* Main Container */}
-      <div className="flex-1 max-w-7xl w-full mx-auto px-3 sm:px-6 py-6 grid grid-cols-1 lg:grid-cols-12 gap-6">
+      <div className="flex-1 max-w-7xl w-full mx-auto px-3 sm:px-6 py-4 grid grid-cols-1 lg:grid-cols-12 gap-4">
 
         {/* ===================================================================
             VIEW 1: 12-CHAPTER READER & SECTION-BY-SECTION HIGH-CHANCE TESTS
            =================================================================== */}
         {activeView === 'reader' && (
           <>
-            {/* Left Sidebar: 12 Chapters TOC - Clean Light */}
-            <aside className="lg:col-span-4 space-y-4">
-              
-              {/* Progress Summary Card */}
-              <div className="bg-white border border-slate-200 rounded-3xl p-5 shadow-xs space-y-3">
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-2">
-                    <Sparkles className="w-4 h-4 text-emerald-600" />
-                    <span className="text-xs font-black uppercase tracking-wider text-slate-700">
-                      Study Progress
+            {/* Left Sidebar: 12 Chapters TOC - Compact & Independently Scrollable */}
+            {isSidebarOpen && (
+              <aside className="lg:col-span-4 lg:sticky lg:top-16 lg:h-[calc(100vh-5rem)] flex flex-col space-y-2.5">
+                
+                {/* Progress Summary Card - Compact */}
+                <div className="bg-white border border-slate-200 rounded-2xl p-3.5 shadow-xs space-y-2">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-1.5">
+                      <Sparkles className="w-3.5 h-3.5 text-emerald-600" />
+                      <span className="text-[11px] font-black uppercase tracking-wider text-slate-700">
+                        Study Progress
+                      </span>
+                    </div>
+                    <span className="text-[11px] font-bold text-emerald-800 px-2 py-0.5 rounded-full bg-emerald-50 border border-emerald-200">
+                      {totalPassedSections} / {BUILDING_CLEANING_BOOK_DATA.chapters.length} Passed
                     </span>
                   </div>
-                  <span className="text-xs font-bold text-emerald-800 px-2.5 py-0.5 rounded-full bg-emerald-50 border border-emerald-200">
-                    {totalPassedSections} / {BUILDING_CLEANING_BOOK_DATA.chapters.length} Passed
-                  </span>
+
+                  <p className="text-[11px] text-slate-600 leading-snug">
+                    Study each chapter and pass the <strong className="text-emerald-700 font-bold">Section CBT Test</strong>.
+                  </p>
                 </div>
 
-                <p className="text-xs text-slate-600 leading-relaxed">
-                  Study each chapter and pass the <strong className="text-emerald-700">Section CBT Test</strong> at the end of each topic.
-                </p>
+                {/* Chapters List - Independent Scroll Container */}
+                <div className="bg-white border border-slate-200 rounded-2xl p-2 shadow-xs flex-1 overflow-y-auto overscroll-contain scrollbar-thin scrollbar-thumb-slate-200 space-y-1">
+                  <div className="flex items-center justify-between px-2 py-1">
+                    <span className="text-[10px] font-black uppercase text-slate-400">
+                      Table of Contents (目次)
+                    </span>
+                    <span className="text-[10px] font-bold text-slate-400">
+                      12 Chapters
+                    </span>
+                  </div>
 
-                {/* Direct Download of Docx File */}
-                <a
-                  href="/BuildingCleaningBookwithmodelqsn.docx"
-                  download="BuildingCleaningBookwithmodelqsn.docx"
-                  className="flex items-center justify-center gap-2 w-full py-2.5 rounded-xl bg-slate-50 hover:bg-slate-100 border border-slate-200 text-slate-700 hover:text-slate-900 text-xs font-bold transition-all"
-                >
-                  <Download className="w-4 h-4 text-indigo-600" />
-                  Download Original Book (.docx)
-                </a>
-              </div>
+                  {BUILDING_CLEANING_BOOK_DATA.chapters.map((ch) => {
+                    const isSelected = ch.id === selectedChapterId;
+                    const isSubmitted = submittedSections[ch.id];
+                    const score = getChapterScore(ch);
+                    const isPassed = isSubmitted && score >= Math.ceil(ch.sectionTest.length * 0.6);
 
-              {/* Chapters List */}
-              <div className="bg-white border border-slate-200 rounded-3xl p-3 shadow-xs space-y-1.5 max-h-[72vh] overflow-y-auto scrollbar-thin scrollbar-thumb-slate-200">
-                <p className="text-[11px] font-black uppercase text-slate-400 px-3 py-1">
-                  Table of Contents (目次)
-                </p>
-
-                {BUILDING_CLEANING_BOOK_DATA.chapters.map((ch) => {
-                  const isSelected = ch.id === selectedChapterId;
-                  const isSubmitted = submittedSections[ch.id];
-                  const score = getChapterScore(ch);
-                  const isPassed = isSubmitted && score >= Math.ceil(ch.sectionTest.length * 0.6);
-
-                  return (
-                    <button
-                      key={ch.id}
-                      onClick={() => {
-                        setSelectedChapterId(ch.id);
-                        window.scrollTo({ top: 0, behavior: 'smooth' });
-                      }}
-                      className={`w-full text-left p-3 rounded-2xl transition-all flex items-start justify-between gap-2 cursor-pointer ${
-                        isSelected
-                          ? 'bg-emerald-50/90 border border-emerald-300 shadow-xs'
-                          : 'hover:bg-slate-50 border border-transparent text-slate-700'
-                      }`}
-                    >
-                      <div className="space-y-0.5 min-w-0">
-                        <div className="flex items-center gap-2">
-                          <span
-                            className={`text-[10px] font-black px-1.5 py-0.5 rounded-md ${
-                              isSelected
-                                ? 'bg-emerald-600 text-white'
-                                : 'bg-slate-100 text-slate-600'
-                            }`}
-                          >
-                            Ch.{ch.chapterNumber}
-                          </span>
-                          <span className={`text-xs font-bold truncate ${isSelected ? 'text-emerald-950 font-black' : 'text-slate-900'}`}>
-                            {ch.titleJp.replace(/^第\d+章\s*/, '')}
-                          </span>
+                    return (
+                      <button
+                        key={ch.id}
+                        onClick={() => {
+                          setSelectedChapterId(ch.id);
+                          window.scrollTo({ top: 0, behavior: 'smooth' });
+                        }}
+                        className={`w-full text-left p-2 rounded-xl transition-all flex items-center justify-between gap-2 cursor-pointer ${
+                          isSelected
+                            ? 'bg-emerald-50/90 border border-emerald-300 shadow-xs'
+                            : 'hover:bg-slate-50 border border-transparent text-slate-700'
+                        }`}
+                      >
+                        <div className="space-y-0.5 min-w-0 flex-1">
+                          <div className="flex items-center gap-1.5">
+                            <span
+                              className={`text-[9px] font-black px-1.5 py-0.5 rounded-md shrink-0 ${
+                                isSelected
+                                  ? 'bg-emerald-600 text-white'
+                                  : 'bg-slate-100 text-slate-600'
+                              }`}
+                            >
+                              Ch.{ch.chapterNumber}
+                            </span>
+                            <span className={`text-xs truncate ${isSelected ? 'text-emerald-950 font-black' : 'text-slate-900 font-semibold'}`}>
+                              {ch.titleJp.replace(/^第\d+章\s*/, '')}
+                            </span>
+                          </div>
+                          <p className="text-[10px] text-slate-500 truncate pl-0.5">
+                            {ch.titleNe.replace(/^अध्याय\s*[\d.]+\s*:\s*/, '')}
+                          </p>
                         </div>
-                        <p className="text-[11px] text-slate-500 truncate">
-                          {ch.titleNe.replace(/^अध्याय\s*[\d.]+\s*:\s*/, '')}
-                        </p>
-                      </div>
 
-                      {/* Status indicator */}
-                      <div className="shrink-0 mt-0.5">
-                        {isSubmitted ? (
-                          isPassed ? (
-                            <span className="inline-flex items-center text-[10px] font-black px-1.5 py-0.5 rounded-md bg-emerald-100 text-emerald-800 border border-emerald-300">
-                              ✓ {score}/{ch.sectionTest.length}
-                            </span>
+                        {/* Status indicator */}
+                        <div className="shrink-0">
+                          {isSubmitted ? (
+                            isPassed ? (
+                              <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
+                            ) : (
+                              <span className="text-[9px] font-black px-1.5 py-0.5 rounded-full bg-rose-50 text-rose-700 border border-rose-200">
+                                {score}/{ch.sectionTest.length}
+                              </span>
+                            )
                           ) : (
-                            <span className="inline-flex items-center text-[10px] font-black px-1.5 py-0.5 rounded-md bg-rose-50 text-rose-700 border border-rose-200">
-                              {score}/{ch.sectionTest.length}
-                            </span>
-                          )
-                        ) : (
-                          <ChevronRight className="w-4 h-4 text-slate-400" />
-                        )}
-                      </div>
-                    </button>
-                  );
-                })}
-              </div>
-            </aside>
+                            <ChevronRight className="w-3.5 h-3.5 text-slate-300" />
+                          )}
+                        </div>
+                      </button>
+                    );
+                  })}
+                </div>
+              </aside>
+            )}
 
             {/* Right Main Column: Chapter Content & Section Test */}
-            <main className="lg:col-span-8 space-y-6">
+            <main className={`${isSidebarOpen ? 'lg:col-span-8' : 'lg:col-span-12'} space-y-4`}>
               
-              {/* Chapter Header Card - Calm, Light White/Mint */}
-              <div className="bg-gradient-to-br from-white via-slate-50 to-emerald-50/40 border border-slate-200 rounded-3xl p-6 sm:p-8 shadow-xs space-y-4">
+              {/* Top Chapter Control Bar: Toggle Index Sidebar */}
+              <div className="flex items-center justify-between gap-2">
+                <button
+                  onClick={() => setIsSidebarOpen(!isSidebarOpen)}
+                  className="px-2.5 py-1 rounded-xl bg-white border border-slate-200 hover:bg-slate-50 text-slate-700 text-xs font-bold transition-all flex items-center gap-1.5 cursor-pointer shadow-xs"
+                >
+                  <BookOpen className="w-3.5 h-3.5 text-emerald-600" />
+                  <span>{isSidebarOpen ? 'Hide Index (目次を閉じる)' : 'Show Index (目次を開く)'}</span>
+                </button>
+
+                <div className="text-[11px] font-bold text-slate-500 flex items-center gap-1">
+                  <span>Chapter {currentChapter.chapterNumber} of {BUILDING_CLEANING_BOOK_DATA.chapters.length}</span>
+                </div>
+              </div>
+
+              {/* Chapter Header Card - Compact, Light White/Mint */}
+              <div className="bg-gradient-to-br from-white via-slate-50 to-emerald-50/40 border border-slate-200 rounded-2xl p-4 sm:p-5 shadow-xs space-y-2">
                 
-                <div className="flex flex-wrap items-center justify-between gap-2 border-b border-slate-100 pb-3">
-                  <span className="px-3 py-1 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs font-black uppercase tracking-wider">
+                <div className="flex flex-wrap items-center justify-between gap-2 border-b border-slate-100 pb-2">
+                  <span className="px-2.5 py-0.5 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-800 text-[11px] font-black uppercase tracking-wider">
                     {currentChapter.badge}
                   </span>
                   <span className="text-xs font-bold text-slate-500 flex items-center gap-1">
@@ -414,37 +435,37 @@ export default function BuildingCleaningBookReader({ country = 'japan' }: Props)
                 </div>
 
                 {/* Japanese Title with Furigana directly above Kanji */}
-                <div className="space-y-1">
-                  <h2 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight leading-loose">
-                    <FuriganaText text={currentChapter.titleJp} showFurigana={showFurigana} />
+                <div className="space-y-0.5">
+                  <h2 className="text-xl sm:text-2xl font-black text-slate-900 tracking-tight leading-relaxed">
+                    <FuriganaText text={currentChapter.titleJp} showFurigana={isFuriganaOn} furiganaType={furiganaType} />
                   </h2>
-                  <p className="text-sm sm:text-base font-bold text-indigo-800">
+                  <p className="text-xs sm:text-sm font-bold text-indigo-800">
                     🇳🇵 {currentChapter.titleNe}
                   </p>
-                  <p className="text-xs font-semibold text-slate-500">
+                  <p className="text-[11px] font-medium text-slate-500">
                     🇬🇧 {currentChapter.titleEn}
                   </p>
                 </div>
               </div>
 
-              {/* Theory Content Paragraphs - Light, Calm Reading Surface */}
-              <div className="bg-white border border-slate-200 rounded-3xl p-6 sm:p-8 shadow-xs space-y-6">
-                <div className="space-y-6">
+              {/* Theory Content Paragraphs - Compact Reading Surface */}
+              <div className="bg-white border border-slate-200 rounded-2xl p-4 sm:p-5 shadow-xs space-y-4">
+                <div className="space-y-3">
                   {currentChapter.paragraphs.map((p, idx) => (
-                    <div key={idx} className="space-y-3 border-b border-slate-100 pb-5 last:border-b-0 last:pb-0">
+                    <div key={idx} className="space-y-2 border-b border-slate-100 pb-3 last:border-b-0 last:pb-0">
                       
                       {/* Japanese Primary Text with Furigana above Kanji */}
-                      <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200 text-sm sm:text-base text-slate-900 font-medium leading-loose">
-                        <span className="inline-block px-2 py-0.5 rounded-md bg-emerald-100 text-emerald-800 text-[10px] font-black uppercase mr-2 align-middle">
+                      <div className="p-3 sm:p-3.5 rounded-xl bg-slate-50 border border-slate-200 text-xs sm:text-sm text-slate-900 font-medium leading-relaxed">
+                        <span className="inline-block px-1.5 py-0.5 rounded-md bg-emerald-100 text-emerald-800 text-[9px] font-black uppercase mr-1.5 align-middle">
                           JP
                         </span>
-                        <FuriganaText text={p.jp} showFurigana={showFurigana} />
+                        <FuriganaText text={p.jp} showFurigana={isFuriganaOn} furiganaType={furiganaType} />
                       </div>
 
                       {/* Nepali Dual Translation */}
                       {showNepali && (
-                        <div className="p-4 rounded-2xl bg-indigo-50/60 border border-indigo-100 text-xs sm:text-sm text-indigo-950 font-normal leading-relaxed">
-                          <span className="inline-block px-2 py-0.5 rounded-md bg-indigo-100 text-indigo-800 text-[10px] font-black uppercase mr-2">
+                        <div className="p-2.5 sm:p-3 rounded-xl bg-indigo-50/60 border border-indigo-100 text-[11px] sm:text-xs text-indigo-950 font-normal leading-relaxed">
+                          <span className="inline-block px-1.5 py-0.5 rounded-md bg-indigo-100 text-indigo-800 text-[9px] font-black uppercase mr-1.5 align-middle">
                             🇳🇵 NP
                           </span>
                           {p.ne}
@@ -454,27 +475,27 @@ export default function BuildingCleaningBookReader({ country = 'japan' }: Props)
                   ))}
                 </div>
 
-                {/* Key Points Grid */}
+                {/* Key Points Grid - Compact */}
                 {currentChapter.keyPoints.length > 0 && (
-                  <div className="pt-4 space-y-3">
-                    <h3 className="text-xs font-black uppercase tracking-wider text-slate-500 flex items-center gap-1.5">
-                      <Lightbulb className="w-4 h-4 text-amber-600" />
+                  <div className="pt-2 space-y-2">
+                    <h3 className="text-[11px] font-black uppercase tracking-wider text-slate-500 flex items-center gap-1">
+                      <Lightbulb className="w-3.5 h-3.5 text-amber-600" />
                       Key Exam Principles (重要ポイント)
                     </h3>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-2.5">
                       {currentChapter.keyPoints.map((kp, i) => (
-                        <div key={i} className="p-4 rounded-2xl bg-amber-50/70 border border-amber-200 space-y-1.5">
+                        <div key={i} className="p-3 rounded-xl bg-amber-50/70 border border-amber-200 space-y-1">
                           <p className="text-xs font-black text-amber-900 leading-normal">
-                            ⭐ <FuriganaText text={kp.titleJp} showFurigana={showFurigana} />
+                            ⭐ <FuriganaText text={kp.titleJp} showFurigana={isFuriganaOn} furiganaType={furiganaType} />
                           </p>
-                          <p className="text-[11px] font-bold text-amber-800">
+                          <p className="text-[10px] font-bold text-amber-800">
                             🇳🇵 {kp.titleNe}
                           </p>
-                          <p className="text-xs text-slate-700 leading-relaxed">
-                            <FuriganaText text={kp.descriptionJp} showFurigana={showFurigana} />
+                          <p className="text-[11px] text-slate-700 leading-relaxed">
+                            <FuriganaText text={kp.descriptionJp} showFurigana={isFuriganaOn} furiganaType={furiganaType} />
                           </p>
                           {showNepali && (
-                            <p className="text-[11px] text-slate-600 leading-snug pt-1 border-t border-amber-200/60">
+                            <p className="text-[10px] text-slate-600 leading-snug pt-1 border-t border-amber-200/60">
                               {kp.descriptionNe}
                             </p>
                           )}
@@ -484,23 +505,23 @@ export default function BuildingCleaningBookReader({ country = 'japan' }: Props)
                   </div>
                 )}
 
-                {/* Exam Traps & Warnings Alert */}
+                {/* Exam Traps & Warnings Alert - Compact */}
                 {currentChapter.examTraps.length > 0 && (
-                  <div className="space-y-3 pt-2">
+                  <div className="space-y-2 pt-1">
                     {currentChapter.examTraps.map((et, i) => (
                       <div
                         key={i}
-                        className="p-4 rounded-2xl bg-rose-50/80 border border-rose-200 space-y-2 text-rose-950 text-xs sm:text-sm"
+                        className="p-3 sm:p-3.5 rounded-xl bg-rose-50/80 border border-rose-200 space-y-1 text-rose-950 text-xs"
                       >
-                        <div className="flex items-center gap-2 text-rose-700 font-black text-xs uppercase tracking-wider">
-                          <AlertTriangle className="w-4 h-4" />
+                        <div className="flex items-center gap-1.5 text-rose-700 font-black text-[11px] uppercase tracking-wider">
+                          <AlertTriangle className="w-3.5 h-3.5" />
                           <span>Exam Trap Alert (試験の落とし穴 / परीक्षामा झुक्किने बुँदा)</span>
                         </div>
-                        <p className="font-semibold text-slate-900 leading-loose">
-                          <FuriganaText text={et.alertJp} showFurigana={showFurigana} />
+                        <p className="font-semibold text-slate-900 leading-relaxed">
+                          <FuriganaText text={et.alertJp} showFurigana={isFuriganaOn} furiganaType={furiganaType} />
                         </p>
                         {showNepali && (
-                          <p className="text-rose-900 text-xs leading-relaxed border-t border-rose-200 pt-1.5">
+                          <p className="text-rose-900 text-[11px] leading-relaxed border-t border-rose-200 pt-1">
                             🇳🇵 {et.alertNe}
                           </p>
                         )}
@@ -509,35 +530,35 @@ export default function BuildingCleaningBookReader({ country = 'japan' }: Props)
                   </div>
                 )}
 
-                {/* Section Vocabulary Micro-Table */}
+                {/* Section Vocabulary Micro-Table - Compact */}
                 {currentChapter.vocabulary.length > 0 && (
-                  <div className="pt-4 space-y-3">
-                    <h3 className="text-xs font-black uppercase tracking-wider text-slate-500 flex items-center gap-1.5">
-                      <Bookmark className="w-4 h-4 text-emerald-600" />
+                  <div className="pt-2 space-y-2">
+                    <h3 className="text-[11px] font-black uppercase tracking-wider text-slate-500 flex items-center gap-1">
+                      <Bookmark className="w-3.5 h-3.5 text-emerald-600" />
                       Essential Technical Vocab for this Section ({currentChapter.vocabulary.length})
                     </h3>
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                       {currentChapter.vocabulary.map((vocab, i) => (
                         <div
                           key={i}
-                          className="p-3 rounded-2xl bg-slate-50 border border-slate-200 flex items-start justify-between gap-2"
+                          className="p-2.5 rounded-xl bg-slate-50 border border-slate-200 flex items-start justify-between gap-2"
                         >
                           <div>
-                            <div className="flex items-center gap-2">
-                              <span className="text-sm font-black text-slate-900 leading-normal">
-                                <FuriganaText text={vocab.kanji} showFurigana={showFurigana} />
+                            <div className="flex items-center gap-1.5">
+                              <span className="text-xs sm:text-sm font-black text-slate-900 leading-normal">
+                                <FuriganaText text={vocab.kanji} showFurigana={isFuriganaOn} furiganaType={furiganaType} />
                               </span>
-                              <span className="text-xs text-emerald-700 font-medium">({vocab.kana})</span>
+                              <span className="text-[11px] text-emerald-700 font-medium">({vocab.kana})</span>
                             </div>
-                            <p className="text-[11px] text-slate-700 font-semibold mt-0.5">
+                            <p className="text-[10px] text-slate-700 font-semibold mt-0.5">
                               🇳🇵 {vocab.nepali}
                             </p>
-                            <p className="text-[10px] text-slate-500">
+                            <p className="text-[9px] text-slate-500">
                               🇬🇧 {vocab.english}
                             </p>
                           </div>
                           <span
-                            className={`text-[9px] font-black uppercase px-2 py-0.5 rounded-full ${
+                            className={`text-[8px] font-black uppercase px-1.5 py-0.5 rounded-full ${
                               vocab.importance === 'CRITICAL'
                                 ? 'bg-rose-100 text-rose-800 border border-rose-200'
                                 : 'bg-emerald-100 text-emerald-800 border border-emerald-200'
@@ -740,8 +761,8 @@ export default function BuildingCleaningBookReader({ country = 'japan' }: Props)
                   )}
                 </div>
 
-                {/* Question List */}
-                <div className="space-y-6">
+                {/* Question List - Compact */}
+                <div className="space-y-3.5">
                   {currentChapter.sectionTest.map((q, qIndex) => {
                     const selectedIdx = testAnswers[q.id];
                     const isSubmitted = submittedSections[currentChapter.id];
@@ -751,7 +772,7 @@ export default function BuildingCleaningBookReader({ country = 'japan' }: Props)
                     return (
                       <div
                         key={q.id}
-                        className={`p-5 rounded-3xl border transition-all space-y-4 ${
+                        className={`p-3.5 sm:p-4 rounded-2xl border transition-all space-y-3 ${
                           isCorrect
                             ? 'bg-emerald-50/50 border-emerald-300'
                             : isWrong
@@ -760,32 +781,32 @@ export default function BuildingCleaningBookReader({ country = 'japan' }: Props)
                         }`}
                       >
                         {/* Question Title & Prompt */}
-                        <div className="space-y-1.5">
+                        <div className="space-y-1">
                           <div className="flex items-center gap-2">
-                            <span className="px-2 py-0.5 rounded-md bg-emerald-100 text-emerald-800 text-[11px] font-black uppercase">
+                            <span className="px-2 py-0.5 rounded-md bg-emerald-100 text-emerald-800 text-[10px] font-black uppercase">
                               Q{qIndex + 1} • {q.type === 'TF' ? '○× 真偽法' : '4-Choice 択一式'}
                             </span>
                             {isSubmitted && (
                               isCorrect ? (
                                 <span className="text-xs font-black text-emerald-700 flex items-center gap-1">
-                                  <CheckCircle2 className="w-4 h-4" /> Correct
+                                  <CheckCircle2 className="w-3.5 h-3.5" /> Correct
                                 </span>
                               ) : (
                                 <span className="text-xs font-black text-rose-700 flex items-center gap-1">
-                                  <XCircle className="w-4 h-4" /> Incorrect
+                                  <XCircle className="w-3.5 h-3.5" /> Incorrect
                                 </span>
                               )
                             )}
                           </div>
 
-                          {showFurigana && q.questionFurigana && (
+                          {isFuriganaOn && q.questionFurigana && (
                             <p className="text-[11px] text-emerald-700 font-medium">
                               {q.questionFurigana}
                             </p>
                           )}
 
-                          <h4 className="text-sm sm:text-base font-bold text-slate-900 leading-snug">
-                            <FuriganaText text={q.questionJp} showFurigana={showFurigana} />
+                          <h4 className="text-sm font-bold text-slate-900 leading-snug">
+                            <FuriganaText text={q.questionJp} showFurigana={isFuriganaOn} furiganaType={furiganaType} />
                           </h4>
 
                           {showNepali && (
@@ -796,7 +817,7 @@ export default function BuildingCleaningBookReader({ country = 'japan' }: Props)
                         </div>
 
                         {/* Options */}
-                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                           {q.options?.map((opt, optIdx) => {
                             const isThisSelected = selectedIdx === optIdx;
                             const isThisCorrectAnswer = isSubmitted && optIdx === q.correctAnswer;
@@ -821,17 +842,17 @@ export default function BuildingCleaningBookReader({ country = 'japan' }: Props)
                                 key={optIdx}
                                 disabled={isSubmitted}
                                 onClick={() => handleSelectOption(q.id, optIdx, currentChapter.id)}
-                                className={`p-3 rounded-2xl border text-left text-xs transition-all cursor-pointer flex items-start gap-2.5 ${optStyle}`}
+                                className={`p-2.5 rounded-xl border text-left text-xs transition-all cursor-pointer flex items-start gap-2 ${optStyle}`}
                               >
-                                <span className="w-5 h-5 rounded-full border border-slate-300 flex items-center justify-center shrink-0 text-[10px] font-bold mt-0.5">
+                                <span className="w-4 h-4 rounded-full border border-slate-300 flex items-center justify-center shrink-0 text-[10px] font-bold mt-0.5">
                                   {q.type === 'TF' ? (optIdx === 0 ? '○' : '×') : optIdx + 1}
                                 </span>
                                 <div className="space-y-0.5">
                                   <p className="font-bold leading-normal">
-                                    <FuriganaText text={opt.textJp} showFurigana={showFurigana} />
+                                    <FuriganaText text={opt.textJp} showFurigana={isFuriganaOn} furiganaType={furiganaType} />
                                   </p>
                                   {showNepali && (
-                                    <p className="text-[11px] opacity-80 font-normal">
+                                    <p className="text-[10px] opacity-80 font-normal">
                                       {opt.textNe}
                                     </p>
                                   )}
@@ -843,24 +864,24 @@ export default function BuildingCleaningBookReader({ country = 'japan' }: Props)
 
                         {/* Explanation Card (shows after submit) */}
                         {isSubmitted && (
-                          <div className="mt-3 p-4 rounded-2xl bg-white border border-slate-200 space-y-2 text-xs">
+                          <div className="mt-2.5 p-3 rounded-xl bg-white border border-slate-200 space-y-1.5 text-xs">
                             <p className="font-bold text-emerald-800 flex items-center gap-1.5">
-                              <Lightbulb className="w-4 h-4" />
+                              <Lightbulb className="w-3.5 h-3.5" />
                               正解・解説（Correct Answer &amp; Explanation）
                             </p>
                             <p className="text-slate-800 leading-relaxed font-medium">
-                              <FuriganaText text={q.explanationJp} showFurigana={showFurigana} />
+                              <FuriganaText text={q.explanationJp} showFurigana={isFuriganaOn} furiganaType={furiganaType} />
                             </p>
                             {showNepali && (
-                              <p className="text-indigo-900 leading-relaxed border-t border-slate-100 pt-1.5">
+                              <p className="text-indigo-900 leading-relaxed border-t border-slate-100 pt-1">
                                 🇳🇵 {q.explanationNe}
                               </p>
                             )}
                             {q.examTrapNote && (
-                              <p className="text-[11px] text-amber-900 font-semibold bg-amber-50 border border-amber-200 p-2.5 rounded-xl">
-                                💡 試験対策のヒント: <FuriganaText text={q.examTrapNote} showFurigana={showFurigana} />
+                              <p className="text-[10px] text-amber-900 font-semibold bg-amber-50 border border-amber-200 p-2 rounded-lg">
+                                💡 試験対策のヒント: <FuriganaText text={q.examTrapNote} showFurigana={isFuriganaOn} furiganaType={furiganaType} />
                                 {showNepali && q.examTrapNoteNe && (
-                                  <span className="block text-[10px] text-amber-800 pt-1">
+                                  <span className="block text-[10px] text-amber-800 pt-0.5">
                                     🇳🇵 {q.examTrapNoteNe}
                                   </span>
                                 )}
@@ -1165,8 +1186,8 @@ export default function BuildingCleaningBookReader({ country = 'japan' }: Props)
               </div>
             )}
 
-            {/* Questions Form */}
-            <div className="space-y-6">
+            {/* Questions Form - Compact */}
+            <div className="space-y-3.5">
               {BUILDING_CLEANING_BOOK_DATA.finalModelExam.questions.map((q, idx) => {
                 const selected = mockExamAnswers[q.id];
                 const isCorrect = mockExamSubmitted && selected === q.correctAnswer;
@@ -1175,7 +1196,7 @@ export default function BuildingCleaningBookReader({ country = 'japan' }: Props)
                 return (
                   <div
                     key={q.id}
-                    className={`p-6 rounded-3xl border transition-all space-y-4 ${
+                    className={`p-3.5 sm:p-4 rounded-2xl border transition-all space-y-3 ${
                       isCorrect
                         ? 'bg-emerald-50/60 border-emerald-300'
                         : isWrong
@@ -1183,12 +1204,12 @@ export default function BuildingCleaningBookReader({ country = 'japan' }: Props)
                         : 'bg-white border-slate-200 shadow-xs'
                     }`}
                   >
-                    <div className="space-y-1.5">
+                    <div className="space-y-1">
                       <span className="px-2 py-0.5 rounded-md bg-emerald-100 text-emerald-800 text-[10px] font-black uppercase">
                         Question {idx + 1} • {q.type === 'TF' ? '○×形式 (True/False)' : '択一式 (Multiple Choice)'}
                       </span>
-                      <h4 className="text-base font-bold text-slate-900 leading-snug">
-                        <FuriganaText text={q.questionJp} showFurigana={showFurigana} />
+                      <h4 className="text-sm sm:text-base font-bold text-slate-900 leading-snug">
+                        <FuriganaText text={q.questionJp} showFurigana={isFuriganaOn} furiganaType={furiganaType} />
                       </h4>
                       {showNepali && (
                         <p className="text-xs text-indigo-900 font-medium">
@@ -1197,7 +1218,7 @@ export default function BuildingCleaningBookReader({ country = 'japan' }: Props)
                       )}
                     </div>
 
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                       {q.options?.map((opt, optIdx) => {
                         const isThisSelected = selected === optIdx;
                         const isThisCorrect = mockExamSubmitted && optIdx === q.correctAnswer;
@@ -1219,17 +1240,17 @@ export default function BuildingCleaningBookReader({ country = 'japan' }: Props)
                             key={optIdx}
                             disabled={mockExamSubmitted}
                             onClick={() => setMockExamAnswers((prev) => ({ ...prev, [q.id]: optIdx }))}
-                            className={`p-3.5 rounded-2xl border text-left text-xs transition-all cursor-pointer flex items-start gap-2.5 ${style}`}
+                            className={`p-2.5 rounded-xl border text-left text-xs transition-all cursor-pointer flex items-start gap-2 ${style}`}
                           >
-                            <span className="w-5 h-5 rounded-full border border-slate-300 flex items-center justify-center shrink-0 text-[10px] font-bold mt-0.5">
+                            <span className="w-4 h-4 rounded-full border border-slate-300 flex items-center justify-center shrink-0 text-[10px] font-bold mt-0.5">
                               {q.type === 'TF' ? (optIdx === 0 ? '○' : '×') : optIdx + 1}
                             </span>
                             <div className="space-y-0.5">
                               <p className="font-bold leading-normal">
-                                <FuriganaText text={opt.textJp} showFurigana={showFurigana} />
+                                <FuriganaText text={opt.textJp} showFurigana={isFuriganaOn} furiganaType={furiganaType} />
                               </p>
                               {showNepali && (
-                                <p className="text-[11px] opacity-80 font-normal">
+                                <p className="text-[10px] opacity-80 font-normal">
                                   {opt.textNe}
                                 </p>
                               )}
@@ -1241,12 +1262,12 @@ export default function BuildingCleaningBookReader({ country = 'japan' }: Props)
 
                     {/* Explanations */}
                     {mockExamSubmitted && (
-                      <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200 space-y-1.5 text-xs">
+                      <div className="p-3 rounded-xl bg-slate-50 border border-slate-200 space-y-1.5 text-xs">
                         <p className="font-bold text-emerald-800">
                           正解の解説（Explanation）
                         </p>
                         <p className="text-slate-800">
-                          <FuriganaText text={q.explanationJp} showFurigana={showFurigana} />
+                          <FuriganaText text={q.explanationJp} showFurigana={isFuriganaOn} furiganaType={furiganaType} />
                         </p>
                         {showNepali && <p className="text-indigo-900">🇳🇵 {q.explanationNe}</p>}
                       </div>

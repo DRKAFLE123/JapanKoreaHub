@@ -236,7 +236,7 @@ export default function SSWSectorDetailClient({ country, sectorKey, sectorData }
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {sectorData.textbooks.map((tb) => (
+              {sectorData.textbooks.map((tb, i) => (
                 <div key={tb.id} className="bg-white border border-slate-200 rounded-3xl p-6 shadow-xs flex flex-col justify-between space-y-4 hover:border-emerald-300 transition-all">
                   <div className="space-y-3">
                     <div className="flex items-center justify-between">
@@ -263,14 +263,34 @@ export default function SSWSectorDetailClient({ country, sectorKey, sectorData }
                     </div>
                   </div>
 
-                  <a
-                    href={tb.pdfUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="w-full py-3 bg-slate-900 hover:bg-slate-800 text-white rounded-2xl font-black text-xs text-center flex items-center justify-center gap-2 shadow-sm transition-all cursor-pointer"
-                  >
-                    <Download className="w-4 h-4 text-emerald-400" /> Download Official PDF Textbook
-                  </a>
+                  {tb.id === 'clean-textbook-official-bilingual' || sectorKey.includes('building') && i === 0 ? (
+                    <div className="space-y-2 pt-2">
+                      <Link
+                        href={`/${country}/work/${sectorKey}/book`}
+                        className="w-full py-3 bg-emerald-600 hover:bg-emerald-500 text-white rounded-2xl font-black text-xs text-center flex items-center justify-center gap-2 shadow-md hover:shadow-lg transition-all cursor-pointer"
+                      >
+                        <BookOpen className="w-4 h-4 text-white" />
+                        📖 Study Online (12 Chapters + CBT Quizzes)
+                      </Link>
+                      <a
+                        href={tb.pdfUrl}
+                        download="BuildingCleaningBookwithmodelqsn.docx"
+                        className="w-full py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl font-bold text-xs text-center flex items-center justify-center gap-2 transition-all cursor-pointer border border-slate-200"
+                      >
+                        <Download className="w-3.5 h-3.5 text-indigo-600" />
+                        Download Original Book (.docx)
+                      </a>
+                    </div>
+                  ) : (
+                    <a
+                      href={tb.pdfUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="w-full py-3 bg-slate-900 hover:bg-slate-800 text-white rounded-2xl font-black text-xs text-center flex items-center justify-center gap-2 shadow-sm transition-all cursor-pointer"
+                    >
+                      <Download className="w-4 h-4 text-emerald-400" /> Download Official PDF Textbook
+                    </a>
+                  )}
                 </div>
               ))}
             </div>

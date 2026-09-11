@@ -18,13 +18,14 @@ import FuriganaText from './FuriganaText';
 
 interface DiagramProps {
   showFurigana?: boolean;
+  furiganaType?: 'hiragana' | 'katakana';
   showNepali?: boolean;
 }
 
 /**
  * 1. Vacuum Cleaner Diagram (真空掃除機 / バキュームクリーナー)
  */
-export function VacuumCleanerDiagram({ showFurigana = true, showNepali = true }: DiagramProps) {
+export function VacuumCleanerDiagram({ showFurigana = true, furiganaType = 'katakana', showNepali = true }: DiagramProps) {
   const [selectedPart, setSelectedPart] = useState<string>('nozzle');
 
   const parts: Record<string, { titleJp: string; titleNe: string; descJp: string; descNe: string; cautionJp: string }> = {
