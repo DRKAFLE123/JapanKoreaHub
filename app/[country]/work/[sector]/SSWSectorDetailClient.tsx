@@ -75,43 +75,43 @@ export default function SSWSectorDetailClient({ country, sectorKey, sectorData }
           </span>
         </div>
 
-        {/* Hero Banner Box */}
-        <div className="bg-gradient-to-r from-slate-900 via-slate-800 to-emerald-950 text-white rounded-3xl p-6 sm:p-8 shadow-xl border border-emerald-500/20 space-y-4">
+        {/* Hero Banner Box - Calm Light White */}
+        <div className="bg-gradient-to-r from-white via-slate-50 to-emerald-50/40 text-slate-900 rounded-3xl p-6 sm:p-8 shadow-xs border border-slate-200 space-y-4">
           <div className="flex items-center gap-4">
-            <span className="text-4xl sm:text-5xl p-3 bg-white/10 rounded-2xl border border-white/10">{sectorData.icon}</span>
+            <span className="text-4xl sm:text-5xl p-3 bg-white rounded-2xl border border-slate-200 shadow-xs">{sectorData.icon}</span>
             <div>
-              <span className="text-xs font-black uppercase tracking-wider text-emerald-400">{sectorData.badge}</span>
-              <h1 className="text-2xl sm:text-4xl font-black tracking-tight text-white mt-0.5">
+              <span className="text-xs font-black uppercase tracking-wider text-emerald-800 bg-emerald-50 border border-emerald-200 px-2.5 py-0.5 rounded-full">{sectorData.badge}</span>
+              <h1 className="text-2xl sm:text-4xl font-black tracking-tight text-slate-900 mt-1">
                 {sectorData.name}
               </h1>
-              <p className="text-xs sm:text-sm text-slate-300 font-semibold mt-1">{sectorData.kanji}</p>
+              <p className="text-xs sm:text-sm text-slate-500 font-semibold mt-1">{sectorData.kanji}</p>
             </div>
           </div>
 
-          <p className="text-xs sm:text-sm text-slate-300 font-medium leading-relaxed max-w-3xl">
+          <p className="text-xs sm:text-sm text-slate-700 font-medium leading-relaxed max-w-3xl">
             {sectorData.summary}
           </p>
-          <div className="p-3.5 rounded-2xl bg-white/10 border border-white/10 text-xs text-emerald-200 font-medium">
+          <div className="p-3.5 rounded-2xl bg-indigo-50/70 border border-indigo-200/80 text-xs text-indigo-950 font-medium">
             🇳🇵 <strong>नेपाली व्याख्या:</strong> {sectorData.summaryNe}
           </div>
 
           {/* Quick Specs Grid */}
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-2">
-            <div className="p-3 rounded-2xl bg-white/5 border border-white/10">
+            <div className="p-3 rounded-2xl bg-white border border-slate-200 shadow-xs">
               <span className="text-[10px] uppercase font-bold text-slate-400">Demand Status</span>
-              <p className="text-xs font-black text-emerald-400">{sectorData.demand}</p>
+              <p className="text-xs font-black text-emerald-700">{sectorData.demand}</p>
             </div>
-            <div className="p-3 rounded-2xl bg-white/5 border border-white/10">
+            <div className="p-3 rounded-2xl bg-white border border-slate-200 shadow-xs">
               <span className="text-[10px] uppercase font-bold text-slate-400">Exam Duration</span>
-              <p className="text-xs font-black text-white">{sectorData.testDuration}</p>
+              <p className="text-xs font-black text-slate-900">{sectorData.testDuration}</p>
             </div>
-            <div className="p-3 rounded-2xl bg-white/5 border border-white/10">
+            <div className="p-3 rounded-2xl bg-white border border-slate-200 shadow-xs">
               <span className="text-[10px] uppercase font-bold text-slate-400">Passing Mark</span>
-              <p className="text-xs font-black text-amber-400">{sectorData.passScore}</p>
+              <p className="text-xs font-black text-amber-700">{sectorData.passScore}</p>
             </div>
-            <div className="p-3 rounded-2xl bg-white/5 border border-white/10">
+            <div className="p-3 rounded-2xl bg-white border border-slate-200 shadow-xs">
               <span className="text-[10px] uppercase font-bold text-slate-400">Prometric Fee</span>
-              <p className="text-xs font-black text-sky-300">{sectorData.prometricFee}</p>
+              <p className="text-xs font-black text-sky-700">{sectorData.prometricFee}</p>
             </div>
           </div>
         </div>
@@ -151,30 +151,30 @@ export default function SSWSectorDetailClient({ country, sectorKey, sectorData }
         {activeTab === 'overview' && (
           <div className="space-y-6">
             {sectorKey.includes('building') && (
-              <section className="bg-gradient-to-r from-emerald-950 via-slate-900 to-indigo-950 rounded-3xl p-6 border border-emerald-500/40 text-white shadow-xl space-y-4">
+              <section className="bg-gradient-to-r from-emerald-50/90 via-teal-50/40 to-indigo-50/40 rounded-3xl p-6 border border-emerald-200 text-slate-900 shadow-xs space-y-4">
                 <div className="flex items-start justify-between gap-4">
                   <div className="space-y-1">
-                    <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500/20 text-emerald-400 text-xs font-black uppercase">
+                    <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-100 text-emerald-800 text-xs font-black uppercase">
                       <Sparkles className="w-3.5 h-3.5" /> Official 12-Chapter Bilingual Study Guide &amp; Tests
                     </span>
-                    <h2 className="text-xl sm:text-2xl font-black text-white">
+                    <h2 className="text-xl sm:text-2xl font-black text-slate-900">
                       ビルクリーニング分野 特定技能１号評価試験 学習ガイド
                     </h2>
-                    <p className="text-xs sm:text-sm text-indigo-200 font-semibold">
+                    <p className="text-xs sm:text-sm text-indigo-900 font-semibold">
                       🇳🇵 भवन सरसफाइ क्षेत्र विशेष सीप नं. १ मूल्याङ्कन परीक्षा — अध्ययन पुस्तिका (१२ अध्याय + अभ्यास परीक्षा)
                     </p>
                   </div>
                   <span className="text-4xl hidden sm:block">🧹</span>
                 </div>
 
-                <p className="text-xs text-slate-300 leading-relaxed max-w-3xl">
+                <p className="text-xs text-slate-600 leading-relaxed max-w-3xl">
                   Complete bilingual guide covering all 12 chapters from JBMA specifications: Safety &amp; 5S, Machinery, Detergent Dilution &amp; Acid/Alkali danger, Floor Waxing &amp; Marble precautions, Glass Squeegee techniques, Restroom cross-contamination, Hotel Bed Making, Waste segregation, and Workplace Hō-Ren-Sō.
                 </p>
 
                 <div className="flex flex-wrap items-center gap-3 pt-2">
                   <button
                     onClick={() => setActiveTab('book')}
-                    className="px-5 py-3 rounded-2xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-black text-xs shadow-lg transition-all flex items-center gap-2 cursor-pointer"
+                    className="px-5 py-3 rounded-2xl bg-emerald-600 hover:bg-emerald-500 text-white font-black text-xs shadow-md transition-all flex items-center gap-2 cursor-pointer"
                   >
                     <BookOpen className="w-4 h-4" />
                     Read Interactive Book &amp; Take Section Tests
@@ -182,18 +182,18 @@ export default function SSWSectorDetailClient({ country, sectorKey, sectorData }
 
                   <Link
                     href={`/${country}/work/${sectorKey}/book`}
-                    className="px-4 py-3 rounded-2xl bg-slate-800 hover:bg-slate-700 text-white font-bold text-xs border border-slate-700 transition-all flex items-center gap-1.5"
+                    className="px-4 py-3 rounded-2xl bg-white hover:bg-slate-50 text-slate-800 font-bold text-xs border border-slate-200 shadow-xs transition-all flex items-center gap-1.5"
                   >
-                    <ExternalLink className="w-4 h-4 text-emerald-400" />
+                    <ExternalLink className="w-4 h-4 text-emerald-600" />
                     Open Fullscreen Reader
                   </Link>
 
                   <a
                     href="/BuildingCleaningBookwithmodelqsn.docx"
                     download="BuildingCleaningBookwithmodelqsn.docx"
-                    className="px-4 py-3 rounded-2xl bg-white/10 hover:bg-white/20 text-slate-200 font-bold text-xs border border-white/10 transition-all flex items-center gap-1.5"
+                    className="px-4 py-3 rounded-2xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs border border-slate-200 transition-all flex items-center gap-1.5"
                   >
-                    <Download className="w-4 h-4 text-indigo-300" />
+                    <Download className="w-4 h-4 text-indigo-600" />
                     Download Original (.docx)
                   </a>
                 </div>
@@ -356,12 +356,12 @@ export default function SSWSectorDetailClient({ country, sectorKey, sectorData }
                     </button>
                   </div>
 
-                  {/* Transcript Box */}
-                  <div className="p-4 rounded-2xl bg-slate-900 text-slate-100 text-xs space-y-2 font-mono">
-                    <p className="text-emerald-400 font-bold">🇯🇵 Japanese Transcript:</p>
+                  {/* Transcript Box - Light Theme */}
+                  <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200 text-slate-800 text-xs space-y-2 font-mono">
+                    <p className="text-emerald-800 font-bold">🇯🇵 Japanese Transcript:</p>
                     <p className="leading-relaxed">{drill.transcriptJp}</p>
-                    <p className="text-slate-400 font-sans text-[11px] pt-1">🇬🇧 {drill.transcriptEn}</p>
-                    <p className="text-slate-300 font-sans text-[11px]">🇳🇵 {drill.transcriptNe}</p>
+                    <p className="text-slate-500 font-sans text-[11px] pt-1">🇬🇧 {drill.transcriptEn}</p>
+                    <p className="text-indigo-900 font-sans text-[11px]">🇳🇵 {drill.transcriptNe}</p>
                   </div>
 
                   {/* Question */}
@@ -434,12 +434,12 @@ export default function SSWSectorDetailClient({ country, sectorKey, sectorData }
               </div>
 
               {showExamResults && (
-                <div className="p-6 rounded-3xl bg-slate-900 text-white text-center space-y-3 shadow-xl">
+                <div className="p-6 rounded-3xl bg-emerald-50 border border-emerald-200 text-slate-900 text-center space-y-3 shadow-xs">
                   <span className="text-3xl">🎉</span>
-                  <h3 className="text-2xl font-black">
+                  <h3 className="text-2xl font-black text-slate-900">
                     Your Score: {calculateScore()} / {sectorData.practiceQuestions.length} ({Math.round((calculateScore() / sectorData.practiceQuestions.length) * 100)}%)
                   </h3>
-                  <p className="text-xs text-slate-300 font-medium">
+                  <p className="text-xs text-slate-600 font-medium">
                     {calculateScore() / sectorData.practiceQuestions.length >= 0.6
                       ? 'Congratulations! You passed the SSW Skill Evaluation benchmark (60%).'
                       : 'Keep practicing! Review the textbook chapters and retake the test.'}
@@ -500,7 +500,7 @@ export default function SSWSectorDetailClient({ country, sectorKey, sectorData }
 
         {/* TAB 6: OFFICIAL BOOK & SECTION TESTS */}
         {activeTab === 'book' && sectorKey.includes('building') && (
-          <div className="rounded-3xl overflow-hidden border border-slate-800 shadow-2xl">
+          <div className="rounded-3xl overflow-hidden border border-slate-200 shadow-xs">
             <BuildingCleaningBookReader country={country} />
           </div>
         )}
