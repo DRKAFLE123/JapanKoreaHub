@@ -237,90 +237,37 @@ export default function CaregivingBookReader({ country = 'japan', isEmbedded = f
       
       {/* Top Sticky Navigation Bar - Light & Calm */}
       <header className="shrink-0 sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-slate-200 shadow-xs">
-        <div className="max-w-7xl mx-auto px-4 py-2.5 flex flex-wrap items-center justify-between gap-3">
+        {/* Tier 1: Brand & Study Controls */}
+        <div className="max-w-7xl mx-auto px-3 sm:px-4 py-2 flex items-center justify-between gap-2 border-b border-slate-100">
           
           {/* Left: Back & Title */}
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2 sm:gap-3 min-w-0">
             {!isEmbedded && (
               <Link
                 href={`/${country}/work/nursing`}
-                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 hover:text-slate-900 text-xs font-bold border border-slate-200 transition-colors"
+                className="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold border border-slate-200 transition-colors shrink-0"
               >
                 <ArrowLeft className="w-3.5 h-3.5 text-emerald-600" />
-                <span className="hidden sm:inline">Back to Sector Hub</span>
-                <span className="sm:hidden">Back</span>
+                <span className="hidden md:inline">Back to Sector Hub</span>
+                <span className="md:hidden">Back</span>
               </Link>
             )}
 
-            <div className="flex items-center gap-2">
-              <span className="text-xl">🩺</span>
-              <div>
-                <h1 className="text-xs sm:text-sm font-black text-slate-900 leading-tight">
+            <div className="flex items-center gap-1.5 sm:gap-2 min-w-0">
+              <span className="text-lg sm:text-xl shrink-0">🩺</span>
+              <div className="min-w-0">
+                <h1 className="text-xs sm:text-sm font-black text-slate-900 truncate leading-tight">
                   SSW Caregiving (介護) Official Book
                 </h1>
-                <p className="text-[10px] text-emerald-700 font-semibold hidden md:block">
+                <p className="text-[10px] text-emerald-700 font-semibold truncate hidden sm:block">
                   {CAREGIVING_BOOK_DATA.bookTitleNe}
                 </p>
               </div>
             </div>
           </div>
 
-          {/* Center Navigation Tabs: Reader / Visual Guide / Mock Exam / Glossary */}
-          <div className="flex items-center p-1 bg-slate-100 rounded-2xl border border-slate-200 text-xs font-bold">
-            <button
-              onClick={() => setActiveView('reader')}
-              className={`px-3 py-1.5 rounded-xl transition-all flex items-center gap-1.5 cursor-pointer ${
-                activeView === 'reader'
-                  ? 'bg-white text-emerald-800 shadow-xs font-black'
-                  : 'text-slate-600 hover:text-slate-900'
-              }`}
-            >
-              <BookOpen className="w-3.5 h-3.5 text-emerald-600" />
-              <span>Study Book</span>
-            </button>
-
-            <button
-              onClick={() => setActiveView('equipment-guide')}
-              className={`px-3 py-1.5 rounded-xl transition-all flex items-center gap-1.5 cursor-pointer ${
-                activeView === 'equipment-guide'
-                  ? 'bg-white text-emerald-800 shadow-xs font-black'
-                  : 'text-slate-600 hover:text-slate-900'
-              }`}
-            >
-              <Stethoscope className="w-3.5 h-3.5 text-indigo-600" />
-              <span className="hidden sm:inline">Clinical Visuals</span>
-              <span className="sm:hidden">Visuals</span>
-            </button>
-
-            <button
-              onClick={() => setActiveView('mock-exam')}
-              className={`px-3 py-1.5 rounded-xl transition-all flex items-center gap-1.5 cursor-pointer ${
-                activeView === 'mock-exam'
-                  ? 'bg-white text-emerald-800 shadow-xs font-black'
-                  : 'text-slate-600 hover:text-slate-900'
-              }`}
-            >
-              <Award className="w-3.5 h-3.5 text-amber-500" />
-              <span className="hidden sm:inline">CBT Mock Exam</span>
-              <span className="sm:hidden">Exam</span>
-            </button>
-
-            <button
-              onClick={() => setActiveView('glossary')}
-              className={`px-3 py-1.5 rounded-xl transition-all flex items-center gap-1.5 cursor-pointer ${
-                activeView === 'glossary'
-                  ? 'bg-white text-emerald-800 shadow-xs font-black'
-                  : 'text-slate-600 hover:text-slate-900'
-              }`}
-            >
-              <Search className="w-3.5 h-3.5 text-sky-600" />
-              <span className="hidden sm:inline">Glossary ({CAREGIVING_BOOK_DATA.glossary.length})</span>
-              <span className="sm:hidden">Vocab</span>
-            </button>
-          </div>
-
           {/* Right Controls: Furigana & Nepali & TOC Toggle */}
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
             {/* Furigana Mode Selector */}
             <div className="flex items-center bg-slate-100 p-0.5 rounded-xl border border-slate-200 text-[10px] font-bold">
               <button
@@ -330,7 +277,7 @@ export default function CaregivingBookReader({ country = 'japan', isEmbedded = f
                     ? 'bg-emerald-600 text-white font-black shadow-xs'
                     : 'text-slate-600 hover:text-slate-900'
                 }`}
-                title="Convert Kanji to Katakana ruby (Loanwords remain unchanged)"
+                title="Convert Kanji to Katakana ruby"
               >
                 カタカナ
               </button>
@@ -347,7 +294,7 @@ export default function CaregivingBookReader({ country = 'japan', isEmbedded = f
               </button>
               <button
                 onClick={() => setFuriganaMode('off')}
-                className={`px-2 py-1 rounded-lg transition-all ${
+                className={`px-1.5 sm:px-2 py-1 rounded-lg transition-all ${
                   furiganaMode === 'off'
                     ? 'bg-slate-700 text-white font-black shadow-xs'
                     : 'text-slate-600 hover:text-slate-900'
@@ -361,21 +308,21 @@ export default function CaregivingBookReader({ country = 'japan', isEmbedded = f
             {/* Nepali Toggle Button */}
             <button
               onClick={() => setShowNepali((v) => !v)}
-              className={`px-2.5 py-1 rounded-xl text-xs font-bold border transition-colors flex items-center gap-1.5 cursor-pointer ${
+              className={`px-2 sm:px-2.5 py-1 rounded-xl text-xs font-bold border transition-colors flex items-center gap-1 cursor-pointer ${
                 showNepali
                   ? 'bg-indigo-50 border-indigo-200 text-indigo-700'
                   : 'bg-white border-slate-200 text-slate-500'
               }`}
             >
               <span>🇳🇵</span>
-              <span className="hidden sm:inline">{showNepali ? 'Nepali ON' : 'Nepali OFF'}</span>
+              <span className="hidden md:inline">{showNepali ? 'Nepali ON' : 'Nepali OFF'}</span>
             </button>
 
             {/* Sidebar toggle button (Both Desktop and Mobile) */}
             {activeView === 'reader' && (
               <button
                 onClick={() => setIsSidebarOpen((v) => !v)}
-                className={`px-2.5 py-1 rounded-xl border text-xs font-bold transition-all flex items-center gap-1.5 cursor-pointer ${
+                className={`px-2 sm:px-2.5 py-1 rounded-xl border text-xs font-bold transition-all flex items-center gap-1.5 cursor-pointer ${
                   isSidebarOpen
                     ? 'bg-slate-100 border-slate-300 text-slate-700 hover:bg-slate-200'
                     : 'bg-emerald-50 border-emerald-300 text-emerald-800 hover:bg-emerald-100 shadow-xs'
@@ -383,9 +330,68 @@ export default function CaregivingBookReader({ country = 'japan', isEmbedded = f
                 title={isSidebarOpen ? 'Hide Index (目次を閉じる)' : 'Show Index (目次を開く)'}
               >
                 <BookOpen className="w-3.5 h-3.5 text-emerald-600" />
-                <span className="hidden sm:inline">{isSidebarOpen ? 'Hide Index' : 'Show Index'}</span>
+                <span>{isSidebarOpen ? 'Hide Index' : 'Show Index'}</span>
               </button>
             )}
+          </div>
+        </div>
+
+        {/* Tier 2: Mode Navigation Tabs Bar (Scrollable on mobile) */}
+        <div className="max-w-7xl mx-auto px-2 sm:px-4 py-1.5 flex items-center justify-between gap-2 overflow-x-auto scrollbar-none">
+          <div className="flex items-center gap-1 p-0.5 bg-slate-100 rounded-xl border border-slate-200 text-xs font-bold shrink-0">
+            <button
+              onClick={() => setActiveView('reader')}
+              className={`px-2.5 sm:px-3 py-1 rounded-lg transition-all flex items-center gap-1.5 cursor-pointer whitespace-nowrap ${
+                activeView === 'reader'
+                  ? 'bg-white text-emerald-800 shadow-xs font-black'
+                  : 'text-slate-600 hover:text-slate-900'
+              }`}
+            >
+              <BookOpen className="w-3.5 h-3.5 text-emerald-600" />
+              <span>Study Book</span>
+            </button>
+
+            <button
+              onClick={() => setActiveView('equipment-guide')}
+              className={`px-2.5 sm:px-3 py-1 rounded-lg transition-all flex items-center gap-1.5 cursor-pointer whitespace-nowrap ${
+                activeView === 'equipment-guide'
+                  ? 'bg-white text-emerald-800 shadow-xs font-black'
+                  : 'text-slate-600 hover:text-slate-900'
+              }`}
+            >
+              <Stethoscope className="w-3.5 h-3.5 text-indigo-600" />
+              <span>Clinical Visuals (10)</span>
+            </button>
+
+            <button
+              onClick={() => setActiveView('mock-exam')}
+              className={`px-2.5 sm:px-3 py-1 rounded-lg transition-all flex items-center gap-1.5 cursor-pointer whitespace-nowrap ${
+                activeView === 'mock-exam'
+                  ? 'bg-white text-emerald-800 shadow-xs font-black'
+                  : 'text-slate-600 hover:text-slate-900'
+              }`}
+            >
+              <Award className="w-3.5 h-3.5 text-amber-500" />
+              <span>CBT Mock Exam</span>
+            </button>
+
+            <button
+              onClick={() => setActiveView('glossary')}
+              className={`px-2.5 sm:px-3 py-1 rounded-lg transition-all flex items-center gap-1.5 cursor-pointer whitespace-nowrap ${
+                activeView === 'glossary'
+                  ? 'bg-white text-emerald-800 shadow-xs font-black'
+                  : 'text-slate-600 hover:text-slate-900'
+              }`}
+            >
+              <Search className="w-3.5 h-3.5 text-sky-600" />
+              <span>Glossary ({CAREGIVING_BOOK_DATA.glossary.length})</span>
+            </button>
+          </div>
+
+          <div className="hidden sm:flex items-center gap-2 text-xs font-bold text-slate-500 shrink-0">
+            <span className="px-2 py-0.5 rounded-md bg-emerald-50 text-emerald-800 border border-emerald-200 text-[11px]">
+              {totalPassedSections} / {CAREGIVING_BOOK_DATA.chapters.length} Passed
+            </span>
           </div>
         </div>
 
@@ -398,122 +404,133 @@ export default function CaregivingBookReader({ country = 'japan', isEmbedded = f
         </div>
       </header>
 
-      {/* Main Container - Contained Viewport Dual-Pane Loop */}
-      <div className="flex-1 overflow-hidden max-w-7xl w-full mx-auto px-2 sm:px-4 py-2">
+      {/* Main Container - Contained Viewport Dual-Pane Loop with min-h-0 flex stretch */}
+      <div className="flex-1 min-h-0 overflow-hidden max-w-7xl w-full mx-auto px-2 sm:px-4 py-2 flex flex-col">
 
         {/* ===================================================================
             VIEW 1: 12-CHAPTER READER & SECTION-BY-SECTION HIGH-CHANCE TESTS
            =================================================================== */}
         {activeView === 'reader' && (
-          <div className="h-full flex gap-3 sm:gap-4 overflow-hidden">
-            {/* Left Sidebar: 12 Chapters TOC - Contained Closed-Scroll Loop */}
+          <div className="flex-1 min-h-0 h-full flex gap-3 sm:gap-4 overflow-hidden relative">
+            {/* Left Sidebar: 12 Chapters TOC - Contained Closed-Scroll Loop (Desktop Side-by-side, Mobile Overlay Drawer) */}
             {isSidebarOpen && (
-              <aside className="w-72 sm:w-80 lg:w-84 shrink-0 h-full flex flex-col space-y-2 overflow-hidden">
-                
-                {/* Progress Summary Card - Compact */}
-                <div className="shrink-0 bg-white border border-slate-200 rounded-2xl p-3 shadow-xs space-y-1.5">
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-1.5">
-                      <Sparkles className="w-3.5 h-3.5 text-emerald-600" />
-                      <span className="text-[11px] font-black uppercase tracking-wider text-slate-700">
-                        Caregiving Progress
+              <>
+                {/* Mobile Backdrop for drawer */}
+                <div
+                  className="fixed inset-0 bg-black/40 z-40 lg:hidden backdrop-blur-xs animate-fade-in"
+                  onClick={() => setIsSidebarOpen(false)}
+                />
+
+                <aside className="fixed inset-y-0 left-0 z-50 w-80 max-w-[85vw] bg-slate-50 p-3 shadow-2xl flex flex-col space-y-2 overflow-hidden lg:static lg:z-auto lg:w-80 lg:max-w-none lg:bg-transparent lg:p-0 lg:shadow-none lg:shrink-0 lg:h-full lg:min-h-0">
+                  
+                  {/* Progress Summary Card - Compact */}
+                  <div className="shrink-0 bg-white border border-slate-200 rounded-2xl p-3 shadow-xs space-y-1.5">
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-1.5">
+                        <Sparkles className="w-3.5 h-3.5 text-emerald-600" />
+                        <span className="text-[11px] font-black uppercase tracking-wider text-slate-700">
+                          Caregiving Progress
+                        </span>
+                      </div>
+                      <span className="text-[10px] font-bold text-emerald-800 px-2 py-0.5 rounded-full bg-emerald-50 border border-emerald-200">
+                        {totalPassedSections} / {CAREGIVING_BOOK_DATA.chapters.length} Passed
                       </span>
                     </div>
-                    <span className="text-[10px] font-bold text-emerald-800 px-2 py-0.5 rounded-full bg-emerald-50 border border-emerald-200">
-                      {totalPassedSections} / {CAREGIVING_BOOK_DATA.chapters.length} Passed
-                    </span>
+
+                    <p className="text-[10px] text-slate-600 leading-snug">
+                      Master each clinical chapter and pass the <strong className="text-emerald-700 font-bold">Section CBT Test</strong>.
+                    </p>
                   </div>
 
-                  <p className="text-[10px] text-slate-600 leading-snug">
-                    Master each clinical chapter and pass the <strong className="text-emerald-700 font-bold">Section CBT Test</strong>.
-                  </p>
-                </div>
-
-                {/* Chapters List - Closed Scroll Loop */}
-                <div className="flex-1 overflow-y-auto overscroll-contain rounded-2xl bg-white border border-slate-200 p-2 shadow-xs space-y-1 scrollbar-thin scrollbar-thumb-slate-300">
-                  <div className="flex items-center justify-between px-2 py-1 border-b border-slate-100 pb-1.5">
-                    <div className="flex items-center gap-1.5">
-                      <span className="text-[10px] font-black uppercase text-slate-500">
-                        Table of Contents (目次)
-                      </span>
-                      <span className="text-[9px] font-bold text-slate-400">
-                        12 Chapters
-                      </span>
-                    </div>
-                    <button
-                      onClick={() => setIsSidebarOpen(false)}
-                      className="p-1 rounded-lg hover:bg-slate-100 text-slate-400 hover:text-slate-700 transition-colors text-xs font-bold flex items-center gap-1 cursor-pointer"
-                      title="Close Table of Contents (目次を閉じる)"
-                    >
-                      <span className="text-[10px]">Close</span>
-                      <XCircle className="w-3.5 h-3.5 text-slate-400" />
-                    </button>
-                  </div>
-
-                  {CAREGIVING_BOOK_DATA.chapters.map((ch) => {
-                    const isSelected = ch.id === selectedChapterId;
-                    const isSubmitted = submittedSections[ch.id];
-                    const score = getChapterScore(ch);
-                    const isPassed = isSubmitted && score >= Math.ceil(ch.sectionTest.length * 0.6);
-
-                    return (
+                  {/* Chapters List - Closed Scroll Loop */}
+                  <div className="flex-1 min-h-0 overflow-y-auto overscroll-contain rounded-2xl bg-white border border-slate-200 p-2 shadow-xs space-y-1 scrollbar-thin scrollbar-thumb-slate-300">
+                    <div className="flex items-center justify-between px-2 py-1 border-b border-slate-100 pb-1.5">
+                      <div className="flex items-center gap-1.5">
+                        <span className="text-[10px] font-black uppercase text-slate-500">
+                          Table of Contents (目次)
+                        </span>
+                        <span className="text-[9px] font-bold text-slate-400">
+                          12 Chapters
+                        </span>
+                      </div>
                       <button
-                        key={ch.id}
-                        onClick={() => {
-                          setSelectedChapterId(ch.id);
-                          studyScrollRef.current?.scrollTo({ top: 0, behavior: 'smooth' });
-                        }}
-                        className={`w-full text-left p-2 rounded-xl transition-all flex items-center justify-between gap-2 cursor-pointer ${
-                          isSelected
-                            ? 'bg-emerald-50/90 border border-emerald-300 shadow-xs'
-                            : 'hover:bg-slate-50 border border-transparent text-slate-700'
-                        }`}
+                        onClick={() => setIsSidebarOpen(false)}
+                        className="p-1 rounded-lg hover:bg-slate-100 text-slate-400 hover:text-slate-700 transition-colors text-xs font-bold flex items-center gap-1 cursor-pointer"
+                        title="Close Table of Contents (目次を閉じる)"
                       >
-                        <div className="space-y-0.5 min-w-0 flex-1">
-                          <div className="flex items-center gap-1.5">
-                            <span
-                              className={`text-[9px] font-black px-1.5 py-0.5 rounded-md shrink-0 ${
-                                isSelected
-                                  ? 'bg-emerald-600 text-white'
-                                  : 'bg-slate-100 text-slate-600'
-                              }`}
-                            >
-                              Ch.{ch.chapterNumber}
-                            </span>
-                            <span className={`text-xs truncate ${isSelected ? 'text-emerald-950 font-black' : 'text-slate-900 font-semibold'}`}>
-                              {ch.titleJp.replace(/^第\d+章\s*/, '')}
-                            </span>
-                          </div>
-                          <p className="text-[10px] text-slate-500 truncate pl-0.5">
-                            {ch.titleNe.replace(/^अध्याय\s*[\d.]+\s*:\s*/, '')}
-                          </p>
-                        </div>
-
-                        {/* Status indicator */}
-                        <div className="shrink-0">
-                          {isSubmitted ? (
-                            isPassed ? (
-                              <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
-                            ) : (
-                              <span className="text-[9px] font-black px-1.5 py-0.5 rounded-full bg-rose-50 text-rose-700 border border-rose-200">
-                                {score}/{ch.sectionTest.length}
-                              </span>
-                            )
-                          ) : (
-                            <ChevronRight className="w-3.5 h-3.5 text-slate-300" />
-                          )}
-                        </div>
+                        <span className="text-[10px]">Close</span>
+                        <XCircle className="w-3.5 h-3.5 text-slate-400" />
                       </button>
-                    );
-                  })}
-                </div>
-              </aside>
+                    </div>
+
+                    {CAREGIVING_BOOK_DATA.chapters.map((ch) => {
+                      const isSelected = ch.id === selectedChapterId;
+                      const isSubmitted = submittedSections[ch.id];
+                      const score = getChapterScore(ch);
+                      const isPassed = isSubmitted && score >= Math.ceil(ch.sectionTest.length * 0.6);
+
+                      return (
+                        <button
+                          key={ch.id}
+                          onClick={() => {
+                            setSelectedChapterId(ch.id);
+                            studyScrollRef.current?.scrollTo({ top: 0, behavior: 'smooth' });
+                            if (typeof window !== 'undefined' && window.innerWidth < 1024) {
+                              setIsSidebarOpen(false);
+                            }
+                          }}
+                          className={`w-full text-left p-2 rounded-xl transition-all flex items-center justify-between gap-2 cursor-pointer ${
+                            isSelected
+                              ? 'bg-emerald-50/90 border border-emerald-300 shadow-xs'
+                              : 'hover:bg-slate-50 border border-transparent text-slate-700'
+                          }`}
+                        >
+                          <div className="space-y-0.5 min-w-0 flex-1">
+                            <div className="flex items-center gap-1.5">
+                              <span
+                                className={`text-[9px] font-black px-1.5 py-0.5 rounded-md shrink-0 ${
+                                  isSelected
+                                    ? 'bg-emerald-600 text-white'
+                                    : 'bg-slate-100 text-slate-600'
+                                }`}
+                              >
+                                Ch.{ch.chapterNumber}
+                              </span>
+                              <span className={`text-xs truncate ${isSelected ? 'text-emerald-950 font-black' : 'text-slate-900 font-semibold'}`}>
+                                {ch.titleJp.replace(/^第\d+章\s*/, '')}
+                              </span>
+                            </div>
+                            <p className="text-[10px] text-slate-500 truncate pl-0.5">
+                              {ch.titleNe.replace(/^अध्याय\s*[\d.]+\s*:\s*/, '')}
+                            </p>
+                          </div>
+
+                          {/* Status indicator */}
+                          <div className="shrink-0">
+                            {isSubmitted ? (
+                              isPassed ? (
+                                <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
+                              ) : (
+                                <span className="text-[9px] font-black px-1.5 py-0.5 rounded-full bg-rose-50 text-rose-700 border border-rose-200">
+                                  {score}/{ch.sectionTest.length}
+                                </span>
+                              )
+                            ) : (
+                              <ChevronRight className="w-3.5 h-3.5 text-slate-300" />
+                            )}
+                          </div>
+                        </button>
+                      );
+                    })}
+                  </div>
+                </aside>
+              </>
             )}
 
             {/* Right Main Content Area: Contained Closed-Scroll Loop */}
             <main
               ref={studyScrollRef}
-              className="flex-1 h-full overflow-y-auto overscroll-contain rounded-2xl pb-28 pr-1 sm:pr-2 space-y-4 scrollbar-thin scrollbar-thumb-slate-300"
+              className="flex-1 min-h-0 h-full overflow-y-auto overscroll-contain rounded-2xl pb-8 pr-1 sm:pr-2 space-y-4 scrollbar-thin scrollbar-thumb-slate-300"
             >
               {/* Top Chapter Control Bar with Toggle Index Button */}
               <div className="sticky top-0 z-20 flex items-center justify-between gap-2 bg-white/95 backdrop-blur-xs border border-slate-200 rounded-2xl px-3.5 py-2 shadow-xs">
@@ -997,7 +1014,7 @@ export default function CaregivingBookReader({ country = 'japan', isEmbedded = f
             VIEW 2: CLINICAL & EQUIPMENT VISUAL GUIDE (10 DIAGRAMS)
            =================================================================== */}
         {activeView === 'equipment-guide' && (
-          <main className="h-full overflow-y-auto overscroll-contain rounded-2xl pb-28 pr-1 sm:pr-2 space-y-6 scrollbar-thin scrollbar-thumb-slate-300">
+          <main className="flex-1 min-h-0 h-full overflow-y-auto overscroll-contain rounded-2xl pb-8 pr-1 sm:pr-2 space-y-6 scrollbar-thin scrollbar-thumb-slate-300">
             
             {/* Visual Guide Header */}
             <div className="bg-white border border-slate-200 rounded-3xl p-6 shadow-xs space-y-3">
@@ -1133,7 +1150,7 @@ export default function CaregivingBookReader({ country = 'japan', isEmbedded = f
             VIEW 3: PROMETRIC CBT MOCK EXAM (20 QUESTIONS / 60 MIN)
            =================================================================== */}
         {activeView === 'mock-exam' && (
-          <main className="h-full overflow-y-auto overscroll-contain rounded-2xl pb-28 pr-1 sm:pr-2 space-y-6 scrollbar-thin scrollbar-thumb-slate-300">
+          <main className="flex-1 min-h-0 h-full overflow-y-auto overscroll-contain rounded-2xl pb-8 pr-1 sm:pr-2 space-y-6 scrollbar-thin scrollbar-thumb-slate-300">
             
             {/* Exam Header & Live Timer Box */}
 
@@ -1396,7 +1413,7 @@ export default function CaregivingBookReader({ country = 'japan', isEmbedded = f
             VIEW 4: CAREGIVING GLOSSARY (65+ MEDICAL/CARE TERMS)
            =================================================================== */}
         {activeView === 'glossary' && (
-          <main className="h-full overflow-y-auto overscroll-contain rounded-2xl pb-28 pr-1 sm:pr-2 space-y-6 scrollbar-thin scrollbar-thumb-slate-300">
+          <main className="flex-1 min-h-0 h-full overflow-y-auto overscroll-contain rounded-2xl pb-8 pr-1 sm:pr-2 space-y-6 scrollbar-thin scrollbar-thumb-slate-300">
             
             {/* Glossary Header & Search Box */}
 

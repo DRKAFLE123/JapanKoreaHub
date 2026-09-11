@@ -62,7 +62,7 @@ export default function SSWSectorDetailClient({ country, sectorKey, sectorData }
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 text-slate-900 pb-24 font-sans">
+    <div className={`min-h-screen bg-slate-50 text-slate-900 ${activeTab === 'book' ? 'pb-6' : 'pb-24'} font-sans`}>
       <main className="max-w-5xl mx-auto px-4 py-6 space-y-6">
         
         {/* Header Breadcrumb */}
@@ -564,9 +564,23 @@ export default function SSWSectorDetailClient({ country, sectorKey, sectorData }
 
         {/* TAB 6: OFFICIAL BOOK & SECTION TESTS */}
         {activeTab === 'book' && (
-          <div className="h-[82vh] rounded-3xl overflow-hidden border border-slate-200 shadow-xs bg-slate-50 flex flex-col">
-            {sectorKey.includes('building') && <BuildingCleaningBookReader country={country} isEmbedded={true} />}
-            {(sectorKey === 'nursing' || sectorKey === 'caregiving') && <CaregivingBookReader country={country} isEmbedded={true} />}
+          <div className="space-y-3">
+            <div className="flex items-center justify-between px-1">
+              <span className="text-xs font-bold text-slate-500">
+                Interactive Study Curriculum &amp; CBT Tests
+              </span>
+              <Link
+                href={`/${country}/work/${sectorKey}/book`}
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white hover:bg-slate-100 text-slate-800 text-xs font-bold border border-slate-200 shadow-xs transition-all"
+              >
+                <ExternalLink className="w-3.5 h-3.5 text-emerald-600" />
+                <span>Fullscreen Immersive Mode</span>
+              </Link>
+            </div>
+            <div className="h-[calc(100vh-140px)] min-h-[640px] rounded-3xl overflow-hidden border border-slate-200 shadow-xs bg-slate-50 flex flex-col">
+              {sectorKey.includes('building') && <BuildingCleaningBookReader country={country} isEmbedded={true} />}
+              {(sectorKey === 'nursing' || sectorKey === 'caregiving') && <CaregivingBookReader country={country} isEmbedded={true} />}
+            </div>
           </div>
         )}
 
