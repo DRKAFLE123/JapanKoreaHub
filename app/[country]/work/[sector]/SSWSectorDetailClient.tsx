@@ -5,6 +5,7 @@ import { ArrowLeft, BookOpen, Download, Volume2, Play, Pause, CheckCircle2, XCir
 import BottomTabBar from '@/components/layout/BottomTabBar';
 import { SSWSectorData } from '@/lib/ssw-sectors-data';
 import BuildingCleaningBookReader from '@/components/building-cleaning/BuildingCleaningBookReader';
+import CaregivingBookReader from '@/components/caregiving/CaregivingBookReader';
 
 interface Props {
   country: 'japan' | 'korea';
@@ -119,14 +120,17 @@ export default function SSWSectorDetailClient({ country, sectorKey, sectorData }
         {/* Tab Navigation */}
         {(() => {
           const isBuildingCleaning = sectorKey.includes('building');
+          const isCaregiving = sectorKey === 'nursing' || sectorKey === 'caregiving';
+          const hasOfficialBook = isBuildingCleaning || isCaregiving;
           const tabsList = [
             { id: 'overview', label: '📌 Overview & Syllabus', icon: ShieldCheck },
-            ...(isBuildingCleaning ? [{ id: 'book', label: '📖 Official Book & Tests (12 Ch.)', icon: BookOpen }] : []),
+            ...(hasOfficialBook ? [{ id: 'book', label: '📖 Official Book & Tests (12 Ch.)', icon: BookOpen }] : []),
             { id: 'textbooks', label: `📚 Textbooks & Books (${sectorData.textbooks.length})`, icon: BookOpen },
             { id: 'vocab', label: `🗂️ Sector Vocab (${sectorData.vocabList.length})`, icon: FileText },
             { id: 'listening', label: `🎧 Listening Drills (${sectorData.listeningDrills.length})`, icon: Volume2 },
             { id: 'practice', label: `✍️ CBT Mock Exam (${sectorData.practiceQuestions.length})`, icon: HelpCircle },
           ];
+
 
           return (
             <div className="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-none border-b border-slate-200">
@@ -199,6 +203,57 @@ export default function SSWSectorDetailClient({ country, sectorKey, sectorData }
                 </div>
               </section>
             )}
+
+            {(sectorKey === 'nursing' || sectorKey === 'caregiving') && (
+              <section className="bg-gradient-to-r from-emerald-50/90 via-teal-50/40 to-indigo-50/40 rounded-3xl p-6 border border-emerald-200 text-slate-900 shadow-xs space-y-4">
+                <div className="flex items-start justify-between gap-4">
+                  <div className="space-y-1">
+                    <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-100 text-emerald-800 text-xs font-black uppercase">
+                      <Sparkles className="w-3.5 h-3.5" /> Official 12-Chapter Bilingual Study Curriculum &amp; Tests
+                    </span>
+                    <h2 className="text-xl sm:text-2xl font-black text-slate-900">
+                      介護分野 特定技能１号評価試験 完全学習ガイド
+                    </h2>
+                    <p className="text-xs sm:text-sm text-indigo-900 font-semibold">
+                      🇳🇵 नर्सिङ केयरगिभर (介護) विशेष सीप मूल्याङ्कन परीक्षा — आधिकारिक अध्ययन पुस्तक (१२ अध्याय + १० क्लिनिकल डायग्राम + मोडल परीक्षा)
+                    </p>
+                  </div>
+                  <span className="text-4xl hidden sm:block">🩺</span>
+                </div>
+
+                <p className="text-xs text-slate-600 leading-relaxed max-w-3xl">
+                  Official bilingual curriculum based on Japan MHLW (厚生労働省) Prometric CBT standards: Human Dignity, Independence Support, Body Mechanics (8 principles), Wheelchair safety, Hemiplegia transfers, Dysphagia &amp; Choking prevention, Dakken Chakkan dressing, Pressure ulcers (bedsore prevention), Vital signs standards, Dementia 4-classification, and Workplace Handover records.
+                </p>
+
+                <div className="flex flex-wrap items-center gap-3 pt-2">
+                  <button
+                    onClick={() => setActiveTab('book')}
+                    className="px-5 py-3 rounded-2xl bg-emerald-600 hover:bg-emerald-500 text-white font-black text-xs shadow-md transition-all flex items-center gap-2 cursor-pointer"
+                  >
+                    <BookOpen className="w-4 h-4" />
+                    Read Interactive Book &amp; Take Section Tests
+                  </button>
+
+                  <Link
+                    href={`/${country}/work/${sectorKey}/book`}
+                    className="px-4 py-3 rounded-2xl bg-white hover:bg-slate-50 text-slate-800 font-bold text-xs border border-slate-200 shadow-xs transition-all flex items-center gap-1.5"
+                  >
+                    <ExternalLink className="w-4 h-4 text-emerald-600" />
+                    Open Fullscreen Reader
+                  </Link>
+
+                  <a
+                    href="/SSW Caregiving (介護) Full Study Textbook & Web Curriculum (Japanese-Nepali).docx"
+                    download="SSW_Caregiving_Full_Study_Textbook.docx"
+                    className="px-4 py-3 rounded-2xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs border border-slate-200 transition-all flex items-center gap-1.5"
+                  >
+                    <Download className="w-4 h-4 text-indigo-600" />
+                    Download Original (.docx)
+                  </a>
+                </div>
+              </section>
+            )}
+
             <section className="bg-white rounded-3xl p-6 border border-slate-200 shadow-xs space-y-4">
               <h2 className="text-lg font-black text-slate-900 flex items-center gap-2">
                 <ShieldCheck className="w-5 h-5 text-emerald-600" />
@@ -519,11 +574,13 @@ export default function SSWSectorDetailClient({ country, sectorKey, sectorData }
         )}
 
         {/* TAB 6: OFFICIAL BOOK & SECTION TESTS */}
-        {activeTab === 'book' && sectorKey.includes('building') && (
+        {activeTab === 'book' && (
           <div className="rounded-3xl overflow-hidden border border-slate-200 shadow-xs">
-            <BuildingCleaningBookReader country={country} />
+            {sectorKey.includes('building') && <BuildingCleaningBookReader country={country} />}
+            {(sectorKey === 'nursing' || sectorKey === 'caregiving') && <CaregivingBookReader country={country} />}
           </div>
         )}
+
 
       </main>
       <BottomTabBar />
