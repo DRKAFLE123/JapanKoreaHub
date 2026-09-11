@@ -31,6 +31,16 @@ import {
   SectionTestQuestion,
   BookVocabItem
 } from '@/lib/building-cleaning-book-data';
+import FuriganaText from './FuriganaText';
+import {
+  VacuumCleanerDiagram,
+  FloorPolisherDiagram,
+  CarpetExtractorDiagram,
+  GlassSqueegeeDiagram,
+  ColorCodedMopsDiagram,
+  ChemicalPHChart,
+  WorkplaceConversationCard
+} from './CleaningEquipmentDiagrams';
 
 interface Props {
   country?: string;
@@ -40,7 +50,7 @@ export default function BuildingCleaningBookReader({ country = 'japan' }: Props)
   const [selectedChapterId, setSelectedChapterId] = useState<number>(1);
   const [showNepali, setShowNepali] = useState<boolean>(true);
   const [showFurigana, setShowFurigana] = useState<boolean>(true);
-  const [activeView, setActiveView] = useState<'reader' | 'mock-exam' | 'glossary'>('reader');
+  const [activeView, setActiveView] = useState<'reader' | 'equipment-guide' | 'mock-exam' | 'glossary'>('reader');
   
   // Section test answers state: { [questionId]: selectedOptionIndex }
   const [testAnswers, setTestAnswers] = useState<Record<string, number>>({});
@@ -201,6 +211,17 @@ export default function BuildingCleaningBookReader({ country = 'japan' }: Props)
             >
               <BookOpen className="w-3.5 h-3.5 text-emerald-600" />
               <span>12 Chapters</span>
+            </button>
+            <button
+              onClick={() => setActiveView('equipment-guide')}
+              className={`px-3 py-1.5 rounded-lg transition-all flex items-center gap-1.5 cursor-pointer ${
+                activeView === 'equipment-guide'
+                  ? 'bg-white text-slate-900 shadow-xs'
+                  : 'text-slate-600 hover:text-slate-900'
+              }`}
+            >
+              <Wrench className="w-3.5 h-3.5 text-teal-600" />
+              <span>🎨 Equipment Guide</span>
             </button>
             <button
               onClick={() => setActiveView('mock-exam')}
@@ -392,15 +413,10 @@ export default function BuildingCleaningBookReader({ country = 'japan' }: Props)
                   </span>
                 </div>
 
-                {/* Japanese Title with optional Furigana */}
+                {/* Japanese Title with Furigana directly above Kanji */}
                 <div className="space-y-1">
-                  {showFurigana && (
-                    <p className="text-xs font-semibold text-emerald-700 tracking-wide">
-                      {currentChapter.titleFurigana}
-                    </p>
-                  )}
-                  <h2 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">
-                    {currentChapter.titleJp}
+                  <h2 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight leading-loose">
+                    <FuriganaText text={currentChapter.titleJp} showFurigana={showFurigana} />
                   </h2>
                   <p className="text-sm sm:text-base font-bold text-indigo-800">
                     🇳🇵 {currentChapter.titleNe}
@@ -417,12 +433,12 @@ export default function BuildingCleaningBookReader({ country = 'japan' }: Props)
                   {currentChapter.paragraphs.map((p, idx) => (
                     <div key={idx} className="space-y-3 border-b border-slate-100 pb-5 last:border-b-0 last:pb-0">
                       
-                      {/* Japanese Primary Text */}
-                      <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200 text-sm sm:text-base text-slate-900 font-medium leading-relaxed">
-                        <span className="inline-block px-2 py-0.5 rounded-md bg-emerald-100 text-emerald-800 text-[10px] font-black uppercase mr-2">
+                      {/* Japanese Primary Text with Furigana above Kanji */}
+                      <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200 text-sm sm:text-base text-slate-900 font-medium leading-loose">
+                        <span className="inline-block px-2 py-0.5 rounded-md bg-emerald-100 text-emerald-800 text-[10px] font-black uppercase mr-2 align-middle">
                           JP
                         </span>
-                        {p.jp}
+                        <FuriganaText text={p.jp} showFurigana={showFurigana} />
                       </div>
 
                       {/* Nepali Dual Translation */}
@@ -448,14 +464,14 @@ export default function BuildingCleaningBookReader({ country = 'japan' }: Props)
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                       {currentChapter.keyPoints.map((kp, i) => (
                         <div key={i} className="p-4 rounded-2xl bg-amber-50/70 border border-amber-200 space-y-1.5">
-                          <p className="text-xs font-black text-amber-900">
-                            ⭐ {kp.titleJp}
+                          <p className="text-xs font-black text-amber-900 leading-normal">
+                            ⭐ <FuriganaText text={kp.titleJp} showFurigana={showFurigana} />
                           </p>
                           <p className="text-[11px] font-bold text-amber-800">
                             🇳🇵 {kp.titleNe}
                           </p>
-                          <p className="text-xs text-slate-700 leading-snug">
-                            {kp.descriptionJp}
+                          <p className="text-xs text-slate-700 leading-relaxed">
+                            <FuriganaText text={kp.descriptionJp} showFurigana={showFurigana} />
                           </p>
                           {showNepali && (
                             <p className="text-[11px] text-slate-600 leading-snug pt-1 border-t border-amber-200/60">
@@ -480,8 +496,8 @@ export default function BuildingCleaningBookReader({ country = 'japan' }: Props)
                           <AlertTriangle className="w-4 h-4" />
                           <span>Exam Trap Alert (試験の落とし穴 / परीक्षामा झुक्किने बुँदा)</span>
                         </div>
-                        <p className="font-semibold text-slate-900 leading-relaxed">
-                          {et.alertJp}
+                        <p className="font-semibold text-slate-900 leading-loose">
+                          <FuriganaText text={et.alertJp} showFurigana={showFurigana} />
                         </p>
                         {showNepali && (
                           <p className="text-rose-900 text-xs leading-relaxed border-t border-rose-200 pt-1.5">
@@ -508,7 +524,9 @@ export default function BuildingCleaningBookReader({ country = 'japan' }: Props)
                         >
                           <div>
                             <div className="flex items-center gap-2">
-                              <span className="text-sm font-black text-slate-900">{vocab.kanji}</span>
+                              <span className="text-sm font-black text-slate-900 leading-normal">
+                                <FuriganaText text={vocab.kanji} showFurigana={showFurigana} />
+                              </span>
                               <span className="text-xs text-emerald-700 font-medium">({vocab.kana})</span>
                             </div>
                             <p className="text-[11px] text-slate-700 font-semibold mt-0.5">
@@ -534,6 +552,145 @@ export default function BuildingCleaningBookReader({ country = 'japan' }: Props)
                 )}
 
               </div>
+
+              {/* ===================================================================
+                  VISUAL EQUIPMENT & CONVERSATION CARDS INTEGRATED INTO CHAPTERS
+                 =================================================================== */}
+              {/* Chapter 2: Safety & 5S Conversation Dialogue */}
+              {currentChapter.id === 2 && (
+                <WorkplaceConversationCard
+                  titleJp="[始業前点検|しぎょうまえてんけん]と[安全衛生|あんぜんえいせい]の[指示|しじ]"
+                  titleNe="काम सुरु गर्नुअघिको निरीक्षण र सुरक्षा निर्देशन"
+                  badge="Safety & 5S Dialogue"
+                  sceneJp="朝の朝礼時、作業責任者から新人の外国人スタッフへ安全靴と保護具の着用を確認する場面"
+                  sceneNe="बिहानी बैठकमा कामको सुपरभाइजरले नयाँ विदेशी कर्मचारीलाई सुरक्षा जुत्ता र सुरक्षित पोसाक लगाएको जाँच गर्दै"
+                  showFurigana={showFurigana}
+                  showNepali={showNepali}
+                  lines={[
+                    {
+                      speaker: 'LEADER',
+                      speakerNameJp: '佐藤リーダー',
+                      speakerNameNe: 'सातो लिडर',
+                      textJp: 'おはようございます。今日の作業前に、安全靴の靴ひもがしっかり結ばれているか確認してください。',
+                      textNe: 'शुभ प्रभात। आजको काम सुरु गर्नुअघि सुरक्षा जुत्ताको तुना राम्ररी बाँधिएको छ कि छैन जाँच गर्नुहोस्।',
+                    },
+                    {
+                      speaker: 'WORKER',
+                      speakerNameJp: 'タパ（作業員）',
+                      speakerNameNe: 'थापा (कर्मचारी)',
+                      textJp: 'おはようございます！はい、安全靴よし、ゴム手袋も携帯しました！',
+                      textNe: 'शुभ प्रभात हजुर! हजुर, सुरक्षा जुत्ता ठिक छ, रबरको पन्जा पनि साथमा लिएको छु!',
+                    },
+                    {
+                      speaker: 'LEADER',
+                      speakerNameJp: '佐藤リーダー',
+                      speakerNameNe: 'सातो लिडर',
+                      textJp: '素晴らしいですね。脚立を使うときは天板の上に立たないよう厳守してください。ご安全に！',
+                      textNe: 'अति राम्रो। भर्‍याङ प्रयोग गर्दा माथिल्लो स्टेपमा कहिल्यै नउभिनुहोला। सुरक्षित रहनुहोस्!',
+                    },
+                  ]}
+                  examTipJp="脚立の天板に乗って作業することは墜落災害につながるため固く禁止されています。「天板立ち作業＝禁止」は試験必出です。"
+                  examTipNe="भर्‍याङको सबैभन्दा माथिल्लो स्टेपमा उभिएर काम गर्न कडा प्रतिबन्ध लगाइएको छ। यो परीक्षामा १००% सोधिने प्रश्न हो।"
+                />
+              )}
+
+              {/* Chapter 4: Floor Machines (Vacuum Cleaner, Polisher, Carpet Extractor) */}
+              {currentChapter.id === 4 && (
+                <div className="space-y-6">
+                  <VacuumCleanerDiagram showFurigana={showFurigana} showNepali={showNepali} />
+                  <FloorPolisherDiagram showFurigana={showFurigana} showNepali={showNepali} />
+                  <CarpetExtractorDiagram showFurigana={showFurigana} showNepali={showNepali} />
+                </div>
+              )}
+
+              {/* Chapter 5: Chemical pH Chart & Dilution Conversation */}
+              {currentChapter.id === 5 && (
+                <div className="space-y-6">
+                  <ChemicalPHChart showFurigana={showFurigana} showNepali={showNepali} />
+                  <WorkplaceConversationCard
+                    titleJp="[洗剤|せんざい]の[希釈|きしゃく]と[保護具着用|ほごぐちゃくよう]の[確認|かくにん]"
+                    titleNe="डिटर्जेन्ट पानीमा मिसाउने र सुरक्षित पोसाक लगाउने संवाद"
+                    badge="Chemical Dilution Dialogue"
+                    sceneJp="洗剤倉庫で、強力な剥離剤を水で希釈して希釈液を作る場面"
+                    sceneNe="रसायन भण्डारमा कडा वाक्स उप्काउने केमिकल पानीमा मिसाएर बनाउँदै गर्दा"
+                    showFurigana={showFurigana}
+                    showNepali={showNepali}
+                    lines={[
+                      {
+                        speaker: 'LEADER',
+                        speakerNameJp: '佐藤リーダー',
+                        speakerNameNe: 'सातो लिडर',
+                        textJp: '剥離剤はアルカリが強いので、必ず保護メガネと耐薬品手袋を着用してから希釈してください。',
+                        textNe: 'वाक्स उप्काउने केमिकल धेरै कडा अल्कालाइन हुने भएकाले चस्मा र केमिकल-प्रतिरोधी पन्जा लगाएर मात्र मिसाउनुहोस्।',
+                      },
+                      {
+                        speaker: 'WORKER',
+                        speakerNameJp: 'タパ（作業員）',
+                        speakerNameNe: 'थापा (कर्मचारी)',
+                        textJp: '承知いたしました。バケツに先に水を入れてから剥離剤を投入します。',
+                        textNe: 'बुझेँ हजुर। बाल्टिनमा पहिले पानी हालेर मात्र केमिकल मिसाउँछु।',
+                      },
+                      {
+                        speaker: 'LEADER',
+                        speakerNameJp: '佐藤リーダー',
+                        speakerNameNe: 'सातो लिडर',
+                        textJp: 'その通りです！洗剤を先に入れると泡立って正確に計量できず、飛び散る危険があります。完璧です！',
+                        textNe: 'एकदम सही! केमिकल पहिले हालेमा फिँज आएर सही नाप लिन सकिँदैन र उछिट्टिने डर हुन्छ। उत्कृष्ट!',
+                      },
+                    ]}
+                    examTipJp="洗剤希釈の鉄則：「バケツに水を先に入れ、後から洗剤を注ぐ」。洗剤を先に入れると泡立ち飛び散るため不正解となります。"
+                    examTipNe="डिटर्जेन्ट मिसाउने मुख्य नियम: “पहिले बाल्टिनमा पानी हाल्ने, त्यसपछि मात्र केमिकल हाल्ने”। परीक्षामा यो बारम्बार सोधिन्छ।"
+                  />
+                </div>
+              )}
+
+              {/* Chapter 7: Glass Cleaning (Squeegee & Washer) */}
+              {currentChapter.id === 7 && (
+                <GlassSqueegeeDiagram showFurigana={showFurigana} showNepali={showNepali} />
+              )}
+
+              {/* Chapter 8: Color-Coded Mops Diagram */}
+              {currentChapter.id === 8 && (
+                <ColorCodedMopsDiagram showFurigana={showFurigana} showNepali={showNepali} />
+              )}
+
+              {/* Chapter 11: Workplace Manners & Lost Item Dialogue */}
+              {currentChapter.id === 11 && (
+                <WorkplaceConversationCard
+                  titleJp="[お客様|おきゃくさま]への[挨拶|あいさつ]と[遺失物|いしつぶつ]の[報告|ほうこく]（報連相）"
+                  titleNe="सेवाग्राहीलाई अभिवादन र हराएको सामान भेटिँदा प्रतिवेदन (हो-रेन-सो)"
+                  badge="Work Manners & Hō-Ren-Sō"
+                  sceneJp="ロビー清掃中に財布の落とし物を発見し、責任者に速やかに報告する場面"
+                  sceneNe="प्रवेश हलमा सफाइ गर्दा कसैको पर्स भेटाएर तत्काल सुपरभाइजरलाई जानकारी गराउँदा"
+                  showFurigana={showFurigana}
+                  showNepali={showNepali}
+                  lines={[
+                    {
+                      speaker: 'WORKER',
+                      speakerNameJp: 'タパ（作業員）',
+                      speakerNameNe: 'थापा (कर्मचारी)',
+                      textJp: '佐藤リーダー、報告があります。2階のソファの隙間で茶色の財布を拾得いたしました。',
+                      textNe: 'सातो लिडर, म एउटा जानकारी दिन चाहन्छु। दोस्रो तलाको सोफाको कापमा खैरो पर्स भेटाएँ।',
+                    },
+                    {
+                      speaker: 'LEADER',
+                      speakerNameJp: '佐藤リーダー',
+                      speakerNameNe: 'सातो लिडर',
+                      textJp: '素早い報告ありがとう。中身は開けずに、発見場所と時間を記録してすぐに防災センターへ届けましょう。',
+                      textNe: 'तुरुन्त जानकारी दिएकोमा धन्यवाद। भित्र नखोली कहाँ र कति बजे भेटियो टिपोट गरी विपद् व्यवस्थापन केन्द्रमा बुझाऔँ।',
+                    },
+                    {
+                      speaker: 'WORKER',
+                      speakerNameJp: 'タパ（作業員）',
+                      speakerNameNe: 'थापा (कर्मचारी)',
+                      textJp: 'かしこまりました。拾得場所と時刻をメモして同行いたします。',
+                      textNe: 'हस हजुर। भेटिएको ठाउँ र समय टिपेर म हजुरसँगै जान्छु।',
+                    },
+                  ]}
+                  examTipJp="落とし物（遺失物）を拾ったときは中身を勝手に改めず、「速やかに責任者へ報告して引き渡す」ことが絶対ルールです。"
+                  examTipNe="हराएको सामान भेटिँदा आफैँले नखोली तत्काल लिडर वा सुरक्षा शाखामा बुझाउनु पर्छ।"
+                />
+              )}
 
               {/* ===================================================================
                   SECTION-BY-SECTION HIGH-CHANCE CBT SKILL TEST CARD - Light Theme
@@ -628,7 +785,7 @@ export default function BuildingCleaningBookReader({ country = 'japan' }: Props)
                           )}
 
                           <h4 className="text-sm sm:text-base font-bold text-slate-900 leading-snug">
-                            {q.questionJp}
+                            <FuriganaText text={q.questionJp} showFurigana={showFurigana} />
                           </h4>
 
                           {showNepali && (
@@ -670,7 +827,9 @@ export default function BuildingCleaningBookReader({ country = 'japan' }: Props)
                                   {q.type === 'TF' ? (optIdx === 0 ? '○' : '×') : optIdx + 1}
                                 </span>
                                 <div className="space-y-0.5">
-                                  <p className="font-bold">{opt.textJp}</p>
+                                  <p className="font-bold leading-normal">
+                                    <FuriganaText text={opt.textJp} showFurigana={showFurigana} />
+                                  </p>
                                   {showNepali && (
                                     <p className="text-[11px] opacity-80 font-normal">
                                       {opt.textNe}
@@ -690,7 +849,7 @@ export default function BuildingCleaningBookReader({ country = 'japan' }: Props)
                               正解・解説（Correct Answer &amp; Explanation）
                             </p>
                             <p className="text-slate-800 leading-relaxed font-medium">
-                              {q.explanationJp}
+                              <FuriganaText text={q.explanationJp} showFurigana={showFurigana} />
                             </p>
                             {showNepali && (
                               <p className="text-indigo-900 leading-relaxed border-t border-slate-100 pt-1.5">
@@ -699,7 +858,7 @@ export default function BuildingCleaningBookReader({ country = 'japan' }: Props)
                             )}
                             {q.examTrapNote && (
                               <p className="text-[11px] text-amber-900 font-semibold bg-amber-50 border border-amber-200 p-2.5 rounded-xl">
-                                💡 試験対策のヒント: {q.examTrapNote}
+                                💡 試験対策のヒント: <FuriganaText text={q.examTrapNote} showFurigana={showFurigana} />
                                 {showNepali && q.examTrapNoteNe && (
                                   <span className="block text-[10px] text-amber-800 pt-1">
                                     🇳🇵 {q.examTrapNoteNe}
@@ -784,6 +943,139 @@ export default function BuildingCleaningBookReader({ country = 'japan' }: Props)
 
             </main>
           </>
+        )}
+
+        {/* ===================================================================
+            VIEW: DEDICATED EQUIPMENT & DIAGRAM MANUAL GUIDE (器具・資機材図解マニュアル)
+           =================================================================== */}
+        {activeView === 'equipment-guide' && (
+          <main className="lg:col-span-12 max-w-5xl mx-auto w-full space-y-6">
+            
+            {/* Guide Banner */}
+            <div className="bg-gradient-to-r from-teal-50 via-white to-emerald-50 border border-teal-200 rounded-3xl p-6 sm:p-8 shadow-xs space-y-4">
+              <div className="flex items-center gap-3">
+                <span className="text-3xl p-3 bg-teal-100 text-teal-800 rounded-2xl border border-teal-200">
+                  🎨
+                </span>
+                <div>
+                  <h2 className="text-2xl font-black text-slate-900">
+                    清掃資機材・用具ビジュアル図解マニュアル
+                  </h2>
+                  <p className="text-xs sm:text-sm font-bold text-teal-800">
+                    भवन सरसफाइ मेसिन, औजार र कार्यविधि सचित्र गाइड (Visual Diagrams &amp; Machinery Guide)
+                  </p>
+                </div>
+              </div>
+              <p className="text-xs text-slate-600 leading-relaxed">
+                ビルクリーニング特定技能１号試験（判断試験・作業試験）に出題される主要な清掃機材（真空掃除機、ポリッシャー、エクストラクター、スクイジー）、モップの色分け基準、洗剤のpH液性をすべて図解で直感的に学習できます。
+              </p>
+            </div>
+
+            {/* Grid of All Equipment Diagrams */}
+            <div className="space-y-6">
+              <div className="space-y-2">
+                <h3 className="text-xs font-black uppercase tracking-wider text-slate-500">
+                  1. 床面清掃の主要機械（Vacuum Cleaner &amp; Polisher）
+                </h3>
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                  <VacuumCleanerDiagram showFurigana={showFurigana} showNepali={showNepali} />
+                  <FloorPolisherDiagram showFurigana={showFurigana} showNepali={showNepali} />
+                </div>
+              </div>
+
+              <div className="space-y-2">
+                <h3 className="text-xs font-black uppercase tracking-wider text-slate-500">
+                  2. カーペット深層洗浄（Carpet Deep Extractor）
+                </h3>
+                <CarpetExtractorDiagram showFurigana={showFurigana} showNepali={showNepali} />
+              </div>
+
+              <div className="space-y-2">
+                <h3 className="text-xs font-black uppercase tracking-wider text-slate-500">
+                  3. ガラス水切り動作（Glass Squeegee &amp; Washer）
+                </h3>
+                <GlassSqueegeeDiagram showFurigana={showFurigana} showNepali={showNepali} />
+              </div>
+
+              <div className="space-y-2">
+                <h3 className="text-xs font-black uppercase tracking-wider text-slate-500">
+                  4. 衛生管理基準（Color-Coded Mops &amp; Cross-Contamination）
+                </h3>
+                <ColorCodedMopsDiagram showFurigana={showFurigana} showNepali={showNepali} />
+              </div>
+
+              <div className="space-y-2">
+                <h3 className="text-xs font-black uppercase tracking-wider text-slate-500">
+                  5. 洗剤化学特性（Chemical pH Spectrum &amp; Soil Types）
+                </h3>
+                <ChemicalPHChart showFurigana={showFurigana} showNepali={showNepali} />
+              </div>
+
+              <div className="space-y-2">
+                <h3 className="text-xs font-black uppercase tracking-wider text-slate-500">
+                  6. 実技・現場対話シミュレーション（Workplace Dialogue Cards）
+                </h3>
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                  <WorkplaceConversationCard
+                    titleJp="[洗剤|せんざい]の[希釈|きしゃく]と[安全衛生|あんぜんえいせい]"
+                    titleNe="डिटर्जेन्ट पानीमा मिसाउने र सुरक्षा संवाद"
+                    badge="Chemical Dialogue"
+                    sceneJp="剥離剤の希釈作業での安全確認"
+                    sceneNe="कडा केमिकल पानीमा मिसाउने समयको सुरक्षा जाँच"
+                    showFurigana={showFurigana}
+                    showNepali={showNepali}
+                    lines={[
+                      {
+                        speaker: 'LEADER',
+                        speakerNameJp: '佐藤リーダー',
+                        speakerNameNe: 'सातो लिडर',
+                        textJp: '剥離剤を使うときは、必ず保護メガネとゴム手袋を着用してください。',
+                        textNe: 'वाक्स उप्काउने केमिकल चलाउँदा चस्मा र रबरको पन्जा अनिवार्य लगाउनुहोस्।',
+                      },
+                      {
+                        speaker: 'WORKER',
+                        speakerNameJp: 'タパ（作業員）',
+                        speakerNameNe: 'थापा (कर्मचारी)',
+                        textJp: 'はい！バケツに水を先に注いでから、正確に希釈します。',
+                        textNe: 'हजुर! बाल्टिनमा पहिले पानी हालेर मात्र सहि अनुपातमा मिसाउँछु।',
+                      },
+                    ]}
+                    examTipJp="「バケツに水が先、洗剤が後」。洗剤が先だと泡立って危険です。"
+                    examTipNe="पहिले पानी, त्यसपछि मात्र केमिकल हाल्ने।"
+                  />
+
+                  <WorkplaceConversationCard
+                    titleJp="[高所作業|こうしょさぎょう]と[脚立|きゃたつ]の[安全|あんぜん]"
+                    titleNe="अग्लो ठाउँको काम र भर्‍याङको सुरक्षा"
+                    badge="Safety Dialogue"
+                    sceneJp="脚立を使用した高所清掃の安全指導"
+                    sceneNe="भर्‍याङ प्रयोग गरी अग्लो ठाउँ सफा गर्दाको सुरक्षा निर्देशन"
+                    showFurigana={showFurigana}
+                    showNepali={showNepali}
+                    lines={[
+                      {
+                        speaker: 'LEADER',
+                        speakerNameJp: '佐藤リーダー',
+                        speakerNameNe: 'सातो लिडर',
+                        textJp: '脚立の天板に乗って作業することは絶対に禁止です。',
+                        textNe: 'भर्‍याङको सबैभन्दा माथिल्लो स्टेपमा उभिन कडा प्रतिबन्ध छ।',
+                      },
+                      {
+                        speaker: 'WORKER',
+                        speakerNameJp: 'タパ（作業員）',
+                        speakerNameNe: 'थापा (कर्मचारी)',
+                        textJp: '了解しました！開き止め金具を確実にロックして作業します。',
+                        textNe: 'बुझेँ हजुर! भर्‍याङको लक राम्ररी लगाएर मात्र काम गर्छु।',
+                      },
+                    ]}
+                    examTipJp="脚立の天板立ち作業は墜落の危険があり法令で禁止されています。"
+                    examTipNe="भर्‍याङको माथिल्लो स्टेपमा उभिएर काम गर्न निषेध गरिएको छ।"
+                  />
+                </div>
+              </div>
+            </div>
+
+          </main>
         )}
 
         {/* ===================================================================
@@ -896,7 +1188,7 @@ export default function BuildingCleaningBookReader({ country = 'japan' }: Props)
                         Question {idx + 1} • {q.type === 'TF' ? '○×形式 (True/False)' : '択一式 (Multiple Choice)'}
                       </span>
                       <h4 className="text-base font-bold text-slate-900 leading-snug">
-                        {q.questionJp}
+                        <FuriganaText text={q.questionJp} showFurigana={showFurigana} />
                       </h4>
                       {showNepali && (
                         <p className="text-xs text-indigo-900 font-medium">
@@ -933,7 +1225,9 @@ export default function BuildingCleaningBookReader({ country = 'japan' }: Props)
                               {q.type === 'TF' ? (optIdx === 0 ? '○' : '×') : optIdx + 1}
                             </span>
                             <div className="space-y-0.5">
-                              <p className="font-bold">{opt.textJp}</p>
+                              <p className="font-bold leading-normal">
+                                <FuriganaText text={opt.textJp} showFurigana={showFurigana} />
+                              </p>
                               {showNepali && (
                                 <p className="text-[11px] opacity-80 font-normal">
                                   {opt.textNe}
@@ -951,7 +1245,9 @@ export default function BuildingCleaningBookReader({ country = 'japan' }: Props)
                         <p className="font-bold text-emerald-800">
                           正解の解説（Explanation）
                         </p>
-                        <p className="text-slate-800">{q.explanationJp}</p>
+                        <p className="text-slate-800">
+                          <FuriganaText text={q.explanationJp} showFurigana={showFurigana} />
+                        </p>
                         {showNepali && <p className="text-indigo-900">🇳🇵 {q.explanationNe}</p>}
                       </div>
                     )}
