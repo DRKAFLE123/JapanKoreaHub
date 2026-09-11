@@ -50,18 +50,22 @@ import {
 
 interface Props {
   country?: string;
+  isEmbedded?: boolean;
 }
 
-export default function BuildingCleaningBookReader({ country = 'japan' }: Props) {
+export default function BuildingCleaningBookReader({ country = 'japan', isEmbedded = false }: Props) {
   const [selectedChapterId, setSelectedChapterId] = useState<number>(1);
   const [showNepali, setShowNepali] = useState<boolean>(true);
   const [furiganaMode, setFuriganaMode] = useState<'katakana' | 'hiragana' | 'off'>('katakana');
   const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(true);
   const [activeView, setActiveView] = useState<'reader' | 'equipment-guide' | 'mock-exam' | 'glossary'>('reader');
 
+  const studyScrollRef = React.useRef<HTMLDivElement>(null);
+
   const isFuriganaOn = furiganaMode !== 'off';
   const furiganaType = furiganaMode === 'katakana' ? 'katakana' : 'hiragana';
   const showFurigana = isFuriganaOn;
+
   
   // Section test answers state: { [questionId]: selectedOptionIndex }
   const [testAnswers, setTestAnswers] = useState<Record<string, number>>({});
@@ -223,22 +227,24 @@ export default function BuildingCleaningBookReader({ country = 'japan' }: Props)
   }, [submittedSections, testAnswers]);
 
   return (
-    <div className="min-h-screen bg-slate-50 text-slate-900 flex flex-col font-sans selection:bg-emerald-100 selection:text-emerald-900">
+    <div className={`${isEmbedded ? 'h-full min-h-[75vh]' : 'h-screen'} flex flex-col bg-slate-50 text-slate-900 overflow-hidden font-sans selection:bg-emerald-100 selection:text-emerald-900`}>
       
       {/* Top Sticky Navigation Bar - Light & Calm */}
-      <header className="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-slate-200 shadow-xs">
-        <div className="max-w-7xl mx-auto px-4 py-3 flex flex-wrap items-center justify-between gap-3">
+      <header className="shrink-0 sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-slate-200 shadow-xs">
+        <div className="max-w-7xl mx-auto px-4 py-2.5 flex flex-wrap items-center justify-between gap-3">
           
           {/* Left: Back & Title */}
           <div className="flex items-center gap-3">
-            <Link
-              href={`/${country}/work/building_cleaning`}
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 hover:text-slate-900 text-xs font-bold border border-slate-200 transition-colors"
-            >
-              <ArrowLeft className="w-3.5 h-3.5 text-emerald-600" />
-              <span className="hidden sm:inline">Back to Sector Hub</span>
-              <span className="sm:hidden">Back</span>
-            </Link>
+            {!isEmbedded && (
+              <Link
+                href={`/${country}/work/building_cleaning`}
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 hover:text-slate-900 text-xs font-bold border border-slate-200 transition-colors"
+              >
+                <ArrowLeft className="w-3.5 h-3.5 text-emerald-600" />
+                <span className="hidden sm:inline">Back to Sector Hub</span>
+                <span className="sm:hidden">Back</span>
+              </Link>
+            )}
 
             <div className="flex items-center gap-2">
               <span className="text-xl">🧹</span>
@@ -301,7 +307,7 @@ export default function BuildingCleaningBookReader({ country = 'japan' }: Props)
             </button>
           </div>
 
-          {/* Right: Study Toggles (Nepali & Furigana) */}
+          {/* Right: Study Toggles (Nepali & Furigana & Sidebar Toggle) */}
           <div className="flex items-center gap-2">
             <button
               onClick={() => setShowNepali(!showNepali)}
@@ -336,6 +342,22 @@ export default function BuildingCleaningBookReader({ country = 'japan' }: Props)
                 {furiganaMode === 'katakana' ? 'カタカナ' : furiganaMode === 'hiragana' ? 'ひらがな' : 'OFF'}
               </span>
             </button>
+
+            {/* Sidebar toggle button (Both Desktop and Mobile) */}
+            {activeView === 'reader' && (
+              <button
+                onClick={() => setIsSidebarOpen((v) => !v)}
+                className={`px-2.5 py-1.5 rounded-xl border text-xs font-bold transition-all flex items-center gap-1.5 cursor-pointer ${
+                  isSidebarOpen
+                    ? 'bg-slate-100 border-slate-300 text-slate-700 hover:bg-slate-200'
+                    : 'bg-emerald-50 border-emerald-300 text-emerald-800 hover:bg-emerald-100 shadow-xs'
+                }`}
+                title={isSidebarOpen ? 'Hide Index (目次を閉じる)' : 'Show Index (目次を開く)'}
+              >
+                <BookOpen className="w-3.5 h-3.5 text-emerald-600" />
+                <span className="hidden sm:inline">{isSidebarOpen ? 'Hide Index' : 'Show Index'}</span>
+              </button>
+            )}
           </div>
 
         </div>
@@ -351,20 +373,20 @@ export default function BuildingCleaningBookReader({ country = 'japan' }: Props)
         </div>
       </header>
 
-      {/* Main Container */}
-      <div className="flex-1 max-w-7xl w-full mx-auto px-3 sm:px-6 py-4 grid grid-cols-1 lg:grid-cols-12 gap-4">
+      {/* Main Container - Contained Viewport Dual-Pane Loop */}
+      <div className="flex-1 overflow-hidden max-w-7xl w-full mx-auto px-2 sm:px-4 py-2">
 
         {/* ===================================================================
             VIEW 1: 12-CHAPTER READER & SECTION-BY-SECTION HIGH-CHANCE TESTS
            =================================================================== */}
         {activeView === 'reader' && (
-          <>
-            {/* Left Sidebar: 12 Chapters TOC - Compact & Independently Scrollable */}
+          <div className="h-full flex gap-3 sm:gap-4 overflow-hidden">
+            {/* Left Sidebar: 12 Chapters TOC - Contained Closed-Scroll Loop */}
             {isSidebarOpen && (
-              <aside className="lg:col-span-4 lg:sticky lg:top-16 lg:h-[calc(100vh-5rem)] flex flex-col space-y-2.5">
+              <aside className="w-72 sm:w-80 lg:w-84 shrink-0 h-full flex flex-col space-y-2 overflow-hidden">
                 
                 {/* Progress Summary Card - Compact */}
-                <div className="bg-white border border-slate-200 rounded-2xl p-3.5 shadow-xs space-y-2">
+                <div className="shrink-0 bg-white border border-slate-200 rounded-2xl p-3 shadow-xs space-y-1.5">
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-1.5">
                       <Sparkles className="w-3.5 h-3.5 text-emerald-600" />
@@ -372,25 +394,35 @@ export default function BuildingCleaningBookReader({ country = 'japan' }: Props)
                         Study Progress
                       </span>
                     </div>
-                    <span className="text-[11px] font-bold text-emerald-800 px-2 py-0.5 rounded-full bg-emerald-50 border border-emerald-200">
+                    <span className="text-[10px] font-bold text-emerald-800 px-2 py-0.5 rounded-full bg-emerald-50 border border-emerald-200">
                       {totalPassedSections} / {BUILDING_CLEANING_BOOK_DATA.chapters.length} Passed
                     </span>
                   </div>
 
-                  <p className="text-[11px] text-slate-600 leading-snug">
+                  <p className="text-[10px] text-slate-600 leading-snug">
                     Study each chapter and pass the <strong className="text-emerald-700 font-bold">Section CBT Test</strong>.
                   </p>
                 </div>
 
-                {/* Chapters List - Independent Scroll Container */}
-                <div className="bg-white border border-slate-200 rounded-2xl p-2 shadow-xs flex-1 overflow-y-auto overscroll-contain scrollbar-thin scrollbar-thumb-slate-200 space-y-1">
-                  <div className="flex items-center justify-between px-2 py-1">
-                    <span className="text-[10px] font-black uppercase text-slate-400">
-                      Table of Contents (目次)
-                    </span>
-                    <span className="text-[10px] font-bold text-slate-400">
-                      12 Chapters
-                    </span>
+                {/* Chapters List - Closed Scroll Loop */}
+                <div className="flex-1 overflow-y-auto overscroll-contain rounded-2xl bg-white border border-slate-200 p-2 shadow-xs space-y-1 scrollbar-thin scrollbar-thumb-slate-300">
+                  <div className="flex items-center justify-between px-2 py-1 border-b border-slate-100 pb-1.5">
+                    <div className="flex items-center gap-1.5">
+                      <span className="text-[10px] font-black uppercase text-slate-500">
+                        Table of Contents (目次)
+                      </span>
+                      <span className="text-[9px] font-bold text-slate-400">
+                        12 Chapters
+                      </span>
+                    </div>
+                    <button
+                      onClick={() => setIsSidebarOpen(false)}
+                      className="p-1 rounded-lg hover:bg-slate-100 text-slate-400 hover:text-slate-700 transition-colors text-xs font-bold flex items-center gap-1 cursor-pointer"
+                      title="Close Table of Contents (目次を閉じる)"
+                    >
+                      <span className="text-[10px]">Close</span>
+                      <XCircle className="w-3.5 h-3.5 text-slate-400" />
+                    </button>
                   </div>
 
                   {BUILDING_CLEANING_BOOK_DATA.chapters.map((ch) => {
@@ -404,7 +436,7 @@ export default function BuildingCleaningBookReader({ country = 'japan' }: Props)
                         key={ch.id}
                         onClick={() => {
                           setSelectedChapterId(ch.id);
-                          window.scrollTo({ top: 0, behavior: 'smooth' });
+                          studyScrollRef.current?.scrollTo({ top: 0, behavior: 'smooth' });
                         }}
                         className={`w-full text-left p-2 rounded-xl transition-all flex items-center justify-between gap-2 cursor-pointer ${
                           isSelected
@@ -453,17 +485,20 @@ export default function BuildingCleaningBookReader({ country = 'japan' }: Props)
               </aside>
             )}
 
-            {/* Right Main Column: Chapter Content & Section Test */}
-            <main className={`${isSidebarOpen ? 'lg:col-span-8' : 'lg:col-span-12'} space-y-4`}>
+            {/* Right Main Column: Contained Closed-Scroll Loop */}
+            <main
+              ref={studyScrollRef}
+              className="flex-1 h-full overflow-y-auto overscroll-contain rounded-2xl pb-28 pr-1 sm:pr-2 space-y-4 scrollbar-thin scrollbar-thumb-slate-300"
+            >
               
               {/* Top Chapter Control Bar: Toggle Index Sidebar */}
-              <div className="flex items-center justify-between gap-2">
+              <div className="sticky top-0 z-20 flex items-center justify-between gap-2 bg-white/95 backdrop-blur-xs border border-slate-200 rounded-2xl px-3.5 py-2 shadow-xs">
                 <button
                   onClick={() => setIsSidebarOpen(!isSidebarOpen)}
-                  className="px-2.5 py-1 rounded-xl bg-white border border-slate-200 hover:bg-slate-50 text-slate-700 text-xs font-bold transition-all flex items-center gap-1.5 cursor-pointer shadow-xs"
+                  className="px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs font-bold border border-slate-200 transition-all flex items-center gap-1.5 cursor-pointer shadow-xs"
                 >
                   <BookOpen className="w-3.5 h-3.5 text-emerald-600" />
-                  <span>{isSidebarOpen ? 'Hide Index (目次を閉じる)' : 'Show Index (目次を開く)'}</span>
+                  <span>{isSidebarOpen ? 'Hide Index (目次閉じる)' : 'Show Index (目次開く)'}</span>
                 </button>
 
                 <div className="text-[11px] font-bold text-slate-500 flex items-center gap-1">
@@ -473,6 +508,7 @@ export default function BuildingCleaningBookReader({ country = 'japan' }: Props)
 
               {/* Chapter Header Card - Compact, Light White/Mint */}
               <div className="bg-gradient-to-br from-white via-slate-50 to-emerald-50/40 border border-slate-200 rounded-2xl p-4 sm:p-5 shadow-xs space-y-2">
+
                 
                 <div className="flex flex-wrap items-center justify-between gap-2 border-b border-slate-100 pb-2">
                   <span className="px-2.5 py-0.5 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-800 text-[11px] font-black uppercase tracking-wider">
@@ -1003,7 +1039,7 @@ export default function BuildingCleaningBookReader({ country = 'japan' }: Props)
                   disabled={currentChapter.id === 1}
                   onClick={() => {
                     setSelectedChapterId(currentChapter.id - 1);
-                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                    studyScrollRef.current?.scrollTo({ top: 0, behavior: 'smooth' });
                   }}
                   className="px-4 py-2 rounded-xl bg-white border border-slate-200 disabled:opacity-30 text-xs font-bold text-slate-700 hover:bg-slate-50 transition-all flex items-center gap-1.5 cursor-pointer shadow-xs"
                 >
@@ -1019,7 +1055,7 @@ export default function BuildingCleaningBookReader({ country = 'japan' }: Props)
                   disabled={currentChapter.id === BUILDING_CLEANING_BOOK_DATA.chapters.length}
                   onClick={() => {
                     setSelectedChapterId(currentChapter.id + 1);
-                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                    studyScrollRef.current?.scrollTo({ top: 0, behavior: 'smooth' });
                   }}
                   className="px-4 py-2 rounded-xl bg-white border border-slate-200 disabled:opacity-30 text-xs font-bold text-slate-700 hover:bg-slate-50 transition-all flex items-center gap-1.5 cursor-pointer shadow-xs"
                 >
@@ -1029,14 +1065,14 @@ export default function BuildingCleaningBookReader({ country = 'japan' }: Props)
               </div>
 
             </main>
-          </>
+          </div>
         )}
 
         {/* ===================================================================
             VIEW: DEDICATED EQUIPMENT & DIAGRAM MANUAL GUIDE (器具・資機材図解マニュアル)
            =================================================================== */}
         {activeView === 'equipment-guide' && (
-          <main className="lg:col-span-12 max-w-5xl mx-auto w-full space-y-6">
+          <main className="h-full overflow-y-auto overscroll-contain rounded-2xl pb-28 pr-1 sm:pr-2 space-y-6 scrollbar-thin scrollbar-thumb-slate-300">
             
             {/* Guide Banner */}
             <div className="bg-gradient-to-r from-teal-50 via-white to-emerald-50 border border-teal-200 rounded-3xl p-6 sm:p-8 shadow-xs space-y-4">
@@ -1209,7 +1245,7 @@ export default function BuildingCleaningBookReader({ country = 'japan' }: Props)
             VIEW 2: FINAL COMPREHENSIVE CBT MOCK EXAM (総合模擬試験) - Light
            =================================================================== */}
         {activeView === 'mock-exam' && (
-          <main className="lg:col-span-12 max-w-4xl mx-auto w-full space-y-6">
+          <main className="h-full overflow-y-auto overscroll-contain rounded-2xl pb-28 pr-1 sm:pr-2 space-y-6 scrollbar-thin scrollbar-thumb-slate-300">
             
             {/* Mock Exam Banner */}
             <div className="bg-gradient-to-r from-emerald-50 via-teal-50/60 to-indigo-50 border border-emerald-200 rounded-3xl p-6 sm:p-8 shadow-xs space-y-4">
@@ -1464,7 +1500,7 @@ export default function BuildingCleaningBookReader({ country = 'japan' }: Props)
             VIEW 3: COMPLETE BILINGUAL CLEANING GLOSSARY (用語集) - Light
            =================================================================== */}
         {activeView === 'glossary' && (
-          <main className="lg:col-span-12 max-w-5xl mx-auto w-full space-y-6">
+          <main className="h-full overflow-y-auto overscroll-contain rounded-2xl pb-28 pr-1 sm:pr-2 space-y-6 scrollbar-thin scrollbar-thumb-slate-300">
             
             {/* Glossary Banner */}
             <div className="bg-gradient-to-r from-slate-100 via-white to-emerald-50 border border-slate-200 rounded-3xl p-6 sm:p-8 shadow-xs space-y-4">

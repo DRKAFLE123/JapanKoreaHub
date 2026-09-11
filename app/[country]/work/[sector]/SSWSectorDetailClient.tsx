@@ -575,9 +575,9 @@ export default function SSWSectorDetailClient({ country, sectorKey, sectorData }
 
         {/* TAB 6: OFFICIAL BOOK & SECTION TESTS */}
         {activeTab === 'book' && (
-          <div className="rounded-3xl overflow-hidden border border-slate-200 shadow-xs">
-            {sectorKey.includes('building') && <BuildingCleaningBookReader country={country} />}
-            {(sectorKey === 'nursing' || sectorKey === 'caregiving') && <CaregivingBookReader country={country} />}
+          <div className="h-[82vh] rounded-3xl overflow-hidden border border-slate-200 shadow-xs bg-slate-50 flex flex-col">
+            {sectorKey.includes('building') && <BuildingCleaningBookReader country={country} isEmbedded={true} />}
+            {(sectorKey === 'nursing' || sectorKey === 'caregiving') && <CaregivingBookReader country={country} isEmbedded={true} />}
           </div>
         )}
 
