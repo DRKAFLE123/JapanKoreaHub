@@ -23,7 +23,9 @@ import {
   Wrench,
   Bookmark,
   Share2,
-  Download
+  Download,
+  Clock,
+  Timer
 } from 'lucide-react';
 import {
   BUILDING_CLEANING_BOOK_DATA,
@@ -39,7 +41,11 @@ import {
   GlassSqueegeeDiagram,
   ColorCodedMopsDiagram,
   ChemicalPHChart,
-  WorkplaceConversationCard
+  WorkplaceConversationCard,
+  StepladderSafetyDiagram,
+  PersonalProtectiveEquipmentDiagram,
+  AutoScrubberDiagram,
+  FloorBlowerDiagram
 } from './CleaningEquipmentDiagrams';
 
 interface Props {
@@ -64,6 +70,7 @@ export default function BuildingCleaningBookReader({ country = 'japan' }: Props)
   // Final Mock Exam state
   const [mockExamAnswers, setMockExamAnswers] = useState<Record<string, number>>({});
   const [mockExamSubmitted, setMockExamSubmitted] = useState<boolean>(false);
+  const [mockExamTimeLeft, setMockExamTimeLeft] = useState<number>(3600); // 60 minutes in seconds
   // Glossary search & filter
   const [glossarySearch, setGlossarySearch] = useState<string>('');
   const [glossaryCategory, setGlossaryCategory] = useState<string>('ALL');
@@ -123,6 +130,31 @@ export default function BuildingCleaningBookReader({ country = 'japan' }: Props)
     return score;
   };
 
+  // Mock Exam timer (60 minutes)
+  useEffect(() => {
+    let timer: NodeJS.Timeout | null = null;
+    if (activeView === 'mock-exam' && !mockExamSubmitted && mockExamTimeLeft > 0) {
+      timer = setInterval(() => {
+        setMockExamTimeLeft((prev) => {
+          if (prev <= 1) {
+            setMockExamSubmitted(true);
+            return 0;
+          }
+          return prev - 1;
+        });
+      }, 1000);
+    }
+    return () => {
+      if (timer) clearInterval(timer);
+    };
+  }, [activeView, mockExamSubmitted, mockExamTimeLeft]);
+
+  const formatMockTime = (totalSeconds: number) => {
+    const minutes = Math.floor(totalSeconds / 60);
+    const seconds = totalSeconds % 60;
+    return `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+  };
+
   // Mock Exam scoring
   const calculateMockScore = () => {
     let score = 0;
@@ -136,6 +168,23 @@ export default function BuildingCleaningBookReader({ country = 'japan' }: Props)
   const mockScore = calculateMockScore();
   const mockPercent = Math.round((mockScore / mockTotal) * 100);
   const isMockPassed = mockPercent >= BUILDING_CLEANING_BOOK_DATA.finalModelExam.passScorePercent;
+  const mockAnsweredCount = Object.keys(mockExamAnswers).length;
+
+  const mockTFQuestions = useMemo(() => {
+    return BUILDING_CLEANING_BOOK_DATA.finalModelExam.questions.filter((q) => q.type === 'TF');
+  }, []);
+
+  const mockMCQQuestions = useMemo(() => {
+    return BUILDING_CLEANING_BOOK_DATA.finalModelExam.questions.filter((q) => q.type === 'CHOICE');
+  }, []);
+
+  const mockTFScore = useMemo(() => {
+    return mockTFQuestions.reduce((acc, q) => (mockExamAnswers[q.id] === q.correctAnswer ? acc + 1 : acc), 0);
+  }, [mockTFQuestions, mockExamAnswers]);
+
+  const mockMCQScore = useMemo(() => {
+    return mockMCQQuestions.reduce((acc, q) => (mockExamAnswers[q.id] === q.correctAnswer ? acc + 1 : acc), 0);
+  }, [mockMCQQuestions, mockExamAnswers]);
 
   // Filtered glossary
   const filteredGlossary = useMemo(() => {
@@ -574,52 +623,55 @@ export default function BuildingCleaningBookReader({ country = 'japan' }: Props)
 
               </div>
 
-              {/* ===================================================================
-                  VISUAL EQUIPMENT & CONVERSATION CARDS INTEGRATED INTO CHAPTERS
-                 =================================================================== */}
-              {/* Chapter 2: Safety & 5S Conversation Dialogue */}
+              {/* ====================================              {/* Chapter 2: Safety & 5S Conversation Dialogue, PPE & Stepladder Safety */}
               {currentChapter.id === 2 && (
-                <WorkplaceConversationCard
-                  titleJp="[始業前点検|しぎょうまえてんけん]と[安全衛生|あんぜんえいせい]の[指示|しじ]"
-                  titleNe="काम सुरु गर्नुअघिको निरीक्षण र सुरक्षा निर्देशन"
-                  badge="Safety & 5S Dialogue"
-                  sceneJp="朝の朝礼時、作業責任者から新人の外国人スタッフへ安全靴と保護具の着用を確認する場面"
-                  sceneNe="बिहानी बैठकमा कामको सुपरभाइजरले नयाँ विदेशी कर्मचारीलाई सुरक्षा जुत्ता र सुरक्षित पोसाक लगाएको जाँच गर्दै"
-                  showFurigana={showFurigana}
-                  showNepali={showNepali}
-                  lines={[
-                    {
-                      speaker: 'LEADER',
-                      speakerNameJp: '佐藤リーダー',
-                      speakerNameNe: 'सातो लिडर',
-                      textJp: 'おはようございます。今日の作業前に、安全靴の靴ひもがしっかり結ばれているか確認してください。',
-                      textNe: 'शुभ प्रभात। आजको काम सुरु गर्नुअघि सुरक्षा जुत्ताको तुना राम्ररी बाँधिएको छ कि छैन जाँच गर्नुहोस्।',
-                    },
-                    {
-                      speaker: 'WORKER',
-                      speakerNameJp: 'タパ（作業員）',
-                      speakerNameNe: 'थापा (कर्मचारी)',
-                      textJp: 'おはようございます！はい、安全靴よし、ゴム手袋も携帯しました！',
-                      textNe: 'शुभ प्रभात हजुर! हजुर, सुरक्षा जुत्ता ठिक छ, रबरको पन्जा पनि साथमा लिएको छु!',
-                    },
-                    {
-                      speaker: 'LEADER',
-                      speakerNameJp: '佐藤リーダー',
-                      speakerNameNe: 'सातो लिडर',
-                      textJp: '素晴らしいですね。脚立を使うときは天板の上に立たないよう厳守してください。ご安全に！',
-                      textNe: 'अति राम्रो। भर्‍याङ प्रयोग गर्दा माथिल्लो स्टेपमा कहिल्यै नउभिनुहोला। सुरक्षित रहनुहोस्!',
-                    },
-                  ]}
-                  examTipJp="脚立の天板に乗って作業することは墜落災害につながるため固く禁止されています。「天板立ち作業＝禁止」は試験必出です。"
-                  examTipNe="भर्‍याङको सबैभन्दा माथिल्लो स्टेपमा उभिएर काम गर्न कडा प्रतिबन्ध लगाइएको छ। यो परीक्षामा १००% सोधिने प्रश्न हो।"
-                />
+                <div className="space-y-6">
+                  <PersonalProtectiveEquipmentDiagram showFurigana={showFurigana} showNepali={showNepali} />
+                  <StepladderSafetyDiagram showFurigana={showFurigana} showNepali={showNepali} />
+                  <WorkplaceConversationCard
+                    titleJp="[始業前点検|しぎょうまえてんけん]と[安全衛生|あんぜんえいせい]の[指示|しじ]"
+                    titleNe="काम सुरु गर्नुअघिको निरीक्षण र सुरक्षा निर्देशन"
+                    badge="Safety & 5S Dialogue"
+                    sceneJp="朝の朝礼時、作業責任者から新人の外国人スタッフへ安全靴と保護具の着用を確認する場面"
+                    sceneNe="बिहानी बैठकमा कामको सुपरभाइजरले नयाँ विदेशी कर्मचारीलाई सुरक्षा जुत्ता र सुरक्षित पोसाक लगाएको जाँच गर्दै"
+                    showFurigana={showFurigana}
+                    showNepali={showNepali}
+                    lines={[
+                      {
+                        speaker: 'LEADER',
+                        speakerNameJp: '佐藤リーダー',
+                        speakerNameNe: 'सातो लिडर',
+                        textJp: 'おはようございます。今日の作業前に、安全靴の靴ひもがしっかり結ばれているか確認してください。',
+                        textNe: 'शुभ प्रभात। आजको काम सुरु गर्नुअघि सुरक्षा जुत्ताको तुना राम्ररी बाँधिएको छ कि छैन जाँच गर्नुहोस्।',
+                      },
+                      {
+                        speaker: 'WORKER',
+                        speakerNameJp: 'タパ（作業員）',
+                        speakerNameNe: 'थापा (कर्मचारी)',
+                        textJp: 'おはようございます！はい、安全靴よし、ゴム手袋も携帯しました！',
+                        textNe: 'शुभ प्रभात हजुर! हजुर, सुरक्षा जुत्ता ठिक छ, रबरको पन्जा पनि साथमा लिएको छु!',
+                      },
+                      {
+                        speaker: 'LEADER',
+                        speakerNameJp: '佐藤リーダー',
+                        speakerNameNe: 'सातो लिडर',
+                        textJp: '素晴らしいですね。脚立を使うときは天板の上に立たないよう厳守してください。ご安全に！',
+                        textNe: 'अति राम्रो। भर्‍याङ प्रयोग गर्दा माथिल्लो स्टेपमा कहिल्यै नउभिनुहोला। सुरक्षित रहनुहोस्!',
+                      },
+                    ]}
+                    examTipJp="脚立の天板に乗って作業することは墜落災害につながるため固く禁止されています。「天板立ち作業＝禁止」は試験必出です。"
+                    examTipNe="भर्‍याङको सबैभन्दा माथिल्लो स्टेपमा उभिएर काम गर्न कडा प्रतिबन्ध लगाइएको छ। यो परीक्षामा १००% सोधिने प्रश्न हो।"
+                  />
+                </div>
               )}
 
-              {/* Chapter 4: Floor Machines (Vacuum Cleaner, Polisher, Carpet Extractor) */}
+              {/* Chapter 4: Floor Machines (Vacuum Cleaner, Polisher, Auto-Scrubber, Floor Blower, Carpet Extractor) */}
               {currentChapter.id === 4 && (
                 <div className="space-y-6">
                   <VacuumCleanerDiagram showFurigana={showFurigana} showNepali={showNepali} />
                   <FloorPolisherDiagram showFurigana={showFurigana} showNepali={showNepali} />
+                  <AutoScrubberDiagram showFurigana={showFurigana} showNepali={showNepali} />
+                  <FloorBlowerDiagram showFurigana={showFurigana} showNepali={showNepali} />
                   <CarpetExtractorDiagram showFurigana={showFurigana} showNepali={showNepali} />
                 </div>
               )}
@@ -665,14 +717,28 @@ export default function BuildingCleaningBookReader({ country = 'japan' }: Props)
                 </div>
               )}
 
-              {/* Chapter 7: Glass Cleaning (Squeegee & Washer) */}
-              {currentChapter.id === 7 && (
-                <GlassSqueegeeDiagram showFurigana={showFurigana} showNepali={showNepali} />
+              {/* Chapter 6: Carpet Cleaning & Rapid Drying */}
+              {currentChapter.id === 6 && (
+                <div className="space-y-6">
+                  <CarpetExtractorDiagram showFurigana={showFurigana} showNepali={showNepali} />
+                  <FloorBlowerDiagram showFurigana={showFurigana} showNepali={showNepali} />
+                </div>
               )}
 
-              {/* Chapter 8: Color-Coded Mops Diagram */}
+              {/* Chapter 7: Glass Cleaning & High-Place Safety */}
+              {currentChapter.id === 7 && (
+                <div className="space-y-6">
+                  <GlassSqueegeeDiagram showFurigana={showFurigana} showNepali={showNepali} />
+                  <StepladderSafetyDiagram showFurigana={showFurigana} showNepali={showNepali} />
+                </div>
+              )}
+
+              {/* Chapter 8: Color-Coded Mops & Sanitary PPE */}
               {currentChapter.id === 8 && (
-                <ColorCodedMopsDiagram showFurigana={showFurigana} showNepali={showNepali} />
+                <div className="space-y-6">
+                  <ColorCodedMopsDiagram showFurigana={showFurigana} showNepali={showNepali} />
+                  <PersonalProtectiveEquipmentDiagram showFurigana={showFurigana} showNepali={showNepali} />
+                </div>
               )}
 
               {/* Chapter 11: Workplace Manners & Lost Item Dialogue */}
@@ -993,49 +1059,89 @@ export default function BuildingCleaningBookReader({ country = 'japan' }: Props)
             </div>
 
             {/* Grid of All Equipment Diagrams */}
-            <div className="space-y-6">
-              <div className="space-y-2">
-                <h3 className="text-xs font-black uppercase tracking-wider text-slate-500">
-                  1. 床面清掃の主要機械（Vacuum Cleaner &amp; Polisher）
-                </h3>
+            <div className="space-y-8">
+              {/* 1. Floor Cleaning Electric Machines */}
+              <div className="space-y-3">
+                <div className="flex items-center gap-2">
+                  <span className="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
+                  <h3 className="text-xs sm:text-sm font-black uppercase tracking-wider text-slate-700">
+                    1. 床面清掃の主要機械（Floor Cleaning Electric Machinery）
+                  </h3>
+                </div>
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                   <VacuumCleanerDiagram showFurigana={showFurigana} showNepali={showNepali} />
                   <FloorPolisherDiagram showFurigana={showFurigana} showNepali={showNepali} />
+                  <AutoScrubberDiagram showFurigana={showFurigana} showNepali={showNepali} />
+                  <FloorBlowerDiagram showFurigana={showFurigana} showNepali={showNepali} />
                 </div>
               </div>
 
-              <div className="space-y-2">
-                <h3 className="text-xs font-black uppercase tracking-wider text-slate-500">
-                  2. カーペット深層洗浄（Carpet Deep Extractor）
-                </h3>
+              {/* 2. Carpet Extractor */}
+              <div className="space-y-3">
+                <div className="flex items-center gap-2">
+                  <span className="w-2.5 h-2.5 rounded-full bg-indigo-500"></span>
+                  <h3 className="text-xs sm:text-sm font-black uppercase tracking-wider text-slate-700">
+                    2. カーペット深層温水洗浄機（Carpet Deep Hot-Water Extractor）
+                  </h3>
+                </div>
                 <CarpetExtractorDiagram showFurigana={showFurigana} showNepali={showNepali} />
               </div>
 
-              <div className="space-y-2">
-                <h3 className="text-xs font-black uppercase tracking-wider text-slate-500">
-                  3. ガラス水切り動作（Glass Squeegee &amp; Washer）
-                </h3>
+              {/* 3. Glass Squeegee */}
+              <div className="space-y-3">
+                <div className="flex items-center gap-2">
+                  <span className="w-2.5 h-2.5 rounded-full bg-cyan-500"></span>
+                  <h3 className="text-xs sm:text-sm font-black uppercase tracking-wider text-slate-700">
+                    3. ガラス水切り動作・用具（Glass Squeegee &amp; Washer）
+                  </h3>
+                </div>
                 <GlassSqueegeeDiagram showFurigana={showFurigana} showNepali={showNepali} />
               </div>
 
-              <div className="space-y-2">
-                <h3 className="text-xs font-black uppercase tracking-wider text-slate-500">
-                  4. 衛生管理基準（Color-Coded Mops &amp; Cross-Contamination）
-                </h3>
+              {/* 4. Safety & PPE */}
+              <div className="space-y-3">
+                <div className="flex items-center gap-2">
+                  <span className="w-2.5 h-2.5 rounded-full bg-amber-500"></span>
+                  <h3 className="text-xs sm:text-sm font-black uppercase tracking-wider text-slate-700">
+                    4. 高所作業・脚立安全基準 &amp; 個人用保護具（Safety Gears &amp; Stepladder Inspection）
+                  </h3>
+                </div>
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                  <StepladderSafetyDiagram showFurigana={showFurigana} showNepali={showNepali} />
+                  <PersonalProtectiveEquipmentDiagram showFurigana={showFurigana} showNepali={showNepali} />
+                </div>
+              </div>
+
+              {/* 5. Color-Coded Mops */}
+              <div className="space-y-3">
+                <div className="flex items-center gap-2">
+                  <span className="w-2.5 h-2.5 rounded-full bg-rose-500"></span>
+                  <h3 className="text-xs sm:text-sm font-black uppercase tracking-wider text-slate-700">
+                    5. 衛生管理基準・色分けモップ（Color-Coded Mops &amp; Cross-Contamination）
+                  </h3>
+                </div>
                 <ColorCodedMopsDiagram showFurigana={showFurigana} showNepali={showNepali} />
               </div>
 
-              <div className="space-y-2">
-                <h3 className="text-xs font-black uppercase tracking-wider text-slate-500">
-                  5. 洗剤化学特性（Chemical pH Spectrum &amp; Soil Types）
-                </h3>
+              {/* 6. Chemical pH Spectrum */}
+              <div className="space-y-3">
+                <div className="flex items-center gap-2">
+                  <span className="w-2.5 h-2.5 rounded-full bg-purple-500"></span>
+                  <h3 className="text-xs sm:text-sm font-black uppercase tracking-wider text-slate-700">
+                    6. 洗剤化学特性（Chemical pH Spectrum &amp; Soil Neutralization）
+                  </h3>
+                </div>
                 <ChemicalPHChart showFurigana={showFurigana} showNepali={showNepali} />
               </div>
 
-              <div className="space-y-2">
-                <h3 className="text-xs font-black uppercase tracking-wider text-slate-500">
-                  6. 実技・現場対話シミュレーション（Workplace Dialogue Cards）
-                </h3>
+              {/* 7. Workplace Dialogues */}
+              <div className="space-y-3">
+                <div className="flex items-center gap-2">
+                  <span className="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
+                  <h3 className="text-xs sm:text-sm font-black uppercase tracking-wider text-slate-700">
+                    7. 実技・現場対話シミュレーション（Workplace Dialogue Cards）
+                  </h3>
+                </div>
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                   <WorkplaceConversationCard
                     titleJp="[洗剤|せんざい]の[希釈|きしゃく]と[安全衛生|あんぜんえいせい]"
@@ -1135,54 +1241,112 @@ export default function BuildingCleaningBookReader({ country = 'japan' }: Props)
                   <p className="text-sm font-black text-slate-900">{mockTotal} Questions</p>
                 </div>
                 <div className="p-3 rounded-2xl bg-white border border-slate-200 shadow-xs">
-                  <span className="text-[10px] uppercase font-bold text-slate-400">Format</span>
-                  <p className="text-sm font-black text-slate-900">5 〇× + 5 MCQ</p>
+                  <span className="text-[10px] uppercase font-bold text-slate-400">Official Format</span>
+                  <p className="text-sm font-black text-slate-900">10 〇× + 10 択一式</p>
                 </div>
                 <div className="p-3 rounded-2xl bg-white border border-slate-200 shadow-xs">
                   <span className="text-[10px] uppercase font-bold text-slate-400">Passing Mark</span>
-                  <p className="text-sm font-black text-amber-700">60% (6 / 10 Pts)</p>
+                  <p className="text-sm font-black text-amber-700">60% (12 / 20 Pts)</p>
                 </div>
                 <div className="p-3 rounded-2xl bg-white border border-slate-200 shadow-xs">
-                  <span className="text-[10px] uppercase font-bold text-slate-400">Current Status</span>
-                  <p className="text-sm font-black text-emerald-700">
-                    {mockExamSubmitted ? `${mockScore}/${mockTotal} (${mockPercent}%)` : 'In Progress'}
+                  <span className="text-[10px] uppercase font-bold text-slate-400">Exam Timer</span>
+                  <p className={`text-sm font-black flex items-center gap-1 ${mockExamTimeLeft < 600 ? 'text-rose-600 animate-pulse' : 'text-emerald-700'}`}>
+                    <Clock className="w-3.5 h-3.5" />
+                    {formatMockTime(mockExamTimeLeft)}
                   </p>
                 </div>
               </div>
             </div>
 
+            {/* Live Exam Progress & Timer Bar */}
+            {!mockExamSubmitted && (
+              <div className="sticky top-20 z-30 p-3.5 sm:p-4 rounded-2xl bg-white/95 backdrop-blur-md border border-slate-200 shadow-sm flex items-center justify-between gap-4">
+                <div className="flex items-center gap-4 text-xs">
+                  <div className="flex items-center gap-1.5 font-black text-slate-800">
+                    <Clock className={`w-4 h-4 ${mockExamTimeLeft < 600 ? 'text-rose-600 animate-pulse' : 'text-emerald-600'}`} />
+                    <span>Time: <span className={mockExamTimeLeft < 600 ? 'text-rose-600 font-black' : 'text-slate-900'}>{formatMockTime(mockExamTimeLeft)}</span></span>
+                  </div>
+                  <div className="text-slate-500 font-bold hidden sm:block">
+                    Answered: <span className="text-emerald-600 font-black">{mockAnsweredCount}</span> / {mockTotal}
+                  </div>
+                </div>
+
+                <button
+                  onClick={() => {
+                    setMockExamSubmitted(true);
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                  }}
+                  className="px-5 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-black text-xs transition-all shadow-xs cursor-pointer flex items-center gap-1.5"
+                >
+                  <Award className="w-4 h-4" />
+                  Submit Exam (採点する)
+                </button>
+              </div>
+            )}
+
             {/* Score Result Announcement if Submitted */}
             {mockExamSubmitted && (
               <div
-                className={`p-6 rounded-3xl border shadow-xs flex flex-col sm:flex-row items-center justify-between gap-4 ${
+                className={`p-6 sm:p-8 rounded-3xl border shadow-xs space-y-4 ${
                   isMockPassed
                     ? 'bg-emerald-50 border-emerald-300 text-emerald-950'
                     : 'bg-rose-50 border-rose-300 text-rose-950'
                 }`}
               >
-                <div className="space-y-1 text-center sm:text-left">
-                  <div className="flex items-center justify-center sm:justify-start gap-2">
-                    <span className="text-2xl">{isMockPassed ? '🎉' : '⚠️'}</span>
-                    <h3 className="text-xl font-black text-slate-900">
-                      {isMockPassed ? '合格！ (EXAM PASSED!)' : '不合格 (NEEDS MORE PRACTICE)'}
-                    </h3>
+                <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+                  <div className="space-y-1">
+                    <div className="flex items-center gap-2">
+                      <span className="text-3xl">{isMockPassed ? '🎉' : '⚠️'}</span>
+                      <div>
+                        <h3 className="text-xl sm:text-2xl font-black text-slate-900">
+                          {isMockPassed ? '合格！ (PROMETRIC CBT PASSED!)' : '不合格 (NEEDS MORE PRACTICE)'}
+                        </h3>
+                        <p className="text-xs font-bold text-slate-600">
+                          ビルクリーニング特定技能１号 評価試験基準（合格ライン：60%以上 / 12点以上）
+                        </p>
+                      </div>
+                    </div>
+                    <p className="text-xs sm:text-sm text-slate-700 pt-1">
+                      You scored <strong>{mockScore}</strong> out of <strong>{mockTotal}</strong> ({mockPercent}%). Passing threshold is 60% (12 / 20).
+                    </p>
                   </div>
-                  <p className="text-xs">
-                    You scored <strong>{mockScore}</strong> out of <strong>{mockTotal}</strong> ({mockPercent}%). Passing threshold is 60%.
-                  </p>
+
+                  <button
+                    onClick={() => {
+                      setMockExamAnswers({});
+                      setMockExamSubmitted(false);
+                      setMockExamTimeLeft(3600);
+                      window.scrollTo({ top: 0, behavior: 'smooth' });
+                    }}
+                    className="px-5 py-2.5 rounded-2xl bg-white hover:bg-slate-50 text-slate-800 font-bold text-xs border border-slate-200 transition-all flex items-center gap-2 cursor-pointer shadow-xs shrink-0"
+                  >
+                    <RotateCcw className="w-4 h-4" />
+                    Retake Mock Exam
+                  </button>
                 </div>
 
-                <button
-                  onClick={() => {
-                    setMockExamAnswers({});
-                    setMockExamSubmitted(false);
-                    window.scrollTo({ top: 0, behavior: 'smooth' });
-                  }}
-                  className="px-5 py-2.5 rounded-2xl bg-white hover:bg-slate-50 text-slate-800 font-bold text-xs border border-slate-200 transition-all flex items-center gap-2 cursor-pointer shadow-xs"
-                >
-                  <RotateCcw className="w-4 h-4" />
-                  Retake Mock Exam
-                </button>
+                {/* Diagnostic Category Breakdown */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
+                  <div className="p-3 rounded-2xl bg-white border border-slate-200 flex items-center justify-between">
+                    <div>
+                      <span className="text-[10px] font-black uppercase text-slate-400 block">Section 1</span>
+                      <p className="text-xs font-bold text-slate-800">○×形式 正誤判断（True/False）</p>
+                    </div>
+                    <span className={`text-sm font-black ${mockTFScore >= 6 ? 'text-emerald-600' : 'text-rose-600'}`}>
+                      {mockTFScore} / {mockTFQuestions.length}
+                    </span>
+                  </div>
+
+                  <div className="p-3 rounded-2xl bg-white border border-slate-200 flex items-center justify-between">
+                    <div>
+                      <span className="text-[10px] font-black uppercase text-slate-400 block">Section 2</span>
+                      <p className="text-xs font-bold text-slate-800">択一式 専門知識（Multiple Choice）</p>
+                    </div>
+                    <span className={`text-sm font-black ${mockMCQScore >= 6 ? 'text-emerald-600' : 'text-rose-600'}`}>
+                      {mockMCQScore} / {mockMCQQuestions.length}
+                    </span>
+                  </div>
+                </div>
               </div>
             )}
 

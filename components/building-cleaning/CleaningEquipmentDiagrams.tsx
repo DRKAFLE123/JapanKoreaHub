@@ -755,3 +755,470 @@ export function WorkplaceConversationCard({
     </div>
   );
 }
+
+/**
+ * 7. Stepladder Safety Diagram (脚立・はしごの安全点検と高所墜落防止)
+ */
+export function StepladderSafetyDiagram({ showFurigana = true, furiganaType = 'katakana', showNepali = true }: DiagramProps) {
+  const [selectedPart, setSelectedPart] = useState<'top' | 'lock' | 'feet' | 'rule'>('top');
+
+  const parts: Record<string, { titleJp: string; titleNe: string; descJp: string; descNe: string; cautionJp: string }> = {
+    top: {
+      titleJp: '[天板|てんばん]（最上段に乗る行為は[厳禁|げんきん]）',
+      titleNe: 'भर्याङको सबैभन्दा माथिल्लो भाग (खुट्टा टेक्न कडा मनाही)',
+      descJp: '脚立の天板に立ったり、またがって作業することは転倒・墜落の危険が極めて高く、労働安全衛生規則で禁止されています。作業時は天板から２段目以下の踏ざんに立ちます。',
+      descNe: 'भर्याङको सबैभन्दा माथिल्लो भागमा उभिँदा सन्तुलन गुमेर लड्ने ठूलो जोखिम हुने भएकाले यसमा कहिल्यै उभिनु हुँदैन। काम गर्दा माथिबाट दोस्रो वा त्योभन्दा तलको खुड्किलोमा उभिनुपर्छ।',
+      cautionJp: '【CBT頻出試験問題】「天板にまたがって作業した」→ 必ず×（誤り）。',
+    },
+    lock: {
+      titleJp: '[開|ひら]き[止|ど]め[金具|かなぐ]（完全にロックして固定）',
+      titleNe: 'भर्याङ लक गर्ने बिचको धातुको पट्टी (Spread Lock Bracket)',
+      descJp: '脚立を開いた際、両側の脚が勝手に閉じたり広がったりしないように固定する金具です。確実に「カチッ」とまっすぐ水平にロックされていることを作業前に目視確認します。',
+      descNe: 'भर्याङ खुम्चिन वा अचानक बन्द हुन नदिन बीचमा राखिएको लक गर्ने पट्टी हो। काम सुरु गर्नुअघि यो सीधा र पूर्ण रूपमा लक भएको जाँच गर्नुपर्छ।',
+      cautionJp: '金具が外れたり曲がっている状態での使用は厳禁です。',
+    },
+    feet: {
+      titleJp: '[脚|あし]ゴム（すべり[止|ど]めゴム・[設置面|せっちめん]の[確認|かくにん]）',
+      titleNe: 'भर्याङको फेदको रबर (Anti-slip Rubber Feet)',
+      descJp: '床面と接する脚の先端に装着されたゴム。摩耗・破れ・油の付着がないか点検します。設置場所は必ず水平で平らな安定した床を選び、濡れた床や段差には設置しません。',
+      descNe: 'भुइँमा अड्याउने खुट्टाको फेदमा भएको रबर हो। यो खिइएको वा तेल लागेको हुनुहुँदैन। भर्याङ सधैं समतल र नचिप्लने ठाउँमा राख्नुपर्छ।',
+      cautionJp: '床に段差や異物がある場所、マンホール上には絶対に設置してはいけません。',
+    },
+    rule: {
+      titleJp: '[三点支持|さんてんしじ]の[原則|げんそく]（両足＋片手 または 両手＋片足）',
+      titleNe: 'तीन-बिन्दु समर्थनको नियम (Three-Point Contact Rule)',
+      descJp: '昇降時や作業時は、常に身体の３箇所（両足と片手、または両手と片足）が脚立に接触している状態を保ちます。身を乗り出しての作業はバランスを崩すため絶対に行いません。',
+      descNe: 'भर्याङ चढ्दा वा ओर्लंदा सधैं शरीरका ३ अङ्ग (दुवै खुट्टा र एक हात, वा दुवै हात र एक खुट्टा) भर्याङमा छोइएको हुनुपर्छ। धेरै बाहिर झुकेर काम गर्नु हुँदैन।',
+      cautionJp: '届かない場所は脚立を降りて設置場所を移動させます。無理な身の乗り出しは厳禁。',
+    },
+  };
+
+  const current = parts[selectedPart];
+
+  return (
+    <div className="bg-white border border-slate-200 rounded-2xl p-4 sm:p-5 shadow-xs space-y-3.5">
+      {/* Header */}
+      <div className="flex flex-wrap items-center justify-between gap-2 border-b border-slate-100 pb-2.5">
+        <div className="flex items-center gap-2">
+          <span className="p-1.5 rounded-xl bg-amber-50 text-amber-700 border border-amber-200">
+            🪜
+          </span>
+          <div>
+            <h4 className="text-sm sm:text-base font-black text-slate-900 flex items-center gap-1.5">
+              <FuriganaText text="[脚立|きゃたつ]の[安全点検|あんぜんてんけん]と[高所墜落防止|こうしょついらくぼうし]" showFurigana={showFurigana} furiganaType={furiganaType} />
+            </h4>
+            <p className="text-xs text-slate-500 font-medium">
+              🇳🇵 भर्याङ प्रयोगको सुरक्षा नियम र लड्नबाट बच्ने उपाय (Stepladder Safety)
+            </p>
+          </div>
+        </div>
+        <span className="px-2.5 py-0.5 rounded-full bg-rose-50 text-rose-800 border border-rose-200 text-[10px] font-black uppercase">
+          ⚠️ High-Chance Exam Topic
+        </span>
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-12 gap-4 items-center">
+        {/* SVG Stepladder Diagram */}
+        <div className="md:col-span-5 bg-slate-50 border border-slate-200 rounded-xl p-3 flex flex-col items-center justify-center">
+          <svg className="w-44 h-56" viewBox="0 0 200 240" fill="none" xmlns="http://www.w3.org/2000/svg">
+            {/* Ladder Frame Left & Right Stems */}
+            <line x1="60" y1="40" x2="25" y2="215" stroke="#475569" strokeWidth="7" strokeLinecap="round" />
+            <line x1="140" y1="40" x2="175" y2="215" stroke="#475569" strokeWidth="7" strokeLinecap="round" />
+
+            {/* Top Plate with Red Caution Stripes */}
+            <rect x="50" y="32" width="100" height="14" rx="3" fill="#EF4444" stroke="#B91C1C" strokeWidth="2" />
+            <text x="100" y="43" textAnchor="middle" fill="#FFFFFF" fontSize="9" fontWeight="900">天板 乗るな！</text>
+
+            {/* Steps */}
+            <line x1="53" y1="75" x2="147" y2="75" stroke="#94A3B8" strokeWidth="5" strokeLinecap="round" />
+            <line x1="45" y1="115" x2="155" y2="115" stroke="#94A3B8" strokeWidth="5" strokeLinecap="round" />
+            <line x1="37" y1="155" x2="163" y2="155" stroke="#94A3B8" strokeWidth="5" strokeLinecap="round" />
+            <line x1="29" y1="195" x2="171" y2="195" stroke="#94A3B8" strokeWidth="5" strokeLinecap="round" />
+
+            {/* Spread Lock Bracket (Middle) */}
+            <line x1="45" y1="115" x2="100" y2="120" stroke="#10B981" strokeWidth="4" strokeLinecap="round" />
+            <line x1="100" y1="120" x2="155" y2="115" stroke="#10B981" strokeWidth="4" strokeLinecap="round" />
+            <circle cx="100" cy="120" r="4" fill="#059669" />
+
+            {/* Rubber Feet */}
+            <rect x="18" y="215" width="16" height="12" rx="3" fill="#1E293B" />
+            <rect x="166" y="215" width="16" height="12" rx="3" fill="#1E293B" />
+
+            {/* Prohibited standing symbol on top */}
+            <circle cx="100" cy="18" r="12" fill="#FEE2E2" stroke="#EF4444" strokeWidth="2" />
+            <path d="M94 12 L106 24 M106 12 L94 24" stroke="#EF4444" strokeWidth="2.5" strokeLinecap="round" />
+          </svg>
+
+          {/* Hotspot Selection Buttons */}
+          <div className="grid grid-cols-2 gap-1.5 w-full mt-2">
+            {[
+              { id: 'top', label: '1. 天板 (乗るな!)' },
+              { id: 'lock', label: '2. 開き止め金具' },
+              { id: 'feet', label: '3. 脚ゴム・床面' },
+              { id: 'rule', label: '4. 三点支持則' },
+            ].map((btn) => (
+              <button
+                key={btn.id}
+                onClick={() => setSelectedPart(btn.id as any)}
+                className={`px-2 py-1 rounded-lg text-xs font-bold transition-all cursor-pointer text-center ${
+                  selectedPart === btn.id
+                    ? 'bg-amber-600 text-white shadow-xs'
+                    : 'bg-white border border-slate-200 text-slate-700 hover:bg-slate-100'
+                }`}
+              >
+                {btn.label}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {/* Selected Hotspot Explanation */}
+        <div className="md:col-span-7 space-y-2.5">
+          <div className="p-3.5 rounded-xl bg-amber-50/70 border border-amber-200 space-y-1.5">
+            <h5 className="text-sm font-black text-amber-950">
+              <FuriganaText text={current.titleJp} showFurigana={showFurigana} furiganaType={furiganaType} />
+            </h5>
+            <p className="text-xs font-bold text-amber-800">
+              🇳🇵 {current.titleNe}
+            </p>
+            <p className="text-xs text-slate-700 leading-relaxed font-medium">
+              {current.descJp}
+            </p>
+            {showNepali && (
+              <p className="text-xs text-slate-600 leading-relaxed border-t border-amber-200/60 pt-1">
+                🇳🇵 {current.descNe}
+              </p>
+            )}
+          </div>
+
+          <div className="p-2.5 rounded-xl bg-rose-50 border border-rose-200 text-xs text-rose-950 space-y-1">
+            <p className="font-bold flex items-center gap-1 text-rose-800">
+              <AlertTriangle className="w-3.5 h-3.5 text-rose-600" />
+              <span>試験・実務の最重要ルール (Exam Trap)</span>
+            </p>
+            <p className="text-[11px] leading-snug">{current.cautionJp}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/**
+ * 8. Personal Protective Equipment Diagram (個人用保護具 / PPE)
+ */
+export function PersonalProtectiveEquipmentDiagram({ showFurigana = true, furiganaType = 'katakana', showNepali = true }: DiagramProps) {
+  const [selectedGear, setSelectedGear] = useState<'shoes' | 'gloves' | 'goggles' | 'mask'>('shoes');
+
+  const gears: Record<string, { titleJp: string; titleNe: string; roleJp: string; roleNe: string; ruleJp: string }> = {
+    shoes: {
+      titleJp: '[安全靴|あんぜんぐつ]（つま[先芯|さきしん]入り・[耐滑底|たいかつぞこ]）',
+      titleNe: 'सुरक्षा जुत्ता (Safety Shoes with Steel Toe)',
+      roleJp: '重い機材（ポリッシャー等）の落下から足先を守る鋼製先芯と、濡れた床・ワックス剥離液で滑らない耐滑ソールを備えています。',
+      roleNe: 'गह्रुङ्गो उपकरण खस्दा खुट्टा जोगाउने स्टीलको अगाडिको भाग र चिप्लो भुइँमा नचिप्लने रबरको सोल हुन्छ।',
+      ruleJp: '靴ひもがほどけていないか、かかとを踏んで履いていないかを毎朝点検します。',
+    },
+    gloves: {
+      titleJp: '[耐薬品性|たいやくひんせい]ゴム[手袋|てぶくろ]（[酸|さん]・アルカリ・[感染防止|かんせんぼうし]）',
+      titleNe: 'रसायन प्रतिरोधी रबर पन्जा (Chemical & Infection Gloves)',
+      roleJp: '洗剤（強酸・強アルカリ・剥離剤）による手荒れ・化学熱傷や、トイレ清掃・汚物処理での病原菌感染を防ぐために着用します。',
+      roleNe: 'कडा एसिड, अल्कालाइन रसायनले छाला जलाउन नदिन र शौचालय सरसफाइमा कीटाणु सर्नबाट रोक्न लगाइन्छ।',
+      ruleJp: 'トイレ用と一般エリア用でゴム手袋を色分け（交差汚染防止）し、使用後は必ず手指消毒します。',
+    },
+    goggles: {
+      titleJp: '[保護|ほご]メガネ（[洗剤飛沫|せんざいひまつ]からの[眼保護|めほご]）',
+      titleNe: 'सुरक्षा चस्मा (Safety Splash Goggles)',
+      roleJp: '洗剤の希釈時、剥離剤の散布時、高圧洗浄時に、薬剤の飛沫が目に入るのを防ぎます。失明や眼球損傷事故を防止します。',
+      roleNe: 'रसायन घोल्दा, भुइँमा छर्कंदा वा पानीको छिटा आँखामा पर्न नदिन लगाइने सुरक्षा चस्मा हो।',
+      ruleJp: 'もし洗剤が目に入った場合は、直ちに流水で１５分以上洗い流し、医師の診察を受けます。',
+    },
+    mask: {
+      titleJp: '[防|ぼう]じん・[防毒|ぼうどく]マスク（[粉塵|ふんじん]・[有毒蒸気|ゆうどくじょうき]の[吸入防止|きゅうにゅうぼうし]）',
+      titleNe: 'सुरक्षा मास्क (Dust & Chemical Vapor Mask)',
+      roleJp: 'ワックス剥離作業の溶剤臭気や、エアコンフィルター清掃時のほこり、トイレ消毒剤の蒸気を吸い込まないように着用します。',
+      roleNe: 'वाक्स उप्काउने रसायनको गन्ध, धुलो र कीटाणुनाशक ग्यास फोक्सोमा जान नदिन लगाइन्छ।',
+      ruleJp: '作業場所は必ず窓を開けるか換気扇を回して「換気（かんき）」を徹底します。',
+    },
+  };
+
+  const current = gears[selectedGear];
+
+  return (
+    <div className="bg-white border border-slate-200 rounded-2xl p-4 sm:p-5 shadow-xs space-y-3.5">
+      {/* Header */}
+      <div className="flex flex-wrap items-center justify-between gap-2 border-b border-slate-100 pb-2.5">
+        <div className="flex items-center gap-2">
+          <span className="p-1.5 rounded-xl bg-emerald-50 text-emerald-700 border border-emerald-200">
+            🦺
+          </span>
+          <div>
+            <h4 className="text-sm sm:text-base font-black text-slate-900 flex items-center gap-1.5">
+              <FuriganaText text="[作業前点検|さぎょうまえてんけん]：[個人用保護具|こじんようほごぐ]（PPE）の[完全着用|かんぜんちゃくよう]" showFurigana={showFurigana} furiganaType={furiganaType} />
+            </h4>
+            <p className="text-xs text-slate-500 font-medium">
+              🇳🇵 व्यक्तिगत सुरक्षा उपकरण (Personal Protective Equipment - PPE)
+            </p>
+          </div>
+        </div>
+        <span className="px-2.5 py-0.5 rounded-full bg-emerald-50 text-emerald-800 border border-emerald-200 text-[10px] font-black uppercase">
+          5S &amp; Safety Standard
+        </span>
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-12 gap-4 items-center">
+        {/* Vector Gear Illustration */}
+        <div className="md:col-span-5 bg-slate-50 border border-slate-200 rounded-xl p-3 flex flex-col items-center justify-center">
+          <svg className="w-40 h-52" viewBox="0 0 160 220" fill="none" xmlns="http://www.w3.org/2000/svg">
+            {/* Head & Goggles */}
+            <circle cx="80" cy="40" r="22" fill="#FED7AA" stroke="#EA580C" strokeWidth="2" />
+            <rect x="66" y="32" width="28" height="12" rx="4" fill="#67E8F9" stroke="#0891B2" strokeWidth="2" />
+            {/* Mask */}
+            <path d="M68 45 C68 55, 92 55, 92 45 Z" fill="#F1F5F9" stroke="#64748B" strokeWidth="2" />
+            
+            {/* Body / Uniform */}
+            <rect x="52" y="65" width="56" height="70" rx="8" fill="#3B82F6" stroke="#1D4ED8" strokeWidth="2" />
+            <line x1="80" y1="65" x2="80" y2="135" stroke="#1E40AF" strokeWidth="2" />
+            
+            {/* Arms & Rubber Gloves */}
+            <path d="M52 75 L30 115" stroke="#3B82F6" strokeWidth="8" strokeLinecap="round" />
+            <path d="M108 75 L130 115" stroke="#3B82F6" strokeWidth="8" strokeLinecap="round" />
+            <circle cx="28" cy="120" r="8" fill="#F59E0B" stroke="#D97706" strokeWidth="2" />
+            <circle cx="132" cy="120" r="8" fill="#F59E0B" stroke="#D97706" strokeWidth="2" />
+
+            {/* Legs & Safety Shoes */}
+            <line x1="66" y1="135" x2="66" y2="185" stroke="#1E3A8A" strokeWidth="8" strokeLinecap="round" />
+            <line x1="94" y1="135" x2="94" y2="185" stroke="#1E3A8A" strokeWidth="8" strokeLinecap="round" />
+            <rect x="54" y="185" width="22" height="12" rx="4" fill="#0F172A" stroke="#334155" strokeWidth="2" />
+            <rect x="88" y="185" width="22" height="12" rx="4" fill="#0F172A" stroke="#334155" strokeWidth="2" />
+          </svg>
+
+          {/* Hotspot buttons */}
+          <div className="grid grid-cols-2 gap-1.5 w-full mt-2">
+            {[
+              { id: 'shoes', label: '1. 安全靴 (先芯)' },
+              { id: 'gloves', label: '2. 耐薬品手袋' },
+              { id: 'goggles', label: '3. 保護メガネ' },
+              { id: 'mask', label: '4. 防じんマスク' },
+            ].map((btn) => (
+              <button
+                key={btn.id}
+                onClick={() => setSelectedGear(btn.id as any)}
+                className={`px-2 py-1 rounded-lg text-xs font-bold transition-all cursor-pointer text-center ${
+                  selectedGear === btn.id
+                    ? 'bg-emerald-600 text-white shadow-xs'
+                    : 'bg-white border border-slate-200 text-slate-700 hover:bg-slate-100'
+                }`}
+              >
+                {btn.label}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {/* Selected Gear Information */}
+        <div className="md:col-span-7 space-y-2.5">
+          <div className="p-3.5 rounded-xl bg-emerald-50/70 border border-emerald-200 space-y-1.5">
+            <h5 className="text-sm font-black text-emerald-950">
+              <FuriganaText text={current.titleJp} showFurigana={showFurigana} furiganaType={furiganaType} />
+            </h5>
+            <p className="text-xs font-bold text-emerald-800">
+              🇳🇵 {current.titleNe}
+            </p>
+            <p className="text-xs text-slate-700 leading-relaxed font-medium">
+              {current.roleJp}
+            </p>
+            {showNepali && (
+              <p className="text-xs text-slate-600 leading-relaxed border-t border-emerald-200/60 pt-1">
+                🇳🇵 {current.roleNe}
+              </p>
+            )}
+          </div>
+
+          <div className="p-2.5 rounded-xl bg-blue-50 border border-blue-200 text-xs text-blue-950 space-y-1">
+            <p className="font-bold flex items-center gap-1 text-blue-800">
+              <CheckCircle2 className="w-3.5 h-3.5 text-blue-600" />
+              <span>始業前点検ルール (Daily Check Rule)</span>
+            </p>
+            <p className="text-[11px] leading-snug">{current.ruleJp}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/**
+ * 9. Automatic Floor Scrubber Diagram (自動床洗浄機 / オートスクラバー)
+ */
+export function AutoScrubberDiagram({ showFurigana = true, furiganaType = 'katakana', showNepali = true }: DiagramProps) {
+  const [selectedPart, setSelectedPart] = useState<'tank_clean' | 'brush' | 'squeegee' | 'tank_dirty'>('brush');
+
+  const parts: Record<string, { titleJp: string; titleNe: string; descJp: string; descNe: string }> = {
+    tank_clean: {
+      titleJp: '[洗浄水|せんじょうすい]タンク（[希釈洗剤|きしゃくせんざい]の[投入|とうにゅう]）',
+      titleNe: 'सफा पानीको ट्याङ्की (Clean Solution Tank)',
+      descJp: '床面を洗浄するための水と中性またはアルカリ性希釈洗剤を蓄えるタンクです。床質に合わせた正しい希釈倍率で給水します。',
+      descNe: 'भुइँ सफा गर्न प्रयोग हुने पानी र डिटर्जेन्टको घोल राखिने ट्याङ्की हो।',
+    },
+    brush: {
+      titleJp: '[洗浄|せんじょう]デッキ・ディスクブラシ（床面の[洗浄|せんじょう]）',
+      titleNe: 'घुम्ने ब्रश र सफाइ डेक (Scrubbing Disc Brush)',
+      descJp: '床面に洗剤を散布しながら高速回転するブラシまたはパッドで汚れを浮かせます。広いエントランスや空港ホールを短時間で洗浄します。',
+      descNe: 'डिटर्जेन्ट छर्कंदै तीव्र गतिमा घुमेर भुइँको फोहोर उक्काउने मुख्य भाग हो।',
+    },
+    squeegee: {
+      titleJp: 'バキュームスクイジー（[汚水|おすい]の[即座吸引回収|そくざきゅういんかいしゅう]）',
+      titleNe: 'भ्याकुम स्क्विजी (Rear Squeegee & Vacuum Pickup)',
+      descJp: '機体の後部に湾曲して取り付けられたゴム製スクイジー。ブラシが洗い出した汚水を強力なバキュームで一滴も残さず瞬時に吸引回収します。',
+      descNe: 'धोएर निस्किएको फोहोर पानीलाई तत्कालै चुसेर सुक्खा बनाउने पछाडिको भाग हो।',
+    },
+    tank_dirty: {
+      titleJp: '[回収汚水|かいしゅうおすい]タンク（[満水防止|まんすいぼうし]フロート[弁|べん]）',
+      titleNe: 'फोहोर पानीको ट्याङ्की (Recovery Dirty Tank)',
+      descJp: '吸引した汚水を溜めるタンク。満水になるとフロート弁が作動してモーターへの浸水を防ぎます。作業後は必ず排水し水洗い清掃します。',
+      descNe: 'चुसेको फोहोर पानी जम्मा हुने ट्याङ्की। काम सकिएपछि अनिवार्य खाली गरी सफा गर्नुपर्छ।',
+    },
+  };
+
+  const current = parts[selectedPart];
+
+  return (
+    <div className="bg-white border border-slate-200 rounded-2xl p-4 sm:p-5 shadow-xs space-y-3.5">
+      {/* Header */}
+      <div className="flex flex-wrap items-center justify-between gap-2 border-b border-slate-100 pb-2.5">
+        <div className="flex items-center gap-2">
+          <span className="p-1.5 rounded-xl bg-teal-50 text-teal-700 border border-teal-200">
+            🚜
+          </span>
+          <div>
+            <h4 className="text-sm sm:text-base font-black text-slate-900 flex items-center gap-1.5">
+              <FuriganaText text="[自動床洗浄機|じどうゆかせんじょうき]（オートスクラバー）のしくみ" showFurigana={showFurigana} furiganaType={furiganaType} />
+            </h4>
+            <p className="text-xs text-slate-500 font-medium">
+              🇳🇵 स्वचालित भुइँ सफा गर्ने मेसिन (Automatic Walk-behind / Ride-on Scrubber)
+            </p>
+          </div>
+        </div>
+        <span className="px-2.5 py-0.5 rounded-full bg-teal-50 text-teal-800 border border-teal-200 text-[10px] font-black uppercase">
+          Commercial Machinery
+        </span>
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-12 gap-4 items-center">
+        {/* SVG Auto-Scrubber */}
+        <div className="md:col-span-5 bg-slate-50 border border-slate-200 rounded-xl p-3 flex flex-col items-center justify-center">
+          <svg className="w-48 h-48" viewBox="0 0 200 180" fill="none" xmlns="http://www.w3.org/2000/svg">
+            {/* Body */}
+            <rect x="30" y="45" width="130" height="75" rx="14" fill="#0D9488" stroke="#0F766E" strokeWidth="3" />
+            <rect x="40" y="55" width="55" height="40" rx="6" fill="#CCFBF1" stroke="#14B8A6" strokeWidth="2" />
+            <rect x="100" y="55" width="50" height="40" rx="6" fill="#99F6E4" stroke="#0D9488" strokeWidth="2" />
+
+            {/* Handlebar */}
+            <path d="M160 65 L185 50" stroke="#334155" strokeWidth="6" strokeLinecap="round" />
+            
+            {/* Front Brush Deck */}
+            <rect x="25" y="115" width="40" height="15" rx="3" fill="#F59E0B" stroke="#D97706" strokeWidth="2" />
+            <circle cx="45" cy="130" r="10" fill="#78350F" />
+
+            {/* Wheels */}
+            <circle cx="85" cy="130" r="14" fill="#334155" stroke="#0F172A" strokeWidth="2" />
+            <circle cx="145" cy="130" r="14" fill="#334155" stroke="#0F172A" strokeWidth="2" />
+
+            {/* Rear Curved Squeegee */}
+            <path d="M165 110 C175 125, 175 140, 165 148" stroke="#EF4444" strokeWidth="5" strokeLinecap="round" />
+            <text x="175" y="132" fill="#EF4444" fontSize="8" fontWeight="bold">Squeegee</text>
+          </svg>
+
+          {/* Hotspots */}
+          <div className="grid grid-cols-2 gap-1.5 w-full mt-2">
+            {[
+              { id: 'tank_clean', label: '1. 洗浄液タンク' },
+              { id: 'brush', label: '2. ディスクブラシ' },
+              { id: 'squeegee', label: '3. 吸水スクイジー' },
+              { id: 'tank_dirty', label: '4. 回収タンク' },
+            ].map((btn) => (
+              <button
+                key={btn.id}
+                onClick={() => setSelectedPart(btn.id as any)}
+                className={`px-2 py-1 rounded-lg text-xs font-bold transition-all cursor-pointer text-center ${
+                  selectedPart === btn.id
+                    ? 'bg-teal-600 text-white shadow-xs'
+                    : 'bg-white border border-slate-200 text-slate-700 hover:bg-slate-100'
+                }`}
+              >
+                {btn.label}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {/* Selected Part Detail */}
+        <div className="md:col-span-7 space-y-2.5">
+          <div className="p-3.5 rounded-xl bg-teal-50/70 border border-teal-200 space-y-1.5">
+            <h5 className="text-sm font-black text-teal-950">
+              <FuriganaText text={current.titleJp} showFurigana={showFurigana} furiganaType={furiganaType} />
+            </h5>
+            <p className="text-xs font-bold text-teal-800">
+              🇳🇵 {current.titleNe}
+            </p>
+            <p className="text-xs text-slate-700 leading-relaxed font-medium">
+              {current.descJp}
+            </p>
+            {showNepali && (
+              <p className="text-xs text-slate-600 leading-relaxed border-t border-teal-200/60 pt-1">
+                🇳🇵 {current.descNe}
+              </p>
+            )}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/**
+ * 10. Floor & Carpet Blower Diagram (送風乾燥機 / ブロアー)
+ */
+export function FloorBlowerDiagram({ showFurigana = true, furiganaType = 'katakana', showNepali = true }: DiagramProps) {
+  return (
+    <div className="bg-white border border-slate-200 rounded-2xl p-4 sm:p-5 shadow-xs space-y-3">
+      <div className="flex flex-wrap items-center justify-between gap-2 border-b border-slate-100 pb-2.5">
+        <div className="flex items-center gap-2">
+          <span className="p-1.5 rounded-xl bg-cyan-50 text-cyan-700 border border-cyan-200">
+            💨
+          </span>
+          <div>
+            <h4 className="text-sm sm:text-base font-black text-slate-900 flex items-center gap-1.5">
+              <FuriganaText text="[送風乾燥機|そうふうかんそうき]（ブロアー）の[役割|やくわり]と[乾燥手順|かんそうてじゅん]" showFurigana={showFurigana} furiganaType={furiganaType} />
+            </h4>
+            <p className="text-xs text-slate-500 font-medium">
+              🇳🇵 भुइँ र कार्पेट सुकाउने शक्तिशाली पंखा (Air Mover / Carpet Blower)
+            </p>
+          </div>
+        </div>
+        <span className="px-2.5 py-0.5 rounded-full bg-cyan-50 text-cyan-800 border border-cyan-200 text-[10px] font-black uppercase">
+          Drying Equipment
+        </span>
+      </div>
+
+      <div className="p-3.5 rounded-xl bg-cyan-50/70 border border-cyan-200 space-y-2 text-xs">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div className="bg-white p-3 rounded-xl border border-cyan-100 space-y-1">
+            <p className="font-bold text-cyan-950">① ワックス塗布後の急速乾燥</p>
+            <p className="text-slate-600">
+              床面にワックスを塗布した後、送風機を床面と平行に向けて風を送り、乾燥ムラを防ぎながら素早く乾燥させます。
+            </p>
+            <p className="text-[11px] text-cyan-800">🇳🇵 भुइँमा वाक्स लगाएपछि छिटो र बराबर सुकाउन प्रयोग गरिन्छ।</p>
+          </div>
+          <div className="bg-white p-3 rounded-xl border border-cyan-100 space-y-1">
+            <p className="font-bold text-cyan-950">② カーペット洗浄後のカビ・臭い防止</p>
+            <p className="text-slate-600">
+              エクストラクター等で水洗いしたカーペットの奥深くまで風を行き渡らせ、生乾きによる悪臭やカビの発生を完全に防ぎます。
+            </p>
+            <p className="text-[11px] text-cyan-800">🇳🇵 कार्पेट धोएपछि भित्री भागसम्म सुकाएर ढुसी पर्नबाट रोक्छ।</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}

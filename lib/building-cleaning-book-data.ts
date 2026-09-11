@@ -139,7 +139,11 @@ export const BUILDING_CLEANING_BOOK_DATA: BuildingCleaningBookData = {
         { kanji: '特定技能', kana: 'とくていぎのう', romaji: 'tokutei ginou', nepali: 'विशेष सीप (Specified Skilled Worker)', english: 'Specified Skilled Worker', importance: 'CRITICAL' },
         { kanji: '評価試験', kana: 'ひょうかしけん', romaji: 'hyouka shiken', nepali: 'मूल्याङ्कन परीक्षा', english: 'Evaluation Exam', importance: 'CRITICAL' },
         { kanji: '技能実習', kana: 'ぎのうじっしゅう', romaji: 'ginou jisshuu', nepali: 'प्राविधिक प्रशिक्षार्थी तालिम', english: 'Technical Intern Training', importance: 'MEDIUM' },
-        { kanji: '全国ビルメンテナンス協会', kana: 'ぜんこくびるめんてなんすきょうかい', romaji: 'zenkoku biru mentenansu kyoukai', nepali: 'राष्ट्रिय भवन मर्मत संघ (JBMA)', english: 'Japan Building Maintenance Association', importance: 'HIGH' },
+        { kanji: '全国ビルメンテナンス協会', kana: 'ぜんこくびるめんてなんすきょうかい', romaji: 'zenkoku biru mentenansu kyoukai', nepali: 'राष्ट्रिय भवन मर्मत संभार संघ (JBMA)', english: 'Japan Building Maintenance Association', importance: 'HIGH' },
+        { kanji: '建築物', kana: 'けんちくぶつ', romaji: 'kenchikubutsu', nepali: 'व्यावसायिक भवन / संरचना', english: 'Commercial Buildings', importance: 'HIGH' },
+        { kanji: '在留資格', kana: 'ざいりゅうしかく', romaji: 'zairyuu shikaku', nepali: 'बसोबास स्थिति (Visa Status)', english: 'Status of Residence', importance: 'CRITICAL' },
+        { kanji: '免除', kana: 'めんじょ', romaji: 'menjo', nepali: 'परीक्षा छुट (Exemption)', english: 'Exemption', importance: 'HIGH' },
+        { kanji: '厚生労働大臣', kana: 'こうせいろうどうだいじん', romaji: 'kousei roudou daijin', nepali: 'स्वास्थ्य, श्रम तथा कल्याण मन्त्री (MHLW)', english: 'Minister of Health, Labour and Welfare', importance: 'MEDIUM' },
       ],
       sectionTest: [
         {
@@ -253,11 +257,14 @@ export const BUILDING_CLEANING_BOOK_DATA: BuildingCleaningBookData = {
         },
       ],
       vocabulary: [
-        { kanji: '安全衛生', kana: 'あんぜんえいせい', romaji: 'anzen eisei', nepali: 'सुरक्षा तथा स्वास्थ्य', english: 'Safety and Health', importance: 'CRITICAL' },
-        { kanji: '保護具', kana: 'ほごぐ', romaji: 'hogogu', nepali: 'व्यक्तिगत सुरक्षा उपकरण (PPE)', english: 'Personal Protective Equipment', importance: 'CRITICAL' },
-        { kanji: '脚立', kana: 'きゃたつ', romaji: 'kyatatsu', nepali: 'भर्याङ (Stepladder)', english: 'Stepladder', importance: 'HIGH' },
-        { kanji: '安全帯', kana: 'あんぜんたい', romaji: 'anzentai', nepali: 'सुरक्षा पेटी (Safety Harness)', english: 'Safety Harness', importance: 'HIGH' },
-        { kanji: '交差汚染', kana: 'こうさおせん', romaji: 'kousa osen', nepali: 'क्रस-कन्टामिनेसन (एक ठाउँको कीटाणु अर्कोमा सर्नु)', english: 'Cross-Contamination', importance: 'CRITICAL' },
+        { kanji: '安全衛生', kana: 'あんぜんえいせい', romaji: 'anzen eisei', nepali: 'सुरक्षा तथा स्वास्थ्य', english: 'Safety & Health', importance: 'CRITICAL' },
+        { kanji: '保護具', kana: 'ほごぐ', romaji: 'hogogu', nepali: 'व्यक्तिगत सुरक्षा उपकरण (PPE)', english: 'Protective Equipment', importance: 'CRITICAL' },
+        { kanji: '労働災害', kana: 'ろうどうさいがい', romaji: 'roudou saigai', nepali: 'कार्यस्थलमा हुने दुर्घटना (Labor Accident)', english: 'Workplace Accident', importance: 'CRITICAL' },
+        { kanji: '安全データシート', kana: 'あんぜんでーたしーと', romaji: 'anzen deeta shiito', nepali: 'रासायनिक सुरक्षा डाटा पाना (SDS)', english: 'Safety Data Sheet (SDS)', importance: 'CRITICAL' },
+        { kanji: '整理・整頓', kana: 'せいり・せいとん', romaji: 'seiri seiton', nepali: 'सफाइ र व्यवस्थित राख्ने (5S Rules)', english: 'Sort & Set in Order (5S)', importance: 'HIGH' },
+        { kanji: '有毒ガス', kana: 'ゆうどくがす', romaji: 'yuudoku gasu', nepali: 'विषालु ग्यास (Toxic Gas)', english: 'Toxic Gas', importance: 'CRITICAL' },
+        { kanji: '安全靴', kana: 'あんぜんぐつ', romaji: 'anzengutsu', nepali: 'सुरक्षा जुत्ता (Safety Shoes)', english: 'Safety Shoes', importance: 'HIGH' },
+        { kanji: '手指消毒', kana: 'てゆびしょうどく', romaji: 'teyubi shoudoku', nepali: 'हातको कीटाणुशोधन (Hand Sanitization)', english: 'Hand Disinfection', importance: 'HIGH' },
       ],
       sectionTest: [
         {
@@ -379,10 +386,14 @@ export const BUILDING_CLEANING_BOOK_DATA: BuildingCleaningBookData = {
         },
       ],
       vocabulary: [
-        { kanji: '日常清掃', kana: 'にちじょうせいそう', romaji: 'nichijou seisou', nepali: 'दैनिक सरसफाइ', english: 'Routine/Daily Cleaning', importance: 'HIGH' },
-        { kanji: '定期清掃', kana: 'ていきせいそう', romaji: 'teiki seisou', nepali: 'आवधिक सरसफाइ', english: 'Periodic Cleaning', importance: 'HIGH' },
-        { kanji: '点検', kana: 'てんけん', romaji: 'tenken', nepali: 'निरीक्षण / चेकजाँच', english: 'Inspection', importance: 'CRITICAL' },
-        { kanji: '奥から手前へ', kana: 'おくからてまえへ', romaji: 'oku kara temae e', nepali: 'भित्रबाट बाहिरतिर', english: 'From inside to entrance', importance: 'CRITICAL' },
+        { kanji: '日常清掃', kana: 'にちじょうせいそう', romaji: 'nichijou seisou', nepali: 'दैनिक सरसफाइ', english: 'Routine Cleaning', importance: 'CRITICAL' },
+        { kanji: '定期清掃', kana: 'ていきせいそう', romaji: 'teiki seisou', nepali: 'आवधिक सरसफाइ (हप्ता/महिना)', english: 'Periodic Deep Cleaning', importance: 'CRITICAL' },
+        { kanji: '特別清掃', kana: 'とくべつせいそう', romaji: 'tokubetsu seisou', nepali: 'विशेष सरसफाइ (वार्षिक/ठूलो)', english: 'Special Comprehensive Cleaning', importance: 'HIGH' },
+        { kanji: '上から下へ', kana: 'うえからしたへ', romaji: 'ue kara shita he', nepali: 'माथिबाट तल (आधारभूत नियम)', english: 'From Top to Bottom', importance: 'CRITICAL' },
+        { kanji: '奥から手前へ', kana: 'おくからてまえへ', romaji: 'oku kara temae he', nepali: 'भित्रबाट बाहिर (आधारभूत नियम)', english: 'From Back to Front', importance: 'CRITICAL' },
+        { kanji: '乾燥ムラ', kana: 'かんそうむら', romaji: 'kansou mura', nepali: 'असमान सुक्ने समस्या', english: 'Uneven Drying', importance: 'HIGH' },
+        { kanji: '積算見積り', kana: 'せきさんみつもり', romaji: 'sekisan mitsumori', nepali: 'लागत अनुमान / हिसाब', english: 'Cost Estimation', importance: 'MEDIUM' },
+        { kanji: '巡回清掃', kana: 'じゅんかいせいそう', romaji: 'junkai seisou', nepali: 'गस्ती सरसफाइ (Patrol Cleaning)', english: 'Patrol Cleaning', importance: 'HIGH' },
       ],
       sectionTest: [
         {
@@ -484,11 +495,14 @@ export const BUILDING_CLEANING_BOOK_DATA: BuildingCleaningBookData = {
         },
       ],
       vocabulary: [
-        { kanji: '床みがき機（ポリッシャー）', kana: 'ゆかみがきき（ぽりっしゃー）', romaji: 'porisshaa', nepali: 'फ्लोर पोलिसर (भुइँ माझ्ने मेसिन)', english: 'Floor Polishing Machine', importance: 'CRITICAL' },
-        { kanji: '真空掃除機', kana: 'しんくうそうじき', romaji: 'shinkuu soujiki', nepali: 'भ्याकुम क्लिनर', english: 'Vacuum Cleaner', importance: 'HIGH' },
-        { kanji: 'エクストラクター', kana: 'えくすとらくたー', romaji: 'ekusutorakutaa', nepali: 'कार्पेट एक्स्ट्र्याक्टर', english: 'Carpet Extractor', importance: 'CRITICAL' },
-        { kanji: 'スクイジー', kana: 'すくいじー', romaji: 'sukuijii', nepali: 'स्क्विजी (सिसाको पानी तान्ने रबर)', english: 'Squeegee', importance: 'CRITICAL' },
-        { kanji: '自在ほうき', kana: 'じざいほうき', romaji: 'jizai houki', nepali: 'घुम्ने कुचो', english: 'Swivel Broom', importance: 'MEDIUM' },
+        { kanji: '真空掃除機', kana: 'しんくうそうじき', romaji: 'shinkuu soujiki', nepali: 'भ्याकुम क्लिनर', english: 'Vacuum Cleaner', importance: 'CRITICAL' },
+        { kanji: '床みがき機', kana: 'ゆかみがきき', romaji: 'yuka migakiki', nepali: 'फ्लोर पोलिसर (Polisher)', english: 'Floor Polisher', importance: 'CRITICAL' },
+        { kanji: 'エクストラクター', kana: 'えくすとらくたー', romaji: 'ekusutorakutaa', nepali: 'कार्पेट एक्स्ट्र्याक्टर (सफाइ抽出機)', english: 'Carpet Extractor', importance: 'CRITICAL' },
+        { kanji: '自動床洗浄機', kana: 'じどうゆかせんじょうき', romaji: 'jidou yuka senjouki', nepali: 'स्वचालित भुइँ धुने मेसिन (Auto-Scrubber)', english: 'Automatic Floor Scrubber', importance: 'CRITICAL' },
+        { kanji: '回転ブラシ', kana: 'かいてんぶらし', romaji: 'kaiten burashi', nepali: 'घुम्ने ब्रश', english: 'Rotating Brush', importance: 'HIGH' },
+        { kanji: 'パッド台', kana: 'ぱっどだい', romaji: 'paddodai', nepali: 'प्याड राख्ने आधार (Pad Holder)', english: 'Pad Drive / Holder', importance: 'HIGH' },
+        { kanji: '延長管', kana: 'えんちょうかん', romaji: 'enchoukan', nepali: 'लामो रड (Extension Wand)', english: 'Extension Wand', importance: 'MEDIUM' },
+        { kanji: 'フィルター点検', kana: 'ふぃるたーてんけん', romaji: 'firutaa tenken', nepali: 'फिल्टर जाँच तथा सफाइ', english: 'Filter Inspection', importance: 'HIGH' },
       ],
       sectionTest: [
         {
@@ -592,10 +606,12 @@ export const BUILDING_CLEANING_BOOK_DATA: BuildingCleaningBookData = {
       vocabulary: [
         { kanji: '酸性洗剤', kana: 'さんせいせんざい', romaji: 'sansei senzai', nepali: 'एसिडिक डिटर्जेन्ट (अम्लीय)', english: 'Acidic Detergent', importance: 'CRITICAL' },
         { kanji: 'アルカリ性洗剤', kana: 'あるかりせいせんざい', romaji: 'arukarisei senzai', nepali: 'अल्कालाइन डिटर्जेन्ट (क्षारीय)', english: 'Alkaline Detergent', importance: 'CRITICAL' },
-        { kanji: '中性洗剤', kana: 'ちゅうせいせんざい', romaji: 'chuusei senzai', nepali: 'न्युट्रल डिटर्जेन्ट (तटस्थ)', english: 'Neutral Detergent', importance: 'HIGH' },
-        { kanji: '尿石', kana: 'にょうせき', romaji: 'nyouseki', nepali: 'पिसाबको कडा दाग (Urine Stone)', english: 'Urine Scale / Stone', importance: 'CRITICAL' },
-        { kanji: '希釈', kana: 'きしゃく', romaji: 'kishaku', nepali: 'पातलो पार्ने (Dilution)', english: 'Dilution', importance: 'HIGH' },
-        { kanji: '樹脂ワックス', kana: 'じゅしわっくす', romaji: 'jushi wakkusu', nepali: 'रेजिन वाक्स', english: 'Resin Floor Wax', importance: 'HIGH' },
+        { kanji: '中性洗剤', kana: 'ちゅうせいせんざい', romaji: 'chuusei senzai', nepali: 'न्युट्रल डिटर्जेन्ट (तटस्थ)', english: 'Neutral Detergent', importance: 'CRITICAL' },
+        { kanji: '希釈倍率', kana: 'きしゃくばいりつ', romaji: 'kishaku bairitsu', nepali: 'पातलो पार्ने अनुपात (Dilution Ratio)', english: 'Dilution Ratio', importance: 'CRITICAL' },
+        { kanji: '塩素系漂白剤', kana: 'えんそけいひょうはくざい', romaji: 'ensokei hyouhakuzai', nepali: 'क्लोरिन ब्लिच (मिश्रण निषेध)', english: 'Chlorine Bleach', importance: 'CRITICAL' },
+        { kanji: '塩素ガス', kana: 'えんそがす', romaji: 'enso gasu', nepali: 'विषालु क्लोरिन ग्यास', english: 'Chlorine Gas', importance: 'CRITICAL' },
+        { kanji: '剥離剤', kana: 'はくりざい', romaji: 'hakurizai', nepali: 'वाक्स उप्काउने रसायन (Stripper)', english: 'Stripping Agent', importance: 'CRITICAL' },
+        { kanji: '樹脂ワックス', kana: 'じゅしわっくす', romaji: 'jushi wakkusu', nepali: 'फ्लोर पोलिस वाक्स', english: 'Resin Wax', importance: 'HIGH' },
       ],
       sectionTest: [
         {
@@ -699,11 +715,14 @@ export const BUILDING_CLEANING_BOOK_DATA: BuildingCleaningBookData = {
         },
       ],
       vocabulary: [
-        { kanji: '弾性床材', kana: 'だんせいゆかざい', romaji: 'dansei yukazai', nepali: 'इलास्टिक भुइँ (भिनाइल/लिनोलियम)', english: 'Resilient/Elastic Flooring', importance: 'HIGH' },
-        { kanji: '硬性床材', kana: 'こうせいゆかざい', romaji: 'kousei yukazai', nepali: 'कडा भुइँ (मार्बल/ग्रेनाइट)', english: 'Hard Flooring (Marble/Stone)', importance: 'HIGH' },
-        { kanji: '大理石', kana: 'だいりせき', romaji: 'dairiseki', nepali: 'मार्बल ढुङ्गा', english: 'Marble', importance: 'CRITICAL' },
-        { kanji: '剥離剤', kana: 'はくりざい', romaji: 'hakurizai', nepali: 'वाक्स उप्काउने रसायन (Wax Stripper)', english: 'Wax Stripper', importance: 'CRITICAL' },
-        { kanji: '白化', kana: 'はっか', romaji: 'hakka', nepali: 'वाक्स नसुकेर सेतो हुनु', english: 'Blooming / Blushing (White hazing)', importance: 'MEDIUM' },
+        { kanji: '弾性床材', kana: 'だんせいゆかざい', romaji: 'dansei yukazai', nepali: 'लचिलो भुइँ (भिनाइल/लिनोलियम)', english: 'Resilient Flooring', importance: 'CRITICAL' },
+        { kanji: '硬性床材', kana: 'こうせいゆかざい', romaji: 'kousei yukazai', nepali: 'कडा भुइँ (मार्बल/ग्रेनाइट)', english: 'Hard Flooring', importance: 'CRITICAL' },
+        { kanji: '繊維床材', kana: 'せんいゆかざい', romaji: "sen'i yukazai", nepali: 'कार्पेट भुइँ (Carpet)', english: 'Textile / Carpet Flooring', importance: 'HIGH' },
+        { kanji: '大理石', kana: 'だいりせき', romaji: 'dairiseki', nepali: 'मार्बल (एसिड निषेध)', english: 'Marble (Acid Sensitive)', importance: 'CRITICAL' },
+        { kanji: '黒パッド', kana: 'くろぱっど', romaji: 'kuro paddo', nepali: 'कालो कडा प्याड (वाक्स उप्काउने)', english: 'Black Stripping Pad', importance: 'CRITICAL' },
+        { kanji: '赤パッド', kana: 'あかぱっど', romaji: 'aka paddo', nepali: 'रातो मध्यम प्याड (दैनिक सफाइ)', english: 'Red Cleaning Pad', importance: 'HIGH' },
+        { kanji: '白パッド', kana: 'しろぱっど', romaji: 'shiro paddo', nepali: 'सेतो नरम प्याड (चम्काउने/पोलिस)', english: 'White Buffing Pad', importance: 'HIGH' },
+        { kanji: '送風乾燥', kana: 'そうふうかんそう', romaji: 'soufuu kansou', nepali: 'पंखाले छिटो सुकाउने काम', english: 'Forced-Air Drying', importance: 'HIGH' },
       ],
       sectionTest: [
         {
@@ -803,10 +822,14 @@ export const BUILDING_CLEANING_BOOK_DATA: BuildingCleaningBookData = {
         },
       ],
       vocabulary: [
-        { kanji: 'ウォッシャー', kana: 'うぉっしゃー', romaji: 'wosshaa', nepali: 'वासर (सिसामा फिँज लगाउने स्पन्ज)', english: 'Window Washer', importance: 'CRITICAL' },
-        { kanji: 'スクイジー', kana: 'すくいじー', romaji: 'sukuijii', nepali: 'स्क्विजी (पानी तान्ने औजार)', english: 'Window Squeegee', importance: 'CRITICAL' },
-        { kanji: '水切り', kana: 'みずきり', romaji: 'mizukiri', nepali: 'पानी काट्ने / पानी हटाउने', english: 'Water Removal / Wiper Action', importance: 'HIGH' },
-        { kanji: 'サッシ枠', kana: 'さっしわく', romaji: 'sasshiwaku', nepali: 'झ्यालको फ्रेम (Sash Frame)', english: 'Window Frame / Sash', importance: 'MEDIUM' },
+        { kanji: 'スクイジー', kana: 'すくいじー', romaji: 'sukuijii', nepali: 'स्क्विजी (सिसाको पानी तान्ने)', english: 'Window Squeegee', importance: 'CRITICAL' },
+        { kanji: 'ウォッシャー', kana: 'うぉっしゃー', romaji: 'wosshaa', nepali: 'सिसामा डिटर्जेन्ट लगाउने स्पन्ज (T-Bar)', english: 'Window Washer / T-bar', importance: 'CRITICAL' },
+        { kanji: 'ゴムブレード', kana: 'ごむぶれーど', romaji: 'gomu bureedo', nepali: 'रबरको ब्लेड (काट्ने भाग)', english: 'Rubber Blade', importance: 'HIGH' },
+        { kanji: '水切り', kana: 'みずきり', romaji: 'mizukiri', nepali: 'पानी तान्ने प्रक्रिया', english: 'Water Extraction Action', importance: 'HIGH' },
+        { kanji: '高所作業', kana: 'こうしょさぎょう', romaji: 'kousho sagyou', nepali: 'उचाइमा गरिने काम', english: 'High-Place Operations', importance: 'CRITICAL' },
+        { kanji: '安全帯', kana: 'あんぜんたい', romaji: 'anzentai', nepali: 'सुरक्षा पेटी (Safety Harness)', english: 'Safety Harness', importance: 'CRITICAL' },
+        { kanji: '強風中止', kana: 'きょうふうちゅうし', romaji: 'kyoufuu chuushi', nepali: 'हावाहुरी चल्दा काम रोक्ने नियम', english: 'Stop Work in High Winds', importance: 'CRITICAL' },
+        { kanji: '水滴痕', kana: 'すいてきこん', romaji: 'suitekikon', nepali: 'पानीको दाग / छिटा', english: 'Water Droplet Marks', importance: 'MEDIUM' },
       ],
       sectionTest: [
         {
@@ -892,11 +915,14 @@ export const BUILDING_CLEANING_BOOK_DATA: BuildingCleaningBookData = {
         },
       ],
       vocabulary: [
-        { kanji: '衛生陶器', kana: 'えいせいとうき', romaji: 'eisei touki', nepali: 'सेरामिक शौचालय सामग्री (कमोड/बेसिन)', english: 'Sanitary Ware (Porcelain)', importance: 'HIGH' },
-        { kanji: '小便器', kana: 'しょうべんき', romaji: 'shoubenki', nepali: 'युरिनल (पुरुष पिसाब फेर्ने भाँडो)', english: 'Urinal', importance: 'HIGH' },
-        { kanji: '大便器', kana: 'だいべんき', romaji: 'daibenki', nepali: 'कमोड (Toilet Bowl)', english: 'Toilet Bowl / Closet', importance: 'HIGH' },
-        { kanji: '清潔から不潔へ', kana: 'せいけつからふけつへ', romaji: 'seiketsu kara fuketsu e', nepali: 'सफा ठाउँबाट फोहोर ठाउँतिर', english: 'From clean to soiled areas', importance: 'CRITICAL' },
-        { kanji: '水栓金具', kana: 'すいせんかなぐ', romaji: 'suisen kanagu', nepali: 'पानीको धारा/टुटी (Faucet)', english: 'Water Faucets & Metal Fittings', importance: 'MEDIUM' },
+        { kanji: '尿石', kana: 'にょうせき', romaji: 'nyouseki', nepali: 'पिसाबको कडा दाग (Urine Stone)', english: 'Urine Scale', importance: 'CRITICAL' },
+        { kanji: '水垢', kana: 'みずあか', romaji: 'mizuaka', nepali: 'पानीको दाग (Limescale)', english: 'Water Scale', importance: 'HIGH' },
+        { kanji: '交差汚染', kana: 'こうさおせん', romaji: 'kousa osen', nepali: 'क्रस-कन्टामिनेसन (कीटाणु सर्नु)', english: 'Cross-Contamination', importance: 'CRITICAL' },
+        { kanji: '衛生陶器', kana: 'えいせいとうき', romaji: 'eisei touki', nepali: 'कमोड तथा युरिनल टायल/मार्बल', english: 'Sanitary Ceramics', importance: 'HIGH' },
+        { kanji: '使い捨て手袋', kana: 'つかいすててぶくろ', romaji: 'tsukaisute tebukuro', nepali: 'एकपटक प्रयोग हुने पन्जा (Disposable)', english: 'Disposable Gloves', importance: 'CRITICAL' },
+        { kanji: '消毒用エタノール', kana: 'しょうどくようえたのーる', romaji: 'shoudokuyou etanooru', nepali: 'कीटाणुनाशक अल्कोहल', english: 'Disinfectant Alcohol', importance: 'HIGH' },
+        { kanji: '赤色モップ', kana: 'あかいろもっぷ', romaji: 'akairo moppu', nepali: 'रातो मप (शौचालय専用)', english: 'Red Mop (Restroom Only)', importance: 'CRITICAL' },
+        { kanji: '便座除菌', kana: 'べんざじょきん', romaji: 'benza jokin', nepali: 'ट्वाइलेट सिट कीटाणुरहित पार्ने', english: 'Toilet Seat Sanitization', importance: 'HIGH' },
       ],
       sectionTest: [
         {
@@ -983,9 +1009,13 @@ export const BUILDING_CLEANING_BOOK_DATA: BuildingCleaningBookData = {
       ],
       vocabulary: [
         { kanji: 'ベッドメイキング', kana: 'べっどめいきんぐ', romaji: 'beddo meikingu', nepali: 'ओछ्यान मिलाउने काम', english: 'Bed Making', importance: 'CRITICAL' },
-        { kanji: 'リネン', kana: 'りねん', romaji: 'rinen', nepali: 'तन्ना, खोल, तौलिया (Linen)', english: 'Bed Linens (Sheets/Pillowcases)', importance: 'HIGH' },
-        { kanji: 'アメニティ', kana: 'あめにてぃ', romaji: 'ameniti', nepali: 'पाहुनाका लागि राखिने सामग्री (Amenities)', english: 'Guest Amenities', importance: 'HIGH' },
-        { kanji: '忘れ物（遺失物）', kana: 'わすれもの（いしつぶつ）', romaji: 'wasuremono', nepali: 'छुटेका/बिर्सिएका सामान', english: 'Lost and Found', importance: 'CRITICAL' },
+        { kanji: 'リネンサプライ', kana: 'りねんさぷらい', romaji: 'rinen sapurai', nepali: 'तन्ना र सिरकका खोल (Linen)', english: 'Linen Supply', importance: 'CRITICAL' },
+        { kanji: 'シーツ交換', kana: 'しーつこうかん', romaji: 'shiitsu koukan', nepali: 'तन्ना फेर्ने काम', english: 'Bedsheet Exchange', importance: 'HIGH' },
+        { kanji: 'ピロケース', kana: 'ぴろけーす', romaji: 'piro keesu', nepali: 'तकियाको खोल (Pillowcase)', english: 'Pillowcase', importance: 'MEDIUM' },
+        { kanji: '忘れ物報告', kana: 'わすれものほうこく', romaji: 'wasuremono houkoku', nepali: 'बिर्सिएको सामान रिपोर्ट गर्ने', english: 'Lost Property Reporting', importance: 'CRITICAL' },
+        { kanji: 'アメニティ補充', kana: 'あめてぃほじゅう', romaji: 'ameniti hojuu', nepali: 'पाहुनाका सामग्री थप्ने (Amenities)', english: 'Amenities Replenishment', importance: 'HIGH' },
+        { kanji: '清潔リネン', kana: 'せいけつりねん', romaji: 'seiketsu rinen', nepali: 'सफा तन्ना (भुइँमा राख्न निषेध)', english: 'Clean Linen', importance: 'CRITICAL' },
+        { kanji: '最終点検', kana: 'さいしゅうてんけん', romaji: 'saishuu tenken', nepali: 'अन्तिम निरीक्षण (Final Check)', english: 'Final Room Inspection', importance: 'HIGH' },
       ],
       sectionTest: [
         {
@@ -1071,11 +1101,14 @@ export const BUILDING_CLEANING_BOOK_DATA: BuildingCleaningBookData = {
         },
       ],
       vocabulary: [
-        { kanji: '廃棄物', kana: 'はいきぶつ', romaji: 'haikibutsu', nepali: 'फोहोरमैला (Waste)', english: 'Waste / Garbage', importance: 'CRITICAL' },
-        { kanji: '分別', kana: 'ぶんべつ', romaji: 'bunbetsu', nepali: 'वर्गीकरण / छुट्याउने काम', english: 'Segregation / Separation', importance: 'CRITICAL' },
-        { kanji: '燃えるごみ（可燃ごみ）', kana: 'もえるごみ', romaji: 'moeru gomi', nepali: 'जल्ने फोहोर', english: 'Burnable Garbage', importance: 'HIGH' },
-        { kanji: '燃えないごみ（不燃ごみ）', kana: 'もえないごみ', romaji: 'moenai gomi', nepali: 'नजल्ने फोहोर', english: 'Non-burnable Garbage', importance: 'HIGH' },
+        { kanji: '分別基準', kana: 'ぶんべつきじゅん', romaji: 'bunbetsu kijun', nepali: 'फोहोर वर्गीकरणको नियम', english: 'Segregation Standards', importance: 'CRITICAL' },
+        { kanji: '可燃ごみ', kana: 'かねんごみ', romaji: 'kanen gomi', nepali: 'जल्ने फोहोर (Combustible)', english: 'Combustible Waste', importance: 'CRITICAL' },
+        { kanji: '不燃ごみ', kana: 'ふねんごみ', romaji: 'funen gomi', nepali: 'नजल्ने फोहोर (Non-combustible)', english: 'Non-Combustible Waste', importance: 'CRITICAL' },
         { kanji: '資源ごみ', kana: 'しげんごみ', romaji: 'shigen gomi', nepali: 'पुनःप्रयोग हुने फोहोर (Recyclable)', english: 'Recyclable Waste', importance: 'HIGH' },
+        { kanji: '感染性廃棄物', kana: 'かんせんせいはいきぶつ', romaji: 'kansensei haikibutsu', nepali: 'संक्रामक फोहोर (रगत, थुक आदि)', english: 'Infectious Medical Waste', importance: 'CRITICAL' },
+        { kanji: '割れガラス', kana: 'われがらす', romaji: 'ware garasu', nepali: 'फुटेको सिसा (कागजमा बेर्ने नियम)', english: 'Broken Glass Caution', importance: 'HIGH' },
+        { kanji: '密閉容器', kana: 'みっぺいようき', romaji: 'mippei youki', nepali: 'हावा नछिर्ने बन्द भाँडो (Airtight)', english: 'Airtight Container', importance: 'HIGH' },
+        { kanji: '地方自治体ルール', kana: 'ちほうじちたいるーる', romaji: 'chihou jichitai ruuru', nepali: 'स्थानीय नगरपालिकाको नियम', english: 'Local Municipal Ordinances', importance: 'HIGH' },
       ],
       sectionTest: [
         {
@@ -1161,10 +1194,14 @@ export const BUILDING_CLEANING_BOOK_DATA: BuildingCleaningBookData = {
         },
       ],
       vocabulary: [
-        { kanji: '報告・連絡・相談（ホウレンソウ）', kana: 'ほうれんそう', romaji: 'hourensou', nepali: 'प्रतिवेदन, सम्पर्क र सल्लाह', english: 'Report, Communicate, Consult', importance: 'CRITICAL' },
-        { kanji: '自己判断', kana: 'じこはんだん', romaji: 'jiko handan', nepali: 'आफैं मनलाग्दी अनुमान/निर्णय गर्ने', english: 'Self-judgment (Arbitrary decisions)', importance: 'HIGH' },
-        { kanji: '失礼します', kana: 'しつれいします', romaji: 'shitsurei shimasu', nepali: 'माफ गर्नुहोस् (Excuse me)', english: 'Excuse me', importance: 'CRITICAL' },
-        { kanji: '身だしなみ', kana: 'みだしなみ', romaji: 'midashinami', nepali: 'व्यक्तिगत सरसफाइ र शिष्ट पोशाक', english: 'Personal Grooming and Appearance', importance: 'MEDIUM' },
+        { kanji: '報告・連絡・相談', kana: 'ほうれんそう', romaji: 'hourensou', nepali: 'सूचना, सम्पर्क, सल्लाह (Ho-Ren-So)', english: 'Report, Contact, Consult', importance: 'CRITICAL' },
+        { kanji: '身だしなみ', kana: 'みだしなみ', romaji: 'midashinami', nepali: 'सफा र मर्यादित पोशाक', english: 'Personal Grooming', importance: 'CRITICAL' },
+        { kanji: '指差し呼称', kana: 'ゆびさしこしょう', romaji: 'yubisashi koshou', nepali: 'औंलाले देखाएर बोल्ने सुरक्षा जाँच', english: 'Pointing and Calling', importance: 'HIGH' },
+        { kanji: '通行者優先', kana: 'つうこうしゃゆうせん', romaji: 'tsuukousha yuusen', nepali: 'पैदलयात्रीलाई पहिलो प्राथमिकता', english: 'Pedestrian Priority', importance: 'CRITICAL' },
+        { kanji: '会釈・挨拶', kana: 'えしゃく・あいさつ', romaji: 'eshaku aisatsu', nepali: 'टाउको निहुराएर नमस्कार गर्ने', english: 'Greeting & Bowing', importance: 'HIGH' },
+        { kanji: 'クッション言葉', kana: 'くっしょんことば', romaji: 'kusshon kotoba', nepali: 'नम्र बोली (恐れ入ります等)', english: 'Cushion Words / Polite Phrases', importance: 'MEDIUM' },
+        { kanji: '苦情対応', kana: 'くじょうたいおう', romaji: 'kujou taiou', nepali: 'गुनासो व्यवस्थापन (Complaint Response)', english: 'Complaint Handling', importance: 'HIGH' },
+        { kanji: '勝手な判断禁止', kana: 'かってなはんだんきんし', romaji: 'katte na handan kinshi', nepali: 'आफैं अन्दाजी निर्णय गर्न मनाही', english: 'No Self-Discretion Rule', importance: 'CRITICAL' },
       ],
       sectionTest: [
         {
@@ -1250,10 +1287,14 @@ export const BUILDING_CLEANING_BOOK_DATA: BuildingCleaningBookData = {
         },
       ],
       vocabulary: [
-        { kanji: '真偽法', kana: 'しんぎほう', romaji: 'shingihou', nepali: 'सही वा गलत (○×) प्रश्न ढाँचा', english: 'True / False (○×) Format', importance: 'HIGH' },
-        { kanji: '択一式', kana: 'たくいつしき', romaji: 'takuitsushiki', nepali: 'बहुविकल्पीय छनोट ढाँचा (Multiple Choice)', english: 'Multiple Choice Format', importance: 'HIGH' },
-        { kanji: '実技試験', kana: 'じつぎしけん', romaji: 'jitsugi shiken', nepali: 'प्रयोगात्मक परीक्षा (Practical Exam)', english: 'Practical Skill Test', importance: 'CRITICAL' },
-        { kanji: '合格基準', kana: 'ごうかくきじゅん', romaji: 'goukaku kijun', nepali: 'उत्तीर्ण मापदण्ड (Pass Criteria)', english: 'Passing Criteria (60%+)', importance: 'HIGH' },
+        { kanji: '学科試験', kana: 'がっかしけん', romaji: 'gakka shiken', nepali: 'विषयगत सैद्धान्तिक परीक्षा (CBT)', english: 'Theory CBT Exam', importance: 'CRITICAL' },
+        { kanji: '判断試験', kana: 'はんだんしけん', romaji: 'handan shiken', nepali: 'निर्णय परीक्षा (○× / चित्र निर्णय)', english: 'Judgment Evaluation Test', importance: 'CRITICAL' },
+        { kanji: '実技試験', kana: 'じつぎしけん', romaji: 'jitsugi shiken', nepali: 'व्यावहारिक कार्य परीक्षा', english: 'Practical Skill Exam', importance: 'CRITICAL' },
+        { kanji: '合格基準', kana: 'ごうかくきじゅん', romaji: 'goukaku kijun', nepali: 'उत्तीर्ण अंक (६०% वा माथि)', english: 'Passing Mark (60%+)', importance: 'CRITICAL' },
+        { kanji: 'CBT方式', kana: 'しーびーてぃーほうしき', romaji: 'shiibiitii houshiki', nepali: 'कम्प्युटरमा आधारित परीक्षा प्रणाली', english: 'Computer-Based Testing', importance: 'CRITICAL' },
+        { kanji: '実技ペーパーテスト', kana: 'じつぎぺーぱーてすと', romaji: 'jitsugi peepaa tesuto', nepali: 'व्यावहारिक कागजी चित्र परीक्षा', english: 'Practical Paper Test', importance: 'HIGH' },
+        { kanji: '試験時間', kana: 'しけんじかん', romaji: 'shiken jikan', nepali: 'परीक्षाको समय (६० मिनेट)', english: 'Exam Duration (60 mins)', importance: 'HIGH' },
+        { kanji: '実施要領', kana: 'じっしようりょう', romaji: 'jisshi youryou', nepali: 'परीक्षा सञ्चालन निर्देशिका (JBMA)', english: 'Official Guidelines', importance: 'HIGH' },
       ],
       sectionTest: [
         {
