@@ -62,11 +62,19 @@ export default async function SectorBookPage({ params }: Props) {
   }
 
   if (resolvedParams.sector.includes('building')) {
-    return <BuildingCleaningBookReader country={resolvedParams.country} />;
+    return (
+      <main className="h-screen w-full overflow-hidden bg-slate-50">
+        <BuildingCleaningBookReader country={resolvedParams.country} />
+      </main>
+    );
   }
 
   if (resolvedParams.sector === 'nursing' || resolvedParams.sector === 'caregiving') {
-    return <CaregivingBookReader country={resolvedParams.country} />;
+    return (
+      <main className="h-screen w-full overflow-hidden bg-slate-50">
+        <CaregivingBookReader country={resolvedParams.country} />
+      </main>
+    );
   }
 
   notFound();

@@ -81,13 +81,20 @@ export default function MainLayoutWrapper({ children }: { children: React.ReactN
     localStorage.setItem('jkh_sidebar_collapsed', String(val));
   };
 
-  // Standalone layout for Admin CMS
-  if (pathname?.startsWith('/admin')) {
+  // Standalone layout for Admin CMS and Fullscreen Book Readers
+  const isBookReader = pathname?.endsWith('/book');
+  if (pathname?.startsWith('/admin') || isBookReader) {
     return (
       <ThemeProvider>
         <LanguageProvider>
           <CountryProvider>
-            {children}
+            {isBookReader ? (
+              <div className="h-screen w-full overflow-hidden bg-slate-50">
+                {children}
+              </div>
+            ) : (
+              children
+            )}
           </CountryProvider>
         </LanguageProvider>
       </ThemeProvider>

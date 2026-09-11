@@ -226,7 +226,7 @@ export default function BuildingCleaningBookReader({ country = 'japan', isEmbedd
   }, [submittedSections, testAnswers]);
 
   return (
-    <div className={`${isEmbedded ? 'h-full min-h-[75vh]' : 'h-screen'} flex flex-col bg-slate-50 text-slate-900 overflow-hidden font-sans selection:bg-emerald-100 selection:text-emerald-900`}>
+    <div className={`${isEmbedded ? 'h-full min-h-[75vh]' : 'h-screen max-h-screen w-full'} flex flex-col bg-slate-50 text-slate-900 overflow-hidden font-sans selection:bg-emerald-100 selection:text-emerald-900`}>
       
       {/* Top Sticky Navigation Bar - Light & Calm */}
       <header className="shrink-0 sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-slate-200 shadow-xs">
