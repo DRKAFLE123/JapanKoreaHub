@@ -23,7 +23,6 @@ import {
   Wrench,
   Bookmark,
   Share2,
-  Download,
   Clock,
   Timer
 } from 'lucide-react';

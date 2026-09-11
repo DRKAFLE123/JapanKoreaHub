@@ -1,7 +1,7 @@
 'use client';
 import React, { useState } from 'react';
 import Link from 'next/link';
-import { ArrowLeft, BookOpen, Download, Volume2, Play, Pause, CheckCircle2, XCircle, ShieldCheck, Clock, FileText, HelpCircle, GraduationCap, Briefcase, Sparkles, ExternalLink } from 'lucide-react';
+import { ArrowLeft, BookOpen, Volume2, Play, Pause, CheckCircle2, XCircle, ShieldCheck, Clock, FileText, HelpCircle, GraduationCap, Briefcase, Sparkles, ExternalLink } from 'lucide-react';
 import BottomTabBar from '@/components/layout/BottomTabBar';
 import { SSWSectorData } from '@/lib/ssw-sectors-data';
 import BuildingCleaningBookReader from '@/components/building-cleaning/BuildingCleaningBookReader';
@@ -191,15 +191,6 @@ export default function SSWSectorDetailClient({ country, sectorKey, sectorData }
                     <ExternalLink className="w-4 h-4 text-emerald-600" />
                     Open Fullscreen Reader
                   </Link>
-
-                  <a
-                    href="/BuildingCleaningBookwithmodelqsn.docx"
-                    download="BuildingCleaningBookwithmodelqsn.docx"
-                    className="px-4 py-3 rounded-2xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs border border-slate-200 transition-all flex items-center gap-1.5"
-                  >
-                    <Download className="w-4 h-4 text-indigo-600" />
-                    Download Original (.docx)
-                  </a>
                 </div>
               </section>
             )}
@@ -241,15 +232,6 @@ export default function SSWSectorDetailClient({ country, sectorKey, sectorData }
                     <ExternalLink className="w-4 h-4 text-emerald-600" />
                     Open Fullscreen Reader
                   </Link>
-
-                  <a
-                    href="/SSW Caregiving (介護) Full Study Textbook & Web Curriculum (Japanese-Nepali).docx"
-                    download="SSW_Caregiving_Full_Study_Textbook.docx"
-                    className="px-4 py-3 rounded-2xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs border border-slate-200 transition-all flex items-center gap-1.5"
-                  >
-                    <Download className="w-4 h-4 text-indigo-600" />
-                    Download Original (.docx)
-                  </a>
                 </div>
               </section>
             )}
@@ -283,71 +265,78 @@ export default function SSWSectorDetailClient({ country, sectorKey, sectorData }
           </div>
         )}
 
-        {/* TAB 2: TEXTBOOKS & DOWNLOADS */}
+        {/* TAB 2: TEXTBOOKS & STUDY MATERIALS */}
         {activeTab === 'textbooks' && (
           <div className="space-y-6">
-            <div className="bg-amber-50 border border-amber-200 p-4 rounded-2xl text-xs text-amber-900 font-medium">
-              💡 <strong>Official Study Materials:</strong> Download government-approved PDF textbooks and training manuals directly for offline reading.
+            <div className="bg-emerald-50 border border-emerald-200 p-4 rounded-2xl text-xs text-emerald-900 font-medium">
+              💡 <strong>Official Study Materials:</strong> Government-approved textbooks and curriculum manuals available for interactive online study.
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {sectorData.textbooks.map((tb, i) => (
-                <div key={tb.id} className="bg-white border border-slate-200 rounded-3xl p-6 shadow-xs flex flex-col justify-between space-y-4 hover:border-emerald-300 transition-all">
-                  <div className="space-y-3">
-                    <div className="flex items-center justify-between">
-                      <span className="px-2.5 py-0.5 rounded-lg bg-indigo-100 text-indigo-800 font-bold text-[10px]">
-                        {tb.language}
-                      </span>
-                      <span className="text-xs font-bold text-slate-400">{tb.fileSize}</span>
+              {sectorData.textbooks.map((tb, i) => {
+                const hasInteractiveBook = (sectorKey.includes('building') && (tb.id.includes('clean') || i === 0)) ||
+                  ((sectorKey === 'nursing' || sectorKey === 'caregiving') && (tb.id.includes('care') || tb.id.includes('nurs') || i === 0));
+
+                return (
+                  <div key={tb.id} className="bg-white border border-slate-200 rounded-3xl p-6 shadow-xs flex flex-col justify-between space-y-4 hover:border-emerald-300 transition-all">
+                    <div className="space-y-3">
+                      <div className="flex items-center justify-between">
+                        <span className="px-2.5 py-0.5 rounded-lg bg-indigo-100 text-indigo-800 font-bold text-[10px]">
+                          {tb.language}
+                        </span>
+                        <span className="text-xs font-bold text-slate-400">{tb.fileSize}</span>
+                      </div>
+
+                      <h3 className="font-black text-base text-slate-900 leading-snug">{tb.title}</h3>
+                      <p className="text-xs font-bold text-indigo-700">🇳🇵 {tb.titleNe}</p>
+                      <p className="text-xs text-slate-600 leading-relaxed">{tb.description}</p>
+
+                      <div className="pt-2 border-t border-slate-100 space-y-1">
+                        <p className="text-[11px] font-black uppercase text-slate-400">Chapters Covered:</p>
+                        <ul className="space-y-1">
+                          {tb.chapters.map((ch, i) => (
+                            <li key={i} className="text-xs font-semibold text-slate-700 flex items-center gap-1.5">
+                              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+                              {ch}
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
                     </div>
 
-                    <h3 className="font-black text-base text-slate-900 leading-snug">{tb.title}</h3>
-                    <p className="text-xs font-bold text-indigo-700">🇳🇵 {tb.titleNe}</p>
-                    <p className="text-xs text-slate-600 leading-relaxed">{tb.description}</p>
-
-                    <div className="pt-2 border-t border-slate-100 space-y-1">
-                      <p className="text-[11px] font-black uppercase text-slate-400">Chapters Covered:</p>
-                      <ul className="space-y-1">
-                        {tb.chapters.map((ch, i) => (
-                          <li key={i} className="text-xs font-semibold text-slate-700 flex items-center gap-1.5">
-                            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
-                            {ch}
-                          </li>
-                        ))}
-                      </ul>
+                    <div className="pt-2">
+                      {hasInteractiveBook ? (
+                        <div className="flex flex-col sm:flex-row items-center gap-2">
+                          <button
+                            onClick={() => setActiveTab('book')}
+                            className="w-full py-3 bg-emerald-600 hover:bg-emerald-500 text-white rounded-2xl font-black text-xs text-center flex items-center justify-center gap-2 shadow-md hover:shadow-lg transition-all cursor-pointer"
+                          >
+                            <BookOpen className="w-4 h-4 text-white" />
+                            📖 Study Online (12 Chapters + CBT Quizzes)
+                          </button>
+                          <Link
+                            href={`/${country}/work/${sectorKey}/book`}
+                            className="w-full sm:w-auto px-4 py-3 bg-white hover:bg-slate-50 text-slate-800 rounded-2xl font-bold text-xs text-center flex items-center justify-center gap-1.5 border border-slate-200 transition-all cursor-pointer shadow-xs whitespace-nowrap"
+                          >
+                            <ExternalLink className="w-4 h-4 text-emerald-600" />
+                            Fullscreen
+                          </Link>
+                        </div>
+                      ) : (
+                        <a
+                          href={tb.pdfUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="w-full py-3 bg-emerald-600 hover:bg-emerald-500 text-white rounded-2xl font-black text-xs text-center flex items-center justify-center gap-2 shadow-md hover:shadow-lg transition-all cursor-pointer"
+                        >
+                          <BookOpen className="w-4 h-4 text-white" />
+                          📖 Study Online (Official Textbook)
+                        </a>
+                      )}
                     </div>
                   </div>
-
-                  {tb.id === 'clean-textbook-official-bilingual' || sectorKey.includes('building') && i === 0 ? (
-                    <div className="space-y-2 pt-2">
-                      <Link
-                        href={`/${country}/work/${sectorKey}/book`}
-                        className="w-full py-3 bg-emerald-600 hover:bg-emerald-500 text-white rounded-2xl font-black text-xs text-center flex items-center justify-center gap-2 shadow-md hover:shadow-lg transition-all cursor-pointer"
-                      >
-                        <BookOpen className="w-4 h-4 text-white" />
-                        📖 Study Online (12 Chapters + CBT Quizzes)
-                      </Link>
-                      <a
-                        href={tb.pdfUrl}
-                        download="BuildingCleaningBookwithmodelqsn.docx"
-                        className="w-full py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl font-bold text-xs text-center flex items-center justify-center gap-2 transition-all cursor-pointer border border-slate-200"
-                      >
-                        <Download className="w-3.5 h-3.5 text-indigo-600" />
-                        Download Original Book (.docx)
-                      </a>
-                    </div>
-                  ) : (
-                    <a
-                      href={tb.pdfUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="w-full py-3 bg-slate-900 hover:bg-slate-800 text-white rounded-2xl font-black text-xs text-center flex items-center justify-center gap-2 shadow-sm transition-all cursor-pointer"
-                    >
-                      <Download className="w-4 h-4 text-emerald-400" /> Download Official PDF Textbook
-                    </a>
-                  )}
-                </div>
-              ))}
+                );
+              })}
             </div>
           </div>
         )}
