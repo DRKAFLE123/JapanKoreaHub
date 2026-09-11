@@ -4,7 +4,7 @@ import ExamDetailClient from './ExamDetailClient';
 
 const VALID_EXAMS: Record<string, string[]> = {
   japan: ['jlpt-n5', 'jlpt-n4', 'jlpt-n3', 'jlpt-n2', 'jft-basic'],
-  korea: ['eps-topik', 'topik-1', 'topik-2'],
+  korea: ['eps-topik', 'topik-1', 'topik-2', 'kiip'],
 };
 
 export function generateStaticParams() {

@@ -1,7 +1,7 @@
 'use client';
 import React, { useState, useRef, useEffect } from 'react';
 import Link from 'next/link';
-import { Search, Globe, ChevronDown, User, LogIn, Menu, BookOpen, Clock, GraduationCap, Briefcase, Shield, Moon, Sun, Bell, ArrowRight } from 'lucide-react';
+import { Search, Globe, ChevronDown, User, LogIn, Menu, BookOpen, Clock, GraduationCap, Briefcase, Shield, Moon, Sun, Bell, ArrowRight, Award, FileText } from 'lucide-react';
 import AuthSheet from '@/components/auth/AuthSheet';
 
 import { useCountry } from '@/lib/context/CountryContext';
@@ -31,6 +31,9 @@ const KOREA_DROPDOWN = [
   { label: 'Learn Korean', href: '/korea/learn', icon: BookOpen, desc: 'Hangul & EPS 1–60' },
   { label: 'EPS-TOPIK', href: '/korea/exams/eps-topik', icon: Clock, desc: 'Official CBT simulator' },
   { label: 'TOPIK I & II', href: '/korea/exams/topik-1', icon: Clock, desc: 'Proficiency tests' },
+  { label: 'KIIP (사회통합)', href: '/korea/exams/kiip', icon: Award, desc: 'Immigration & PR Program' },
+  { label: 'TOPIK vs KIIP Guide', href: '/blog/kiip-korea-immigration-integration-program-nepali-guide', icon: FileText, desc: 'Visa points & full comparison' },
+  { label: '6-Month TOPIK Strategy', href: '/blog/topik-ii-level-3-6-month-strategy-nepali-guide', icon: GraduationCap, desc: 'Level 0 to L3 roadmap' },
   { label: 'Study in Korea', href: '/korea/study', icon: GraduationCap, desc: 'GKS & D-2 Universities' },
   { label: 'Work in Korea', href: '/korea/work', icon: Briefcase, desc: 'E-9 Worker sectors' },
   { label: 'Visa Checklist', href: '/korea/visa', icon: Shield, desc: 'E-9 & D-4 Visas' },

@@ -98,9 +98,9 @@ export default function WorkHubClient({ country }: { country: Country }) {
             {sectors.map((sec) => (
               <div
                 key={sec.id}
-                className="card p-4 flex items-start gap-4 hover:border-emerald-200 hover:shadow-sm transition-all"
+                className="card p-4 flex items-start gap-4 hover:border-emerald-300 hover:shadow-md transition-all"
               >
-                <div className="w-12 h-12 rounded-2xl bg-gray-50 border border-gray-100 flex items-center justify-center text-2xl flex-shrink-0">
+                <div className="w-12 h-12 rounded-2xl bg-emerald-50 border border-emerald-100 flex items-center justify-center text-2xl flex-shrink-0">
                   {sec.icon}
                 </div>
                 <div className="flex-1 min-w-0">
@@ -112,20 +112,19 @@ export default function WorkHubClient({ country }: { country: Country }) {
                   </div>
                   <p className="text-xs text-gray-500 mt-1 leading-relaxed">{sec.desc}</p>
 
-                  <div className="flex items-center gap-3 mt-3 pt-2 border-t border-gray-100 text-xs">
+                  <div className="flex flex-wrap items-center gap-2.5 mt-3 pt-2 border-t border-gray-100 text-xs">
                     <Link
-                      href={`/${country}/learn/vocabulary`}
-                      className="text-emerald-700 font-semibold hover:underline flex items-center gap-1"
+                      href={`/${country}/work/${sec.id}`}
+                      className="px-3 py-1.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-black text-xs flex items-center gap-1.5 transition-colors"
                     >
-                      <BookOpen className="w-3.5 h-3.5" />
-                      Sector Vocab
+                      <BookOpen className="w-3.5 h-3.5 text-emerald-400" />
+                      SSW Study Hub &amp; Textbooks
                     </Link>
-                    <span className="text-gray-300">•</span>
                     <Link
-                      href={`/${country}/visa`}
-                      className="text-gray-600 hover:underline"
+                      href={`/${country}/work/${sec.id}`}
+                      className="px-3 py-1.5 rounded-xl bg-emerald-50 hover:bg-emerald-100 text-emerald-800 font-extrabold text-xs transition-colors"
                     >
-                      Visa Requirements
+                      🎧 Listening &amp; CBT Test
                     </Link>
                   </div>
                 </div>

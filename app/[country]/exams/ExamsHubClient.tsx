@@ -224,6 +224,21 @@ const KOREA_MOCK_TESTS: MockTestCatalogItem[] = [
     formatType: 'Paper Exam',
     hasCodePrompt: true,
   },
+  {
+    id: 'KIIP_SET_1',
+    level: 'KIIP',
+    title: 'KIIP | Level 5 Comprehensive Exam (사회통합프로그램 종합평가)',
+    subTitle: '법무부 사회통합프로그램 사전평가・중간평가・영주귀화 종합평가',
+    specs: 'Approx Time : 50 mins • 20 Questions • CBT Exam',
+    desc: 'Ministry of Justice immigration integration test covering Korean society, culture, law, and history for E-7-4, F-2-7, F-5 PR, and Naturalization.',
+    badge: 'KIIP (사회통합)',
+    difficulty: 'Medium',
+    questionsCount: 20,
+    durationMinutes: 50,
+    passScore: '60 / 100 Pts',
+    formatType: 'CBT Exam',
+    hasCodePrompt: true,
+  },
 ];
 
 export default function ExamsHubClient({ country }: { country: Country }) {
@@ -251,6 +266,7 @@ export default function ExamsHubClient({ country }: { country: Country }) {
     { id: 'EPS',        label: 'EPS-TOPIK' },
     { id: 'TOPIK1_L1',  label: 'TOPIK I (Levels 1–2)' },
     { id: 'TOPIK3',     label: 'TOPIK II (Levels 3–6)' },
+    { id: 'KIIP',       label: 'KIIP (사회통합)' },
   ];
 
   const curriculumLevels = country === 'japan' ? japanCurriculumLevels : koreaCurriculumLevels;

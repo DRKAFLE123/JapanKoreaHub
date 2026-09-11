@@ -14,6 +14,7 @@ const EXAMS: Record<string, { exam: string; title: string; badge: string; time: 
     { exam: 'eps-topik', title: 'EPS-TOPIK',  badge: 'E-9 Required',         time: '70 min',  passRate: '~55%' },
     { exam: 'topik-1',   title: 'TOPIK I',    badge: 'Levels 1–2',           time: '100 min', passRate: '~60%' },
     { exam: 'topik-2',   title: 'TOPIK II',   badge: 'Levels 3–6',           time: '180 min', passRate: '~40%' },
+    { exam: 'kiip',      title: 'KIIP (사회통합)', badge: 'Visa, PR & Citizenship', time: '50 min',  passRate: '~75%' },
   ],
 };
 

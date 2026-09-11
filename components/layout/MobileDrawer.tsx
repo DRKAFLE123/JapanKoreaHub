@@ -119,6 +119,34 @@ export default function MobileDrawer({ onClose, user, onAuthOpen }: MobileDrawer
               </Link>
             );
           })}
+
+          {/* Quick Access Korea Guides & KIIP */}
+          {(activeCountry === 'korea' || activeCountry === 'all') && (
+            <div className="mt-3 pt-3 border-t border-gray-100 px-4 space-y-1.5">
+              <p className="text-[10px] font-black text-blue-600 uppercase tracking-wider px-1">🇰🇷 Featured Guides &amp; KIIP</p>
+              <Link
+                href="/korea/exams/kiip"
+                onClick={onClose}
+                className="flex items-center gap-2 p-2 rounded-xl bg-blue-50/60 hover:bg-blue-100/70 text-blue-900 text-xs font-bold transition-colors"
+              >
+                <span>🏛️ KIIP (사회통합) Full Guide</span>
+              </Link>
+              <Link
+                href="/blog/kiip-korea-immigration-integration-program-nepali-guide"
+                onClick={onClose}
+                className="flex items-center gap-2 p-2 rounded-xl bg-indigo-50/60 hover:bg-indigo-100/70 text-indigo-900 text-xs font-bold transition-colors"
+              >
+                <span>📜 TOPIK vs KIIP Nepali Guide</span>
+              </Link>
+              <Link
+                href="/blog/topik-ii-level-3-6-month-strategy-nepali-guide"
+                onClick={onClose}
+                className="flex items-center gap-2 p-2 rounded-xl bg-amber-50/60 hover:bg-amber-100/70 text-amber-900 text-xs font-bold transition-colors"
+              >
+                <span>🚀 6-Month TOPIK II Strategy</span>
+              </Link>
+            </div>
+          )}
         </nav>
 
         {/* Footer */}

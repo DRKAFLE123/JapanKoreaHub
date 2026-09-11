@@ -21,6 +21,423 @@ export interface BlogPost {
 
 export const INITIAL_POSTS: BlogPost[] = [
   {
+    id: 'kiip-korea-immigration-integration-program-nepali-guide',
+    slug: 'kiip-korea-immigration-integration-program-nepali-guide',
+    title: 'कोरियाली भिसा (E-7-4, F-2-7), PR (F-5) र नागरिकताको मुख्य साँचो! KIIP (사회통합프로그램) पूर्ण गाइड — कोर्ष संरचना, परीक्षा र TOPIK संग तुलना (२०२६)',
+    category: 'VISA',
+    country: 'KOREA',
+    author: 'LanguageGuru Korea Immigration Advisory',
+    date: 'August 30, 2026',
+    readTime: '11 min read',
+    excerpt: 'कोरियाको न्याय मन्त्रालय (법무부) द्वारा सञ्चालित KIIP (사회통합프로그램) को सम्पूर्ण विवरण—तह ० देखि ५ सम्मको कोर्ष संरचना, 사전평가/중간평가/종합평가 परीक्षा, E-7-4 र F-2-7 भिसामा पाउने अंक, F-5 स्थायी आवास र TOPIK सँगको भिन्नता।',
+    image: '/images/kiip_korea_immigration_program_banner.jpg',
+    tags: ['KIIP', '사회통합프로그램', 'Korea Visa PR', 'E-7-4 Visa', 'F-2-7 Visa', 'F-5 Permanent Residence', 'TOPIK vs KIIP', 'Socinet'],
+    isFeatured: true,
+    content: `दक्षिण कोरियामा बसोबास गरिरहेका वा भविष्यमा **E-7-4 (दक्ष कामदार भिसा)**, **F-2-7 (अंक प्रणालीमा आधारित आवासीय भिसा)**, **F-5 (स्थायी आवासीय अधिकार / Permanent Residence)** वा **कोरियाली नागरिकता (귀화)** प्राप्त गर्न चाहने विदेशी नागरिकहरूका लागि **KIIP (사회통합프로그램 - Korea Immigration & Integration Program)** सबैभन्दा महत्त्वपूर्ण सरकारी कार्यक्रम हो।
+
+यो कार्यक्रम दक्षिण कोरियाको **न्याय मन्त्रालय (Ministry of Justice – 법무부)** द्वारा प्रत्यक्ष सञ्चालन गरिन्छ। यो लेखमा KIIP को कोर्ष संरचना, परीक्षा प्रणाली, भिसामा पाइने अंक तथा सुविधाहरू र TOPIK सँग यसको तुलना विस्तृत रूपमा प्रस्तुत गरिएको छ।
+
+---
+
+## 1. KIIP (사회통합프로그램) भनेको के हो?
+
+**KIIP (Korea Immigration and Integration Program)** दक्षिण कोरियामा कानुनी रूपमा बसोबास गर्ने विदेशी नागरिकहरूलाई कोरियाली भाषा, संस्कृति, इतिहास, कानून र सामाजिक व्यवस्था बुझ्न मद्दत पुर्याउने उद्देश्यले सञ्चालन गरिएको **निःशुल्क सरकारी तालिम कार्यक्रम** हो।
+
+- **सञ्चालक निकाय:** कोरियाली न्याय मन्त्रालय (Ministry of Justice / 법무부)
+- **आधिकारिक पोर्टल:** [www.socinet.go.kr](https://www.socinet.go.kr)
+- **तालिम शुल्क:** १००% निःशुल्क (सरकारी अनुदान प्राप्त)
+- **मुख्य फाइदा:** भिसा परिवर्तन (E-7-4, F-2-7), स्थायी आवास (F-5) र नागरिकता प्राप्त गर्दा लिखित परीक्षा तथा अन्तर्वार्ता छूट वा विशेष अंक।
+
+---
+
+## 2. KIIP कोर्ष संरचना र लेभलहरू (Levels & Hours)
+
+KIIP कार्यक्रमलाई जम्मा **६ वटा तह (Level 0 देखि Level 5)** मा विभाजन गरिएको छ। प्रारम्भिक परीक्षा (Placement Test) को अंकका आधारमा विद्यार्थीहरूलाई उपयुक्त लेभलमा राखिन्छ:
+
+| लेभल (Level) | पाठ्यक्रमको नाम | अध्ययन अवधि (घण्टा) | प्रारम्भिक परीक्षा अंक (Placement Score) | समकक्षता |
+|---|---|---|---|---|
+| **Level 0** | 기초 (Beginner Foundation) | १५ घण्टा | ० - २९ अंक | आधारभूत कोरियन वर्णमाला |
+| **Level 1** | 초급 1 (Elementary 1) | १०० घण्टा | ३० - ४९ अंक | TOPIK Level 1 समकक्ष |
+| **Level 2** | 초급 2 (Elementary 2) | १०० घण्टा | ५० - ६९ अंक | TOPIK Level 2 समकक्ष |
+| **Level 3** | 중급 1 (Intermediate 1) | १०० घण्टा | ७० - ८४ अंक | TOPIK Level 3 समकक्ष |
+| **Level 4** | 중급 2 (Intermediate 2) | १०० घण्टा | ८५ - १०० अंक | TOPIK Level 4 समकक्ष |
+| **Level 5** | 한국사회 이해 (Korean Society) | ७० वा १०० घण्टा | Level 4 / 중간평가 उत्तीर्ण | PR (७० घण्टा) / नागरिकता (१०० घण्टा) |
+
+> **ध्यान दिनुपर्ने कुरा:** यदि तपाईंसँग पहिले नै वैध **TOPIK नतिजा (Score Certificate)** छ भने, तपाईंले Placement Test नदिई सिधै सम्बन्धित KIIP लेभलमा प्रवेश पाउन सक्नुहुन्छ। (उदाहरण: TOPIK Level 3 भएमा सिधै KIIP Level 3 वा 4 मा दर्ता हुन सकिन्छ)।
+
+---
+
+## 3. KIIP का मुख्य परीक्षाहरू (Exam Types)
+
+KIIP को यात्रामा मुख्यतया ३ प्रकारका परीक्षाहरू हुन्छन्:
+
+### १. प्रारम्भिक परीक्षा (Placement Test / 사전평가)
+- KIIP सुरु गर्नुअघि तपाईंको कोरियाली भाषाको स्तर मापन गर्न यो परीक्षा लिइन्छ।
+- यसमा वस्तुगत (Multiple Choice) प्रश्न, छोटो लेखन र मौखिक (Speaking) परीक्षा समावेश हुन्छ।
+- परीक्षाको प्राप्तांक अनुसार तपाईंलाई Level 0 देखि Level 5 सम्मको कक्षामा पठाइन्छ।
+
+### २. मध्यकालीन परीक्षा (Midterm Exam / 중간평가)
+- **Level 4 (중급 2)** पूरा गरेपछि यो परीक्षा दिनुपर्छ।
+- उत्तीर्णांक: १०० मा न्यूनतम **६० अंक**।
+- यो पास गरेपछि मात्र तपाईं **Level 5 (한국사회 이해)** मा प्रवेश गर्न योग्य हुनुहुन्छ। E-7-4 वा F-2-7 भिसा आवेदनका लागि Level 4 उत्तीर्ण प्रमाणपत्र निकै लाभदायक हुन्छ।
+
+### ३. अन्तिम कम्प्रेहेन्सिभ परीक्षा (Comprehensive Test / 종합평가)
+- **Level 5 (한국사회 이해)** को कक्षा पूरा गरेपछि दिइने अन्तिम परीक्षा हो।
+- यो परीक्षा दुई प्रकारको हुन्छ:
+  - **영주용 종합평가 (Permanent Residence Track):** F-5 स्थायी आवास भिसाका लागि। (७० घण्टाको कक्षा पछि)।
+  - **귀화용 종합평가 (Naturalization Track):** कोरियाली नागरिकताका लागि। (१०० घण्टाको कक्षा पछि)।
+- यो परीक्षा पास गरेपछि न्याय मन्त्रालयबाट **आधिकारिक प्रमाणपत्र (사회통합프로그램 이수증)** जारी हुन्छ, जुन जीवनभर मान्य हुन्छ।
+
+---
+
+## 4. TOPIK र KIIP बीचको तुलना (TOPIK vs. KIIP)
+
+धेरै नेपाली साथीहरू TOPIK र KIIP मा कुन परीक्षा दिने भन्नेमा अलमलमा पर्छन्। तलको तुलनात्मक तालिकाले तपाईंलाई प्रष्ट पार्नेछ:
+
+| विशेषता (Feature) | TOPIK (한국어능력시험) | KIIP (사회통합프로그램) |
+|---|---|---|
+| **सञ्चालक निकाय** | शिक्षा मन्त्रालय (NIIED) | न्याय मन्त्रालय (Ministry of Justice / 법무부) |
+| **मुख्य उद्देश्य** | कलेज/विश्वविद्यालय भर्ना, छात्रवृत्ति, जागिर | भिसा परिवर्तन (E-7-4, F-2-7), PR (F-5), नागरिकता |
+| **प्रक्रिया** | केवल परीक्षा दिने (कक्षा लिनु पर्दैन) | अनिवार्य कक्षा उपस्थिति + परीक्षा |
+| **तालिम शुल्क** | परीक्षा शुल्क लाग्छ (~KRW 40,000–55,000) | कक्षा निःशुल्क (१००% Government Funded) |
+| **प्रमाणपत्रको अवधि** | **२ वर्ष मात्र मान्य** (२ वर्षपछि स्वतः रद्द) | **जीवनभर मान्य (Lifetime Permanent)** |
+| **नागरिकता/PR छूट** | PR/नागरिकतामा सिधै परीक्षा छूट पाइँदैन | लिखित परीक्षा र अन्तर्वार्ता पूर्ण रूपमा छूट |
+
+---
+
+## 5. भिसा परिवर्तन र KIIP का सुविधाहरू (Visa Benefits)
+
+1. **E-7-4 (दक्ष कामदार भिसा):** E-9 वा E-10 भिसामा कार्यरत कामदारहरूले E-7-4 मा परिवर्तन गर्दा KIIP लेभल अनुसार उच्च अंक (Points) प्राप्त गर्छन्।
+2. **F-2-7 (अंक प्रणाली आवासीय भिसा):** KIIP Level 5 पूरा गर्दा थप १० देखि १५ बोनस अंक पाइन्छ।
+3. **F-5 (स्थायी आवास / Permanent Residence):** F-5 भिसाका लागि KIIP Level 5 अनिवार्य वा सबैभन्दा सहज बाटो मानिन्छ।
+4. **नागरिकता (귀화):** KIIP Level 5 (귀화용) उत्तीर्ण गर्ने व्यक्तिले नागरिकताका लागि दिइने कडा लिखित परीक्षा र अध्यागमन अन्तर्वार्ता (Immigration Interview) दिनु पर्दैन।
+
+---
+
+## 6. आवेदन कसरी दिने? (How to Apply on Socinet)
+
+1. **Soci-Net पोर्टलमा जानुहोस्:** [www.socinet.go.kr](https://www.socinet.go.kr) मा गई आफ्नो Alien Registration Card (ARC) मार्फत नयाँ अकाउन्ट बनाउनुहोस्।
+2. **사전평가 (Placement Test) आवेदन दिनुहोस्:** पोर्टलमा परीक्षा मिति र केन्द्र छनौट गरी फर्म भर्नुहोस्।
+3. **कक्षा रोज्नुहोस् (Course Enrollment):** नतिजा आएपछि आफ्नो पायक पर्ने मल्टिकल्चरल सेन्टर, विश्वविद्यालय वा अनलाइन (Online/Weekend) क्लास रोजेर भर्ना हुनुहोस्।`
+  },
+  {
+    id: 'kiip-korea-immigration-integration-program-full-english-guide',
+    slug: 'kiip-korea-immigration-integration-program-full-english-guide',
+    title: 'The Ultimate Guide to KIIP (Korea Immigration & Integration Program) 2026: Course Levels, Exams, Visa Points & TOPIK vs KIIP',
+    category: 'GUIDE',
+    country: 'KOREA',
+    author: 'LanguageGuru Immigration Desk',
+    date: 'August 30, 2026',
+    readTime: '10 min read',
+    excerpt: 'Complete breakdown of South Korea’s Ministry of Justice KIIP (사회통합프로그램) program—course levels (Level 0-5), class hours, placement & comprehensive exams, visa point advantages (E-7-4, F-2-7, F-5 PR), and TOPIK vs KIIP matrix.',
+    image: '/images/kiip_korea_immigration_program_banner.jpg',
+    tags: ['KIIP Korea', 'Korea Immigration', 'Social Integration Program', 'Socinet Korea', 'F-5 PR Korea', 'E-7-4 Visa Points', 'TOPIK vs KIIP'],
+    isFeatured: false,
+    content: `For foreign residents living in South Korea or planning long-term career trajectories, the **Korea Immigration and Integration Program (KIIP / 사회통합프로그램)** represents the official gateway toward long-term residency, visa status changes, and naturalization.
+
+Administered directly by the **Ministry of Justice (MOJ / 법무부)**, KIIP provides free Korean language and cultural education designed specifically to help non-citizens settle smoothly into Korean society.
+
+---
+
+## 1. What is KIIP (사회통합프로그램)?
+
+The **Korea Immigration and Integration Program (KIIP)** is a government-funded educational scheme. Unlike academic language programs, KIIP combines practical Korean language proficiency with essential knowledge of Korean laws, history, political systems, and societal customs.
+
+- **Governing Body:** Ministry of Justice (MOJ / 법무부) & Korea Immigration Service
+- **Official Portal:** [www.socinet.go.kr](https://www.socinet.go.kr)
+- **Tuition Cost:** 100% Free (Government Subsidized)
+- **Primary Eligibility:** Holders of valid Alien Registration Cards (ARC / 외국인등록증) including E-9, E-7, D-2, D-10, F-1, F-2, F-6, etc.
+
+---
+
+## 2. KIIP Course Levels & Class Hours Breakdown
+
+The KIIP curriculum is structured into 6 progressive levels (Level 0 through Level 5). Students enter at a specific level based on their Placement Test score:
+
+| Level | Course Module | Mandatory Class Hours | Placement Test Score Range | Equivalent Proficiency |
+|---|---|---|---|---|
+| **Level 0** | Beginner Foundation (기초) | 15 Hours | 0 – 29 Points | Hangul Alphabet & Phonetics |
+| **Level 1** | Elementary 1 (초급 1) | 100 Hours | 30 – 49 Points | Basic Daily Phrases (~TOPIK 1) |
+| **Level 2** | Elementary 2 (초급 2) | 100 Hours | 50 – 69 Points | Routine Conversations (~TOPIK 2) |
+| **Level 3** | Intermediate 1 (중급 1) | 100 Hours | 70 – 84 Points | Public Services & Banking (~TOPIK 3) |
+| **Level 4** | Intermediate 2 (중급 2) | 100 Hours | 85 – 100 Points | Abstract Expressions & News (~TOPIK 4) |
+| **Level 5** | Understanding Korean Society (한국사회 이해) | 70 / 100 Hours | Passed Level 4 / Midterm Exam | 70h for PR (영주), 100h for Naturalization (귀화) |
+
+> 💡 **TOPIK Score Exemption:** If you already possess an official, valid **TOPIK Score Certificate**, you can submit it on Socinet to bypass the Placement Test and be assigned directly to your corresponding KIIP level!
+
+---
+
+## 3. Official KIIP Examination Architecture
+
+To progress through levels and receive official certification, candidates must complete three key evaluation milestones:
+
+### 1. Placement Test (사전평가)
+- **Purpose:** Determines your starting level in the KIIP program before enrolling in classes.
+- **Format:** 50 multiple-choice questions (Grammar, Vocabulary, Reading, Culture) + 5 short oral interview questions.
+- **Outcome:** Direct assignment into Level 0, 1, 2, 3, 4, or 5.
+
+### 2. Midterm Exam (중간평가)
+- **Purpose:** Required after finishing **Level 4 (Intermediate 2)** coursework.
+- **Passing Threshold:** Minimum 60 out of 100 points.
+- **Outcome:** Grants eligibility to enter **Level 5 (Korean Society)**. Passing Level 4 also unlocks crucial point system bonuses for **E-7-4 (Skilled Worker)** and **F-2-7 (Long-term Residency)** visas.
+
+### 3. Final Comprehensive Test (종합평가)
+- **Purpose:** Taken after completing Level 5 coursework.
+- **Tracks:**
+  - **PR Track (영주용 종합평가):** Taken after 70 hours of Level 5 coursework. Grants eligibility for **F-5 Permanent Residency**.
+  - **Naturalization Track (귀화용 종합평가):** Taken after 100 hours of Level 5 coursework. Grants eligibility for **Korean Citizenship**.
+- **Certification:** Successful graduates receive the official **Ministry of Justice Certificate of Completion (사회통합프로그램 이수증)**, which remains **permanently valid for life**.
+
+---
+
+## 4. Comprehensive Comparison: TOPIK vs. KIIP
+
+Many foreign residents wonder whether they should prepare for TOPIK or KIIP. The table below outlines the core differences:
+
+| Metric Feature | Academic TOPIK (한국어능력시험) | Immigration KIIP (사회통합프로그램) |
+|---|---|---|
+| **Governing Authority** | Ministry of Education (NIIED) | Ministry of Justice (MOJ / 법무부) |
+| **Primary Target** | University admissions, job recruitment, scholarships | Visa upgrades (E-7-4, F-2-7), PR (F-5), Citizenship |
+| **Format** | Written exam paper only (No class attendance required) | Mandatory class hours (0–515h) + Evaluation tests |
+| **Tuition Fee** | Exam registration fee (~KRW 40,000–55,000) | 100% Free Tuition (Government Funded) |
+| **Validity Period** | **2 Years Only** (Expires automatically after 24 months) | **Lifetime Permanent Validity** (Never expires) |
+| **Immigration Perks** | Standard visa points | Maximum visa bonus points + Exempts written citizenship exam & interview |
+
+---
+
+## 5. Major Visa & Residency Benefits of KIIP
+
+1. **E-7-4 Skilled Worker Visa:** Completing KIIP Level 3, Level 4, or Level 5 adds significant bonus points to the mandatory point evaluation grid.
+2. **F-2-7 Points-Based Long-Term Residency Visa:** Level 5 completion provides up to **15 maximum points** in the Korean language category.
+3. **F-5 Permanent Residence (영주권):** F-5 visa applicants who complete KIIP Level 5 are exempt from income threshold multipliers and mandatory written tests.
+4. **Korean Citizenship (귀화):** KIIP Level 5 graduates are **fully exempt from the written naturalization exam and the official immigration interview**, streamlining citizenship acquisition.
+
+---
+
+## 6. How to Register on Socinet (Step-by-Step)
+
+1. **Create Account:** Register at [www.socinet.go.kr](https://www.socinet.go.kr) using your Alien Registration Card (ARC).
+2. **Apply for Placement Test:** Select your preferred test date and regional testing center.
+3. **Enroll in Classes:** Upon receiving your placement score, browse available weekday morning, evening, or weekend class slots at local multicultural centers or universities.`
+  },
+  {
+    id: 'topik-ii-level-3-6-month-strategy-guide',
+    slug: 'topik-ii-level-3-6-month-strategy-nepali-guide',
+    title: '0 बाट TOPIK II Level 3 सम्म ६-महिने पूर्ण-समय अध्ययन रणनीति (6-Month Full-Time TOPIK Preparation Strategy with Nepali Explanation)',
+    category: 'GUIDE',
+    country: 'KOREA',
+    author: 'LanguageGuru Korea Academic Desk',
+    date: 'August 30, 2026',
+    readTime: '12 min read',
+    excerpt: 'शून्य (0) बाट ६ महिनाभित्र TOPIK II Level 3 वा Level 4 उत्तीर्ण गर्ने पूर्ण-समय अध्ययन रणनीति—अंक गणित, ३-चरणको मार्गचित्र, Q53 ग्राफ व्याख्याका ढाँचाहरू, दैनिक कार्यतालिका र नेपाली व्याख्या सहित।',
+    image: '/images/topik_6_month_strategy_banner.jpg',
+    tags: ['TOPIK II', 'TOPIK Level 3', 'Korean Study Plan', 'TOPIK Writing Q53', 'Nepali Korean Guide', 'EPS TOPIK', 'Study in Korea'],
+    isFeatured: true,
+    content: `यो पूर्ण-समय अध्ययन मार्गचित्र (Full-Time Study Strategy) विशेष गरी शून्य (Absolute Beginner) स्तरबाट ६ महिनाभित्रै **TOPIK II Level 3** (वा **Level 4**) सफलतापूर्वक हासिल गर्न तयार पारिएको हो। मार्च २०२७ वा आगामी चक्रमा कोरिया प्रस्थान गर्ने लक्ष्य राख्नुभएका उम्मेदवारहरूका लागि यसमा प्रत्येक खण्डको नेपाली व्याख्या, अंक गणना, दैनिक समय तालिका, र लेखन (Writing) खण्डका लागि रेडीमेड फर्म्याटहरू समावेश गरिएको छ।
+
+---
+
+## 1. Learning Objectives & Target Levels (सिकाईका उद्देश्यहरू र लक्ष्य स्तरहरू)
+
+The core objective of this full-time study program is to transition from an absolute beginner to an intermediate user capable of producing and analyzing academic-level Korean before your departure in March 2027.
+
+> **नेपाली व्याख्या:** यो पूर्ण-समय अध्ययन योजनाको मुख्य उद्देश्य मार्च २०२७ मा दक्षिण कोरिया प्रस्थान गर्नु अघि तपाईंलाई एउटा सुरुवाती चरण (Beginner) बाट प्राज्ञिक स्तरको कोरियन भाषा बुझ्न र प्रयोग गर्न सक्ने मध्यम स्तर (Intermediate) मा पुर्याउनु हो।
+
+### Primary Competency Target (मुख्य योग्यता लक्ष्य)
+- **Certified Qualification:** Secure a certified TOPIK Level 3 or Level 4 qualification.
+> **नेपाली:** आधिकारिक परीक्षामा TOPIK Level 3 वा Level 4 उत्तीर्ण गर्ने लक्ष्य राख्ने।
+
+### Operational Objectives (व्यावहारिक उद्देश्यहरू)
+1. **Lexical Acquisition:** Synthesize a receptive vocabulary of at least 1,500 to 2,000 high-frequency expressions.
+   > **नेपाली:** कम्तीमा १५०० देखि २००० सम्म धेरै प्रयोग हुने कोरियन शब्दहरू कण्ठ गर्ने।
+2. **Comprehensive Processing:** Deconstruct compound intermediate reading articles and multi-speaker academic audio tracks under timed exam conditions.
+   > **नेपाली:** समय सीमा भित्र मध्यम स्तरका लामा लामा लेखहरू पढ्ने र प्राज्ञिक संवादहरू सुनेर बुझ्न सक्ने हुने।
+3. **Productive Writing:** Formulate logical data descriptions (graph interpretations) and short formal messages utilizing standard written syntax without spelling errors.
+   > **नेपाली:** हिज्जे (Spelling) को गल्ती बिना ग्राफ र चार्टहरूको व्याख्या लेख्न सक्ने तथा औपचारिक सन्देशहरू तयार पार्न सक्ने।
+
+### Administrative Targets (प्रशासनिक जानकारी)
+Monitor test announcements from the [Embassy of the Republic of Korea in Nepal](https://np.mofa.go.kr/np-en/brd/m_25533/view.do?seq=175). The standard local examination fee in Kathmandu is approximately NPR $3,000 for TOPIK I and NPR $3,500 for TOPIK II, administered at locations such as St. Mary's Secondary School in Jawalakhel, Lalitpur.
+
+> **नेपाली:** काठमाडौंमा TOPIK I को परीक्षा शुल्क करिब नेरु ३,००० र TOPIK II को नेरु ३,५०० पर्दछ। यो परीक्षा ललितपुरको जावलाखेलस्थित सेन्ट मेरोज् स्कुल जस्ता केन्द्रहरूमा सञ्चालन हुन्छ।
+
+---
+
+## 2. Exam Structure & Score Calculations (परीक्षाको संरचना र अंक गणना)
+
+To achieve your target grade, you must understand how your daily point generation aggregates across the sub-sections of the test. The examination architecture is divided into two separate classification tracks.
+
+> **नेपाली व्याख्या:** परीक्षामा राम्रो अंक ल्याउन यसको संरचना बुझ्न आवश्यक छ। TOPIK लाई दुईवटा छुट्टाछुट्टै ट्र्याकमा विभाजन गरिएको छ।
+
+### TOPIK I (Beginner Track / सुरुवाती चरण)
+This track evaluates basic daily routines and consists entirely of multiple-choice questions across two categories. Let $L_{1}$ represent the Listening score and $R_{1}$ represent the Reading score. The total score $S_{1}$ is calculated as:
+
+$$S_{1}=L_{1}+R_{1}$$
+
+Where $L_{1} \le 100$ (30 questions over 40 minutes) and $R_{1} \le 100$ (40 questions over 60 minutes), resulting in a maximum total of 200 points.
+
+> **नेपाली:** TOPIK I मा Listening र Reading मात्र हुन्छ। कुल पूर्णांक २०० हुन्छ।
+
+- **Level 1 Passing Cutoff:** $S_{1} \ge 80$ *(नेपाली: ८० अंक ल्याएमा लेभल १ हुन्छ।)*
+- **Level 2 Passing Cutoff:** $S_{1} \ge 140$ *(नेपाली: १४० अंक ल्याएमा लेभल २ हुन्छ।)*
+
+### TOPIK II (Intermediate-Advanced Track / मध्यम-उच्च चरण)
+Your full-time study timeline focuses on this track. It introduces a descriptive writing metric on top of the standard listening and reading papers. Let $L$ be your Listening score, $R$ be your Reading score, and $W$ be your Writing score. Your overall composite score $S$ is calculated via:
+
+$$S=L+R+W$$
+
+Where each individual section accounts for a maximum of 100 points ($L \le 100$, $R \le 100$, $W \le 100$), yielding a total score ceiling of 300 points. The testing sessions are strictly split into two sittings:
+
+> **नेपाली:** मास्टर डिग्री वा विश्वविद्यालय अध्ययनका लागि तपाईंले यो TOPIK II परीक्षा दिनुपर्छ। यसमा Listening, Reading का साथै Writing (लेख्ने) खण्ड पनि थपिन्छ। कुल पूर्णांक ३०० हुन्छ।
+
+- **Session 1 (110 Minutes):** Listening (50 multiple-choice questions in 60 minutes) + Writing (4 open-ended questions in 50 minutes). *(नेपाली: पहिलो सेसनमा Listening र Writing को परीक्षा एकैसाथ ११० मिनेटको हुन्छ।)*
+- **Session 2 (70 Minutes):** Reading (50 multiple-choice questions in 70 minutes). *(नेपाली: दोस्रो सेसनमा Reading को परीक्षा ७० मिनेटको हुन्छ।)*
+
+#### Designated Score Placement Thresholds
+- **Level 3 Threshold (लेभल ३ को लागि अंक):** $S \ge 120$
+- **Level 4 Threshold (लेभल ४ को लागि अंक):** $S \ge 150$
+- **Level 5 Threshold (लेभल ५ को लागि अंक):** $S \ge 190$
+- **Level 6 Threshold (लेभल ६ को लागि अंक):** $S \ge 230$
+
+Using a strategic full-time approach, you can maximize your total score by aiming for high marks in Listening and Reading to cushion your grade, while locking down predictable foundational templates in the Writing section.
+
+> **नेपाली:** रणनीति अनुसार Listening र Reading मा धेरै अंक ल्याएर सुरक्षित हुने र Writing मा याद गरिएका ढाँचाहरू (Templates) प्रयोग गरेर अंक बढाउने।
+
+---
+
+## 3. The 6-Month Phase-by-Phase Roadmap (६-महिने चरणबद्ध मार्गचित्र)
+
+To systematically build intermediate capabilities within 6 months, divide your full-time study schedule into three distinct, structured chronological phases.
+
+> **नेपाली व्याख्या:** ६ महिनाको समयलाई प्रभावकारी बनाउन यसलाई ३ वटा स्पष्ट चरणहरूमा बाँडेर अध्ययन गर्नुपर्छ।
+
+### Phase 1: Beginner Foundation & Syntax Immersion (Months 1 & 2)
+*(चरण १: आधारभूत जग र वाक्य संरचना - महिना १ र २)*
+
+- **Primary Objective:** Eliminate native language thought patterns, achieve flawless pronunciation of the Hangul alphabet, and master standard basic grammar mechanics.
+  > *(नेपाली: कोरियन वर्णमाला (Hangul) को सही उच्चारण सिक्ने र आधारभूत वाक्य बनाउने नियमहरू पूर्ण रूपमा बुझ्ने।)*
+- **Syllabus Focus:** Subject-verb-object constraints, polite spoken markers, simple sentence connections, and base number systems.
+  > *(नेपाली: वाक्यमा कर्ता-कर्म-क्रियाको नियम, आदरार्थी शब्दहरू, र कोरियन संख्या प्रणाली (Numbers) मा ध्यान दिने।)*
+- **Vocabulary Goal:** Acquire and retain 800 to 1,000 foundational words relating to daily interactions, locations, and essential actions.
+  > *(नेपाली: दैनिक जीवनमा प्रयोग हुने ८०० देखि १००० वटा आधारभूत शब्दहरू कण्ठ गर्ने।)*
+
+### Phase 2: Intermediate Transition & Essay Preparation (Months 3 & 4)
+*(चरण २: मध्यम स्तरमा प्रवेश र निबन्धको तयारी - महिना ३ र ४)*
+
+- **Primary Objective:** Transition entirely to TOPIK II materials and learn how to generate productive written outputs rather than relying purely on recognition.
+  > *(नेपाली: अब सिधै TOPIK II को पाठ्यक्रममा जाने र पढेर बुझ्ने मात्र नभई आफैं वाक्य तथा निबन्ध लेख्न अभ्यास गर्ने।)*
+- **Syllabus Focus:** Indirect speech forms, causal connectors, relative clauses, and graph-descriptive vocabulary.
+  > *(नेपाली: अप्रत्यक्ष कथन (Indirect Speech), कारण जनाउने व्याकरण, र ग्राफ व्याख्या गर्न चाहिने विशेष शब्दहरू सिक्ने।)*
+- **Vocabulary Goal:** Expand your lexicon by an additional 1,500 words, prioritizing academic verbs, Sino-Korean roots, and structural antonyms.
+  > *(नेपाली: थप १५०० शब्दहरू सिक्ने, जसमा प्राज्ञिक शब्द र चिनियाँ मूलका कोरियन शब्दहरू (Sino-Korean roots) सामेल हुनुपर्छ।)*
+
+### Phase 3: Simulated Testing & Timing Optimization (Months 5 & 6)
+*(चरण ३: नक्कली परीक्षा र समय व्यवस्थापन - महिना ५ र ६)*
+
+- **Primary Objective:** Train for raw speed, learn to skip highly advanced questions tactically to preserve time, and eliminate text production errors under exam pressures.
+  > *(नेपाली: तीव्र गतिमा प्रश्न हल गर्ने अभ्यास गर्ने, परीक्षाको समय बचाउन गाह्रा प्रश्नहरू छोड्ने रणनीति सिक्ने र गल्तीहरू सुधार्ने।)*
+- **Syllabus Focus:** Complete formal timed past paper cycles, address vocabulary weaknesses, and memorize essay writing structures.
+  > *(नेपाली: समय हेरेर पुराना परीक्षाका प्रश्नपत्रहरू हल गर्ने र निबन्ध लेख्ने फर्म्याटहरू कण्ठ गर्ने।)*
+- **Practice Resource:** Use the historical database of past exams from the [TOPIK Guide Archive](https://www.topikguide.com/topik-test-schedule/) to download official papers.
+  > *(नेपाली: पुराना प्रश्नपत्रहरू डाउनलोड गर्न यो लिङ्क प्रयोग गर्नुहोस्।)*
+
+---
+
+## 4. Subject-Specific Content (Grammar & Writing) / व्याकरण र लेखन खण्ड
+
+Succeeding in the TOPIK II exam requires direct mastery of explicit intermediate grammatical structures and strict adherence to structural formatting rules during the text production phase.
+
+> **नेपाली व्याख्या:** TOPIK II मा उत्तीर्ण हुन मध्यम स्तरको व्याकरण (Grammar) र लेखन (Writing) को नियमहरूलाई विशेष ध्यान दिनुपर्छ।
+
+### Mandatory Intermediate Grammar Equations (अनिवार्य मध्यम स्तरका व्याकरणहरू)
+
+You must confidently master these specific structures to process the text items found in Questions 1 through 4 of the reading paper, as well as to construct formal sentences in your essay answers:
+
+1. **Contrasting Clauses (उल्टो वा विपरीत कुरा जोड्न):** Noun + **-기는 하지만** (Translates to: "Although X is true, Y...").
+   > **नेपाली अर्थ:** "X त हो, तर पनि Y..." - यद्यपि यस्तो भए तापनि...
+2. **Causal Expressions (कारण देखाउन):** Verb + **-기 때문에** (Formal reason structure: "Because of X...").
+   > **नेपाली अर्थ:** "X भएको कारणले गर्दा..." - औपचारिक रूपमा कारण दिँदा प्रयोग हुन्छ।
+3. **Speculative Assumptions (अनुमान लगाउँदा):** Verb + **-(으)ㄹ지도 모르다** (Expresses potentiality: "Might not know if X...").
+   > **नेपाली अर्थ:** "X हुने हो कि थाहा छैन / हुन पनि सक्छ..."
+
+### Writing Breakdown: The 4 Descriptive Tasks (लेखन खण्डका ४ वटा मुख्य प्रश्नहरू)
+
+The writing paper contains exactly 4 questions, total worth 100 points. For an intermediate level, focus heavily on the first three questions to secure points efficiently:
+
+> **नेपाली:** लेखन खण्ड १०० पूर्णांकको हुन्छ जसमा ४ वटा मात्र प्रश्न सोधिन्छ। लेभल ३ वा ४ ल्याउन सुरुका ३ वटा प्रश्नमा बढी जोड दिनुपर्छ।
+
+| Question No | Topic & Type | Points | Character Limit | Tactical Focus & Nepali Strategy |
+|---|---|---|---|---|
+| **Question 51** | Short Answer (Notice / Email) | 10 Pts | 1 Formal Phrase | इमेल वा सूचनाको खाली ठाउँमा मिल्ने औपचारिक वाक्य भर्ने। (Fill in formal phrase) |
+| **Question 52** | Short Answer (Academic Context) | 10 Pts | 1 Explanatory Sentence | प्राज्ञिक वा वर्णनात्मक लेखको खाली ठाउँमा मिल्ने वाक्य भर्ने। (Fill academic clause) |
+| **Question 53** | Data Description (Graph / Chart) | 30 Pts | 200 – 300 Characters | दिइएको ग्राफ वा चार्टको आधारमा प्रतिवेदन लेख्ने। (Fixed templates, high scoring) |
+| **Question 54** | Extended Essay (Abstract Theme) | 50 Pts | 600 – 700 Characters | सामाजिक वा गम्भीर विषयमा निबन्ध लेख्ने। (Basic layout for Level 3 candidates) |
+
+- **Question 51 (Short Answer - 10 Points):** Insert a contextually appropriate formal phrase into the blank space of a formal notice or corporate email communication. *(नेपाली: प्रश्न ५१ - इमेल वा सूचनाको खाली ठाउँमा मिल्ने औपचारिक वाक्य भर्ने।)*
+- **Question 52 (Short Answer - 10 Points):** Fill in a blank space inside an explanatory text or academic observation sentence, mimicking the exact surrounding prose style. *(नेपाली: प्रश्न ५२ - प्राज्ञिक वा वर्णनात्मक लेखको खाली ठाउँमा मिल्ने वाक्य भर्ने।)*
+- **Question 53 (Data Description - 30 Points):** Write a concise report of exactly 200 to 300 characters based entirely on a provided chart, graph, or statistical table. This question requires no personal opinions or original arguments; you simply use fixed structural frameworks to describe the visual trends. *(नेपाली: प्रश्न ५३ - दिइएको ग्राफ वा चार्टको आधारमा २०० देखि ३०० अक्षरको प्रतिवेदन लेख्ने। यसमा आफ्नो विचार लेख्नु पर्दैन, केवल ग्राफको विवरण मात्र दिनुपर्छ। यो खण्ड अंक ल्याउन निकै सजिलो छ।)*
+- **Question 54 (Extended Essay - 50 Points):** Compose a 600 to 700 character essay explaining an abstract theme or personal perspective on a socio-cultural issue. Advanced learners should practice this thoroughly, while intermediate candidates should prioritize completing Questions 51 to 53 perfectly to lock in safe scores. *(नेपाली: प्रश्न ५४ - कुनै सामाजिक वा गम्भीर विषयमा ६०० देखि ७०० अक्षरको लामो निबन्ध लेख्ने। मध्यम स्तरका विद्यार्थीले प्रश्न ५१ देखि ५३ सम्म मिलाएर यसमा सामान्य अंक ल्याए पुग्छ।)*
+
+Explore the complete structural guidelines for manuscript response grids via the [TopikLab Writing Blueprint](https://info.topiklab.com/topik-writing/).
+
+---
+
+## 5. Curated Full-Day Study Timetable (दैनिक अध्ययन कार्यतालिका)
+
+Treat your full-time preparation like a professional job. Dedicate 6 to 7 hours of active, alert study every single day, structured to prevent cognitive fatigue.
+
+> **नेपाली व्याख्या:** पूर्ण-समय तयारीलाई एउटा जागिर जस्तै मानेर दैनिक ६ देखि ७ घण्टा ध्यान दिएर पढ्नुहोस्। यसले दिमागलाई थकिन हुन दिँदैन र सिकाई प्रभावकारी बनाउँछ।
+
+| Daily Time Block | Functional Objective (उद्देश्य) | Operational Activities & Materials (नेपाली व्याख्या सहित) |
+|---|---|---|
+| **09:00 – 11:30** *(2.5 Hours)* | Core Grammar & Structural Construction | Study 2–3 new patterns daily. Write 5 formal sentences using each rule to embed the syntax. Avoid translating directly from your native tongue. <br/>*(नेपाली: व्याकरण अभ्यास - दैनिक २-३ वटा नयाँ नियम सिक्ने र वाक्य बनाउने। नेपालीबाट सिधै उल्था नगर्ने।)* |
+| **11:30 – 13:00** *(1.5 Hours)* | Midday Intermission & Passive Exposure | Rest your mind, but keep native Korean media, radio channels, or news podcasts running at normal speed in the background to build auditory familiarity. <br/>*(नेपाली: आराम र श्रवण अभ्यास - दिमागलाई आराम दिँदै पृष्ठभूमिमा कोरियन गीत, समाचार वा पडकास्ट बजाएर सुन्ने बानी बसाल्ने।)* |
+| **13:00 – 15:00** *(2.0 Hours)* | Lexical Acquisition & Contextual Reading | Acquire 25–30 new words daily. Practice reading by parsing short non-fiction paragraphs or essays, translating line by line to map vocabulary roots. <br/>*(नेपाली: शब्दार्थ र पढाई अभ्यास - दैनिक २५-३० नयाँ शब्द सिक्ने र छोटा लेखहरू पढेर अर्थ बुझ्ने प्रयास गर्ने।)* |
+| **15:30 – 17:00** *(1.5 Hours)* | Active Output & Review Systems | Review active flashcards using memory applications. Complete 10–15 practice questions from specific question banks. <br/>*(नेपाली: दोहोर्याउने र प्रश्न हल गर्ने - याद गरेका शब्दहरू फ्ल्यासकार्ड मार्फत दोहोर्याउने र १०-१५ वटा अभ्यास प्रश्नहरू हल गर्ने।)* |
+
+---
+
+## 6. High-Yield Practice Questions & Strategy (महत्त्वपूर्ण प्रश्नहरू र रणनीति)
+
+When working with actual test questions, success relies on using formulaic sentence starters that guarantee structural and grammatical points from the grader.
+
+> **नेपाली व्याख्या:** परीक्षामा अंक पक्का गर्नका लागि निश्चित वाक्यका ढाँचाहरू (Fixed Templates) पहिले नै कण्ठ गरेर जानु उत्तम हुन्छ।
+
+### Strategic Strategy for Question 53 (The Graph Essay / ग्राफ व्याख्या गर्ने तरिका)
+To ensure your response meets the required 200–300 character limit without wasting precious time, rely on these proven structural templates:
+
+> *(नेपाली: समय बचाउन र अक्षर संख्या पुर्याउन यी वाक्यहरू कण्ठ पार्नुहोस्:)*
+
+1. **The Introduction Line (सुरुवात गर्ने वाक्य):** State the institution conducting the poll and the primary metric being monitored:
+   - **Template:** **조사기관 + 에서 + 조사대상 + 에 대해 조사를 실시하였다.**
+   - **Meaning (अर्थ):** "(सर्भे गर्ने संस्था) ले (विषय) को बारेमा सर्भेक्षण सञ्चालन गरेको थियो।"
+
+2. **Describing an Upward Trend (ग्राफ बढेको देखाउँदा):** Use fixed causal connectors to describe line graphs:
+   - **Template:** **Noun + 이/가 + 지속적으로 증가하는 추세를 보였다.**
+   - **Meaning (अर्थ):** "(सूचक/तथ्याङ्क) निरन्तर रूपमा बढ्दै गइरहेको प्रवृत्ति देखियो।"
+
+3. **Stating the Core Reason (कारण बुझाउँदा):** Transition logically from the data points to the underlying causes provided in the prompt:
+   - **Template:** **이러한 원인으로는 + 기인한 것으로 나타났다.**
+   - **Meaning (अर्थ):** "यस प्रकारको नतिजा आउनुको मुख्य कारण... बाट भएको देखिन्छ।"
+
+To practice writing under these exact grading rules, use the interactive tools provided on the [Korean Graded Readers Data Description Portal](https://koreangradedreaders.com/topik-53/).
+
+---
+
+## 7. Glossary & Core Resource Directory (शब्दावली र स्रोतहरू)
+
+Keep this structural reference directory on hand throughout your 6 months of full-time preparation to ensure your study materials are correct and reliable.
+
+### Lexical Terminology Directory (महत्त्वपूर्ण परीक्षा शब्दावली)
+- **원인 (Won-in):** Underlying cause or driving factor; highly critical for answering Question 53 graph prompts. *(नेपाली: कारण)*
+- **그래프 (Geu-rae-peu):** Graph or chart; the central visual feature of the intermediate writing paper. *(नेपाली: ग्राफ वा चार्ट)*
+- **원고지 (Won-go-ji):** Standard square grid manuscript paper used for the written exam. *(नेपाली: लेखन परीक्षामा प्रयोग गरिने कोठा भएको विशेष कागज)*
+- **성적증명서 (Seong-jeok-jeung-myeong-seo):** Official language score report sheet required by university registration offices. *(नेपाली: आधिकारिक परीक्षाको लब्धांक पत्र/Certificate)*
+
+### Verified Reference Frameworks (प्रमाणित अध्ययन सामग्रीहरू)
+- **The Test Simulation Standard:** *HOT TOPIK II Actual Test Book (Revised Edition)*. This manual contains 5 full-length mock examinations that closely mimic current testing trends, complete with detailed answer sheets. *(नेपाली: यस पुस्तकमा परीक्षामा सोधिने जस्तै ५ वटा पूर्ण सेट अभ्यास प्रश्नहरू राखिएका छन्।)*
+- **Grammar Foundation Resource:** *Korean Grammar in Use (Beginner & Intermediate)*. These books serve as an excellent self-study reference, detailing the specific structural differences between similar connectors with clear English footnotes. *(नेपाली: आफैं अध्ययन गर्नको लागि यो उत्कृष्ट व्याकरण पुस्तक हो।)*`
+  },
+  {
     id: 'korea-eps-e9-visa-guide-2026',
     slug: 'korea-eps-e9-visa-full-guide-2026',
     title: 'कोरिया जाने राजमार्ग! EPS (E-9) मार्फत नेपालबाट कोरिया पुग्ने पूर्ण गाइड — फर्म भर्नेदेखि उडान उड्नेसम्म (२०२६)',
@@ -694,10 +1111,13 @@ export function getPostSlug(post: BlogPost): string {
 }
 
 export function findPostBySlugOrId(identifier: string): BlogPost | undefined {
-  const decoded = decodeURIComponent(identifier).toLowerCase();
+  if (!identifier) return undefined;
+  const decoded = decodeURIComponent(identifier).trim().toLowerCase();
   return INITIAL_POSTS.find(
     (p) =>
       p.id.toLowerCase() === decoded ||
-      (p.slug && p.slug.toLowerCase() === decoded)
+      (p.slug && p.slug.toLowerCase() === decoded) ||
+      p.id.toLowerCase().replace(/-/g, '') === decoded.replace(/-/g, '') ||
+      (p.slug && p.slug.toLowerCase().replace(/-/g, '') === decoded.replace(/-/g, ''))
   );
 }

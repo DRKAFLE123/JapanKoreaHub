@@ -30,7 +30,8 @@ function slugifyHeading(text: string, index: number): string {
 }
 
 // Extract Table of Contents items from Markdown content
-function extractTOC(content: string): { items: TOCItem[]; processedContent: string } {
+function extractTOC(content: string = ''): { items: TOCItem[]; processedContent: string } {
+  if (!content) return { items: [], processedContent: '' };
   const lines = content.split('\n');
   const items: TOCItem[] = [];
   let headingIndex = 0;
@@ -135,6 +136,16 @@ export const BlogArticleView: React.FC<BlogArticleViewProps> = ({ post }) => {
   const shareWhatsappUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(`${post.title}\n\n${pageUrl}`)}`;
   const shareLinkedinUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(pageUrl)}`;
 
+  // Helper for inline markdown replacements (bold, italic, code, math, links)
+  const formatInlineMarkdown = (text: string): string => {
+    return text
+      .replace(/\*\*(.*?)\*\*/g, '<strong class="text-slate-900 font-black">$1</strong>')
+      .replace(/\*(.*?)\*/g, '<em class="italic text-slate-800">$1</em>')
+      .replace(/`([^`]+)`/g, '<code class="px-1.5 py-0.5 rounded bg-slate-100 border border-slate-200 text-pink-700 font-mono text-xs font-bold">$1</code>')
+      .replace(/\$([^$]+)\$/g, '<code class="px-2 py-0.5 rounded-md bg-indigo-50 border border-indigo-200 text-indigo-800 font-mono text-xs font-bold inline-block mx-0.5">$1</code>')
+      .replace(/\[(.*?)\]\((.*?)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer" class="text-indigo-600 underline underline-offset-4 hover:text-indigo-700 font-bold">$1</a>');
+  };
+
   // Custom Markdown Parser to HTML Elements
   const renderFormattedBody = () => {
     // Split by Markdown blocks
@@ -146,6 +157,18 @@ export const BlogArticleView: React.FC<BlogArticleViewProps> = ({ post }) => {
 
     lines.forEach((line, idx) => {
       const trimmed = line.trim();
+
+      // Check Math Block ($$ ... $$)
+      if (trimmed.startsWith('$$') && trimmed.endsWith('$$')) {
+        const formula = trimmed.slice(2, -2).trim();
+        elements.push(
+          <div key={`math-${idx}`} className="my-5 p-4 sm:p-5 rounded-2xl bg-gradient-to-r from-slate-900 via-indigo-950 to-slate-900 text-emerald-400 font-mono text-center text-sm sm:text-base font-bold shadow-md border border-indigo-500/20 overflow-x-auto">
+            <span className="text-xs text-indigo-300 block font-sans font-semibold mb-1 uppercase tracking-wider">Formula Equation</span>
+            {formula}
+          </div>
+        );
+        return;
+      }
 
       // Check Table Lines
       if (trimmed.startsWith('|') && trimmed.endsWith('|')) {
@@ -167,7 +190,7 @@ export const BlogArticleView: React.FC<BlogArticleViewProps> = ({ post }) => {
               <thead>
                 <tr className="bg-slate-100 border-b border-slate-200 text-slate-900 font-extrabold uppercase tracking-wider">
                   {tableHeaders.map((h, i) => (
-                    <th key={i} className="px-4 py-3">{h}</th>
+                    <th key={i} className="px-4 py-3" dangerouslySetInnerHTML={{ __html: formatInlineMarkdown(h) }} />
                   ))}
                 </tr>
               </thead>
@@ -175,7 +198,7 @@ export const BlogArticleView: React.FC<BlogArticleViewProps> = ({ post }) => {
                 {tableRows.map((row, rIdx) => (
                   <tr key={rIdx} className="hover:bg-slate-50 transition-colors">
                     {row.map((cell, cIdx) => (
-                      <td key={cIdx} className="px-4 py-3">{cell}</td>
+                      <td key={cIdx} className="px-4 py-3" dangerouslySetInnerHTML={{ __html: formatInlineMarkdown(cell) }} />
                     ))}
                   </tr>
                 ))}
@@ -198,10 +221,10 @@ export const BlogArticleView: React.FC<BlogArticleViewProps> = ({ post }) => {
 
       // Check Blockquote
       if (trimmed.startsWith('> ')) {
-        const quoteText = trimmed.replace(/^>\s+/, '').replace(/\*\*/g, '');
+        const quoteText = trimmed.replace(/^>\s+/, '');
         elements.push(
           <blockquote key={idx} className="my-4 p-4 rounded-2xl bg-amber-50 border-l-4 border-amber-500 text-amber-900 text-xs sm:text-sm font-medium space-y-1">
-            <p>{quoteText}</p>
+            <p dangerouslySetInnerHTML={{ __html: formatInlineMarkdown(quoteText) }} />
           </blockquote>
         );
         return;
@@ -218,9 +241,7 @@ export const BlogArticleView: React.FC<BlogArticleViewProps> = ({ post }) => {
         const itemText = trimmed.substring(2);
         elements.push(
           <li key={idx} className="ml-4 list-disc text-slate-700 leading-relaxed text-xs sm:text-sm my-1">
-            <span dangerouslySetInnerHTML={{
-              __html: itemText.replace(/\*\*(.*?)\*\*/g, '<strong class="text-slate-900 font-black">$1</strong>')
-            }} />
+            <span dangerouslySetInnerHTML={{ __html: formatInlineMarkdown(itemText) }} />
           </li>
         );
         return;
@@ -234,9 +255,7 @@ export const BlogArticleView: React.FC<BlogArticleViewProps> = ({ post }) => {
             <span className="flex-shrink-0 w-6 h-6 rounded-full bg-indigo-100 text-indigo-800 border border-indigo-200 text-xs font-black flex items-center justify-center">
               {numMatch[1]}
             </span>
-            <span className="pt-0.5" dangerouslySetInnerHTML={{
-              __html: numMatch[2].replace(/\*\*(.*?)\*\*/g, '<strong class="text-slate-900 font-black">$1</strong>')
-            }} />
+            <span className="pt-0.5" dangerouslySetInnerHTML={{ __html: formatInlineMarkdown(numMatch[2]) }} />
           </div>
         );
         return;
@@ -246,9 +265,7 @@ export const BlogArticleView: React.FC<BlogArticleViewProps> = ({ post }) => {
       if (trimmed) {
         elements.push(
           <p key={idx} className="text-xs sm:text-sm text-slate-700 leading-relaxed my-3 font-medium" dangerouslySetInnerHTML={{
-            __html: trimmed
-              .replace(/\*\*(.*?)\*\*/g, '<strong class="text-slate-900 font-black">$1</strong>')
-              .replace(/\[(.*?)\]\((.*?)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer" class="text-indigo-600 underline underline-offset-4 hover:text-indigo-700 font-bold">$1</a>')
+            __html: formatInlineMarkdown(trimmed)
           }} />
         );
       }
