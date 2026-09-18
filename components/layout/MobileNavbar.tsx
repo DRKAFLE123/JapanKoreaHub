@@ -2,7 +2,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Menu, Search, LogIn, X, ChevronDown, User, Bell } from 'lucide-react';
+import { Menu, Search, LogIn, X, ChevronDown, User, Bell, BarChart2 } from 'lucide-react';
 import AuthSheet from '@/components/auth/AuthSheet';
 import MobileDrawer from '@/components/layout/MobileDrawer';
 
@@ -118,6 +118,14 @@ export default function MobileNavbar({ user, lang, onLangToggle, onSearchOpen }:
                         >
                           <User className="w-4 h-4 text-slate-500" />
                           <span>My Profile</span>
+                        </Link>
+                        <Link
+                          href="/dashboard"
+                          onClick={() => setDropdownOpen(false)}
+                          className="flex items-center gap-2.5 px-3 py-2 rounded-xl text-slate-700 hover:text-slate-900 hover:bg-slate-100 font-bold transition-colors"
+                        >
+                          <BarChart2 className="w-4 h-4 text-indigo-500" />
+                          <span>My Progress</span>
                         </Link>
                       </div>
 

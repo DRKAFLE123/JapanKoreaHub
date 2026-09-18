@@ -103,7 +103,7 @@ export const SEARCH_DATABASE: SearchItem[] = [
     category: 'Work',
     country: 'japan',
     keywords: ['building cleaning', 'ssw cleaning', 'polisher', 'chemical safety', 'cleaning textbook'],
-    href: '/japan/work/building_cleaning',
+    href: '/japan/work/building-cleaning',
   },
   {
     id: 'jp-ssw-construction',
@@ -123,7 +123,7 @@ export const SEARCH_DATABASE: SearchItem[] = [
     category: 'Work',
     country: 'japan',
     keywords: ['food service japan', 'gaishoku', 'otaff', 'haccp', 'restaurant japanese', 'food safety'],
-    href: '/japan/work/food_service',
+    href: '/japan/work/food-service',
   },
   {
     id: 'jp-ssw-agriculture',

@@ -1,6 +1,6 @@
 'use client';
 import React, { createContext, useContext, useState, useEffect } from 'react';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 
 export type CountryFocus = 'japan' | 'korea' | 'all';
 
@@ -19,6 +19,7 @@ const CountryContext = createContext<CountryContextType>({
 export function CountryProvider({ children }: { children: React.ReactNode }) {
   const [activeCountry, setActiveCountry] = useState<CountryFocus>('japan');
   const pathname = usePathname();
+  const router = useRouter();
 
   useEffect(() => {
     // 1. Check URL path first
@@ -35,14 +36,53 @@ export function CountryProvider({ children }: { children: React.ReactNode }) {
 
     // 2. Otherwise load saved preference
     const saved = localStorage.getItem('jkh_country') as CountryFocus | null;
-    if (saved && (saved === 'japan' || saved === 'korea' || saved === 'all')) {
+    if (saved && (saved === 'japan' || saved === 'korea')) {
       setActiveCountry(saved);
     }
   }, [pathname]);
 
   const setCountryFocus = (c: CountryFocus) => {
-    setActiveCountry(c);
-    localStorage.setItem('jkh_country', c);
+    const target = c === 'all' ? 'japan' : c;
+    setActiveCountry(target);
+    localStorage.setItem('jkh_country', target);
+    localStorage.setItem('jkh_user_selected_country', target);
+
+    // Auto-navigate between country-scoped URLs
+    if (target === 'japan') {
+      if (pathname.startsWith('/korea')) {
+        router.push(pathname.replace('/korea', '/japan'));
+      } else if (
+        pathname === '/' ||
+        pathname === '/learn' ||
+        pathname === '/exams' ||
+        pathname === '/study' ||
+        pathname === '/work' ||
+        pathname === '/visa' ||
+        pathname === '/life' ||
+        pathname === '/skills' ||
+        pathname === '/exams/skills'
+      ) {
+        const dest = pathname === '/' ? '/japan' : pathname === '/skills' || pathname === '/exams/skills' ? '/japan/exams/skills' : `/japan${pathname}`;
+        router.push(dest);
+      }
+    } else if (target === 'korea') {
+      if (pathname.startsWith('/japan')) {
+        router.push(pathname.replace('/japan', '/korea'));
+      } else if (
+        pathname === '/' ||
+        pathname === '/learn' ||
+        pathname === '/exams' ||
+        pathname === '/study' ||
+        pathname === '/work' ||
+        pathname === '/visa' ||
+        pathname === '/life' ||
+        pathname === '/skills' ||
+        pathname === '/exams/skills'
+      ) {
+        const dest = pathname === '/' ? '/korea' : pathname === '/skills' || pathname === '/exams/skills' ? '/korea/exams/skills' : `/korea${pathname}`;
+        router.push(dest);
+      }
+    }
   };
 
   const getScopedUrl = (path: 'learn' | 'exams' | 'study' | 'work' | 'visa' | 'life') => {

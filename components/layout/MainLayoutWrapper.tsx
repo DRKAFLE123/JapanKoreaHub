@@ -9,6 +9,7 @@ import ContentProtection from '../security/ContentProtection';
 import { LanguageProvider } from '@/lib/i18n/LanguageContext';
 import { CountryProvider } from '@/lib/context/CountryContext';
 import { ThemeProvider } from '@/lib/context/ThemeContext';
+import CountrySelectionModal from '../ui/CountrySelectionModal';
 
 import { usePathname } from 'next/navigation';
 
@@ -61,6 +62,11 @@ export default function MainLayoutWrapper({ children }: { children: React.ReactN
       })
       .catch(() => {});
   }, []);
+
+  // Always close mobile sidebar when route/pathname changes
+  useEffect(() => {
+    setSidebarOpen(false);
+  }, [pathname]);
 
   const toggleLang = () => {
     const next = lang === 'en' ? 'ne' : 'en';
@@ -145,6 +151,9 @@ export default function MainLayoutWrapper({ children }: { children: React.ReactN
             
             {/* Global Search Modal */}
             <GlobalSearch isOpen={searchOpen} onClose={() => setSearchOpen(false)} />
+
+            {/* First-time Country Selection Dialog */}
+            <CountrySelectionModal />
           </div>
         </SidebarCollapseContext.Provider>
       </CountryProvider>

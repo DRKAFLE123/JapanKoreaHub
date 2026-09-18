@@ -12,6 +12,7 @@ const VISA_TYPES: Record<string, { type: string; title: string; desc: string; ic
   korea: [
     { type: 'e9',      title: 'E-9 Work Visa', desc: 'EPS route for non-professional employment', icon: '👷' },
     { type: 'student', title: 'Student Visa (D-2/D-4)', desc: 'University and language school requirements', icon: '🎓' },
+    { type: 'dependent', title: 'Dependent Visa (F-3)', desc: 'Family accompanying visa for Korea', icon: '👨‍👩‍👧‍👦' },
     { type: 'e7',      title: 'E-7 Work Visa', desc: 'Professional and skilled employment', icon: '💼' },
     { type: 'interview', title: 'Interview Prep', desc: 'Embassy interview questions and tips', icon: '🗣️' },
   ],

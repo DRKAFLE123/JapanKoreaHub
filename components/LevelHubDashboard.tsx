@@ -1,11 +1,11 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Sparkles, BookOpen, Layers, Headphones, Clock, Target, Award, Calendar, Flame, CheckCircle2, ChevronRight, Zap, ArrowLeft, FileText, Globe, Maximize2, Minimize2 } from 'lucide-react';
+import Link from 'next/link';
+import { Sparkles, BookOpen, Layers, Headphones, Clock, Target, Award, Calendar, Flame, CheckCircle2, ChevronRight, Zap, ArrowLeft, ArrowRight, FileText, Globe, Maximize2, Minimize2 } from 'lucide-react';
 import { LevelPassTricks } from './LevelPassTricks';
 import { LevelStudyPlanModal } from './LevelStudyPlanModal';
 import { VocabularyExplorer } from './VocabularyExplorer';
 import { KanjiCard } from './KanjiCard';
 import { AlphabetGrid } from './AlphabetGrid';
-import { TimedExamEngine } from './TimedExamEngine';
 import { RadicalBreakdown } from './RadicalBreakdown';
 import { LevelExamSyllabusGuide } from './LevelExamSyllabusGuide';
 import { JFTGrammarExplorer } from './JFTGrammarExplorer';
@@ -69,7 +69,7 @@ export const LevelHubDashboard: React.FC<LevelHubDashboardProps> = ({
       if (currentLevel === 'BASICS') {
         setActiveTab('BASICS_VOCAB');
       } else if (currentLevel === 'JFT') {
-        setActiveTab('EXAMS');
+        setActiveTab('VOCABULARY');
       } else {
         setActiveTab('VOCABULARY');
       }
@@ -99,7 +99,6 @@ export const LevelHubDashboard: React.FC<LevelHubDashboardProps> = ({
         { id: 'VOCABULARY', label: 'Vocabulary Explorer', icon: BookOpen, emoji: '📚' },
         { id: 'FLASHCARDS', label: 'Kanji Flashcards', icon: Layers, emoji: '🃏' },
         { id: 'LISTENING', label: 'Listening Practice', icon: Headphones, emoji: '🎧' },
-        { id: 'EXAMS', label: 'Mock Tests', icon: Clock, emoji: '⏱' },
         { id: 'EXAM_GUIDE', label: 'Exam & Syllabus Guide', icon: FileText, emoji: '🎓' },
       ];
     }
@@ -108,17 +107,15 @@ export const LevelHubDashboard: React.FC<LevelHubDashboardProps> = ({
         { id: 'VOCABULARY', label: `Vocabulary Explorer (${currentLevel})`, icon: BookOpen, emoji: '📚' },
         { id: 'FLASHCARDS', label: 'Kanji Flashcards', icon: Layers, emoji: '🃏' },
         { id: 'LISTENING', label: 'Listening Practice', icon: Headphones, emoji: '🎧' },
-        { id: 'EXAMS', label: 'Mock Tests', icon: Clock, emoji: '⏱' },
         { id: 'EXAM_GUIDE', label: 'Exam & Syllabus Guide', icon: FileText, emoji: '🎓' },
       ];
     }
     if (currentLevel === 'JFT') {
       return [
-        { id: 'EXAMS', label: 'CBT Exam Engine', icon: Clock, emoji: '⏱' },
-        { id: 'EXAM_GUIDE', label: 'Exam & Syllabus Guide', icon: FileText, emoji: '🎓' },
         { id: 'VOCABULARY', label: 'JFT Meanings (Lessons 1-50)', icon: BookOpen, emoji: '📖' },
         { id: 'GRAMMAR', label: 'JFT Grammar (Lessons 1-50)', icon: FileText, emoji: '📝' },
         { id: 'FLASHCARDS', label: 'Kanji Flashcards', icon: Layers, emoji: '🃏' },
+        { id: 'EXAM_GUIDE', label: 'Exam & Syllabus Guide', icon: FileText, emoji: '🎓' },
       ];
     }
     if (currentLevel === 'KANJI_1000') {
@@ -131,7 +128,6 @@ export const LevelHubDashboard: React.FC<LevelHubDashboardProps> = ({
     return [
       { id: 'VOCABULARY', label: 'Vocabulary Explorer', icon: BookOpen, emoji: '📚' },
       { id: 'FLASHCARDS', label: 'Kanji Flashcards', icon: Layers, emoji: '🃏' },
-      { id: 'EXAMS', label: 'Mock Tests', icon: Clock, emoji: '⏱' },
       { id: 'EXAM_GUIDE', label: 'Exam & Syllabus Guide', icon: FileText, emoji: '🎓' },
     ];
   };
@@ -165,6 +161,15 @@ export const LevelHubDashboard: React.FC<LevelHubDashboardProps> = ({
                 </button>
               );
             })}
+
+            {/* 🛠️ SSW Skills & Study Hub Quick Jump */}
+            <Link
+              href="/japan/exams/skills"
+              className="px-2.5 py-1 rounded-xl text-xs font-extrabold transition-all cursor-pointer whitespace-nowrap border bg-indigo-50 dark:bg-indigo-950/60 text-indigo-700 dark:text-indigo-300 hover:bg-indigo-100 dark:hover:bg-indigo-900/60 border-indigo-200 dark:border-indigo-800 flex items-center gap-1 shadow-xs"
+              title="Open Official SSW-1 Skills Directory, Sector Study Hubs & Prometric CBT Exams"
+            >
+              <span>🛠️ SSW Skills &amp; Hub</span>
+            </Link>
 
             {/* ⛶ FOCUS MODE TOGGLE BUTTON */}
             <button
@@ -231,7 +236,26 @@ export const LevelHubDashboard: React.FC<LevelHubDashboardProps> = ({
             )}
 
             {activeTab === 'EXAMS' && (
-              <TimedExamEngine />
+              <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 sm:p-8 text-center space-y-4 max-w-2xl mx-auto my-6 shadow-xs">
+                <div className="w-14 h-14 rounded-2xl bg-red-50 text-red-600 text-2xl flex items-center justify-center mx-auto border border-red-200">
+                  ⏱️
+                </div>
+                <div className="space-y-1">
+                  <h3 className="text-lg font-black text-slate-900 dark:text-white">
+                    Official Timed Mock Exams are in the Mock Test Section
+                  </h3>
+                  <p className="text-xs text-slate-600 dark:text-slate-400 max-w-md mx-auto leading-relaxed">
+                    Learn section is dedicated strictly to study &amp; reading. Launch full-length timed paper &amp; CBT mock tests with official timers, answer keys, and score tracking in the Mock Test section.
+                  </p>
+                </div>
+                <Link
+                  href="/japan/exams"
+                  className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-red-600 hover:bg-red-500 text-white font-black text-xs transition-all shadow-sm cursor-pointer"
+                >
+                  <span>Go to Japan Mock Test Section</span>
+                  <ArrowRight className="w-4 h-4" />
+                </Link>
+              </div>
             )}
 
             {activeTab === 'EXAM_GUIDE' && (

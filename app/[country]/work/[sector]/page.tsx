@@ -8,6 +8,8 @@ interface Props {
   params: Promise<{ country: string; sector: string }> | { country: string; sector: string };
 }
 
+import { redirect } from 'next/navigation';
+
 export async function generateStaticParams() {
   const sectors = Object.keys(SSW_SECTORS_DATA);
   const paramsList: { country: string; sector: string }[] = [];
@@ -40,7 +42,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       'Prometric Skill Test',
       'Specified Skilled Worker',
       'OTIT Textbooks',
-      'Kaigo Listening',
+      'SSW Interview Practice',
+      'Kaigo Mensetsu',
       'Construction Safety'
     ],
   };
@@ -48,7 +51,15 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function SSWSectorPage({ params }: Props) {
   const resolvedParams = await params;
-  const sectorData = SSW_SECTORS_DATA[resolvedParams.sector];
+  const rawSector = resolvedParams.sector;
+
+  // 301-redirect underscore URLs to hyphen (SEO canonical)
+  if (rawSector.includes('_')) {
+    const canonical = rawSector.replace(/_/g, '-');
+    redirect(`/${resolvedParams.country}/work/${canonical}`);
+  }
+
+  const sectorData = SSW_SECTORS_DATA[rawSector];
 
   if (!sectorData && resolvedParams.country === 'japan') {
     notFound();
@@ -57,7 +68,7 @@ export default async function SSWSectorPage({ params }: Props) {
   return (
     <SSWSectorDetailClient
       country={(resolvedParams.country as 'japan' | 'korea') || 'japan'}
-      sectorKey={resolvedParams.sector}
+      sectorKey={rawSector}
       sectorData={sectorData}
     />
   );

@@ -1,7 +1,7 @@
 'use client';
 import React from 'react';
 import Link from 'next/link';
-import { ArrowLeft, Briefcase, ChevronRight, ArrowRight, ShieldCheck, BookOpen, Building, CheckCircle2 } from 'lucide-react';
+import { ArrowLeft, Briefcase, ChevronRight, ArrowRight, ShieldCheck, BookOpen, Building, CheckCircle2, Play } from 'lucide-react';
 import MobileNavbar from '@/components/layout/MobileNavbar';
 import BottomTabBar from '@/components/layout/BottomTabBar';
 
@@ -11,8 +11,8 @@ const SECTORS: Record<Country, { id: string; name: string; icon: string; desc: s
   japan: [
     { id: 'nursing', name: 'Caregiving (Kaigo)', icon: '🏥', desc: 'High demand in Japanese nursing homes. Requires JFT-Basic + Kaigo Skill Test.', demand: 'Very High' },
     { id: 'agriculture', name: 'Agriculture (Nougyou)', icon: '🌾', desc: 'Crop farming & livestock management under SSW-1 visa.', demand: 'High' },
-    { id: 'food_service', name: 'Food Service (Gaishoku)', icon: '🍽️', desc: 'Restaurant, kitchen & food preparation jobs across major Japanese cities.', demand: 'High' },
-    { id: 'building_cleaning', name: 'Building Cleaning', icon: '🧹', desc: 'Facility maintenance & commercial building cleaning services.', demand: 'Moderate' },
+    { id: 'food-service', name: 'Food Service (Gaishoku)', icon: '🍽️', desc: 'Restaurant, kitchen & food preparation jobs across major Japanese cities.', demand: 'High' },
+    { id: 'building-cleaning', name: 'Building Cleaning', icon: '🧹', desc: 'Facility maintenance & commercial building cleaning services.', demand: 'Moderate' },
     { id: 'construction', name: 'Construction (Kensetsu)', icon: '🏗️', desc: 'Carpentry, rebar, scaffolding & infrastructure work.', demand: 'High' },
   ],
   korea: [
@@ -112,19 +112,20 @@ export default function WorkHubClient({ country }: { country: Country }) {
                   </div>
                   <p className="text-xs text-gray-500 mt-1 leading-relaxed">{sec.desc}</p>
 
-                  <div className="flex flex-wrap items-center gap-2.5 mt-3 pt-2 border-t border-gray-100 text-xs">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 mt-3 pt-2.5 border-t border-gray-100 text-xs">
                     <Link
                       href={`/${country}/work/${sec.id}`}
-                      className="px-3 py-1.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-black text-xs flex items-center gap-1.5 transition-colors"
+                      className="py-2.5 px-3 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-black text-xs flex items-center justify-center gap-2 transition-colors shadow-xs"
                     >
-                      <BookOpen className="w-3.5 h-3.5 text-emerald-400" />
-                      SSW Study Hub &amp; Textbooks
+                      <BookOpen className="w-3.5 h-3.5 text-indigo-200" />
+                      <span>Start Learning • Study Hub</span>
                     </Link>
                     <Link
-                      href={`/${country}/work/${sec.id}`}
-                      className="px-3 py-1.5 rounded-xl bg-emerald-50 hover:bg-emerald-100 text-emerald-800 font-extrabold text-xs transition-colors"
+                      href={`/${country}/exams/skills?sector=${sec.id}`}
+                      className="py-2.5 px-3 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-black text-xs flex items-center justify-center gap-2 transition-colors shadow-xs"
                     >
-                      🎧 Listening &amp; CBT Test
+                      <Play className="w-3.5 h-3.5 fill-white" />
+                      <span>Mock Tests (5 Sets) ✍️</span>
                     </Link>
                   </div>
                 </div>

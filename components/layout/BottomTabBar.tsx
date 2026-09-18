@@ -2,7 +2,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Home as HomeIcon, BookOpen as LearnIcon, Shield as VisaIcon, BarChart2 as ProgressIcon, User as ProfileIcon } from 'lucide-react';
+import { Home as HomeIcon, BookOpen as LearnIcon, Shield as VisaIcon, Briefcase as JobsIcon, User as ProfileIcon } from 'lucide-react';
 import { useCountry } from '@/lib/context/CountryContext';
 
 export default function BottomTabBar() {
@@ -14,15 +14,16 @@ export default function BottomTabBar() {
     if (key === 'learn') return activeCountry === 'japan' ? '/japan/learn' : activeCountry === 'korea' ? '/korea/learn' : '/learn';
     if (key === 'visa') return activeCountry === 'japan' ? '/japan/visa' : activeCountry === 'korea' ? '/korea/visa' : '/visa';
     if (key === 'dashboard') return '/dashboard';
+    if (key === 'jobs') return activeCountry === 'japan' ? '/japan/jobs' : '/korea/jobs';
     return '/profile';
   };
 
   const tabs = [
-    { key: 'home',      href: getHref('home'),      label: 'Home',     Icon: HomeIcon     },
-    { key: 'learn',     href: getHref('learn'),     label: 'Learn',    Icon: LearnIcon    },
-    { key: 'visa',      href: getHref('visa'),      label: 'Visa',     Icon: VisaIcon     },
-    { key: 'dashboard', href: getHref('dashboard'), label: 'Progress', Icon: ProgressIcon },
-    { key: 'profile',   href: getHref('profile'),   label: 'Profile',  Icon: ProfileIcon  },
+    { key: 'home',    href: getHref('home'),    label: 'Home',    Icon: HomeIcon    },
+    { key: 'learn',   href: getHref('learn'),   label: 'Learn',   Icon: LearnIcon   },
+    { key: 'visa',    href: getHref('visa'),    label: 'Visa',    Icon: VisaIcon    },
+    { key: 'jobs',    href: getHref('jobs'),    label: 'Jobs',    Icon: JobsIcon    },
+    { key: 'profile', href: getHref('profile'), label: 'Profile', Icon: ProfileIcon },
   ];
 
   const isActive = (href: string) => {

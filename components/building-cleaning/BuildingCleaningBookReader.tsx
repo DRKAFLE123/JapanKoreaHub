@@ -46,6 +46,7 @@ import {
   AutoScrubberDiagram,
   FloorBlowerDiagram
 } from './CleaningEquipmentDiagrams';
+import BuildingCleaningMockExam from './BuildingCleaningMockExam';
 
 interface Props {
   country?: string;
@@ -55,9 +56,16 @@ interface Props {
 export default function BuildingCleaningBookReader({ country = 'japan', isEmbedded = false }: Props) {
   const [selectedChapterId, setSelectedChapterId] = useState<number>(1);
   const [showNepali, setShowNepali] = useState<boolean>(true);
-  const [furiganaMode, setFuriganaMode] = useState<'katakana' | 'hiragana' | 'off'>('katakana');
-  const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(true);
+  const [furiganaMode, setFuriganaMode] = useState<'katakana' | 'hiragana' | 'off'>('hiragana');
+  const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(false);
   const [activeView, setActiveView] = useState<'reader' | 'equipment-guide' | 'mock-exam' | 'glossary'>('reader');
+
+  // Open sidebar by default only on desktop screens
+  useEffect(() => {
+    if (typeof window !== 'undefined' && window.innerWidth >= 1024) {
+      setIsSidebarOpen(true);
+    }
+  }, []);
 
   const studyScrollRef = React.useRef<HTMLDivElement>(null);
 
@@ -237,7 +245,7 @@ export default function BuildingCleaningBookReader({ country = 'japan', isEmbedd
           <div className="flex items-center gap-2 sm:gap-3 min-w-0">
             {!isEmbedded && (
               <Link
-                href={`/${country}/work/building_cleaning`}
+                href={`/${country}/work/building-cleaning`}
                 className="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold border border-slate-200 transition-colors shrink-0"
               >
                 <ArrowLeft className="w-3.5 h-3.5 text-emerald-600" />
@@ -363,7 +371,7 @@ export default function BuildingCleaningBookReader({ country = 'japan', isEmbedd
               }`}
             >
               <Award className="w-3.5 h-3.5 text-amber-600" />
-              <span>CBT Mock Exam</span>
+              <span>🏆 60-Min Official Mock Exam (30 Qs)</span>
             </button>
             <button
               onClick={() => setActiveView('glossary')}
@@ -1279,254 +1287,12 @@ export default function BuildingCleaningBookReader({ country = 'japan', isEmbedd
             VIEW 2: FINAL COMPREHENSIVE CBT MOCK EXAM (総合模擬試験) - Light
            =================================================================== */}
         {activeView === 'mock-exam' && (
-          <main className="flex-1 min-h-0 h-full overflow-y-auto overscroll-contain rounded-2xl pb-8 pr-1 sm:pr-2 space-y-6 scrollbar-thin scrollbar-thumb-slate-300">
-            
-            {/* Mock Exam Banner */}
-            <div className="bg-gradient-to-r from-emerald-50 via-teal-50/60 to-indigo-50 border border-emerald-200 rounded-3xl p-6 sm:p-8 shadow-xs space-y-4">
-              <div className="flex items-center gap-3">
-                <span className="text-4xl p-3 bg-white rounded-2xl border border-emerald-200 shadow-xs">
-                  🏆
-                </span>
-                <div>
-                  <span className="px-2.5 py-0.5 rounded-full bg-emerald-100 text-emerald-800 text-xs font-black uppercase tracking-wider">
-                    Full Prometric Simulation
-                  </span>
-                  <h2 className="text-2xl sm:text-3xl font-black text-slate-900 mt-1">
-                    {BUILDING_CLEANING_BOOK_DATA.finalModelExam.titleJp}
-                  </h2>
-                  <p className="text-xs sm:text-sm font-bold text-indigo-900 mt-0.5">
-                    🇳🇵 {BUILDING_CLEANING_BOOK_DATA.finalModelExam.titleNe}
-                  </p>
-                </div>
-              </div>
-
-              <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
-                {BUILDING_CLEANING_BOOK_DATA.finalModelExam.descriptionJp}
-              </p>
-
-              {/* Exam Specs */}
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-2 text-xs">
-                <div className="p-3 rounded-2xl bg-white border border-slate-200 shadow-xs">
-                  <span className="text-[10px] uppercase font-bold text-slate-400">Total Questions</span>
-                  <p className="text-sm font-black text-slate-900">{mockTotal} Questions</p>
-                </div>
-                <div className="p-3 rounded-2xl bg-white border border-slate-200 shadow-xs">
-                  <span className="text-[10px] uppercase font-bold text-slate-400">Official Format</span>
-                  <p className="text-sm font-black text-slate-900">10 〇× + 10 択一式</p>
-                </div>
-                <div className="p-3 rounded-2xl bg-white border border-slate-200 shadow-xs">
-                  <span className="text-[10px] uppercase font-bold text-slate-400">Passing Mark</span>
-                  <p className="text-sm font-black text-amber-700">60% (12 / 20 Pts)</p>
-                </div>
-                <div className="p-3 rounded-2xl bg-white border border-slate-200 shadow-xs">
-                  <span className="text-[10px] uppercase font-bold text-slate-400">Exam Timer</span>
-                  <p className={`text-sm font-black flex items-center gap-1 ${mockExamTimeLeft < 600 ? 'text-rose-600 animate-pulse' : 'text-emerald-700'}`}>
-                    <Clock className="w-3.5 h-3.5" />
-                    {formatMockTime(mockExamTimeLeft)}
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            {/* Live Exam Progress & Timer Bar */}
-            {!mockExamSubmitted && (
-              <div className="sticky top-20 z-30 p-3.5 sm:p-4 rounded-2xl bg-white/95 backdrop-blur-md border border-slate-200 shadow-sm flex items-center justify-between gap-4">
-                <div className="flex items-center gap-4 text-xs">
-                  <div className="flex items-center gap-1.5 font-black text-slate-800">
-                    <Clock className={`w-4 h-4 ${mockExamTimeLeft < 600 ? 'text-rose-600 animate-pulse' : 'text-emerald-600'}`} />
-                    <span>Time: <span className={mockExamTimeLeft < 600 ? 'text-rose-600 font-black' : 'text-slate-900'}>{formatMockTime(mockExamTimeLeft)}</span></span>
-                  </div>
-                  <div className="text-slate-500 font-bold hidden sm:block">
-                    Answered: <span className="text-emerald-600 font-black">{mockAnsweredCount}</span> / {mockTotal}
-                  </div>
-                </div>
-
-                <button
-                  onClick={() => {
-                    setMockExamSubmitted(true);
-                    window.scrollTo({ top: 0, behavior: 'smooth' });
-                  }}
-                  className="px-5 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-black text-xs transition-all shadow-xs cursor-pointer flex items-center gap-1.5"
-                >
-                  <Award className="w-4 h-4" />
-                  Submit Exam (採点する)
-                </button>
-              </div>
-            )}
-
-            {/* Score Result Announcement if Submitted */}
-            {mockExamSubmitted && (
-              <div
-                className={`p-6 sm:p-8 rounded-3xl border shadow-xs space-y-4 ${
-                  isMockPassed
-                    ? 'bg-emerald-50 border-emerald-300 text-emerald-950'
-                    : 'bg-rose-50 border-rose-300 text-rose-950'
-                }`}
-              >
-                <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-                  <div className="space-y-1">
-                    <div className="flex items-center gap-2">
-                      <span className="text-3xl">{isMockPassed ? '🎉' : '⚠️'}</span>
-                      <div>
-                        <h3 className="text-xl sm:text-2xl font-black text-slate-900">
-                          {isMockPassed ? '合格！ (PROMETRIC CBT PASSED!)' : '不合格 (NEEDS MORE PRACTICE)'}
-                        </h3>
-                        <p className="text-xs font-bold text-slate-600">
-                          ビルクリーニング特定技能１号 評価試験基準（合格ライン：60%以上 / 12点以上）
-                        </p>
-                      </div>
-                    </div>
-                    <p className="text-xs sm:text-sm text-slate-700 pt-1">
-                      You scored <strong>{mockScore}</strong> out of <strong>{mockTotal}</strong> ({mockPercent}%). Passing threshold is 60% (12 / 20).
-                    </p>
-                  </div>
-
-                  <button
-                    onClick={() => {
-                      setMockExamAnswers({});
-                      setMockExamSubmitted(false);
-                      setMockExamTimeLeft(3600);
-                      window.scrollTo({ top: 0, behavior: 'smooth' });
-                    }}
-                    className="px-5 py-2.5 rounded-2xl bg-white hover:bg-slate-50 text-slate-800 font-bold text-xs border border-slate-200 transition-all flex items-center gap-2 cursor-pointer shadow-xs shrink-0"
-                  >
-                    <RotateCcw className="w-4 h-4" />
-                    Retake Mock Exam
-                  </button>
-                </div>
-
-                {/* Diagnostic Category Breakdown */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
-                  <div className="p-3 rounded-2xl bg-white border border-slate-200 flex items-center justify-between">
-                    <div>
-                      <span className="text-[10px] font-black uppercase text-slate-400 block">Section 1</span>
-                      <p className="text-xs font-bold text-slate-800">○×形式 正誤判断（True/False）</p>
-                    </div>
-                    <span className={`text-sm font-black ${mockTFScore >= 6 ? 'text-emerald-600' : 'text-rose-600'}`}>
-                      {mockTFScore} / {mockTFQuestions.length}
-                    </span>
-                  </div>
-
-                  <div className="p-3 rounded-2xl bg-white border border-slate-200 flex items-center justify-between">
-                    <div>
-                      <span className="text-[10px] font-black uppercase text-slate-400 block">Section 2</span>
-                      <p className="text-xs font-bold text-slate-800">択一式 専門知識（Multiple Choice）</p>
-                    </div>
-                    <span className={`text-sm font-black ${mockMCQScore >= 6 ? 'text-emerald-600' : 'text-rose-600'}`}>
-                      {mockMCQScore} / {mockMCQQuestions.length}
-                    </span>
-                  </div>
-                </div>
-              </div>
-            )}
-
-            {/* Questions Form - Compact */}
-            <div className="space-y-3.5">
-              {BUILDING_CLEANING_BOOK_DATA.finalModelExam.questions.map((q, idx) => {
-                const selected = mockExamAnswers[q.id];
-                const isCorrect = mockExamSubmitted && selected === q.correctAnswer;
-                const isWrong = mockExamSubmitted && selected !== undefined && selected !== q.correctAnswer;
-
-                return (
-                  <div
-                    key={q.id}
-                    className={`p-3.5 sm:p-4 rounded-2xl border transition-all space-y-3 ${
-                      isCorrect
-                        ? 'bg-emerald-50/60 border-emerald-300'
-                        : isWrong
-                        ? 'bg-rose-50/60 border-rose-300'
-                        : 'bg-white border-slate-200 shadow-xs'
-                    }`}
-                  >
-                    <div className="space-y-1">
-                      <span className="px-2 py-0.5 rounded-md bg-emerald-100 text-emerald-800 text-[10px] font-black uppercase">
-                        Question {idx + 1} • {q.type === 'TF' ? '○×形式 (True/False)' : '択一式 (Multiple Choice)'}
-                      </span>
-                      <h4 className="text-sm sm:text-base font-bold text-slate-900 leading-snug">
-                        <FuriganaText text={q.questionJp} showFurigana={isFuriganaOn} furiganaType={furiganaType} />
-                      </h4>
-                      {showNepali && (
-                        <p className="text-xs text-indigo-900 font-medium">
-                          🇳🇵 {q.questionNe}
-                        </p>
-                      )}
-                    </div>
-
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                      {q.options?.map((opt, optIdx) => {
-                        const isThisSelected = selected === optIdx;
-                        const isThisCorrect = mockExamSubmitted && optIdx === q.correctAnswer;
-
-                        let style = 'bg-slate-50 border-slate-200 text-slate-800 hover:bg-white hover:border-slate-300';
-                        if (isThisSelected) style = 'bg-emerald-50 border-emerald-500 text-emerald-950 font-bold';
-                        if (mockExamSubmitted) {
-                          if (isThisCorrect) {
-                            style = 'bg-emerald-600 text-white font-black border-emerald-600 shadow-xs';
-                          } else if (isThisSelected && !isCorrect) {
-                            style = 'bg-rose-100 text-rose-900 font-bold border-rose-300';
-                          } else {
-                            style = 'opacity-40 bg-slate-50 border-slate-200 text-slate-500';
-                          }
-                        }
-
-                        return (
-                          <button
-                            key={optIdx}
-                            disabled={mockExamSubmitted}
-                            onClick={() => setMockExamAnswers((prev) => ({ ...prev, [q.id]: optIdx }))}
-                            className={`p-2.5 rounded-xl border text-left text-xs transition-all cursor-pointer flex items-start gap-2 ${style}`}
-                          >
-                            <span className="w-4 h-4 rounded-full border border-slate-300 flex items-center justify-center shrink-0 text-[10px] font-bold mt-0.5">
-                              {q.type === 'TF' ? (optIdx === 0 ? '○' : '×') : optIdx + 1}
-                            </span>
-                            <div className="space-y-0.5">
-                              <p className="font-bold leading-normal">
-                                <FuriganaText text={opt.textJp} showFurigana={isFuriganaOn} furiganaType={furiganaType} />
-                              </p>
-                              {showNepali && (
-                                <p className="text-[10px] opacity-80 font-normal">
-                                  {opt.textNe}
-                                </p>
-                              )}
-                            </div>
-                          </button>
-                        );
-                      })}
-                    </div>
-
-                    {/* Explanations */}
-                    {mockExamSubmitted && (
-                      <div className="p-3 rounded-xl bg-slate-50 border border-slate-200 space-y-1.5 text-xs">
-                        <p className="font-bold text-emerald-800">
-                          正解の解説（Explanation）
-                        </p>
-                        <p className="text-slate-800">
-                          <FuriganaText text={q.explanationJp} showFurigana={isFuriganaOn} furiganaType={furiganaType} />
-                        </p>
-                        {showNepali && <p className="text-indigo-900">🇳🇵 {q.explanationNe}</p>}
-                      </div>
-                    )}
-                  </div>
-                );
-              })}
-            </div>
-
-            {/* Mock Exam Submit Button */}
-            {!mockExamSubmitted && (
-              <div className="pt-4">
-                <button
-                  onClick={() => {
-                    setMockExamSubmitted(true);
-                    window.scrollTo({ top: 0, behavior: 'smooth' });
-                  }}
-                  className="w-full py-4 rounded-2xl bg-emerald-600 hover:bg-emerald-500 text-white font-black text-sm shadow-md transition-all cursor-pointer flex items-center justify-center gap-2"
-                >
-                  <Award className="w-5 h-5" />
-                  Submit Mock Exam &amp; View Pass/Fail Result (採点する)
-                </button>
-              </div>
-            )}
-
+          <main className="flex-1 min-h-0 h-full overflow-hidden rounded-2xl">
+            <BuildingCleaningMockExam
+              isEmbedded={true}
+              country={country}
+              onExit={() => setActiveView('reader')}
+            />
           </main>
         )}
 

@@ -1,10 +1,13 @@
 import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
 import VisaDetailClient from './VisaDetailClient';
+import VisaInterviewPreparationClient from '@/components/visa/VisaInterviewPreparationClient';
+import StudentVisaMasterClient from '@/components/visa/StudentVisaMasterClient';
+import WorkingVisaMasterClient from '@/components/visa/WorkingVisaMasterClient';
 
 const VALID_VISAS: Record<string, string[]> = {
-  japan: ['student', 'ssw', 'dependent', 'interview'],
-  korea: ['e9', 'student', 'e7', 'interview'],
+  japan: ['student', 'ssw', 'dependent', 'interview', 'work'],
+  korea: ['e9', 'student', 'e7', 'interview', 'dependent', 'work'],
 };
 
 export function generateStaticParams() {
@@ -19,8 +22,21 @@ export function generateStaticParams() {
 
 export async function generateMetadata({ params }: { params: Promise<{ country: string; type: string }> }): Promise<Metadata> {
   const { country, type } = await params;
+  const isInterview = type === 'interview';
+  const isStudent = type === 'student';
+  const isWork = ['work', 'ssw', 'e9', 'e7'].includes(type);
+
+  let title = `${type.toUpperCase()} Visa Guide — JapanKoreaHub`;
+  if (isInterview) {
+    title = `${country === 'japan' ? 'Japan' : 'Korea'} Visa & Interview Preparation (Student, Work, Dependent) | LanguageGuru`;
+  } else if (isStudent) {
+    title = `Study Visa in ${country === 'japan' ? 'Japan' : 'Korea'} (Colleges, Scholarships & Process) — JapanKoreaHub`;
+  } else if (isWork) {
+    title = `Work Visa in ${country === 'japan' ? 'Japan' : 'Korea'} (SSW, E-9, Points & Rights) — JapanKoreaHub`;
+  }
+
   return {
-    title: `${type.toUpperCase()} Visa Guide — JapanKoreaHub`,
+    title,
     alternates: { canonical: `https://japankoreahub.com/${country}/visa/${type}` },
   };
 }
@@ -30,5 +46,19 @@ export default async function VisaDetailPage({ params }: { params: Promise<{ cou
   if (!VALID_VISAS[country]?.includes(type)) {
     notFound();
   }
+
+  if (type === 'interview') {
+    return <VisaInterviewPreparationClient country={country as 'japan' | 'korea'} />;
+  }
+
+  if (type === 'student') {
+    return <StudentVisaMasterClient country={country as 'japan' | 'korea'} />;
+  }
+
+  if (['work', 'ssw', 'e9', 'e7'].includes(type)) {
+    return <WorkingVisaMasterClient country={country as 'japan' | 'korea'} initialType={type} />;
+  }
+
   return <VisaDetailClient country={country as 'japan' | 'korea'} type={type} />;
 }
+

@@ -2,7 +2,7 @@
 
 import React, { useState, useMemo } from 'react';
 import Link from 'next/link';
-import { ArrowLeft, Clock, Award, Search, Filter, Play, CheckCircle2, Sparkles, BookOpen, Layers, X, ChevronDown, LayoutList, LayoutGrid, BarChart2, Globe } from 'lucide-react';
+import { ArrowLeft, Clock, Award, Search, Filter, Play, CheckCircle2, Sparkles, BookOpen, Layers, X, ChevronDown, ChevronRight, LayoutList, LayoutGrid, BarChart2, Globe } from 'lucide-react';
 import MobileNavbar from '@/components/layout/MobileNavbar';
 import BottomTabBar from '@/components/layout/BottomTabBar';
 import { TimedExamEngine } from '@/components/TimedExamEngine';
@@ -161,6 +161,186 @@ const JAPAN_MOCK_TESTS: MockTestCatalogItem[] = [
     formatType: 'CBT Exam',
     hasCodePrompt: true,
   },
+  {
+    id: 'N4_SET_2',
+    level: 'N4',
+    title: 'JLPT N4 | Mock Test - 2 (Grammar & Short Passages)',
+    subTitle: 'JLPT N4 公式模擬試験 第2集 【文法・短文読解】',
+    specs: 'Approx Time : 45 mins • 15 Questions • Paper Exam',
+    desc: 'Targeted N4 exam with conditional forms (~ば, ~たら, ~なら) and daily conversation.',
+    badge: 'JLPT N4',
+    difficulty: 'Medium',
+    questionsCount: 15,
+    durationMinutes: 45,
+    passScore: '90 / 180 Pts',
+    formatType: 'Paper Exam',
+    hasCodePrompt: true,
+  },
+  {
+    id: 'N3_SET_2',
+    level: 'N3',
+    title: 'JLPT N3 | Mock Test - 2 (Workplace Reading Comprehension)',
+    subTitle: 'JLPT N3 公式模擬試験 第2集 【ビジネス読解・語彙】',
+    specs: 'Approx Time : 60 mins • 15 Questions • Paper Exam',
+    desc: 'N3 workplace communication, notices, emails, and intermediate reading drills.',
+    badge: 'JLPT N3',
+    difficulty: 'Medium',
+    questionsCount: 15,
+    durationMinutes: 60,
+    passScore: '95 / 180 Pts',
+    formatType: 'Paper Exam',
+    hasCodePrompt: true,
+  },
+  {
+    id: 'JFT_SET_2',
+    level: 'JFT',
+    title: 'JFT-Basic | Official CBT Simulator - 2',
+    subTitle: 'JFT-Basic Prometric CBT 公式模擬試験 第2集 【生活会話・実務】',
+    specs: 'Approx Time : 60 mins • 25 Questions • CBT Exam',
+    desc: 'Prometric standard CBT practice exam for SSW visa candidates in everyday Japanese situations.',
+    badge: 'JFT-Basic',
+    difficulty: 'Medium',
+    questionsCount: 25,
+    durationMinutes: 60,
+    passScore: '200 / 250 Pts',
+    formatType: 'CBT Exam',
+    hasCodePrompt: true,
+  },
+  {
+    id: 'BC_SSW1_SET_1',
+    level: 'SSW',
+    title: 'SSW Building Cleaning | CBT Mock Test — Set 1 (Comprehensive)',
+    subTitle: 'ビルクリーニング分野特定技能1号評価試験 第1集 【公式60分・30問・全漢字ふりがな付】',
+    specs: 'Official 60 mins • 30 Questions • Prometric CBT',
+    desc: 'Full official Prometric CBT simulation: 15 True/False and 15 Multiple Choice questions with complete Furigana on all Kanji, visual equipment diagrams, and 60% pass mark.',
+    badge: 'SSW Cleaning',
+    difficulty: 'Medium',
+    questionsCount: 30,
+    durationMinutes: 60,
+    passScore: '18 / 30 Pts (60%)',
+    formatType: 'CBT Exam',
+    hasCodePrompt: false,
+  },
+  {
+    id: 'BC_SSW1_SET_2',
+    level: 'SSW',
+    title: 'SSW Building Cleaning | CBT Mock Test — Set 2 (Tools & Machinery)',
+    subTitle: 'ビルクリーニング分野特定技能1号評価試験 第2集 【機材・洗剤希釈】',
+    specs: 'Official 60 mins • 30 Questions • Prometric CBT',
+    desc: 'Focus on pad colors, squeegees, neutral vs alkaline detergents, and safe electrical cords.',
+    badge: 'SSW Cleaning',
+    difficulty: 'Medium',
+    questionsCount: 30,
+    durationMinutes: 60,
+    passScore: '18 / 30 Pts (60%)',
+    formatType: 'CBT Exam',
+    hasCodePrompt: false,
+  },
+  {
+    id: 'BC_SSW1_SET_3',
+    level: 'SSW',
+    title: 'SSW Building Cleaning | CBT Mock Test — Set 3 (Sanitation & Washrooms)',
+    subTitle: 'ビルクリーニング分野特定技能1号評価試験 第3集 【衛生・トイレ清掃】',
+    specs: 'Official 60 mins • 30 Questions • Prometric CBT',
+    desc: 'Urinal descaling with acidic cleaners, sanitary glove changes, and cross-contamination prevention.',
+    badge: 'SSW Cleaning',
+    difficulty: 'Medium',
+    questionsCount: 30,
+    durationMinutes: 60,
+    passScore: '18 / 30 Pts (60%)',
+    formatType: 'CBT Exam',
+    hasCodePrompt: false,
+  },
+  {
+    id: 'BC_SSW1_SET_4',
+    level: 'SSW',
+    title: 'SSW Building Cleaning | CBT Mock Test — Set 4 (Glass & High Places)',
+    subTitle: 'ビルクリーニング分野特定技能1号評価試験 第4集 【ガラス・脚立安全】',
+    specs: 'Official 60 mins • 30 Questions • Prometric CBT',
+    desc: 'Stepladder 75-degree angle, scraper safety, glass cleaner streak-free wiper techniques.',
+    badge: 'SSW Cleaning',
+    difficulty: 'Hard',
+    questionsCount: 30,
+    durationMinutes: 60,
+    passScore: '18 / 30 Pts (60%)',
+    formatType: 'CBT Exam',
+    hasCodePrompt: false,
+  },
+  {
+    id: 'BC_SSW1_SET_5',
+    level: 'SSW',
+    title: 'SSW Building Cleaning | CBT Mock Test — Set 5 (Final Prometric Simulator)',
+    subTitle: 'ビルクリーニング分野特定技能1号評価試験 第5集 【全国統一本試験模倣】',
+    specs: 'Official 60 mins • 30 Questions • Prometric CBT',
+    desc: 'Simulating official JBMA test center conditions with tricky questions on marble protection and hazard signs.',
+    badge: 'SSW Cleaning',
+    difficulty: 'Hard',
+    questionsCount: 30,
+    durationMinutes: 60,
+    passScore: '18 / 30 Pts (60%)',
+    formatType: 'CBT Exam',
+    hasCodePrompt: false,
+  },
+  {
+    id: 'KAIGO_SSW1_SET_1',
+    level: 'SSW',
+    title: 'SSW Caregiving (Kaigo) | CBT Mock Test — Set 1 (Body Mechanics & Transfer)',
+    subTitle: '介護分野特定技能1号評価試験 第1集 【ボディメカニクス・移乗介助】',
+    specs: 'Official 60 mins • 45 Questions • Prometric CBT',
+    desc: 'MHLW official simulation covering wheelchair transfers, 8 rules of body mechanics, and patient safety.',
+    badge: 'SSW Kaigo',
+    difficulty: 'Medium',
+    questionsCount: 45,
+    durationMinutes: 60,
+    passScore: '27 / 45 Pts (60%)',
+    formatType: 'CBT Exam',
+    hasCodePrompt: false,
+  },
+  {
+    id: 'FOOD_SSW1_SET_1',
+    level: 'SSW',
+    title: 'SSW Food Service | CBT Mock Test — Set 1 (HACCP & Kitchen Sanitation)',
+    subTitle: '外食業分野特定技能1号評価試験 第1集 【HACCP衛生管理・厨房安全】',
+    specs: 'Official 80 mins • 45 Questions • Prometric CBT',
+    desc: 'OTAFF official restaurant evaluation on Norovirus prevention, hand washing, and kitchen safety.',
+    badge: 'SSW Food',
+    difficulty: 'Medium',
+    questionsCount: 45,
+    durationMinutes: 80,
+    passScore: '65% Pass Mark',
+    formatType: 'CBT Exam',
+    hasCodePrompt: false,
+  },
+  {
+    id: 'AGRI_SSW1_SET_1',
+    level: 'SSW',
+    title: 'SSW Agriculture | CBT Mock Test — Set 1 (Crop Cultivation & Machinery)',
+    subTitle: '農業分野特定技能1号評価試験 第1集 【栽培管理・トラクター安全】',
+    specs: 'Official 60 mins • 30 Questions • Prometric CBT',
+    desc: 'ASNET official agricultural simulation covering greenhouse ventilation and machinery safety.',
+    badge: 'SSW Agriculture',
+    difficulty: 'Medium',
+    questionsCount: 30,
+    durationMinutes: 60,
+    passScore: '60% Pass Mark',
+    formatType: 'CBT Exam',
+    hasCodePrompt: false,
+  },
+  {
+    id: 'CONST_SSW1_SET_1',
+    level: 'SSW',
+    title: 'SSW Construction | CBT Mock Test — Set 1 (Safety Harness & Scaffolding)',
+    subTitle: '建設分野特定技能1号評価試験 第1集 【フルハーネス・足場安全】',
+    specs: 'Official 60 mins • 30 Questions • Prometric CBT',
+    desc: 'JAC Prometric construction evaluation covering full harness 2-hook rules and scaffold safety.',
+    badge: 'SSW Construction',
+    difficulty: 'Medium',
+    questionsCount: 30,
+    durationMinutes: 60,
+    passScore: '60% Pass Mark',
+    formatType: 'CBT Exam',
+    hasCodePrompt: false,
+  },
 ];
 
 const KOREA_MOCK_TESTS: MockTestCatalogItem[] = [
@@ -195,12 +375,72 @@ const KOREA_MOCK_TESTS: MockTestCatalogItem[] = [
     hasCodePrompt: true,
   },
   {
+    id: 'EPS_SET_3',
+    level: 'EPS',
+    title: 'EPS-TOPIK | Mock Test - 3 (Workplace Dialogues & Instructions)',
+    subTitle: 'EPS-TOPIK 고용허가제 공식 모의고사 제3회 【작업지시 대화】',
+    specs: 'Approx Time : 50 mins • 20 Questions • CBT Exam',
+    desc: 'Standard HRD Korea CBT exam on supervisor instructions, tool inventory, and factory tasks.',
+    badge: 'EPS-TOPIK',
+    difficulty: 'Medium',
+    questionsCount: 20,
+    durationMinutes: 50,
+    passScore: '110 / 200 Pts',
+    formatType: 'CBT Exam',
+    hasCodePrompt: true,
+  },
+  {
+    id: 'EPS_SKILL_MFG',
+    level: 'EPS',
+    title: 'EPS Skills | Manufacturing Competency Test (Caliper & Assembly)',
+    subTitle: '제조업 기능평가 【버니어 캘리퍼스・핀 꽂기・작업기초】',
+    specs: 'Approx Time : 20 mins • 15 Questions • CBT Exam',
+    desc: 'HRD Korea Stage 2 evaluation covering Vernier caliper measurement, pin insertion pegboard, and tool identification.',
+    badge: 'EPS Skills',
+    difficulty: 'Medium',
+    questionsCount: 15,
+    durationMinutes: 20,
+    passScore: 'Pass Benchmark',
+    formatType: 'CBT Exam',
+    hasCodePrompt: false,
+  },
+  {
+    id: 'EPS_SKILL_ORAL',
+    level: 'EPS',
+    title: 'EPS Skills | Oral Viva Interview & Reaction Commands (구술시험)',
+    subTitle: '한국어 구술시험 【자기소개・동작 지시・기초 공구】',
+    specs: 'Approx Time : 15 mins • 20 Questions • CBT Exam',
+    desc: 'Face-to-face spoken Korean evaluation on self-introduction, physical directional reaction commands, and tool flashcards.',
+    badge: 'EPS Viva',
+    difficulty: 'Medium',
+    questionsCount: 20,
+    durationMinutes: 15,
+    passScore: 'Viva Benchmark',
+    formatType: 'CBT Exam',
+    hasCodePrompt: false,
+  },
+  {
     id: 'TOPIK1_SET_1',
     level: 'TOPIK1_L1',
     title: 'TOPIK I | Mock Test - 1 (Levels 1–2 Beginner)',
     subTitle: '한국어능력시험 TOPIK I 공식 모의고사 제1회 【듣기・읽기】',
     specs: 'Approx Time : 60 mins • 30 Questions • Paper Exam',
     desc: 'Official 100% multiple-choice TOPIK I exam covering daily greetings and locations.',
+    badge: 'TOPIK I',
+    difficulty: 'Easy',
+    questionsCount: 30,
+    durationMinutes: 60,
+    passScore: '80 / 200 Pts',
+    formatType: 'Paper Exam',
+    hasCodePrompt: true,
+  },
+  {
+    id: 'TOPIK1_SET_2',
+    level: 'TOPIK1_L1',
+    title: 'TOPIK I | Mock Test - 2 (Grammar & Comprehension)',
+    subTitle: '한국어능력시험 TOPIK I 공식 모의고사 제2회 【어휘・문法】',
+    specs: 'Approx Time : 60 mins • 30 Questions • Paper Exam',
+    desc: 'Beginner TOPIK test covering shopping, transportation, particles (-이/가, -은/는, -을/를), and short passages.',
     badge: 'TOPIK I',
     difficulty: 'Easy',
     questionsCount: 30,
@@ -248,6 +488,7 @@ export default function ExamsHubClient({ country }: { country: Country }) {
   const [selectedDifficulty, setSelectedDifficulty] = useState<string>('ALL');
   const [activeExamLevel, setActiveExamLevel] = useState<string | null>(null);
   const [confirmTest, setConfirmTest] = useState<MockTestCatalogItem | null>(null);
+  const [showHubExitConfirm, setShowHubExitConfirm] = useState<boolean>(false);
 
   const rawMockTests = country === 'japan' ? JAPAN_MOCK_TESTS : KOREA_MOCK_TESTS;
 
@@ -259,6 +500,7 @@ export default function ExamsHubClient({ country }: { country: Country }) {
     { id: 'N2',  label: 'JLPT N2' },
     { id: 'N1',  label: 'JLPT N1' },
     { id: 'JFT', label: 'JFT-Basic' },
+    { id: 'SSW', label: '🛠️ SSW Skill Tests' },
   ];
 
   const koreaCurriculumLevels = [
@@ -288,7 +530,7 @@ export default function ExamsHubClient({ country }: { country: Country }) {
       <div className="min-h-screen bg-slate-50 text-slate-900 p-4 font-sans">
         <div className="max-w-5xl mx-auto mb-4">
           <button
-            onClick={() => setActiveExamLevel(null)}
+            onClick={() => setShowHubExitConfirm(true)}
             className="px-4 py-2 rounded-xl bg-white hover:bg-slate-100 text-slate-700 font-bold text-xs border border-slate-200 shadow-xs transition-all cursor-pointer flex items-center gap-1.5"
           >
             <ArrowLeft className="w-4 h-4 text-rose-500" /> Return to Mock Tests Directory
@@ -300,6 +542,56 @@ export default function ExamsHubClient({ country }: { country: Country }) {
           autoStart={true}
           onExitExam={() => setActiveExamLevel(null)}
         />
+
+        {/* Exit Confirmation Modal */}
+        {showHubExitConfirm && (
+          <div className="fixed inset-0 z-[120] flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-sm animate-fade-in">
+            <div className="w-full max-w-md bg-white rounded-3xl p-6 shadow-2xl border border-slate-200 space-y-4">
+              <div className="flex items-start gap-3">
+                <div className="p-3 rounded-2xl bg-rose-50 text-rose-600 border border-rose-200 text-2xl shrink-0">
+                  ⚠️
+                </div>
+                <div className="space-y-1">
+                  <h3 className="text-base sm:text-lg font-black text-slate-900 leading-snug">
+                    Exit Exam Session? (परीक्षाबाट बाहिरिने?)
+                  </h3>
+                  <p className="text-xs text-slate-500 font-medium">
+                    Level: {activeExamLevel}
+                  </p>
+                </div>
+              </div>
+
+              <div className="p-3.5 rounded-2xl bg-rose-50/80 border border-rose-200 text-xs text-rose-950 space-y-2">
+                <p className="font-semibold leading-relaxed">
+                  Are you sure you want to exit the exam? All unsaved progress and answers will be discarded.
+                </p>
+                <p className="text-indigo-900 font-bold text-[11px]">
+                  🇳🇵 के तपाईं साँच्चै परीक्षा छोड्न चाहनुहुन्छ? बाहिरिएमा तपाईंको प्रगति मेटिनेछ।
+                </p>
+              </div>
+
+              <div className="flex items-center gap-2 pt-2">
+                <button
+                  type="button"
+                  onClick={() => setShowHubExitConfirm(false)}
+                  className="flex-1 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-extrabold text-xs transition-colors cursor-pointer border border-slate-200 text-center"
+                >
+                  Resume Exam (जारी राख्नुहोस्)
+                </button>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setShowHubExitConfirm(false);
+                    setActiveExamLevel(null);
+                  }}
+                  className="flex-1 py-2.5 rounded-xl bg-rose-600 hover:bg-rose-500 text-white font-black text-xs transition-colors cursor-pointer border border-rose-600 shadow-sm text-center"
+                >
+                  Yes, Exit Exam (हो, बाहिरिनुहोस्)
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     );
   }
@@ -321,7 +613,9 @@ export default function ExamsHubClient({ country }: { country: Country }) {
               return (
                 <button
                   key={lvl.id}
-                  onClick={() => setSelectedCurriculumLevel(lvl.id)}
+                  onClick={() => {
+                    setSelectedCurriculumLevel(lvl.id);
+                  }}
                   className={`px-3 py-1 rounded-xl text-xs font-extrabold transition-all cursor-pointer whitespace-nowrap border ${
                     isSelected
                       ? country === 'japan'
@@ -335,6 +629,39 @@ export default function ExamsHubClient({ country }: { country: Country }) {
               );
             })}
           </div>
+        </div>
+
+        {/* 🛠️ SKILLS EVALUATION MOCK TESTS HERO BANNER (Country Tailored) */}
+        <div className="p-4 rounded-2xl bg-gradient-to-r from-emerald-50 via-teal-50 to-indigo-50 border border-emerald-300 shadow-xs flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+          <div className="flex items-center gap-3">
+            <span className="text-3xl p-2.5 bg-white rounded-2xl border border-emerald-200 shadow-xs shrink-0">🛠️</span>
+            <div>
+              <div className="flex items-center gap-2">
+                <span className="px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 text-[10px] font-black uppercase tracking-wider">
+                  {country === 'japan' ? 'Prometric SSW-1 Official Track' : 'HRD Korea EPS Stage 2 Track'}
+                </span>
+                <span className="text-[10px] font-bold text-slate-500">
+                  {country === 'japan' ? '8 Sectors • Full Furigana' : 'Vocational Skills & Viva'}
+                </span>
+              </div>
+              <h3 className="text-sm sm:text-base font-black text-slate-900 mt-0.5">
+                {country === 'japan' ? 'SSW Skills Evaluation Mock Tests (特定技能評価試験)' : 'EPS-TOPIK Skills & Competency Evaluation (기능시험)'}
+              </h3>
+              <p className="text-xs text-slate-600 font-medium">
+                {country === 'japan' 
+                  ? 'Building Cleaning (Official 60 min • 30 Qs • 100% Furigana), Caregiving, Food Service, Agriculture, Construction, etc.'
+                  : 'Manufacturing (Caliper & assembly), Agriculture, Construction, Physical Grip Strength & Oral Viva commands.'
+                }
+              </p>
+            </div>
+          </div>
+          <Link
+            href={`/${country}/exams/skills`}
+            className="px-4 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 text-white text-xs font-black transition-all flex items-center gap-1.5 shadow-sm shrink-0 cursor-pointer"
+          >
+            <span>{country === 'japan' ? 'Open SSW Skills Hub' : 'Open EPS Skills Hub'}</span>
+            <ChevronRight className="w-3.5 h-3.5 text-emerald-400" />
+          </Link>
         </div>
 
         {/* 🔝 ROW 2: TOP HEADER CONTROL BAR (Matching User Screenshot UI) */}
@@ -419,73 +746,155 @@ export default function ExamsHubClient({ country }: { country: Country }) {
           </div>
         </div>
 
-        {/* 📋 MOCK TESTS LISTING (Matching User Screenshot UI Cards) */}
+        {/* 📋 MOCK TESTS LISTING */}
         {activeTab === 'MOCK_TEST' ? (
-          <div className={viewMode === 'GRID' ? 'grid grid-cols-1 md:grid-cols-2 gap-3' : 'space-y-3'}>
-            {filteredTests.map((test) => (
-              <div
-                key={test.id}
-                className="bg-white border border-slate-200 hover:border-slate-300 rounded-2xl p-4 sm:p-5 shadow-xs transition-all text-slate-900 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4"
-              >
-                {/* Left Card Details */}
-                <div className="space-y-1.5 flex-1">
-                  <h3 className="text-base sm:text-lg font-black text-slate-900 tracking-tight">
-                    {test.title}
-                  </h3>
-                  {test.subTitle && (
-                    <p className="text-xs text-slate-500 font-medium">
-                      {test.subTitle}
-                    </p>
-                  )}
+          viewMode === 'LIST' ? (
+            <div className="bg-white border border-slate-200 rounded-2xl shadow-xs overflow-hidden">
+              {/* Desktop Table Header */}
+              <div className="hidden lg:grid grid-cols-12 gap-3 px-5 py-3 bg-slate-50/90 border-b border-slate-200 text-[11px] font-black uppercase tracking-wider text-slate-500 items-center">
+                <div className="col-span-3">Curriculum / Level</div>
+                <div className="col-span-4">Mock Examination Title</div>
+                <div className="col-span-3 text-center">Specifications & Benchmark</div>
+                <div className="col-span-2 text-right">Action</div>
+              </div>
 
-                  {/* Specs Row */}
-                  <div className="flex items-center gap-3 text-xs text-amber-800 font-semibold pt-1 flex-wrap">
-                    <span className="px-2.5 py-1 rounded-lg bg-amber-50 border border-amber-200 flex items-center gap-1">
-                      <Clock className="w-3.5 h-3.5 text-amber-600" />
-                      <span>{test.specs}</span>
-                    </span>
-                  </div>
-                </div>
-
-                {/* Right Card Actions & Badges */}
-                <div className="flex flex-col sm:items-end gap-2 w-full sm:w-auto shrink-0">
-                  <div className="flex items-center gap-2 flex-wrap">
-                    {test.hasCodePrompt && (
-                      <span className="text-xs font-semibold text-slate-500">
-                        Have a code? <button onClick={() => alert('Enter promotional or access code to unlock extra sets.')} className="text-red-700 font-bold hover:underline cursor-pointer">Click here</button>
+              {/* Rows */}
+              <div className="divide-y divide-slate-100">
+                {filteredTests.map((test) => (
+                  <div
+                    key={test.id}
+                    className="p-3 sm:px-5 sm:py-3.5 hover:bg-slate-50/80 transition-colors flex flex-col lg:grid lg:grid-cols-12 lg:gap-3 lg:items-center group"
+                  >
+                    {/* Col 1: Level Badge & Format */}
+                    <div className="lg:col-span-3 flex items-center gap-2 mb-1.5 lg:mb-0">
+                      <span className="px-2.5 py-1 rounded-lg bg-slate-100 border border-slate-200 text-slate-800 text-xs font-black whitespace-nowrap">
+                        {test.badge}
                       </span>
+                      <span className={`px-2 py-0.5 rounded-md text-[10px] font-black uppercase tracking-wider ${
+                        test.formatType === 'CBT Exam'
+                          ? 'bg-emerald-50 text-emerald-700 border border-emerald-200'
+                          : 'bg-indigo-50 text-indigo-700 border border-indigo-200'
+                      }`}>
+                        {test.formatType === 'CBT Exam' ? 'CBT' : 'Paper'}
+                      </span>
+                    </div>
+
+                    {/* Col 2: Title & Subtitle */}
+                    <div className="lg:col-span-4 min-w-0 pr-2 space-y-0.5">
+                      <h3 className="text-xs sm:text-sm font-black text-slate-900 group-hover:text-red-600 transition-colors line-clamp-1">
+                        {test.title}
+                      </h3>
+                      {test.subTitle && (
+                        <p className="text-[11px] text-slate-500 truncate font-medium">
+                          {test.subTitle}
+                        </p>
+                      )}
+                    </div>
+
+                    {/* Col 3: Specs & Difficulty */}
+                    <div className="lg:col-span-3 flex items-center justify-start lg:justify-center gap-1.5 my-2 lg:my-0 text-xs">
+                      <span className="px-2.5 py-1 rounded-lg bg-slate-100 text-slate-700 font-bold text-[11px] whitespace-nowrap">
+                        ⏱️ {test.durationMinutes}m
+                      </span>
+                      <span className="px-2.5 py-1 rounded-lg bg-slate-100 text-slate-700 font-bold text-[11px] whitespace-nowrap">
+                        {test.questionsCount} Qs
+                      </span>
+                      <span className={`px-2.5 py-1 rounded-lg text-[10px] font-black border ${
+                        test.difficulty === 'Easy'
+                          ? 'bg-emerald-50 text-emerald-700 border-emerald-200'
+                          : test.difficulty === 'Medium'
+                          ? 'bg-amber-50 text-amber-700 border-amber-200'
+                          : 'bg-rose-50 text-rose-700 border-rose-200'
+                      }`}>
+                        {test.difficulty}
+                      </span>
+                    </div>
+
+                    {/* Col 4: Action */}
+                    <div className="lg:col-span-2 flex items-center justify-end gap-2 mt-1 lg:mt-0">
+                      <button
+                        onClick={() => setConfirmTest(test)}
+                        className={`px-4 py-2 rounded-xl font-black text-xs text-white shadow-xs transition-all cursor-pointer flex items-center gap-1.5 whitespace-nowrap ${
+                          country === 'japan'
+                            ? 'bg-red-600 hover:bg-red-500 border border-red-500'
+                            : 'bg-blue-600 hover:bg-blue-500 border border-blue-500'
+                        }`}
+                      >
+                        <Play className="w-3.5 h-3.5 fill-white" />
+                        <span>Start Test</span>
+                      </button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          ) : (
+            /* 2. CARD / GRID VIEW */
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+              {filteredTests.map((test) => (
+                <div
+                  key={test.id}
+                  className="bg-white border border-slate-200 hover:border-slate-300 rounded-2xl p-4 sm:p-5 shadow-xs transition-all text-slate-900 flex flex-col justify-between gap-4"
+                >
+                  {/* Left Card Details */}
+                  <div className="space-y-1.5 flex-1">
+                    <div className="flex items-center gap-2 flex-wrap pb-1">
+                      <span className="px-2.5 py-0.5 rounded-lg bg-slate-100 text-slate-700 text-xs font-bold border border-slate-200">
+                        {test.badge}
+                      </span>
+                      <span className={`px-2.5 py-0.5 rounded-lg text-xs font-bold border ${
+                        test.difficulty === 'Easy'
+                          ? 'bg-emerald-50 text-emerald-700 border-emerald-200'
+                          : test.difficulty === 'Medium'
+                          ? 'bg-amber-50 text-amber-700 border-amber-200'
+                          : 'bg-rose-50 text-rose-700 border-rose-200'
+                      }`}>
+                        {test.difficulty}
+                      </span>
+                      <span className="text-[11px] font-bold text-slate-400">
+                        {test.formatType}
+                      </span>
+                    </div>
+
+                    <h3 className="text-base sm:text-lg font-black text-slate-900 tracking-tight">
+                      {test.title}
+                    </h3>
+                    {test.subTitle && (
+                      <p className="text-xs text-slate-500 font-medium">
+                        {test.subTitle}
+                      </p>
                     )}
 
-                    <span className="px-2.5 py-0.5 rounded-lg bg-slate-100 text-slate-700 text-xs font-bold border border-slate-200">
-                      {test.badge}
-                    </span>
-
-                    <span className={`px-2.5 py-0.5 rounded-lg text-xs font-bold border ${
-                      test.difficulty === 'Easy'
-                        ? 'bg-emerald-50 text-emerald-700 border-emerald-200'
-                        : test.difficulty === 'Medium'
-                        ? 'bg-amber-50 text-amber-700 border-amber-200'
-                        : 'bg-rose-50 text-rose-700 border-rose-200'
-                    }`}>
-                      {test.difficulty}
-                    </span>
+                    {/* Specs Row */}
+                    <div className="flex items-center gap-3 text-xs text-amber-800 font-semibold pt-1 flex-wrap">
+                      <span className="px-2.5 py-1 rounded-lg bg-amber-50 border border-amber-200 flex items-center gap-1">
+                        <Clock className="w-3.5 h-3.5 text-amber-600" />
+                        <span>{test.specs}</span>
+                      </span>
+                    </div>
                   </div>
 
-                  <button
-                    onClick={() => setConfirmTest(test)}
-                    className={`w-full sm:w-auto px-5 py-2 rounded-xl font-black text-xs shadow-xs transition-all cursor-pointer flex items-center justify-center gap-1.5 ${
-                      country === 'japan'
-                        ? 'bg-red-600 hover:bg-red-500 text-white border border-red-500'
-                        : 'bg-blue-600 hover:bg-blue-500 text-white border border-blue-500'
-                    }`}
-                  >
-                    <Play className="w-3.5 h-3.5 fill-white" />
-                    <span>Start</span>
-                  </button>
+                  {/* Card Actions */}
+                  <div className="flex items-center justify-between pt-2 border-t border-slate-100">
+                    <span className="text-xs font-semibold text-slate-500">
+                      Pass: <strong className="text-slate-900">{test.passScore}</strong>
+                    </span>
+                    <button
+                      onClick={() => setConfirmTest(test)}
+                      className={`px-5 py-2 rounded-xl font-black text-xs shadow-xs transition-all cursor-pointer flex items-center justify-center gap-1.5 ${
+                        country === 'japan'
+                          ? 'bg-red-600 hover:bg-red-500 text-white border border-red-500'
+                          : 'bg-blue-600 hover:bg-blue-500 text-white border border-blue-500'
+                      }`}
+                    >
+                      <Play className="w-3.5 h-3.5 fill-white" />
+                      <span>Start</span>
+                    </button>
+                  </div>
                 </div>
-              </div>
-            ))}
-          </div>
+              ))}
+            </div>
+          )
         ) : (
           /* SCORE HISTORY VIEW */
           <div className="bg-white border border-slate-200 rounded-3xl p-6 sm:p-8 text-center space-y-3 text-slate-900">
@@ -592,6 +1001,31 @@ export default function ExamsHubClient({ country }: { country: Country }) {
               <button
                 type="button"
                 onClick={() => {
+                  if (confirmTest.id.startsWith('BC_SSW1_SET_')) {
+                    const setNum = confirmTest.id.replace('BC_SSW1_SET_', '');
+                    window.location.href = `/${country}/work/building-cleaning/exam?set=${setNum}`;
+                    return;
+                  }
+                  if (confirmTest.id.startsWith('KAIGO_SSW1')) {
+                    window.location.href = `/${country}/exams/skills?sector=nursing`;
+                    return;
+                  }
+                  if (confirmTest.id.startsWith('FOOD_SSW1')) {
+                    window.location.href = `/${country}/exams/skills?sector=food-service`;
+                    return;
+                  }
+                  if (confirmTest.id.startsWith('AGRI_SSW1')) {
+                    window.location.href = `/${country}/exams/skills?sector=agriculture`;
+                    return;
+                  }
+                  if (confirmTest.id.startsWith('CONST_SSW1')) {
+                    window.location.href = `/${country}/exams/skills?sector=construction`;
+                    return;
+                  }
+                  if (confirmTest.level === 'SSW') {
+                    window.location.href = `/${country}/exams/skills`;
+                    return;
+                  }
                   setActiveExamLevel(confirmTest.level);
                   setConfirmTest(null);
                 }}

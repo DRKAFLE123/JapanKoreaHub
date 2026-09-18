@@ -1,6 +1,6 @@
 import React from 'react';
 import { Metadata } from 'next';
-import { notFound } from 'next/navigation';
+import { notFound, redirect } from 'next/navigation';
 import BuildingCleaningBookReader from '@/components/building-cleaning/BuildingCleaningBookReader';
 import CaregivingBookReader from '@/components/caregiving/CaregivingBookReader';
 
@@ -10,7 +10,6 @@ interface Props {
 
 export async function generateStaticParams() {
   return [
-    { country: 'japan', sector: 'building_cleaning' },
     { country: 'japan', sector: 'building-cleaning' },
     { country: 'japan', sector: 'nursing' },
     { country: 'japan', sector: 'caregiving' },
@@ -59,6 +58,11 @@ export default async function SectorBookPage({ params }: Props) {
 
   if (resolvedParams.country !== 'japan') {
     notFound();
+  }
+
+  // Redirect legacy underscore URL to hyphen canonical
+  if (resolvedParams.sector === 'building_cleaning') {
+    redirect(`/${resolvedParams.country}/work/building-cleaning/book`);
   }
 
   if (resolvedParams.sector.includes('building')) {

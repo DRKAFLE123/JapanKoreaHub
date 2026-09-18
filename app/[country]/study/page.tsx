@@ -1,6 +1,5 @@
-import { notFound } from 'next/navigation';
+import { redirect, notFound } from 'next/navigation';
 import type { Metadata } from 'next';
-import StudyHubClient from './StudyHubClient';
 
 const STUDY_META: Record<string, { title: string; desc: string }> = {
   japan: {
@@ -24,12 +23,13 @@ export async function generateMetadata({ params }: { params: Promise<{ country: 
   return {
     title: m.title,
     description: m.desc,
-    alternates: { canonical: `https://japankoreahub.com/${country}/study` },
+    alternates: { canonical: `https://japankoreahub.com/${country}/visa/student` },
   };
 }
 
 export default async function StudyPage({ params }: { params: Promise<{ country: string }> }) {
   const { country } = await params;
   if (!STUDY_META[country]) notFound();
-  return <StudyHubClient country={country as 'japan' | 'korea'} />;
+  redirect(`/${country}/visa/student`);
 }
+

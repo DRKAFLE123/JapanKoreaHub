@@ -2,7 +2,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { X, Home, BookOpen, ClipboardList, GraduationCap, Briefcase, Shield, Globe, Bell, FileText, Handshake, User, LogIn, BarChart2 } from 'lucide-react';
+import { X, Home, BookOpen, ClipboardList, GraduationCap, Briefcase, Shield, Globe, Bell, FileText, Handshake, User, LogIn, BarChart2, Building } from 'lucide-react';
 import { useCountry } from '@/lib/context/CountryContext';
 
 interface MobileDrawerProps {
@@ -22,13 +22,14 @@ export default function MobileDrawer({ onClose, user, onAuthOpen }: MobileDrawer
     return `/${key}`;
   };
 
+  // Exact Master Sequence: Home → Learn → Mock Test → Visa → Rooms → Jobs → Life → Progress
   const navItems = [
     { key: 'home',         label: 'Home',         href: getScopedHref('home'),     Icon: Home },
     { key: 'learn',        label: 'Learn',        href: getScopedHref('learn'),    Icon: BookOpen },
     { key: 'exams',        label: 'Mock Test',    href: getScopedHref('exams'),    Icon: ClipboardList },
-    { key: 'study',        label: 'Study',        href: getScopedHref('study'),    Icon: GraduationCap },
-    { key: 'work',         label: 'Work',         href: getScopedHref('work'),     Icon: Briefcase },
     { key: 'visa',         label: 'Visa',         href: getScopedHref('visa'),     Icon: Shield },
+    { key: 'rooms',        label: 'Rooms',        href: getScopedHref('rooms'),    Icon: Building },
+    { key: 'jobs',         label: 'Jobs',         href: getScopedHref('jobs'),     Icon: Briefcase },
     { key: 'life',         label: 'Life',         href: getScopedHref('life'),     Icon: Globe },
     { key: 'dashboard',    label: 'Progress',     href: '/dashboard',             Icon: BarChart2 },
     { key: 'notices',      label: 'Notices',      href: '/notices',               Icon: Bell },
@@ -36,8 +37,11 @@ export default function MobileDrawer({ onClose, user, onAuthOpen }: MobileDrawer
     { key: 'consultancy',  label: 'Consultancy',  href: '/consultancy',           Icon: Handshake },
   ];
 
+
   const isActive = (href: string) => {
-    if (href === '/') return pathname === '/';
+    if (href === '/' || href === '/japan' || href === '/korea') {
+      return pathname === href;
+    }
     return pathname === href || pathname.startsWith(href + '/');
   };
 
@@ -67,30 +71,22 @@ export default function MobileDrawer({ onClose, user, onAuthOpen }: MobileDrawer
         {/* Country Focus Switcher Card inside Mobile Drawer */}
         <div className="p-3 border-b border-gray-100 bg-slate-50">
           <p className="text-[10px] font-black text-gray-400 uppercase tracking-wider mb-1.5 px-1">Active Platform Hub</p>
-          <div className="grid grid-cols-3 gap-1 bg-gray-200/70 p-1 rounded-xl">
+          <div className="grid grid-cols-2 gap-1 bg-gray-200/80 p-1 rounded-xl">
             <button
-              onClick={() => setCountryFocus('japan')}
-              className={`py-1.5 px-1 rounded-lg text-xs font-bold transition-all cursor-pointer flex items-center justify-center gap-1 ${
-                activeCountry === 'japan' ? 'bg-red-600 text-white shadow-xs' : 'text-gray-600'
+              onClick={() => { setCountryFocus('japan'); onClose(); }}
+              className={`py-1.5 px-2 rounded-lg text-xs font-black transition-all cursor-pointer flex items-center justify-center gap-1.5 ${
+                activeCountry === 'japan' ? 'bg-red-600 text-white shadow-xs' : 'text-gray-700 hover:bg-white/60'
               }`}
             >
-              🇯🇵 Japan
+              🇯🇵 Japan Hub
             </button>
             <button
-              onClick={() => setCountryFocus('korea')}
-              className={`py-1.5 px-1 rounded-lg text-xs font-bold transition-all cursor-pointer flex items-center justify-center gap-1 ${
-                activeCountry === 'korea' ? 'bg-blue-600 text-white shadow-xs' : 'text-gray-600'
+              onClick={() => { setCountryFocus('korea'); onClose(); }}
+              className={`py-1.5 px-2 rounded-lg text-xs font-black transition-all cursor-pointer flex items-center justify-center gap-1.5 ${
+                activeCountry === 'korea' ? 'bg-blue-600 text-white shadow-xs' : 'text-gray-700 hover:bg-white/60'
               }`}
             >
-              🇰🇷 Korea
-            </button>
-            <button
-              onClick={() => setCountryFocus('all')}
-              className={`py-1.5 px-1 rounded-lg text-xs font-bold transition-all cursor-pointer flex items-center justify-center gap-1 ${
-                activeCountry === 'all' ? 'bg-gray-900 text-white shadow-xs' : 'text-gray-600'
-              }`}
-            >
-              🌏 Both
+              🇰🇷 Korea Hub
             </button>
           </div>
         </div>

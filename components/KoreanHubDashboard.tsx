@@ -1,17 +1,16 @@
 'use client';
-
 import React, { useState, useEffect, useRef } from 'react';
+import Link from 'next/link';
 import {
   BookOpen, Layers, Headphones, Clock, FileText, Globe,
   Sparkles, Award, Factory, Leaf, HardHat, Waves, ShieldCheck,
-  PenLine, Target, ChevronRight, ChevronDown, GraduationCap, Compass, CheckCircle2, Maximize2, Minimize2
+  PenLine, Target, ChevronRight, ChevronDown, GraduationCap, Compass, CheckCircle2, Maximize2, Minimize2, ArrowRight
 } from 'lucide-react';
 import { KoreanVocabularyExplorer } from './KoreanVocabularyExplorer';
 import { KoreanGrammarExplorer } from './KoreanGrammarExplorer';
 import { Korean300CommonWordsExplorer } from './Korean300CommonWordsExplorer';
 import { KoreanFlashcardCard } from './KoreanFlashcardCard';
 import { AlphabetGrid } from './AlphabetGrid';
-import { TimedExamEngine } from './TimedExamEngine';
 import { LevelExamSyllabusGuide } from './LevelExamSyllabusGuide';
 import { EPSSectorHub } from './korean/EPSSectorHub';
 import { KoreanBasicsModuleSystem } from './korean/KoreanBasicsModuleSystem';
@@ -721,7 +720,6 @@ export const KoreanHubDashboard: React.FC<KoreanHubDashboardProps> = ({
     if (meta.hasWriting) tabs.push({ id: 'WRITING', label: 'Writing', icon: PenLine, emoji: '✍️' });
 
     tabs.push(
-      { id: 'EXAMS', label: 'Mock Exams', icon: Clock, emoji: '⏱' },
       { id: 'EXAM_GUIDE', label: 'Exam Guide', icon: GraduationCap, emoji: '🎓' },
     );
 
@@ -945,12 +943,26 @@ export const KoreanHubDashboard: React.FC<KoreanHubDashboardProps> = ({
         )}
 
         {activeTab === 'EXAMS' && (
-          <TimedExamEngine
-            activeLanguage="KOREAN"
-            preselectedLevel={level === 'BASICS' ? 'EPS' : level}
-            hideLevelSelector={true}
-            hideCategorySelector={true}
-          />
+          <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 sm:p-8 text-center space-y-4 max-w-2xl mx-auto my-6 shadow-xs">
+            <div className="w-14 h-14 rounded-2xl bg-blue-50 text-blue-600 text-2xl flex items-center justify-center mx-auto border border-blue-200">
+              ⏱️
+            </div>
+            <div className="space-y-1">
+              <h3 className="text-lg font-black text-slate-900 dark:text-white">
+                Official Timed Mock Exams are in the Mock Test Section
+              </h3>
+              <p className="text-xs text-slate-600 dark:text-slate-400 max-w-md mx-auto leading-relaxed">
+                Learn section is dedicated strictly to study &amp; reading. Launch official EPS-TOPIK CBT simulators, TOPIK I/II papers, and KIIP tests in the Mock Test section.
+              </p>
+            </div>
+            <Link
+              href="/korea/exams"
+              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-black text-xs transition-all shadow-sm cursor-pointer"
+            >
+              <span>Go to Korea Mock Test Section</span>
+              <ArrowRight className="w-4 h-4" />
+            </Link>
+          </div>
         )}
 
         {activeTab === 'EXAM_GUIDE' && (

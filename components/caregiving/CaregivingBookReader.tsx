@@ -61,10 +61,17 @@ interface Props {
 export default function CaregivingBookReader({ country = 'japan', isEmbedded = false }: Props) {
   const [selectedChapterId, setSelectedChapterId] = useState<number>(1);
   const [showNepali, setShowNepali] = useState<boolean>(true);
-  const [furiganaMode, setFuriganaMode] = useState<'katakana' | 'hiragana' | 'off'>('katakana');
-  const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(true);
+  const [furiganaMode, setFuriganaMode] = useState<'katakana' | 'hiragana' | 'off'>('hiragana');
+  const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(false);
   const [activeView, setActiveView] = useState<'reader' | 'equipment-guide' | 'mock-exam' | 'glossary'>('reader');
   const [guideCategory, setGuideCategory] = useState<string>('ALL');
+
+  // Open sidebar by default only on desktop screens
+  useEffect(() => {
+    if (typeof window !== 'undefined' && window.innerWidth >= 1024) {
+      setIsSidebarOpen(true);
+    }
+  }, []);
 
   const studyScrollRef = React.useRef<HTMLDivElement>(null);
 

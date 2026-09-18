@@ -1,7 +1,7 @@
 'use client';
 import React, { useState, useRef, useEffect } from 'react';
 import Link from 'next/link';
-import { Search, Globe, ChevronDown, User, LogIn, Menu, BookOpen, Clock, GraduationCap, Briefcase, Shield, Moon, Sun, Bell, ArrowRight, Award, FileText } from 'lucide-react';
+import { Search, Globe, ChevronDown, User, LogIn, Menu, BookOpen, Clock, GraduationCap, Briefcase, Shield, Moon, Sun, Bell, ArrowRight, Award, FileText, Building, Home, BarChart2 } from 'lucide-react';
 import AuthSheet from '@/components/auth/AuthSheet';
 
 import { useCountry } from '@/lib/context/CountryContext';
@@ -20,25 +20,21 @@ interface DesktopHeaderProps {
 const JAPAN_DROPDOWN = [
   { label: 'Learn Japanese', href: '/japan/learn', icon: BookOpen, desc: 'Minna no Nihongo & Kanji' },
   { label: 'JLPT N5–N2', href: '/japan/exams/jlpt-n5', icon: Clock, desc: 'Exam simulator' },
-  { label: 'JFT-Basic', href: '/japan/exams/jft-basic', icon: Clock, desc: '250-mark CBT test' },
-  { label: 'Study in Japan', href: '/japan/study', icon: GraduationCap, desc: 'MEXT & Language schools' },
-  { label: 'Work in Japan', href: '/japan/work', icon: Briefcase, desc: 'SSW-1 Skill visas' },
-  { label: 'Visa Checklist', href: '/japan/visa', icon: Shield, desc: 'COE & Student visas' },
+  { label: 'Visa Guide', href: '/japan/visa', icon: Shield, desc: 'Student, SSW & Work Visas' },
+  { label: 'Rooms & Housing', href: '/japan/rooms', icon: Home, desc: 'Apartments & Sharehouses' },
+  { label: 'Jobs & Careers', href: '/japan/jobs', icon: Briefcase, desc: 'Part-time & SSW Visas' },
   { label: 'Life in Japan', href: '/japan/life', icon: Globe, desc: 'Cost of living & housing' },
 ];
 
 const KOREA_DROPDOWN = [
   { label: 'Learn Korean', href: '/korea/learn', icon: BookOpen, desc: 'Hangul & EPS 1–60' },
   { label: 'EPS-TOPIK', href: '/korea/exams/eps-topik', icon: Clock, desc: 'Official CBT simulator' },
-  { label: 'TOPIK I & II', href: '/korea/exams/topik-1', icon: Clock, desc: 'Proficiency tests' },
-  { label: 'KIIP (사회통합)', href: '/korea/exams/kiip', icon: Award, desc: 'Immigration & PR Program' },
-  { label: 'TOPIK vs KIIP Guide', href: '/blog/kiip-korea-immigration-integration-program-nepali-guide', icon: FileText, desc: 'Visa points & full comparison' },
-  { label: '6-Month TOPIK Strategy', href: '/blog/topik-ii-level-3-6-month-strategy-nepali-guide', icon: GraduationCap, desc: 'Level 0 to L3 roadmap' },
-  { label: 'Study in Korea', href: '/korea/study', icon: GraduationCap, desc: 'GKS & D-2 Universities' },
-  { label: 'Work in Korea', href: '/korea/work', icon: Briefcase, desc: 'E-9 Worker sectors' },
-  { label: 'Visa Checklist', href: '/korea/visa', icon: Shield, desc: 'E-9 & D-4 Visas' },
+  { label: 'Visa Guide', href: '/korea/visa', icon: Shield, desc: 'E-9, E-7 & Study Visas' },
+  { label: 'Rooms & Housing', href: '/korea/rooms', icon: Home, desc: 'Goshiwon & One-Room' },
+  { label: 'Jobs & Careers', href: '/korea/jobs', icon: Briefcase, desc: 'Student Alba & E-9 Jobs' },
   { label: 'Life in Korea', href: '/korea/life', icon: Globe, desc: 'Rent & Living costs' },
 ];
+
 
 export default function DesktopHeader({ user, onSearchOpen, lang, onLangToggle, onMenuToggle }: DesktopHeaderProps) {
   const [authSheetOpen, setAuthSheetOpen] = useState(false);
@@ -178,11 +174,28 @@ export default function DesktopHeader({ user, onSearchOpen, lang, onLangToggle, 
               )}
             </div>
 
+            {/* Rooms Link */}
+            <Link
+              href={activeCountry === 'korea' ? '/korea/rooms' : '/japan/rooms'}
+              className="px-3 py-2 rounded-xl text-slate-600 hover:text-slate-900 hover:bg-slate-100 font-medium transition-colors"
+            >
+              Rooms
+            </Link>
+
+            {/* Jobs Link */}
+            <Link
+              href={activeCountry === 'korea' ? '/korea/jobs' : '/japan/jobs'}
+              className="px-3 py-2 rounded-xl text-slate-600 hover:text-slate-900 hover:bg-slate-100 font-medium transition-colors"
+            >
+              Jobs
+            </Link>
+
             {/* Consult Now CTA with Hover Tooltip */}
             <div 
               className="relative group/consult"
               onMouseEnter={() => setOpenDropdown(null)}
             >
+
               <Link
                 href="/consultancy"
                 className="flex items-center gap-2 px-4 py-2 rounded-xl bg-emerald-500 hover:bg-emerald-600 active:bg-emerald-700 text-white text-xs font-black transition-all duration-200 shadow-md shadow-emerald-500/20 hover:shadow-lg hover:shadow-emerald-500/30 hover:-translate-y-0.5 border border-emerald-400/30 cursor-pointer"
@@ -257,6 +270,15 @@ export default function DesktopHeader({ user, onSearchOpen, lang, onLangToggle, 
                     >
                       <User className="w-4 h-4 text-slate-500" />
                       <span>My Profile</span>
+                    </Link>
+
+                    <Link
+                      href="/dashboard"
+                      onClick={() => setProfileDropdownOpen(false)}
+                      className="flex items-center gap-2.5 px-3 py-2 rounded-xl text-slate-700 hover:text-slate-900 hover:bg-slate-100 font-bold transition-colors"
+                    >
+                      <BarChart2 className="w-4 h-4 text-indigo-500" />
+                      <span>My Progress</span>
                     </Link>
 
                     {/* Dark Mode Toggle Button */}
