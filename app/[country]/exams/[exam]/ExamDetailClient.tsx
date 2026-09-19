@@ -2,8 +2,7 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { ArrowLeft, PlayCircle, BookOpen } from 'lucide-react';
-import MobileNavbar from '@/components/layout/MobileNavbar';
-import BottomTabBar from '@/components/layout/BottomTabBar';
+
 import { TimedExamEngine } from '@/components/TimedExamEngine';
 
 interface Props {
@@ -257,7 +256,6 @@ export default function ExamDetailClient({ country, exam }: Props) {
           </section>
 
         </main>
-        <BottomTabBar />
       </div>
     );
   }
@@ -385,7 +383,6 @@ export default function ExamDetailClient({ country, exam }: Props) {
           </div>
         </section>
       </main>
-      <BottomTabBar />
     </div>
   );
 }

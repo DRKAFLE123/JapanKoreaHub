@@ -2,8 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { ArrowLeft, ExternalLink, Calendar, ShieldCheck, AlertCircle, Share2 } from 'lucide-react';
-import MobileNavbar from '@/components/layout/MobileNavbar';
-import BottomTabBar from '@/components/layout/BottomTabBar';
+
 
 interface Notice {
   id: string;
@@ -41,9 +40,7 @@ export default function NoticeDetailClient({ id }: { id: string }) {
   if (loading) {
     return (
       <div className="min-h-screen bg-white pb-24">
-        <MobileNavbar user={null} lang="en" onLangToggle={() => {}} onSearchOpen={() => {}} />
         <div className="pt-24 text-center text-sm text-gray-400">Loading notice...</div>
-        <BottomTabBar />
       </div>
     );
   }
@@ -51,8 +48,7 @@ export default function NoticeDetailClient({ id }: { id: string }) {
   if (error || !notice) {
     return (
       <div className="min-h-screen bg-white pb-24">
-        <MobileNavbar user={null} lang="en" onLangToggle={() => {}} onSearchOpen={() => {}} />
-        <main className="pt-16 px-4 max-w-2xl mx-auto text-center py-12">
+        <main className="px-4 max-w-2xl mx-auto text-center py-12">
           <AlertCircle className="w-10 h-10 text-amber-500 mx-auto mb-3" />
           <h1 className="text-xl font-bold text-gray-900">Notice Not Found</h1>
           <p className="text-sm text-gray-500 mt-1 mb-6">The requested notice may have expired or been removed.</p>
@@ -60,7 +56,6 @@ export default function NoticeDetailClient({ id }: { id: string }) {
             Return to Notices
           </Link>
         </main>
-        <BottomTabBar />
       </div>
     );
   }
@@ -88,9 +83,7 @@ export default function NoticeDetailClient({ id }: { id: string }) {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(articleJsonLd) }}
       />
-      <MobileNavbar user={null} lang="en" onLangToggle={() => {}} onSearchOpen={() => {}} />
-
-      <main className="pt-14 max-w-3xl mx-auto">
+      <main className="max-w-3xl mx-auto">
         {/* Breadcrumb */}
         <div className="px-4 pt-4 pb-2">
           <Link href="/notices" className="inline-flex items-center gap-1 text-sm text-gray-500 hover:text-gray-700 transition-colors">
@@ -175,7 +168,6 @@ export default function NoticeDetailClient({ id }: { id: string }) {
         </article>
       </main>
 
-      <BottomTabBar />
     </div>
   );
 }

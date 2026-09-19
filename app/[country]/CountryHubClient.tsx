@@ -6,8 +6,7 @@ import {
   GraduationCap, Globe, ChevronRight, ArrowRight, Sparkles,
   Bell, Award, Headphones, CheckCircle2, Flame, Users
 } from 'lucide-react';
-import MobileNavbar from '@/components/layout/MobileNavbar';
-import BottomTabBar from '@/components/layout/BottomTabBar';
+
 import { useTranslation } from '@/lib/i18n/LanguageContext';
 
 type Country = 'japan' | 'korea';
@@ -345,7 +344,6 @@ export default function CountryHubClient({ country }: { country: Country }) {
 
       </main>
 
-      <BottomTabBar />
     </div>
   );
 }

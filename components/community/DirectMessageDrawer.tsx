@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { X, Send, MessageSquare, Phone, User, ShieldCheck, CheckCheck, Loader2 } from 'lucide-react';
 import type { CommunityPost, DirectMessage } from '@/lib/community-data';
+import PlatformMessageIcon from '@/components/icons/PlatformMessageIcon';
 
 interface DirectMessageDrawerProps {
   isOpen: boolean;
@@ -98,8 +99,8 @@ export default function DirectMessageDrawer({
         {/* Drawer Header */}
         <div className="p-4 sm:p-5 border-b border-slate-200 bg-slate-900 text-white flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-2xl bg-indigo-600/80 flex items-center justify-center text-white">
-              <MessageSquare className="w-5 h-5" />
+            <div className="w-10 h-10 rounded-2xl bg-white/10 flex items-center justify-center text-white">
+              <PlatformMessageIcon className="w-5 h-5 text-white" forceColor="text-white" />
             </div>
             <div>
               <h3 className="text-sm font-black text-white">

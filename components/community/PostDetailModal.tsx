@@ -132,6 +132,12 @@ export default function PostDetailModal({
                 {isJapan ? '🇯🇵 Japan' : '🇰🇷 Korea'} &middot; {isJob ? 'Job Opening' : 'Room & Housing'}
               </span>
 
+              {post.languageLevel && (
+                <span className="px-2.5 py-1 rounded-lg bg-amber-400/20 text-amber-200 text-xs font-black border border-amber-400/30">
+                  🗣️ {isJapan ? 'Japanese' : 'Korean'}: {post.languageLevel}
+                </span>
+              )}
+
               {post.isPhoneVerified && (
                 <span className="flex items-center gap-1 px-2.5 py-1 rounded-lg bg-emerald-500/20 text-emerald-300 text-xs font-black">
                   <ShieldCheck className="w-3.5 h-3.5" />

@@ -63,10 +63,23 @@ export default function MainLayoutWrapper({ children }: { children: React.ReactN
       .catch(() => {});
   }, []);
 
-  // Always close mobile sidebar when route/pathname changes
+  // Always close mobile sidebar and search when route/pathname changes
   useEffect(() => {
     setSidebarOpen(false);
+    setSearchOpen(false);
   }, [pathname]);
+
+  // Global search open/close event listeners (works universally across mobile & desktop)
+  useEffect(() => {
+    const handleOpen = () => setSearchOpen(true);
+    const handleClose = () => setSearchOpen(false);
+    window.addEventListener('open-global-search', handleOpen);
+    window.addEventListener('close-global-search', handleClose);
+    return () => {
+      window.removeEventListener('open-global-search', handleOpen);
+      window.removeEventListener('close-global-search', handleClose);
+    };
+  }, []);
 
   const toggleLang = () => {
     const next = lang === 'en' ? 'ne' : 'en';
@@ -147,7 +160,7 @@ export default function MainLayoutWrapper({ children }: { children: React.ReactN
             </div>
 
             {/* Mobile Sticky Bottom Navigation (Visible on mobile screens) */}
-            <BottomTabBar />
+            <BottomTabBar user={user} />
             
             {/* Global Search Modal */}
             <GlobalSearch isOpen={searchOpen} onClose={() => setSearchOpen(false)} />

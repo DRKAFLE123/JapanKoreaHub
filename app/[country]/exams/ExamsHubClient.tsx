@@ -3,8 +3,7 @@
 import React, { useState, useMemo } from 'react';
 import Link from 'next/link';
 import { ArrowLeft, Clock, Award, Search, Filter, Play, CheckCircle2, Sparkles, BookOpen, Layers, X, ChevronDown, ChevronRight, LayoutList, LayoutGrid, BarChart2, Globe } from 'lucide-react';
-import MobileNavbar from '@/components/layout/MobileNavbar';
-import BottomTabBar from '@/components/layout/BottomTabBar';
+
 import { TimedExamEngine } from '@/components/TimedExamEngine';
 
 type Country = 'japan' | 'korea';
@@ -1044,7 +1043,6 @@ export default function ExamsHubClient({ country }: { country: Country }) {
         </div>
       )}
 
-      <BottomTabBar />
     </div>
   );
 }

@@ -16,6 +16,7 @@ export async function GET(request: Request) {
     const duration = searchParams.get('duration') || undefined;
     const serviceChargeOnly = searchParams.get('serviceChargeOnly') === 'true';
     const search = searchParams.get('search') || undefined;
+    const languageLevel = searchParams.get('languageLevel') || undefined;
 
     const minPrice = minPriceStr ? parseFloat(minPriceStr) : undefined;
     const maxPrice = maxPriceStr ? parseFloat(maxPriceStr) : undefined;
@@ -33,6 +34,7 @@ export async function GET(request: Request) {
       duration,
       serviceChargeOnly,
       search,
+      languageLevel,
     });
 
     return NextResponse.json({ success: true, count: posts.length, posts });
@@ -74,6 +76,7 @@ export async function POST(request: Request) {
       isPhoneVerified,
       contactPreference,
       tags,
+      languageLevel,
       deposit,
       maintenanceFee,
     } = body;
@@ -113,6 +116,7 @@ export async function POST(request: Request) {
       isPhoneVerified: Boolean(isPhoneVerified),
       contactPreference: contactPreference || 'IN_APP',
       tags: Array.isArray(tags) ? tags : [],
+      languageLevel: languageLevel || undefined,
       deposit: deposit ? Number(deposit) : undefined,
       maintenanceFee: maintenanceFee ? Number(maintenanceFee) : undefined,
     });

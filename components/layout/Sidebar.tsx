@@ -95,7 +95,7 @@ export default function Sidebar({ isOpen, isCollapsed = false, onToggleCollapse,
     { key: 'home',      label: 'Home',       href: getScopedHref('home'),   Icon: Home },
     { key: 'learn',     label: 'Learn',      href: getScopedHref('learn'),  Icon: BookOpen, hasDropdown: true },
     { key: 'exams',     label: 'Mock Test',  href: getScopedHref('exams'),  Icon: ClipboardList },
-    { key: 'visa',      label: 'Visa',       href: getScopedHref('visa'),   Icon: Shield, hasDropdown: true },
+    { key: 'visa',      label: 'Visa & Interview', href: getScopedHref('visa'),   Icon: Shield, hasDropdown: true },
     { key: 'rooms',     label: 'Rooms',      href: getScopedHref('rooms'),  Icon: Building, badge: 'Housing' },
     { key: 'jobs',      label: 'Jobs',       href: getScopedHref('jobs'),   Icon: Briefcase, badge: 'Careers' },
     { key: 'life',      label: 'Life',       href: getScopedHref('life'),   Icon: Globe },
@@ -255,7 +255,7 @@ export default function Sidebar({ isOpen, isCollapsed = false, onToggleCollapse,
           <Link
             key={link.key}
             href={link.href}
-            title="Visa"
+            title="Visa & Interview"
             className={`
               flex items-center justify-center p-2.5 rounded-xl text-sm transition-all duration-150
               ${active 

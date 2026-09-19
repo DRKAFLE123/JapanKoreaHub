@@ -19,7 +19,9 @@ import {
   ArrowRight,
   MessageSquare,
   FileText,
-  Clock
+  Clock,
+  ChevronDown,
+  RotateCcw
 } from 'lucide-react';
 import type { CommunityPost } from '@/lib/community-data';
 import PostCard from '@/components/community/PostCard';
@@ -29,6 +31,7 @@ import DirectMessageDrawer from '@/components/community/DirectMessageDrawer';
 import PostDetailModal from '@/components/community/PostDetailModal';
 import AuthSheet from '@/components/auth/AuthSheet';
 import { useCountry } from '@/lib/context/CountryContext';
+import CustomSelect from '@/components/ui/CustomSelect';
 
 interface RoomsHubClientProps {
   country?: 'japan' | 'korea' | 'all';
@@ -126,6 +129,7 @@ export default function RoomsHubClient({ country = 'all' }: RoomsHubClientProps)
   const [onlyFreeService, setOnlyFreeService] = useState(false);
   const [searchKeyword, setSearchKeyword] = useState('');
   const [showBookmarksOnly, setShowBookmarksOnly] = useState(false);
+  const [showAdvancedFilters, setShowAdvancedFilters] = useState(false);
 
   // Modals & States
   const [postModalOpen, setPostModalOpen] = useState(false);
@@ -252,39 +256,50 @@ export default function RoomsHubClient({ country = 'all' }: RoomsHubClientProps)
   const isJapan = selectedCountry === 'japan';
   const cities = isJapan ? ['Tokyo', 'Osaka', 'Nagoya', 'Fukuoka'] : ['Seoul', 'Busan', 'Incheon'];
 
+  const activeFiltersCount = 
+    (selectedCity !== 'ALL' ? 1 : 0) +
+    (areaQuery.trim() ? 1 : 0) +
+    (maxPrice > 0 ? 1 : 0) +
+    (maxDeposit >= 0 ? 1 : 0) +
+    (onlyFreeService ? 1 : 0) +
+    (searchKeyword.trim() ? 1 : 0) +
+    (showBookmarksOnly ? 1 : 0);
+
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-4 pb-24 font-sans">
       
-      {/* Hero Banner with Quick Stats & Country Hub Selector */}
-      <div className={`rounded-3xl p-6 sm:p-8 mb-8 relative overflow-hidden shadow-lg border text-white ${
+      {/* Minimized Hero Banner with Quick Stats & Quick Actions */}
+      <div className={`rounded-2xl p-4 sm:p-5 mb-4 relative overflow-hidden shadow-sm border text-white ${
         isJapan 
-          ? 'bg-gradient-to-br from-rose-600 via-red-600 to-rose-700 shadow-rose-600/15 border-rose-400/25' 
-          : 'bg-gradient-to-br from-indigo-600 via-purple-600 to-violet-700 shadow-purple-600/15 border-purple-400/25'
+          ? 'bg-gradient-to-br from-rose-600 via-red-600 to-rose-700 shadow-rose-600/10 border-rose-400/20' 
+          : 'bg-gradient-to-br from-indigo-600 via-purple-600 to-violet-700 shadow-purple-600/10 border-purple-400/20'
       }`}>
         <div className="absolute right-0 top-0 bottom-0 w-1/3 bg-gradient-to-l from-white/10 to-transparent pointer-events-none" />
         
-        <div className="relative z-10">
-          <div className="flex items-center gap-2 mb-3">
-            <span className="px-3 py-1 rounded-full bg-white/20 backdrop-blur-md border border-white/25 text-white text-xs font-semibold tracking-wide">
-              {isJapan ? '🇯🇵 Japan Housing & Rooms' : '🇰🇷 Korea Housing & Rooms'}
-            </span>
-            <span className="flex items-center gap-1.5 text-xs text-white/90 font-medium">
-              <span className="w-2 h-2 rounded-full bg-emerald-300 animate-pulse" />
-              Live Feed Active
-            </span>
+        <div className="relative z-10 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+          <div>
+            <div className="flex items-center gap-2 mb-1">
+              <span className="px-2.5 py-0.5 rounded-full bg-white/20 backdrop-blur-md border border-white/25 text-white text-[11px] font-bold tracking-wide">
+                {isJapan ? '🇯🇵 Japan Housing & Rooms' : '🇰🇷 Korea Housing & Rooms'}
+              </span>
+              <span className="flex items-center gap-1.5 text-[11px] text-white/90 font-medium">
+                <span className="w-2 h-2 rounded-full bg-emerald-300 animate-pulse" />
+                Live Feed
+              </span>
+            </div>
+
+            <h1 className="text-lg sm:text-xl font-bold tracking-tight text-white">
+              {isJapan ? 'Find Rooms & Apartments in Japan' : 'Find Goshiwon & Studios in Korea'}
+            </h1>
+            <p className="text-xs text-white/85 max-w-xl leading-snug font-normal mt-0.5 hidden sm:block">
+              {isJapan
+                ? 'Zero-key-money apartments, Oakhouse sharehouses, and private 1K flats with verified posters.'
+                : 'Zero-deposit Goshiwons, one-rooms, and modern officetels near top universities with direct contact.'}
+            </p>
           </div>
 
-          <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-white mb-2">
-            {isJapan ? 'Find Rooms & Apartments in Japan' : 'Find Goshiwon & Studios in Korea'}
-          </h1>
-          <p className="text-xs sm:text-sm text-white/85 max-w-2xl leading-relaxed font-normal">
-            {isJapan
-              ? 'Explore Gaijin-friendly private 1K apartments, Oakhouse sharehouses, and zero-key-money UR housing with verified phone posters and zero broker traps.'
-              : 'Discover budget zero-deposit Goshiwons, convenient One-rooms, and modern Officetels near top Korean universities with direct owner contact.'}
-          </p>
-
           {/* Quick Action Bar */}
-          <div className="flex flex-wrap items-center gap-3 mt-5">
+          <div className="flex items-center gap-2 shrink-0">
             <button
               onClick={() => {
                 if (!user) {
@@ -297,10 +312,10 @@ export default function RoomsHubClient({ country = 'all' }: RoomsHubClientProps)
                 }
                 setPostModalOpen(true);
               }}
-              className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-white hover:bg-slate-100 text-purple-700 font-semibold text-xs transition-all shadow-sm cursor-pointer"
+              className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-white hover:bg-slate-100 text-purple-700 font-bold text-xs transition-all shadow-xs cursor-pointer"
             >
-              <Plus className="w-4 h-4" />
-              <span>Post a Room Listing</span>
+              <Plus className="w-3.5 h-3.5" />
+              <span>Post Room</span>
             </button>
 
             <button
@@ -311,17 +326,17 @@ export default function RoomsHubClient({ country = 'all' }: RoomsHubClientProps)
                 }
                 setMessageDrawerOpen(true);
               }}
-              className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-white/15 hover:bg-white/25 text-white font-medium text-xs transition-colors cursor-pointer border border-white/25 backdrop-blur-sm"
+              className="flex items-center gap-1.5 px-3 py-2 rounded-xl bg-white/15 hover:bg-white/25 text-white font-semibold text-xs transition-colors cursor-pointer border border-white/25 backdrop-blur-sm"
             >
-              <MessageSquare className="w-4 h-4 text-white/90" />
-              <span>My Inquiries / Inbox</span>
+              <MessageSquare className="w-3.5 h-3.5 text-white/90" />
+              <span>Inbox</span>
             </button>
           </div>
         </div>
       </div>
 
       {/* Navigation Sub-Tabs */}
-      <div className="flex items-center gap-2 mb-6 border-b border-slate-200 pb-3 overflow-x-auto">
+      <div className="flex items-center gap-2 mb-4 border-b border-slate-200 pb-2.5 overflow-x-auto">
         <button
           onClick={() => setActiveTab('LISTINGS')}
           className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-semibold transition-all cursor-pointer shrink-0 ${
@@ -375,172 +390,103 @@ export default function RoomsHubClient({ country = 'all' }: RoomsHubClientProps)
       {activeTab === 'LISTINGS' && (
         <div className="space-y-6">
           
-          {/* Filter Bar Panel */}
-          <div className="p-4 sm:p-5 rounded-2xl bg-white border border-slate-200/90 shadow-xs space-y-4">
-            <div className="flex items-center justify-between border-b border-slate-100 pb-3">
-              <span className="text-xs font-semibold uppercase tracking-wider text-slate-700 flex items-center gap-2">
-                <Filter className="w-4 h-4 text-purple-600" />
-                <span>Search &amp; Filter Rooms</span>
-              </span>
+          {/* Minimized Filter Bar Panel */}
+          <div className="p-3 sm:p-4 rounded-2xl bg-white border border-slate-200 shadow-xs space-y-3">
+            {/* Primary compact single-line bar */}
+            <div className="flex flex-wrap sm:flex-nowrap items-center gap-2">
+              {/* City selector */}
+              <div className="w-32 sm:w-36 shrink-0">
+                <CustomSelect
+                  value={selectedCity}
+                  onChange={(val) => setSelectedCity(String(val))}
+                  options={[
+                    { value: 'ALL', label: 'All Cities' },
+                    ...cities.map(c => ({ value: c, label: c }))
+                  ]}
+                  accentColor="purple"
+                  buttonClassName="font-bold text-slate-800"
+                />
+              </div>
 
-              {/* Saved Bookmarks Toggle */}
+              {/* Area search input */}
+              <div className="relative flex-1 min-w-[140px]">
+                <MapPin className="w-3.5 h-3.5 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
+                <input
+                  type="text"
+                  value={areaQuery}
+                  onChange={(e) => setAreaQuery(e.target.value)}
+                  placeholder="Area / Station (Shin-Okubo, Hongdae...)"
+                  className="w-full pl-8 pr-3 py-2 rounded-xl border border-slate-200 text-xs font-medium text-slate-900 placeholder-slate-400 focus:outline-none focus:border-purple-500"
+                />
+              </div>
+
+              {/* Saved Rooms Button */}
               <button
                 type="button"
                 onClick={() => setShowBookmarksOnly(prev => !prev)}
-                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-black border transition-all cursor-pointer ${
+                className={`flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-bold border transition-all cursor-pointer shrink-0 ${
                   showBookmarksOnly
                     ? 'bg-amber-50 border-amber-300 text-amber-700'
                     : 'border-slate-200 text-slate-600 hover:bg-slate-50'
                 }`}
+                title="Filter by saved rooms"
               >
                 <Bookmark className={`w-3.5 h-3.5 ${showBookmarksOnly ? 'fill-current text-amber-600' : ''}`} />
-                <span>Saved Rooms ({bookmarks.length})</span>
+                <span className="hidden sm:inline">Saved</span>
+                <span>({bookmarks.length})</span>
+              </button>
+
+              {/* Toggle Advanced Filters Button */}
+              <button
+                type="button"
+                onClick={() => setShowAdvancedFilters(prev => !prev)}
+                className={`flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-bold border transition-all cursor-pointer shrink-0 ${
+                  showAdvancedFilters || activeFiltersCount > 0
+                    ? 'bg-purple-50 border-purple-200 text-purple-700'
+                    : 'border-slate-200 text-slate-600 hover:bg-slate-50'
+                }`}
+              >
+                <Filter className="w-3.5 h-3.5 text-purple-600" />
+                <span>Filters</span>
+                {activeFiltersCount > 0 && (
+                  <span className="w-4 h-4 rounded-full bg-purple-600 text-white text-[10px] font-bold flex items-center justify-center">
+                    {activeFiltersCount}
+                  </span>
+                )}
+                <ChevronDown className={`w-3 h-3 transition-transform ${showAdvancedFilters ? 'rotate-180' : ''}`} />
               </button>
             </div>
 
-            {/* Systematic Filter Inputs */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3">
-              
-              {/* City Filter */}
-              <div>
-                <label className="block text-[11px] font-semibold uppercase tracking-wider text-slate-500 mb-1">
-                  City / Region
-                </label>
-                <select
-                  value={selectedCity}
-                  onChange={(e) => setSelectedCity(e.target.value)}
-                  className="w-full px-3 py-2 rounded-xl border border-slate-200 text-xs font-medium text-slate-900 bg-slate-50 focus:outline-none focus:border-purple-500 cursor-pointer"
-                >
-                  <option value="ALL">All Cities</option>
-                  {cities.map(c => (
-                    <option key={c} value={c}>{c}</option>
-                  ))}
-                </select>
-              </div>
-
-              {/* Area / Station Search */}
-              <div>
-                <label className="block text-[11px] font-semibold uppercase tracking-wider text-slate-500 mb-1">
-                  Area / Station / Ward
-                </label>
-                <div className="relative">
-                  <MapPin className="w-3.5 h-3.5 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
-                  <input
-                    type="text"
-                    value={areaQuery}
-                    onChange={(e) => setAreaQuery(e.target.value)}
-                    placeholder="e.g. Shin-Okubo, Hongdae..."
-                    className="w-full pl-8 pr-3 py-2 rounded-xl border border-slate-200 text-xs font-medium text-slate-900 placeholder-slate-400 focus:outline-none focus:border-purple-500"
-                  />
-                </div>
-              </div>
-
-              {/* Max Monthly Rent */}
-              <div>
-                <label className="block text-[11px] font-semibold uppercase tracking-wider text-slate-500 mb-1">
-                  Max Monthly Rent
-                </label>
-                <select
-                  value={maxPrice}
-                  onChange={(e) => setMaxPrice(Number(e.target.value))}
-                  className="w-full px-3 py-2 rounded-xl border border-slate-200 text-xs font-medium text-slate-900 bg-slate-50 focus:outline-none focus:border-purple-500 cursor-pointer"
-                >
-                  <option value={0}>Any Budget</option>
-                  {isJapan ? (
-                    <>
-                      <option value={50000}>Under ¥50,000 / mo</option>
-                      <option value={70000}>Under ¥70,000 / mo</option>
-                      <option value={90000}>Under ¥90,000 / mo</option>
-                    </>
-                  ) : (
-                    <>
-                      <option value={450000}>Under ₩450,000 / mo</option>
-                      <option value={600000}>Under ₩600,000 / mo</option>
-                      <option value={800000}>Under ₩800,000 / mo</option>
-                    </>
-                  )}
-                </select>
-              </div>
-
-              {/* Max Security Deposit */}
-              <div>
-                <label className="block text-[11px] font-semibold uppercase tracking-wider text-slate-500 mb-1">
-                  Security Deposit
-                </label>
-                <select
-                  value={maxDeposit}
-                  onChange={(e) => setMaxDeposit(Number(e.target.value))}
-                  className="w-full px-3 py-2 rounded-xl border border-slate-200 text-xs font-medium text-slate-900 bg-slate-50 focus:outline-none focus:border-purple-500 cursor-pointer"
-                >
-                  <option value={-1}>Any Deposit</option>
-                  <option value={0}>⚡ Zero Deposit (₩0 / ¥0)</option>
-                  {isJapan ? (
-                    <>
-                      <option value={30000}>Under ¥30,000</option>
-                      <option value={50000}>Under ¥50,000</option>
-                      <option value={100000}>Under ¥100,000</option>
-                    </>
-                  ) : (
-                    <>
-                      <option value={1000000}>Under ₩1,000,000</option>
-                      <option value={3000000}>Under ₩3,000,000</option>
-                      <option value={5000000}>Under ₩5,000,000</option>
-                    </>
-                  )}
-                </select>
-              </div>
-
-              {/* Keyword Search */}
-              <div>
-                <label className="block text-[11px] font-semibold uppercase tracking-wider text-slate-500 mb-1">
-                  Keyword / Amenity
-                </label>
-                <div className="relative">
-                  <Search className="w-3.5 h-3.5 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
-                  <input
-                    type="text"
-                    value={searchKeyword}
-                    onChange={(e) => setSearchKeyword(e.target.value)}
-                    placeholder="Wi-Fi, Free Food..."
-                    className="w-full pl-8 pr-3 py-2 rounded-xl border border-slate-200 text-xs font-medium text-slate-900 placeholder-slate-400 focus:outline-none focus:border-purple-500"
-                  />
-                </div>
-              </div>
-
-            </div>
-
-            {/* Quick Filter Chips */}
-            <div className="flex flex-wrap items-center gap-1.5 pt-2">
-              <span className="text-[11px] font-medium text-slate-400 mr-1">Quick Filters:</span>
-              
+            {/* Quick 1-tap filter chips (horizontal scrollable) */}
+            <div className="flex items-center gap-1.5 overflow-x-auto pb-1 text-xs no-scrollbar">
               <button
                 type="button"
                 onClick={() => setMaxDeposit(prev => prev === 0 ? -1 : 0)}
-                className={`px-2.5 py-1 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
+                className={`px-2.5 py-1 rounded-lg font-bold transition-all cursor-pointer shrink-0 ${
                   maxDeposit === 0
                     ? 'bg-purple-600 text-white shadow-xs'
                     : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
                 }`}
               >
-                ⚡ Zero Deposit Only
+                ⚡ Zero Deposit
               </button>
 
               <button
                 type="button"
                 onClick={() => setOnlyFreeService(prev => !prev)}
-                className={`px-2.5 py-1 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
+                className={`px-2.5 py-1 rounded-lg font-bold transition-all cursor-pointer shrink-0 ${
                   onlyFreeService
                     ? 'bg-emerald-600 text-white shadow-xs'
                     : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
                 }`}
               >
-                Free Brokerage Only
+                Free Brokerage
               </button>
 
               <button
                 type="button"
                 onClick={() => setSearchKeyword(searchKeyword === 'Near Station' ? '' : 'Near Station')}
-                className={`px-2.5 py-1 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
+                className={`px-2.5 py-1 rounded-lg font-bold transition-all cursor-pointer shrink-0 ${
                   searchKeyword === 'Near Station'
                     ? 'bg-purple-600 text-white shadow-xs'
                     : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
@@ -552,7 +498,7 @@ export default function RoomsHubClient({ country = 'all' }: RoomsHubClientProps)
               <button
                 type="button"
                 onClick={() => setSearchKeyword(searchKeyword === 'Furnished' ? '' : 'Furnished')}
-                className={`px-2.5 py-1 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
+                className={`px-2.5 py-1 rounded-lg font-bold transition-all cursor-pointer shrink-0 ${
                   searchKeyword === 'Furnished'
                     ? 'bg-purple-600 text-white shadow-xs'
                     : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
@@ -565,28 +511,122 @@ export default function RoomsHubClient({ country = 'all' }: RoomsHubClientProps)
                 <button
                   type="button"
                   onClick={() => setSearchKeyword(searchKeyword === 'No Reikin' ? '' : 'No Reikin')}
-                  className={`px-2.5 py-1 rounded-lg text-xs font-bold transition-all cursor-pointer ${
+                  className={`px-2.5 py-1 rounded-lg font-bold transition-all cursor-pointer shrink-0 ${
                     searchKeyword === 'No Reikin'
                       ? 'bg-purple-600 text-white shadow-xs'
                       : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
                   }`}
                 >
-                  🎉 Zero Key Money (礼金ゼロ)
+                  🎉 Zero Key Money
                 </button>
               ) : (
                 <button
                   type="button"
                   onClick={() => setSearchKeyword(searchKeyword === 'Zero Deposit' ? '' : 'Zero Deposit')}
-                  className={`px-2.5 py-1 rounded-lg text-xs font-bold transition-all cursor-pointer ${
+                  className={`px-2.5 py-1 rounded-lg font-bold transition-all cursor-pointer shrink-0 ${
                     searchKeyword === 'Zero Deposit'
                       ? 'bg-purple-600 text-white shadow-xs'
                       : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
                   }`}
                 >
-                  💰 Zero Deposit (보증금 0원)
+                  💰 Zero Deposit
+                </button>
+              )}
+
+              {activeFiltersCount > 0 && (
+                <button
+                  type="button"
+                  onClick={() => {
+                    setSelectedCity('ALL');
+                    setAreaQuery('');
+                    setMaxPrice(0);
+                    setMaxDeposit(-1);
+                    setOnlyFreeService(false);
+                    setSearchKeyword('');
+                    setShowBookmarksOnly(false);
+                  }}
+                  className="px-2 py-1 rounded-lg text-slate-400 hover:text-rose-600 hover:bg-rose-50 font-bold transition-colors cursor-pointer shrink-0 flex items-center gap-1"
+                >
+                  <RotateCcw className="w-3 h-3" />
+                  <span>Reset</span>
                 </button>
               )}
             </div>
+
+            {/* Collapsible Advanced Filters Tray */}
+            {showAdvancedFilters && (
+              <div className="pt-3 border-t border-slate-100 grid grid-cols-1 sm:grid-cols-3 gap-3 animate-fade-in">
+                {/* Max Monthly Rent */}
+                <div>
+                  <label className="block text-[11px] font-bold uppercase tracking-wider text-slate-500 mb-1">
+                    Max Monthly Rent
+                  </label>
+                  <CustomSelect
+                    value={maxPrice}
+                    onChange={(val) => setMaxPrice(Number(val))}
+                    options={[
+                      { value: 0, label: 'Any Budget' },
+                      ...(isJapan
+                        ? [
+                            { value: 50000, label: 'Under ¥50,000 / mo' },
+                            { value: 70000, label: 'Under ¥70,000 / mo' },
+                            { value: 90000, label: 'Under ¥90,000 / mo' },
+                          ]
+                        : [
+                            { value: 450000, label: 'Under ₩450,000 / mo' },
+                            { value: 600000, label: 'Under ₩600,000 / mo' },
+                            { value: 800000, label: 'Under ₩800,000 / mo' },
+                          ])
+                    ]}
+                    accentColor="purple"
+                  />
+                </div>
+
+                {/* Security Deposit */}
+                <div>
+                  <label className="block text-[11px] font-bold uppercase tracking-wider text-slate-500 mb-1">
+                    Security Deposit
+                  </label>
+                  <CustomSelect
+                    value={maxDeposit}
+                    onChange={(val) => setMaxDeposit(Number(val))}
+                    options={[
+                      { value: -1, label: 'Any Deposit' },
+                      { value: 0, label: '⚡ Zero Deposit (₩0 / ¥0)' },
+                      ...(isJapan
+                        ? [
+                            { value: 30000, label: 'Under ¥30,000' },
+                            { value: 50000, label: 'Under ¥50,000' },
+                            { value: 100000, label: 'Under ¥100,000' },
+                          ]
+                        : [
+                            { value: 1000000, label: 'Under ₩1,000,000' },
+                            { value: 3000000, label: 'Under ₩3,000,000' },
+                            { value: 5000000, label: 'Under ₩5,000,000' },
+                          ])
+                    ]}
+                    accentColor="purple"
+                  />
+                </div>
+
+                {/* Keyword search */}
+                <div>
+                  <label className="block text-[11px] font-bold uppercase tracking-wider text-slate-500 mb-1">
+                    Keyword / Amenity
+                  </label>
+                  <div className="relative">
+                    <Search className="w-3.5 h-3.5 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
+                    <input
+                      type="text"
+                      value={searchKeyword}
+                      onChange={(e) => setSearchKeyword(e.target.value)}
+                      placeholder="Wi-Fi, Free Food..."
+                      className="w-full pl-8 pr-3 py-2 rounded-xl border border-slate-200 text-xs font-medium text-slate-900 placeholder-slate-400 focus:outline-none focus:border-purple-500"
+                    />
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
 
           {/* Listings Feed */}
@@ -618,19 +658,30 @@ export default function RoomsHubClient({ country = 'all' }: RoomsHubClientProps)
               </button>
             </div>
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-              {filteredPosts.map((post) => (
-                <PostCard
-                  key={post.id}
-                  post={post}
-                  isBookmarked={bookmarks.includes(post.id)}
-                  onToggleBookmark={handleToggleBookmark}
-                  onOpenMessage={handleOpenMessage}
-                  onOpenDetail={handleOpenDetail}
-                  user={user}
-                  onRequireAuth={() => setAuthSheetOpen(true)}
-                />
-              ))}
+            <div className="space-y-4">
+              <div className="flex items-center justify-between pt-1">
+                <h2 className="text-base sm:text-lg font-bold text-slate-900 tracking-tight flex items-center gap-2">
+                  <span>{isJapan ? '🇯🇵 Available Japan Housing Listings' : '🇰🇷 Available Korea Housing Listings'}</span>
+                  <span className="px-2.5 py-0.5 rounded-full text-xs font-bold bg-purple-100 text-purple-800">
+                    {filteredPosts.length}
+                  </span>
+                </h2>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+                {filteredPosts.map((post) => (
+                  <PostCard
+                    key={post.id}
+                    post={post}
+                    isBookmarked={bookmarks.includes(post.id)}
+                    onToggleBookmark={handleToggleBookmark}
+                    onOpenMessage={handleOpenMessage}
+                    onOpenDetail={handleOpenDetail}
+                    user={user}
+                    onRequireAuth={() => setAuthSheetOpen(true)}
+                  />
+                ))}
+              </div>
             </div>
           )}
 

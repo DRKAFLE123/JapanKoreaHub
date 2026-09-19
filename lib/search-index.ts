@@ -5,7 +5,7 @@ export interface SearchItem {
   title: string;
   titleNe?: string;
   description: string;
-  category: 'Learn' | 'Exam' | 'Visa' | 'Work' | 'Study' | 'Life' | 'Notice' | 'Consultancy';
+  category: 'Learn' | 'Exam' | 'Visa' | 'Work' | 'Study' | 'Life' | 'Notice' | 'Consultancy' | 'Jobs' | 'Rooms';
   country: 'japan' | 'korea' | 'both';
   keywords: string[];
   href: string;
@@ -228,6 +228,50 @@ export const SEARCH_DATABASE: SearchItem[] = [
     country: 'korea',
     keywords: ['korea student visa', 'd2 visa', 'd4 visa', 'gks scholarship', 'study in korea'],
     href: '/korea/visa/student',
+  },
+
+  // ── JOBS & CAREERS ──
+  {
+    id: 'jp-jobs-portal',
+    title: 'Jobs & Vacancies in Japan (Part-time & SSW)',
+    titleNe: 'जापानमा रोजगारी (पार्ट-टाइम, SSW, फ्याक्ट्री)',
+    description: 'Find part-time student arubaito, SSW worker vacancies, and direct employer contacts across Japan',
+    category: 'Jobs',
+    country: 'japan',
+    keywords: ['jobs', 'job', 'work', 'part time', 'arubaito', 'baito', 'ssw jobs', 'japan jobs', 'vacancy', 'hiring'],
+    href: '/japan/jobs',
+  },
+  {
+    id: 'kr-jobs-portal',
+    title: 'Jobs & Careers in Korea (Student Alba & E-9)',
+    titleNe: 'कोरियामा रोजगारी (विद्यार्थी अल्बा, E-9 र कम्पनीहरू)',
+    description: 'Browse part-time Alba jobs for students, E-9 & E-7 company positions in South Korea',
+    category: 'Jobs',
+    country: 'korea',
+    keywords: ['jobs', 'job', 'work', 'alba', 'part time', 'korea jobs', 'e9 jobs', 'vacancy', 'hiring'],
+    href: '/korea/jobs',
+  },
+
+  // ── ROOMS & HOUSING ──
+  {
+    id: 'jp-rooms-portal',
+    title: 'Rooms & Housing in Japan (Apartments & Sharehouses)',
+    titleNe: 'जापानमा कोठा तथा अपार्टमेन्ट खोज्नुहोस्',
+    description: 'Find foreigner-friendly apartments, sharehouses, and UR housing with zero guarantor fees',
+    category: 'Rooms',
+    country: 'japan',
+    keywords: ['rooms', 'room', 'housing', 'apartment', 'sharehouse', 'rent', 'japan room', 'flat', 'hostel'],
+    href: '/japan/rooms',
+  },
+  {
+    id: 'kr-rooms-portal',
+    title: 'Rooms & Housing in Korea (Goshiwon & One-Room)',
+    titleNe: 'कोरियामा कोठा तथा गोसिवन खोज्नुहोस्',
+    description: 'Affordable Goshiwons, One-room studios, and student housing near Korean universities',
+    category: 'Rooms',
+    country: 'korea',
+    keywords: ['rooms', 'room', 'housing', 'goshiwon', 'oneroom', 'rent', 'korea room', 'hasukjib', 'sharehouse'],
+    href: '/korea/rooms',
   },
 
   // ── CONSULTANCY ──

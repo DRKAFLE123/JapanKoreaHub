@@ -2,8 +2,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { ArrowLeft, ChevronRight, ArrowRight, ShieldCheck } from 'lucide-react';
-import MobileNavbar from '@/components/layout/MobileNavbar';
-import BottomTabBar from '@/components/layout/BottomTabBar';
+
 import VisaTrustBanner from '@/components/visa/VisaTrustBanner';
 
 type Country = 'japan' | 'korea';
@@ -103,7 +102,6 @@ export default function VisaHubClient({ country, visaTypes }: { country: Country
         </section>
       </main>
 
-      <BottomTabBar />
     </div>
   );
 }

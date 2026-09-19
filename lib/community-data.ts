@@ -22,6 +22,7 @@ export interface CommunityPost {
   contactPreference: 'IN_APP' | 'WHATSAPP' | 'PHONE';
   // Additional metadata
   tags: string[];
+  languageLevel?: 'No Need' | 'Basic' | 'Medium' | 'Advance' | 'Expert';
   deposit?: number; // For rooms
   maintenanceFee?: number; // For rooms
   viewsCount: number;
@@ -86,8 +87,9 @@ Surrounded by halal groceries, Nepali restaurants, and Asian supermarkets.
     tags: ['Near Station', 'No Reikin', 'Gaijin Friendly', 'Free Wi-Fi', 'Furnished'],
     deposit: 68000,
     maintenanceFee: 3000,
-    viewsCount: 420,
-    likesCount: 38,
+    viewsCount: 0,
+    likesCount: 0,
+    sharesCount: 0,
     status: 'ACTIVE',
     createdAt: new Date(Date.now() - 1000 * 60 * 60 * 3).toISOString(), // 3 hours ago
   },
@@ -120,8 +122,9 @@ Only 7 minutes walk to Ikebukuro West Exit.
     tags: ['All Bills Included', 'Ikebukuro Hub', 'Immediate Move-in', 'Nepali Friendly'],
     deposit: 20000,
     maintenanceFee: 0,
-    viewsCount: 310,
-    likesCount: 24,
+    viewsCount: 0,
+    likesCount: 0,
+    sharesCount: 0,
     status: 'ACTIVE',
     createdAt: new Date(Date.now() - 1000 * 60 * 60 * 12).toISOString(),
   },
@@ -153,8 +156,9 @@ UR apartments have strictly ZERO key money, ZERO renewal fees, and NO guarantor 
     tags: ['UR Housing', 'No Key Money', 'Osaka Namba', 'Couples Welcome', 'Zero Guarantor'],
     deposit: 140000,
     maintenanceFee: 4500,
-    viewsCount: 280,
-    likesCount: 19,
+    viewsCount: 0,
+    likesCount: 0,
+    sharesCount: 0,
     status: 'ACTIVE',
     createdAt: new Date(Date.now() - 1000 * 60 * 60 * 28).toISOString(),
   },
@@ -189,8 +193,9 @@ Perfect for D-4 language trainees or D-2 students seeking zero-deposit budget li
     tags: ['Zero Deposit', 'Free Food', 'Private Shower', 'Hongdae', 'Student Friendly'],
     deposit: 0,
     maintenanceFee: 0,
-    viewsCount: 512,
-    likesCount: 47,
+    viewsCount: 0,
+    likesCount: 0,
+    sharesCount: 0,
     status: 'ACTIVE',
     createdAt: new Date(Date.now() - 1000 * 60 * 60 * 5).toISOString(),
   },
@@ -223,8 +228,9 @@ Close to D-2 universities (Korea Univ, Hankuk University of Foreign Studies, Han
     tags: ['One-Room', 'Wolse', 'Dongdaemun', 'Near Universities', 'Furnished'],
     deposit: 3000000,
     maintenanceFee: 50000,
-    viewsCount: 390,
-    likesCount: 31,
+    viewsCount: 0,
+    likesCount: 0,
+    sharesCount: 0,
     status: 'ACTIVE',
     createdAt: new Date(Date.now() - 1000 * 60 * 60 * 18).toISOString(),
   },
@@ -258,9 +264,11 @@ Friendly store owner welcoming foreign international students!
     authorPhone: '+81-3-3366-9900',
     isPhoneVerified: true,
     contactPreference: 'IN_APP',
-    tags: ['Night Shift', '¥1,400/hr', 'Transit Paid', 'JLPT N4 OK', 'Student Friendly'],
-    viewsCount: 640,
-    likesCount: 55,
+    languageLevel: 'Basic',
+    tags: ['Japanese Beginner OK', 'Night Shift', '¥1,400/hr', 'Transit Paid', 'JLPT N4 OK', 'Student Friendly'],
+    viewsCount: 0,
+    likesCount: 0,
+    sharesCount: 0,
     status: 'ACTIVE',
     createdAt: new Date(Date.now() - 1000 * 60 * 60 * 2).toISOString(),
   },
@@ -291,9 +299,11 @@ Visa change from Student Visa or SSW Skill Test passers warmly welcome.
     authorPhone: '+81-90-4433-2211',
     isPhoneVerified: true,
     contactPreference: 'IN_APP',
+    languageLevel: 'Medium',
     tags: ['SSW-1 Visa', 'Full-time', 'Visa Sponsorship', 'Free Makanai', 'Osaka Umeda'],
-    viewsCount: 780,
-    likesCount: 68,
+    viewsCount: 0,
+    likesCount: 0,
+    sharesCount: 0,
     status: 'ACTIVE',
     createdAt: new Date(Date.now() - 1000 * 60 * 60 * 8).toISOString(),
   },
@@ -323,9 +333,11 @@ Minimal Japanese required — perfect for newly arrived students who just passed
     authorPhone: '+81-80-6677-8899',
     isPhoneVerified: true,
     contactPreference: 'IN_APP',
+    languageLevel: 'No Need',
     tags: ['No Japanese Required', 'Weekly Pay', '¥1,380/hr', 'Nepali Team', 'Logistics'],
-    viewsCount: 530,
-    likesCount: 42,
+    viewsCount: 0,
+    likesCount: 0,
+    sharesCount: 0,
     status: 'ACTIVE',
     createdAt: new Date(Date.now() - 1000 * 60 * 60 * 20).toISOString(),
   },
@@ -357,9 +369,11 @@ Located 2 mins from Sillim Station (Line 2).
     authorPhone: '+82-10-8877-6655',
     isPhoneVerified: true,
     contactPreference: 'IN_APP',
-    tags: ['Part-time Alba', '₩10,500/hr', 'Sillim Line 2', 'TOPIK 2 OK', 'Weekend Shift'],
-    viewsCount: 460,
-    likesCount: 39,
+    languageLevel: 'Basic',
+    tags: ['Korean Beginner OK', 'Part-time Alba', '₩10,500/hr', 'Sillim Line 2', 'TOPIK 2 OK', 'Weekend Shift'],
+    viewsCount: 0,
+    likesCount: 0,
+    sharesCount: 0,
     status: 'ACTIVE',
     createdAt: new Date(Date.now() - 1000 * 60 * 60 * 6).toISOString(),
   },
@@ -390,9 +404,11 @@ Clean auto parts assembly line.
     authorPhone: '+82-10-3322-1144',
     isPhoneVerified: true,
     contactPreference: 'IN_APP',
+    languageLevel: 'Basic',
     tags: ['E-9 EPS', 'Dormitory Included', 'Overtime Bonus', 'E-7-4 Pathway', 'Incheon'],
-    viewsCount: 890,
-    likesCount: 76,
+    viewsCount: 0,
+    likesCount: 0,
+    sharesCount: 0,
     status: 'ACTIVE',
     createdAt: new Date(Date.now() - 1000 * 60 * 60 * 16).toISOString(),
   },
@@ -400,32 +416,7 @@ Clean auto parts assembly line.
 
 // In-memory runtime storage for persistence across API requests during session
 let memoryPosts: CommunityPost[] = [...INITIAL_POSTS];
-let memoryComments: PostComment[] = [
-  {
-    id: 'c-1',
-    postId: 'room-jp-1',
-    authorId: 'u-ashok',
-    authorName: 'Ashok Thapa',
-    content: 'Is this apartment available for move-in starting next month on October 1st? I have a student visa.',
-    createdAt: new Date(Date.now() - 1000 * 60 * 60 * 2).toISOString(),
-  },
-  {
-    id: 'c-2',
-    postId: 'room-jp-1',
-    authorId: 'user-suraj-tokyo',
-    authorName: 'Suraj Shrestha (Poster)',
-    content: 'Yes Ashok! October 1st move-in is completely fine. Please send me a direct message so we can arrange a room viewing!',
-    createdAt: new Date(Date.now() - 1000 * 60 * 45).toISOString(),
-  },
-  {
-    id: 'c-3',
-    postId: 'job-jp-1',
-    authorId: 'u-manish',
-    authorName: 'Manish Neupane',
-    content: 'I passed JFT-Basic last month and currently study at language school. Can I apply for Friday and Saturday night shifts?',
-    createdAt: new Date(Date.now() - 1000 * 60 * 30).toISOString(),
-  },
-];
+let memoryComments: PostComment[] = [];
 
 let memoryMessages: DirectMessage[] = [
   {
@@ -471,6 +462,7 @@ export function getCommunityPosts(params: {
   duration?: string;
   serviceChargeOnly?: boolean;
   search?: string;
+  languageLevel?: string;
 }): CommunityPost[] {
   return memoryPosts.filter(post => {
     // Type Filter (ROOM vs JOB vs ALL)
@@ -509,6 +501,17 @@ export function getCommunityPosts(params: {
     // Free vs Service Charge filter
     if (params.serviceChargeOnly !== undefined) {
       if (params.serviceChargeOnly && post.serviceCharge === 0) return false;
+    }
+
+    // Language Level filter
+    if (params.languageLevel && params.languageLevel !== 'ALL') {
+      const target = params.languageLevel.toLowerCase();
+      if (post.languageLevel) {
+        if (post.languageLevel.toLowerCase() !== target) return false;
+      } else {
+        const match = post.tags.some(t => t.toLowerCase().includes(target));
+        if (!match) return false;
+      }
     }
 
     // Text Search in Title, Description, Area, and Tags

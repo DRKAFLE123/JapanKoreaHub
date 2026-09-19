@@ -20,7 +20,7 @@ import {
   HelpCircle,
   Briefcase
 } from 'lucide-react';
-import BottomTabBar from '@/components/layout/BottomTabBar';
+
 
 type Country = 'japan' | 'korea';
 
@@ -431,7 +431,6 @@ export default function LifeHubClient({ country }: { country: Country }) {
         )}
 
       </main>
-      <BottomTabBar />
     </div>
   );
 }

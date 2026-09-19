@@ -20,7 +20,7 @@ import {
   Building,
   FileCheck
 } from 'lucide-react';
-import BottomTabBar from '@/components/layout/BottomTabBar';
+
 
 interface Props {
   country: 'japan' | 'korea';
@@ -458,7 +458,6 @@ export default function VisaInterviewPreparationClient({ country }: Props) {
         </section>
 
       </main>
-      <BottomTabBar />
     </div>
   );
 }

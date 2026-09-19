@@ -116,8 +116,8 @@ export const KoreanVocabularyExplorer: React.FC<KoreanVocabularyExplorerProps> =
 
       {/* Main 2-Column Layout: Left Lessons Sidebar + Right White Book Page Content */}
       <div className="grid grid-cols-1 lg:grid-cols-4 gap-4 sm:gap-6 items-start">
-          {/* Left Column: Lessons Sidebar (Japanese Style) */}
-          <div className="lg:col-span-1 bg-white border border-slate-200 rounded-2xl sm:rounded-3xl p-3.5 sm:p-4 text-slate-900 shadow-xs space-y-3 lg:sticky lg:top-20 lg:h-[calc(100vh-6rem)] lg:max-h-[calc(100vh-6rem)] flex flex-col overflow-hidden">
+          {/* Left Column: Lessons Sidebar (Desktop only - Mobile uses the unified in-card selector) */}
+          <div className="hidden lg:flex lg:col-span-1 bg-white border border-slate-200 rounded-3xl p-3.5 sm:p-4 text-slate-900 shadow-xs space-y-3 lg:sticky lg:top-20 lg:h-[calc(100vh-6rem)] lg:max-h-[calc(100vh-6rem)] flex-col overflow-hidden">
             <div className="flex items-center justify-between pb-2 border-b border-slate-100 shrink-0">
               <div className="flex items-center gap-2 font-black text-xs sm:text-sm text-emerald-600 uppercase tracking-wider">
                 <BookOpen className="w-4 h-4 text-emerald-600" />
@@ -128,52 +128,8 @@ export const KoreanVocabularyExplorer: React.FC<KoreanVocabularyExplorerProps> =
               </span>
             </div>
 
-            {/* Mobile Dropdown Quick Selector (Custom Bounded Picker) */}
-            <div className="block lg:hidden relative w-full pb-1 z-30 shrink-0">
-              <button
-                type="button"
-                onClick={() => setMobileLessonMenuOpen(!mobileLessonMenuOpen)}
-                className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2.5 text-xs font-black text-slate-900 flex items-center justify-between shadow-xs cursor-pointer"
-              >
-                <span className="truncate">
-                  Lesson {selectedLesson}: {getLessonTitle(selectedLevel, selectedLesson)}
-                </span>
-                <ChevronDown className={`w-4 h-4 text-slate-500 shrink-0 transition-transform duration-200 ${mobileLessonMenuOpen ? 'rotate-180' : ''}`} />
-              </button>
-
-              {mobileLessonMenuOpen && (
-                <>
-                  <div className="fixed inset-0 z-40 bg-slate-950/20" onClick={() => setMobileLessonMenuOpen(false)} />
-                  <div className="absolute top-full left-0 right-0 mt-1 w-full max-w-full bg-white border border-slate-200 rounded-2xl p-1.5 shadow-2xl z-50 max-h-64 overflow-y-auto space-y-1 text-slate-900">
-                    {availableLessons.map((n) => {
-                      const isSel = selectedLesson === n;
-                      const title = getLessonTitle(selectedLevel, n);
-                      return (
-                        <button
-                          key={n}
-                          type="button"
-                          onClick={() => {
-                            setSelectedLesson(n);
-                            setSearchQuery('');
-                            setExpandedGrammar(null);
-                            setMobileLessonMenuOpen(false);
-                          }}
-                          className={`w-full text-left p-2.5 rounded-xl text-xs font-extrabold flex items-center justify-between gap-2 cursor-pointer ${
-                            isSel ? 'bg-emerald-600 text-white font-black shadow-xs' : 'text-slate-700 hover:bg-slate-100 hover:text-slate-900'
-                          }`}
-                        >
-                          <span className="truncate">Lesson {n}: {title}</span>
-                          {isSel && <Check className="w-3.5 h-3.5 shrink-0 text-white" />}
-                        </button>
-                      );
-                    })}
-                  </div>
-                </>
-              )}
-            </div>
-
-            {/* Scrollable Lesson Items List */}
-            <div className="hidden lg:block flex-1 overflow-y-auto space-y-1.5 pr-1 scrollbar-thin scrollbar-thumb-slate-200 scrollbar-track-transparent">
+            {/* Scrollable Lesson Items List (Desktop) */}
+            <div className="flex-1 overflow-y-auto space-y-1.5 pr-1 scrollbar-thin scrollbar-thumb-slate-200 scrollbar-track-transparent">
             {availableLessons.map((n) => {
               const isSelected = selectedLesson === n;
               const title = getLessonTitle(selectedLevel, n);
@@ -217,43 +173,151 @@ export const KoreanVocabularyExplorer: React.FC<KoreanVocabularyExplorerProps> =
         </div>
 
         {/* Right Column: White Book Paper Mode Reading Content (Scrollable fixed height) */}
-        <div id="korean-vocab-content-area" ref={mainRef} className="lg:col-span-3 bg-white text-slate-900 border border-slate-200/90 rounded-2xl sm:rounded-3xl p-4 sm:p-6 shadow-2xl space-y-4 font-sans scroll-mt-24 lg:sticky lg:top-20 lg:h-[calc(100vh-6rem)] lg:max-h-[calc(100vh-6rem)] overflow-y-auto scrollbar-thin scrollbar-thumb-slate-300 scrollbar-track-transparent">
+        <div id="korean-vocab-content-area" ref={mainRef} className="lg:col-span-3 bg-white text-slate-900 border border-slate-200/90 rounded-2xl sm:rounded-3xl p-3.5 sm:p-6 shadow-2xl space-y-3 sm:space-y-4 font-sans scroll-mt-24 lg:sticky lg:top-20 lg:h-[calc(100vh-6rem)] lg:max-h-[calc(100vh-6rem)] overflow-y-auto scrollbar-thin scrollbar-thumb-slate-300 scrollbar-track-transparent">
           {/* Header & In-Page View Switcher Tabs (Vocab vs Grammar) */}
-          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 pb-3.5 border-b border-slate-200">
-            <div>
-              <div className="text-[10px] sm:text-xs font-black uppercase tracking-wider text-emerald-700">
-                {LEVEL_LABELS[selectedLevel]}
+          <div className="pb-3 border-b border-slate-200">
+            {/* Mobile Header: Single Merged Lesson Dropdown as the Main Title + Tab Switcher */}
+            <div className="lg:hidden space-y-2.5">
+              <div className="flex items-center justify-between gap-2">
+                <div className="flex items-center gap-1.5">
+                  <span className="text-[10px] font-black uppercase tracking-wider text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-md border border-emerald-200/80">
+                    {LEVEL_LABELS[selectedLevel]}
+                  </span>
+                  <span className="text-[10px] font-bold text-slate-400">
+                    ({availableLessons.length} Lessons)
+                  </span>
+                </div>
               </div>
-              <h2 className="text-base sm:text-xl font-black text-slate-900 mt-0.5">
-                {searchQuery ? 'Search Results' : `Lesson ${selectedLesson}: ${getLessonTitle(selectedLevel, selectedLesson)}`}
-              </h2>
+
+              {/* Lesson Dropdown (Serves as the Single, Interactive Lesson Header on Mobile) */}
+              <div className="relative w-full">
+                <button
+                  type="button"
+                  onClick={() => setMobileLessonMenuOpen(!mobileLessonMenuOpen)}
+                  className="w-full bg-slate-50 hover:bg-slate-100/80 active:bg-slate-100 border border-slate-200 rounded-xl px-3 py-2.5 text-xs font-black text-slate-900 flex items-center justify-between gap-2 shadow-xs cursor-pointer text-left transition-colors"
+                >
+                  <span className="truncate">
+                    {searchQuery ? '🔍 Search Results' : `Lesson ${selectedLesson}: ${getLessonTitle(selectedLevel, selectedLesson)}`}
+                  </span>
+                  <div className="flex items-center gap-1 shrink-0 text-slate-500 text-[11px] font-bold">
+                    <span className="text-emerald-700 bg-emerald-100/80 px-1.5 py-0.5 rounded text-[9px] font-black">Change</span>
+                    <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-200 ${mobileLessonMenuOpen ? 'rotate-180 text-emerald-600' : ''}`} />
+                  </div>
+                </button>
+
+                {mobileLessonMenuOpen && (
+                  <>
+                    <div className="fixed inset-0 z-40 bg-slate-950/20 backdrop-blur-2xs" onClick={() => setMobileLessonMenuOpen(false)} />
+                    <div className="absolute top-full left-0 right-0 mt-1.5 w-full bg-white border border-slate-200 rounded-2xl p-1.5 shadow-2xl z-50 max-h-72 overflow-y-auto space-y-1 text-slate-900 animate-in fade-in zoom-in-95 duration-100">
+                      <div className="px-3 py-1.5 text-[10px] font-black uppercase tracking-wider text-slate-400 border-b border-slate-100 mb-1 flex items-center justify-between">
+                        <span>Select Lesson</span>
+                        <span>{availableLessons.length} Total</span>
+                      </div>
+                      {availableLessons.map((n) => {
+                        const isSel = selectedLesson === n;
+                        const title = getLessonTitle(selectedLevel, n);
+                        const isPrep = selectedLevel.startsWith('EPS') && n <= 5;
+                        return (
+                          <button
+                            key={n}
+                            type="button"
+                            onClick={() => {
+                              setSelectedLesson(n);
+                              setSearchQuery('');
+                              setExpandedGrammar(null);
+                              setMobileLessonMenuOpen(false);
+                            }}
+                            className={`w-full text-left p-2 rounded-xl text-xs font-bold flex items-center justify-between gap-2 cursor-pointer transition-colors ${
+                              isSel ? 'bg-emerald-600 text-white shadow-xs font-black' : 'text-slate-700 hover:bg-slate-100 hover:text-slate-900'
+                            }`}
+                          >
+                            <div className="flex items-center gap-2 truncate">
+                              <span className={`w-5 h-5 rounded-full text-[10px] font-black flex items-center justify-center shrink-0 ${
+                                isSel ? 'bg-white text-emerald-800' : 'bg-slate-100 text-slate-600'
+                              }`}>
+                                {n}
+                              </span>
+                              <span className="truncate">Lesson {n}: {title}</span>
+                            </div>
+                            {isSel && <Check className="w-3.5 h-3.5 shrink-0 text-white" />}
+                            {isPrep && !isSel && (
+                              <span className="text-[9px] font-black px-1.5 py-0.5 rounded bg-amber-100 text-amber-800 shrink-0">
+                                Prep
+                              </span>
+                            )}
+                          </button>
+                        );
+                      })}
+                    </div>
+                  </>
+                )}
+              </div>
+
+              {/* In-Page Tab Switcher on Mobile (Grid 2-col) */}
+              <div className="grid grid-cols-2 gap-1.5 bg-slate-100 p-1 rounded-xl border border-slate-200/80 w-full">
+                <button
+                  onClick={() => setActiveLessonTab('VOCAB')}
+                  className={`py-1.5 px-2 rounded-lg text-xs font-extrabold transition-all cursor-pointer flex items-center justify-center gap-1.5 ${
+                    activeLessonTab === 'VOCAB'
+                      ? 'bg-emerald-600 text-white shadow-xs'
+                      : 'text-slate-600 hover:text-slate-900'
+                  }`}
+                >
+                  <Book className="w-3.5 h-3.5" />
+                  <span>Vocabulary ({filteredVocab.length})</span>
+                </button>
+
+                <button
+                  onClick={() => setActiveLessonTab('GRAMMAR')}
+                  className={`py-1.5 px-2 rounded-lg text-xs font-extrabold transition-all cursor-pointer flex items-center justify-center gap-1.5 ${
+                    activeLessonTab === 'GRAMMAR'
+                      ? 'bg-emerald-600 text-white shadow-xs'
+                      : 'text-slate-600 hover:text-slate-900'
+                  }`}
+                >
+                  <BookCheck className="w-3.5 h-3.5" />
+                  <span>Chapter Grammar ({grammarGuide?.grammarPoints.length || 0})</span>
+                </button>
+              </div>
             </div>
 
-            {/* In-Page Tab Switcher (Vocabulary vs Grammar) */}
-            <div className="flex items-center gap-1.5 bg-slate-100 p-1 rounded-xl border border-slate-200/80 self-stretch sm:self-auto justify-center">
-              <button
-                onClick={() => setActiveLessonTab('VOCAB')}
-                className={`px-3 py-1.5 rounded-lg text-xs font-extrabold transition-all cursor-pointer flex items-center gap-1.5 ${
-                  activeLessonTab === 'VOCAB'
-                    ? 'bg-emerald-600 text-white shadow-xs'
-                    : 'text-slate-600 hover:text-slate-900'
-                }`}
-              >
-                <Book className="w-3.5 h-3.5" />
-                <span>Vocabulary ({filteredVocab.length})</span>
-              </button>
+            {/* Desktop Header: Clean Title on Left + Tabs on Right */}
+            <div className="hidden lg:flex items-center justify-between gap-3">
+              <div>
+                <div className="text-[10px] sm:text-xs font-black uppercase tracking-wider text-emerald-700">
+                  {LEVEL_LABELS[selectedLevel]}
+                </div>
+                <h2 className="text-base sm:text-xl font-black text-slate-900 mt-0.5">
+                  {searchQuery ? 'Search Results' : `Lesson ${selectedLesson}: ${getLessonTitle(selectedLevel, selectedLesson)}`}
+                </h2>
+              </div>
 
-              <button
-                onClick={() => setActiveLessonTab('GRAMMAR')}
-                className={`px-3 py-1.5 rounded-lg text-xs font-extrabold transition-all cursor-pointer flex items-center gap-1.5 ${
-                  activeLessonTab === 'GRAMMAR'
-                    ? 'bg-emerald-600 text-white shadow-xs'
-                    : 'text-slate-600 hover:text-slate-900'
-                }`}
-              >
-                <BookCheck className="w-3.5 h-3.5" />
-                <span>Chapter Grammar ({grammarGuide?.grammarPoints.length || 0})</span>
-              </button>
+              {/* In-Page Tab Switcher (Vocabulary vs Grammar) */}
+              <div className="flex items-center gap-1.5 bg-slate-100 p-1 rounded-xl border border-slate-200/80 shrink-0">
+                <button
+                  onClick={() => setActiveLessonTab('VOCAB')}
+                  className={`px-3 py-1.5 rounded-lg text-xs font-extrabold transition-all cursor-pointer flex items-center gap-1.5 ${
+                    activeLessonTab === 'VOCAB'
+                      ? 'bg-emerald-600 text-white shadow-xs'
+                      : 'text-slate-600 hover:text-slate-900'
+                  }`}
+                >
+                  <Book className="w-3.5 h-3.5" />
+                  <span>Vocabulary ({filteredVocab.length})</span>
+                </button>
+
+                <button
+                  onClick={() => setActiveLessonTab('GRAMMAR')}
+                  className={`px-3 py-1.5 rounded-lg text-xs font-extrabold transition-all cursor-pointer flex items-center gap-1.5 ${
+                    activeLessonTab === 'GRAMMAR'
+                      ? 'bg-emerald-600 text-white shadow-xs'
+                      : 'text-slate-600 hover:text-slate-900'
+                  }`}
+                >
+                  <BookCheck className="w-3.5 h-3.5" />
+                  <span>Chapter Grammar ({grammarGuide?.grammarPoints.length || 0})</span>
+                </button>
+              </div>
             </div>
           </div>
 

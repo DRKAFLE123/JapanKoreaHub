@@ -2,8 +2,7 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { ArrowLeft, Calendar, ShieldCheck, CheckCircle2, Star, User, Loader2, Send, MessageSquare } from 'lucide-react';
-import MobileNavbar from '@/components/layout/MobileNavbar';
-import BottomTabBar from '@/components/layout/BottomTabBar';
+
 
 interface Counselor {
   name: string;
@@ -96,9 +95,7 @@ export default function ConsultancyClient() {
 
   return (
     <div className="min-h-screen bg-white pb-24">
-      <MobileNavbar user={null} lang="en" onLangToggle={() => {}} onSearchOpen={() => {}} />
-
-      <main className="pt-14 max-w-4xl mx-auto">
+      <main className="max-w-4xl mx-auto">
         {/* Breadcrumb */}
         <div className="px-4 pt-4 pb-2">
           <Link href="/" className="inline-flex items-center gap-1 text-sm text-gray-500 hover:text-gray-700 transition-colors">
@@ -325,7 +322,6 @@ export default function ConsultancyClient() {
         </div>
       )}
 
-      <BottomTabBar />
     </div>
   );
 }

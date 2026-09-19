@@ -5,8 +5,6 @@ import {
   BookOpen, GraduationCap, Briefcase, Shield,
   ChevronRight, Bell, ArrowRight, Flame, Sparkles
 } from 'lucide-react';
-import MobileNavbar from '@/components/layout/MobileNavbar';
-import BottomTabBar from '@/components/layout/BottomTabBar';
 
 /* ── Types ── */
 interface User { name: string; email: string; streak?: number; }
@@ -91,34 +89,15 @@ const CONTINUE_ITEMS = [
 ];
 
 export default function HomePage() {
-  const [user, setUser] = useState<User | null>(null);
-  const [lang, setLang] = useState<'en' | 'ne'>('en');
   const [notices, setNotices] = useState<Notice[]>([]);
-  const [searchOpen, setSearchOpen] = useState(false);
 
   useEffect(() => {
-    // Load language preference
-    const saved = localStorage.getItem('jkh_lang') as 'en' | 'ne' | null;
-    if (saved) setLang(saved);
-
-    // Load user session
-    fetch('/api/auth/me')
-      .then(r => r.ok ? r.json() : null)
-      .then(d => d?.user && setUser(d.user))
-      .catch(() => {});
-
     // Load recent notices
     fetch('/api/notices?limit=3')
       .then(r => r.ok ? r.json() : null)
       .then(d => d?.notices && setNotices(d.notices))
       .catch(() => {});
   }, []);
-
-  const toggleLang = () => {
-    const next = lang === 'en' ? 'ne' : 'en';
-    setLang(next);
-    localStorage.setItem('jkh_lang', next);
-  };
 
   const categoryColor: Record<string, string> = {
     VISA_UPDATE:    'bg-amber-100 text-amber-700',
@@ -129,16 +108,8 @@ export default function HomePage() {
 
   return (
     <div className="min-h-screen bg-white">
-      {/* Mobile Navbar */}
-      <MobileNavbar
-        user={user}
-        lang={lang}
-        onLangToggle={toggleLang}
-        onSearchOpen={() => setSearchOpen(true)}
-      />
-
       {/* Main content */}
-      <main className="pt-14 pb-20 md:pt-0 md:pb-0 max-w-5xl mx-auto">
+      <main className="pb-20 md:pb-8 max-w-5xl mx-auto">
 
         {/* ── Hero (Single Viewport Optimized) ── */}
         <section className="px-4 pt-4 md:pt-6 pb-4 mb-2">
@@ -346,9 +317,6 @@ export default function HomePage() {
         </section>
 
       </main>
-
-      {/* Bottom Tab Bar */}
-      <BottomTabBar />
     </div>
   );
 }

@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { ArrowLeft, ArrowRight, BookOpen, Volume2, Play, Pause, CheckCircle2, XCircle, ShieldCheck, Clock, FileText, HelpCircle, GraduationCap, Briefcase, Sparkles, ExternalLink, MessageSquare, AlertTriangle, Lightbulb, Eye, EyeOff } from 'lucide-react';
-import BottomTabBar from '@/components/layout/BottomTabBar';
+
 import { SSWSectorData } from '@/lib/ssw-sectors-data';
 import BuildingCleaningBookReader from '@/components/building-cleaning/BuildingCleaningBookReader';
 import CaregivingBookReader from '@/components/caregiving/CaregivingBookReader';
@@ -905,7 +905,6 @@ export default function SSWSectorDetailClient({ country, sectorKey, sectorData }
 
 
       </main>
-      <BottomTabBar />
     </div>
   );
 }

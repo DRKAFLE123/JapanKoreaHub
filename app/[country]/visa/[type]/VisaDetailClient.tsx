@@ -2,8 +2,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { ArrowLeft, ArrowRight, ShieldCheck, FileCheck, CheckCircle2 } from 'lucide-react';
-import MobileNavbar from '@/components/layout/MobileNavbar';
-import BottomTabBar from '@/components/layout/BottomTabBar';
+
 import VisaTrustBanner from '@/components/visa/VisaTrustBanner';
 
 interface Props {
@@ -102,7 +101,6 @@ export default function VisaDetailClient({ country, type }: Props) {
         </section>
 
       </main>
-      <BottomTabBar />
     </div>
   );
 }

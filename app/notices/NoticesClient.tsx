@@ -2,8 +2,6 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { Bell, ArrowLeft, ExternalLink, Calendar, ShieldCheck, Filter, Plus, X } from 'lucide-react';
-import MobileNavbar from '@/components/layout/MobileNavbar';
-import BottomTabBar from '@/components/layout/BottomTabBar';
 
 interface Notice {
   id: string;
@@ -124,9 +122,7 @@ export default function NoticesClient() {
 
   return (
     <div className="min-h-screen bg-white pb-24">
-      <MobileNavbar user={null} lang="en" onLangToggle={() => {}} onSearchOpen={() => {}} />
-
-      <main className="pt-14 max-w-4xl mx-auto">
+      <main className="max-w-4xl mx-auto">
         {/* Breadcrumb */}
         <div className="px-4 pt-4 pb-2">
           <Link href="/" className="inline-flex items-center gap-1 text-sm text-gray-500 hover:text-gray-700 transition-colors">
@@ -417,8 +413,6 @@ export default function NoticesClient() {
           </div>
         </div>
       )}
-
-      <BottomTabBar />
     </div>
   );
 }

@@ -2,8 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { Flame, Layers, Clock, Award, CheckCircle2, BookOpen, ShieldCheck, ArrowRight, User } from 'lucide-react';
-import MobileNavbar from '@/components/layout/MobileNavbar';
-import BottomTabBar from '@/components/layout/BottomTabBar';
+
 
 interface UserSession {
   name: string;
@@ -28,9 +27,7 @@ export default function DashboardClient() {
 
   return (
     <div className="min-h-screen bg-white pb-24">
-      <MobileNavbar user={user} lang="en" onLangToggle={() => {}} onSearchOpen={() => {}} />
-
-      <main className="pt-14 max-w-4xl mx-auto">
+      <main className="max-w-4xl mx-auto">
         {/* Header */}
         <section className="px-4 py-6">
           <div className="flex items-center gap-3">
@@ -130,7 +127,7 @@ export default function DashboardClient() {
         </section>
       </main>
 
-      <BottomTabBar />
+
     </div>
   );
 }

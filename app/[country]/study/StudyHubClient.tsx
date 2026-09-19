@@ -2,8 +2,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { ArrowLeft, GraduationCap, Award, BookOpen, ShieldCheck, ArrowRight, DollarSign, CheckCircle2 } from 'lucide-react';
-import MobileNavbar from '@/components/layout/MobileNavbar';
-import BottomTabBar from '@/components/layout/BottomTabBar';
+
 
 type Country = 'japan' | 'korea';
 
@@ -128,7 +127,6 @@ export default function StudyHubClient({ country }: { country: Country }) {
         </section>
       </main>
 
-      <BottomTabBar />
     </div>
   );
 }

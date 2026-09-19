@@ -2,8 +2,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { ArrowLeft, Briefcase, ChevronRight, ArrowRight, ShieldCheck, BookOpen, Building, CheckCircle2, Play } from 'lucide-react';
-import MobileNavbar from '@/components/layout/MobileNavbar';
-import BottomTabBar from '@/components/layout/BottomTabBar';
+
 
 type Country = 'japan' | 'korea';
 
@@ -154,7 +153,6 @@ export default function WorkHubClient({ country }: { country: Country }) {
         </section>
       </main>
 
-      <BottomTabBar />
     </div>
   );
 }

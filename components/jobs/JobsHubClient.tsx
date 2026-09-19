@@ -18,7 +18,9 @@ import {
   GraduationCap,
   MessageSquare,
   Award,
-  AlertCircle
+  AlertCircle,
+  ChevronDown,
+  RotateCcw
 } from 'lucide-react';
 import type { CommunityPost } from '@/lib/community-data';
 import PostCard from '@/components/community/PostCard';
@@ -28,6 +30,7 @@ import DirectMessageDrawer from '@/components/community/DirectMessageDrawer';
 import PostDetailModal from '@/components/community/PostDetailModal';
 import AuthSheet from '@/components/auth/AuthSheet';
 import { useCountry } from '@/lib/context/CountryContext';
+import CustomSelect from '@/components/ui/CustomSelect';
 
 interface JobsHubClientProps {
   country?: 'japan' | 'korea' | 'all';
@@ -122,9 +125,11 @@ export default function JobsHubClient({ country = 'all' }: JobsHubClientProps) {
   const [areaQuery, setAreaQuery] = useState('');
   const [minSalary, setMinSalary] = useState<number>(0);
   const [selectedDuration, setSelectedDuration] = useState<string>('ALL');
+  const [selectedLanguageLevel, setSelectedLanguageLevel] = useState<string>('ALL');
   const [onlyFreeService, setOnlyFreeService] = useState(false);
   const [searchKeyword, setSearchKeyword] = useState('');
   const [showBookmarksOnly, setShowBookmarksOnly] = useState(false);
+  const [showAdvancedFilters, setShowAdvancedFilters] = useState(false);
 
   // Modals & States
   const [postModalOpen, setPostModalOpen] = useState(false);
@@ -235,12 +240,30 @@ export default function JobsHubClient({ country = 'all' }: JobsHubClientProps) {
     if (minSalary > 0 && post.price < minSalary) return false;
     if (selectedDuration !== 'ALL' && !post.duration.toLowerCase().includes(selectedDuration.toLowerCase())) return false;
     if (onlyFreeService && post.serviceCharge > 0) return false;
+    if (selectedLanguageLevel !== 'ALL') {
+      const target = selectedLanguageLevel.toLowerCase();
+      const hasExact = post.languageLevel && post.languageLevel.toLowerCase() === target;
+      if (selectedLanguageLevel === 'No Need') {
+        const noNeedMatch =
+          post.languageLevel === 'No Need' ||
+          post.tags.some(t => t.toLowerCase().includes('no japanese') || t.toLowerCase().includes('no korean')) ||
+          post.description.toLowerCase().includes('minimal japanese') ||
+          post.description.toLowerCase().includes('minimal korean') ||
+          post.description.toLowerCase().includes('no heavy conversation');
+        if (!noNeedMatch && !hasExact) return false;
+      } else if (!hasExact) {
+        const tagMatch = post.tags.some(t => t.toLowerCase().includes(target));
+        const descMatch = post.description.toLowerCase().includes(target);
+        if (!tagMatch && !descMatch) return false;
+      }
+    }
     if (searchKeyword.trim()) {
       const q = searchKeyword.toLowerCase();
       const match =
         post.title.toLowerCase().includes(q) ||
         post.description.toLowerCase().includes(q) ||
-        post.tags.some(t => t.toLowerCase().includes(q));
+        post.tags.some(t => t.toLowerCase().includes(q)) ||
+        (post.languageLevel && post.languageLevel.toLowerCase().includes(q));
       if (!match) return false;
     }
     return true;
@@ -249,39 +272,51 @@ export default function JobsHubClient({ country = 'all' }: JobsHubClientProps) {
   const isJapan = selectedCountry === 'japan';
   const cities = isJapan ? ['Tokyo', 'Osaka', 'Nagoya', 'Fukuoka'] : ['Seoul', 'Busan', 'Incheon'];
 
+  const activeFiltersCount = 
+    (selectedCity !== 'ALL' ? 1 : 0) +
+    (areaQuery.trim() ? 1 : 0) +
+    (minSalary > 0 ? 1 : 0) +
+    (selectedDuration !== 'ALL' ? 1 : 0) +
+    (selectedLanguageLevel !== 'ALL' ? 1 : 0) +
+    (onlyFreeService ? 1 : 0) +
+    (searchKeyword.trim() ? 1 : 0) +
+    (showBookmarksOnly ? 1 : 0);
+
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-4 pb-24 font-sans">
       
-      {/* Hero Banner with Quick Stats & Country Hub Selector */}
-      <div className={`rounded-3xl p-6 sm:p-8 mb-8 relative overflow-hidden shadow-lg border text-white ${
+      {/* Minimized Hero Banner with Quick Stats & Quick Actions */}
+      <div className={`rounded-2xl p-4 sm:p-5 mb-4 relative overflow-hidden shadow-sm border text-white ${
         isJapan 
-          ? 'bg-gradient-to-br from-rose-600 via-red-600 to-rose-700 shadow-rose-600/15 border-rose-400/25' 
-          : 'bg-gradient-to-br from-blue-600 via-indigo-600 to-violet-700 shadow-indigo-600/15 border-indigo-400/25'
+          ? 'bg-gradient-to-br from-rose-600 via-red-600 to-rose-700 shadow-rose-600/10 border-rose-400/20' 
+          : 'bg-gradient-to-br from-blue-600 via-indigo-600 to-violet-700 shadow-indigo-600/10 border-indigo-400/20'
       }`}>
         <div className="absolute right-0 top-0 bottom-0 w-1/3 bg-gradient-to-l from-white/10 to-transparent pointer-events-none" />
         
-        <div className="relative z-10">
-          <div className="flex items-center gap-2 mb-3">
-            <span className="px-3 py-1 rounded-full bg-white/20 backdrop-blur-md border border-white/25 text-white text-xs font-semibold tracking-wide">
-              {isJapan ? '🇯🇵 Japan Jobs & Careers' : '🇰🇷 Korea Jobs & Careers'}
-            </span>
-            <span className="flex items-center gap-1.5 text-xs text-white/90 font-medium">
-              <span className="w-2 h-2 rounded-full bg-emerald-300 animate-pulse" />
-              Verified Job Feed Active
-            </span>
+        <div className="relative z-10 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+          <div>
+            <div className="flex items-center gap-2 mb-1">
+              <span className="px-2.5 py-0.5 rounded-full bg-white/20 backdrop-blur-md border border-white/25 text-white text-[11px] font-bold tracking-wide">
+                {isJapan ? '🇯🇵 Japan Jobs & Careers' : '🇰🇷 Korea Jobs & Careers'}
+              </span>
+              <span className="flex items-center gap-1.5 text-[11px] text-white/90 font-medium">
+                <span className="w-2 h-2 rounded-full bg-emerald-300 animate-pulse" />
+                Live Feed
+              </span>
+            </div>
+
+            <h1 className="text-lg sm:text-xl font-bold tracking-tight text-white">
+              {isJapan ? 'Part-Time Arubaito & Full-Time Jobs in Japan' : 'Part-Time Alba & EPS E-9 Jobs in Korea'}
+            </h1>
+            <p className="text-xs text-white/85 max-w-xl leading-snug font-normal mt-0.5 hidden sm:block">
+              {isJapan
+                ? 'Convenience stores, restaurant shifts, logistics jobs, and official SSW-1 employer matching.'
+                : 'Certified student alba positions, factory shifts, and long-term E-9 career opportunities.'}
+            </p>
           </div>
 
-          <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-white mb-2">
-            {isJapan ? 'Part-Time Arubaito & Full-Time Jobs in Japan' : 'Part-Time Alba & EPS E-9 Jobs in Korea'}
-          </h1>
-          <p className="text-xs sm:text-sm text-white/85 max-w-2xl leading-relaxed font-normal">
-            {isJapan
-              ? 'Find student-friendly 28h/week convenience store, restaurant, and logistics jobs, plus official SSW-1 visa employer matching with transparent wages.'
-              : 'Discover certified student alba positions, factory and agriculture shifts, and long-term E-9 and E-7-4 career opportunities with labor protections.'}
-          </p>
-
           {/* Quick Action Bar */}
-          <div className="flex flex-wrap items-center gap-3 mt-5">
+          <div className="flex items-center gap-2 shrink-0">
             <button
               onClick={() => {
                 if (!user) {
@@ -294,10 +329,10 @@ export default function JobsHubClient({ country = 'all' }: JobsHubClientProps) {
                 }
                 setPostModalOpen(true);
               }}
-              className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-white hover:bg-slate-100 text-indigo-700 font-semibold text-xs transition-all shadow-sm cursor-pointer"
+              className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-white hover:bg-slate-100 text-indigo-700 font-bold text-xs transition-all shadow-xs cursor-pointer"
             >
-              <Plus className="w-4 h-4" />
-              <span>Post a Job Opening</span>
+              <Plus className="w-3.5 h-3.5" />
+              <span>Post Job</span>
             </button>
 
             <button
@@ -308,17 +343,17 @@ export default function JobsHubClient({ country = 'all' }: JobsHubClientProps) {
                 }
                 setMessageDrawerOpen(true);
               }}
-              className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-white/15 hover:bg-white/25 text-white font-medium text-xs transition-colors cursor-pointer border border-white/25 backdrop-blur-sm"
+              className="flex items-center gap-1.5 px-3 py-2 rounded-xl bg-white/15 hover:bg-white/25 text-white font-semibold text-xs transition-colors cursor-pointer border border-white/25 backdrop-blur-sm"
             >
-              <MessageSquare className="w-4 h-4 text-white/90" />
-              <span>My Job Inquiries</span>
+              <MessageSquare className="w-3.5 h-3.5 text-white/90" />
+              <span>Inbox</span>
             </button>
           </div>
         </div>
       </div>
 
       {/* Navigation Sub-Tabs */}
-      <div className="flex items-center gap-2 mb-6 border-b border-slate-200 pb-3 overflow-x-auto">
+      <div className="flex items-center gap-2 mb-4 border-b border-slate-200 pb-2.5 overflow-x-auto">
         <button
           onClick={() => setActiveTab('LISTINGS')}
           className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-semibold transition-all cursor-pointer shrink-0 ${
@@ -372,135 +407,134 @@ export default function JobsHubClient({ country = 'all' }: JobsHubClientProps) {
       {activeTab === 'LISTINGS' && (
         <div className="space-y-6">
           
-          {/* Systematic Filter Bar */}
-          <div className="p-4 sm:p-5 rounded-2xl bg-white border border-slate-200/90 shadow-xs space-y-4">
-            <div className="flex items-center justify-between border-b border-slate-100 pb-3">
-              <span className="text-xs font-semibold uppercase tracking-wider text-slate-700 flex items-center gap-2">
-                <Filter className="w-4 h-4 text-indigo-600" />
-                <span>Search &amp; Filter Jobs</span>
-              </span>
+          {/* Minimized Filter Bar Panel */}
+          <div className="p-3 sm:p-4 rounded-2xl bg-white border border-slate-200 shadow-xs space-y-3">
+            {/* Primary compact single-line bar */}
+            <div className="flex flex-wrap sm:flex-nowrap items-center gap-2">
+              {/* City selector */}
+              <div className="w-32 sm:w-36 shrink-0">
+                <CustomSelect
+                  value={selectedCity}
+                  onChange={(val) => setSelectedCity(String(val))}
+                  options={[
+                    { value: 'ALL', label: 'All Cities' },
+                    ...cities.map(c => ({ value: c, label: c }))
+                  ]}
+                  accentColor="indigo"
+                  buttonClassName="font-bold text-slate-800"
+                />
+              </div>
 
-              {/* Bookmarks Toggle */}
+              {/* Area search input */}
+              <div className="relative flex-1 min-w-[140px]">
+                <MapPin className="w-3.5 h-3.5 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
+                <input
+                  type="text"
+                  value={areaQuery}
+                  onChange={(e) => setAreaQuery(e.target.value)}
+                  placeholder="Area / Station (Shinjuku, Incheon...)"
+                  className="w-full pl-8 pr-3 py-2 rounded-xl border border-slate-200 text-xs font-medium text-slate-900 placeholder-slate-400 focus:outline-none focus:border-indigo-500"
+                />
+              </div>
+
+              {/* Saved Jobs Button */}
               <button
                 type="button"
                 onClick={() => setShowBookmarksOnly(prev => !prev)}
-                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-black border transition-all cursor-pointer ${
+                className={`flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-bold border transition-all cursor-pointer shrink-0 ${
                   showBookmarksOnly
                     ? 'bg-amber-50 border-amber-300 text-amber-700'
                     : 'border-slate-200 text-slate-600 hover:bg-slate-50'
                 }`}
+                title="Filter by saved jobs"
               >
                 <Bookmark className={`w-3.5 h-3.5 ${showBookmarksOnly ? 'fill-current text-amber-600' : ''}`} />
-                <span>Saved Jobs ({bookmarks.length})</span>
+                <span className="hidden sm:inline">Saved</span>
+                <span>({bookmarks.length})</span>
+              </button>
+
+              {/* Toggle Advanced Filters Button */}
+              <button
+                type="button"
+                onClick={() => setShowAdvancedFilters(prev => !prev)}
+                className={`flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-bold border transition-all cursor-pointer shrink-0 ${
+                  showAdvancedFilters || activeFiltersCount > 0
+                    ? 'bg-indigo-50 border-indigo-200 text-indigo-700'
+                    : 'border-slate-200 text-slate-600 hover:bg-slate-50'
+                }`}
+              >
+                <Filter className="w-3.5 h-3.5 text-indigo-600" />
+                <span>Filters</span>
+                {activeFiltersCount > 0 && (
+                  <span className="w-4 h-4 rounded-full bg-indigo-600 text-white text-[10px] font-bold flex items-center justify-center">
+                    {activeFiltersCount}
+                  </span>
+                )}
+                <ChevronDown className={`w-3 h-3 transition-transform ${showAdvancedFilters ? 'rotate-180' : ''}`} />
               </button>
             </div>
 
-            {/* Systematic Inputs */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
-              
-              {/* City Filter */}
-              <div>
-                <label className="block text-[11px] font-black uppercase tracking-wider text-slate-500 mb-1">
-                  City / Region
-                </label>
-                <select
-                  value={selectedCity}
-                  onChange={(e) => setSelectedCity(e.target.value)}
-                  className="w-full px-3 py-2 rounded-xl border border-slate-200 text-xs font-bold text-slate-900 bg-slate-50 focus:outline-none focus:border-indigo-500 cursor-pointer"
-                >
-                  <option value="ALL">All Cities</option>
-                  {cities.map(c => (
-                    <option key={c} value={c}>{c}</option>
-                  ))}
-                </select>
-              </div>
+            {/* Quick 1-tap filter chips (horizontal scrollable) */}
+            <div className="flex items-center gap-1.5 overflow-x-auto pb-1 text-xs no-scrollbar">
+              <button
+                type="button"
+                onClick={() => setSelectedDuration(selectedDuration === 'Part-time' ? 'ALL' : 'Part-time')}
+                className={`px-2.5 py-1 rounded-lg font-bold transition-all cursor-pointer shrink-0 ${
+                  selectedDuration === 'Part-time'
+                    ? 'bg-indigo-600 text-white shadow-xs'
+                    : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
+                }`}
+              >
+                ⏱️ Part-Time (28h)
+              </button>
 
-              {/* Area Search */}
-              <div>
-                <label className="block text-[11px] font-black uppercase tracking-wider text-slate-500 mb-1">
-                  Area / Station
-                </label>
-                <div className="relative">
-                  <MapPin className="w-3.5 h-3.5 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
-                  <input
-                    type="text"
-                    value={areaQuery}
-                    onChange={(e) => setAreaQuery(e.target.value)}
-                    placeholder="e.g. Shinjuku, Incheon..."
-                    className="w-full pl-8 pr-3 py-2 rounded-xl border border-slate-200 text-xs font-bold text-slate-900 placeholder-slate-400 focus:outline-none focus:border-indigo-500"
-                  />
-                </div>
-              </div>
-
-              {/* Duration / Shift Type */}
-              <div>
-                <label className="block text-[11px] font-black uppercase tracking-wider text-slate-500 mb-1">
-                  Commitment / Shifts
-                </label>
-                <select
-                  value={selectedDuration}
-                  onChange={(e) => setSelectedDuration(e.target.value)}
-                  className="w-full px-3 py-2 rounded-xl border border-slate-200 text-xs font-bold text-slate-900 bg-slate-50 focus:outline-none focus:border-indigo-500 cursor-pointer"
-                >
-                  <option value="ALL">All Shifts &amp; Visas</option>
-                  <option value="Part-time">Part-time (28h student limit)</option>
-                  <option value="Night">Night Shift (22:00–05:00)</option>
-                  <option value="Weekend">Weekend Only</option>
-                  <option value="Full-time">Full-time (SSW / E-9)</option>
-                </select>
-              </div>
-
-              {/* Keyword Search */}
-              <div>
-                <label className="block text-[11px] font-black uppercase tracking-wider text-slate-500 mb-1">
-                  Job Role / Keyword
-                </label>
-                <div className="relative">
-                  <Search className="w-3.5 h-3.5 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
-                  <input
-                    type="text"
-                    value={searchKeyword}
-                    onChange={(e) => setSearchKeyword(e.target.value)}
-                    placeholder="Cashier, Sorting, Makanai..."
-                    className="w-full pl-8 pr-3 py-2 rounded-xl border border-slate-200 text-xs font-bold text-slate-900 placeholder-slate-400 focus:outline-none focus:border-indigo-500"
-                  />
-                </div>
-              </div>
-
-            </div>
-
-            {/* Quick Chips */}
-            <div className="flex flex-wrap items-center gap-1.5 pt-2">
-              <span className="text-[11px] font-bold text-slate-400 mr-1">Quick Filters:</span>
-              
               <button
                 type="button"
                 onClick={() => setOnlyFreeService(prev => !prev)}
-                className={`px-2.5 py-1 rounded-lg text-xs font-black transition-all cursor-pointer ${
+                className={`px-2.5 py-1 rounded-lg font-bold transition-all cursor-pointer shrink-0 ${
                   onlyFreeService
                     ? 'bg-emerald-600 text-white shadow-xs'
                     : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
                 }`}
               >
-                ⚡ Free Referral Only
+                Zero Fee / Free
               </button>
 
               <button
                 type="button"
-                onClick={() => setSearchKeyword(searchKeyword === 'Night Shift' ? '' : 'Night Shift')}
-                className={`px-2.5 py-1 rounded-lg text-xs font-bold transition-all cursor-pointer ${
-                  searchKeyword === 'Night Shift'
+                onClick={() => {
+                  const keyword = isJapan ? 'Japanese Beginner' : 'Korean Beginner';
+                  setSearchKeyword(searchKeyword === keyword ? '' : keyword);
+                }}
+                className={`px-2.5 py-1 rounded-lg font-bold transition-all cursor-pointer shrink-0 ${
+                  searchKeyword === (isJapan ? 'Japanese Beginner' : 'Korean Beginner')
                     ? 'bg-indigo-600 text-white shadow-xs'
                     : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
                 }`}
               >
-                🌙 Night Shift (+25% pay)
+                🗣️ {isJapan ? 'Japanese Beginner OK' : 'Korean Beginner OK'}
               </button>
+
+              {/* Language Level Quick Filters */}
+              {(['No Need', 'Basic', 'Medium', 'Advance', 'Expert'] as const).map((lvl) => (
+                <button
+                  key={lvl}
+                  type="button"
+                  onClick={() => setSelectedLanguageLevel(selectedLanguageLevel === lvl ? 'ALL' : lvl)}
+                  className={`px-2.5 py-1 rounded-lg font-bold transition-all cursor-pointer shrink-0 ${
+                    selectedLanguageLevel === lvl
+                      ? 'bg-indigo-600 text-white shadow-xs'
+                      : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
+                  }`}
+                >
+                  🗣️ {lvl}
+                </button>
+              ))}
 
               <button
                 type="button"
                 onClick={() => setSearchKeyword(searchKeyword === 'Transit Paid' ? '' : 'Transit Paid')}
-                className={`px-2.5 py-1 rounded-lg text-xs font-bold transition-all cursor-pointer ${
+                className={`px-2.5 py-1 rounded-lg font-bold transition-all cursor-pointer shrink-0 ${
                   searchKeyword === 'Transit Paid'
                     ? 'bg-indigo-600 text-white shadow-xs'
                     : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
@@ -513,19 +547,19 @@ export default function JobsHubClient({ country = 'all' }: JobsHubClientProps) {
                 <button
                   type="button"
                   onClick={() => setSearchKeyword(searchKeyword === 'SSW-1' ? '' : 'SSW-1')}
-                  className={`px-2.5 py-1 rounded-lg text-xs font-bold transition-all cursor-pointer ${
+                  className={`px-2.5 py-1 rounded-lg font-bold transition-all cursor-pointer shrink-0 ${
                     searchKeyword === 'SSW-1'
                       ? 'bg-indigo-600 text-white shadow-xs'
                       : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
                   }`}
                 >
-                  🏅 SSW-1 Full-time Visa
+                  🏅 SSW-1 Visa
                 </button>
               ) : (
                 <button
                   type="button"
                   onClick={() => setSearchKeyword(searchKeyword === 'E-9' ? '' : 'E-9')}
-                  className={`px-2.5 py-1 rounded-lg text-xs font-bold transition-all cursor-pointer ${
+                  className={`px-2.5 py-1 rounded-lg font-bold transition-all cursor-pointer shrink-0 ${
                     searchKeyword === 'E-9'
                       ? 'bg-indigo-600 text-white shadow-xs'
                       : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
@@ -534,7 +568,113 @@ export default function JobsHubClient({ country = 'all' }: JobsHubClientProps) {
                   🏭 Official E-9 Factory
                 </button>
               )}
+
+              {activeFiltersCount > 0 && (
+                <button
+                  type="button"
+                  onClick={() => {
+                    setSelectedCity('ALL');
+                    setAreaQuery('');
+                    setMinSalary(0);
+                    setSelectedDuration('ALL');
+                    setSelectedLanguageLevel('ALL');
+                    setOnlyFreeService(false);
+                    setSearchKeyword('');
+                    setShowBookmarksOnly(false);
+                  }}
+                  className="px-2 py-1 rounded-lg text-slate-400 hover:text-rose-600 hover:bg-rose-50 font-bold transition-colors cursor-pointer shrink-0 flex items-center gap-1"
+                >
+                  <RotateCcw className="w-3 h-3" />
+                  <span>Reset</span>
+                </button>
+              )}
             </div>
+
+            {/* Collapsible Advanced Filters Tray */}
+            {showAdvancedFilters && (
+              <div className="pt-3 border-t border-slate-100 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3 animate-fade-in">
+                {/* Language Level Required */}
+                <div>
+                  <label className="block text-[11px] font-bold uppercase tracking-wider text-slate-500 mb-1">
+                    {isJapan ? 'Japanese Level Required' : 'Korean Level Required'}
+                  </label>
+                  <CustomSelect
+                    value={selectedLanguageLevel}
+                    onChange={(val) => setSelectedLanguageLevel(String(val))}
+                    options={[
+                      { value: 'ALL', label: 'All Language Levels' },
+                      { value: 'No Need', label: 'No Need (Zero Required)' },
+                      { value: 'Basic', label: `Basic (Conversational / ${isJapan ? 'N5' : 'TOPIK 1'})` },
+                      { value: 'Medium', label: `Medium (Intermediate / ${isJapan ? 'N4–N3' : 'TOPIK 2–3'})` },
+                      { value: 'Advance', label: `Advance (Fluent / ${isJapan ? 'N2' : 'TOPIK 4–5'})` },
+                      { value: 'Expert', label: `Expert (Native / Business / ${isJapan ? 'N1' : 'TOPIK 6'})` },
+                    ]}
+                    accentColor="indigo"
+                  />
+                </div>
+                {/* Min Wage */}
+                <div>
+                  <label className="block text-[11px] font-bold uppercase tracking-wider text-slate-500 mb-1">
+                    Minimum Rate / Salary
+                  </label>
+                  <CustomSelect
+                    value={minSalary}
+                    onChange={(val) => setMinSalary(Number(val))}
+                    options={[
+                      { value: 0, label: 'Any Wage' },
+                      ...(isJapan
+                        ? [
+                            { value: 1100, label: '¥1,100+ / hr (Standard)' },
+                            { value: 1300, label: '¥1,300+ / hr (High)' },
+                            { value: 200000, label: '¥200,000+ / mo (Full-Time)' },
+                          ]
+                        : [
+                            { value: 10000, label: '₩10,000+ / hr (Statutory)' },
+                            { value: 12000, label: '₩12,000+ / hr (High)' },
+                            { value: 2200000, label: '₩2,200,000+ / mo (Full-Time)' },
+                          ])
+                    ]}
+                    accentColor="indigo"
+                  />
+                </div>
+
+                {/* Duration / Commitment */}
+                <div>
+                  <label className="block text-[11px] font-bold uppercase tracking-wider text-slate-500 mb-1">
+                    Commitment / Shifts
+                  </label>
+                  <CustomSelect
+                    value={selectedDuration}
+                    onChange={(val) => setSelectedDuration(String(val))}
+                    options={[
+                      { value: 'ALL', label: 'All Types' },
+                      { value: 'Part-time', label: 'Part-time (Under 28h)' },
+                      { value: 'Full-time', label: 'Full-time Regular' },
+                      { value: 'Contract / SSW', label: 'Visa Sponsored / Contract' },
+                      { value: 'Weekend', label: 'Weekend Shift Only' },
+                    ]}
+                    accentColor="indigo"
+                  />
+                </div>
+
+                {/* Keyword search */}
+                <div>
+                  <label className="block text-[11px] font-bold uppercase tracking-wider text-slate-500 mb-1">
+                    Keyword Search
+                  </label>
+                  <div className="relative">
+                    <Search className="w-3.5 h-3.5 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
+                    <input
+                      type="text"
+                      value={searchKeyword}
+                      onChange={(e) => setSearchKeyword(e.target.value)}
+                      placeholder="e.g. 7-Eleven, Factory, Kitchen..."
+                      className="w-full pl-8 pr-3 py-2 rounded-xl border border-slate-200 text-xs font-medium text-slate-900 placeholder-slate-400 focus:outline-none focus:border-indigo-500"
+                    />
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
 
           {/* Job Listings Grid */}
@@ -567,19 +707,30 @@ export default function JobsHubClient({ country = 'all' }: JobsHubClientProps) {
               </button>
             </div>
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-              {filteredPosts.map((post) => (
-                <PostCard
-                  key={post.id}
-                  post={post}
-                  isBookmarked={bookmarks.includes(post.id)}
-                  onToggleBookmark={handleToggleBookmark}
-                  onOpenMessage={handleOpenMessage}
-                  onOpenDetail={handleOpenDetail}
-                  user={user}
-                  onRequireAuth={() => setAuthSheetOpen(true)}
-                />
-              ))}
+            <div className="space-y-4">
+              <div className="flex items-center justify-between pt-1">
+                <h2 className="text-base sm:text-lg font-bold text-slate-900 tracking-tight flex items-center gap-2">
+                  <span>{isJapan ? '🇯🇵 Available Japan Job Openings' : '🇰🇷 Available Korea Job Openings'}</span>
+                  <span className="px-2.5 py-0.5 rounded-full text-xs font-bold bg-indigo-100 text-indigo-800">
+                    {filteredPosts.length}
+                  </span>
+                </h2>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+                {filteredPosts.map((post) => (
+                  <PostCard
+                    key={post.id}
+                    post={post}
+                    isBookmarked={bookmarks.includes(post.id)}
+                    onToggleBookmark={handleToggleBookmark}
+                    onOpenMessage={handleOpenMessage}
+                    onOpenDetail={handleOpenDetail}
+                    user={user}
+                    onRequireAuth={() => setAuthSheetOpen(true)}
+                  />
+                ))}
+              </div>
             </div>
           )}
 

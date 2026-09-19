@@ -24,7 +24,6 @@ import {
   LayoutGrid,
   X
 } from 'lucide-react';
-import BottomTabBar from '@/components/layout/BottomTabBar';
 
 export interface SkillExamItem {
   id: string;
@@ -1460,7 +1459,6 @@ function SkillsExamDirectoryInner({ country = 'japan', initialSector }: ClientPr
         )}
 
       </main>
-      <BottomTabBar />
     </div>
   );
 }
