@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { getMessagesForUser, sendDirectMessage } from '@/lib/community-data';
+import { getMessagesForUser, getUnreadMessagesCountForUser, markMessagesAsReadForUser, sendDirectMessage } from '@/lib/community-data';
 import { getAuthUserFromRequest } from '@/lib/auth-security';
 
 export async function GET(request: Request) {
@@ -13,7 +13,8 @@ export async function GET(request: Request) {
     }
 
     const messages = getMessagesForUser(userId);
-    return NextResponse.json({ success: true, messages });
+    const unreadCount = getUnreadMessagesCountForUser(userId);
+    return NextResponse.json({ success: true, messages, unreadCount });
   } catch (err: any) {
     return NextResponse.json({ error: err?.message || 'Failed to retrieve messages' }, { status: 500 });
   }
@@ -51,5 +52,24 @@ export async function POST(request: Request) {
     return NextResponse.json({ success: true, message }, { status: 201 });
   } catch (err: any) {
     return NextResponse.json({ error: err?.message || 'Failed to send message' }, { status: 500 });
+  }
+}
+
+export async function PATCH(request: Request) {
+  try {
+    const authUser = getAuthUserFromRequest(request);
+    const body = await request.json();
+    const userId = authUser?.id || body.userId;
+    const { postId } = body;
+
+    if (!userId) {
+      return NextResponse.json({ error: 'User ID is required' }, { status: 400 });
+    }
+
+    markMessagesAsReadForUser(userId, postId);
+    const unreadCount = getUnreadMessagesCountForUser(userId);
+    return NextResponse.json({ success: true, unreadCount });
+  } catch (err: any) {
+    return NextResponse.json({ error: err?.message || 'Failed to update messages' }, { status: 500 });
   }
 }

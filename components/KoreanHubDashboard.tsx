@@ -56,12 +56,14 @@ export type KoreanSubTab =
 
 import { useSidebarCollapse } from './layout/MainLayoutWrapper';
 import { PanelLeftClose, PanelLeftOpen } from 'lucide-react';
+import SectionPracticeEngine from '@/components/practice/SectionPracticeEngine';
 
 export interface KoreanHubDashboardProps {
   level?: KoreanLevelType;
   onSelectLevel?: (lvl: KoreanLevelType) => void;
   activeTab?: KoreanSubTab;
-  onTabChange?: (tab: KoreanSubTab) => void;
+  onTabChange?: (tab: KoreanSubTab, section?: string) => void;
+  initialPracticeSection?: string;
 }
 
 // ─────────────────────────────────────────────────────────────────────
@@ -674,15 +676,31 @@ export const KoreanHubDashboard: React.FC<KoreanHubDashboardProps> = ({
   onSelectLevel,
   activeTab: externalActiveTab,
   onTabChange,
+  initialPracticeSection,
 }) => {
   const [activeTab, setActiveTab] = useState<KoreanSubTab>(level === 'BASICS' ? 'BASICS_MODULES' : 'VOCABULARY');
   const [selectedModuleId, setSelectedModuleId] = useState<string | undefined>(undefined);
   const [showModuleDropdown, setShowModuleDropdown] = useState<boolean>(false);
   const meta = LEVEL_META[level] ?? LEVEL_META['EPS'];
 
-  const [practiceSection, setPracticeSection] = useState<'READING' | 'LISTENING' | 'VOCABULARY' | 'WRITING'>('READING');
+  const resolveInitialKoreanSection = (sec?: string): 'READING' | 'LISTENING' | 'VOCABULARY' | 'WRITING' | 'ORAL_VIVA' => {
+    const s = (sec || '').toUpperCase();
+    if (s === 'READING' || s === 'ILGI') return 'READING';
+    if (s === 'LISTENING' || s === 'DEUTGI') return 'LISTENING';
+    if (s === 'WRITING' || s === 'SSEUGI') return 'WRITING';
+    if (s === 'ORAL_VIVA' || s === 'VIVA' || s === 'GUSUL') return 'ORAL_VIVA';
+    return 'LISTENING';
+  };
+
+  const [practiceSection, setPracticeSection] = useState<'READING' | 'LISTENING' | 'VOCABULARY' | 'WRITING' | 'ORAL_VIVA'>(() => resolveInitialKoreanSection(initialPracticeSection));
   const [practiceDropdownOpen, setPracticeDropdownOpen] = useState(false);
   const practiceDropdownRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    if (initialPracticeSection) {
+      setPracticeSection(resolveInitialKoreanSection(initialPracticeSection));
+    }
+  }, [initialPracticeSection]);
 
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
@@ -694,26 +712,28 @@ export const KoreanHubDashboard: React.FC<KoreanHubDashboardProps> = ({
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
-  const getKoreanPracticeSections = (lvl: KoreanLevelType) => {
-    if (lvl === 'EPS' || lvl.startsWith('EPS_')) {
+  const getKoreanPracticeSections = (lvl: KoreanLevelType | 'KIIP') => {
+    if (lvl === 'EPS' || (typeof lvl === 'string' && lvl.startsWith('EPS_'))) {
       return [
-        { id: 'READING' as const, title: 'Reading Practice', sub: '읽기 (20 Questions • Signs & Public Life)', icon: '📖' },
-        { id: 'LISTENING' as const, title: 'Listening Practice', sub: '듣기 (20 Questions • Dialogues & Work Sounds)', icon: '🎧' },
-        { id: 'VOCABULARY' as const, title: 'Vocational Viva & Commands', sub: '직무 구술 (Workplace Direction & Tools)', icon: '🛠️' },
+        { id: 'LISTENING' as const, title: 'Listening Practice', sub: '듣기 (20 Questions • Dialogues & Sounds)', icon: '🎧' },
+        { id: 'READING' as const, title: 'Reading Practice', sub: '읽기 (20 Questions • Signs & Safety)', icon: '📖' },
+        { id: 'ORAL_VIVA' as const, title: 'Vocational Viva & Commands', sub: '직무 구술 (Workplace Direction & Tools)', icon: '🛠️' },
+        { id: 'VOCABULARY' as const, title: 'Vocabulary Rapid Drill', sub: '현장 어휘 (Tools & Safety Words)', icon: '🔤' },
       ];
     }
     if (lvl === 'TOPIK3' || lvl === 'TOPIK4' || lvl === 'TOPIK2_L5' || lvl === 'TOPIK2_L6') {
       return [
-        { id: 'LISTENING' as const, title: 'Listening Practice', sub: '듣기 (50 Questions)', icon: '🎧' },
-        { id: 'WRITING' as const, title: 'Writing Practice', sub: '쓰기 (Sentence & Essay)', icon: '✍️' },
-        { id: 'READING' as const, title: 'Reading Practice', sub: '읽기 (50 Questions)', icon: '📖' },
+        { id: 'LISTENING' as const, title: 'Listening Practice', sub: '듣기 (50 Questions • Official CBT Format)', icon: '🎧' },
+        { id: 'READING' as const, title: 'Reading Practice', sub: '읽기 (50 Questions • Passages & Notices)', icon: '📖' },
+        { id: 'WRITING' as const, title: 'Writing Practice', sub: '쓰기 (Q51-Q54 Fill-in & Essays)', icon: '✍️' },
+        { id: 'VOCABULARY' as const, title: 'Intermediate Vocabulary', sub: '중고급 어휘 및 문법', icon: '🔤' },
       ];
     }
     // TOPIK I (Levels 1 & 2)
     return [
-      { id: 'LISTENING' as const, title: 'Listening Practice', sub: '듣기 (30 Questions)', icon: '🎧' },
-      { id: 'READING' as const, title: 'Reading Practice', sub: '읽기 (40 Questions)', icon: '📖' },
-      { id: 'VOCABULARY' as const, title: 'Vocabulary & Grammar Drill', sub: '어휘 및 문법', icon: '🔤' },
+      { id: 'LISTENING' as const, title: 'Listening Practice', sub: '듣기 (30 Questions • Dialogues & Tasks)', icon: '🎧' },
+      { id: 'READING' as const, title: 'Reading Practice', sub: '읽기 (40 Questions • Signs & Passages)', icon: '📖' },
+      { id: 'VOCABULARY' as const, title: 'Vocabulary & Grammar Drill', sub: '초급 어휘 및 문법', icon: '🔤' },
     ];
   };
 
@@ -778,16 +798,16 @@ export const KoreanHubDashboard: React.FC<KoreanHubDashboardProps> = ({
     <div className={`space-y-2 font-sans w-full max-w-full overflow-x-hidden ${isFocusMode ? 'fixed inset-0 z-[100] bg-slate-50 dark:bg-slate-950 p-2 sm:p-5 overflow-y-auto' : ''}`}>
 
       {/* 🌐 UNIFIED KOREAN LEVEL & SUB-MENU NAVIGATION CARD */}
-      <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-2 space-y-1.5 shadow-xs">
-        {/* ROW 1: Level Switcher (Course Label on Left, Level Pills Aligned to Right like Mock Test) */}
-        <div className="flex items-center justify-between gap-2 overflow-x-auto no-scrollbar touch-pan-x py-1 w-full">
+      <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-2 space-y-1.5 shadow-xs relative z-30">
+        {/* ROW 1: Level Switcher (All Courses Aligned Left) */}
+        <div className="flex items-center justify-start gap-2 overflow-x-auto no-scrollbar touch-pan-x py-1 w-full">
           {/* Left: Course Label */}
-          <div className="flex items-center gap-1.5 text-xs font-black uppercase tracking-wider text-slate-500 whitespace-nowrap pl-1 pr-2 shrink-0">
+          <div className="flex items-center gap-1.5 text-xs font-black uppercase tracking-wider text-slate-500 whitespace-nowrap pl-1 pr-1 shrink-0">
             <Globe className="w-3.5 h-3.5 text-blue-600" />
             <span>Course:</span>
           </div>
 
-          {/* Right: Level Switcher Pills & Focus Action */}
+          {/* Level Switcher Pills Aligned Left */}
           <div className="flex items-center gap-1.5 flex-nowrap">
             {KOREA_LEVEL_LIST.map((lvl) => {
               const isSelected = level === lvl.id;
@@ -824,145 +844,181 @@ export const KoreanHubDashboard: React.FC<KoreanHubDashboardProps> = ({
           </div>
         </div>
 
-        {/* ROW 2: Options Sub-Menu (Micro-Pill Navigation - Centered & Clean) */}
-        <div className="pt-1.5 border-t border-slate-100 dark:border-slate-800/80 flex items-center justify-start sm:justify-center gap-1.5 overflow-x-auto no-scrollbar touch-pan-x py-0.5">
-          {subTabs.map(tab => {
-            const isActive = activeTab === tab.id;
+        {/* ROW 2: Options Sub-Menu (Micro-Pill Navigation - Left-Aligned & Symmetrical) */}
+        <div className="pt-1.5 border-t border-slate-100 dark:border-slate-800/80 flex items-center justify-start gap-2 overflow-visible py-0.5 relative z-20">
+          {/* Left: Module Label */}
+          <div className="flex items-center gap-1.5 text-xs font-black uppercase tracking-wider text-slate-500 whitespace-nowrap pl-1 pr-1 shrink-0">
+            <BookOpen className="w-3.5 h-3.5 text-blue-600" />
+            <span>Module:</span>
+          </div>
 
-            if (tab.id === 'BASICS_MODULES') {
-              return (
-                <div key={tab.id} className="relative shrink-0">
-                  <button
-                    onClick={() => {
-                      setActiveTab('BASICS_MODULES');
-                      setShowModuleDropdown(!showModuleDropdown);
-                    }}
-                    className={`flex items-center gap-1 px-2.5 py-1 rounded-lg text-[10.5px] font-extrabold transition-all cursor-pointer ${
-                      isActive
-                        ? `bg-gradient-to-r ${meta.color} text-white shadow-glow font-black`
-                        : 'bg-slate-50 dark:bg-slate-800/50 text-slate-600 dark:text-slate-400 hover:text-slate-900 hover:bg-slate-100 dark:hover:bg-slate-800 font-bold'
-                    }`}
-                  >
-                    <span className="text-[10px]">{tab.emoji}</span>
-                    <span>{tab.label}</span>
-                    <ChevronDown className={`w-3.5 h-3.5 text-slate-400 transition-transform duration-200 ${showModuleDropdown ? 'rotate-180' : ''}`} />
-                  </button>
+          {/* Sub-menu Pills Aligned Left */}
+          <div className="flex items-center gap-1.5 flex-wrap sm:flex-nowrap overflow-visible">
+            {subTabs.map(tab => {
+              const isActive = activeTab === tab.id;
 
-                  {/* Click Dropdown Card for 12 Modules Quick Jump */}
-                  {showModuleDropdown && (
-                    <>
-                      <div className="fixed inset-0 z-[90]" onClick={() => setShowModuleDropdown(false)} />
-                      <div className="absolute top-full left-0 mt-2 w-80 bg-white border border-slate-200 rounded-2xl p-2.5 shadow-2xl z-[100] space-y-1 max-h-[75vh] overflow-y-auto scrollbar-thin text-slate-900">
-                        <div className="px-2 py-1 text-[10px] font-black uppercase tracking-wider text-emerald-600 border-b border-slate-100 mb-1 flex items-center justify-between">
-                          <span>Korean Basics Modules (12)</span>
-                          <span>Quick Jump</span>
-                        </div>
+              if (tab.id === 'BASICS_MODULES') {
+                return (
+                  <div key={tab.id} className="relative shrink-0">
+                    <button
+                      onClick={() => {
+                        setActiveTab('BASICS_MODULES');
+                        setShowModuleDropdown(!showModuleDropdown);
+                      }}
+                      className={`flex items-center gap-1 px-2.5 py-1 rounded-lg text-[10.5px] font-extrabold transition-all cursor-pointer ${
+                        isActive
+                          ? `bg-gradient-to-r ${meta.color} text-white shadow-glow font-black`
+                          : 'bg-slate-50 dark:bg-slate-800/50 text-slate-600 dark:text-slate-400 hover:text-slate-900 hover:bg-slate-100 dark:hover:bg-slate-800 font-bold'
+                      }`}
+                    >
+                      <span className="text-[10px]">{tab.emoji}</span>
+                      <span>{tab.label}</span>
+                      <ChevronDown className={`w-3.5 h-3.5 text-slate-400 transition-transform duration-200 ${showModuleDropdown ? 'rotate-180' : ''}`} />
+                    </button>
 
-                        {KOREAN_BASICS_MODULES.map((m) => (
-                          <button
-                            key={m.id}
-                            onClick={() => {
-                              setSelectedModuleId(m.id);
-                              setActiveTab('BASICS_MODULES');
-                              setShowModuleDropdown(false);
-                            }}
-                            className="w-full text-left p-2 rounded-xl hover:bg-emerald-50 border border-transparent transition-all flex items-center justify-between group/item cursor-pointer"
-                          >
-                            <div className="flex items-center gap-2 min-w-0">
-                              <span className="text-base">{m.emoji}</span>
-                              <div className="truncate">
-                                <div className="text-xs font-bold text-slate-900 group-hover/item:text-emerald-700 truncate">
-                                  Mod {m.moduleNumber}: {m.title}
+                    {/* Click Dropdown Card for 12 Modules Quick Jump */}
+                    {showModuleDropdown && (
+                      <>
+                        <div className="fixed inset-0 z-[90]" onClick={() => setShowModuleDropdown(false)} />
+                        <div className="absolute top-full left-0 mt-2 w-80 bg-white border border-slate-200 rounded-2xl p-2.5 shadow-2xl z-[100] space-y-1 max-h-[75vh] overflow-y-auto scrollbar-thin text-slate-900">
+                          <div className="px-2 py-1 text-[10px] font-black uppercase tracking-wider text-emerald-600 border-b border-slate-100 mb-1 flex items-center justify-between">
+                            <span>Korean Basics Modules (12)</span>
+                            <span>Quick Jump</span>
+                          </div>
+
+                          {KOREAN_BASICS_MODULES.map((m) => (
+                            <button
+                              key={m.id}
+                              onClick={() => {
+                                setSelectedModuleId(m.id);
+                                setActiveTab('BASICS_MODULES');
+                                setShowModuleDropdown(false);
+                              }}
+                              className="w-full text-left p-2 rounded-xl hover:bg-emerald-50 border border-transparent transition-all flex items-center justify-between group/item cursor-pointer"
+                            >
+                              <div className="flex items-center gap-2 min-w-0">
+                                <span className="text-base">{m.emoji}</span>
+                                <div className="truncate">
+                                  <div className="text-xs font-bold text-slate-900 group-hover/item:text-emerald-700 truncate">
+                                    Mod {m.moduleNumber}: {m.title}
+                                  </div>
+                                  <div className="text-[10px] text-slate-500 truncate">{m.lessons.length} Lessons • {m.badgeName}</div>
                                 </div>
-                                <div className="text-[10px] text-slate-500 truncate">{m.lessons.length} Lessons • {m.badgeName}</div>
+                              </div>
+                              <ChevronRight className="w-3.5 h-3.5 text-slate-400 group-hover/item:text-emerald-600 shrink-0" />
+                            </button>
+                          ))}
+                        </div>
+                      </>
+                    )}
+                  </div>
+                );
+              }
+
+              if ((tab as any).isPracticeDropdown) {
+                return (
+                  <div
+                    key={tab.id}
+                    ref={practiceDropdownRef}
+                    className="relative shrink-0"
+                  >
+                    <button
+                      type="button"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setPracticeDropdownOpen((prev) => !prev);
+                      }}
+                      className={`flex items-center gap-1.5 px-3 py-1 rounded-lg text-xs font-extrabold whitespace-nowrap transition-all shrink-0 cursor-pointer ${
+                        activeTab === 'SECTION_PRACTICE' || activeTab === 'LISTENING' || activeTab === 'READING'
+                          ? 'bg-blue-600 text-white shadow-xs border border-blue-500 font-black'
+                          : 'bg-slate-50 dark:bg-slate-800/50 text-slate-600 dark:text-slate-400 hover:text-slate-900 hover:bg-slate-100 dark:hover:bg-slate-800 border border-slate-200/60 dark:border-slate-700/60 font-bold'
+                      }`}
+                    >
+                      <span className="text-[11px]">
+                        {activeTab === 'SECTION_PRACTICE'
+                          ? practiceSection === 'READING'
+                            ? '📖'
+                            : practiceSection === 'LISTENING'
+                              ? '🎧'
+                              : practiceSection === 'WRITING'
+                                ? '✍️'
+                                : practiceSection === 'ORAL_VIVA'
+                                  ? '🛠️'
+                                  : '🔤'
+                          : tab.emoji}
+                      </span>
+                      <span>
+                        {activeTab === 'SECTION_PRACTICE'
+                          ? `Practice: ${
+                              practiceSection === 'READING'
+                                ? 'Reading'
+                                : practiceSection === 'LISTENING'
+                                  ? 'Listening'
+                                  : practiceSection === 'WRITING'
+                                    ? 'Writing'
+                                    : practiceSection === 'ORAL_VIVA'
+                                      ? 'Viva'
+                                      : 'Vocab'
+                            }`
+                          : tab.label}
+                      </span>
+                      <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-200 ${practiceDropdownOpen ? 'rotate-180' : ''}`} />
+                    </button>
+
+                    {/* Dropdown Menu of Official Korean Exam Sections */}
+                    {practiceDropdownOpen && (
+                      <div className="absolute top-full left-0 mt-1.5 w-64 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl shadow-xl p-1.5 z-50 animate-fade-in space-y-0.5">
+                        <div className="px-2.5 py-1 text-[10px] font-black uppercase tracking-wider text-slate-400 border-b border-slate-100 dark:border-slate-800">
+                          {level} Official Exam Sections
+                        </div>
+                        {getKoreanPracticeSections(level).map((sec) => (
+                          <button
+                            key={sec.id}
+                            type="button"
+                            onClick={() => {
+                              setPracticeSection(sec.id as any);
+                              setActiveTab('SECTION_PRACTICE');
+                              setPracticeDropdownOpen(false);
+                              if (onTabChange) onTabChange('SECTION_PRACTICE', sec.id.toLowerCase());
+                            }}
+                            className={`w-full px-2.5 py-2 rounded-xl text-xs font-bold text-left flex items-center justify-between transition-colors cursor-pointer ${
+                              activeTab === 'SECTION_PRACTICE' && practiceSection === sec.id
+                                ? 'bg-blue-50 text-blue-700 dark:bg-blue-950/50 dark:text-blue-300 font-black'
+                                : 'text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800'
+                            }`}
+                          >
+                            <div className="flex items-center gap-2">
+                              <span className="text-sm">{sec.icon}</span>
+                              <div>
+                                <p className="leading-tight">{sec.title}</p>
+                                <p className="text-[10px] text-slate-400 dark:text-slate-500 font-medium">{sec.sub}</p>
                               </div>
                             </div>
-                            <ChevronRight className="w-3.5 h-3.5 text-slate-400 group-hover/item:text-emerald-600 shrink-0" />
+                            <ChevronRight className="w-3.5 h-3.5 text-slate-400" />
                           </button>
                         ))}
                       </div>
-                    </>
-                  )}
-                </div>
-              );
-            }
+                    )}
+                  </div>
+                );
+              }
 
-            if ((tab as any).isPracticeDropdown) {
               return (
-                <div
+                <button
                   key={tab.id}
-                  ref={practiceDropdownRef}
-                  className="relative shrink-0"
-                  onMouseEnter={() => setPracticeDropdownOpen(true)}
-                  onMouseLeave={() => setPracticeDropdownOpen(false)}
+                  onClick={() => handleTabClick(tab.id)}
+                  className={`flex items-center gap-1 px-2.5 py-1 rounded-lg text-[10.5px] font-extrabold whitespace-nowrap transition-all shrink-0 cursor-pointer ${
+                    isActive
+                      ? 'bg-blue-600 text-white shadow-xs border border-blue-500 font-black'
+                      : 'bg-slate-50 dark:bg-slate-800/50 text-slate-600 dark:text-slate-400 hover:text-slate-900 hover:bg-slate-100 dark:hover:bg-slate-800 border border-slate-200/60 dark:border-slate-700/60 font-bold'
+                  }`}
                 >
-                  <button
-                    type="button"
-                    onClick={() => setPracticeDropdownOpen(!practiceDropdownOpen)}
-                    className={`flex items-center gap-1.5 px-3 py-1 rounded-lg text-xs font-extrabold whitespace-nowrap transition-all shrink-0 cursor-pointer ${
-                      activeTab === 'SECTION_PRACTICE' || activeTab === 'LISTENING' || activeTab === 'READING'
-                        ? 'bg-blue-600 text-white shadow-xs border border-blue-500 font-black'
-                        : 'bg-slate-50 dark:bg-slate-800/50 text-slate-600 dark:text-slate-400 hover:text-slate-900 hover:bg-slate-100 dark:hover:bg-slate-800 border border-slate-200/60 dark:border-slate-700/60 font-bold'
-                    }`}
-                  >
-                    <span className="text-[11px]">{tab.emoji}</span>
-                    <span>{tab.label}</span>
-                    <ChevronDown className={`w-3 h-3 transition-transform duration-200 ${practiceDropdownOpen ? 'rotate-180' : ''}`} />
-                  </button>
-
-                  {/* Dropdown Menu of Official Korean Exam Sections */}
-                  {practiceDropdownOpen && (
-                    <div className="absolute top-full left-1/2 -translate-x-1/2 sm:left-0 sm:translate-x-0 mt-1 w-64 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl shadow-xl p-1.5 z-50 animate-fade-in space-y-0.5">
-                      <div className="px-2.5 py-1 text-[10px] font-black uppercase tracking-wider text-slate-400 border-b border-slate-100 dark:border-slate-800">
-                        {level} Official Exam Sections
-                      </div>
-                      {getKoreanPracticeSections(level).map((sec) => (
-                        <button
-                          key={sec.id}
-                          type="button"
-                          onClick={() => {
-                            setPracticeSection(sec.id);
-                            setActiveTab('SECTION_PRACTICE');
-                            setPracticeDropdownOpen(false);
-                            if (onTabChange) onTabChange('SECTION_PRACTICE');
-                          }}
-                          className={`w-full px-2.5 py-2 rounded-xl text-xs font-bold text-left flex items-center justify-between transition-colors cursor-pointer ${
-                            activeTab === 'SECTION_PRACTICE' && practiceSection === sec.id
-                              ? 'bg-blue-50 text-blue-700 dark:bg-blue-950/50 dark:text-blue-300 font-black'
-                              : 'text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800'
-                          }`}
-                        >
-                          <div className="flex items-center gap-2">
-                            <span className="text-sm">{sec.icon}</span>
-                            <div>
-                              <p className="leading-tight">{sec.title}</p>
-                              <p className="text-[10px] text-slate-400 dark:text-slate-500 font-medium">{sec.sub}</p>
-                            </div>
-                          </div>
-                          <ChevronRight className="w-3.5 h-3.5 text-slate-400" />
-                        </button>
-                      ))}
-                    </div>
-                  )}
-                </div>
+                  <span className="text-[10px]">{tab.emoji}</span>
+                  <span>{tab.label}</span>
+                </button>
               );
-            }
-
-            return (
-              <button
-                key={tab.id}
-                onClick={() => handleTabClick(tab.id)}
-                className={`flex items-center gap-1 px-2.5 py-1 rounded-lg text-[10.5px] font-extrabold whitespace-nowrap transition-all shrink-0 cursor-pointer ${
-                  isActive
-                    ? 'bg-blue-600 text-white shadow-xs border border-blue-500 font-black'
-                    : 'bg-slate-50 dark:bg-slate-800/50 text-slate-600 dark:text-slate-400 hover:text-slate-900 hover:bg-slate-100 dark:hover:bg-slate-800 border border-slate-200/60 dark:border-slate-700/60 font-bold'
-                }`}
-              >
-                <span className="text-[10px]">{tab.emoji}</span>
-                <span>{tab.label}</span>
-              </button>
-            );
-          })}
+            })}
+          </div>
         </div>
       </div>
 
@@ -1032,63 +1088,15 @@ export const KoreanHubDashboard: React.FC<KoreanHubDashboardProps> = ({
         )}
 
         {activeTab === 'SECTION_PRACTICE' && (
-          <div className="space-y-3">
-            {/* Header with quick section pills */}
-            <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-3.5 shadow-xs flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
-              <div>
-                <div className="flex items-center gap-2">
-                  <span className="px-2.5 py-0.5 rounded-lg bg-blue-100 dark:bg-blue-950/60 text-blue-800 dark:text-blue-300 text-[10px] font-black uppercase tracking-wider">
-                    {level} Section Practice
-                  </span>
-                  <span className="text-[11px] font-bold text-slate-500">
-                    Official Exam Format • Self-Paced Focused Drill
-                  </span>
-                </div>
-                <h3 className="text-sm sm:text-base font-black text-slate-900 dark:text-white mt-1">
-                  {practiceSection === 'READING' && '📖 읽기 (Reading Comprehension) Practice'}
-                  {practiceSection === 'LISTENING' && '🎧 듣기 (Listening Comprehension) Practice'}
-                  {practiceSection === 'VOCABULARY' && '🔤 어휘 및 직무 구술 (Vocabulary & Viva) Practice'}
-                  {practiceSection === 'WRITING' && '✍️ 쓰기 (Writing & Sentence Composition) Practice'}
-                </h3>
-              </div>
-
-              {/* Quick Section Switcher */}
-              <div className="flex items-center gap-1.5 flex-wrap">
-                {getKoreanPracticeSections(level).map((sec) => (
-                  <button
-                    key={sec.id}
-                    type="button"
-                    onClick={() => setPracticeSection(sec.id)}
-                    className={`px-3 py-1.5 rounded-xl text-xs font-black transition-all cursor-pointer flex items-center gap-1.5 border ${
-                      practiceSection === sec.id
-                        ? 'bg-blue-600 text-white border-blue-500 shadow-xs'
-                        : 'bg-slate-50 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 border-slate-200 dark:border-slate-700'
-                    }`}
-                  >
-                    <span>{sec.icon}</span>
-                    <span>{sec.title.split(' ')[0]}</span>
-                  </button>
-                ))}
-              </div>
-            </div>
-
-            {/* Practice engine view: Audio TTS for Listening, Passages for Reading, or TimedExamEngine */}
-            {practiceSection === 'LISTENING' ? (
-              <ListeningPractice level={level} />
-            ) : practiceSection === 'READING' ? (
-              <ReadingPractice level={level} />
-            ) : (
-              <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-3 sm:p-5 shadow-xs">
-                <TimedExamEngine
-                  initialLanguage="KOREAN"
-                  preselectedLevel={level.startsWith('EPS') ? 'EPS' : level}
-                  selectedSections={[practiceSection]}
-                  examMode="PARTIAL"
-                  autoStart={true}
-                />
-              </div>
-            )}
-          </div>
+          <SectionPracticeEngine
+            language="KOREAN"
+            level={level}
+            activeSection={practiceSection as any}
+            onSectionChange={(sec) => {
+              setPracticeSection(sec as any);
+              if (onTabChange) onTabChange('SECTION_PRACTICE', sec.toLowerCase());
+            }}
+          />
         )}
 
         {activeTab === 'LISTENING' && <ListeningPractice level={level} />}

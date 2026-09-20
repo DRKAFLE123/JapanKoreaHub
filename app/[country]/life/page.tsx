@@ -1,5 +1,6 @@
 import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
+import { Suspense } from 'react';
 import LifeHubClient from './LifeHubClient';
 
 const LIFE_META: Record<string, { title: string; desc: string }> = {
@@ -31,5 +32,9 @@ export async function generateMetadata({ params }: { params: Promise<{ country: 
 export default async function LifePage({ params }: { params: Promise<{ country: string }> }) {
   const { country } = await params;
   if (!LIFE_META[country]) notFound();
-  return <LifeHubClient country={country as 'japan' | 'korea'} />;
+  return (
+    <Suspense fallback={<div className="min-h-screen bg-slate-50" />}>
+      <LifeHubClient country={country as 'japan' | 'korea'} />
+    </Suspense>
+  );
 }

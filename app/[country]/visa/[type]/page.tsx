@@ -1,5 +1,6 @@
 import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
+import { Suspense } from 'react';
 import VisaDetailClient from './VisaDetailClient';
 import VisaInterviewPreparationClient from '@/components/visa/VisaInterviewPreparationClient';
 import StudentVisaMasterClient from '@/components/visa/StudentVisaMasterClient';
@@ -47,18 +48,21 @@ export default async function VisaDetailPage({ params }: { params: Promise<{ cou
     notFound();
   }
 
-  if (type === 'interview') {
-    return <VisaInterviewPreparationClient country={country as 'japan' | 'korea'} />;
-  }
-
-  if (type === 'student') {
-    return <StudentVisaMasterClient country={country as 'japan' | 'korea'} />;
-  }
-
-  if (['work', 'ssw', 'e9', 'e7'].includes(type)) {
-    return <WorkingVisaMasterClient country={country as 'japan' | 'korea'} initialType={type} />;
-  }
-
-  return <VisaDetailClient country={country as 'japan' | 'korea'} type={type} />;
+  return (
+    <Suspense fallback={<div className="min-h-screen bg-slate-50" />}>
+      {type === 'interview' && (
+        <VisaInterviewPreparationClient country={country as 'japan' | 'korea'} />
+      )}
+      {type === 'student' && (
+        <StudentVisaMasterClient country={country as 'japan' | 'korea'} />
+      )}
+      {['work', 'ssw', 'e9', 'e7'].includes(type) && (
+        <WorkingVisaMasterClient country={country as 'japan' | 'korea'} initialType={type} />
+      )}
+      {!['interview', 'student', 'work', 'ssw', 'e9', 'e7'].includes(type) && (
+        <VisaDetailClient country={country as 'japan' | 'korea'} type={type} />
+      )}
+    </Suspense>
+  );
 }
 

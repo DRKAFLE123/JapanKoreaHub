@@ -37,6 +37,18 @@ export default function DirectMessageDrawer({
       const data = await res.json();
       if (data.success && Array.isArray(data.messages)) {
         setMessages(data.messages);
+        // Mark unread messages as read
+        if (user?.email) {
+          fetch('/api/community/messages', {
+            method: 'PATCH',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ userId: user.email, postId: activePost?.id }),
+          })
+            .then(() => {
+              window.dispatchEvent(new Event('jkh_messages_sync'));
+            })
+            .catch(() => {});
+        }
       }
     } catch {}
     finally {
@@ -83,6 +95,7 @@ export default function DirectMessageDrawer({
       if (data.success) {
         setMessages(prev => [...prev, data.message]);
         setInputText('');
+        window.dispatchEvent(new Event('jkh_messages_sync'));
       }
     } catch {}
     finally {

@@ -1,7 +1,8 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { useSearchParams } from 'next/navigation';
 import {
   ArrowLeft,
   Home as HomeIcon,
@@ -34,8 +35,41 @@ type LifeTab = 'SETUP' | 'HOUSING' | 'CULTURE' | 'VISA_RENEWAL' | 'RIGHTS' | 'EM
 
 type CultureCategory = 'ALL' | 'ETIQUETTE' | 'DINING' | 'WORKPLACE' | 'TRADITIONS' | 'NEPALI_TIPS';
 
+const TAB_SLUG_MAP: Record<string, LifeTab> = {
+  'city-office': 'SETUP',
+  'setup': 'SETUP',
+  'housing': 'HOUSING',
+  'culture': 'CULTURE',
+  'visa-pr': 'VISA_RENEWAL',
+  'visa': 'VISA_RENEWAL',
+  'labor-rights': 'RIGHTS',
+  'rights': 'RIGHTS',
+  'helplines': 'EMERGENCY',
+  'emergency': 'EMERGENCY',
+};
+
+const LIFE_TABS = [
+  { key: 'SETUP' as LifeTab, slug: 'city-office', label: '1. City Office', icon: Building },
+  { key: 'HOUSING' as LifeTab, slug: 'housing', label: '2. Housing & Rent', icon: HomeIcon },
+  { key: 'CULTURE' as LifeTab, slug: 'culture', label: '3. Culture & Etiquette', icon: Sparkles, hasDot: true },
+  { key: 'VISA_RENEWAL' as LifeTab, slug: 'visa-pr', label: '4. Visa & PR', icon: FileCheck },
+  { key: 'RIGHTS' as LifeTab, slug: 'labor-rights', label: '5. Labor Rights', icon: Scale },
+  { key: 'EMERGENCY' as LifeTab, slug: 'helplines', label: '6. Helplines', icon: Phone },
+];
+
 export default function LifeHubClient({ country }: { country: Country }) {
-  const [activeTab, setActiveTab] = useState<LifeTab>('SETUP');
+  const searchParams = useSearchParams();
+  const rawTab = searchParams.get('tab')?.toLowerCase();
+  const initialTab: LifeTab = (rawTab && TAB_SLUG_MAP[rawTab]) ? TAB_SLUG_MAP[rawTab] : 'SETUP';
+
+  const [activeTab, setActiveTab] = useState<LifeTab>(initialTab);
+
+  useEffect(() => {
+    const qTab = searchParams.get('tab')?.toLowerCase();
+    if (qTab && TAB_SLUG_MAP[qTab]) {
+      setActiveTab(TAB_SLUG_MAP[qTab]);
+    }
+  }, [searchParams]);
   const [cultureCategory, setCultureCategory] = useState<CultureCategory>('ALL');
   const [quizAnswers, setQuizAnswers] = useState<Record<number, number>>({});
   const [quizFeedback, setQuizFeedback] = useState<Record<number, boolean>>({});
@@ -393,100 +427,79 @@ export default function LifeHubClient({ country }: { country: Country }) {
           </span>
         </div>
 
-        {/* Hero Section */}
-        <section className={`rounded-3xl p-6 sm:p-8 shadow-xs border text-white space-y-3 ${
-          isJapan 
-            ? 'bg-gradient-to-r from-red-700 via-rose-800 to-indigo-950 border-red-500/30' 
-            : 'bg-gradient-to-r from-blue-700 via-indigo-800 to-slate-950 border-blue-500/30'
-        }`}>
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/20 backdrop-blur-md text-xs font-black tracking-wider uppercase">
-            <span>{flag} Life &amp; Culture in {cName} · दैनिक जीवन र संस्कृति निर्देशिका</span>
+        {/* Hero Section - Clean, Bright Minimalist Premium UI */}
+        <section className="bg-white rounded-3xl border border-slate-200 p-6 sm:p-7 shadow-xs space-y-4 font-sans">
+          <div className="flex flex-wrap items-center justify-between gap-3">
+            <div className="flex flex-wrap items-center gap-2">
+              <span className="px-3 py-1 rounded-full bg-indigo-50 border border-indigo-200 text-indigo-700 text-xs font-black uppercase tracking-wider">
+                {flag} Life &amp; Culture in {cName} · दैनिक जीवन र संस्कृति
+              </span>
+              <span className="text-xs text-emerald-700 font-bold flex items-center gap-1 bg-emerald-50 border border-emerald-200 px-2.5 py-0.5 rounded-full">
+                <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
+                Resident Guide 2026/2027
+              </span>
+            </div>
+
+            {/* Country Switcher */}
+            <div className="flex items-center gap-1 bg-slate-100 p-1 rounded-xl border border-slate-200">
+              <Link
+                href="/japan/life"
+                className={`px-3 py-1.5 rounded-lg text-xs font-extrabold transition-all ${
+                  isJapan
+                    ? 'bg-white text-slate-900 shadow-xs border border-slate-200 font-black'
+                    : 'text-slate-600 hover:text-slate-900 font-bold'
+                }`}
+              >
+                🇯🇵 Japan
+              </Link>
+              <Link
+                href="/korea/life"
+                className={`px-3 py-1.5 rounded-lg text-xs font-extrabold transition-all ${
+                  !isJapan
+                    ? 'bg-white text-slate-900 shadow-xs border border-slate-200 font-black'
+                    : 'text-slate-600 hover:text-slate-900 font-bold'
+                }`}
+              >
+                🇰🇷 Korea
+              </Link>
+            </div>
           </div>
-          <h1 className="text-2xl sm:text-3xl font-black leading-tight">
-            Life &amp; Culture in {cName}: Complete Resident Guide
-          </h1>
-          <p className="text-xs sm:text-sm text-white/90 leading-relaxed font-medium max-w-3xl">
-            Master everything for living smoothly in {cName} — from municipal address registration, housing deposits, and legal rights to deep cultural etiquette, dining manners, workplace codes, and emergency helplines.
-          </p>
+
+          <div>
+            <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight mb-2">
+              Life &amp; Culture in {cName}: Complete Resident Guide
+            </h1>
+            <p className="text-xs sm:text-sm text-slate-600 max-w-3xl leading-relaxed font-normal">
+              Master everything for living smoothly in {cName} — from municipal address registration, housing deposits, and legal rights to deep cultural etiquette, dining manners, workplace codes, and emergency helplines.
+            </p>
+          </div>
         </section>
 
-        {/* 6 Clean Navigation Tabs */}
+        {/* 6 Clean Navigation Tabs - SEO Friendly Links to Slugs */}
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2 bg-white p-2 rounded-2xl border border-slate-200 shadow-xs">
-          <button
-            onClick={() => setActiveTab('SETUP')}
-            className={`py-3 px-2 rounded-xl text-xs font-extrabold flex flex-col items-center justify-center gap-1.5 transition-all cursor-pointer ${
-              activeTab === 'SETUP'
-                ? isJapan ? 'bg-red-600 text-white shadow-xs' : 'bg-blue-600 text-white shadow-xs'
-                : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
-            }`}
-          >
-            <Building className="w-4 h-4" />
-            <span>1. City Office</span>
-          </button>
-
-          <button
-            onClick={() => setActiveTab('HOUSING')}
-            className={`py-3 px-2 rounded-xl text-xs font-extrabold flex flex-col items-center justify-center gap-1.5 transition-all cursor-pointer ${
-              activeTab === 'HOUSING'
-                ? isJapan ? 'bg-red-600 text-white shadow-xs' : 'bg-blue-600 text-white shadow-xs'
-                : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
-            }`}
-          >
-            <HomeIcon className="w-4 h-4" />
-            <span>2. Housing &amp; Rent</span>
-          </button>
-
-          {/* NEW CULTURE TAB */}
-          <button
-            onClick={() => setActiveTab('CULTURE')}
-            className={`py-3 px-2 rounded-xl text-xs font-extrabold flex flex-col items-center justify-center gap-1.5 transition-all cursor-pointer ${
-              activeTab === 'CULTURE'
-                ? isJapan ? 'bg-red-600 text-white shadow-xs' : 'bg-blue-600 text-white shadow-xs'
-                : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
-            }`}
-          >
-            <Sparkles className="w-4 h-4" />
-            <span className="flex items-center gap-1">
-              3. Culture &amp; Etiquette
-              <span className="w-2 h-2 rounded-full bg-emerald-400"></span>
-            </span>
-          </button>
-
-          <button
-            onClick={() => setActiveTab('VISA_RENEWAL')}
-            className={`py-3 px-2 rounded-xl text-xs font-extrabold flex flex-col items-center justify-center gap-1.5 transition-all cursor-pointer ${
-              activeTab === 'VISA_RENEWAL'
-                ? isJapan ? 'bg-red-600 text-white shadow-xs' : 'bg-blue-600 text-white shadow-xs'
-                : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
-            }`}
-          >
-            <FileCheck className="w-4 h-4" />
-            <span>4. Visa &amp; PR</span>
-          </button>
-
-          <button
-            onClick={() => setActiveTab('RIGHTS')}
-            className={`py-3 px-2 rounded-xl text-xs font-extrabold flex flex-col items-center justify-center gap-1.5 transition-all cursor-pointer ${
-              activeTab === 'RIGHTS'
-                ? isJapan ? 'bg-red-600 text-white shadow-xs' : 'bg-blue-600 text-white shadow-xs'
-                : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
-            }`}
-          >
-            <Scale className="w-4 h-4" />
-            <span>5. Labor Rights</span>
-          </button>
-
-          <button
-            onClick={() => setActiveTab('EMERGENCY')}
-            className={`py-3 px-2 rounded-xl text-xs font-extrabold flex flex-col items-center justify-center gap-1.5 transition-all cursor-pointer ${
-              activeTab === 'EMERGENCY'
-                ? isJapan ? 'bg-red-600 text-white shadow-xs' : 'bg-blue-600 text-white shadow-xs'
-                : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
-            }`}
-          >
-            <Phone className="w-4 h-4" />
-            <span>6. Helplines</span>
-          </button>
+          {LIFE_TABS.map((tab) => {
+            const Icon = tab.icon;
+            const isActive = activeTab === tab.key;
+            return (
+              <Link
+                key={tab.key}
+                href={`/${country}/life?tab=${tab.slug}`}
+                scroll={false}
+                onClick={() => setActiveTab(tab.key)}
+                className={`py-3 px-2 rounded-xl text-xs font-extrabold flex flex-col items-center justify-center gap-1.5 transition-all border ${
+                  isActive
+                    ? 'bg-indigo-600 text-white shadow-xs border-indigo-600 font-black'
+                    : 'bg-white text-slate-600 hover:text-slate-900 hover:bg-slate-50 border-transparent'
+                }`}
+              >
+                <Icon className="w-4 h-4" />
+                <span className="flex items-center gap-1">
+                  {tab.label}
+                  {tab.hasDot && <span className="w-2 h-2 rounded-full bg-emerald-400"></span>}
+                </span>
+              </Link>
+            );
+          })}
         </div>
 
         {/* TAB 1: CITY OFFICE & INITIAL SETUP */}
@@ -906,22 +919,22 @@ export default function LifeHubClient({ country }: { country: Country }) {
         {activeTab === 'EMERGENCY' && (
           <div className="space-y-4 animate-fade-in">
             <div className="bg-white rounded-3xl border border-slate-200 p-6 shadow-xs space-y-4">
-              <h2 className="text-lg font-black text-slate-900 flex items-center gap-2 text-red-600">
-                <Phone className="w-5 h-5" />
+              <h2 className="text-lg font-black text-slate-900 flex items-center gap-2">
+                <Phone className="w-5 h-5 text-indigo-600" />
                 <span>Emergency Helplines &amp; Embassy Contacts (आपतकालीन सम्पर्क)</span>
               </h2>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
-                <div className="p-4 rounded-2xl bg-red-50 border border-red-200 space-y-2">
-                  <p className="font-bold text-red-950">Police Emergency (प्रहरी)</p>
-                  <p className="text-2xl font-black text-red-700">{isJapan ? '110' : '112'}</p>
-                  <p className="text-[11px] text-red-800">Traffic accidents, theft, crime report, lost wallet/card</p>
+                <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200 space-y-1.5">
+                  <p className="font-bold text-slate-900">Police Emergency (प्रहरी)</p>
+                  <p className="text-2xl font-black text-slate-900">{isJapan ? '110' : '112'}</p>
+                  <p className="text-[11px] text-slate-600">Traffic accidents, theft, crime report, lost wallet/card</p>
                 </div>
 
-                <div className="p-4 rounded-2xl bg-red-50 border border-red-200 space-y-2">
-                  <p className="font-bold text-red-950">Ambulance &amp; Fire (एम्बुलेन्स तथा दमकल)</p>
-                  <p className="text-2xl font-black text-red-700">119</p>
-                  <p className="text-[11px] text-red-800">Sudden illness, severe injury, fire accident (Available 24/7)</p>
+                <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200 space-y-1.5">
+                  <p className="font-bold text-slate-900">Ambulance &amp; Fire (एम्बुलेन्स तथा दमकल)</p>
+                  <p className="text-2xl font-black text-slate-900">119</p>
+                  <p className="text-[11px] text-slate-600">Sudden illness, severe injury, fire accident (Available 24/7)</p>
                 </div>
 
                 <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200 space-y-2">

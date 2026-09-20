@@ -577,6 +577,20 @@ export function getMessagesForUser(userId: string): DirectMessage[] {
   return memoryMessages.filter(m => m.senderId === userId || m.receiverId === userId);
 }
 
+export function getUnreadMessagesCountForUser(userId: string): number {
+  if (!userId) return 0;
+  return memoryMessages.filter(m => m.receiverId === userId && !m.isRead).length;
+}
+
+export function markMessagesAsReadForUser(userId: string, postId?: string): void {
+  if (!userId) return;
+  memoryMessages.forEach(m => {
+    if (m.receiverId === userId && (!postId || m.postId === postId)) {
+      m.isRead = true;
+    }
+  });
+}
+
 export function sendDirectMessage(data: {
   postId: string;
   postTitle: string;

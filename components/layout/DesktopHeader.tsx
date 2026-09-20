@@ -30,6 +30,7 @@ import { useTheme } from '@/lib/context/ThemeContext';
 import NotificationBell from '@/components/notifications/NotificationBell';
 import LanguageDropdown from '@/components/layout/LanguageDropdown';
 import PlatformMessageIcon from '@/components/icons/PlatformMessageIcon';
+import { useUnreadMessages } from '@/lib/useUnreadMessages';
 
 interface DesktopHeaderProps {
   user?: { name: string; email: string } | null;
@@ -77,6 +78,7 @@ export default function DesktopHeader({ user, onSearchOpen, lang, onLangToggle, 
   const [postType, setPostType] = useState<'JOB' | 'ROOM'>('JOB');
   const [messageDrawerOpen, setMessageDrawerOpen] = useState(false);
   const [phoneModalOpen, setPhoneModalOpen] = useState(false);
+  const { unreadCount: unreadMessageCount } = useUnreadMessages(user);
   const [isPhoneVerified, setIsPhoneVerified] = useState(false);
   const [verifiedPhone, setVerifiedPhone] = useState('');
 
@@ -363,6 +365,11 @@ export default function DesktopHeader({ user, onSearchOpen, lang, onLangToggle, 
             title="Messaging & Inquiries"
           >
             <PlatformMessageIcon className="w-5 h-5" />
+            {unreadMessageCount > 0 && (
+              <span className="absolute -top-1 -right-1 px-1.5 py-0.5 rounded-full bg-rose-600 text-white text-[10px] font-black border-2 border-white min-w-[18px] text-center shadow-xs animate-pulse">
+                {unreadMessageCount > 9 ? '9+' : unreadMessageCount}
+              </span>
+            )}
           </button>
 
           <div className="w-px h-5 bg-slate-200 mx-0.5 shrink-0" />

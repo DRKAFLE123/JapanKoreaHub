@@ -46,6 +46,7 @@ const JAPAN_TAB_SLUGS: Record<LevelSubTab, string> = {
   RADICALS: 'radicals',
   KANA_MATRIX: 'matrix',
   EXAMS: 'exams',
+  SECTION_PRACTICE: 'practice',
 };
 
 const JAPAN_SLUG_TO_TAB: Record<string, LevelSubTab> = {
@@ -60,6 +61,8 @@ const JAPAN_SLUG_TO_TAB: Record<string, LevelSubTab> = {
   matrix: 'KANA_MATRIX',
   radicals: 'RADICALS',
   exams: 'EXAMS',
+  practice: 'SECTION_PRACTICE',
+  'section-practice': 'SECTION_PRACTICE',
 };
 
 // ── SLUG & TAB MAPPINGS (KOREA) ──────────────────────────────────
@@ -114,6 +117,7 @@ const KOREAN_TAB_SLUGS: Record<KoreanSubTab, string> = {
   COMMON_300: 'words-300',
   EXAMS: 'exams',
   EXAM_GUIDE: 'guide',
+  SECTION_PRACTICE: 'practice',
 };
 
 const KOREAN_SLUG_TO_TAB: Record<string, KoreanSubTab> = {
@@ -131,12 +135,15 @@ const KOREAN_SLUG_TO_TAB: Record<string, KoreanSubTab> = {
   'grammar-100': 'GRAMMAR_100',
   'words-300': 'COMMON_300',
   guide: 'EXAM_GUIDE',
+  practice: 'SECTION_PRACTICE',
+  'section-practice': 'SECTION_PRACTICE',
 };
 
 export default function LearnHubClient({ country, initialLevel }: LearnHubClientProps) {
   const searchParams = useSearchParams();
   const rawQueryTab = searchParams.get('tab')?.toLowerCase();
   const rawQueryLevel = searchParams.get('level')?.toLowerCase();
+  const rawQuerySection = searchParams.get('section')?.toLowerCase();
 
   // Helper to parse Japan level from initial prop, URL query, or default
   const resolveInitialJapanLevel = (): LevelType => {
@@ -173,6 +180,9 @@ export default function LearnHubClient({ country, initialLevel }: LearnHubClient
     return 'VOCABULARY';
   });
 
+  const [japanPracticeSection, setJapanPracticeSection] = useState<string | undefined>(rawQuerySection || undefined);
+  const [koreanPracticeSection, setKoreanPracticeSection] = useState<string | undefined>(rawQuerySection || undefined);
+
   // Keep state in sync if initialLevel prop changes
   useEffect(() => {
     if (initialLevel) {
@@ -196,6 +206,7 @@ export default function LearnHubClient({ country, initialLevel }: LearnHubClient
         const slug = segments[2] || '';
         const search = new URLSearchParams(window.location.search);
         const tabParam = search.get('tab')?.toLowerCase() || '';
+        const secParam = search.get('section')?.toLowerCase() || undefined;
 
         if (country === 'japan') {
           if (slug && JAPAN_SLUG_TO_LEVEL[slug]) {
@@ -206,6 +217,7 @@ export default function LearnHubClient({ country, initialLevel }: LearnHubClient
           } else {
             setJapanTab('VOCABULARY');
           }
+          if (secParam) setJapanPracticeSection(secParam);
         } else {
           if (slug && KOREAN_SLUG_TO_LEVEL[slug]) {
             setKoreanLevel(KOREAN_SLUG_TO_LEVEL[slug]);
@@ -215,6 +227,7 @@ export default function LearnHubClient({ country, initialLevel }: LearnHubClient
           } else {
             setKoreanTab('VOCABULARY');
           }
+          if (secParam) setKoreanPracticeSection(secParam);
         }
       }
     };
@@ -237,20 +250,26 @@ export default function LearnHubClient({ country, initialLevel }: LearnHubClient
   }, [country]);
 
   // Handle Japan Sub-Tab switch with URL update
-  const handleJapanTabSelect = useCallback((tab: LevelSubTab) => {
+  const handleJapanTabSelect = useCallback((tab: LevelSubTab, section?: string) => {
     setJapanTab(tab);
+    if (section) setJapanPracticeSection(section);
     const levelSlug = JAPAN_LEVEL_SLUGS[japanLevel] || 'n5';
-    const tabSlug = JAPAN_TAB_SLUGS[tab];
+    const tabSlug = JAPAN_TAB_SLUGS[tab] || 'vocabulary';
     // Keep URL clean: omit query if default VOCABULARY or BASICS_VOCAB
     const isDefault = (japanLevel === 'BASICS' && tab === 'BASICS_VOCAB') || (japanLevel !== 'BASICS' && tab === 'VOCABULARY');
-    const targetUrl = isDefault
+    let targetUrl = isDefault
       ? `/${country}/learn/${levelSlug}`
       : `/${country}/learn/${levelSlug}?tab=${tabSlug}`;
 
-    if (typeof window !== 'undefined') {
-      window.history.pushState({ level: japanLevel, tab }, '', targetUrl);
+    if (tab === 'SECTION_PRACTICE' && (section || japanPracticeSection)) {
+      const activeSec = (section || japanPracticeSection)?.toLowerCase();
+      targetUrl = `/${country}/learn/${levelSlug}?tab=practice&section=${activeSec}`;
     }
-  }, [country, japanLevel]);
+
+    if (typeof window !== 'undefined') {
+      window.history.pushState({ level: japanLevel, tab, section: section || japanPracticeSection }, '', targetUrl);
+    }
+  }, [country, japanLevel, japanPracticeSection]);
 
   // Handle Korean Level switch with URL update
   const handleKoreanLevelSelect = useCallback((lvl: KoreanLevelType) => {
@@ -266,19 +285,25 @@ export default function LearnHubClient({ country, initialLevel }: LearnHubClient
   }, [country]);
 
   // Handle Korean Sub-Tab switch with URL update
-  const handleKoreanTabSelect = useCallback((tab: KoreanSubTab) => {
+  const handleKoreanTabSelect = useCallback((tab: KoreanSubTab, section?: string) => {
     setKoreanTab(tab);
+    if (section) setKoreanPracticeSection(section);
     const levelSlug = KOREAN_LEVEL_SLUGS[koreanLevel] || 'eps';
-    const tabSlug = KOREAN_TAB_SLUGS[tab];
+    const tabSlug = KOREAN_TAB_SLUGS[tab] || 'vocabulary';
     const isDefault = (koreanLevel === 'BASICS' && tab === 'BASICS_MODULES') || (koreanLevel !== 'BASICS' && tab === 'VOCABULARY');
-    const targetUrl = isDefault
+    let targetUrl = isDefault
       ? `/${country}/learn/${levelSlug}`
       : `/${country}/learn/${levelSlug}?tab=${tabSlug}`;
 
-    if (typeof window !== 'undefined') {
-      window.history.pushState({ level: koreanLevel, tab }, '', targetUrl);
+    if (tab === 'SECTION_PRACTICE' && (section || koreanPracticeSection)) {
+      const activeSec = (section || koreanPracticeSection)?.toLowerCase();
+      targetUrl = `/${country}/learn/${levelSlug}?tab=practice&section=${activeSec}`;
     }
-  }, [country, koreanLevel]);
+
+    if (typeof window !== 'undefined') {
+      window.history.pushState({ level: koreanLevel, tab, section: section || koreanPracticeSection }, '', targetUrl);
+    }
+  }, [country, koreanLevel, koreanPracticeSection]);
 
   return (
     <div className="min-h-screen bg-slate-50 text-slate-900 font-sans pb-20 pt-0">
@@ -290,6 +315,7 @@ export default function LearnHubClient({ country, initialLevel }: LearnHubClient
             onSelectLevel={handleJapanLevelSelect}
             activeTab={japanTab}
             onTabChange={handleJapanTabSelect}
+            initialPracticeSection={japanPracticeSection}
           />
         ) : (
           <KoreanHubDashboard
@@ -297,6 +323,7 @@ export default function LearnHubClient({ country, initialLevel }: LearnHubClient
             onSelectLevel={handleKoreanLevelSelect}
             activeTab={koreanTab}
             onTabChange={handleKoreanTabSelect}
+            initialPracticeSection={koreanPracticeSection}
           />
         )}
       </main>

@@ -1,7 +1,7 @@
 'use client';
 import React from 'react';
 import Link from 'next/link';
-import { ArrowLeft, ChevronRight, ArrowRight, ShieldCheck } from 'lucide-react';
+import { ArrowLeft, ChevronRight, ArrowRight, ShieldCheck, Building } from 'lucide-react';
 
 import VisaTrustBanner from '@/components/visa/VisaTrustBanner';
 
@@ -16,6 +16,31 @@ const LABELS: Record<Country, { flag: string; name: string; chipClass: string }>
 const OFFICIAL_SOURCES: Record<Country, { name: string; url: string; date: string }> = {
   japan: { name: 'Ministry of Foreign Affairs (MOFA)', url: 'https://www.mofa.go.jp/j_info/visit/visa/', date: 'August 8, 2026' },
   korea: { name: 'Korea Visa Portal (K-ETA)', url: 'https://www.visa.go.kr/', date: 'August 8, 2026' },
+};
+
+const EMPLOYMENT_PATHWAYS: Record<Country, { title: string; subtitle: string; steps: string[] }> = {
+  japan: {
+    title: 'Official SSW Employment Pathway',
+    subtitle: 'Step-by-step roadmap for Specified Skilled Worker (SSW-1) visa applicants',
+    steps: [
+      'Pass JFT-Basic (A2) or JLPT N4 exam',
+      'Pass Sector Skill Evaluation Test (e.g. Kaigo, Agriculture, Food Service, Building Cleaning)',
+      'Match with Japanese employer / Interview via accredited agency',
+      'Sign Employment Contract & Receive Certificate of Eligibility (COE)',
+      'Embassy Visa Application & Departure to Japan',
+    ],
+  },
+  korea: {
+    title: 'Official EPS E-9 Employment Pathway',
+    subtitle: 'Step-by-step roadmap for Employment Permit System (EPS) applicants',
+    steps: [
+      'Register for EPS-TOPIK Examination via HRD Korea',
+      'Pass EPS-TOPIK CBT & Skill Evaluation Test',
+      'Complete Medical Checkup & Enter SPAS Candidate Roster',
+      'Korean Employer Selection & Certificate for Confirmation of Visa Issuance (CCVI)',
+      'Pre-departure orientation & Flight departure to Korea',
+    ],
+  },
 };
 
 export default function VisaHubClient({ country, visaTypes }: { country: Country; visaTypes: VisaDef[] }) {
@@ -73,6 +98,38 @@ export default function VisaHubClient({ country, visaTypes }: { country: Country
             ))}
           </div>
         </section>
+
+        {/* Official Employment Pathway Section */}
+        {EMPLOYMENT_PATHWAYS[country] && (
+          <section className="px-4 pb-6">
+            <div className="card p-5 border border-slate-200 rounded-2xl bg-white shadow-xs">
+              <div className="flex items-center gap-2.5 mb-1.5">
+                <div className="w-8 h-8 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center text-sm">
+                  <Building className="w-4 h-4" />
+                </div>
+                <div>
+                  <h2 className="font-extrabold text-gray-900 text-sm sm:text-base">
+                    {EMPLOYMENT_PATHWAYS[country].title}
+                  </h2>
+                  <p className="text-xs text-gray-500">
+                    {EMPLOYMENT_PATHWAYS[country].subtitle}
+                  </p>
+                </div>
+              </div>
+
+              <div className="mt-4 pt-3 border-t border-slate-100 space-y-2.5">
+                {EMPLOYMENT_PATHWAYS[country].steps.map((step, idx) => (
+                  <div key={idx} className="flex items-start gap-3 p-2.5 rounded-xl bg-slate-50 border border-slate-100">
+                    <div className="w-5 h-5 rounded-full bg-emerald-600 text-white font-black text-xs flex items-center justify-center shrink-0 mt-0.5">
+                      {idx + 1}
+                    </div>
+                    <span className="text-xs text-gray-800 font-medium leading-relaxed">{step}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </section>
+        )}
 
         {/* Professional Assistance (Consultancy CTA) */}
         <section className="px-4 pb-8">

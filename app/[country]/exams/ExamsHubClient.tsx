@@ -1245,7 +1245,7 @@ export default function ExamsHubClient({ country, initialLevel }: { country: Cou
       {/* ── EXAM CONFIRMATION MODAL ── */}
       {confirmTest && (
         <div className="fixed inset-0 z-[100] overflow-y-auto flex items-center justify-center p-3 sm:p-4 bg-slate-950/85 backdrop-blur-md animate-fade-in min-h-screen min-h-[100dvh]">
-          <div className="w-full max-w-lg bg-white text-slate-900 border border-slate-200 rounded-3xl p-6 sm:p-7 shadow-2xl space-y-5 my-auto mx-auto shrink-0 font-sans">
+          <div className="w-full sm:w-[540px] max-w-lg bg-white text-slate-900 border border-slate-200 rounded-3xl p-6 sm:p-7 shadow-2xl space-y-5 my-auto mx-auto shrink-0 font-sans">
             
             {/* Modal Header */}
             <div className="flex items-start justify-between pb-3 border-b border-slate-200">
@@ -1304,109 +1304,126 @@ export default function ExamsHubClient({ country, initialLevel }: { country: Cou
               </button>
             </div>
 
-            {/* In FULL MODE: Test Specs Grid + Concise Exam Rules */}
-            {examMode === 'FULL' ? (
-              <div className="space-y-3">
-                <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 text-center text-xs">
-                  <div className="p-3 rounded-2xl bg-slate-50 border border-slate-200 space-y-0.5">
-                    <span className="text-[10px] font-black uppercase text-slate-400 block">Duration</span>
-                    <span className="font-black text-slate-900 text-sm">{calculatedDuration} Mins</span>
+            {/* Mode Body: Locked minimum height to ensure identical card dimensions between Full and Custom modes */}
+            <div className="min-h-[200px] flex flex-col justify-between">
+              {/* In FULL MODE: Test Specs Grid + Concise Exam Rules */}
+              {examMode === 'FULL' ? (
+                <div className="space-y-3">
+                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 text-center text-xs">
+                    <div className="p-3 rounded-2xl bg-slate-50 border border-slate-200 space-y-0.5">
+                      <span className="text-[10px] font-black uppercase text-slate-400 block">Duration</span>
+                      <span className="font-black text-slate-900 text-sm">{calculatedDuration} Mins</span>
+                    </div>
+                    <div className="p-3 rounded-2xl bg-slate-50 border border-slate-200 space-y-0.5">
+                      <span className="text-[10px] font-black uppercase text-slate-400 block">Questions</span>
+                      <span className="font-black text-slate-900 text-sm">{calculatedQuestions} Qs</span>
+                    </div>
+                    <div className="p-3 rounded-2xl bg-slate-50 border border-slate-200 space-y-0.5">
+                      <span className="text-[10px] font-black uppercase text-slate-400 block">Pass Target</span>
+                      <span className="font-black text-emerald-700 text-xs">{confirmTest.passScore}</span>
+                    </div>
+                    <div className="p-3 rounded-2xl bg-slate-50 border border-slate-200 space-y-0.5">
+                      <span className="text-[10px] font-black uppercase text-slate-400 block">Format</span>
+                      <span className="font-black text-slate-900 text-xs">{confirmTest.formatType}</span>
+                    </div>
                   </div>
-                  <div className="p-3 rounded-2xl bg-slate-50 border border-slate-200 space-y-0.5">
-                    <span className="text-[10px] font-black uppercase text-slate-400 block">Questions</span>
-                    <span className="font-black text-slate-900 text-sm">{calculatedQuestions} Qs</span>
-                  </div>
-                  <div className="p-3 rounded-2xl bg-slate-50 border border-slate-200 space-y-0.5">
-                    <span className="text-[10px] font-black uppercase text-slate-400 block">Pass Target</span>
-                    <span className="font-black text-emerald-700 text-xs">{confirmTest.passScore}</span>
-                  </div>
-                  <div className="p-3 rounded-2xl bg-slate-50 border border-slate-200 space-y-0.5">
-                    <span className="text-[10px] font-black uppercase text-slate-400 block">Format</span>
-                    <span className="font-black text-slate-900 text-xs">{confirmTest.formatType}</span>
-                  </div>
-                </div>
 
-                <div className="p-3.5 rounded-2xl bg-amber-50/80 border border-amber-200/90 text-xs text-amber-950 space-y-1.5">
-                  <div className="font-black uppercase tracking-wider text-amber-900 flex items-center gap-1.5 text-[11px]">
-                    <span>⚠️ Examination Rules</span>
-                  </div>
-                  <div className="text-slate-700 text-xs space-y-1">
-                    <p>• Countdown starts immediately upon clicking <strong>Begin Exam Now</strong>.</p>
-                    <p>• Listening audio maximum <strong>2 replays</strong> per question.</p>
-                    <p>• Detailed scorecard &amp; Nepali explanations available on submission.</p>
-                  </div>
-                </div>
-              </div>
-            ) : (
-              /* In CUSTOM MODE: Show section options inside the same card footprint without expanding */
-              <div className="space-y-2.5">
-                <div className="flex items-center justify-between px-0.5">
-                  <span className="text-xs font-black text-slate-900 uppercase tracking-wider">
-                    Select Practice Sections:
-                  </span>
-                  <div className="flex items-center gap-2 text-[11px] font-bold">
-                    <button
-                      type="button"
-                      onClick={() => setSelectedSections(availableSections.map(s => s.id))}
-                      className="text-indigo-600 hover:underline cursor-pointer"
-                    >
-                      Select All
-                    </button>
-                    <span className="text-slate-300">•</span>
-                    <button
-                      type="button"
-                      onClick={() => setSelectedSections([])}
-                      className="text-slate-500 hover:underline cursor-pointer"
-                    >
-                      Clear
-                    </button>
+                  <div className="p-3.5 rounded-2xl bg-amber-50/80 border border-amber-200/90 text-xs text-amber-950 space-y-1.5">
+                    <div className="font-black uppercase tracking-wider text-amber-900 flex items-center gap-1.5 text-[11px]">
+                      <span>⚠️ Examination Rules</span>
+                    </div>
+                    <div className="text-slate-700 text-xs space-y-1">
+                      <p>• Countdown starts immediately upon clicking <strong>Begin Exam Now</strong>.</p>
+                      <p>• Listening audio maximum <strong>2 replays</strong> per question.</p>
+                      <p>• Detailed scorecard &amp; Nepali explanations available on submission.</p>
+                    </div>
                   </div>
                 </div>
+              ) : (
+                /* In CUSTOM MODE: Show section options with balanced guidance box to match Full mode footprint */
+                <div className="space-y-2.5 flex flex-col justify-between flex-1">
+                  <div>
+                    <div className="flex items-center justify-between px-0.5 mb-2">
+                      <span className="text-xs font-black text-slate-900 uppercase tracking-wider">
+                        Select Practice Sections:
+                      </span>
+                      <div className="flex items-center gap-2 text-[11px] font-bold">
+                        <button
+                          type="button"
+                          onClick={() => setSelectedSections(availableSections.map(s => s.id))}
+                          className="text-indigo-600 hover:underline cursor-pointer"
+                        >
+                          Select All
+                        </button>
+                        <span className="text-slate-300">•</span>
+                        <button
+                          type="button"
+                          onClick={() => setSelectedSections([])}
+                          className="text-slate-500 hover:underline cursor-pointer"
+                        >
+                          Clear
+                        </button>
+                      </div>
+                    </div>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                  {availableSections.map((sec) => {
-                    const isChecked = selectedSections.includes(sec.id);
-                    return (
-                      <label
-                        key={sec.id}
-                        className={`flex items-center justify-between gap-2 p-3 rounded-xl border transition-all cursor-pointer select-none ${
-                          isChecked
-                            ? 'bg-indigo-50/90 border-indigo-400 text-indigo-950 shadow-xs'
-                            : 'bg-slate-50 border-slate-200 text-slate-500 hover:bg-slate-100'
-                        }`}
-                      >
-                        <div className="flex items-center gap-2 min-w-0">
-                          <input
-                            type="checkbox"
-                            checked={isChecked}
-                            onChange={() => {
-                              if (isChecked) {
-                                setSelectedSections(selectedSections.filter(id => id !== sec.id));
-                              } else {
-                                setSelectedSections([...selectedSections, sec.id]);
-                              }
-                            }}
-                            className="rounded border-slate-300 text-indigo-600 focus:ring-indigo-500 w-4 h-4 cursor-pointer shrink-0"
-                          />
-                          <span className="font-bold text-xs truncate">{sec.label}</span>
-                        </div>
-                        <span className="text-[10px] font-black text-indigo-600 bg-indigo-100 px-1.5 py-0.5 rounded shrink-0">
-                          {sec.count} Qs
-                        </span>
-                      </label>
-                    );
-                  })}
-                </div>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                      {availableSections.map((sec) => {
+                        const isChecked = selectedSections.includes(sec.id);
+                        return (
+                          <label
+                            key={sec.id}
+                            className={`flex items-center justify-between gap-2 p-3 rounded-xl border transition-all cursor-pointer select-none ${
+                              isChecked
+                                ? 'bg-indigo-50/90 border-indigo-400 text-indigo-950 shadow-xs'
+                                : 'bg-slate-50 border-slate-200 text-slate-500 hover:bg-slate-100'
+                            }`}
+                          >
+                            <div className="flex items-center gap-2 min-w-0">
+                              <input
+                                type="checkbox"
+                                checked={isChecked}
+                                onChange={() => {
+                                  if (isChecked) {
+                                    setSelectedSections(selectedSections.filter(id => id !== sec.id));
+                                  } else {
+                                    setSelectedSections([...selectedSections, sec.id]);
+                                  }
+                                }}
+                                className="rounded border-slate-300 text-indigo-600 focus:ring-indigo-500 w-4 h-4 cursor-pointer shrink-0"
+                              />
+                              <span className="font-bold text-xs truncate">{sec.label}</span>
+                            </div>
+                            <span className="text-[10px] font-black text-indigo-600 bg-indigo-100 px-1.5 py-0.5 rounded shrink-0">
+                              {sec.count} Qs
+                            </span>
+                          </label>
+                        );
+                      })}
+                    </div>
+                  </div>
 
-                {/* Compact Custom Stats Strip matching the card aesthetic */}
-                <div className="flex items-center justify-between p-3 rounded-xl bg-slate-50 border border-slate-200 text-xs text-slate-700">
-                  <span className="font-bold text-[11px] text-slate-500">Custom Session Target:</span>
-                  <span className="font-black text-slate-900">
-                    ⏱️ {calculatedDuration} Mins &nbsp;•&nbsp; 📝 {calculatedQuestions} Questions
-                  </span>
+                  {/* Guidance callout for tests with 1-2 sections (e.g. SSW Building Cleaning, EPS-TOPIK) to keep height identical */}
+                  {availableSections.length <= 2 && (
+                    <div className="p-3 rounded-2xl bg-indigo-50/70 border border-indigo-200/80 text-xs text-indigo-950 space-y-1">
+                      <div className="font-black uppercase tracking-wider text-indigo-900 flex items-center gap-1.5 text-[11px]">
+                        <span>💡 Custom Practice Mode</span>
+                      </div>
+                      <p className="text-slate-600 text-xs leading-relaxed">
+                        Timer &amp; questions scale dynamically to your chosen skills. Audio replay &amp; scorecards remain active.
+                      </p>
+                    </div>
+                  )}
+
+                  {/* Compact Custom Stats Strip matching the card aesthetic */}
+                  <div className="flex items-center justify-between p-3 rounded-xl bg-slate-50 border border-slate-200 text-xs text-slate-700">
+                    <span className="font-bold text-[11px] text-slate-500">Custom Session Target:</span>
+                    <span className="font-black text-slate-900">
+                      ⏱️ {calculatedDuration} Mins &nbsp;•&nbsp; 📝 {calculatedQuestions} Questions
+                    </span>
+                  </div>
                 </div>
-              </div>
-            )}
+              )}
+            </div>
 
             {/* Modal Actions */}
             <div className="flex items-center gap-3 pt-2">

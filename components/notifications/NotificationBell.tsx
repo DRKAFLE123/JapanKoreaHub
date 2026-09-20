@@ -71,13 +71,61 @@ const INITIAL_NOTIFICATIONS: NotificationItem[] = [
   },
 ];
 
+const STORAGE_KEY_READ_IDS = 'jkh_read_notification_ids';
+const STORAGE_KEY_ALL_READ_AT = 'jkh_notifications_all_read_at';
+
+function getStoredReadIds(): Set<string> {
+  if (typeof window === 'undefined') return new Set();
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY_READ_IDS);
+    return new Set(raw ? JSON.parse(raw) : []);
+  } catch {
+    return new Set();
+  }
+}
+
+function getStoredAllReadAt(): number {
+  if (typeof window === 'undefined') return 0;
+  try {
+    return Number(localStorage.getItem(STORAGE_KEY_ALL_READ_AT) || 0);
+  } catch {
+    return 0;
+  }
+}
+
+function applyStoredReadStatus(items: NotificationItem[]): NotificationItem[] {
+  const readIds = getStoredReadIds();
+  const allReadAt = getStoredAllReadAt();
+  return items.map((item) => {
+    if (readIds.has(item.id)) return { ...item, isRead: true };
+    if (allReadAt > 0) return { ...item, isRead: true };
+    return item;
+  });
+}
+
 export default function NotificationBell() {
   const [isOpen, setIsOpen] = useState(false);
   const [notifications, setNotifications] = useState<NotificationItem[]>(INITIAL_NOTIFICATIONS);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const hoverTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
-  // Load notices from API if available
+  // Sync with stored read state on mount & listen for updates across headers
+  useEffect(() => {
+    setNotifications((prev) => applyStoredReadStatus(prev));
+
+    const handleSync = () => {
+      setNotifications((prev) => applyStoredReadStatus(prev));
+    };
+
+    window.addEventListener('jkh_notifications_sync', handleSync);
+    window.addEventListener('storage', handleSync);
+    return () => {
+      window.removeEventListener('jkh_notifications_sync', handleSync);
+      window.removeEventListener('storage', handleSync);
+    };
+  }, []);
+
+  // Load notices from API if available and apply stored read status
   useEffect(() => {
     fetch('/api/notices')
       .then((r) => (r.ok ? r.json() : null))
@@ -92,7 +140,7 @@ export default function NotificationBell() {
             url: item.link || `/notices/${item.id}`,
             isRead: false,
           }));
-          setNotifications(apiItems);
+          setNotifications(applyStoredReadStatus(apiItems));
         }
       })
       .catch(() => {});
@@ -112,10 +160,26 @@ export default function NotificationBell() {
   const unreadCount = notifications.filter((n) => !n.isRead).length;
 
   const markAllAsRead = () => {
+    try {
+      const currentIds = notifications.map((n) => n.id);
+      const existing = Array.from(getStoredReadIds());
+      const updated = Array.from(new Set([...existing, ...currentIds]));
+      localStorage.setItem(STORAGE_KEY_READ_IDS, JSON.stringify(updated));
+      localStorage.setItem(STORAGE_KEY_ALL_READ_AT, Date.now().toString());
+      window.dispatchEvent(new Event('jkh_notifications_sync'));
+    } catch {}
     setNotifications((prev) => prev.map((n) => ({ ...n, isRead: true })));
   };
 
   const markItemAsRead = (id: string) => {
+    try {
+      const existing = Array.from(getStoredReadIds());
+      if (!existing.includes(id)) {
+        existing.push(id);
+        localStorage.setItem(STORAGE_KEY_READ_IDS, JSON.stringify(existing));
+      }
+      window.dispatchEvent(new Event('jkh_notifications_sync'));
+    } catch {}
     setNotifications((prev) => prev.map((n) => (n.id === id ? { ...n, isRead: true } : n)));
     setIsOpen(false);
   };

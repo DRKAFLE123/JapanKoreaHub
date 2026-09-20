@@ -1,6 +1,7 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { useSearchParams } from 'next/navigation';
 import {
   Briefcase,
   Award,
@@ -24,125 +25,158 @@ interface WorkingVisaMasterClientProps {
   initialType?: string;
 }
 
+type WorkSection = 'VISAS' | 'ELIGIBILITY' | 'PIPELINE' | 'WAGES_RIGHTS';
+
+const WORK_TAB_SLUG_MAP: Record<string, WorkSection> = {
+  'visas': 'VISAS',
+  'types': 'VISAS',
+  'eligibility': 'ELIGIBILITY',
+  'requirements': 'ELIGIBILITY',
+  'pipeline': 'PIPELINE',
+  'process': 'PIPELINE',
+  'recruitment': 'PIPELINE',
+  'wages-rights': 'WAGES_RIGHTS',
+  'wages': 'WAGES_RIGHTS',
+  'rights': 'WAGES_RIGHTS',
+  'pension': 'WAGES_RIGHTS',
+};
+
+const WORK_TABS = [
+  { key: 'VISAS' as WorkSection, slug: 'visas', label: '1. All Work Visa Types', icon: Briefcase },
+  { key: 'ELIGIBILITY' as WorkSection, slug: 'eligibility', label: '2. Requirements & Eligibility', icon: ShieldCheck },
+  { key: 'PIPELINE' as WorkSection, slug: 'pipeline', label: '3. Step-by-Step Recruitment', icon: Calendar },
+  { key: 'WAGES_RIGHTS' as WorkSection, slug: 'wages-rights', label: '4. Wages, Overtime & Pension', icon: DollarSign },
+];
+
 export default function WorkingVisaMasterClient({ country, initialType = 'work' }: WorkingVisaMasterClientProps) {
   const { setCountryFocus } = useCountry();
   const isJapan = country === 'japan';
 
-  const [activeSection, setActiveSection] = useState<
-    'VISAS' | 'ELIGIBILITY' | 'PIPELINE' | 'WAGES_RIGHTS'
-  >('VISAS');
+  const searchParams = useSearchParams();
+  const rawTab = searchParams.get('tab')?.toLowerCase();
+  const initialSection: WorkSection = (rawTab && WORK_TAB_SLUG_MAP[rawTab]) ? WORK_TAB_SLUG_MAP[rawTab] : 'VISAS';
+
+  const [activeSection, setActiveSection] = useState<WorkSection>(initialSection);
+
+  useEffect(() => {
+    const qTab = searchParams.get('tab')?.toLowerCase();
+    if (qTab && WORK_TAB_SLUG_MAP[qTab]) {
+      setActiveSection(WORK_TAB_SLUG_MAP[qTab]);
+    }
+  }, [searchParams]);
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-4 pb-24 font-sans">
       
-      {/* Hero Banner */}
-      <div className="rounded-3xl bg-gradient-to-br from-slate-900 via-indigo-950 to-slate-900 text-white p-6 sm:p-8 mb-8 relative overflow-hidden shadow-xl border border-slate-800">
-        <div className="relative z-10">
-          <div className="flex flex-wrap items-center justify-between gap-3 mb-4">
-            <div className="flex items-center gap-2">
-              <span className="px-3 py-1 rounded-full bg-emerald-500/20 border border-emerald-400/40 text-emerald-200 text-xs font-black uppercase tracking-wider">
-                {isJapan ? '🇯🇵 Work Visa & Career Master Guide' : '🇰🇷 Korea Work Visa & EPS Master Guide'}
-              </span>
-              <span className="text-xs text-emerald-400 font-bold flex items-center gap-1">
-                <CheckCircle2 className="w-3.5 h-3.5" />
-                2026 Statutory Regulations
-              </span>
-            </div>
-
-            {/* Country switcher */}
-            <div className="flex items-center gap-1.5 bg-white/10 p-1 rounded-2xl border border-white/10">
-              <Link
-                href="/japan/visa/work"
-                onClick={() => setCountryFocus('japan')}
-                className={`px-3 py-1.5 rounded-xl text-xs font-black transition-all ${
-                  isJapan ? 'bg-red-600 text-white shadow-xs' : 'text-slate-300 hover:text-white'
-                }`}
-              >
-                🇯🇵 Japan Work
-              </Link>
-              <Link
-                href="/korea/visa/work"
-                onClick={() => setCountryFocus('korea')}
-                className={`px-3 py-1.5 rounded-xl text-xs font-black transition-all ${
-                  !isJapan ? 'bg-blue-600 text-white shadow-xs' : 'text-slate-300 hover:text-white'
-                }`}
-              >
-                🇰🇷 Korea Work
-              </Link>
-            </div>
+      {/* Hero Banner - Clean, Light & Minimalist UI */}
+      <div className="rounded-3xl bg-white border border-slate-200 p-6 sm:p-7 mb-6 shadow-xs space-y-4 font-sans">
+        <div className="flex flex-wrap items-center justify-between gap-3">
+          <div className="flex flex-wrap items-center gap-2">
+            <span className="px-3 py-1 rounded-full bg-indigo-50 border border-indigo-200 text-indigo-700 text-xs font-black uppercase tracking-wider">
+              {isJapan ? '🇯🇵 Work Visa & Career Master Guide' : '🇰🇷 Korea Work Visa & EPS Master Guide'}
+            </span>
+            <span className="text-xs text-emerald-700 font-bold flex items-center gap-1 bg-emerald-50 border border-emerald-200 px-2.5 py-0.5 rounded-full">
+              <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
+              2026 Statutory Regulations
+            </span>
           </div>
 
-          <h1 className="text-2xl sm:text-4xl font-black text-white tracking-tight mb-3">
+          {/* Country switcher */}
+          <div className="flex items-center gap-1 bg-slate-100 p-1 rounded-xl border border-slate-200">
+            <Link
+              href="/japan/visa/work"
+              onClick={() => setCountryFocus('japan')}
+              className={`px-3 py-1.5 rounded-lg text-xs font-extrabold transition-all ${
+                isJapan
+                  ? 'bg-white text-slate-900 shadow-xs border border-slate-200 font-black'
+                  : 'text-slate-600 hover:text-slate-900 font-bold'
+              }`}
+            >
+              🇯🇵 Japan Work
+            </Link>
+            <Link
+              href="/korea/visa/work"
+              onClick={() => setCountryFocus('korea')}
+              className={`px-3 py-1.5 rounded-lg text-xs font-extrabold transition-all ${
+                !isJapan
+                  ? 'bg-white text-slate-900 shadow-xs border border-slate-200 font-black'
+                  : 'text-slate-600 hover:text-slate-900 font-bold'
+              }`}
+            >
+              🇰🇷 Korea Work
+            </Link>
+          </div>
+        </div>
+
+        <div>
+          <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight mb-2">
             {isJapan
               ? 'Complete Guide to Working Visas in Japan: SSW-1, SSW-2 & Gijinkoku'
               : 'Complete Guide to Korea Employment Visas: EPS E-9 & E-7-4 Point System'}
           </h1>
-          <p className="text-xs sm:text-sm text-slate-300 max-w-3xl leading-relaxed">
+          <p className="text-xs sm:text-sm text-slate-600 max-w-3xl leading-relaxed">
             {isJapan
               ? 'Everything Nepali candidates need: Specified Skilled Worker (SSW-1/2 across 12 approved sectors), Gijinkoku Engineer/Humanities visas, statutory minimum wages, pension refunds, and permanent residency roadmaps.'
               : 'The comprehensive blueprint for EPS E-9 manufacturing rosters, E-7-4 skilled worker point system upgrades, statutory wages, overtime premiums, and long-term residency pathways in South Korea.'}
           </p>
+        </div>
 
-          {/* Quick Inter-Links */}
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 mt-6 pt-5 border-t border-white/10">
-            <Link
-              href={isJapan ? '/japan/exams/skills' : '/korea/exams'}
-              className="flex items-center gap-2 p-2.5 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-xs font-bold text-slate-300 hover:text-white transition-colors"
-            >
-              <Award className="w-4 h-4 text-slate-400 shrink-0" />
-              <span>Sector Skill Tests</span>
-            </Link>
+        {/* Quick Inter-Links */}
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 pt-3 border-t border-slate-100">
+          <Link
+            href={isJapan ? '/japan/exams/skills' : '/korea/exams'}
+            className="flex items-center gap-2 p-2.5 rounded-xl bg-slate-50 hover:bg-slate-100 border border-slate-200 text-xs font-bold text-slate-700 hover:text-slate-900 transition-colors shadow-2xs"
+          >
+            <Award className="w-4 h-4 text-slate-500 shrink-0" />
+            <span>Sector Skill Tests</span>
+          </Link>
 
-            <Link
-              href={isJapan ? '/japan/learn' : '/korea/learn'}
-              className="flex items-center gap-2 p-2.5 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-xs font-bold text-slate-300 hover:text-white transition-colors"
-            >
-              <BookOpen className="w-4 h-4 text-slate-400 shrink-0" />
-              <span>Workplace Language</span>
-            </Link>
+          <Link
+            href={isJapan ? '/japan/learn' : '/korea/learn'}
+            className="flex items-center gap-2 p-2.5 rounded-xl bg-slate-50 hover:bg-slate-100 border border-slate-200 text-xs font-bold text-slate-700 hover:text-slate-900 transition-colors shadow-2xs"
+          >
+            <BookOpen className="w-4 h-4 text-slate-500 shrink-0" />
+            <span>Workplace Language</span>
+          </Link>
 
-            <Link
-              href={isJapan ? '/japan/visa/interview' : '/korea/visa/interview'}
-              className="flex items-center gap-2 p-2.5 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-xs font-bold text-slate-300 hover:text-white transition-colors"
-            >
-              <MessageSquare className="w-4 h-4 text-slate-400 shrink-0" />
-              <span>Job Interview Prep</span>
-            </Link>
+          <Link
+            href={isJapan ? '/japan/visa/interview' : '/korea/visa/interview'}
+            className="flex items-center gap-2 p-2.5 rounded-xl bg-slate-50 hover:bg-slate-100 border border-slate-200 text-xs font-bold text-slate-700 hover:text-slate-900 transition-colors shadow-2xs"
+          >
+            <MessageSquare className="w-4 h-4 text-slate-500 shrink-0" />
+            <span>Job Interview Prep</span>
+          </Link>
 
-            <Link
-              href={isJapan ? '/japan/jobs' : '/korea/jobs'}
-              className="flex items-center gap-2 p-2.5 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-xs font-bold text-slate-300 hover:text-white transition-colors"
-            >
-              <Briefcase className="w-4 h-4 text-slate-400 shrink-0" />
-              <span>Jobs Board</span>
-            </Link>
-          </div>
+          <Link
+            href={isJapan ? '/japan/jobs' : '/korea/jobs'}
+            className="flex items-center gap-2 p-2.5 rounded-xl bg-slate-50 hover:bg-slate-100 border border-slate-200 text-xs font-bold text-slate-700 hover:text-slate-900 transition-colors shadow-2xs"
+          >
+            <Briefcase className="w-4 h-4 text-slate-500 shrink-0" />
+            <span>Jobs Board</span>
+          </Link>
         </div>
       </div>
 
-      {/* Navigation Tabs */}
+      {/* Navigation Tabs - SEO Friendly Links to Slugs */}
       <div className="flex items-center gap-1.5 mb-8 border-b border-slate-200 pb-3 overflow-x-auto">
-        {[
-          { key: 'VISAS', label: '1. All Work Visa Types', icon: Briefcase },
-          { key: 'ELIGIBILITY', label: '2. Requirements & Eligibility', icon: ShieldCheck },
-          { key: 'PIPELINE', label: '3. Step-by-Step Recruitment', icon: Calendar },
-          { key: 'WAGES_RIGHTS', label: '4. Wages, Overtime & Pension', icon: DollarSign },
-        ].map((tab) => {
+        {WORK_TABS.map((tab) => {
           const Icon = tab.icon;
           const active = activeSection === tab.key;
           return (
-            <button
+            <Link
               key={tab.key}
-              onClick={() => setActiveSection(tab.key as any)}
-              className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-black transition-all cursor-pointer shrink-0 ${
+              href={`/${country}/visa/work?tab=${tab.slug}`}
+              scroll={false}
+              onClick={() => setActiveSection(tab.key)}
+              className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-black transition-all shrink-0 border ${
                 active
-                  ? 'bg-indigo-600 text-white shadow-xs'
-                  : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
+                  ? 'bg-indigo-600 text-white shadow-xs border-indigo-600'
+                  : 'bg-white text-slate-600 hover:text-slate-900 hover:bg-slate-50 border-transparent'
               }`}
             >
               <Icon className="w-4 h-4" />
               <span>{tab.label}</span>
-            </button>
+            </Link>
           );
         })}
       </div>

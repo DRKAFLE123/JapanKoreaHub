@@ -1,7 +1,7 @@
 'use client';
-import React from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link';
-import { ArrowLeft, Briefcase, ChevronRight, ArrowRight, ShieldCheck, BookOpen, Building, CheckCircle2, Play } from 'lucide-react';
+import { ArrowLeft, Briefcase, ChevronRight, ArrowRight, ShieldCheck, BookOpen, Building, CheckCircle2, Play, X } from 'lucide-react';
 
 
 type Country = 'japan' | 'korea';
@@ -41,6 +41,7 @@ const STEPS: Record<Country, string[]> = {
 };
 
 export default function WorkHubClient({ country }: { country: Country }) {
+  const [showPathwayModal, setShowPathwayModal] = useState(false);
   const cName = country === 'japan' ? 'Japan' : 'Korea';
   const flag = country === 'japan' ? '🇯🇵' : '🇰🇷';
   const sectors = SECTORS[country];
@@ -57,40 +58,30 @@ export default function WorkHubClient({ country }: { country: Country }) {
           </Link>
         </div>
 
-        {/* Header */}
+        {/* Header - Compact layout with on-demand pathway trigger */}
         <section className="px-4 py-4">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-100 text-emerald-800 border border-emerald-200 text-xs font-semibold mb-3">
-            {flag} Work in {cName} · {country === 'japan' ? 'SSW Working Visa' : 'EPS E-9 Visa'}
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-2">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-100 text-emerald-800 border border-emerald-200 text-xs font-semibold w-fit">
+              {flag} Work in {cName} · {country === 'japan' ? 'SSW Working Visa' : 'EPS E-9 Visa'}
+            </div>
+            <button
+              type="button"
+              onClick={() => setShowPathwayModal(true)}
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-emerald-50 text-slate-700 hover:text-emerald-700 border border-slate-200 hover:border-emerald-300 text-xs font-bold transition-all cursor-pointer shadow-xs self-start sm:self-auto"
+            >
+              <Building className="w-3.5 h-3.5 text-emerald-600" />
+              <span>5-Step Visa Pathway</span>
+            </button>
           </div>
           <h1 className="text-2xl md:text-3xl font-extrabold text-gray-900">
             Work Opportunities in {cName}
           </h1>
           <p className="text-sm text-gray-500 mt-1">
-            Sector-specific vocabulary, skill test guides, and official employment steps.
+            Sector-specific vocabulary, skill test guides, and official study materials.
           </p>
         </section>
 
-        {/* Official Process Flowchart */}
-        <section className="px-4 pb-6">
-          <div className="card p-5">
-            <h2 className="font-bold text-gray-900 text-base mb-3 flex items-center gap-2">
-              <Building className="w-5 h-5 text-emerald-600" />
-              Official Employment Pathway
-            </h2>
-            <div className="space-y-2.5">
-              {steps.map((step, idx) => (
-                <div key={idx} className="flex items-center gap-3">
-                  <div className="w-6 h-6 rounded-full bg-emerald-100 text-emerald-700 font-extrabold text-xs flex items-center justify-center flex-shrink-0">
-                    {idx + 1}
-                  </div>
-                  <span className="text-xs text-gray-800 font-medium">{step}</span>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* Sector Cards */}
+        {/* Sector Cards - Placed immediately at the top for optimal page space management */}
         <section className="px-4 pb-8 space-y-3">
           <p className="text-xs font-semibold text-gray-400 uppercase tracking-wider">Job Sectors & Vocabulary</p>
           <div className="space-y-3">
@@ -133,6 +124,34 @@ export default function WorkHubClient({ country }: { country: Country }) {
           </div>
         </section>
 
+        {/* Bottom Collapsible Pathway Guide - Cleanly tucked at the bottom so upper page space is saved */}
+        <section className="px-4 pb-6">
+          <details className="group border border-slate-200 bg-slate-50/80 rounded-2xl p-4 sm:p-5 transition-all open:bg-white open:shadow-xs">
+            <summary className="flex items-center justify-between cursor-pointer list-none select-none">
+              <div className="flex items-center gap-3">
+                <div className="w-8 h-8 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center text-sm shrink-0">
+                  <Building className="w-4 h-4" />
+                </div>
+                <div>
+                  <div className="text-[10px] font-black uppercase text-emerald-700 tracking-wider">Immigration &amp; Visa Timeline</div>
+                  <div className="text-sm font-bold text-slate-800">Official {country === 'japan' ? 'SSW' : 'EPS'} Employment Pathway (5 Steps)</div>
+                </div>
+              </div>
+              <span className="text-xs font-bold text-slate-400 group-open:rotate-180 transition-transform">▼</span>
+            </summary>
+            <div className="mt-4 pt-3 border-t border-slate-100 space-y-2.5">
+              {steps.map((step, idx) => (
+                <div key={idx} className="flex items-center gap-3">
+                  <div className="w-6 h-6 rounded-full bg-emerald-100 text-emerald-700 font-extrabold text-xs flex items-center justify-center flex-shrink-0">
+                    {idx + 1}
+                  </div>
+                  <span className="text-xs text-gray-800 font-medium">{step}</span>
+                </div>
+              ))}
+            </div>
+          </details>
+        </section>
+
         {/* Consultancy Assistance */}
         <section className="px-4 pb-8">
           <div className="p-5 bg-blue-50 border border-blue-100 rounded-2xl flex items-center justify-between gap-4">
@@ -153,6 +172,56 @@ export default function WorkHubClient({ country }: { country: Country }) {
         </section>
       </main>
 
+      {/* Pathway Modal Dialog - Accessible anywhere on demand without taking up page real estate */}
+      {showPathwayModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/70 backdrop-blur-xs animate-fade-in">
+          <div className="w-full max-w-lg bg-white rounded-3xl p-6 sm:p-7 shadow-2xl border border-slate-200 space-y-4">
+            <div className="flex items-center justify-between pb-3 border-b border-slate-100">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-2xl bg-emerald-100 text-emerald-700 flex items-center justify-center text-xl">
+                  🏢
+                </div>
+                <div>
+                  <span className="text-[10px] font-black uppercase text-emerald-600 tracking-wider">
+                    Official Government Process
+                  </span>
+                  <h3 className="text-base sm:text-lg font-extrabold text-slate-900">
+                    {country === 'japan' ? 'SSW Working Visa Pathway' : 'EPS E-9 Employment Pathway'}
+                  </h3>
+                </div>
+              </div>
+              <button
+                type="button"
+                onClick={() => setShowPathwayModal(false)}
+                className="p-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-500 transition-colors cursor-pointer"
+              >
+                <X className="w-4 h-4" />
+              </button>
+            </div>
+
+            <div className="space-y-2.5 py-1">
+              {steps.map((step, idx) => (
+                <div key={idx} className="flex items-start gap-3 p-3 rounded-2xl bg-slate-50 border border-slate-100">
+                  <div className="w-6 h-6 rounded-full bg-emerald-600 text-white font-black text-xs flex items-center justify-center shrink-0 mt-0.5 shadow-xs">
+                    {idx + 1}
+                  </div>
+                  <span className="text-xs text-slate-800 font-semibold leading-relaxed">{step}</span>
+                </div>
+              ))}
+            </div>
+
+            <div className="pt-2">
+              <button
+                type="button"
+                onClick={() => setShowPathwayModal(false)}
+                className="w-full py-3 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs transition-colors cursor-pointer"
+              >
+                Close Pathway Guide
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

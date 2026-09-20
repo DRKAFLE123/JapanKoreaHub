@@ -13,6 +13,7 @@ import { TimedExamEngine } from './TimedExamEngine';
 
 import { useSidebarCollapse } from './layout/MainLayoutWrapper';
 import { PanelLeftClose, PanelLeftOpen } from 'lucide-react';
+import SectionPracticeEngine from '@/components/practice/SectionPracticeEngine';
 
 export type LevelType = 'BASICS' | 'N5' | 'N4' | 'N3' | 'N2' | 'N1' | 'JFT' | 'KANJI_1000';
 export type LevelSubTab = 'KANA_MATRIX' | 'BASICS_VOCAB' | 'RADICALS' | 'VOCABULARY' | 'GRAMMAR' | 'FLASHCARDS' | 'LISTENING' | 'EXAMS' | 'EXAM_GUIDE' | 'SECTION_PRACTICE';
@@ -22,7 +23,8 @@ interface LevelHubDashboardProps {
   onSelectLevel?: (level: LevelType) => void;
   onBackToPortal?: () => void;
   activeTab?: LevelSubTab;
-  onTabChange?: (tab: LevelSubTab) => void;
+  onTabChange?: (tab: LevelSubTab, section?: string) => void;
+  initialPracticeSection?: string;
 }
 
 const JAPAN_LEVEL_LIST: { id: LevelType; label: string }[] = [
@@ -42,6 +44,7 @@ export const LevelHubDashboard: React.FC<LevelHubDashboardProps> = ({
   onBackToPortal,
   activeTab: externalActiveTab,
   onTabChange,
+  initialPracticeSection,
 }) => {
   const [currentLevel, setCurrentLevel] = useState<LevelType>(propLevel);
   const [activeTabState, setActiveTabState] = useState<LevelSubTab>(externalActiveTab || 'VOCABULARY');
@@ -87,9 +90,23 @@ export const LevelHubDashboard: React.FC<LevelHubDashboardProps> = ({
     if (onTabChange) onTabChange(t);
   };
 
-  const [practiceSection, setPracticeSection] = useState<'LISTENING' | 'READING' | 'VOCABULARY' | 'GRAMMAR'>('LISTENING');
+  const resolveInitialPracticeSection = (sec?: string): 'LISTENING' | 'READING' | 'VOCABULARY' | 'GRAMMAR' => {
+    const s = (sec || '').toUpperCase();
+    if (s === 'READING' || s === 'DOKKAI') return 'READING';
+    if (s === 'VOCABULARY' || s === 'MOJI_GOI' || s === 'KANJI') return 'VOCABULARY';
+    if (s === 'GRAMMAR' || s === 'BUNPO') return 'GRAMMAR';
+    return 'LISTENING';
+  };
+
+  const [practiceSection, setPracticeSection] = useState<'LISTENING' | 'READING' | 'VOCABULARY' | 'GRAMMAR'>(() => resolveInitialPracticeSection(initialPracticeSection));
   const [practiceDropdownOpen, setPracticeDropdownOpen] = useState(false);
   const practiceDropdownRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    if (initialPracticeSection) {
+      setPracticeSection(resolveInitialPracticeSection(initialPracticeSection));
+    }
+  }, [initialPracticeSection]);
 
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
@@ -169,16 +186,16 @@ export const LevelHubDashboard: React.FC<LevelHubDashboardProps> = ({
     <div className={`space-y-2 animate-fade-in font-sans ${isFocusMode ? 'fixed inset-0 z-[100] bg-slate-50 dark:bg-slate-950 p-2 sm:p-5 overflow-y-auto' : ''}`}>
       
       {/* 🌐 UNIFIED LEVEL & SUB-MENU NAVIGATION CARD */}
-      <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-2 space-y-1.5 shadow-xs">
-        {/* ROW 1: Level Switcher (Course Label on Left, Level Pills Aligned to Right like Mock Test) */}
-        <div className="flex items-center justify-between gap-2 overflow-x-auto no-scrollbar touch-pan-x py-1 w-full">
+      <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-2 space-y-1.5 shadow-xs relative z-30">
+        {/* ROW 1: Level Switcher (All Courses Aligned Left) */}
+        <div className="flex items-center justify-start gap-2 overflow-x-auto no-scrollbar touch-pan-x py-1 w-full">
           {/* Left: Course Label */}
-          <div className="flex items-center gap-1.5 text-xs font-black uppercase tracking-wider text-slate-500 whitespace-nowrap pl-1 pr-2 shrink-0">
+          <div className="flex items-center gap-1.5 text-xs font-black uppercase tracking-wider text-slate-500 whitespace-nowrap pl-1 pr-1 shrink-0">
             <Globe className="w-3.5 h-3.5 text-red-600" />
             <span>Course:</span>
           </div>
 
-          {/* Right: Level Switcher Pills & Focus Action */}
+          {/* Level Switcher Pills Aligned Left */}
           <div className="flex items-center gap-1.5 flex-nowrap">
             {JAPAN_LEVEL_LIST.map((lvl) => {
               const isSelected = currentLevel === lvl.id;
@@ -222,88 +239,120 @@ export const LevelHubDashboard: React.FC<LevelHubDashboardProps> = ({
           </div>
         </div>
 
-        {/* ROW 2: Sub-Menu Options (Micro-Pill Navigation - Centered & Clean) */}
+        {/* ROW 2: Sub-Menu Options (Micro-Pill Navigation - Left-Aligned & Symmetrical) */}
         {currentLevel !== 'BASICS' && currentLevel !== 'KANJI_1000' && (
-          <div className="pt-1.5 border-t border-slate-100 dark:border-slate-800/80 flex items-center justify-start sm:justify-center gap-1.5 overflow-x-auto no-scrollbar touch-pan-x py-0.5">
-            {getSubTabs().map((tab) => {
-              const isActive = activeTab === tab.id;
+          <div className="pt-1.5 border-t border-slate-100 dark:border-slate-800/80 flex items-center justify-start gap-2 overflow-visible py-0.5 relative z-20">
+            {/* Left: Module Label */}
+            <div className="flex items-center gap-1.5 text-xs font-black uppercase tracking-wider text-slate-500 whitespace-nowrap pl-1 pr-1 shrink-0">
+              <BookOpen className="w-3.5 h-3.5 text-red-600" />
+              <span>Module:</span>
+            </div>
 
-              if ((tab as any).isPracticeDropdown) {
-                return (
-                  <div
-                    key={tab.id}
-                    ref={practiceDropdownRef}
-                    className="relative shrink-0"
-                    onMouseEnter={() => setPracticeDropdownOpen(true)}
-                    onMouseLeave={() => setPracticeDropdownOpen(false)}
-                  >
-                    <button
-                      type="button"
-                      onClick={() => setPracticeDropdownOpen(!practiceDropdownOpen)}
-                      className={`px-3 py-1 rounded-lg text-xs font-extrabold transition-all flex items-center gap-1.5 cursor-pointer whitespace-nowrap shrink-0 ${
-                        activeTab === 'SECTION_PRACTICE' || activeTab === 'LISTENING'
-                          ? 'bg-red-600 text-white shadow-xs border border-red-500 font-black'
-                          : 'bg-slate-50 dark:bg-slate-800/50 text-slate-600 dark:text-slate-400 hover:text-slate-900 hover:bg-slate-100 dark:hover:bg-slate-800 border border-slate-200/60 dark:border-slate-700/60 font-bold'
-                      }`}
+            {/* Sub-menu Pills Aligned Left */}
+            <div className="flex items-center gap-1.5 flex-wrap sm:flex-nowrap overflow-visible">
+              {getSubTabs().map((tab) => {
+                const isActive = activeTab === tab.id;
+
+                if ((tab as any).isPracticeDropdown) {
+                  return (
+                    <div
+                      key={tab.id}
+                      ref={practiceDropdownRef}
+                      className="relative shrink-0"
                     >
-                      <span className="text-[11px]">{tab.emoji}</span>
-                      <span>{tab.label}</span>
-                      <ChevronDown className={`w-3 h-3 transition-transform duration-200 ${practiceDropdownOpen ? 'rotate-180' : ''}`} />
-                    </button>
+                      <button
+                        type="button"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setPracticeDropdownOpen((prev) => !prev);
+                        }}
+                        className={`px-3 py-1 rounded-lg text-xs font-extrabold transition-all flex items-center gap-1.5 cursor-pointer whitespace-nowrap shrink-0 ${
+                          activeTab === 'SECTION_PRACTICE' || activeTab === 'LISTENING'
+                            ? 'bg-red-600 text-white shadow-xs border border-red-500 font-black'
+                            : 'bg-slate-50 dark:bg-slate-800/50 text-slate-600 dark:text-slate-400 hover:text-slate-900 hover:bg-slate-100 dark:hover:bg-slate-800 border border-slate-200/60 dark:border-slate-700/60 font-bold'
+                        }`}
+                      >
+                        <span className="text-[11px]">
+                          {activeTab === 'SECTION_PRACTICE'
+                            ? practiceSection === 'LISTENING'
+                              ? '🎧'
+                              : practiceSection === 'READING'
+                                ? '📖'
+                                : practiceSection === 'GRAMMAR'
+                                  ? '📝'
+                                  : '🔤'
+                            : tab.emoji}
+                        </span>
+                        <span>
+                          {activeTab === 'SECTION_PRACTICE'
+                            ? `Practice: ${
+                                practiceSection === 'LISTENING'
+                                  ? 'Listening'
+                                  : practiceSection === 'READING'
+                                    ? 'Reading'
+                                    : practiceSection === 'GRAMMAR'
+                                      ? 'Grammar'
+                                      : 'Vocab'
+                              }`
+                            : tab.label}
+                        </span>
+                        <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-200 ${practiceDropdownOpen ? 'rotate-180' : ''}`} />
+                      </button>
 
-                    {/* Dropdown Menu of Official Sections */}
-                    {practiceDropdownOpen && (
-                      <div className="absolute top-full left-1/2 -translate-x-1/2 sm:left-0 sm:translate-x-0 mt-1 w-64 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl shadow-xl p-1.5 z-50 animate-fade-in space-y-0.5">
-                        <div className="px-2.5 py-1 text-[10px] font-black uppercase tracking-wider text-slate-400 border-b border-slate-100 dark:border-slate-800">
-                          {currentLevel} Official Exam Sections
-                        </div>
-                        {getJapanesePracticeSections(currentLevel).map((sec) => (
-                          <button
-                            key={sec.id}
-                            type="button"
-                            onClick={() => {
-                              setPracticeSection(sec.id);
-                              setActiveTab('SECTION_PRACTICE');
-                              setPracticeDropdownOpen(false);
-                              if (onTabChange) onTabChange('SECTION_PRACTICE');
-                            }}
-                            className={`w-full px-2.5 py-2 rounded-xl text-xs font-bold text-left flex items-center justify-between transition-colors cursor-pointer ${
-                              activeTab === 'SECTION_PRACTICE' && practiceSection === sec.id
-                                ? 'bg-red-50 text-red-700 dark:bg-red-950/50 dark:text-red-300 font-black'
-                                : 'text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800'
-                            }`}
-                          >
-                            <div className="flex items-center gap-2">
-                              <span className="text-sm">{sec.icon}</span>
-                              <div>
-                                <p className="leading-tight">{sec.title}</p>
-                                <p className="text-[10px] text-slate-400 dark:text-slate-500 font-medium">{sec.sub}</p>
+                      {/* Dropdown Menu of Official Sections */}
+                      {practiceDropdownOpen && (
+                        <div className="absolute top-full left-0 mt-1.5 w-64 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl shadow-xl p-1.5 z-50 animate-fade-in space-y-0.5">
+                          <div className="px-2.5 py-1 text-[10px] font-black uppercase tracking-wider text-slate-400 border-b border-slate-100 dark:border-slate-800">
+                            {currentLevel} Official Exam Sections
+                          </div>
+                          {getJapanesePracticeSections(currentLevel).map((sec) => (
+                            <button
+                              key={sec.id}
+                              type="button"
+                              onClick={() => {
+                                setPracticeSection(sec.id);
+                                setActiveTab('SECTION_PRACTICE');
+                                setPracticeDropdownOpen(false);
+                                if (onTabChange) onTabChange('SECTION_PRACTICE', sec.id.toLowerCase());
+                              }}
+                              className={`w-full px-2.5 py-2 rounded-xl text-xs font-bold text-left flex items-center justify-between transition-colors cursor-pointer ${
+                                activeTab === 'SECTION_PRACTICE' && practiceSection === sec.id
+                                  ? 'bg-red-50 text-red-700 dark:bg-red-950/50 dark:text-red-300 font-black'
+                                  : 'text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800'
+                              }`}
+                            >
+                              <div className="flex items-center gap-2">
+                                <span className="text-sm">{sec.icon}</span>
+                                <div>
+                                  <p className="leading-tight">{sec.title}</p>
+                                  <p className="text-[10px] text-slate-400 dark:text-slate-500 font-medium">{sec.sub}</p>
+                                </div>
                               </div>
-                            </div>
-                            <ChevronRight className="w-3.5 h-3.5 text-slate-400" />
-                          </button>
-                        ))}
-                      </div>
-                    )}
-                  </div>
-                );
-              }
+                              <ChevronRight className="w-3.5 h-3.5 text-slate-400" />
+                            </button>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                  );
+                }
 
-              return (
-                <button
-                  key={tab.id}
-                  onClick={() => handleTabClick(tab.id as LevelSubTab)}
-                  className={`px-3 py-1 rounded-lg text-xs font-extrabold transition-all flex items-center gap-1.5 cursor-pointer whitespace-nowrap shrink-0 ${
-                    isActive
-                      ? 'bg-red-600 text-white shadow-xs border border-red-500 font-black'
-                      : 'bg-slate-50 dark:bg-slate-800/50 text-slate-600 dark:text-slate-400 hover:text-slate-900 hover:bg-slate-100 dark:hover:bg-slate-800 border border-slate-200/60 dark:border-slate-700/60 font-bold'
-                  }`}
-                >
-                  <span className="text-[11px]">{tab.emoji}</span>
-                  <span>{tab.label}</span>
-                </button>
-              );
-            })}
+                return (
+                  <button
+                    key={tab.id}
+                    onClick={() => handleTabClick(tab.id as LevelSubTab)}
+                    className={`px-3 py-1 rounded-lg text-xs font-extrabold transition-all flex items-center gap-1.5 cursor-pointer whitespace-nowrap shrink-0 ${
+                      isActive
+                        ? 'bg-red-600 text-white shadow-xs border border-red-500 font-black'
+                        : 'bg-slate-50 dark:bg-slate-800/50 text-slate-600 dark:text-slate-400 hover:text-slate-900 hover:bg-slate-100 dark:hover:bg-slate-800 border border-slate-200/60 dark:border-slate-700/60 font-bold'
+                    }`}
+                  >
+                    <span className="text-[11px]">{tab.emoji}</span>
+                    <span>{tab.label}</span>
+                  </button>
+                );
+              })}
+            </div>
           </div>
         )}
       </div>
@@ -329,60 +378,15 @@ export const LevelHubDashboard: React.FC<LevelHubDashboardProps> = ({
             )}
 
             {(activeTab === 'SECTION_PRACTICE' || activeTab === 'LISTENING') && (
-              <div className="space-y-3">
-                {/* Section Practice Header & Section Quick Switcher */}
-                <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-3.5 shadow-xs flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
-                  <div>
-                    <div className="flex items-center gap-2">
-                      <span className="px-2.5 py-0.5 rounded-lg bg-red-100 dark:bg-red-950/60 text-red-800 dark:text-red-300 text-[10px] font-black uppercase tracking-wider">
-                        {currentLevel} Section Practice
-                      </span>
-                      <span className="text-[11px] font-bold text-slate-500">
-                        Official Exam Format • Self-Paced Focused Drill
-                      </span>
-                    </div>
-                    <h3 className="text-sm sm:text-base font-black text-slate-900 dark:text-white mt-1">
-                      {practiceSection === 'LISTENING' && '🎧 聴解 (Listening Comprehension) Practice'}
-                      {practiceSection === 'READING' && '📖 読解 (Reading Comprehension) Practice'}
-                      {practiceSection === 'VOCABULARY' && '🔤 文字・語彙 (Vocabulary & Kanji) Practice'}
-                      {practiceSection === 'GRAMMAR' && (currentLevel === 'JFT' ? '💬 会話と表現 (Conversation & Expression)' : '📝 文法 (Grammar & Sentence Star) Practice')}
-                    </h3>
-                  </div>
-
-                  {/* Quick Section Switcher */}
-                  <div className="flex items-center gap-1.5 flex-wrap">
-                    {getJapanesePracticeSections(currentLevel).map((sec) => (
-                      <button
-                        key={sec.id}
-                        type="button"
-                        onClick={() => {
-                          setPracticeSection(sec.id);
-                          setActiveTab('SECTION_PRACTICE');
-                        }}
-                        className={`px-3 py-1.5 rounded-xl text-xs font-black transition-all cursor-pointer flex items-center gap-1.5 border ${
-                          practiceSection === sec.id
-                            ? 'bg-red-600 text-white border-red-500 shadow-xs'
-                            : 'bg-slate-50 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 border-slate-200 dark:border-slate-700'
-                        }`}
-                      >
-                        <span>{sec.icon}</span>
-                        <span>{sec.title.split(' ')[0]}</span>
-                      </button>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Dedicated Practice Engine */}
-                <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-3 sm:p-5 shadow-xs">
-                  <TimedExamEngine
-                    initialLanguage="JAPANESE"
-                    preselectedLevel={currentLevel === 'JFT' ? 'JFT' : currentLevel}
-                    selectedSections={[practiceSection]}
-                    examMode="PARTIAL"
-                    autoStart={true}
-                  />
-                </div>
-              </div>
+              <SectionPracticeEngine
+                language="JAPANESE"
+                level={currentLevel}
+                activeSection={practiceSection}
+                onSectionChange={(sec) => {
+                  setPracticeSection(sec as any);
+                  if (onTabChange) onTabChange('SECTION_PRACTICE', sec.toLowerCase());
+                }}
+              />
             )}
 
             {activeTab === 'EXAMS' && (

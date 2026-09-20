@@ -7,6 +7,7 @@ import MobileDrawer from '@/components/layout/MobileDrawer';
 import DirectMessageDrawer from '@/components/community/DirectMessageDrawer';
 import NotificationBell from '@/components/notifications/NotificationBell';
 import PlatformMessageIcon from '@/components/icons/PlatformMessageIcon';
+import { useUnreadMessages } from '@/lib/useUnreadMessages';
 
 interface MobileNavbarProps {
   user?: { name: string; email: string } | null;
@@ -20,6 +21,7 @@ export default function MobileNavbar({ user, onSearchOpen }: MobileNavbarProps) 
   const [authSheetOpen, setAuthSheetOpen] = useState(false);
   const [authMode, setAuthMode] = useState<'signin' | 'register'>('signin');
   const [messageDrawerOpen, setMessageDrawerOpen] = useState(false);
+  const { unreadCount: unreadMessageCount } = useUnreadMessages(user);
 
   const openAuth = (mode: 'signin' | 'register') => {
     setAuthMode(mode);
@@ -104,6 +106,11 @@ export default function MobileNavbar({ user, onSearchOpen }: MobileNavbarProps) 
               title="Messaging & Inquiries"
             >
               <PlatformMessageIcon className="w-5 h-5" />
+              {unreadMessageCount > 0 && (
+                <span className="absolute -top-1 -right-1 px-1.5 py-0.5 rounded-full bg-rose-600 text-white text-[10px] font-black border-2 border-white min-w-[18px] text-center shadow-xs animate-pulse">
+                  {unreadMessageCount > 9 ? '9+' : unreadMessageCount}
+                </span>
+              )}
             </button>
           </div>
         </div>
