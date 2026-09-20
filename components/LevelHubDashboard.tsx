@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
-import { Sparkles, BookOpen, Layers, Headphones, Clock, Target, Award, Calendar, Flame, CheckCircle2, ChevronRight, Zap, ArrowLeft, ArrowRight, FileText, Globe, Maximize2, Minimize2 } from 'lucide-react';
+import { Sparkles, BookOpen, Layers, Headphones, Clock, Target, Award, Calendar, Flame, CheckCircle2, ChevronRight, ChevronDown, Zap, ArrowLeft, ArrowRight, FileText, Globe, Maximize2, Minimize2 } from 'lucide-react';
 import { LevelPassTricks } from './LevelPassTricks';
 import { LevelStudyPlanModal } from './LevelStudyPlanModal';
 import { VocabularyExplorer } from './VocabularyExplorer';
@@ -9,12 +9,13 @@ import { AlphabetGrid } from './AlphabetGrid';
 import { RadicalBreakdown } from './RadicalBreakdown';
 import { LevelExamSyllabusGuide } from './LevelExamSyllabusGuide';
 import { JFTGrammarExplorer } from './JFTGrammarExplorer';
+import { TimedExamEngine } from './TimedExamEngine';
 
 import { useSidebarCollapse } from './layout/MainLayoutWrapper';
 import { PanelLeftClose, PanelLeftOpen } from 'lucide-react';
 
 export type LevelType = 'BASICS' | 'N5' | 'N4' | 'N3' | 'N2' | 'N1' | 'JFT' | 'KANJI_1000';
-export type LevelSubTab = 'KANA_MATRIX' | 'BASICS_VOCAB' | 'RADICALS' | 'VOCABULARY' | 'GRAMMAR' | 'FLASHCARDS' | 'LISTENING' | 'EXAMS' | 'EXAM_GUIDE';
+export type LevelSubTab = 'KANA_MATRIX' | 'BASICS_VOCAB' | 'RADICALS' | 'VOCABULARY' | 'GRAMMAR' | 'FLASHCARDS' | 'LISTENING' | 'EXAMS' | 'EXAM_GUIDE' | 'SECTION_PRACTICE';
 
 interface LevelHubDashboardProps {
   level: LevelType;
@@ -86,6 +87,37 @@ export const LevelHubDashboard: React.FC<LevelHubDashboardProps> = ({
     if (onTabChange) onTabChange(t);
   };
 
+  const [practiceSection, setPracticeSection] = useState<'LISTENING' | 'READING' | 'VOCABULARY' | 'GRAMMAR'>('LISTENING');
+  const [practiceDropdownOpen, setPracticeDropdownOpen] = useState(false);
+  const practiceDropdownRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (practiceDropdownRef.current && !practiceDropdownRef.current.contains(e.target as Node)) {
+        setPracticeDropdownOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
+
+  const getJapanesePracticeSections = (lvl: LevelType) => {
+    if (lvl === 'JFT') {
+      return [
+        { id: 'LISTENING' as const, title: 'Listening Comprehension', sub: '聴解 (Dialogue & Audio Tasks)', icon: '🎧' },
+        { id: 'READING' as const, title: 'Reading Comprehension', sub: '読解 (Passages, Signs & Menus)', icon: '📖' },
+        { id: 'VOCABULARY' as const, title: 'Script & Vocabulary', sub: '文字と語彙 (Kanji & Practical Words)', icon: '🔤' },
+        { id: 'GRAMMAR' as const, title: 'Conversation & Expression', sub: '会話と表現 (Grammar & Phrases)', icon: '💬' },
+      ];
+    }
+    return [
+      { id: 'LISTENING' as const, title: 'Listening Practice', sub: '聴解 (Chōkai - Audio & Dialogues)', icon: '🎧' },
+      { id: 'READING' as const, title: 'Reading Practice', sub: '読解 (Dokkai - Passages & Comprehension)', icon: '📖' },
+      { id: 'VOCABULARY' as const, title: 'Vocabulary & Kanji', sub: '文字・語彙 (Kanji Readings & Meaning)', icon: '🔤' },
+      { id: 'GRAMMAR' as const, title: 'Grammar Practice', sub: '文法 (Bunpō - Sentence Star & Star)', icon: '📝' },
+    ];
+  };
+
   // Dynamic Sub Tabs tailored strictly to current selected level
   const getSubTabs = () => {
     if (currentLevel === 'BASICS') {
@@ -98,7 +130,7 @@ export const LevelHubDashboard: React.FC<LevelHubDashboardProps> = ({
       return [
         { id: 'VOCABULARY', label: 'Vocabulary Explorer', icon: BookOpen, emoji: '📚' },
         { id: 'FLASHCARDS', label: 'Kanji Flashcards', icon: Layers, emoji: '🃏' },
-        { id: 'LISTENING', label: 'Listening Practice', icon: Headphones, emoji: '🎧' },
+        { id: 'SECTION_PRACTICE', label: 'Practice', icon: Target, emoji: '🎯', isPracticeDropdown: true },
         { id: 'EXAM_GUIDE', label: 'Exam & Syllabus Guide', icon: FileText, emoji: '🎓' },
       ];
     }
@@ -106,7 +138,7 @@ export const LevelHubDashboard: React.FC<LevelHubDashboardProps> = ({
       return [
         { id: 'VOCABULARY', label: `Vocabulary Explorer (${currentLevel})`, icon: BookOpen, emoji: '📚' },
         { id: 'FLASHCARDS', label: 'Kanji Flashcards', icon: Layers, emoji: '🃏' },
-        { id: 'LISTENING', label: 'Listening Practice', icon: Headphones, emoji: '🎧' },
+        { id: 'SECTION_PRACTICE', label: 'Practice', icon: Target, emoji: '🎯', isPracticeDropdown: true },
         { id: 'EXAM_GUIDE', label: 'Exam & Syllabus Guide', icon: FileText, emoji: '🎓' },
       ];
     }
@@ -115,6 +147,7 @@ export const LevelHubDashboard: React.FC<LevelHubDashboardProps> = ({
         { id: 'VOCABULARY', label: 'JFT Meanings (Lessons 1-50)', icon: BookOpen, emoji: '📖' },
         { id: 'GRAMMAR', label: 'JFT Grammar (Lessons 1-50)', icon: FileText, emoji: '📝' },
         { id: 'FLASHCARDS', label: 'Kanji Flashcards', icon: Layers, emoji: '🃏' },
+        { id: 'SECTION_PRACTICE', label: 'Practice', icon: Target, emoji: '🎯', isPracticeDropdown: true },
         { id: 'EXAM_GUIDE', label: 'Exam & Syllabus Guide', icon: FileText, emoji: '🎓' },
       ];
     }
@@ -194,6 +227,68 @@ export const LevelHubDashboard: React.FC<LevelHubDashboardProps> = ({
           <div className="pt-1.5 border-t border-slate-100 dark:border-slate-800/80 flex items-center justify-start sm:justify-center gap-1.5 overflow-x-auto no-scrollbar touch-pan-x py-0.5">
             {getSubTabs().map((tab) => {
               const isActive = activeTab === tab.id;
+
+              if ((tab as any).isPracticeDropdown) {
+                return (
+                  <div
+                    key={tab.id}
+                    ref={practiceDropdownRef}
+                    className="relative shrink-0"
+                    onMouseEnter={() => setPracticeDropdownOpen(true)}
+                    onMouseLeave={() => setPracticeDropdownOpen(false)}
+                  >
+                    <button
+                      type="button"
+                      onClick={() => setPracticeDropdownOpen(!practiceDropdownOpen)}
+                      className={`px-3 py-1 rounded-lg text-xs font-extrabold transition-all flex items-center gap-1.5 cursor-pointer whitespace-nowrap shrink-0 ${
+                        activeTab === 'SECTION_PRACTICE' || activeTab === 'LISTENING'
+                          ? 'bg-red-600 text-white shadow-xs border border-red-500 font-black'
+                          : 'bg-slate-50 dark:bg-slate-800/50 text-slate-600 dark:text-slate-400 hover:text-slate-900 hover:bg-slate-100 dark:hover:bg-slate-800 border border-slate-200/60 dark:border-slate-700/60 font-bold'
+                      }`}
+                    >
+                      <span className="text-[11px]">{tab.emoji}</span>
+                      <span>{tab.label}</span>
+                      <ChevronDown className={`w-3 h-3 transition-transform duration-200 ${practiceDropdownOpen ? 'rotate-180' : ''}`} />
+                    </button>
+
+                    {/* Dropdown Menu of Official Sections */}
+                    {practiceDropdownOpen && (
+                      <div className="absolute top-full left-1/2 -translate-x-1/2 sm:left-0 sm:translate-x-0 mt-1 w-64 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl shadow-xl p-1.5 z-50 animate-fade-in space-y-0.5">
+                        <div className="px-2.5 py-1 text-[10px] font-black uppercase tracking-wider text-slate-400 border-b border-slate-100 dark:border-slate-800">
+                          {currentLevel} Official Exam Sections
+                        </div>
+                        {getJapanesePracticeSections(currentLevel).map((sec) => (
+                          <button
+                            key={sec.id}
+                            type="button"
+                            onClick={() => {
+                              setPracticeSection(sec.id);
+                              setActiveTab('SECTION_PRACTICE');
+                              setPracticeDropdownOpen(false);
+                              if (onTabChange) onTabChange('SECTION_PRACTICE');
+                            }}
+                            className={`w-full px-2.5 py-2 rounded-xl text-xs font-bold text-left flex items-center justify-between transition-colors cursor-pointer ${
+                              activeTab === 'SECTION_PRACTICE' && practiceSection === sec.id
+                                ? 'bg-red-50 text-red-700 dark:bg-red-950/50 dark:text-red-300 font-black'
+                                : 'text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800'
+                            }`}
+                          >
+                            <div className="flex items-center gap-2">
+                              <span className="text-sm">{sec.icon}</span>
+                              <div>
+                                <p className="leading-tight">{sec.title}</p>
+                                <p className="text-[10px] text-slate-400 dark:text-slate-500 font-medium">{sec.sub}</p>
+                              </div>
+                            </div>
+                            <ChevronRight className="w-3.5 h-3.5 text-slate-400" />
+                          </button>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                );
+              }
+
               return (
                 <button
                   key={tab.id}
@@ -233,8 +328,61 @@ export const LevelHubDashboard: React.FC<LevelHubDashboardProps> = ({
               <KanjiCard currentLevel={currentLevel} />
             )}
 
-            {activeTab === 'LISTENING' && (
-              <AlphabetGrid activeLanguage="JAPANESE" />
+            {(activeTab === 'SECTION_PRACTICE' || activeTab === 'LISTENING') && (
+              <div className="space-y-3">
+                {/* Section Practice Header & Section Quick Switcher */}
+                <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-3.5 shadow-xs flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+                  <div>
+                    <div className="flex items-center gap-2">
+                      <span className="px-2.5 py-0.5 rounded-lg bg-red-100 dark:bg-red-950/60 text-red-800 dark:text-red-300 text-[10px] font-black uppercase tracking-wider">
+                        {currentLevel} Section Practice
+                      </span>
+                      <span className="text-[11px] font-bold text-slate-500">
+                        Official Exam Format • Self-Paced Focused Drill
+                      </span>
+                    </div>
+                    <h3 className="text-sm sm:text-base font-black text-slate-900 dark:text-white mt-1">
+                      {practiceSection === 'LISTENING' && '🎧 聴解 (Listening Comprehension) Practice'}
+                      {practiceSection === 'READING' && '📖 読解 (Reading Comprehension) Practice'}
+                      {practiceSection === 'VOCABULARY' && '🔤 文字・語彙 (Vocabulary & Kanji) Practice'}
+                      {practiceSection === 'GRAMMAR' && (currentLevel === 'JFT' ? '💬 会話と表現 (Conversation & Expression)' : '📝 文法 (Grammar & Sentence Star) Practice')}
+                    </h3>
+                  </div>
+
+                  {/* Quick Section Switcher */}
+                  <div className="flex items-center gap-1.5 flex-wrap">
+                    {getJapanesePracticeSections(currentLevel).map((sec) => (
+                      <button
+                        key={sec.id}
+                        type="button"
+                        onClick={() => {
+                          setPracticeSection(sec.id);
+                          setActiveTab('SECTION_PRACTICE');
+                        }}
+                        className={`px-3 py-1.5 rounded-xl text-xs font-black transition-all cursor-pointer flex items-center gap-1.5 border ${
+                          practiceSection === sec.id
+                            ? 'bg-red-600 text-white border-red-500 shadow-xs'
+                            : 'bg-slate-50 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 border-slate-200 dark:border-slate-700'
+                        }`}
+                      >
+                        <span>{sec.icon}</span>
+                        <span>{sec.title.split(' ')[0]}</span>
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Dedicated Practice Engine */}
+                <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-3 sm:p-5 shadow-xs">
+                  <TimedExamEngine
+                    initialLanguage="JAPANESE"
+                    preselectedLevel={currentLevel === 'JFT' ? 'JFT' : currentLevel}
+                    selectedSections={[practiceSection]}
+                    examMode="PARTIAL"
+                    autoStart={true}
+                  />
+                </div>
+              </div>
             )}
 
             {activeTab === 'EXAMS' && (
