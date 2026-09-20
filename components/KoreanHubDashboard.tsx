@@ -743,14 +743,16 @@ export const KoreanHubDashboard: React.FC<KoreanHubDashboardProps> = ({
 
       {/* 🌐 UNIFIED KOREAN LEVEL & SUB-MENU NAVIGATION CARD */}
       <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-2 space-y-1.5 shadow-xs">
-        {/* ROW 1: Level Switcher */}
-        <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar touch-pan-x py-0.5 w-full">
-          <div className="flex items-center gap-1 text-xs font-black uppercase tracking-wider text-slate-500 whitespace-nowrap pl-1 pr-0.5 shrink-0">
+        {/* ROW 1: Level Switcher (Course Label on Left, Level Pills Aligned to Right like Mock Test) */}
+        <div className="flex items-center justify-between gap-2 overflow-x-auto no-scrollbar touch-pan-x py-1 w-full">
+          {/* Left: Course Label */}
+          <div className="flex items-center gap-1.5 text-xs font-black uppercase tracking-wider text-slate-500 whitespace-nowrap pl-1 pr-2 shrink-0">
             <Globe className="w-3.5 h-3.5 text-blue-600" />
-            <span className="hidden sm:inline">Course:</span>
+            <span>Course:</span>
           </div>
 
-          <div className="flex items-center gap-1.5 flex-nowrap shrink-0">
+          {/* Right: Level Switcher Pills & Focus Action */}
+          <div className="flex items-center gap-1.5 flex-nowrap">
             {KOREA_LEVEL_LIST.map((lvl) => {
               const isSelected = level === lvl.id;
               return (
@@ -773,7 +775,7 @@ export const KoreanHubDashboard: React.FC<KoreanHubDashboardProps> = ({
             {/* ⛶ FOCUS MODE TOGGLE BUTTON */}
             <button
               onClick={() => setIsFocusMode(!isFocusMode)}
-              className={`ml-1 px-3 py-1 rounded-xl text-xs font-extrabold transition-all flex items-center gap-1.5 cursor-pointer whitespace-nowrap border ${
+              className={`px-3 py-1 rounded-xl text-xs font-extrabold transition-all flex items-center gap-1.5 cursor-pointer whitespace-nowrap border ${
                 isFocusMode
                   ? 'bg-blue-600 text-white border-blue-500 shadow-md font-black animate-pulse'
                   : 'bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200 border-slate-200 dark:border-slate-700 font-bold'
@@ -786,8 +788,8 @@ export const KoreanHubDashboard: React.FC<KoreanHubDashboardProps> = ({
           </div>
         </div>
 
-        {/* ROW 2: Options Sub-Menu (Micro-Pill Navigation) */}
-        <div className="pt-1.5 border-t border-slate-100 dark:border-slate-800/80 flex items-center gap-1 overflow-x-auto no-scrollbar touch-pan-x py-0.5">
+        {/* ROW 2: Options Sub-Menu (Micro-Pill Navigation - Centered & Clean) */}
+        <div className="pt-1.5 border-t border-slate-100 dark:border-slate-800/80 flex items-center justify-start sm:justify-center gap-1.5 overflow-x-auto no-scrollbar touch-pan-x py-0.5">
           {subTabs.map(tab => {
             const isActive = activeTab === tab.id;
 

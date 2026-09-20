@@ -88,10 +88,10 @@ export default function MobileDrawer({ onClose, user, onAuthOpen }: MobileDrawer
     {
       key: 'all-exams',
       label: 'All Mock Tests',
-      href: getScopedHref('exams'),
+      href: getScopedHref('mock-test'),
       Icon: ClipboardList,
       badge: 'CBT Hub',
-      isActive: pathname === `/${activeCountry}/exams`
+      isActive: pathname === `/${activeCountry}/mock-test` || pathname === `/${activeCountry}/exams`
     },
     ...(activeCountry === 'korea'
       ? [
@@ -461,7 +461,7 @@ export default function MobileDrawer({ onClose, user, onAuthOpen }: MobileDrawer
             <Globe className={`w-4 h-4 shrink-0 ${
               isActive(getScopedHref('life')) ? (activeCountry === 'japan' ? 'text-red-600' : 'text-blue-600') : 'text-slate-400'
             }`} />
-            <span>Life</span>
+            <span>Life & Culture</span>
           </Link>
 
           {/* Secondary Links (Updates & Articles) */}

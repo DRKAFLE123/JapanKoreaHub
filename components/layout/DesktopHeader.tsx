@@ -45,7 +45,7 @@ const JAPAN_DROPDOWN = [
   { label: 'Visa Guide', href: '/japan/visa', icon: Shield, desc: 'Student, SSW & Work Visas' },
   { label: 'Rooms & Housing', href: '/japan/rooms', icon: Home, desc: 'Apartments & Sharehouses' },
   { label: 'Jobs & Careers', href: '/japan/jobs', icon: Briefcase, desc: 'Part-time & SSW Visas' },
-  { label: 'Life in Japan', href: '/japan/life', icon: Globe, desc: 'Cost of living & housing' },
+  { label: 'Life & Culture in Japan', href: '/japan/life', icon: Globe, desc: 'Cost of living, housing & etiquette' },
 ];
 
 const KOREA_DROPDOWN = [
@@ -54,7 +54,7 @@ const KOREA_DROPDOWN = [
   { label: 'Visa Guide', href: '/korea/visa', icon: Shield, desc: 'E-9, E-7 & Study Visas' },
   { label: 'Rooms & Housing', href: '/korea/rooms', icon: Home, desc: 'Goshiwon & One-Room' },
   { label: 'Jobs & Careers', href: '/korea/jobs', icon: Briefcase, desc: 'Student Alba & E-9 Jobs' },
-  { label: 'Life in Korea', href: '/korea/life', icon: Globe, desc: 'Rent & Living costs' },
+  { label: 'Life & Culture in Korea', href: '/korea/life', icon: Globe, desc: 'Rent, living costs & customs' },
 ];
 
 export default function DesktopHeader({ user, onSearchOpen, lang, onLangToggle, onMenuToggle }: DesktopHeaderProps) {

@@ -34,3 +34,7 @@ Thumbs.db
 # Python
 __pycache__/
 *.pyc
+
+# Temporary scratch
+scratch/
+

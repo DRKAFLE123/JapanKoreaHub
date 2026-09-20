@@ -4,12 +4,12 @@ import LifeHubClient from './LifeHubClient';
 
 const LIFE_META: Record<string, { title: string; desc: string }> = {
   japan: {
-    title: 'Life in Japan (Cost of Living, Housing & Rights) — JapanKoreaHub',
-    desc: 'Cost of living breakdown in Japan, apartment renting (Reikin/Shikikin), health insurance (NHI), part-time work limits (28 hrs/wk), and emergency contacts.',
+    title: 'Life & Culture in Japan (Living Costs, Housing, Etiquette & Traditions) — JapanKoreaHub',
+    desc: 'Cost of living breakdown in Japan, apartment renting (Reikin/Shikikin), Japanese etiquette (Ojigi, Genkan, Hou-Ren-So), health insurance (NHI), part-time rules (28 hrs/wk), and emergency contacts.',
   },
   korea: {
-    title: 'Life in Korea (Cost of Living, Housing & Rights) — JapanKoreaHub',
-    desc: 'Cost of living breakdown in Seoul & regional cities, housing deposit (Jeonse/Wolse), national health insurance (NHIS), and workplace rights.',
+    title: 'Life & Culture in Korea (Living Costs, Housing, Etiquette & Traditions) — JapanKoreaHub',
+    desc: 'Cost of living breakdown in Seoul & regional cities, housing deposits (Jeonse/Wolse), Korean culture & etiquette (Two-hand rule, Hoesik, Palli-Palli), health insurance, and workplace rights.',
   },
 };
 

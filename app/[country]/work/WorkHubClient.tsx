@@ -120,7 +120,7 @@ export default function WorkHubClient({ country }: { country: Country }) {
                       <span>Start Learning • Study Hub</span>
                     </Link>
                     <Link
-                      href={`/${country}/exams/skills?sector=${sec.id}`}
+                      href={`/${country}/mock-test/skills?sector=${sec.id}`}
                       className="py-2.5 px-3 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-black text-xs flex items-center justify-center gap-2 transition-colors shadow-xs"
                     >
                       <Play className="w-3.5 h-3.5 fill-white" />

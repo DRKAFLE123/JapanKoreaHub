@@ -137,14 +137,16 @@ export const LevelHubDashboard: React.FC<LevelHubDashboardProps> = ({
       
       {/* 🌐 UNIFIED LEVEL & SUB-MENU NAVIGATION CARD */}
       <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-2 space-y-1.5 shadow-xs">
-        {/* ROW 1: Level Switcher */}
-        <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar touch-pan-x py-0.5 w-full">
-          <div className="flex items-center gap-1 text-xs font-black uppercase tracking-wider text-slate-500 whitespace-nowrap pl-1 pr-0.5 shrink-0">
+        {/* ROW 1: Level Switcher (Course Label on Left, Level Pills Aligned to Right like Mock Test) */}
+        <div className="flex items-center justify-between gap-2 overflow-x-auto no-scrollbar touch-pan-x py-1 w-full">
+          {/* Left: Course Label */}
+          <div className="flex items-center gap-1.5 text-xs font-black uppercase tracking-wider text-slate-500 whitespace-nowrap pl-1 pr-2 shrink-0">
             <Globe className="w-3.5 h-3.5 text-red-600" />
-            <span className="hidden sm:inline">Course:</span>
+            <span>Course:</span>
           </div>
 
-          <div className="flex items-center gap-1.5 flex-nowrap shrink-0">
+          {/* Right: Level Switcher Pills & Focus Action */}
+          <div className="flex items-center gap-1.5 flex-nowrap">
             {JAPAN_LEVEL_LIST.map((lvl) => {
               const isSelected = currentLevel === lvl.id;
               return (
@@ -162,19 +164,19 @@ export const LevelHubDashboard: React.FC<LevelHubDashboardProps> = ({
               );
             })}
 
-            {/* 🛠️ SSW Skills & Study Hub Quick Jump */}
+            {/* 🛠️ Study SSW Skill Quick Jump to Study Portal */}
             <Link
-              href="/japan/exams/skills"
+              href="/japan/work"
               className="px-2.5 py-1 rounded-xl text-xs font-extrabold transition-all cursor-pointer whitespace-nowrap border bg-indigo-50 dark:bg-indigo-950/60 text-indigo-700 dark:text-indigo-300 hover:bg-indigo-100 dark:hover:bg-indigo-900/60 border-indigo-200 dark:border-indigo-800 flex items-center gap-1 shadow-xs"
-              title="Open Official SSW-1 Skills Directory, Sector Study Hubs & Prometric CBT Exams"
+              title="Open Official SSW Skills Study Portal & Sector Curriculum"
             >
-              <span>🛠️ SSW Skills &amp; Hub</span>
+              <span>🛠️ Study SSW Skill</span>
             </Link>
 
             {/* ⛶ FOCUS MODE TOGGLE BUTTON */}
             <button
               onClick={() => setIsFocusMode(!isFocusMode)}
-              className={`ml-1 px-3 py-1 rounded-xl text-xs font-extrabold transition-all flex items-center gap-1.5 cursor-pointer whitespace-nowrap border ${
+              className={`px-3 py-1 rounded-xl text-xs font-extrabold transition-all flex items-center gap-1.5 cursor-pointer whitespace-nowrap border ${
                 isFocusMode
                   ? 'bg-red-600 text-white border-red-500 shadow-md font-black animate-pulse'
                   : 'bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200 border-slate-200 dark:border-slate-700 font-bold'
@@ -187,22 +189,22 @@ export const LevelHubDashboard: React.FC<LevelHubDashboardProps> = ({
           </div>
         </div>
 
-        {/* ROW 2: Sub-Menu Options (Micro-Pill Navigation) */}
+        {/* ROW 2: Sub-Menu Options (Micro-Pill Navigation - Centered & Clean) */}
         {currentLevel !== 'BASICS' && currentLevel !== 'KANJI_1000' && (
-          <div className="pt-1.5 border-t border-slate-100 dark:border-slate-800/80 flex items-center gap-1 overflow-x-auto no-scrollbar touch-pan-x py-0.5">
+          <div className="pt-1.5 border-t border-slate-100 dark:border-slate-800/80 flex items-center justify-start sm:justify-center gap-1.5 overflow-x-auto no-scrollbar touch-pan-x py-0.5">
             {getSubTabs().map((tab) => {
               const isActive = activeTab === tab.id;
               return (
                 <button
                   key={tab.id}
                   onClick={() => handleTabClick(tab.id as LevelSubTab)}
-                  className={`px-2.5 py-1 rounded-lg text-[10.5px] font-extrabold transition-all flex items-center gap-1 cursor-pointer whitespace-nowrap shrink-0 ${
+                  className={`px-3 py-1 rounded-lg text-xs font-extrabold transition-all flex items-center gap-1.5 cursor-pointer whitespace-nowrap shrink-0 ${
                     isActive
                       ? 'bg-red-600 text-white shadow-xs border border-red-500 font-black'
                       : 'bg-slate-50 dark:bg-slate-800/50 text-slate-600 dark:text-slate-400 hover:text-slate-900 hover:bg-slate-100 dark:hover:bg-slate-800 border border-slate-200/60 dark:border-slate-700/60 font-bold'
                   }`}
                 >
-                  <span className="text-[10px]">{tab.emoji}</span>
+                  <span className="text-[11px]">{tab.emoji}</span>
                   <span>{tab.label}</span>
                 </button>
               );

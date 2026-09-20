@@ -1,6 +1,8 @@
 'use client';
 
 import React, { useState, useEffect, useRef } from 'react';
+import Link from 'next/link';
+import ComingSoonModal from '@/components/ui/ComingSoonModal';
 import {
   Clock,
   Flag,
@@ -21,20 +23,33 @@ import {
   ArrowLeft,
   FileText,
   Play,
-  RotateCcw
+  RotateCcw,
+  ChevronDown
 } from 'lucide-react';
 import { validateExamSubmission } from '@/lib/auth-security';
+import { JFT_LISTENING_01_QUESTIONS, JFTListeningQuestion, JFTListeningVocab } from '@/lib/jft-listening-data';
 
 export interface ExamQuestion {
   id: string;
-  level: string; // N5, N4, N3, N2 | EPS, TOPIK2, TOPIK3, TOPIK4
-  mockSet?: string; // 'N5_SET_1' | 'N5_SET_2' | 'N4_SET_1' | 'GENERAL'
+  level: string; // N5, N4, N3, N2 | EPS, TOPIK2, TOPIK3, TOPIK4 | JFT
+  mockSet?: string; // 'N5_SET_1' | 'N5_SET_2' | 'N4_SET_1' | 'JFT_LISTENING_01' | 'GENERAL'
+  section?: 'LISTENING' | 'READING' | 'VOCABULARY' | 'GRAMMAR';
   type: 'MULTIPLE_CHOICE' | 'LISTENING' | 'FILL_BLANK';
+  category?: string;
+  categoryEn?: string;
+  categoryNe?: string;
+  situation?: string;
   prompt: string;
+  promptEn?: string;
+  promptNe?: string;
+  audioScript?: string;
   audioUrl?: string;
   options: string[];
   correctAnswer: string;
   explanation?: string;
+  transcript?: string;
+  transcriptNepali?: string;
+  vocabulary?: JFTListeningVocab[];
 }
 
 const JAPANESE_QUESTIONS: ExamQuestion[] = [
@@ -412,6 +427,9 @@ interface TimedExamEngineProps {
   activeLanguage?: 'JAPANESE' | 'KOREAN' | string;
   currentLevel?: string;
   preselectedLevel?: string;
+  preselectedMockSet?: string;
+  selectedSections?: string[];
+  examMode?: 'FULL' | 'PARTIAL';
   autoStart?: boolean;
   hideLevelSelector?: boolean;
   hideCategorySelector?: boolean;
@@ -424,6 +442,9 @@ export const TimedExamEngine: React.FC<TimedExamEngineProps> = ({
   activeLanguage: propActiveLanguage,
   currentLevel: propCurrentLevel,
   preselectedLevel,
+  preselectedMockSet,
+  selectedSections,
+  examMode = 'FULL',
   autoStart = false,
   onExitExam,
   onCompleteExam,
@@ -455,7 +476,11 @@ export const TimedExamEngine: React.FC<TimedExamEngineProps> = ({
     passed: boolean;
     timeSpentSeconds: number;
   } | null>(null);
+  const [certificateCode, setCertificateCode] = useState<string | null>(null);
+  const [comingSoonFeature, setComingSoonFeature] = useState<string | null>(null);
   const [selectedMockSet, setSelectedMockSet] = useState<string>(() => {
+    if (preselectedMockSet) return preselectedMockSet;
+    if (normalizedLevel === 'JFT') return 'JFT_LISTENING_01';
     if (normalizedLevel === 'N4') return 'N4_SET_1';
     if (normalizedLevel === 'EPS') return 'EPS_SET_1';
     if (normalizedLevel === 'TOPIK2') return 'TOPIK1_SET_1';
@@ -466,21 +491,41 @@ export const TimedExamEngine: React.FC<TimedExamEngineProps> = ({
   const [currentIndex, setCurrentIndex] = useState(0);
   const [selectedAnswers, setSelectedAnswers] = useState<Record<string, string>>({});
   const [flaggedQuestions, setFlaggedQuestions] = useState<Record<string, boolean>>({});
-  const [secondsRemaining, setSecondsRemaining] = useState(50 * 60);
+  const [secondsRemaining, setSecondsRemaining] = useState(() => {
+    if (preselectedMockSet === 'JFT_LISTENING_01' || normalizedLevel === 'JFT') return 20 * 60;
+    return 50 * 60;
+  });
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [audioPlaysCount, setAudioPlaysCount] = useState<Record<string, number>>({});
+  const [isPlayingAudio, setIsPlayingAudio] = useState(false);
+  const [showYourLanguage, setShowYourLanguage] = useState<Record<string, boolean>>({});
 
-  const allQuestions = activeLanguage === 'JAPANESE' ? JAPANESE_QUESTIONS : KOREAN_QUESTIONS;
+  const allQuestions: ExamQuestion[] = React.useMemo(() => {
+    if (activeLanguage === 'JAPANESE') {
+      return [...JAPANESE_QUESTIONS, ...(JFT_LISTENING_01_QUESTIONS as ExamQuestion[])];
+    }
+    return KOREAN_QUESTIONS;
+  }, [activeLanguage]);
 
-  // Question pool strictly locked to normalized level
+  // Question pool strictly locked to normalized level and optional section filter
   const questions = React.useMemo(() => {
-    return allQuestions.filter((q) => {
+    let pool = allQuestions.filter((q) => {
       if (selectedMockSet && selectedMockSet !== 'ALL') {
         if (q.mockSet === selectedMockSet) return true;
+        return false;
       }
       return q.level === normalizedLevel;
     });
-  }, [allQuestions, selectedMockSet, normalizedLevel]);
+
+    if (selectedSections && selectedSections.length > 0) {
+      pool = pool.filter((q) => {
+        const qSection = q.section || (q.type === 'LISTENING' ? 'LISTENING' : (q.type === 'FILL_BLANK' ? 'GRAMMAR' : 'READING'));
+        return selectedSections.includes(qSection);
+      });
+    }
+
+    return pool;
+  }, [allQuestions, selectedMockSet, normalizedLevel, selectedSections]);
 
   const toggleFullscreen = () => {
     if (!isFullscreen) {
@@ -509,12 +554,13 @@ export const TimedExamEngine: React.FC<TimedExamEngineProps> = ({
     setCurrentIndex(0);
     setSelectedAnswers({});
     setFlaggedQuestions({});
-    setSecondsRemaining(50 * 60);
+    setSecondsRemaining(setId === 'JFT_LISTENING_01' ? 20 * 60 : 50 * 60);
     setIsSubmitted(false);
     setExamResult(null);
     setShowSubmitConfirmModal(false);
     setShowExitConfirmModal(false);
     setAudioPlaysCount({});
+    setShowYourLanguage({});
     setExamStarted(true);
   };
 
@@ -577,32 +623,65 @@ export const TimedExamEngine: React.FC<TimedExamEngineProps> = ({
     setFlaggedQuestions({ ...flaggedQuestions, [qId]: !flaggedQuestions[qId] });
   };
 
+  const toggleYourLanguage = (qId: string) => {
+    setShowYourLanguage(prev => ({ ...prev, [qId]: !prev[qId] }));
+  };
+
   const playAudioPrompt = () => {
     if (!currentQ) return;
     const currentPlays = audioPlaysCount[currentQ.id] || 0;
-    if (currentPlays >= 2) {
-      alert('Rule: Audio can only be replayed a maximum of 2 times in official exams.');
+    if (!isSubmitted && currentPlays >= 2) {
+      alert('Official CBT Rule: Audio can only be replayed a maximum of 2 times in exam mode.');
       return;
     }
     setAudioPlaysCount({ ...audioPlaysCount, [currentQ.id]: currentPlays + 1 });
+    setIsPlayingAudio(true);
+
+    const spokenText = currentQ.audioScript || currentQ.prompt;
 
     if (currentQ.audioUrl) {
       const audio = new Audio(currentQ.audioUrl);
+      audio.onended = () => setIsPlayingAudio(false);
+      audio.onerror = () => {
+        if ('speechSynthesis' in window) {
+          window.speechSynthesis.cancel();
+          const utterance = new SpeechSynthesisUtterance(spokenText);
+          utterance.lang = activeLanguage === 'JAPANESE' ? 'ja-JP' : 'ko-KR';
+          utterance.rate = 0.9;
+          utterance.onend = () => setIsPlayingAudio(false);
+          utterance.onerror = () => setIsPlayingAudio(false);
+          window.speechSynthesis.speak(utterance);
+        } else {
+          setIsPlayingAudio(false);
+        }
+      };
       audio.play().catch(() => {
         if ('speechSynthesis' in window) {
-          const utterance = new SpeechSynthesisUtterance(currentQ.prompt);
+          window.speechSynthesis.cancel();
+          const utterance = new SpeechSynthesisUtterance(spokenText);
           utterance.lang = activeLanguage === 'JAPANESE' ? 'ja-JP' : 'ko-KR';
+          utterance.rate = 0.9;
+          utterance.onend = () => setIsPlayingAudio(false);
+          utterance.onerror = () => setIsPlayingAudio(false);
           window.speechSynthesis.speak(utterance);
+        } else {
+          setIsPlayingAudio(false);
         }
       });
     } else if ('speechSynthesis' in window) {
-      const utterance = new SpeechSynthesisUtterance(currentQ.prompt);
+      window.speechSynthesis.cancel();
+      const utterance = new SpeechSynthesisUtterance(spokenText);
       utterance.lang = activeLanguage === 'JAPANESE' ? 'ja-JP' : 'ko-KR';
+      utterance.rate = 0.9;
+      utterance.onend = () => setIsPlayingAudio(false);
+      utterance.onerror = () => setIsPlayingAudio(false);
       window.speechSynthesis.speak(utterance);
+    } else {
+      setIsPlayingAudio(false);
     }
   };
 
-  const handleSubmitExam = () => {
+  const handleSubmitExam = async () => {
     setIsSubmitted(true);
     setShowSubmitConfirmModal(false);
     let correctCount = 0;
@@ -623,6 +702,27 @@ export const TimedExamEngine: React.FC<TimedExamEngineProps> = ({
       passed,
       timeSpentSeconds,
     });
+
+    // Persist attempt & certificate into real MySQL database
+    try {
+      const res = await fetch('/api/mock-tests/submit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          examId: selectedMockSet || normalizedLevel,
+          score,
+          totalQuestions: questions.length,
+          timeSpentSeconds,
+          answers: selectedAnswers,
+        }),
+      });
+      const data = await res.json();
+      if (data?.success && data.attempt?.certificateCode) {
+        setCertificateCode(data.attempt.certificateCode);
+      }
+    } catch (err) {
+      console.error('Failed to submit exam attempt to database:', err);
+    }
 
     const check = validateExamSubmission(questions.length, timeSpentSeconds, score);
     if (!check.valid) {
@@ -1016,6 +1116,46 @@ export const TimedExamEngine: React.FC<TimedExamEngineProps> = ({
               </button>
             </div>
           </div>
+
+          {/* Real Database Certificate Banner */}
+          {certificateCode && (
+            <div className="mt-4 p-4 rounded-2xl bg-white text-slate-900 border border-emerald-300 shadow-md space-y-3">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                <div className="flex items-center gap-3">
+                  <div className="p-2.5 rounded-xl bg-emerald-50 text-emerald-600 border border-emerald-200 shrink-0">
+                    <Award className="w-6 h-6 text-emerald-600" />
+                  </div>
+                  <div>
+                    <span className="text-[10px] font-black uppercase tracking-wider px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800">
+                      ✓ Official Registry Record
+                    </span>
+                    <h4 className="font-extrabold text-sm text-slate-950 mt-1">
+                      Certificate Code: <span className="font-mono text-indigo-700">{certificateCode}</span>
+                    </h4>
+                  </div>
+                </div>
+
+                <div className="flex items-center gap-2">
+                  <Link
+                    href={`/verify-certificate/${certificateCode}`}
+                    target="_blank"
+                    className="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl font-bold text-xs flex items-center gap-1.5 shadow-xs transition-colors"
+                  >
+                    <CheckCircle2 className="w-3.5 h-3.5" />
+                    <span>View &amp; Verify Online</span>
+                  </Link>
+
+                  <button
+                    onClick={() => setComingSoonFeature('Official PDF Certificate with Embassy Barcode')}
+                    className="px-3.5 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl font-bold text-xs flex items-center gap-1.5 transition-colors cursor-pointer border border-slate-200"
+                  >
+                    <FileText className="w-3.5 h-3.5" />
+                    <span>Download PDF</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
         </div>
       )}
 
@@ -1048,33 +1188,89 @@ export const TimedExamEngine: React.FC<TimedExamEngineProps> = ({
               </div>
 
               {/* Audio Prompt button if LISTENING question */}
-              {currentQ.type === 'LISTENING' && (
-                <div className="mb-4 p-4 rounded-2xl bg-blue-50 border border-blue-200 flex items-center justify-between">
+              {(currentQ.type === 'LISTENING' || currentQ.mockSet === 'JFT_LISTENING_01') && (
+                <div className="mb-5 p-4 rounded-2xl bg-blue-50/80 border border-blue-200 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 shadow-xs">
                   <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-xl bg-blue-100 flex items-center justify-center text-blue-700">
+                    <div className={`w-11 h-11 rounded-2xl flex items-center justify-center text-blue-700 shrink-0 ${
+                      isPlayingAudio ? 'bg-blue-600 text-white animate-pulse' : 'bg-blue-100'
+                    }`}>
                       <Volume2 className="w-5 h-5" />
                     </div>
                     <div>
-                      <p className="text-xs font-bold text-blue-900">Listening Audio Prompt</p>
-                      <p className="text-[11px] text-blue-700">
-                        Played: {audioPlaysCount[currentQ.id] || 0} / 2 Max Replays
+                      <div className="flex items-center gap-1.5 flex-wrap">
+                        <p className="text-xs font-black text-blue-950">JFT-Basic Listening Audio</p>
+                        {currentQ.category && (
+                          <span className="text-[10px] font-bold px-2 py-0.5 rounded-md bg-blue-100/90 text-blue-800">
+                            {currentQ.category}
+                          </span>
+                        )}
+                      </div>
+                      <p className="text-[11px] text-blue-700 font-medium mt-0.5">
+                        {isSubmitted 
+                          ? '🎧 Review Mode: Unlimited listening available'
+                          : `Replay: ${audioPlaysCount[currentQ.id] || 0} / 2 Max Plays (${Math.max(0, 2 - (audioPlaysCount[currentQ.id] || 0))} remaining)`
+                        }
                       </p>
                     </div>
                   </div>
+
                   <button
                     onClick={playAudioPrompt}
-                    className="px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs shadow-xs transition-all cursor-pointer flex items-center gap-1.5"
+                    disabled={!isSubmitted && (audioPlaysCount[currentQ.id] || 0) >= 2}
+                    className={`px-4 py-2.5 rounded-xl font-black text-xs shadow-xs transition-all flex items-center gap-2 cursor-pointer shrink-0 ${
+                      !isSubmitted && (audioPlaysCount[currentQ.id] || 0) >= 2
+                        ? 'bg-slate-200 text-slate-400 cursor-not-allowed border border-slate-300'
+                        : isPlayingAudio
+                        ? 'bg-amber-500 hover:bg-amber-600 text-white border border-amber-400 animate-pulse'
+                        : 'bg-blue-600 hover:bg-blue-500 text-white border border-blue-500'
+                    }`}
                   >
                     <Volume2 className="w-4 h-4" />
-                    <span>Play Audio Track</span>
+                    <span>
+                      {isPlayingAudio 
+                        ? 'Playing Audio...' 
+                        : !isSubmitted && (audioPlaysCount[currentQ.id] || 0) >= 2
+                        ? 'No Replays Left'
+                        : isSubmitted
+                        ? 'Listen Again'
+                        : 'Play Audio'}
+                    </span>
                   </button>
                 </div>
               )}
 
+              {/* Situation context if available */}
+              {currentQ.situation && (
+                <div className="mb-2 px-3 py-1.5 rounded-xl bg-slate-100/90 border border-slate-200 text-xs text-slate-700 font-medium inline-flex items-center gap-2">
+                  <span className="font-bold text-slate-900 uppercase text-[10px] tracking-wide">Situation:</span>
+                  <span>{currentQ.situation}</span>
+                </div>
+              )}
+
               {/* Question Prompt */}
-              <h3 className="text-lg sm:text-xl font-black text-slate-900 mb-6 leading-relaxed">
-                {currentQ.prompt}
+              <h3 className="text-base sm:text-lg font-black text-slate-900 mb-3 leading-snug">
+                {currentQ.promptEn || currentQ.prompt}
               </h3>
+
+              {/* Your Language (नेपाली) toggle */}
+              {currentQ.promptNe && (
+                <div className="mb-4">
+                  <button
+                    type="button"
+                    onClick={() => toggleYourLanguage(currentQ.id)}
+                    className="inline-flex items-center gap-1.5 px-3 py-1 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold transition-all border border-slate-200 cursor-pointer"
+                  >
+                    <span>🇳🇵 Your Language (नेपाली)</span>
+                    <ChevronDown className={`w-3.5 h-3.5 text-slate-500 transition-transform ${showYourLanguage[currentQ.id] ? 'rotate-180' : ''}`} />
+                  </button>
+                  {showYourLanguage[currentQ.id] && (
+                    <div className="mt-2 p-3 rounded-2xl bg-indigo-50/90 border border-indigo-200 text-xs text-indigo-950 font-medium animate-fade-in">
+                      <span className="font-bold text-indigo-800 block text-[11px] mb-0.5">नेपाली प्रश्न (Nepali Prompt):</span>
+                      {currentQ.promptNe}
+                    </div>
+                  )}
+                </div>
+              )}
 
               {/* Options */}
               <div className="space-y-3">
@@ -1118,13 +1314,73 @@ export const TimedExamEngine: React.FC<TimedExamEngineProps> = ({
                 })}
               </div>
 
-              {/* Explanation on submission */}
-              {isSubmitted && currentQ.explanation && (
-                <div className="mt-6 p-4 rounded-2xl bg-amber-50 border border-amber-200 text-amber-900 text-xs leading-relaxed space-y-1">
-                  <div className="flex items-center gap-1.5 font-bold text-amber-700 uppercase tracking-wider text-[10px]">
-                    <Sparkles className="w-3.5 h-3.5" /> Answer Explanation
-                  </div>
-                  <p>{currentQ.explanation}</p>
+              {/* Detailed Review Mode on Submission */}
+              {isSubmitted && (
+                <div className="mt-6 space-y-3">
+                  {/* Explanation */}
+                  {currentQ.explanation && (
+                    <div className="p-4 rounded-2xl bg-amber-50/90 border border-amber-200 text-amber-950 text-xs leading-relaxed space-y-1">
+                      <div className="flex items-center gap-1.5 font-bold text-amber-800 uppercase tracking-wider text-[10px]">
+                        <Sparkles className="w-3.5 h-3.5" /> Answer Explanation (किन यो सही भयो?)
+                      </div>
+                      <p>{currentQ.explanation}</p>
+                    </div>
+                  )}
+
+                  {/* Japanese Dialogue Transcript */}
+                  {currentQ.transcript && (
+                    <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200 text-xs text-slate-800 space-y-2">
+                      <div className="flex items-center gap-1.5 font-black text-slate-900 uppercase tracking-wider text-[10px]">
+                        <span>📖 Audio Transcript (जापानी संवाद लिपि)</span>
+                      </div>
+                      <pre className="font-sans whitespace-pre-wrap leading-relaxed text-xs bg-white p-3 rounded-xl border border-slate-200 text-slate-900 font-medium">
+                        {currentQ.transcript}
+                      </pre>
+                    </div>
+                  )}
+
+                  {/* Nepali Meaning of Transcript */}
+                  {currentQ.transcriptNepali && (
+                    <div className="p-4 rounded-2xl bg-indigo-50/80 border border-indigo-200 text-xs text-indigo-950 space-y-2">
+                      <div className="flex items-center gap-1.5 font-black text-indigo-900 uppercase tracking-wider text-[10px]">
+                        <span>🇳🇵 नेपाली अर्थ (Dialogue Nepali Meaning)</span>
+                      </div>
+                      <pre className="font-sans whitespace-pre-wrap leading-relaxed text-xs bg-white p-3 rounded-xl border border-indigo-200 text-indigo-950 font-medium">
+                        {currentQ.transcriptNepali}
+                      </pre>
+                    </div>
+                  )}
+
+                  {/* Key Vocabulary Table */}
+                  {currentQ.vocabulary && currentQ.vocabulary.length > 0 && (
+                    <div className="p-4 rounded-2xl bg-emerald-50/80 border border-emerald-200 text-xs text-emerald-950 space-y-2">
+                      <div className="flex items-center gap-1.5 font-black text-emerald-900 uppercase tracking-wider text-[10px]">
+                        <span>📚 Key Vocabulary (मुख्य शब्दावली तथा कान्जी)</span>
+                      </div>
+                      <div className="overflow-x-auto">
+                        <table className="w-full text-left text-xs bg-white rounded-xl border border-emerald-200 overflow-hidden">
+                          <thead>
+                            <tr className="bg-emerald-100/70 text-emerald-900 font-bold border-b border-emerald-200">
+                              <th className="p-2 sm:p-2.5">Word / Kanji</th>
+                              <th className="p-2 sm:p-2.5">Reading</th>
+                              <th className="p-2 sm:p-2.5">English</th>
+                              <th className="p-2 sm:p-2.5">नेपाली अर्थ</th>
+                            </tr>
+                          </thead>
+                          <tbody className="divide-y divide-emerald-100 font-medium text-slate-800">
+                            {currentQ.vocabulary.map((vocab, vIdx) => (
+                              <tr key={vIdx} className="hover:bg-emerald-50/50">
+                                <td className="p-2 sm:p-2.5 font-bold text-slate-950">{vocab.kanji}</td>
+                                <td className="p-2 sm:p-2.5 text-slate-600 font-mono text-[11px]">{vocab.reading}</td>
+                                <td className="p-2 sm:p-2.5 text-slate-700">{vocab.meaningEn}</td>
+                                <td className="p-2 sm:p-2.5 text-indigo-950 font-semibold">{vocab.meaningNe}</td>
+                              </tr>
+                            ))}
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  )}
                 </div>
               )}
             </div>
@@ -1329,6 +1585,13 @@ export const TimedExamEngine: React.FC<TimedExamEngineProps> = ({
           </div>
         </div>
       )}
+
+      {/* Coming Soon Modal for Unbuilt / Phase 6-7 Features */}
+      <ComingSoonModal
+        isOpen={Boolean(comingSoonFeature)}
+        onClose={() => setComingSoonFeature(null)}
+        featureName={comingSoonFeature || ''}
+      />
     </div>
   );
 };

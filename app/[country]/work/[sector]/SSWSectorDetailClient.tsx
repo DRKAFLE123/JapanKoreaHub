@@ -1,11 +1,41 @@
 'use client';
 import React, { useState } from 'react';
 import Link from 'next/link';
-import { ArrowLeft, ArrowRight, BookOpen, Volume2, Play, Pause, CheckCircle2, XCircle, ShieldCheck, Clock, FileText, HelpCircle, GraduationCap, Briefcase, Sparkles, ExternalLink, MessageSquare, AlertTriangle, Lightbulb, Eye, EyeOff } from 'lucide-react';
+import { ArrowLeft, ArrowRight, BookOpen, Volume2, Play, Pause, CheckCircle2, XCircle, ShieldCheck, Clock, FileText, HelpCircle, GraduationCap, Briefcase, Sparkles, ExternalLink, MessageSquare, AlertTriangle, Lightbulb, Eye, EyeOff, X, Layers, ListChecks } from 'lucide-react';
 
 import { SSWSectorData } from '@/lib/ssw-sectors-data';
 import BuildingCleaningBookReader from '@/components/building-cleaning/BuildingCleaningBookReader';
 import CaregivingBookReader from '@/components/caregiving/CaregivingBookReader';
+
+const BUILDING_CLEANING_SYLLABUS = [
+  { ch: 1, jp: 'ビルクリーニングの概要と意義', en: 'Overview & Significance of Commercial Cleaning', ne: 'भवन सरसफाइको परिचय र महत्व' },
+  { ch: 2, jp: '安全と衛生管理 (5S・整理整頓)', en: 'Safety & 5S Hygiene Management', ne: 'सुरक्षा, स्वास्थ्य र ५एस व्यवस्थापन' },
+  { ch: 3, jp: '洗剤の種類と希釈方法 (pH・酸性/アルカリ性)', en: 'Detergents & Chemical Dilution Calculation', ne: 'डिटर्जेन्ट, केमिकल र घोल मिश्रण' },
+  { ch: 4, jp: '清掃用具と機械の取扱い (ポリッシャー・掃除機)', en: 'Tools & Heavy Machinery (Polisher/Vacuum)', ne: 'सफाई औजार, भ्याकुम र भुइँ पोलिस मेसिन' },
+  { ch: 5, jp: '床維持管理 (弾性・硬質床・カーペット)', en: 'Floor Maintenance: Resilient, Stone & Carpet', ne: 'भुइँ मर्मत तथा कार्पेट सरसफाइ' },
+  { ch: 6, jp: 'トイレ・サニタリー清掃と交差汚染防止', en: 'Restrooms, Sanitary & Cross-Contamination Control', ne: 'शौचालय सरसफाइ र किटाणु संक्रमण रोकथाम' },
+  { ch: 7, jp: 'ガラス・窓枠清掃 (スクイジー技術)', en: 'Glass Squeegee & Window Cleaning Techniques', ne: 'झ्याल, सिसा र स्कुइजी प्रविधि' },
+  { ch: 8, jp: 'ホテル客室ベッドメイキング', en: 'Hotel Guest Rooms & Bed Making Standards', ne: 'होटल कोठा तथा बेड मेकिङ' },
+  { ch: 9, jp: 'ごみ処理と環境配慮 (分別廃棄)', en: 'Waste Segregation & Environmental Rules', ne: 'फोहोर वर्गीकरण र विसर्जन' },
+  { ch: 10, jp: '定期清掃と特別清掃 (剥離・ワックス塗布)', en: 'Periodic Stripping & Floor Wax Application', ne: 'आवधिक गहिरो सफाई र भुइँ व्याक्सिङ' },
+  { ch: 11, jp: '職場マナーと報連相 (報告・連絡・相談)', en: 'Workplace Etiquette, Hō-Ren-Sō & Keigo', ne: 'कार्यस्थल अनुशासन र हो-रेन-सो' },
+  { ch: 12, jp: '実技評価試験・模擬テスト', en: 'Practical Judgment Exam & Mock Test Simulation', ne: 'व्यावहारिक परीक्षा र मोडल टेस्ट' },
+];
+
+const CAREGIVING_SYLLABUS = [
+  { ch: 1, jp: '介護の基本と人間の尊厳', en: 'Basics of Caregiving & Human Dignity', ne: 'केयरगिभिङको आधार र मानवीय मर्यादा' },
+  { ch: 2, jp: '自立支援と介護倫理', en: 'Independence Support & Ethical Standards', ne: 'स्वावलम्बन सहायता र आचारसंहिता' },
+  { ch: 3, jp: 'ボディメカニクスの8原則', en: '8 Principles of Body Mechanics', ne: 'शरीर मेकानिक्सका ८ सिद्धान्तहरू' },
+  { ch: 4, jp: '移動・移乗の介護 (車いす・ベッド)', en: 'Transfer & Wheelchair/Bed Ambulation', ne: 'ह्विलचेयर र ओछ्यान स्थानान्तरण' },
+  { ch: 5, jp: '食事の介護と誤嚥予防', en: 'Meal Care, Dysphagia & Choking Prevention', ne: 'खाना खुवाउने र अड्किने समस्या रोकथाम' },
+  { ch: 6, jp: '入浴・清潔保持の介護', en: 'Bathing & Personal Hygiene Care', ne: 'नुहाउने र व्यक्तिगत सरसफाइ' },
+  { ch: 7, jp: '排泄の介護 (トイレ・おむつ交換)', en: 'Excretion Care & Dignified Incontinence Aid', ne: 'शौच तथा डायपर व्यवस्थापन' },
+  { ch: 8, jp: '着脱・衣服の介護 (脱健着患)', en: 'Dressing & Undressing (Dakken Chakkan)', ne: 'लुगा लगाउने/फेर्ने (दक्केन चक्कन)' },
+  { ch: 9, jp: '褥瘡予防とスキンケア', en: 'Pressure Ulcers (Bedsore) Prevention & Skincare', ne: 'ओछ्यान घाउ रोकथाम र छालाको हेरचाह' },
+  { ch: 10, jp: 'バイタルサインと体調観察', en: 'Vital Signs & Anomaly Health Observation', ne: 'भाइटल साइन र स्वास्थ्य अनुगमन' },
+  { ch: 11, jp: '認知症の理解と対応 (中核・周辺症状)', en: 'Dementia Care: 4 Core Types & Behavioral Aid', ne: 'डिमेन्सिया हेरचाह र लक्षणहरू' },
+  { ch: 12, jp: '介護記録と申し送り・報連相', en: 'Care Records, Shift Handover & Hō-Ren-Sō', ne: 'केयर रेकर्ड, ह्यान्डओभर र हो-रेन-सो' },
+];
 
 interface Props {
   country: 'japan' | 'korea';
@@ -14,10 +44,15 @@ interface Props {
 }
 
 export default function SSWSectorDetailClient({ country, sectorKey, sectorData }: Props) {
-  const [activeTab, setActiveTab] = useState<'overview' | 'textbooks' | 'vocab' | 'interview' | 'mocktest' | 'practice' | 'book'>('overview');
+  const isBuildingCleaning = sectorKey.includes('building');
+  const isCaregiving = sectorKey === 'nursing' || sectorKey === 'caregiving';
+  const hasOfficialBook = isBuildingCleaning || isCaregiving;
+
+  const [activeTab, setActiveTab] = useState<'overview' | 'textbooks' | 'vocab' | 'interview' | 'book'>(
+    hasOfficialBook ? 'book' : 'textbooks'
+  );
+  const [showOverviewModal, setShowOverviewModal] = useState(false);
   const [playingAudioId, setPlayingAudioId] = useState<string | null>(null);
-  const [selectedAnswers, setSelectedAnswers] = useState<Record<string, number>>({});
-  const [showExamResults, setShowExamResults] = useState(false);
   const [furiganaVisible, setFuriganaVisible] = useState(true);
   const [revealedAnswers, setRevealedAnswers] = useState<Record<string, boolean>>({});
   const [selectedInterviewCategory, setSelectedInterviewCategory] = useState<string>('ALL');
@@ -60,19 +95,6 @@ export default function SSWSectorDetailClient({ country, sectorKey, sectorData }
     }
   };
 
-  const handleSelectOption = (qId: string, optIdx: number) => {
-    setSelectedAnswers(prev => ({ ...prev, [qId]: optIdx }));
-  };
-
-  const calculateScore = () => {
-    let score = 0;
-    sectorData.practiceQuestions.forEach((q) => {
-      if (selectedAnswers[q.id] === q.correctAnswer) {
-        score += 1;
-      }
-    });
-    return score;
-  };
 
   return (
     <div className={`min-h-screen bg-slate-50 text-slate-900 ${activeTab === 'book' ? 'pb-6' : 'pb-24'} font-sans`}>
@@ -86,7 +108,7 @@ export default function SSWSectorDetailClient({ country, sectorKey, sectorData }
           </Link>
           <div className="flex items-center gap-2">
             <Link
-              href={`/${country}/exams/skills?sector=${sectorKey}`}
+              href={`/${country}/mock-test/skills?sector=${sectorKey}`}
               className="inline-flex items-center gap-1.5 text-xs font-black text-emerald-800 bg-emerald-50 border border-emerald-300 rounded-xl px-3 py-2 shadow-xs hover:bg-emerald-100 transition-colors"
             >
               <Play className="w-3.5 h-3.5 fill-emerald-700" />
@@ -98,59 +120,55 @@ export default function SSWSectorDetailClient({ country, sectorKey, sectorData }
           </div>
         </div>
 
-        {/* Hero Banner Box - Calm Light White */}
-        <div className="bg-gradient-to-r from-white via-slate-50 to-emerald-50/40 text-slate-900 rounded-3xl p-6 sm:p-8 shadow-xs border border-slate-200 space-y-4">
-          <div className="flex items-center gap-4">
-            <span className="text-4xl sm:text-5xl p-3 bg-white rounded-2xl border border-slate-200 shadow-xs">{sectorData.icon}</span>
+        {/* Minimized Compact Header */}
+        <div className="bg-white rounded-2xl p-4 sm:p-5 shadow-xs border border-slate-200 flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div className="flex items-center gap-3.5">
+            <span className="text-3xl sm:text-4xl p-2.5 bg-slate-50 rounded-2xl border border-slate-200 shrink-0 shadow-xs">
+              {sectorData.icon}
+            </span>
             <div>
-              <span className="text-xs font-black uppercase tracking-wider text-emerald-800 bg-emerald-50 border border-emerald-200 px-2.5 py-0.5 rounded-full">{sectorData.badge}</span>
-              <h1 className="text-2xl sm:text-4xl font-black tracking-tight text-slate-900 mt-1">
-                {sectorData.name}
+              <div className="flex items-center gap-2">
+                <span className="text-[10px] font-black uppercase tracking-wider text-emerald-800 bg-emerald-50 border border-emerald-200 px-2 py-0.5 rounded-md">
+                  SSW-1 CBT
+                </span>
+                <span className="text-xs font-semibold text-slate-400">
+                  {sectorData.name.match(/\(([^)]+)\)/)?.[1] || sectorData.kanji}
+                </span>
+              </div>
+              <h1 className="text-xl sm:text-2xl font-black text-slate-900 tracking-tight mt-0.5">
+                {sectorData.name.replace(/\s*\([^)]*\)/, '').trim()}
               </h1>
-              <p className="text-xs sm:text-sm text-slate-500 font-semibold mt-1">{sectorData.kanji}</p>
             </div>
           </div>
 
-          <p className="text-xs sm:text-sm text-slate-700 font-medium leading-relaxed max-w-3xl">
-            {sectorData.summary}
-          </p>
-          <div className="p-3.5 rounded-2xl bg-indigo-50/70 border border-indigo-200/80 text-xs text-indigo-950 font-medium">
-            🇳🇵 <strong>नेपाली व्याख्या:</strong> {sectorData.summaryNe}
-          </div>
+          {/* Compact Specs & Overview & Syllabus Option */}
+          <div className="flex items-center gap-2 flex-wrap sm:flex-nowrap shrink-0">
+            <div className="hidden sm:flex items-center gap-2.5 text-xs bg-slate-50 border border-slate-200 px-3 py-2 rounded-xl text-slate-700 font-medium">
+              <span>⏱ {sectorData.testDuration.replace('minutes', 'min')}</span>
+              <span className="text-slate-300">•</span>
+              <span>🎯 Pass: <strong className="text-emerald-700 font-bold">{sectorData.passScore.includes('(') ? sectorData.passScore.match(/\(([^)]+)\)/)?.[1] || sectorData.passScore : sectorData.passScore}</strong></span>
+              <span className="text-slate-300">•</span>
+              <span>💴 {sectorData.prometricFee.split('/')[0].trim()}</span>
+            </div>
 
-          {/* Quick Specs Grid */}
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-2">
-            <div className="p-3 rounded-2xl bg-white border border-slate-200 shadow-xs">
-              <span className="text-[10px] uppercase font-bold text-slate-400">Demand Status</span>
-              <p className="text-xs font-black text-emerald-700">{sectorData.demand}</p>
-            </div>
-            <div className="p-3 rounded-2xl bg-white border border-slate-200 shadow-xs">
-              <span className="text-[10px] uppercase font-bold text-slate-400">Exam Duration</span>
-              <p className="text-xs font-black text-slate-900">{sectorData.testDuration}</p>
-            </div>
-            <div className="p-3 rounded-2xl bg-white border border-slate-200 shadow-xs">
-              <span className="text-[10px] uppercase font-bold text-slate-400">Passing Mark</span>
-              <p className="text-xs font-black text-amber-700">{sectorData.passScore}</p>
-            </div>
-            <div className="p-3 rounded-2xl bg-white border border-slate-200 shadow-xs">
-              <span className="text-[10px] uppercase font-bold text-slate-400">Prometric Fee</span>
-              <p className="text-xs font-black text-sky-700">{sectorData.prometricFee}</p>
-            </div>
+            <button
+              onClick={() => setShowOverviewModal(true)}
+              className="px-3.5 py-2 rounded-xl bg-indigo-50 hover:bg-indigo-100 text-indigo-900 font-bold text-xs border border-indigo-200 transition-colors flex items-center gap-1.5 cursor-pointer shadow-xs"
+            >
+              <ShieldCheck className="w-4 h-4 text-indigo-600" />
+              <span>Overview &amp; Syllabus</span>
+            </button>
           </div>
         </div>
 
-        {/* Tab Navigation */}
+        {/* Tab Navigation (Direct lessons first, CBT mock test removed from slider since it is at top) */}
         {(() => {
-          const isBuildingCleaning = sectorKey.includes('building');
-          const isCaregiving = sectorKey === 'nursing' || sectorKey === 'caregiving';
-          const hasOfficialBook = isBuildingCleaning || isCaregiving;
           const tabsList = [
-            { id: 'overview', label: '📌 Overview & Syllabus', icon: ShieldCheck },
-            ...(hasOfficialBook ? [{ id: 'book', label: '📖 Official Book & Tests (12 Ch.)', icon: BookOpen }] : []),
+            ...(hasOfficialBook ? [{ id: 'book', label: '📖 Main Lessons & Tests (12 Ch.)', icon: BookOpen }] : []),
             { id: 'textbooks', label: `📚 Textbooks & Books (${sectorData.textbooks.length})`, icon: BookOpen },
             { id: 'vocab', label: `🗂️ Sector Vocab (${sectorData.vocabList.length})`, icon: FileText },
             { id: 'interview', label: `🤝 Interview Practice (${sectorData.interviewPractice?.length || 0})`, icon: MessageSquare },
-            { id: 'mocktest', label: `✍️ CBT Mock Exams (5 Sets)`, icon: HelpCircle },
+            { id: 'overview', label: '📌 Overview & Syllabus', icon: ShieldCheck },
           ];
 
           return (
@@ -160,7 +178,7 @@ export default function SSWSectorDetailClient({ country, sectorKey, sectorData }
                   key={tab.id}
                   onClick={() => setActiveTab(tab.id as any)}
                   className={`px-4 py-2.5 rounded-2xl text-xs font-black transition-all whitespace-nowrap cursor-pointer flex items-center gap-2 ${
-                    activeTab === tab.id || (tab.id === 'mocktest' && activeTab === 'practice')
+                    activeTab === tab.id
                       ? 'bg-slate-900 text-white shadow-md'
                       : 'bg-white text-slate-700 hover:bg-slate-100 border border-slate-200'
                   }`}
@@ -309,7 +327,7 @@ export default function SSWSectorDetailClient({ country, sectorKey, sectorData }
               </div>
               <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 shrink-0 w-full sm:w-auto">
                 <Link
-                  href={`/${country}/exams/skills?sector=${sectorKey}`}
+                  href={`/${country}/mock-test/skills?sector=${sectorKey}`}
                   className="px-5 py-3 rounded-2xl bg-emerald-600 hover:bg-emerald-500 text-white font-black text-xs shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer"
                 >
                   <Play className="w-4 h-4 fill-white" />
@@ -704,182 +722,7 @@ export default function SSWSectorDetailClient({ country, sectorKey, sectorData }
           </div>
         )}
 
-        {/* TAB 5: CBT MOCK EXAMS (5 SETS LAUNCHPAD) */}
-        {(activeTab === 'mocktest' || activeTab === 'practice') && (
-          <div className="space-y-6">
-            {/* Top Directory Redirect Card */}
-            <div className="p-6 rounded-3xl bg-gradient-to-r from-emerald-50 via-teal-50 to-indigo-50 border border-emerald-300 shadow-sm flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-              <div className="flex items-center gap-3">
-                <span className="text-4xl p-3 bg-white rounded-2xl border border-emerald-200 shadow-xs">📝</span>
-                <div>
-                  <div className="flex items-center gap-2">
-                    <span className="px-2.5 py-0.5 rounded-full bg-emerald-100 text-emerald-800 text-[10px] font-black uppercase tracking-wider">
-                      Prometric SSW-1 Track
-                    </span>
-                    <span className="text-xs font-black text-emerald-700">5 Mock Exam Sets Available</span>
-                  </div>
-                  <h3 className="text-lg font-black text-slate-900 mt-0.5">
-                    {sectorData.name} — CBT Mock Exam Suite
-                  </h3>
-                  <p className="text-xs text-slate-600 font-medium">
-                    Timed CBT simulations with 100% Furigana, equipment diagrams, 60% passing mark, and instant scoring.
-                  </p>
-                </div>
-              </div>
-              <Link
-                href={`/${country}/exams/skills?sector=${sectorKey}`}
-                className="px-5 py-3 rounded-2xl bg-slate-900 hover:bg-slate-800 text-white font-black text-xs transition-all shadow-md shrink-0 flex items-center gap-2 cursor-pointer whitespace-nowrap"
-              >
-                <span>Filter in Mock Test Directory →</span>
-              </Link>
-            </div>
 
-            {/* 5 Mock Exam Sets Grid */}
-            <div className="space-y-3">
-              <div className="flex items-center justify-between px-1">
-                <h3 className="text-sm font-black text-slate-900 flex items-center gap-1.5">
-                  <Play className="w-4 h-4 text-emerald-600 fill-emerald-600" />
-                  <span>Choose an Official Exam Set to Begin</span>
-                </h3>
-                <span className="text-xs text-slate-500 font-bold">5 Sets Prepared</span>
-              </div>
-
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
-                {[1, 2, 3, 4, 5].map((setNum) => {
-                  const setTitles = [
-                    'Comprehensive Standard Simulation',
-                    'Tools, Machinery & Dilution Focus',
-                    'Hygiene & Cross-Contamination Focus',
-                    'Work Safety & Standard Protocols',
-                    'Final Examination High-Yield Simulator'
-                  ];
-                  const isBC = sectorKey.includes('building');
-                  const examTarget = isBC 
-                    ? `/${country}/work/building-cleaning/exam?set=${setNum}`
-                    : `/${country}/exams/skills?sector=${sectorKey}`;
-
-                  return (
-                    <div
-                      key={setNum}
-                      className="p-4 rounded-2xl border border-slate-200 bg-white hover:border-emerald-300 hover:shadow-md transition-all flex flex-col justify-between space-y-3"
-                    >
-                      <div className="space-y-1.5">
-                        <div className="flex items-center justify-between">
-                          <span className="px-2.5 py-0.5 rounded-full bg-emerald-600 text-white text-[10px] font-black uppercase tracking-wider">
-                            SET {setNum}
-                          </span>
-                          <span className="text-[10px] font-bold text-slate-400">
-                            {sectorData.testDuration} • {sectorData.passScore}
-                          </span>
-                        </div>
-                        <h4 className="text-xs font-black text-slate-900">
-                          {sectorData.name} — Set {setNum}
-                        </h4>
-                        <p className="text-[11px] text-slate-500 font-medium line-clamp-2">
-                          {setTitles[setNum - 1]}
-                        </p>
-                      </div>
-
-                      <Link
-                        href={examTarget}
-                        className="w-full py-2 px-3 rounded-xl bg-emerald-50 hover:bg-emerald-600 text-emerald-800 hover:text-white font-black text-xs transition-all flex items-center justify-center gap-1.5 border border-emerald-200 hover:border-emerald-600 group"
-                      >
-                        <Play className="w-3.5 h-3.5 fill-current" />
-                        <span>Start Mock Set {setNum} →</span>
-                      </Link>
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
-
-            <div className="bg-white border border-slate-200 rounded-3xl p-6 shadow-xs space-y-6">
-              <div className="flex items-center justify-between border-b border-slate-200 pb-4">
-                <div>
-                  <h2 className="text-lg font-black text-slate-900">CBT Skill Test Simulator</h2>
-                  <p className="text-xs text-slate-500 font-medium mt-0.5">Answer all technical &amp; safety questions. Passing score is 60%.</p>
-                </div>
-                {!showExamResults ? (
-                  <button
-                    onClick={() => setShowExamResults(true)}
-                    className="px-5 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-black text-xs shadow-md transition-all cursor-pointer"
-                  >
-                    Submit Practice Test
-                  </button>
-                ) : (
-                  <button
-                    onClick={() => { setSelectedAnswers({}); setShowExamResults(false); }}
-                    className="px-4 py-2 rounded-xl bg-slate-200 hover:bg-slate-300 text-slate-800 font-bold text-xs transition-colors cursor-pointer"
-                  >
-                    Reset Answers
-                  </button>
-                )}
-              </div>
-
-              {showExamResults && (
-                <div className="p-6 rounded-3xl bg-emerald-50 border border-emerald-200 text-slate-900 text-center space-y-3 shadow-xs">
-                  <span className="text-3xl">🎉</span>
-                  <h3 className="text-2xl font-black text-slate-900">
-                    Your Score: {calculateScore()} / {sectorData.practiceQuestions.length} ({Math.round((calculateScore() / sectorData.practiceQuestions.length) * 100)}%)
-                  </h3>
-                  <p className="text-xs text-slate-600 font-medium">
-                    {calculateScore() / sectorData.practiceQuestions.length >= 0.6
-                      ? 'Congratulations! You passed the SSW Skill Evaluation benchmark (60%).'
-                      : 'Keep practicing! Review the textbook chapters and retake the test.'}
-                  </p>
-                </div>
-              )}
-
-              <div className="space-y-6">
-                {sectorData.practiceQuestions.map((q, idx) => (
-                  <div key={q.id} className="p-5 rounded-2xl bg-slate-50 border border-slate-200 space-y-4">
-                    <div className="flex items-start gap-3">
-                      <span className="w-7 h-7 rounded-xl bg-indigo-600 text-white font-black text-xs flex items-center justify-center flex-shrink-0">
-                        {idx + 1}
-                      </span>
-                      <div className="space-y-1">
-                        <p className="font-extrabold text-sm text-slate-900">{q.question}</p>
-                        {q.questionNe && <p className="font-bold text-xs text-indigo-700">🇳🇵 {q.questionNe}</p>}
-                      </div>
-                    </div>
-
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                      {q.options.map((opt, oIdx) => {
-                        const selected = selectedAnswers[q.id] === oIdx;
-                        const isCorrect = oIdx === q.correctAnswer;
-
-                        return (
-                          <button
-                            key={oIdx}
-                            onClick={() => handleSelectOption(q.id, oIdx)}
-                            className={`p-3.5 rounded-2xl border text-left text-xs font-semibold transition-all cursor-pointer ${
-                              selected
-                                ? isCorrect
-                                  ? 'bg-emerald-50 border-emerald-500 text-emerald-900 font-black'
-                                  : 'bg-rose-50 border-rose-400 text-rose-900 font-black'
-                                : 'bg-white border-slate-200 hover:border-indigo-300 text-slate-800'
-                            }`}
-                          >
-                            <span className="font-mono text-slate-400 mr-2">{oIdx + 1}.</span>
-                            {opt}
-                          </button>
-                        );
-                      })}
-                    </div>
-
-                    {(showExamResults || selectedAnswers[q.id] !== undefined) && (
-                      <div className="p-4 rounded-2xl bg-white border border-slate-200 text-xs text-slate-800 space-y-1">
-                        <p className="font-bold text-emerald-700">💡 Explanation:</p>
-                        <p>{q.explanation}</p>
-                        <p className="text-slate-600">🇳🇵 {q.explanationNe}</p>
-                      </div>
-                    )}
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        )}
 
         {/* TAB 6: OFFICIAL BOOK & SECTION TESTS */}
         {activeTab === 'book' && (
@@ -903,6 +746,238 @@ export default function SSWSectorDetailClient({ country, sectorKey, sectorData }
           </div>
         )}
 
+        {/* Overview & Syllabus Modal (Accessible Anywhere to Manage All Content) */}
+        {showOverviewModal && (
+          <div className="fixed inset-0 z-[120] overflow-y-auto flex items-center justify-center p-3 sm:p-4 bg-slate-950/70 backdrop-blur-sm animate-fade-in font-sans">
+            <div className="w-full max-w-3xl max-h-[90vh] overflow-y-auto bg-white rounded-3xl border border-slate-200 shadow-2xl p-5 sm:p-7 space-y-6 my-auto mx-auto relative scrollbar-thin">
+              {/* Close Button */}
+              <button
+                onClick={() => setShowOverviewModal(false)}
+                className="absolute top-5 right-5 p-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-500 hover:text-slate-800 transition-colors cursor-pointer"
+                title="Close Modal"
+              >
+                <X className="w-4 h-4" />
+              </button>
+
+              {/* Modal Header */}
+              <div className="flex items-center gap-3 pr-10">
+                <span className="text-3xl sm:text-4xl p-2.5 bg-slate-50 rounded-2xl border border-slate-200 shrink-0">
+                  {sectorData.icon}
+                </span>
+                <div>
+                  <div className="flex items-center gap-2">
+                    <span className="text-[10px] font-black uppercase tracking-wider text-emerald-800 bg-emerald-50 border border-emerald-200 px-2.5 py-0.5 rounded-full">
+                      {sectorData.badge}
+                    </span>
+                    <span className="text-xs font-bold text-slate-400">
+                      {sectorData.kanji}
+                    </span>
+                  </div>
+                  <h3 className="text-lg sm:text-xl font-black text-slate-900 mt-0.5">
+                    {sectorData.name} — Overview &amp; Official Syllabus
+                  </h3>
+                </div>
+              </div>
+
+              {/* Quick Content Switcher (Manage & Open Any Content Anywhere) */}
+              <div className="space-y-2.5 bg-slate-50 border border-slate-200 p-4 rounded-2xl">
+                <div className="flex items-center justify-between">
+                  <span className="text-xs font-black uppercase text-slate-700 tracking-wider flex items-center gap-1.5">
+                    <Layers className="w-3.5 h-3.5 text-indigo-600" />
+                    <span>Manage &amp; Jump to Any Content</span>
+                  </span>
+                  <span className="text-[10px] text-slate-400 font-bold">One-Click Switch</span>
+                </div>
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+                  {hasOfficialBook && (
+                    <button
+                      onClick={() => {
+                        setActiveTab('book');
+                        setShowOverviewModal(false);
+                      }}
+                      className={`p-2.5 rounded-xl border text-left text-xs font-bold transition-all cursor-pointer flex flex-col justify-between ${
+                        activeTab === 'book'
+                          ? 'bg-emerald-600 text-white border-emerald-600 shadow-xs'
+                          : 'bg-white hover:bg-emerald-50 text-slate-800 border-slate-200'
+                      }`}
+                    >
+                      <span className="text-[10px] opacity-75 uppercase">Curriculum</span>
+                      <span className="font-extrabold mt-0.5">📖 Main Lessons</span>
+                    </button>
+                  )}
+                  <button
+                    onClick={() => {
+                      setActiveTab('textbooks');
+                      setShowOverviewModal(false);
+                    }}
+                    className={`p-2.5 rounded-xl border text-left text-xs font-bold transition-all cursor-pointer flex flex-col justify-between ${
+                      activeTab === 'textbooks'
+                        ? 'bg-indigo-600 text-white border-indigo-600 shadow-xs'
+                        : 'bg-white hover:bg-indigo-50 text-slate-800 border-slate-200'
+                    }`}
+                  >
+                    <span className="text-[10px] opacity-75 uppercase">Books ({sectorData.textbooks.length})</span>
+                    <span className="font-extrabold mt-0.5">📚 Textbooks</span>
+                  </button>
+                  <button
+                    onClick={() => {
+                      setActiveTab('vocab');
+                      setShowOverviewModal(false);
+                    }}
+                    className={`p-2.5 rounded-xl border text-left text-xs font-bold transition-all cursor-pointer flex flex-col justify-between ${
+                      activeTab === 'vocab'
+                        ? 'bg-amber-600 text-white border-amber-600 shadow-xs'
+                        : 'bg-white hover:bg-amber-50 text-slate-800 border-slate-200'
+                    }`}
+                  >
+                    <span className="text-[10px] opacity-75 uppercase">Terms ({sectorData.vocabList.length})</span>
+                    <span className="font-extrabold mt-0.5">🗂️ Vocab List</span>
+                  </button>
+                  <button
+                    onClick={() => {
+                      setActiveTab('interview');
+                      setShowOverviewModal(false);
+                    }}
+                    className={`p-2.5 rounded-xl border text-left text-xs font-bold transition-all cursor-pointer flex flex-col justify-between ${
+                      activeTab === 'interview'
+                        ? 'bg-sky-600 text-white border-sky-600 shadow-xs'
+                        : 'bg-white hover:bg-sky-50 text-slate-800 border-slate-200'
+                    }`}
+                  >
+                    <span className="text-[10px] opacity-75 uppercase">Keigo ({sectorData.interviewPractice?.length || 0})</span>
+                    <span className="font-extrabold mt-0.5">🤝 Interview</span>
+                  </button>
+                </div>
+              </div>
+
+              {/* Official Syllabus & Chapter Breakdown */}
+              <div className="space-y-3">
+                <div className="flex items-center justify-between border-b border-slate-200 pb-2">
+                  <h4 className="font-black text-slate-900 uppercase tracking-wider text-xs flex items-center gap-1.5">
+                    <ListChecks className="w-4 h-4 text-emerald-600" />
+                    <span>Official 12-Chapter Syllabus &amp; Curriculum Breakdown</span>
+                  </h4>
+                  <span className="text-[10px] font-bold text-slate-400">JBMA / MHLW Standard</span>
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs max-h-60 overflow-y-auto pr-1">
+                  {(isBuildingCleaning ? BUILDING_CLEANING_SYLLABUS : isCaregiving ? CAREGIVING_SYLLABUS : []).map((chItem) => (
+                    <div
+                      key={chItem.ch}
+                      className="p-2.5 rounded-xl bg-slate-50 border border-slate-200/80 hover:border-emerald-300 transition-colors"
+                    >
+                      <div className="flex items-start gap-2">
+                        <span className="px-1.5 py-0.5 rounded bg-emerald-100 text-emerald-800 text-[10px] font-black shrink-0">
+                          Ch.{chItem.ch}
+                        </span>
+                        <div className="min-w-0">
+                          <p className="font-extrabold text-slate-900 leading-tight truncate">
+                            {chItem.jp}
+                          </p>
+                          <p className="text-[11px] text-slate-500 font-medium truncate mt-0.5">
+                            {chItem.en}
+                          </p>
+                          <p className="text-[10px] text-indigo-700 font-bold truncate mt-0.5">
+                            🇳🇵 {chItem.ne}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                  {(!isBuildingCleaning && !isCaregiving) && sectorData.textbooks.map((tb, idx) => (
+                    <div key={idx} className="p-3 rounded-xl bg-slate-50 border border-slate-200 col-span-2">
+                      <p className="font-bold text-slate-900">{tb.title}</p>
+                      <p className="text-xs text-slate-500 mt-1">{tb.description}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Summary & Nepali Explanation */}
+              <div className="space-y-2 text-xs">
+                <h4 className="font-black text-slate-900 uppercase tracking-wider text-[11px]">
+                  Sector Overview
+                </h4>
+                <p className="text-slate-700 leading-relaxed font-medium">
+                  {sectorData.summary}
+                </p>
+                <div className="p-3 rounded-2xl bg-indigo-50/70 border border-indigo-200 text-indigo-950 font-medium leading-relaxed">
+                  🇳🇵 <strong>नेपाली व्याख्या:</strong> {sectorData.summaryNe}
+                </div>
+              </div>
+
+              {/* Quick Specs Grid */}
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 text-xs">
+                <div className="p-3 rounded-2xl bg-slate-50 border border-slate-200">
+                  <span className="text-[10px] uppercase font-bold text-slate-400">Demand Status</span>
+                  <p className="text-xs font-black text-emerald-700">{sectorData.demand}</p>
+                </div>
+                <div className="p-3 rounded-2xl bg-slate-50 border border-slate-200">
+                  <span className="text-[10px] uppercase font-bold text-slate-400">Exam Duration</span>
+                  <p className="text-xs font-black text-slate-900">{sectorData.testDuration}</p>
+                </div>
+                <div className="p-3 rounded-2xl bg-slate-50 border border-slate-200">
+                  <span className="text-[10px] uppercase font-bold text-slate-400">Passing Mark</span>
+                  <p className="text-xs font-black text-amber-700">{sectorData.passScore}</p>
+                </div>
+                <div className="p-3 rounded-2xl bg-slate-50 border border-slate-200">
+                  <span className="text-[10px] uppercase font-bold text-slate-400">Prometric Fee</span>
+                  <p className="text-xs font-black text-sky-700">{sectorData.prometricFee}</p>
+                </div>
+              </div>
+
+              {/* 3 Step Evaluation Framework */}
+              <div className="space-y-2 text-xs">
+                <h4 className="font-black text-slate-900 uppercase tracking-wider text-[11px]">
+                  Official 3-Step Certification Pathway:
+                </h4>
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 text-[11px]">
+                  <div className="p-3 rounded-xl bg-slate-50 border border-slate-200">
+                    <p className="font-extrabold text-slate-900">1. Language Test</p>
+                    <p className="text-slate-500 mt-1">JLPT N4 or JFT-Basic A2 certification required.</p>
+                  </div>
+                  <div className="p-3 rounded-xl bg-slate-50 border border-slate-200">
+                    <p className="font-extrabold text-slate-900">2. Technical Skill Test</p>
+                    <p className="text-slate-500 mt-1">Prometric CBT technical judgment exam (60 mins, 60%).</p>
+                  </div>
+                  <div className="p-3 rounded-xl bg-slate-50 border border-slate-200">
+                    <p className="font-extrabold text-slate-900">3. Employer Interview</p>
+                    <p className="text-slate-500 mt-1">Japanese Mensetsu assessing 5S safety and Hō-Ren-Sō.</p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Action Buttons */}
+              <div className="flex items-center gap-3 pt-2 border-t border-slate-100">
+                {hasOfficialBook && (
+                  <button
+                    onClick={() => {
+                      setActiveTab('book');
+                      setShowOverviewModal(false);
+                    }}
+                    className="flex-1 py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-black text-xs rounded-xl flex items-center justify-center gap-1.5 shadow-xs transition-colors cursor-pointer"
+                  >
+                    <BookOpen className="w-4 h-4" />
+                    <span>Open Main Lessons (१२ अध्याय)</span>
+                  </button>
+                )}
+                <Link
+                  href={`/${country}/mock-test/skills?sector=${sectorKey}`}
+                  className="py-3 px-4 bg-emerald-50 hover:bg-emerald-100 text-emerald-800 font-extrabold text-xs rounded-xl flex items-center gap-1.5 border border-emerald-200 transition-colors cursor-pointer"
+                >
+                  <Play className="w-3.5 h-3.5 fill-emerald-700" />
+                  <span>Launch CBT Mock Tests</span>
+                </Link>
+                <button
+                  onClick={() => setShowOverviewModal(false)}
+                  className="px-5 py-3 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs rounded-xl transition-colors cursor-pointer"
+                >
+                  Close
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
 
       </main>
     </div>

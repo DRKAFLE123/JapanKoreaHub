@@ -42,17 +42,17 @@ const COUNTRY_CONFIG = {
     ],
     sections: [
       { href: '/japan/learn',  label: 'Learn Japanese', Icon: BookOpen,     desc: 'Hiragana, Katakana, Minna no Nihongo, Kanji, Grammar & Listening', count: 'Lessons 1-50', color: 'text-indigo-600', bg: 'bg-indigo-50 border-indigo-100' },
-      { href: '/japan/exams',  label: 'Exams & CBT',    Icon: ClipboardList, desc: 'JLPT N5–N1 timed simulators & JFT-Basic CBT engine', count: 'Full Mock Tests', color: 'text-amber-600', bg: 'bg-amber-50 border-amber-100' },
+      { href: '/japan/mock-test',  label: 'Exams & CBT',    Icon: ClipboardList, desc: 'JLPT N5–N1 timed simulators & JFT-Basic CBT engine', count: 'Full Mock Tests', color: 'text-amber-600', bg: 'bg-amber-50 border-amber-100' },
       { href: '/japan/visa',   label: 'Visa & COE',     Icon: Shield,        desc: 'Student visas, SSW 1 & 2 work permits, COE process & checklist', count: 'Official Checklists', color: 'text-rose-600', bg: 'bg-rose-50 border-rose-100' },
       { href: '/japan/work',   label: 'SSW Work',       Icon: Briefcase,     desc: 'Specified Skilled Worker sectors, Kaigo, Agriculture, Food Service', count: 'SSW Job Hub', color: 'text-emerald-600', bg: 'bg-emerald-50 border-emerald-100' },
       { href: '/japan/study',  label: 'Study in Japan', Icon: GraduationCap, desc: 'MEXT Scholarships, Language Schools, University admissions', count: 'School Finder', color: 'text-blue-600', bg: 'bg-blue-50 border-blue-100' },
-      { href: '/japan/life',   label: 'Life in Japan',  Icon: Globe,         desc: 'Cost of living, apartment renting, municipal registration, rights', count: 'Living Guide', color: 'text-purple-600', bg: 'bg-purple-50 border-purple-100' },
+      { href: '/japan/life',   label: 'Life & Culture', Icon: Globe,         desc: 'Cost of living, housing, cultural etiquette & traditions', count: 'Living & Culture', color: 'text-purple-600', bg: 'bg-purple-50 border-purple-100' },
     ],
     featuredExams: [
-      { href: '/japan/exams/jlpt-n5',  label: 'JLPT N5 CBT Test',   badge: 'Beginner • 180 Marks' },
-      { href: '/japan/exams/jlpt-n4',  label: 'JLPT N4 CBT Test',   badge: 'Elementary • 180 Marks' },
-      { href: '/japan/exams/jlpt-n3',  label: 'JLPT N3 CBT Test',   badge: 'Intermediate • 180 Marks' },
-      { href: '/japan/exams/jft-basic', label: 'JFT-Basic CBT Engine', badge: 'SSW Required • 250 Marks' },
+      { href: '/japan/mock-test/jlpt-n5',  label: 'JLPT N5 CBT Test',   badge: 'Beginner • 180 Marks' },
+      { href: '/japan/mock-test/jlpt-n4',  label: 'JLPT N4 CBT Test',   badge: 'Elementary • 180 Marks' },
+      { href: '/japan/mock-test/jlpt-n3',  label: 'JLPT N3 CBT Test',   badge: 'Intermediate • 180 Marks' },
+      { href: '/japan/mock-test/jft-basic', label: 'JFT-Basic CBT Engine', badge: 'SSW Required • 250 Marks' },
     ],
   },
   korea: {
@@ -85,16 +85,16 @@ const COUNTRY_CONFIG = {
     ],
     sections: [
       { href: '/korea/learn',  label: 'Learn Korean', Icon: BookOpen,     desc: 'Hangul, EPS-TOPIK 60 lessons, TOPIK I & II, 300 Core Words', count: 'Lessons 1-60', color: 'text-indigo-600', bg: 'bg-indigo-50 border-indigo-100' },
-      { href: '/korea/exams',  label: 'Exams & CBT',    Icon: ClipboardList, desc: 'EPS-TOPIK official CBT simulator, TOPIK I & II full tests', count: 'UBT/CBT Tests', color: 'text-amber-600', bg: 'bg-amber-50 border-amber-100' },
+      { href: '/korea/mock-test',  label: 'Exams & CBT',    Icon: ClipboardList, desc: 'EPS-TOPIK official CBT simulator, TOPIK I & II full tests', count: 'UBT/CBT Tests', color: 'text-amber-600', bg: 'bg-amber-50 border-amber-100' },
       { href: '/korea/visa',   label: 'Visa & E-9',     Icon: Shield,        desc: 'E-9 non-professional worker visa, D-2 student visa, D-4 language visa', count: 'Visa Checklists', color: 'text-rose-600', bg: 'bg-rose-50 border-rose-100' },
       { href: '/korea/work',   label: 'EPS Work Sectors', Icon: Briefcase,   desc: 'Manufacturing, Agriculture, Construction, Fishing, Safety', count: '5 Key Sectors', color: 'text-emerald-600', bg: 'bg-emerald-50 border-emerald-100' },
       { href: '/korea/study',  label: 'Study in Korea', Icon: GraduationCap, desc: 'GKS Global Korea Scholarship, Korean Universities admissions', count: 'University Finder', color: 'text-blue-600', bg: 'bg-blue-50 border-blue-100' },
-      { href: '/korea/life',   label: 'Life in Korea',  Icon: Globe,         desc: 'Cost of living, Alien Registration Card (ARC), rent, rights', count: 'Living Guide', color: 'text-purple-600', bg: 'bg-purple-50 border-purple-100' },
+      { href: '/korea/life',   label: 'Life & Culture', Icon: Globe,         desc: 'Cost of living, housing, Korean etiquette & workplace culture', count: 'Living & Culture', color: 'text-purple-600', bg: 'bg-purple-50 border-purple-100' },
     ],
     featuredExams: [
-      { href: '/korea/exams/eps-topik', label: 'EPS-TOPIK Official CBT Simulator', badge: 'E-9 Required • 200 Pts' },
-      { href: '/korea/exams/topik-1',   label: 'TOPIK I Exam Simulator',   badge: 'Level 1 & 2 • 200 Pts' },
-      { href: '/korea/exams/topik-2',   label: 'TOPIK II Exam Simulator',  badge: 'Level 3 to 6 • 300 Pts' },
+      { href: '/korea/mock-test/eps-topik', label: 'EPS-TOPIK Official CBT Simulator', badge: 'E-9 Required • 200 Pts' },
+      { href: '/korea/mock-test/topik-1',   label: 'TOPIK I Exam Simulator',   badge: 'Level 1 & 2 • 200 Pts' },
+      { href: '/korea/mock-test/topik-2',   label: 'TOPIK II Exam Simulator',  badge: 'Level 3 to 6 • 300 Pts' },
     ],
   },
 } as const;
@@ -294,8 +294,8 @@ export default function CountryHubClient({ country }: { country: Country }) {
                 Official Exam & CBT Simulators
               </h2>
             </div>
-            <Link href={`/${country}/exams`} className={`text-xs font-bold ${cfg.theme.accentText} hover:underline flex items-center gap-1`}>
-              All exams <ChevronRight className="w-3.5 h-3.5" />
+            <Link href={`/${country}/mock-test`} className={`text-xs font-bold ${cfg.theme.accentText} hover:underline flex items-center gap-1`}>
+              All mock tests <ChevronRight className="w-3.5 h-3.5" />
             </Link>
           </div>
 

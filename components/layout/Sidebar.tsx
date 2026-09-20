@@ -98,7 +98,7 @@ export default function Sidebar({ isOpen, isCollapsed = false, onToggleCollapse,
     { key: 'visa',      label: 'Visa & Interview', href: getScopedHref('visa'),   Icon: Shield, hasDropdown: true },
     { key: 'rooms',     label: 'Rooms',      href: getScopedHref('rooms'),  Icon: Building, badge: 'Housing' },
     { key: 'jobs',      label: 'Jobs',       href: getScopedHref('jobs'),   Icon: Briefcase, badge: 'Careers' },
-    { key: 'life',      label: 'Life',       href: getScopedHref('life'),   Icon: Globe },
+    { key: 'life',      label: 'Life & Culture', href: getScopedHref('life'),   Icon: Globe },
   ];
 
 
