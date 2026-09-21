@@ -18,6 +18,7 @@ import {
 
 import { searchPlatform, SearchItem } from '@/lib/search-index';
 import { useCountry } from '@/lib/context/CountryContext';
+import { useBodyScrollLock } from '@/lib/useBodyScrollLock';
 
 interface GlobalSearchProps {
   isOpen: boolean;
@@ -47,6 +48,8 @@ export default function GlobalSearch({ isOpen, onClose }: GlobalSearchProps) {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [isOpen, onClose]);
 
+  useBodyScrollLock(isOpen);
+
   useEffect(() => {
     if (isOpen) {
       const timer = setTimeout(() => {
@@ -54,13 +57,7 @@ export default function GlobalSearch({ isOpen, onClose }: GlobalSearchProps) {
           inputRef.current?.focus({ preventScroll: true });
         } catch {}
       }, 50);
-      document.body.style.overflow = 'hidden';
-      return () => {
-        clearTimeout(timer);
-        document.body.style.overflow = 'unset';
-      };
-    } else {
-      document.body.style.overflow = 'unset';
+      return () => clearTimeout(timer);
     }
   }, [isOpen]);
 

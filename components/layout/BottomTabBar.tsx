@@ -21,6 +21,7 @@ import { useTheme } from '@/lib/context/ThemeContext';
 import PostModal from '@/components/community/PostModal';
 import PhoneVerificationModal from '@/components/community/PhoneVerificationModal';
 import AuthSheet from '@/components/auth/AuthSheet';
+import { useBodyScrollLock } from '@/lib/useBodyScrollLock';
 
 interface BottomTabBarProps {
   user?: { name: string; email: string } | null;
@@ -34,6 +35,7 @@ export default function BottomTabBar({ user: propUser }: BottomTabBarProps) {
 
   const [menuOpen, setMenuOpen] = useState(false);
   const [profileMenuOpen, setProfileMenuOpen] = useState(false);
+  useBodyScrollLock(menuOpen || profileMenuOpen);
   const [postModalOpen, setPostModalOpen] = useState(false);
   const [postType, setPostType] = useState<'JOB' | 'ROOM'>('JOB');
   const [phoneModalOpen, setPhoneModalOpen] = useState(false);
@@ -124,7 +126,8 @@ export default function BottomTabBar({ user: propUser }: BottomTabBarProps) {
       {menuOpen && (
         <div
           onClick={() => setMenuOpen(false)}
-          className="fixed inset-0 bg-slate-900/60 backdrop-blur-xs z-40 md:hidden animate-fade-in transition-opacity"
+          onTouchMove={(e) => e.preventDefault()}
+          className="fixed inset-0 bg-slate-900/60 backdrop-blur-xs z-40 md:hidden animate-fade-in transition-opacity touch-none"
         />
       )}
 
@@ -132,7 +135,8 @@ export default function BottomTabBar({ user: propUser }: BottomTabBarProps) {
       {profileMenuOpen && (
         <div
           onClick={() => setProfileMenuOpen(false)}
-          className="fixed inset-0 bg-slate-900/50 backdrop-blur-xs z-40 md:hidden animate-fade-in transition-opacity"
+          onTouchMove={(e) => e.preventDefault()}
+          className="fixed inset-0 bg-slate-900/50 backdrop-blur-xs z-40 md:hidden animate-fade-in transition-opacity touch-none"
         />
       )}
 
@@ -307,10 +311,10 @@ export default function BottomTabBar({ user: propUser }: BottomTabBarProps) {
               <button
                 type="button"
                 onClick={() => openAuth('register')}
-                className="w-full flex items-center gap-2.5 px-3 py-2.5 text-xs font-bold text-white bg-slate-900 hover:bg-slate-800 rounded-xl transition-colors cursor-pointer"
+                className="w-full flex items-center gap-2.5 px-3 py-2.5 text-xs font-bold text-white bg-indigo-600 hover:bg-indigo-500 rounded-xl transition-colors cursor-pointer shadow-xs"
               >
                 <ProfileIcon className="w-4 h-4 text-white" />
-                Register
+                Create Account
               </button>
             </div>
           )}

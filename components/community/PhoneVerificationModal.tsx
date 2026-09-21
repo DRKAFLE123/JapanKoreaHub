@@ -1,6 +1,7 @@
 'use client';
 import React, { useState } from 'react';
 import { X, Phone, ShieldCheck, CheckCircle2, ArrowRight, Loader2, Sparkles, RefreshCw } from 'lucide-react';
+import { useBodyScrollLock } from '@/lib/useBodyScrollLock';
 
 interface PhoneVerificationModalProps {
   isOpen: boolean;
@@ -20,6 +21,8 @@ export default function PhoneVerificationModal({
   const [demoCode, setDemoCode] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+
+  useBodyScrollLock(isOpen);
 
   if (!isOpen) return null;
 
@@ -86,7 +89,11 @@ export default function PhoneVerificationModal({
 
   return (
     <>
-      <div className="fixed inset-0 z-[95] bg-slate-950/70 backdrop-blur-xs animate-fade-in" onClick={onClose} />
+      <div 
+        className="fixed inset-0 z-[95] bg-slate-950/70 backdrop-blur-xs animate-fade-in touch-none" 
+        onClick={onClose} 
+        onTouchMove={(e) => e.preventDefault()}
+      />
       
       <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 pointer-events-none">
         <div className="w-full max-w-md bg-white border border-slate-200 rounded-3xl shadow-2xl overflow-hidden pointer-events-auto my-auto animate-fade-in font-sans">

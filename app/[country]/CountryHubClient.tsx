@@ -2,7 +2,7 @@
 import React from 'react';
 import Link from 'next/link';
 import {
-  BookOpen, ClipboardList, Shield, Briefcase,
+  BookOpen, ClipboardList, Shield, Briefcase, Home as HomeIcon,
   GraduationCap, Globe, ChevronRight, ArrowRight, Sparkles,
   Bell, Award, Headphones, CheckCircle2, Flame, Users
 } from 'lucide-react';
@@ -162,7 +162,7 @@ export default function CountryHubClient({ country }: { country: Country }) {
 
             {/* Right Landmark Illustration — Blended into background (no card box) */}
             <div className="md:col-span-5 flex justify-center items-center">
-              <div className="relative w-full max-w-sm">
+              <div className="relative w-full max-w-[220px] sm:max-w-sm mx-auto">
                 <img
                   src={country === 'japan' ? '/japan_hero_landmarks.png' : '/korea_hero_landmarks.png'}
                   alt={`${cfg.name} Landmarks`}
@@ -172,6 +172,116 @@ export default function CountryHubClient({ country }: { country: Country }) {
             </div>
 
           </div>
+        </section>
+
+        {/* 🧭 OPTION 2: 4-CARD APP-STYLE QUICK HUB BAR */}
+        <section aria-label="Platform Pillars" className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4">
+          
+          {/* Card 1: Study & Learn */}
+          <Link
+            href={`/${country}/learn`}
+            className="group relative bg-white border border-slate-200/90 rounded-2xl p-3.5 sm:p-4 shadow-xs hover:shadow-md hover:border-indigo-300 hover:-translate-y-0.5 active:translate-y-0 transition-all duration-200 flex flex-col justify-between"
+          >
+            <div>
+              <div className="flex items-center justify-between mb-3">
+                <div className="w-10 h-10 rounded-xl bg-indigo-50 border border-indigo-100 flex items-center justify-center text-indigo-600 group-hover:scale-105 transition-transform">
+                  <BookOpen className="w-5 h-5" />
+                </div>
+                <span className="text-[10px] font-black uppercase tracking-wider px-2 py-0.5 rounded-full bg-indigo-50/80 text-indigo-700 border border-indigo-100">
+                  {isNe ? 'पाठ्यक्रम' : 'Courses'}
+                </span>
+              </div>
+              <h2 className="text-sm sm:text-base font-black text-slate-900 group-hover:text-indigo-600 transition-colors flex items-center gap-1">
+                <span>{isNe ? 'पढ्नुहोस् र सिक्नुहोस्' : 'Study & Learn'}</span>
+                <ChevronRight className="w-3.5 h-3.5 opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all text-indigo-600" />
+              </h2>
+              <p className="text-[11px] sm:text-xs text-slate-500 line-clamp-1 mt-0.5">
+                {isNe 
+                  ? (country === 'japan' ? 'JLPT र JFT तयारी' : 'EPS-TOPIK ६० पाठ')
+                  : (country === 'japan' ? 'JLPT & JFT curriculum' : 'EPS-TOPIK 60 lessons')}
+              </p>
+            </div>
+          </Link>
+
+          {/* Card 2: Mock CBT Exams */}
+          <Link
+            href={`/${country}/mock-test`}
+            className="group relative bg-white border border-slate-200/90 rounded-2xl p-3.5 sm:p-4 shadow-xs hover:shadow-md hover:border-amber-300 hover:-translate-y-0.5 active:translate-y-0 transition-all duration-200 flex flex-col justify-between"
+          >
+            <div>
+              <div className="flex items-center justify-between mb-3">
+                <div className="w-10 h-10 rounded-xl bg-amber-50 border border-amber-100 flex items-center justify-center text-amber-600 group-hover:scale-105 transition-transform">
+                  <ClipboardList className="w-5 h-5" />
+                </div>
+                <span className="text-[10px] font-black uppercase tracking-wider px-2 py-0.5 rounded-full bg-amber-50/80 text-amber-700 border border-amber-100">
+                  {isNe ? 'अभ्यास' : 'Practice'}
+                </span>
+              </div>
+              <h2 className="text-sm sm:text-base font-black text-slate-900 group-hover:text-amber-600 transition-colors flex items-center gap-1">
+                <span>{isNe ? 'मोडल परीक्षा' : 'Mock CBT Exams'}</span>
+                <ChevronRight className="w-3.5 h-3.5 opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all text-amber-600" />
+              </h2>
+              <p className="text-[11px] sm:text-xs text-slate-500 line-clamp-1 mt-0.5">
+                {isNe 
+                  ? 'CBT वास्तविक परीक्षा सेट' 
+                  : 'Real timed CBT simulator'}
+              </p>
+            </div>
+          </Link>
+
+          {/* Card 3: Find Jobs */}
+          <Link
+            href={`/${country}/jobs`}
+            className="group relative bg-white border border-slate-200/90 rounded-2xl p-3.5 sm:p-4 shadow-xs hover:shadow-md hover:border-emerald-300 hover:-translate-y-0.5 active:translate-y-0 transition-all duration-200 flex flex-col justify-between"
+          >
+            <div>
+              <div className="flex items-center justify-between mb-3">
+                <div className="w-10 h-10 rounded-xl bg-emerald-50 border border-emerald-100 flex items-center justify-center text-emerald-600 group-hover:scale-105 transition-transform">
+                  <Briefcase className="w-5 h-5" />
+                </div>
+                <span className="text-[10px] font-black uppercase tracking-wider px-2 py-0.5 rounded-full bg-emerald-50/80 text-emerald-700 border border-emerald-100 flex items-center gap-1">
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                  <span>{isNe ? 'नयाँ' : 'Live'}</span>
+                </span>
+              </div>
+              <h2 className="text-sm sm:text-base font-black text-slate-900 group-hover:text-emerald-600 transition-colors flex items-center gap-1">
+                <span>{isNe ? 'काम खोज्नुहोस्' : 'Find Jobs'}</span>
+                <ChevronRight className="w-3.5 h-3.5 opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all text-emerald-600" />
+              </h2>
+              <p className="text-[11px] sm:text-xs text-slate-500 line-clamp-1 mt-0.5">
+                {isNe 
+                  ? 'पार्ट-टाइम र SSW अवसर' 
+                  : (country === 'japan' ? 'Arubaito & SSW listings' : 'E-9 & part-time jobs')}
+              </p>
+            </div>
+          </Link>
+
+          {/* Card 4: Find Rooms */}
+          <Link
+            href={`/${country}/rooms`}
+            className="group relative bg-white border border-slate-200/90 rounded-2xl p-3.5 sm:p-4 shadow-xs hover:shadow-md hover:border-sky-300 hover:-translate-y-0.5 active:translate-y-0 transition-all duration-200 flex flex-col justify-between"
+          >
+            <div>
+              <div className="flex items-center justify-between mb-3">
+                <div className="w-10 h-10 rounded-xl bg-sky-50 border border-sky-100 flex items-center justify-center text-sky-600 group-hover:scale-105 transition-transform">
+                  <HomeIcon className="w-5 h-5" />
+                </div>
+                <span className="text-[10px] font-black uppercase tracking-wider px-2 py-0.5 rounded-full bg-sky-50/80 text-sky-700 border border-sky-100">
+                  {isNe ? 'प्रमाणित' : 'Verified'}
+                </span>
+              </div>
+              <h2 className="text-sm sm:text-base font-black text-slate-900 group-hover:text-sky-600 transition-colors flex items-center gap-1">
+                <span>{isNe ? 'कोठा खोज्नुहोस्' : 'Find Rooms'}</span>
+                <ChevronRight className="w-3.5 h-3.5 opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all text-sky-600" />
+              </h2>
+              <p className="text-[11px] sm:text-xs text-slate-500 line-clamp-1 mt-0.5">
+                {isNe 
+                  ? 'जिरो डिपोजिट र सेयर बसाइ' 
+                  : '0-deposit & shared stays'}
+              </p>
+            </div>
+          </Link>
+
         </section>
 
         {/* 📢 LATEST COUNTRY UPDATES (NOTICES) */}

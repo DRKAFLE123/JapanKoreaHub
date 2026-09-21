@@ -3,6 +3,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { X, Volume2, Shuffle, ArrowLeft, ArrowRight, Eye, EyeOff, Play } from 'lucide-react';
 import { Kanji1000Item } from '@/lib/kanji-1000-data';
+import { useBodyScrollLock } from '@/lib/useBodyScrollLock';
 
 interface KanjiPracticeModalProps {
   isOpen: boolean;
@@ -33,17 +34,13 @@ export const KanjiPracticeModal: React.FC<KanjiPracticeModalProps> = ({
   const [showAnswer, setShowAnswer] = useState<boolean>(false);
   const overlayRef = useRef<HTMLDivElement>(null);
 
-  // Scroll page to top and lock body scroll when modal opens
+  useBodyScrollLock(isOpen);
+
+  // Scroll page to top when modal opens
   useEffect(() => {
     if (isOpen) {
       window.scrollTo({ top: 0, behavior: 'smooth' });
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = '';
     }
-    return () => {
-      document.body.style.overflow = '';
-    };
   }, [isOpen]);
 
   // Initialize and refresh deck when base list or shuffling changes

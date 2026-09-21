@@ -18,6 +18,7 @@ import {
 } from 'lucide-react';
 import type { CommunityPost } from '@/lib/community-data';
 import CustomSelect from '@/components/ui/CustomSelect';
+import { useBodyScrollLock } from '@/lib/useBodyScrollLock';
 
 interface PostModalProps {
   isOpen: boolean;
@@ -88,6 +89,8 @@ export default function PostModal({
   const [customTag, setCustomTag] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+
+  useBodyScrollLock(isOpen);
 
   if (!isOpen) return null;
 
@@ -181,7 +184,11 @@ export default function PostModal({
 
   return (
     <>
-      <div className="fixed inset-0 z-[80] bg-slate-950/60 backdrop-blur-xs animate-fade-in" onClick={onClose} />
+      <div 
+        className="fixed inset-0 z-[80] bg-slate-950/60 backdrop-blur-xs animate-fade-in touch-none" 
+        onClick={onClose} 
+        onTouchMove={(e) => e.preventDefault()}
+      />
 
       <div className="fixed inset-0 z-[90] overflow-y-auto flex items-center justify-center p-3 sm:p-5 pointer-events-none">
         <div className="w-full max-w-xl bg-white border border-slate-200 rounded-3xl shadow-2xl overflow-hidden pointer-events-auto my-auto animate-fade-in font-sans">

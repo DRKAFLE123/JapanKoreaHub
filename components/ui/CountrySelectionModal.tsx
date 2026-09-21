@@ -4,12 +4,15 @@ import React, { useState, useEffect } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
 import { useCountry } from '@/lib/context/CountryContext';
 import { ArrowRight, PlaneTakeoff, Home as HomeIcon, CheckCircle2, X } from 'lucide-react';
+import { useBodyScrollLock } from '@/lib/useBodyScrollLock';
 
 export default function CountrySelectionModal() {
   const [isOpen, setIsOpen] = useState(false);
   const { setCountryFocus } = useCountry();
   const router = useRouter();
   const pathname = usePathname();
+
+  useBodyScrollLock(isOpen);
 
   useEffect(() => {
     // Only show if user has never selected a country preference
@@ -42,7 +45,7 @@ export default function CountrySelectionModal() {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-slate-900/60 backdrop-blur-sm animate-fade-in">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-slate-900/60 backdrop-blur-sm animate-fade-in touch-none" onTouchMove={(e) => { if (e.target === e.currentTarget) e.preventDefault(); }}>
       <div className="relative w-full max-w-xl bg-white rounded-3xl shadow-2xl border border-slate-100 overflow-hidden text-slate-900 animate-scale-up">
         
         {/* Close / Skip button */}

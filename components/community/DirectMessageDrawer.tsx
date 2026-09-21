@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { X, Send, MessageSquare, Phone, User, ShieldCheck, CheckCheck, Loader2 } from 'lucide-react';
 import type { CommunityPost, DirectMessage } from '@/lib/community-data';
 import PlatformMessageIcon from '@/components/icons/PlatformMessageIcon';
+import { useBodyScrollLock } from '@/lib/useBodyScrollLock';
 
 interface DirectMessageDrawerProps {
   isOpen: boolean;
@@ -23,6 +24,8 @@ export default function DirectMessageDrawer({
   const [inputText, setInputText] = useState('');
   const [loading, setLoading] = useState(false);
   const [sending, setSending] = useState(false);
+
+  useBodyScrollLock(isOpen);
 
   useEffect(() => {
     if (isOpen && user) {
@@ -105,7 +108,11 @@ export default function DirectMessageDrawer({
 
   return (
     <>
-      <div className="fixed inset-0 z-[95] bg-slate-950/60 backdrop-blur-xs animate-fade-in" onClick={onClose} />
+      <div 
+        className="fixed inset-0 z-[95] bg-slate-950/60 backdrop-blur-xs animate-fade-in touch-none" 
+        onClick={onClose} 
+        onTouchMove={(e) => e.preventDefault()}
+      />
 
       <div className="fixed top-0 right-0 bottom-0 z-[100] w-full max-w-md bg-white shadow-2xl animate-slide-left flex flex-col font-sans">
         

@@ -1,7 +1,8 @@
 'use client';
 
 import React, { useState } from 'react';
-import { X, Eye, EyeOff, Loader2, Mail, Lock, User, Sparkles, ShieldCheck } from 'lucide-react';
+import { X, Eye, EyeOff, Loader2, Mail, Lock, User, Sparkles, ShieldCheck, UserPlus, LogIn } from 'lucide-react';
+import { useBodyScrollLock } from '@/lib/useBodyScrollLock';
 
 interface AuthSheetProps {
   initialMode?: 'signin' | 'register';
@@ -10,6 +11,7 @@ interface AuthSheetProps {
 }
 
 export default function AuthSheet({ initialMode = 'signin', onClose, onSuccess }: AuthSheetProps) {
+  useBodyScrollLock(true);
   const [mode, setMode] = useState<'signin' | 'register'>(initialMode);
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
@@ -52,11 +54,15 @@ export default function AuthSheet({ initialMode = 'signin', onClose, onSuccess }
 
   return (
     <>
-      {/* Backdrop */}
-      <div className="fixed inset-0 z-[80] bg-slate-950/70 backdrop-blur-sm animate-fade-in" onClick={onClose} />
+      {/* Backdrop with touch-none to prevent scroll bleed */}
+      <div
+        className="fixed inset-0 z-[80] bg-slate-950/70 backdrop-blur-sm animate-fade-in touch-none"
+        onClick={onClose}
+        onTouchMove={(e) => e.preventDefault()}
+      />
 
       {/* Responsive Centered Modal / Sheet */}
-      <div className="fixed inset-0 z-[90] overflow-y-auto flex items-center justify-center p-3 sm:p-4 pointer-events-none">
+      <div className="fixed inset-0 z-[90] overflow-y-auto overscroll-contain flex items-center justify-center p-3 sm:p-4 pointer-events-none">
         <div className="w-full max-w-md bg-white border border-slate-200 rounded-3xl shadow-2xl overflow-hidden pointer-events-auto my-auto mx-auto animate-fade-in font-sans">
           
           {/* Header Banner */}
@@ -84,8 +90,6 @@ export default function AuthSheet({ initialMode = 'signin', onClose, onSuccess }
                 : 'Create a free account to track JLPT & EPS-TOPIK progress.'}
             </p>
           </div>
-
-
 
           <div className="p-5 sm:p-6 space-y-4">
             {/* Error Message */}
@@ -190,8 +194,8 @@ export default function AuthSheet({ initialMode = 'signin', onClose, onSuccess }
                 disabled={loading}
                 className="w-full flex items-center justify-center gap-2 py-3 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-black text-xs uppercase tracking-wider transition-colors shadow-xs disabled:opacity-60 cursor-pointer"
               >
-                {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : <Sparkles className="w-4 h-4" />}
-                {mode === 'signin' ? 'Sign In to Portal' : 'Create Free Student Account'}
+                {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : mode === 'signin' ? <LogIn className="w-4 h-4" /> : <UserPlus className="w-4 h-4" />}
+                {mode === 'signin' ? 'Sign In to Portal' : 'Create Account'}
               </button>
             </form>
 
@@ -222,32 +226,38 @@ export default function AuthSheet({ initialMode = 'signin', onClose, onSuccess }
               <span>100% Free &amp; Secure Student Account</span>
             </div>
 
-            {/* Mode Switch Link */}
-            <p className="text-center text-xs text-slate-500 pt-1">
+            {/* Prominent Mode Switcher Button (Instead of tiny text link) */}
+            <div className="pt-2 border-t border-slate-100">
               {mode === 'signin' ? (
-                <>
-                  No account yet?{' '}
+                <div className="space-y-1.5 text-center">
+                  <p className="text-xs text-slate-500 font-medium">
+                    Don&apos;t have an account yet?
+                  </p>
                   <button
                     type="button"
                     onClick={() => { setMode('register'); setError(''); }}
-                    className="font-bold text-indigo-600 hover:text-indigo-700 underline underline-offset-2 cursor-pointer"
+                    className="w-full flex items-center justify-center gap-2 py-2.5 rounded-xl border border-indigo-200 bg-indigo-50/80 hover:bg-indigo-100 text-indigo-700 font-extrabold text-xs transition-colors cursor-pointer shadow-xs"
                   >
-                    Create one free
+                    <UserPlus className="w-4 h-4" />
+                    <span>Create Account (100% Free)</span>
                   </button>
-                </>
+                </div>
               ) : (
-                <>
-                  Already have an account?{' '}
+                <div className="space-y-1.5 text-center">
+                  <p className="text-xs text-slate-500 font-medium">
+                    Already registered with us?
+                  </p>
                   <button
                     type="button"
                     onClick={() => { setMode('signin'); setError(''); }}
-                    className="font-bold text-indigo-600 hover:text-indigo-700 underline underline-offset-2 cursor-pointer"
+                    className="w-full flex items-center justify-center gap-2 py-2.5 rounded-xl border border-slate-200 bg-slate-50 hover:bg-slate-100 text-slate-700 font-extrabold text-xs transition-colors cursor-pointer shadow-xs"
                   >
-                    Sign In
+                    <LogIn className="w-4 h-4" />
+                    <span>Sign In to Existing Account</span>
                   </button>
-                </>
+                </div>
               )}
-            </p>
+            </div>
           </div>
         </div>
       </div>
