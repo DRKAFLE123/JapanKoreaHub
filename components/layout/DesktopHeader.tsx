@@ -31,6 +31,7 @@ import NotificationBell from '@/components/notifications/NotificationBell';
 import LanguageDropdown from '@/components/layout/LanguageDropdown';
 import PlatformMessageIcon from '@/components/icons/PlatformMessageIcon';
 import { useUnreadMessages } from '@/lib/useUnreadMessages';
+import { useTranslation, LanguageMode } from '@/lib/i18n/LanguageContext';
 
 interface DesktopHeaderProps {
   user?: { name: string; email: string } | null;
@@ -64,6 +65,13 @@ export default function DesktopHeader({ user, onSearchOpen, lang, onLangToggle, 
   const [authMode, setAuthMode] = useState<'signin' | 'register'>('signin');
   const { activeCountry } = useCountry();
   const { isDark, toggleTheme } = useTheme();
+  const { langMode, setLangMode } = useTranslation();
+
+  const LANGUAGE_OPTIONS: { id: LanguageMode; label: string }[] = [
+    { id: 'en', label: 'English' },
+    { id: 'ne', label: 'नेपाली' },
+    { id: 'both', label: 'Both' },
+  ];
 
   const [openDropdown, setOpenDropdown] = useState<'japan' | 'korea' | null>(null);
   const dropdownRef = useRef<HTMLDivElement>(null);
@@ -435,6 +443,38 @@ export default function DesktopHeader({ user, onSearchOpen, lang, onLangToggle, 
                         {isDark ? 'ON' : 'OFF'}
                       </span>
                     </button>
+
+                    {/* Language Mode Selector */}
+                    <div className="pt-2 mt-1 border-t border-slate-100">
+                      <div className="flex items-center justify-between px-2 mb-1.5">
+                        <div className="flex items-center gap-2 text-slate-700 font-bold text-xs">
+                          <Globe className="w-3.5 h-3.5 text-red-500 shrink-0" />
+                          <span>Language / भाषा</span>
+                        </div>
+                        <span className="text-[10px] font-black uppercase text-indigo-600 bg-indigo-50 px-1.5 py-0.2 rounded">
+                          {langMode === 'en' ? 'English' : langMode === 'ne' ? 'नेपाली' : 'Dual'}
+                        </span>
+                      </div>
+                      <div className="grid grid-cols-3 gap-1 bg-slate-100 p-1 rounded-xl">
+                        {LANGUAGE_OPTIONS.map((opt) => {
+                          const isSelected = langMode === opt.id;
+                          return (
+                            <button
+                              key={opt.id}
+                              type="button"
+                              onClick={() => setLangMode(opt.id)}
+                              className={`py-1.5 px-1 rounded-lg text-center text-xs font-bold transition-all cursor-pointer ${
+                                isSelected
+                                  ? 'bg-white text-slate-900 shadow-xs ring-1 ring-slate-200/80 font-black'
+                                  : 'text-slate-500 hover:text-slate-800'
+                              }`}
+                            >
+                              {opt.label}
+                            </button>
+                          );
+                        })}
+                      </div>
+                    </div>
                   </div>
 
                   <div className="border-t border-slate-200 my-1 pt-1">

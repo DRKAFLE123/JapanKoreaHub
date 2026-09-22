@@ -60,13 +60,13 @@ export async function PATCH(request: Request) {
     const authUser = getAuthUserFromRequest(request);
     const body = await request.json();
     const userId = authUser?.id || body.userId;
-    const { postId } = body;
+    const { postId, otherUserId } = body;
 
     if (!userId) {
       return NextResponse.json({ error: 'User ID is required' }, { status: 400 });
     }
 
-    markMessagesAsReadForUser(userId, postId);
+    markMessagesAsReadForUser(userId, postId, otherUserId);
     const unreadCount = getUnreadMessagesCountForUser(userId);
     return NextResponse.json({ success: true, unreadCount });
   } catch (err: any) {

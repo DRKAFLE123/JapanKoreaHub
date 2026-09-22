@@ -14,10 +14,13 @@ import {
   LogIn,
   BarChart2,
   Moon,
-  Sun
+  Sun,
+  Globe,
+  Languages
 } from 'lucide-react';
 import { useCountry } from '@/lib/context/CountryContext';
 import { useTheme } from '@/lib/context/ThemeContext';
+import { useTranslation, LanguageMode } from '@/lib/i18n/LanguageContext';
 import PostModal from '@/components/community/PostModal';
 import PhoneVerificationModal from '@/components/community/PhoneVerificationModal';
 import AuthSheet from '@/components/auth/AuthSheet';
@@ -32,6 +35,13 @@ export default function BottomTabBar({ user: propUser }: BottomTabBarProps) {
   const router = useRouter();
   const { activeCountry } = useCountry();
   const { isDark, toggleTheme } = useTheme();
+  const { langMode, setLangMode } = useTranslation();
+
+  const LANGUAGE_OPTIONS: { id: LanguageMode; label: string; sub: string }[] = [
+    { id: 'en', label: 'English', sub: 'Eng' },
+    { id: 'ne', label: 'नेपाली', sub: 'Np' },
+    { id: 'both', label: 'Both', sub: 'Dual' },
+  ];
 
   const [menuOpen, setMenuOpen] = useState(false);
   const [profileMenuOpen, setProfileMenuOpen] = useState(false);
@@ -273,6 +283,38 @@ export default function BottomTabBar({ user: propUser }: BottomTabBarProps) {
                     {isDark ? 'ON' : 'OFF'}
                   </span>
                 </button>
+
+                {/* Language Conversion Selector */}
+                <div className="pt-2 mt-1 border-t border-slate-100">
+                  <div className="flex items-center justify-between px-2 mb-1.5">
+                    <div className="flex items-center gap-2 text-slate-700 font-bold text-xs">
+                      <Globe className="w-3.5 h-3.5 text-red-500 shrink-0" />
+                      <span>Language / भाषा</span>
+                    </div>
+                    <span className="text-[10px] font-black uppercase text-indigo-600 bg-indigo-50 px-1.5 py-0.2 rounded">
+                      {langMode === 'en' ? 'English' : langMode === 'ne' ? 'नेपाली' : 'Dual'}
+                    </span>
+                  </div>
+                  <div className="grid grid-cols-3 gap-1 bg-slate-100 p-1 rounded-xl">
+                    {LANGUAGE_OPTIONS.map((opt) => {
+                      const isSelected = langMode === opt.id;
+                      return (
+                        <button
+                          key={opt.id}
+                          type="button"
+                          onClick={() => setLangMode(opt.id)}
+                          className={`py-1.5 px-1 rounded-lg text-center text-xs font-bold transition-all cursor-pointer ${
+                            isSelected
+                              ? 'bg-white text-slate-900 shadow-xs ring-1 ring-slate-200/80 font-black'
+                              : 'text-slate-500 hover:text-slate-800'
+                          }`}
+                        >
+                          {opt.label}
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
               </div>
 
               {/* Sign Out Button */}
@@ -316,6 +358,54 @@ export default function BottomTabBar({ user: propUser }: BottomTabBarProps) {
                 <ProfileIcon className="w-4 h-4 text-white" />
                 Create Account
               </button>
+
+              {/* Guest Controls: Dark Mode & Language Conversion */}
+              <div className="pt-2 mt-1.5 border-t border-slate-100 space-y-2">
+                <button
+                  type="button"
+                  onClick={() => toggleTheme()}
+                  className="w-full flex items-center justify-between px-2.5 py-1.5 rounded-xl text-slate-700 hover:bg-slate-100 font-bold text-xs transition-colors cursor-pointer text-left"
+                >
+                  <div className="flex items-center gap-2">
+                    {isDark ? <Sun className="w-3.5 h-3.5 text-amber-500" /> : <Moon className="w-3.5 h-3.5 text-indigo-600" />}
+                    <span>Dark Mode</span>
+                  </div>
+                  <span className="px-2 py-0.5 rounded-full text-[10px] font-black uppercase bg-slate-200 text-slate-700">
+                    {isDark ? 'ON' : 'OFF'}
+                  </span>
+                </button>
+
+                <div className="px-0.5">
+                  <div className="flex items-center justify-between px-2 mb-1.5">
+                    <div className="flex items-center gap-2 text-slate-700 font-bold text-xs">
+                      <Globe className="w-3.5 h-3.5 text-red-500 shrink-0" />
+                      <span>Language / भाषा</span>
+                    </div>
+                    <span className="text-[10px] font-black uppercase text-indigo-600 bg-indigo-50 px-1.5 py-0.2 rounded">
+                      {langMode === 'en' ? 'English' : langMode === 'ne' ? 'नेपाली' : 'Dual'}
+                    </span>
+                  </div>
+                  <div className="grid grid-cols-3 gap-1 bg-slate-100 p-1 rounded-xl">
+                    {LANGUAGE_OPTIONS.map((opt) => {
+                      const isSelected = langMode === opt.id;
+                      return (
+                        <button
+                          key={opt.id}
+                          type="button"
+                          onClick={() => setLangMode(opt.id)}
+                          className={`py-1.5 px-1 rounded-lg text-center text-xs font-bold transition-all cursor-pointer ${
+                            isSelected
+                              ? 'bg-white text-slate-900 shadow-xs ring-1 ring-slate-200/80 font-black'
+                              : 'text-slate-500 hover:text-slate-800'
+                          }`}
+                        >
+                          {opt.label}
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+              </div>
             </div>
           )}
         </div>

@@ -582,11 +582,15 @@ export function getUnreadMessagesCountForUser(userId: string): number {
   return memoryMessages.filter(m => m.receiverId === userId && !m.isRead).length;
 }
 
-export function markMessagesAsReadForUser(userId: string, postId?: string): void {
+export function markMessagesAsReadForUser(userId: string, postId?: string, otherUserId?: string): void {
   if (!userId) return;
   memoryMessages.forEach(m => {
-    if (m.receiverId === userId && (!postId || m.postId === postId)) {
-      m.isRead = true;
+    if (m.receiverId === userId) {
+      const matchPost = !postId || m.postId === postId;
+      const matchSender = !otherUserId || m.senderId === otherUserId;
+      if (matchPost && matchSender) {
+        m.isRead = true;
+      }
     }
   });
 }

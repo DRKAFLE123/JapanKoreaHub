@@ -11,6 +11,8 @@ import {
   Sparkles,
 } from 'lucide-react';
 import type { CommunityPost, PostComment } from '@/lib/community-data';
+import { useBodyScrollLock } from '@/lib/useBodyScrollLock';
+import { useVirtualKeyboard } from '@/lib/useVirtualKeyboard';
 
 interface CommentsDrawerProps {
   isOpen: boolean;
@@ -39,6 +41,19 @@ export default function CommentsDrawer({
 
   const commentInputRef = useRef<HTMLInputElement | null>(null);
   const commentsEndRef = useRef<HTMLDivElement | null>(null);
+
+  useBodyScrollLock(isOpen);
+  const { keyboardHeight, viewportHeight } = useVirtualKeyboard();
+
+  // Keep comments visible when mobile keyboard opens
+  useEffect(() => {
+    if (isOpen && keyboardHeight > 0) {
+      const timer = setTimeout(() => {
+        commentsEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+      }, 100);
+      return () => clearTimeout(timer);
+    }
+  }, [keyboardHeight, isOpen]);
 
   useEffect(() => {
     if (isOpen && post.id) {
@@ -131,12 +146,18 @@ export default function CommentsDrawer({
       />
 
       {/* Slide-Up Bottom Drawer (Facebook Opening Style Towards UP) */}
-      <div className="fixed inset-x-0 bottom-0 z-[100] flex justify-center pointer-events-none">
+      <div 
+        className="fixed inset-x-0 bottom-0 z-[100] flex justify-center pointer-events-none transition-[bottom] duration-150 ease-out"
+        style={{
+          bottom: keyboardHeight > 0 ? `${keyboardHeight}px` : '0px',
+        }}
+      >
         <div
           className="w-full max-w-xl bg-white rounded-t-3xl shadow-2xl flex flex-col pointer-events-auto max-h-[85vh] sm:max-h-[80vh] animate-in slide-in-from-bottom duration-300 ease-out border-t border-slate-200 font-sans"
           style={{
             animationDuration: '300ms',
             animationTimingFunction: 'cubic-bezier(0.16, 1, 0.3, 1)',
+            maxHeight: keyboardHeight > 0 ? `${Math.max(260, viewportHeight - 16)}px` : undefined,
           }}
         >
           {/* Top Drag Handle (Facebook style) */}
@@ -308,6 +329,11 @@ export default function CommentsDrawer({
                     type="text"
                     value={commentInput}
                     onChange={(e) => setCommentInput(e.target.value)}
+                    onFocus={() => {
+                      setTimeout(() => {
+                        commentsEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+                      }, 150);
+                    }}
                     placeholder={`Write a comment as ${user.name}...`}
                     className="w-full bg-slate-100 hover:bg-slate-150 focus:bg-white text-xs text-slate-900 placeholder-slate-400 rounded-full pl-4 pr-10 py-2.5 border border-slate-200 focus:border-indigo-500 focus:outline-none transition-all shadow-2xs"
                   />

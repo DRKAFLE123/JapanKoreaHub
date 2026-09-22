@@ -323,9 +323,14 @@ export default function PostDetailModal({
                     type="text"
                     value={commentInput}
                     onChange={(e) => setCommentInput(e.target.value)}
-                    onFocus={() => {
+                    onFocus={(e) => {
                       if (!user) {
                         onRequireAuth();
+                      } else {
+                        const target = e.currentTarget;
+                        setTimeout(() => {
+                          target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                        }, 200);
                       }
                     }}
                     placeholder={user ? 'Write a comment... (Press Enter to post)' : 'Sign in to leave a public comment...'}
