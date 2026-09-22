@@ -1,13 +1,15 @@
 import { NextResponse } from 'next/server';
 import { db } from '@/lib/db';
-import { validateExamSubmission, checkRateLimit } from '@/lib/auth-security';
+import { validateExamSubmission, checkRateLimit, getAuthUserFromRequest, hashPassword } from '@/lib/auth-security';
+import crypto from 'crypto';
 
 export async function POST(request: Request) {
   try {
+    const authUser = getAuthUserFromRequest(request);
     const body = await request.json();
     const { userId: reqUserId, examId, score, totalQuestions, timeSpentSeconds, answers, studentName } = body;
 
-    const clientIp = request.headers.get('x-forwarded-for') || reqUserId || 'anonymous';
+    const clientIp = request.headers.get('x-forwarded-for') || authUser?.id || reqUserId || 'anonymous';
 
     // Rate limiting: max 10 submissions per minute per user/IP
     if (!checkRateLimit(`mock_test_${clientIp}`, 10, 60 * 1000)) {
@@ -28,22 +30,24 @@ export async function POST(request: Request) {
 
     const passed = (score || 0) >= 70;
 
-    // Resolve or create user in DB
+    // Resolve user in DB: priority to authenticated user
     let user = null;
-    if (reqUserId) {
-      user = await db.user.findUnique({ where: { id: reqUserId } });
+    const targetUserId = authUser?.id || reqUserId;
+
+    if (targetUserId) {
+      user = await db.user.findUnique({ where: { id: targetUserId } });
     }
+
     if (!user) {
-      // Find default or first student user
-      user = await db.user.findFirst();
-    }
-    if (!user) {
-      // Create guest examinee user
+      // Create guest examinee user with secure hashed credentials
+      const randomPassword = crypto.randomBytes(16).toString('hex');
+      const hashedPassword = await hashPassword(randomPassword);
+
       user = await db.user.create({
         data: {
-          email: `examinee_${Date.now()}@japankoreahub.com`,
+          email: `examinee_${Date.now()}_${crypto.randomBytes(3).toString('hex')}@japankoreahub.com`,
           name: studentName || 'Diligent Student',
-          password: 'GuestPasswordHash123!',
+          password: hashedPassword,
           role: 'STUDENT',
           points: 100,
         },

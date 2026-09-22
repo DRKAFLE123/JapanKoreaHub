@@ -20,7 +20,14 @@ export async function GET(req: NextRequest) {
       orderBy: { lesson: 'asc' },
     });
 
-    return NextResponse.json({ success: true, count: vocab.length, data: vocab });
+    return NextResponse.json(
+      { success: true, count: vocab.length, data: vocab },
+      {
+        headers: {
+          'Cache-Control': 'public, max-age=3600, s-maxage=86400, stale-while-revalidate=604800',
+        },
+      }
+    );
   } catch (error: any) {
     return NextResponse.json({ success: false, error: error.message }, { status: 500 });
   }

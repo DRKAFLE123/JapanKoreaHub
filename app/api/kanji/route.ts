@@ -15,7 +15,14 @@ export async function GET(req: NextRequest) {
       orderBy: { lessonOrder: 'asc' },
     });
 
-    return NextResponse.json({ success: true, count: kanjiList.length, data: kanjiList });
+    return NextResponse.json(
+      { success: true, count: kanjiList.length, data: kanjiList },
+      {
+        headers: {
+          'Cache-Control': 'public, max-age=3600, s-maxage=86400, stale-while-revalidate=604800',
+        },
+      }
+    );
   } catch (error: any) {
     return NextResponse.json({ success: false, error: error.message }, { status: 500 });
   }

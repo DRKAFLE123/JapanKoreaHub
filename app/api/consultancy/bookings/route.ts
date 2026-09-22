@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { db } from '@/lib/db';
+import { requireAdmin } from '@/lib/auth-security';
 
 export async function POST(request: Request) {
   try {
@@ -36,6 +37,11 @@ export async function POST(request: Request) {
 
 export async function GET(request: Request) {
   try {
+    const adminAuth = requireAdmin(request);
+    if (adminAuth.errorResponse) {
+      return adminAuth.errorResponse;
+    }
+
     const { searchParams } = new URL(request.url);
     const country = searchParams.get('country');
     const status = searchParams.get('status');

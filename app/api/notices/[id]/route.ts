@@ -1,7 +1,6 @@
 import { NextResponse, NextRequest } from 'next/server';
-import { PrismaClient } from '@prisma/client';
-
-const prisma = new PrismaClient();
+import { db } from '@/lib/db';
+import { requireAdmin } from '@/lib/auth-security';
 
 export async function GET(
   request: NextRequest,
@@ -9,7 +8,7 @@ export async function GET(
 ) {
   try {
     const { id } = await params;
-    const notice = await prisma.notice.findUnique({
+    const notice = await db.notice.findUnique({
       where: { id },
     });
 
@@ -28,10 +27,15 @@ export async function PUT(
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const adminAuth = requireAdmin(request);
+    if (adminAuth.errorResponse) {
+      return adminAuth.errorResponse;
+    }
+
     const { id } = await params;
     const body = await request.json();
 
-    const notice = await prisma.notice.update({
+    const notice = await db.notice.update({
       where: { id },
       data: {
         ...body,
@@ -51,8 +55,13 @@ export async function DELETE(
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const adminAuth = requireAdmin(request);
+    if (adminAuth.errorResponse) {
+      return adminAuth.errorResponse;
+    }
+
     const { id } = await params;
-    await prisma.notice.delete({
+    await db.notice.delete({
       where: { id },
     });
 

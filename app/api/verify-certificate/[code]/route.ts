@@ -22,7 +22,6 @@ export async function GET(
           select: {
             id: true,
             name: true,
-            email: true,
           },
         },
         course: {
@@ -50,7 +49,7 @@ export async function GET(
     return NextResponse.json({
       verified: true,
       certificateCode: certificate.certificateCode,
-      studentName: certificate.user?.name || certificate.user?.email || 'Verified Candidate',
+      studentName: certificate.user?.name || 'Verified Candidate',
       courseTitle: certificate.course?.title || 'Language Examination Course',
       language: certificate.course?.language || 'JAPANESE',
       level: certificate.course?.level || 'Standard',

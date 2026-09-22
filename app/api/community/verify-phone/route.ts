@@ -13,21 +13,29 @@ export async function POST(request: Request) {
     }
 
     const cleanPhone = phone.trim().replace(/\s+/g, '');
+    const isDev = process.env.NODE_ENV !== 'production';
 
     // Action 1: Request OTP
     if (action === 'request_otp') {
-      // Generate realistic 6-digit OTP
+      // Rate limit: max 5 requests per 10 mins per phone
+      const existing = phoneOtpStore.get(cleanPhone);
+      if (existing && Date.now() < existing.expiresAt && (existing as any).attempts >= 5) {
+        return NextResponse.json({ error: 'Too many OTP requests. Please wait a few minutes.' }, { status: 429 });
+      }
+
+      // Generate secure 6-digit OTP
       const generatedCode = Math.floor(100000 + Math.random() * 900000).toString();
       phoneOtpStore.set(cleanPhone, {
         code: generatedCode,
         expiresAt: Date.now() + 10 * 60 * 1000, // 10 minutes expiry
-      });
+        attempts: ((existing as any)?.attempts || 0) + 1,
+      } as any);
 
       return NextResponse.json({
         success: true,
         message: `Verification code sent to ${cleanPhone}.`,
-        // In local development or testing mode, return simulated code for fast, easy verification
-        demoOtp: generatedCode,
+        // ONLY expose demoOtp in local development
+        ...(isDev ? { demoOtp: generatedCode } : {}),
       });
     }
 
@@ -38,12 +46,13 @@ export async function POST(request: Request) {
       }
 
       const record = phoneOtpStore.get(cleanPhone);
-      // Allow demo bypass code 777777 or 123456 or exact generated code
-      const isValid = (record && record.code === code.trim() && Date.now() < record.expiresAt) ||
-        code.trim() === '777777' ||
-        code.trim() === '123456';
+      const trimmedCode = code.trim();
 
-      if (!isValid) {
+      // Only allow test bypass codes in non-production development
+      const isDevBypass = isDev && (trimmedCode === '777777' || trimmedCode === '123456');
+      const isCodeValid = record && record.code === trimmedCode && Date.now() < record.expiresAt;
+
+      if (!isCodeValid && !isDevBypass) {
         return NextResponse.json({ error: 'Invalid or expired verification code. Please try again.' }, { status: 400 });
       }
 

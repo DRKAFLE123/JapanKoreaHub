@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { db } from '@/lib/db';
+import { requireAdmin } from '@/lib/auth-security';
 
 const INITIAL_NOTICES = [
   {
@@ -120,6 +121,11 @@ export async function GET(request: Request) {
 
 export async function POST(request: Request) {
   try {
+    const adminAuth = requireAdmin(request);
+    if (adminAuth.errorResponse) {
+      return adminAuth.errorResponse;
+    }
+
     const body = await request.json();
     const { title, titleNe, body: noticeBody, bodyNe, category, country, sourceType, sourceLabel, sourceUrl, isPinned, expiresAt, lastVerifiedAt } = body;
 

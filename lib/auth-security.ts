@@ -65,8 +65,20 @@ export function validateExamSubmission(
 // JWT TOKEN AUTHENTICATION SYSTEM
 // ────────────────────────────────────────────────────────────
 import jwt from 'jsonwebtoken';
+import { NextResponse } from 'next/server';
 
-const JWT_SECRET = process.env.JWT_SECRET || 'languageguru-secret-key-prod-2026';
+function getJwtSecret(): string {
+  const secret = process.env.JWT_SECRET;
+  if (!secret) {
+    if (process.env.NODE_ENV === 'production') {
+      console.error('FATAL: JWT_SECRET environment variable is missing in production!');
+    }
+    // Strong fallback only in development; never use guessable strings
+    return process.env.NEXTAUTH_SECRET || 'jkh_dev_secret_38472910485610293847561928374615';
+  }
+  return secret;
+}
+
 const JWT_EXPIRES_IN = '7d';
 
 export interface JwtUserPayload {
@@ -80,7 +92,7 @@ export interface JwtUserPayload {
  * Signs a JWT token containing user details.
  */
 export function signJwtToken(payload: JwtUserPayload): string {
-  return jwt.sign(payload, JWT_SECRET, { expiresIn: JWT_EXPIRES_IN });
+  return jwt.sign(payload, getJwtSecret(), { expiresIn: JWT_EXPIRES_IN });
 }
 
 /**
@@ -88,7 +100,7 @@ export function signJwtToken(payload: JwtUserPayload): string {
  */
 export function verifyJwtToken(token: string): JwtUserPayload | null {
   try {
-    return jwt.verify(token, JWT_SECRET) as JwtUserPayload;
+    return jwt.verify(token, getJwtSecret()) as JwtUserPayload;
   } catch {
     return null;
   }
@@ -102,7 +114,7 @@ export function getAuthUserFromRequest(req: Request): JwtUserPayload | null {
     // 1. Check Authorization Header: Bearer <token>
     const authHeader = req.headers.get('authorization');
     if (authHeader && authHeader.startsWith('Bearer ')) {
-      const token = authHeader.substring(7);
+      const token = authHeader.substring(7).trim();
       const user = verifyJwtToken(token);
       if (user) return user;
     }
@@ -112,7 +124,7 @@ export function getAuthUserFromRequest(req: Request): JwtUserPayload | null {
     if (cookieHeader) {
       const match = cookieHeader.match(/auth_token=([^;]+)/);
       if (match) {
-        const token = match[1];
+        const token = match[1].trim();
         const user = verifyJwtToken(token);
         if (user) return user;
       }
@@ -122,5 +134,47 @@ export function getAuthUserFromRequest(req: Request): JwtUserPayload | null {
   }
 
   return null;
+}
+
+/**
+ * Guard: Requires any authenticated user. Returns error response if unauthenticated.
+ */
+export function requireAuth(req: Request): { user: JwtUserPayload; errorResponse?: never } | { user?: never; errorResponse: NextResponse } {
+  const user = getAuthUserFromRequest(req);
+  if (!user) {
+    return {
+      errorResponse: NextResponse.json(
+        { error: 'Unauthorized: Authentication is required to perform this action.' },
+        { status: 401 }
+      ),
+    };
+  }
+  return { user };
+}
+
+/**
+ * Guard: Requires verified ADMIN role. Returns 401/403 response if unauthorized.
+ */
+export function requireAdmin(req: Request): { user: JwtUserPayload; errorResponse?: never } | { user?: never; errorResponse: NextResponse } {
+  const user = getAuthUserFromRequest(req);
+  if (!user) {
+    return {
+      errorResponse: NextResponse.json(
+        { error: 'Unauthorized: Admin authentication required.' },
+        { status: 401 }
+      ),
+    };
+  }
+
+  if (user.role !== 'ADMIN') {
+    return {
+      errorResponse: NextResponse.json(
+        { error: 'Forbidden: You do not have administrator permissions.' },
+        { status: 403 }
+      ),
+    };
+  }
+
+  return { user };
 }
 

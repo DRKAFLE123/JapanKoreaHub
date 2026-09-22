@@ -46,18 +46,18 @@ export async function GET(request: Request) {
 export async function POST(request: Request) {
   try {
     const authUser = getAuthUserFromRequest(request);
-    const body = await request.json();
-
-    // Signup is compulsory for posting
-    const authorId = authUser?.id || body.authorId;
-    const authorName = authUser?.name || body.authorName || 'Verified Community Member';
-
-    if (!authorId) {
+    if (!authUser) {
       return NextResponse.json(
         { error: 'Sign up / Login is compulsory before creating a job or room listing.' },
         { status: 401 }
       );
     }
+
+    const body = await request.json();
+
+    // Enforce authenticated author identity
+    const authorId = authUser.email || authUser.id;
+    const authorName = authUser.name || body.authorName || 'Verified Community Member';
 
     const {
       type,

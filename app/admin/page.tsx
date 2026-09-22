@@ -55,19 +55,12 @@ export default function AdminCMSPage() {
         if (data.authenticated && data.user?.role === 'ADMIN') {
           setCurrentUser(data.user);
         } else {
-          // Check local stored session fallback for demo admin
-          const savedUser = localStorage.getItem('jkh_user');
-          if (savedUser) {
-            try {
-              const u = JSON.parse(savedUser);
-              if (u.role === 'ADMIN' || u.email?.includes('admin')) {
-                setCurrentUser({ id: 'admin-1', name: u.name || 'Admin', email: u.email, role: 'ADMIN' });
-              }
-            } catch (_) {}
-          }
+          setCurrentUser(null);
         }
       })
-      .catch(() => {})
+      .catch(() => {
+        setCurrentUser(null);
+      })
       .finally(() => setAuthChecking(false));
   }, []);
 
@@ -148,37 +141,87 @@ export default function AdminCMSPage() {
     alert(`Success! Mock paper "${created.name}" created for ${created.track} (${created.level}).`);
   };
 
-  // Stats summary state
+  // Real Stats summary state loaded from /api/admin/stats
   const [stats, setStats] = useState<StatsData>({
-    totalUsers: 148,
-    totalStudents: 142,
-    totalAdmins: 6,
+    totalUsers: 0,
+    totalStudents: 0,
+    totalAdmins: 0,
     totalVocab: 4250,
-    totalExams: 18,
+    totalExams: 0,
   });
 
-  // Mock User List for CMS management
-  const [users, setUsers] = useState<UserData[]>([
-    { id: '1', name: 'Dr. Kafle', email: 'drkafle@languageguru.com', role: 'ADMIN', streakDays: 28, createdAt: '2026-01-15' },
-    { id: '2', name: 'Rajendra Thapa', email: 'rajendra.t@example.com', role: 'STUDENT', streakDays: 14, createdAt: '2026-02-10' },
-    { id: '3', name: 'Sita Sharma', email: 'sita.s@example.com', role: 'STUDENT', streakDays: 21, createdAt: '2026-03-01' },
-    { id: '4', name: 'Koji Yamamoto', email: 'koji.instructor@languageguru.com', role: 'INSTRUCTOR', streakDays: 45, createdAt: '2026-01-20' },
-    { id: '5', name: 'Anil Gurung', email: 'anil.g@example.com', role: 'STUDENT', streakDays: 7, createdAt: '2026-04-12' },
-  ]);
+  // Real User List loaded from /api/admin/users
+  const [users, setUsers] = useState<UserData[]>([]);
+  const [loadingUsers, setLoadingUsers] = useState(false);
 
-  const handleRoleChange = (userId: string, newRole: 'STUDENT' | 'ADMIN' | 'INSTRUCTOR') => {
-    setUsers(prev => prev.map(u => u.id === userId ? { ...u, role: newRole } : u));
+  const fetchAdminData = async () => {
+    if (!currentUser || currentUser.role !== 'ADMIN') return;
+    setLoading(true);
+    try {
+      const [statsRes, usersRes] = await Promise.all([
+        fetch('/api/admin/stats').then(r => r.json()).catch(() => null),
+        fetch('/api/admin/users').then(r => r.json()).catch(() => null),
+      ]);
+
+      if (statsRes?.success && statsRes.stats) {
+        setStats(statsRes.stats);
+      }
+      if (usersRes?.success && Array.isArray(usersRes.users)) {
+        setUsers(usersRes.users);
+      }
+    } catch {
+      // ignore
+    } finally {
+      setLoading(false);
+    }
   };
 
-  const handleDeleteUser = (userId: string) => {
-    if (confirm('Are you sure you want to remove this user from the system?')) {
-      setUsers(prev => prev.filter(u => u.id !== userId));
+  useEffect(() => {
+    if (currentUser?.role === 'ADMIN') {
+      fetchAdminData();
+    }
+  }, [currentUser]);
+
+  const handleRoleChange = async (userId: string, newRole: 'STUDENT' | 'ADMIN' | 'INSTRUCTOR') => {
+    try {
+      const res = await fetch('/api/admin/users', {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ userId, role: newRole }),
+      });
+      const data = await res.json();
+      if (data.success) {
+        setUsers(prev => prev.map(u => u.id === userId ? { ...u, role: newRole } : u));
+        fetchAdminData();
+      } else {
+        alert(data.error || 'Failed to update role');
+      }
+    } catch {
+      alert('Network error while updating user role');
+    }
+  };
+
+  const handleDeleteUser = async (userId: string) => {
+    if (!confirm('Are you sure you want to remove this user from the system?')) return;
+    try {
+      const res = await fetch(`/api/admin/users?userId=${encodeURIComponent(userId)}`, {
+        method: 'DELETE',
+      });
+      const data = await res.json();
+      if (data.success) {
+        setUsers(prev => prev.filter(u => u.id !== userId));
+        fetchAdminData();
+      } else {
+        alert(data.error || 'Failed to delete user');
+      }
+    } catch {
+      alert('Network error while deleting user');
     }
   };
 
   const filteredUsers = users.filter(u => {
-    const matchesSearch = u.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                          u.email.toLowerCase().includes(searchQuery.toLowerCase());
+    const matchesSearch = (u.name || '').toLowerCase().includes(searchQuery.toLowerCase()) ||
+                          (u.email || '').toLowerCase().includes(searchQuery.toLowerCase());
     const matchesRole = roleFilter === 'ALL' || u.role === roleFilter;
     return matchesSearch && matchesRole;
   });

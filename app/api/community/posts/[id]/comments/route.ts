@@ -22,18 +22,16 @@ export async function POST(
   try {
     const { id } = await params;
     const authUser = getAuthUserFromRequest(request);
-    const body = await request.json();
-
-    const authorId = authUser?.id || body.authorId;
-    const authorName = authUser?.name || body.authorName;
-
-    // Anyone can scroll, but for comment need to signin
-    if (!authorId || !authorName) {
+    if (!authUser) {
       return NextResponse.json(
         { error: 'Sign in is required to comment on listings.' },
         { status: 401 }
       );
     }
+
+    const body = await request.json();
+    const authorId = authUser.email || authUser.id;
+    const authorName = authUser.name || 'Community Member';
 
     if (!body.content || !body.content.trim()) {
       return NextResponse.json({ error: 'Comment content cannot be empty.' }, { status: 400 });
