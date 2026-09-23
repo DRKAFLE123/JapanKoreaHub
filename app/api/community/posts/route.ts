@@ -90,7 +90,7 @@ export async function POST(request: Request) {
     }
 
     // Phone verification requirement check
-    if (!isPhoneVerified && !authorPhone) {
+    if (!isPhoneVerified) {
       return NextResponse.json(
         { error: 'Only phone verified users can publish room and job listings. Please verify your phone number first.' },
         { status: 403 }

@@ -4,7 +4,7 @@ import Link from 'next/link';
 import {
   BookOpen, ClipboardList, Shield, Briefcase, Home as HomeIcon,
   GraduationCap, Globe, ChevronRight, ArrowRight, Sparkles,
-  Bell, Award, Headphones, CheckCircle2, Flame, Users
+  Bell, Award, Headphones, CheckCircle2, Flame, Users, Clock
 } from 'lucide-react';
 
 import { useTranslation } from '@/lib/i18n/LanguageContext';
@@ -54,6 +54,44 @@ const COUNTRY_CONFIG = {
       { href: '/japan/mock-test/jlpt-n3',  label: 'JLPT N3 CBT Test',   badge: 'Intermediate • 180 Marks' },
       { href: '/japan/mock-test/jft-basic', label: 'JFT-Basic CBT Engine', badge: 'SSW Required • 250 Marks' },
     ],
+    featuredBlogs: [
+      {
+        id: 'j-ssw-guide',
+        cat: 'SSW WORK VISA',
+        catColor: 'bg-emerald-50 text-emerald-700 border-emerald-200',
+        readTime: '5 min read',
+        title: 'Complete SSW 1 Visa Roadmap: Required Skills, Salary & Prometric CBT Steps',
+        titleNe: 'जापान एसएसडब्लु १ (SSW 1) भिसा पूर्ण गाइड: योग्यता, तलब र आवेदन प्रक्रिया',
+        excerpt: 'Comprehensive breakdown of Kaigo, Agriculture & Food Service skill evaluation tests, JFT-Basic scoring, and finding direct employers in Japan.',
+        excerptNe: 'केयरगिभर, कृषि र फुड सर्भिस सीबीटी परीक्षाको ढाँचा, जेएफटी उत्तीर्णांक र प्रत्यक्ष रोजगारदाता खोज्ने प्रमाणित विधि।',
+        href: '/japan/work',
+        emoji: '💼',
+      },
+      {
+        id: 'j-jlpt-prep',
+        cat: 'EXAM ROADMAP',
+        catColor: 'bg-indigo-50 text-indigo-700 border-indigo-200',
+        readTime: '4 min read',
+        title: 'How to Pass JLPT N5 & JFT-Basic in 90 Days: Self-Study Roadmap',
+        titleNe: '९० दिनमा JLPT N5 र JFT-Basic पास गर्ने प्रभावकारी स्व-अध्ययन तालिका',
+        excerpt: 'Essential Minna no Nihongo chapters, 100 core grammar patterns, and daily listening strategies for guaranteed high marks.',
+        excerptNe: 'मिन्ना नो निहोङ्गोका मुख्य पाठहरू, १०० आधारभूत व्याकरण र परीक्षामा उच्च अंक ल्याउने दैनिक अभ्यास तालिका।',
+        href: '/japan/learn',
+        emoji: '🎯',
+      },
+      {
+        id: 'j-living-costs',
+        cat: 'LIVING IN JAPAN',
+        catColor: 'bg-purple-50 text-purple-700 border-purple-200',
+        readTime: '4 min read',
+        title: 'Cost of Living in Tokyo vs Osaka: Student & Worker Budget Breakdown',
+        titleNe: 'टोकियो र ओसाकामा जीवनयापन खर्च: विद्यार्थी र कामदारको मासिक बजेट',
+        excerpt: 'Realistic monthly expenses covering zero-deposit sharehouses, supermarket groceries, commuter passes, and national health insurance.',
+        excerptNe: 'जिरो-डिपोजिट सेयरहाउस, दैनिक उपभोग्य वस्तु, रेल पास र स्वास्थ्य बीमा सहितको वास्तविक मासिक खर्च विवरण।',
+        href: '/japan/life',
+        emoji: '💴',
+      },
+    ],
   },
   korea: {
     name: 'Korea',
@@ -95,6 +133,44 @@ const COUNTRY_CONFIG = {
       { href: '/korea/mock-test/eps-topik', label: 'EPS-TOPIK Official CBT Simulator', badge: 'E-9 Required • 200 Pts' },
       { href: '/korea/mock-test/topik-1',   label: 'TOPIK I Exam Simulator',   badge: 'Level 1 & 2 • 200 Pts' },
       { href: '/korea/mock-test/topik-2',   label: 'TOPIK II Exam Simulator',  badge: 'Level 3 to 6 • 300 Pts' },
+    ],
+    featuredBlogs: [
+      {
+        id: 'k-eps-guide',
+        cat: 'EPS WORK PERMIT',
+        catColor: 'bg-blue-50 text-blue-700 border-blue-200',
+        readTime: '5 min read',
+        title: 'EPS-TOPIK 2026 Master Guide: Exam Pattern, Cutoff Marks & Manufacturing Prep',
+        titleNe: 'ईपीएस-टोपिक २०२६ पूर्ण गाइड: परीक्षा संरचना, उत्तीर्णांक र तयारी टिप्स',
+        excerpt: 'Step-by-step preparation for the 60 official HRD Korea textbook chapters, UBT/CBT computer exam environment, and skill tests.',
+        excerptNe: 'एचआरडी कोरियाको ६० पाठे आधिकारिक पाठ्यपुस्तक, युबिटी कम्प्युटर परीक्षा प्रणाली र सीप परीक्षणको तयारी।',
+        href: '/korea/work',
+        emoji: '🏭',
+      },
+      {
+        id: 'k-e74-pathway',
+        cat: 'VISA CONVERSION',
+        catColor: 'bg-emerald-50 text-emerald-700 border-emerald-200',
+        readTime: '4 min read',
+        title: 'E-9 to E-7-4 Skilled Visa Pathway: How to Transition to Long-term Residency',
+        titleNe: 'ई-९ बाट ई-७-४ दक्ष भिसा रूपान्तरण: स्थायी बसोबासको कानुनी प्रक्रिया',
+        excerpt: 'Understand the new K-point E-7-4 quota, TOPIK level requirements, annual salary thresholds, and bringing family to South Korea.',
+        excerptNe: 'के-पोइन्ट प्रणालीको नयाँ कोटा, आवश्यक टोपिक लेभल, न्यूनतम आम्दानी मापदण्ड र परिवार ल्याउने कानुनी आधार।',
+        href: '/korea/visa',
+        emoji: '🛡️',
+      },
+      {
+        id: 'k-living-costs',
+        cat: 'LIVING IN KOREA',
+        catColor: 'bg-purple-50 text-purple-700 border-purple-200',
+        readTime: '4 min read',
+        title: 'Living in Seoul: Goshiwon vs One-Room & Monthly Cost of Living',
+        titleNe: 'सियोलमा बसाइ: गोसिवन र वान-रुम बीचको भिन्नता र मासिक खर्च विवरण',
+        excerpt: 'Key differences between zero-deposit Goshiwons and deposit-heavy Wolse rentals, grocery budgeting, and subway transit discounts.',
+        excerptNe: 'डिपोजिट बिनाको गोसिवन र वान-रुम बीचको भिन्नता, मासिक खाना खर्च र सबवे यातायात छुटका उपायहरू।',
+        href: '/korea/rooms',
+        emoji: '🏢',
+      },
     ],
   },
 } as const;
@@ -284,38 +360,23 @@ export default function CountryHubClient({ country }: { country: Country }) {
 
         </section>
 
-        {/* 📢 LATEST COUNTRY UPDATES (NOTICES) */}
-        <section className="space-y-3">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <Bell className={`w-4 h-4 ${cfg.theme.accentText}`} />
-              <h2 className="text-xs font-black uppercase tracking-wider text-slate-500">
-                {isNe ? `ताजा ${isNe && country === 'japan' ? 'जापानी' : 'कोरियन'} अपडेट तथा सूचनाहरू` : `Latest ${cfg.name} Updates & Announcements`}
-              </h2>
-            </div>
-            <Link href="/notices" className={`text-xs font-bold ${cfg.theme.accentText} hover:underline flex items-center gap-1`}>
-              {t('viewAll')} <ChevronRight className="w-3.5 h-3.5" />
-            </Link>
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-            {cfg.notices.map((n) => (
-              <Link
-                key={n.id}
-                href={n.href}
-                className="p-4 bg-white border border-gray-200/90 hover:border-gray-300 hover:shadow-md rounded-2xl transition-all space-y-2 group cursor-pointer"
-              >
-                <div className="flex items-center justify-between text-[11px]">
-                  <span className={`font-extrabold px-2 py-0.5 rounded-md ${cfg.theme.chipColor}`}>
-                    {n.cat}
-                  </span>
-                  <span className="font-bold text-slate-400">{n.date}</span>
-                </div>
-                <p className="text-xs font-bold text-slate-800 group-hover:text-slate-950 line-clamp-2 leading-relaxed">
-                  {n.title}
-                </p>
+        {/* 📢 COMPACT SINGLE-LINE OFFICIAL ALERT BAR */}
+        <section aria-label="Official Announcements Ticker">
+          <div className="bg-white border border-slate-200/90 rounded-2xl p-2.5 sm:px-4 sm:py-2.5 shadow-2xs flex items-center justify-between gap-3 hover:border-slate-300 transition-colors">
+            <div className="flex items-center gap-2.5 min-w-0">
+              <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-rose-50 text-rose-700 border border-rose-200 text-[11px] font-bold shrink-0">
+                <span className="w-1.5 h-1.5 rounded-full bg-rose-500 animate-pulse" />
+                <span>{isNe ? 'आधिकारिक सूचना' : 'OFFICIAL ALERT'}</span>
+              </span>
+              <Link href="/notices" className="text-xs sm:text-sm font-semibold text-slate-800 hover:text-indigo-600 truncate">
+                <span className="font-extrabold text-slate-900 mr-1.5">{cfg.notices[0]?.cat}:</span>
+                <span>{cfg.notices[0]?.title}</span>
               </Link>
-            ))}
+            </div>
+            <Link href="/notices" className={`text-xs font-bold ${cfg.theme.accentText} hover:underline shrink-0 flex items-center gap-1`}>
+              <span>{isNe ? 'सबै सूचना' : 'All Updates'}</span>
+              <ChevronRight className="w-3.5 h-3.5" />
+            </Link>
           </div>
         </section>
 
@@ -353,6 +414,65 @@ export default function CountryHubClient({ country }: { country: Country }) {
                   <p className="text-xs text-slate-500 mt-1 line-clamp-2 leading-relaxed">
                     {tr.desc}
                   </p>
+                </div>
+              </Link>
+            ))}
+          </div>
+        </section>
+
+        {/* 📰 DEDICATED 3-COLUMN FEATURED COUNTRY GUIDES (BLOGS) */}
+        <section className="space-y-4">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-2">
+              <BookOpen className={`w-4.5 h-4.5 ${cfg.theme.accentText}`} />
+              <div>
+                <h2 className="text-base sm:text-lg font-bold text-slate-900 tracking-tight">
+                  {isNe ? (country === 'japan' ? '🇯🇵 विशेष जापानी गाइड तथा लेखहरू' : '🇰🇷 विशेष कोरियन गाइड तथा लेखहरू') : `Featured ${cfg.name} Guides & Stories`}
+                </h2>
+                <p className="text-xs text-slate-500">
+                  {isNe ? 'भिसा, अध्ययन र रोजगारीका लागि प्रमाणित मार्गनिर्देशन' : `Practical roadmaps, visa procedures & living advice for ${cfg.name}`}
+                </p>
+              </div>
+            </div>
+            <Link href={`/${country}/life`} className={`text-xs font-bold ${cfg.theme.accentText} hover:underline flex items-center gap-1 shrink-0`}>
+              <span>{t('viewAll')}</span>
+              <ChevronRight className="w-3.5 h-3.5" />
+            </Link>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            {cfg.featuredBlogs.map((b) => (
+              <Link
+                key={b.id}
+                href={b.href}
+                className="bg-white border border-slate-200/90 rounded-2xl p-5 hover:border-slate-300 hover:shadow-md transition-all duration-200 flex flex-col justify-between group cursor-pointer"
+              >
+                <div className="space-y-3">
+                  <div className="flex items-center justify-between gap-2">
+                    <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-[10px] font-extrabold tracking-wide border ${b.catColor}`}>
+                      {b.cat}
+                    </span>
+                    <span className="inline-flex items-center gap-1 text-[11px] font-medium text-slate-400 shrink-0">
+                      <Clock className="w-3 h-3 text-slate-400" />
+                      <span>{b.readTime}</span>
+                    </span>
+                  </div>
+
+                  <h3 className="text-sm sm:text-base font-bold text-slate-900 leading-snug tracking-tight group-hover:text-indigo-600 transition-colors line-clamp-2">
+                    {isNe ? b.titleNe : b.title}
+                  </h3>
+
+                  <p className="text-xs text-slate-600 font-normal leading-relaxed line-clamp-2">
+                    {isNe ? b.excerptNe : b.excerpt}
+                  </p>
+                </div>
+
+                <div className="pt-3 mt-3 border-t border-slate-100 flex items-center justify-between text-xs font-semibold text-slate-500 group-hover:text-indigo-600 transition-colors">
+                  <span className="flex items-center gap-1.5">
+                    <span className="text-sm">{b.emoji}</span>
+                    <span>{isNe ? 'विस्तृत गाइड पढ्नुहोस्' : 'Read Guide'}</span>
+                  </span>
+                  <ArrowRight className="w-3.5 h-3.5 -translate-x-1 group-hover:translate-x-0 transition-transform" />
                 </div>
               </Link>
             ))}

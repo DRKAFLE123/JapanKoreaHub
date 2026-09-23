@@ -14,7 +14,8 @@ import {
   Send,
   Loader2,
   User,
-  Share2
+  Share2,
+  Check
 } from 'lucide-react';
 import type { CommunityPost, PostComment } from '@/lib/community-data';
 import ShareModal from './ShareModal';
@@ -28,6 +29,49 @@ interface PostDetailModalProps {
   onOpenMessage: (post: CommunityPost) => void;
   user?: { name: string; email: string } | null;
   onRequireAuth: () => void;
+}
+
+function VerifiedShieldBadge({ className = "w-5 h-5 sm:w-6 sm:h-6" }: { className?: string }) {
+  return (
+    <svg
+      className={`${className} shrink-0`}
+      viewBox="0 0 24 24"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M12 2L4 5.2V11.5C4 16.5 7.4 21.1 12 22.3C16.6 21.1 20 16.5 20 11.5V5.2L12 2Z"
+        fill="#16A34A"
+      />
+      <path
+        d="M8.5 12L11 14.5L16 9"
+        stroke="white"
+        strokeWidth="2.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
+function formatPostedTime(dateString?: string): string {
+  if (!dateString) return 'Posted recently';
+  try {
+    const date = new Date(dateString);
+    const now = new Date();
+    const diffSec = Math.floor((now.getTime() - date.getTime()) / 1000);
+    if (diffSec < 60) return 'Posted just now';
+    const diffMin = Math.floor(diffSec / 60);
+    if (diffMin < 60) return `Posted ${diffMin} min ago`;
+    const diffHour = Math.floor(diffMin / 60);
+    if (diffHour < 24) return `Posted ${diffHour}h ago`;
+    const diffDay = Math.floor(diffHour / 24);
+    if (diffDay === 1) return 'Posted yesterday';
+    if (diffDay < 7) return `Posted ${diffDay} days ago`;
+    return `Posted ${date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}`;
+  } catch {
+    return 'Posted recently';
+  }
 }
 
 export default function PostDetailModal({
@@ -111,50 +155,56 @@ export default function PostDetailModal({
 
   return (
     <>
-      <div className="fixed inset-0 z-[80] bg-slate-950/70 backdrop-blur-xs animate-fade-in" onClick={onClose} />
+      <div className="fixed inset-0 z-[80] bg-slate-900/40 backdrop-blur-xs animate-fade-in" onClick={onClose} />
 
       <div className="fixed inset-0 z-[90] overflow-y-auto flex items-center justify-center p-3 sm:p-5 pointer-events-none">
-        <div className="w-full max-w-3xl bg-white border border-slate-200 rounded-3xl shadow-2xl overflow-hidden pointer-events-auto my-auto animate-fade-in font-sans">
+        <div className="w-full max-w-3xl bg-white border border-slate-200/90 rounded-3xl shadow-2xl overflow-hidden pointer-events-auto my-auto animate-fade-in font-sans">
           
-          {/* Header */}
-          <div className="p-5 sm:p-6 bg-gradient-to-r from-slate-900 via-indigo-950 to-slate-900 text-white relative">
+          {/* Light & Premium Header */}
+          <div className="p-5 sm:p-6 bg-white border-b border-slate-100 relative">
             <button
               onClick={onClose}
-              className="absolute top-5 right-5 p-2 rounded-full bg-white/10 hover:bg-white/20 text-white transition-colors cursor-pointer"
+              className="absolute top-5 right-5 p-2 rounded-full bg-slate-100/80 hover:bg-slate-200 text-slate-500 hover:text-slate-800 transition-colors cursor-pointer border border-slate-200/60"
+              title="Close modal"
             >
               <X className="w-4 h-4" />
             </button>
 
-            <div className="flex flex-wrap items-center gap-2 mb-2">
-              <span className={`px-2.5 py-1 rounded-lg text-xs font-black tracking-wide ${
-                isJob ? 'bg-indigo-500/30 text-indigo-200' : 'bg-purple-500/30 text-purple-200'
-              }`}>
-                {isJapan ? '🇯🇵 Japan' : '🇰🇷 Korea'} &middot; {isJob ? 'Job Opening' : 'Room & Housing'}
+            <div className="flex flex-wrap items-center gap-1.5 mb-2.5 pr-10">
+              {/* Country Badge */}
+              <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-slate-100 text-slate-700 border border-slate-200/60">
+                <span className="text-xs">{isJapan ? '🇯🇵' : '🇰🇷'}</span>
+                <span>{isJapan ? 'Japan' : 'Korea'}</span>
               </span>
 
+              {/* Language Level Pill */}
               {post.languageLevel && (
-                <span className="px-2.5 py-1 rounded-lg bg-amber-400/20 text-amber-200 text-xs font-black border border-amber-400/30">
+                <span className="inline-flex items-center px-2.5 py-0.5 rounded-full bg-indigo-50 text-indigo-700 text-xs font-semibold border border-indigo-200/70">
                   🗣️ {isJapan ? 'Japanese' : 'Korean'}: {post.languageLevel}
                 </span>
               )}
 
-              {post.isPhoneVerified && (
-                <span className="flex items-center gap-1 px-2.5 py-1 rounded-lg bg-emerald-500/20 text-emerald-300 text-xs font-black">
-                  <ShieldCheck className="w-3.5 h-3.5" />
-                  Phone Verified Poster
-                </span>
-              )}
+              {/* Relative Time Tag */}
+              <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-slate-100/90 text-slate-600 text-xs font-medium">
+                <Clock className="w-3 h-3 text-slate-400" />
+                <span>{formatPostedTime(post.createdAt)}</span>
+              </span>
             </div>
 
-            <h2 className="text-xl sm:text-2xl font-black text-white leading-tight">
-              {post.title}
+            <h2 className="text-xl sm:text-2xl font-extrabold text-slate-900 leading-snug tracking-tight flex items-start gap-2">
+              {post.isPhoneVerified && (
+                <span className="inline-flex shrink-0 mt-0.5 sm:mt-1" title="Verified Listing (SMS Verified Poster)">
+                  <VerifiedShieldBadge className="w-5 h-5 sm:w-6 sm:h-6" />
+                </span>
+              )}
+              <span>{post.title}</span>
             </h2>
 
-            <div className="flex items-center gap-2 text-xs text-slate-300 mt-2">
-              <MapPin className="w-3.5 h-3.5 text-rose-400 shrink-0" />
+            <div className="flex items-center gap-2 text-xs text-slate-500 mt-2 font-medium">
+              <MapPin className="w-3.5 h-3.5 text-rose-500 shrink-0" />
               <span>{post.city} &middot; {post.area}</span>
-              <span className="opacity-40">&bull;</span>
-              <Clock className="w-3.5 h-3.5 opacity-60" />
+              <span className="text-slate-300">&bull;</span>
+              <Clock className="w-3.5 h-3.5 text-slate-400" />
               <span>{post.duration}</span>
             </div>
           </div>
@@ -224,8 +274,11 @@ export default function PostDetailModal({
                   <div className="flex items-center gap-2">
                     <span className="text-sm font-black text-slate-900">{post.authorName}</span>
                     {post.isPhoneVerified && (
-                      <span className="px-1.5 py-0.5 rounded bg-emerald-100 text-emerald-800 text-[10px] font-black">
-                        Verified Poster
+                      <span
+                        className="inline-flex items-center justify-center w-4 h-4 rounded-full bg-emerald-100 text-emerald-700 border border-emerald-300 shrink-0"
+                        title="Phone Verified Account"
+                      >
+                        <Check className="w-2.5 h-2.5 stroke-[3]" />
                       </span>
                     )}
                   </div>

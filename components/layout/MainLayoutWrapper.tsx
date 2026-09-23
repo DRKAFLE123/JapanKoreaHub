@@ -10,6 +10,7 @@ import { LanguageProvider } from '@/lib/i18n/LanguageContext';
 import { CountryProvider } from '@/lib/context/CountryContext';
 import { ThemeProvider } from '@/lib/context/ThemeContext';
 import CountrySelectionModal from '../ui/CountrySelectionModal';
+import LandingNoticeModal from '../notices/LandingNoticeModal';
 
 import { usePathname } from 'next/navigation';
 
@@ -167,6 +168,9 @@ export default function MainLayoutWrapper({ children }: { children: React.ReactN
 
             {/* First-time Country Selection Dialog */}
             <CountrySelectionModal />
+
+            {/* Landing Official Notice Announcement Popup */}
+            <LandingNoticeModal />
           </div>
         </SidebarCollapseContext.Provider>
       </CountryProvider>

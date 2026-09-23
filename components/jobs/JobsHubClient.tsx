@@ -710,14 +710,14 @@ export default function JobsHubClient({ country = 'all' }: JobsHubClientProps) {
             <div className="space-y-4">
               <div className="flex items-center justify-between pt-1">
                 <h2 className="text-base sm:text-lg font-bold text-slate-900 tracking-tight flex items-center gap-2">
-                  <span>{isJapan ? '🇯🇵 Available Japan Job Openings' : '🇰🇷 Available Korea Job Openings'}</span>
+                  <span>{isJapan ? '🇯🇵 Japan Job Openings' : '🇰🇷 Korea Job Openings'}</span>
                   <span className="px-2.5 py-0.5 rounded-full text-xs font-bold bg-indigo-100 text-indigo-800">
                     {filteredPosts.length}
                   </span>
                 </h2>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2.5 sm:gap-4 md:gap-5">
                 {filteredPosts.map((post) => (
                   <PostCard
                     key={post.id}
